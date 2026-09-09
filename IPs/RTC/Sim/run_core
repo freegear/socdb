@@ -1,0 +1,15 @@
+rm ./work/*
+
+# Core RTL
+ncvlog ../Rtl/RCTCore.v
+ncvlog ../Rtl/RTCAPBinterface.v
+ncvlog ../Rtl/RTCTOP.v
+
+ncvlog ./tb.v
+
+### Elaboration
+ncelab -messages work.tb -access +rwc -timescale 1ns/10ps
+
+### Simulation
+ncsim  work.tb
+
