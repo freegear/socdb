@@ -1,0 +1,13 @@
+
+./run_video
+./run_dm
+
+
+# TOP
+ncvlog ./tb.v
+
+### Elaboration
+ncelab -messages work.tb -access +rwc -timescale 1ns/10ps
+
+### Simulation
+ncsim  work.tb

@@ -1,0 +1,41 @@
+library verilog;
+use verilog.vl_types.all;
+entity VideoTestTop is
+    generic(
+        BUS_WID         : integer := 32;
+        ADDR_WID        : integer := 32;
+        MASTERID_WID    : integer := 1;
+        SLAVEID_WID     : integer := 3;
+        AWLEN_WID       : integer := 4;
+        AWSIZE_WID      : integer := 3;
+        AWBURST_WID     : integer := 2;
+        AWLOCK_WID      : integer := 2;
+        AWCACHE_WID     : integer := 4;
+        AWPROT_WID      : integer := 3;
+        WSTRB_WID       : integer := 4;
+        BRESP_WID       : integer := 2;
+        RRESP_WID       : integer := 2;
+        ARLEN_WID       : integer := 4;
+        ARBURST_WID     : integer := 2;
+        ARLOCK_WID      : integer := 2;
+        ARCACHE_WID     : integer := 4;
+        ARPROT_WID      : integer := 3;
+        MASTER_WID      : integer := 3;
+        SLAVE_WID       : integer := 3;
+        SLAVE_NUM       : integer := 6;
+        MASTER_NUM      : integer := 5;
+        SELMASTER_WID   : integer := 2;
+        Wr_REQDEPTH_WID : integer := 2;
+        Rd_REQDEPTH_WID : integer := 2;
+        WrPermit_SLAVECNTWID: integer := 3;
+        RdPermit_SLAVECNTWID: integer := 1;
+        ARSIZE_WID      : integer := 3;
+        DATA_WIDTH      : integer := 32;
+        WID_WIDTH       : integer := 4;
+        RID_WIDTH       : integer := 4;
+        ADDR_WIDTH      : integer := 32;
+        PERIOD1         : real    := 20.830000;
+        PERIOD2         : real    := 18.520000;
+        SDLY            : integer := 2
+    );
+end VideoTestTop;

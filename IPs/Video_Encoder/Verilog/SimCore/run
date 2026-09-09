@@ -1,0 +1,29 @@
+# MODEL
+#ncvlog ../mod/SIN_ROM_FPGA.v
+#ncvlog ../mod/COS_ROM_FPGA.v
+
+
+# Core RTL
+#ncvlog ../rtl/c_lpf.v
+#ncvlog ../rtl/y_lpf.v
+#ncvlog ../rtl/VideoEncInterface.v
+#ncvlog ../rtl/VideoEncSynthesizer.v
+#ncvlog ../rtl/VideoEncRGB2YUV.v
+#ncvlog ../rtl/VideoEncColorGen.v
+#ncvlog ../rtl/VideoEncSubAddrGen.v
+#ncvlog ../rtl/VideoTimingGen.v
+#ncvlog ../rtl/VideoCore.v
+
+./run_core
+
+# TOP
+ncvlog ../Rtl/VideoOut/VideoEncAPBinterface.v
+ncvlog ../Rtl/VideoEnc/VideoEncTop.v
+
+ncvlog ./tb.v
+
+### Elaboration
+ncelab -messages work.tb -access +rwc -timescale 1ns/10ps
+
+### Simulation
+ncsim  work.tb

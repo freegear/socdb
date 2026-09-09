@@ -1,0 +1,42 @@
+rm ./work/*
+
+# MODEL
+ncvlog ../Mod/SIN_ROM_FPGA.v
+ncvlog ../Mod/COS_ROM_FPGA.v
+
+# Core RTL
+
+ncvhdl -V93 ../Rtl/VideoOut/FIR/C065_mult.vhd -messages
+ncvhdl -V93 ../Rtl/VideoOut/FIR/C065.vhd -messages
+
+ncvhdl -V93 ../Rtl/VideoOut/FIR/C135_mult.vhd -messages
+ncvhdl -V93 ../Rtl/VideoOut/FIR/C135.vhd -messages
+
+ncvhdl -V93 ../Rtl/VideoOut/FIR/NTSC_YFilter_mult.vhd -messages
+ncvhdl -V93 ../Rtl/VideoOut/FIR/NTSC_YFilter.vhd -messages
+ncvhdl -V93 ../Rtl/VideoOut/FIR/PAL_YFilter_mult.vhd -messages
+ncvhdl -V93 ../Rtl/VideoOut/FIR/PAL_YFilter.vhd -messages
+
+ncvhdl -V93 ../Rtl/VideoOut/FIR/NTSC_N0.vhd -messages
+ncvhdl -V93 ../Rtl/VideoOut/FIR/NTSC_N0_mult.vhd -messages
+ncvhdl -V93 ../Rtl/VideoOut/FIR/PAL_N0.vhd -messages
+ncvhdl -V93 ../Rtl/VideoOut/FIR/PAL_N0_mult.vhd -messages
+
+ncvhdl -V93 ../Rtl/VideoOut/FIR/NTSC_N1.vhd -messages
+ncvhdl -V93 ../Rtl/VideoOut/FIR/NTSC_N1_mult.vhd -messages
+ncvhdl -V93 ../Rtl/VideoOut/FIR/PAL_N1.vhd -messages
+ncvhdl -V93 ../Rtl/VideoOut/FIR/PAL_N1_mult.vhd -messages
+
+ncvlog ../Rtl/VideoOut/c_lpf.v
+ncvlog ../Rtl/VideoOut/y_lpf.v
+
+ncvlog ../Rtl/VideoOut/VideoEncInterface.v
+ncvlog ../Rtl/VideoOut/VideoEncSynthesizer.v
+ncvlog ../Rtl/VideoOut/VideoEncRGB2YUV.v
+ncvlog ../Rtl/VideoOut/VideoEncColorGen.v
+ncvlog ../Rtl/VideoOut/VideoEncSubAddrGen.v
+ncvlog ../Rtl/VideoOut/VideoTimingGen.v
+ncvlog ../Rtl/VideoOut/VideoEncAPBinterface.v
+ncvlog ../Rtl/VideoOut/VideoOut.v
+ncvlog ../Rtl/VideoOut/VideoCore.v
+ncvlog ../Rtl/VideoOut/VideoEncTop.v

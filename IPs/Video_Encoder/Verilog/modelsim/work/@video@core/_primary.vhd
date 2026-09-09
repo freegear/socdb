@@ -1,0 +1,42 @@
+library verilog;
+use verilog.vl_types.all;
+entity VideoCore is
+    port(
+        CLK             : in     vl_logic;
+        RESETn          : in     vl_logic;
+        HSYNCn          : in     vl_logic;
+        VSYNCn          : in     vl_logic;
+        BLANKn          : in     vl_logic;
+        Rin             : in     vl_logic_vector(7 downto 0);
+        Gin             : in     vl_logic_vector(7 downto 0);
+        Bin             : in     vl_logic_vector(7 downto 0);
+        ENABLE          : in     vl_logic;
+        EN_DAC0         : in     vl_logic;
+        EN_DAC1         : in     vl_logic;
+        EN_DAC2         : in     vl_logic;
+        EN_SQPIXEL      : in     vl_logic;
+        EN_NONINTERLACE : in     vl_logic;
+        EN_RESET_SCH    : in     vl_logic;
+        EN_INTERNAL_PATTERN: in     vl_logic;
+        EN_COLOR_KILL   : in     vl_logic;
+        COLOR_PATTERN_MODE: in     vl_logic_vector(1 downto 0);
+        OUT_MODE        : in     vl_logic_vector(2 downto 0);
+        LUMA_FILTER_SEL : in     vl_logic_vector(1 downto 0);
+        CHRO_FILTER_SEL : in     vl_logic_vector(1 downto 0);
+        CHRO_DELAY      : in     vl_logic_vector(2 downto 0);
+        LUMA_DELAY      : in     vl_logic_vector(2 downto 0);
+        BURST_WID       : in     vl_logic_vector(1 downto 0);
+        HSYNC_WID       : in     vl_logic_vector(2 downto 0);
+        SUB_PHASE       : in     vl_logic_vector(15 downto 0);
+        SUB_REQ         : in     vl_logic_vector(31 downto 0);
+        DAC0_ENABLE     : out    vl_logic;
+        DAC1_ENABLE     : out    vl_logic;
+        DAC2_ENABLE     : out    vl_logic;
+        DAC0_DATA       : out    vl_logic_vector(9 downto 0);
+        DAC1_DATA       : out    vl_logic_vector(9 downto 0);
+        DAC2_DATA       : out    vl_logic_vector(9 downto 0);
+        F_COUNTER_INTER : out    vl_logic_vector(4 downto 0);
+        H_COUNTER_INTER : out    vl_logic_vector(10 downto 0);
+        V_COUNTER_INTER : out    vl_logic_vector(9 downto 0)
+    );
+end VideoCore;
