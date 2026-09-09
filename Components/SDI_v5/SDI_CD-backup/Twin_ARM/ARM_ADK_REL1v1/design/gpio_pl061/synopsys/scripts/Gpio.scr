@@ -1,0 +1,109 @@
+/*----------------------------------------------------------------------
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : Gpio.scr.rca
+-- File Revision          : 1.2
+-- 
+-- Release Information    : PrimeCell(TM)-PL061-REL1v0
+-- 
+----------------------------------------------------------------------*/
+
+
+
+/**********************************************************************/
+/* PERIPH BLOCK-SPECIFIC TIMING PARAMETERS                            */
+/**********************************************************************/
+
+/* Timing parameters for non-AMBA signals, */
+/* set to the PCLK frequency */
+
+/* Input setup and hold times */
+
+tis = 0.4 * tclk
+tih = 0
+
+/* Output valid and hold times */
+
+tov = 0.2 * tclk   
+toh = 0
+
+/* Interrupt Output valid and hold times */
+
+tovint = 0.4 * tclk   
+tohint = 0
+
+/* Convert the above into synthesis parameters */
+
+tidmax = tclk - tis
+tidmin = tih
+
+todmax = tclk - tov
+todmin = toh
+
+toidmax = tclk - tovint
+toidmin = tohint
+
+/**********************************************************************/
+/* INPUT CONSTRAINTS FOR NON-AMBA PORTS                               */
+/**********************************************************************/
+
+/* The following input delay constraints are arbitrary since the      */
+/* corresponding signals are asynchronous to the clock that samples   */
+/* them. Ensure that they are synchronized internally before use.     */
+
+
+set_input_delay -clock PCLK -min tmskew GPIN
+set_input_delay -clock PCLK -max tidmax GPIN
+
+set_input_delay -clock PCLK -min tmskew nGPAFEN
+set_input_delay -clock PCLK -max tidmax nGPAFEN
+
+set_input_delay -clock PCLK -min tmskew GPAFOUT
+set_input_delay -clock PCLK -max tidmax GPAFOUT
+
+
+/* Maximum fanout of 1 for GPIN, to buffer this net */
+set_max_fanout 1.0  GPIN
+
+/* Maximum fanout of 1 for nGPAFEN, to buffer this net */
+set_max_fanout 1.0  nGPAFEN
+
+/* Maximum fanout of 1 for GPAFOUT, to buffer this net */
+set_max_fanout 1.0  GPAFOUT
+
+
+/**********************************************************************/
+/* OUTPUT CONSTRAINTS FOR INTERRUPT OUTPUTS                           */
+/**********************************************************************/
+
+
+set_output_delay -clock PCLK -min toidmin GPIOMIS
+set_output_delay -clock PCLK -max toidmax GPIOMIS
+
+set_output_delay -clock PCLK -min toidmin GPIOINTR
+set_output_delay -clock PCLK -max toidmax GPIOINTR
+
+
+/**********************************************************************/
+/* OUTPUT CONSTRAINTS FOR NON-AMBA PORTS                              */
+/**********************************************************************/
+
+set_output_delay -clock PCLK -min todmin nGPEN
+set_output_delay -clock PCLK -max todmax nGPEN 
+
+set_output_delay -clock PCLK -min todmin GPOUT
+set_output_delay -clock PCLK -max todmax GPOUT
+
+set_output_delay -clock PCLK -min todmin GPAFIN
+set_output_delay -clock PCLK -max todmax GPAFIN
+
+/****************************** End ***********************************/

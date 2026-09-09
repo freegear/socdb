@@ -1,0 +1,234 @@
+APPLICATION NOTE
+
+Using ModelGen 4.3.2 Models with MTI ModelSim (Verilog)
+=======================================================
+
+Introduction
+------------
+
+This application note provides information on running simulations
+containing ModelGen 4 models on the ModelSim Verilog simulator from
+Model Technology.  ModelGen 4 models use a Model Manager that provides
+a set of standard services to a model and handles all communication
+with the simulator.  A single Model Manager can service multiple
+instances of multiple models in a simulation.
+
+Intended audience
+-----------------
+
+This application note is intended for users of ModelGen models in the
+ModelSim Verilog environment.  It provides information on:
+
+ - initial preparations
+ - configuring the simulator to use the Model Manager
+ - how the Model Manager locates a model during elaboration
+ - ModelGen models containing SWIFT models
+ - selecting the appropriate timing model.
+
+You are strongly encouraged to read this document even if you are
+familiar with previous ModelGen model releases, because many of the
+details have changed.
+
+Initial preparations
+--------------------
+
+Before you can run any simulation that contains a ModelGen model you
+must set the environment variable MG_LIB to point to the directory
+containing the Model Manager for the simulator.
+
+ - In a full ModelGen distribution, set MG_LIB to:
+
+   On Solaris	<ModelGen_install_area>/SunOS5/MM
+
+   On HPUX	<ModelGen_install_area>/HPUX/MM
+
+   On Linux	<ModelGen_install_area>/RH_Linux_x86/MM
+
+   On AIX	<ModelGen_install_area>/AIX4/MM
+
+   On WinNT	<ModelGen_install_area>\WinNT\MM
+
+ - In a model distribution, set MG_LIB to:
+
+   On Solaris	<Model_Manager_root>/SunOS5/MM
+
+   On HPUX	<Model_Manager_root>/HPUX/MM
+
+   On Linux	<Model_Manager_root>/RH_Linux_x86/MM
+
+   On AIX	<Model_Manager_root>/AIX4/MM
+
+   On WinNT	<Model_Manager_root>\WinNT\MM
+
+   where <Model_Manager_root> is the Model Manager root directory.
+   For a model distribution which was unpacked using mg_install, this is
+   ${MG_ROOT} as described in the README.txt file.  For other types of model
+   distribution, it is the directory described in the model's README file. 
+
+Configuring the Simulator to use the Model Manager
+--------------------------------------------------
+
+Foreign-language models, such as those produced with ModelGen, must be
+loaded into the simulator using the PLI interface.  These must be
+compiled into shared libraries which are loaded during elaboration.
+
+The ModelGen 4 Model Manager has been designed so that it is not
+necessary to link the models directly into the PLI.  Instead, the
+Model Manager is loaded in once and it handles the requests to load all
+the models in that simulation.
+
+The ModelSim simulator loads PLI models using the Veriuser entry from the
+modelsim.ini file.  This entry must be located in the [vsim] section
+and is a list of shared libraries to load.  To simulate with ModelGen
+4 models, the library $MG_LIB/mti_modelsim_verilog/libmgmm.so must
+appear in the list.  For example:
+
+	[vsim]
+	Veriuser = $MG_LIB/mti_modelsim_verilog/libmgmm.so
+
+The file name extension for the libmgmm library is always .so 
+irrespective of platform.
+
+If you need to simulate with other PLI applications, or with ModelGen
+models produced with versions 2 or 3 of ModelGen, then add the shared
+libraries containing those models to the list.  Do not add ModelGen 4
+models directly to this list, because the Model Manager will load
+these libraries as required for the simulation you are running.
+
+How the model manager locates a model
+-------------------------------------
+
+The Model Manager extends the syntax of Verilog by adding the command
+$mm.  This command takes a number of arguments, and the first of these
+contains the compiled model's device and model (revision) name.  When 
+ModelGen creates the Verilog shell for the model, it places the name 
+of the model in this argument.
+
+The Model Manager uses this information and the environment variable 
+MG_MODEL_PATH to find the shared library containing the compiled model.
+MG_MODEL_PATH is a colon-separated list of directory paths, each of 
+which is the root of a ModelGen model installation tree (as generated 
+by the mg_install program).
+
+Every directory specified in MG_MODEL_PATH is searched, starting with 
+the leftmost.  In each location, the Model Manager looks first for a 
+library with the same name as the device.  If that fails, it looks for 
+a library with the same name as the device plus the platform's shared 
+library extension (for example, .so on Solaris).  The search terminates 
+as soon as the library is found.
+
+On some platforms, it is not possible to perform a search for a shared
+library if the filename extension is missing.  In this situation, the
+operating system code that loads a shared library into an application
+appends the appropriate shared library extension automatically.
+
+For backwards compatibility, the directory indicated by the DIR_<device> 
+environment variable is searched before MG_MODEL_PATH.  Also, if no
+shared library is found in any location in MG_MODEL_PATH, the current
+directory is examined afterwards.
+
+Example:
+
+  Consider a model revision r0 of a device called FIFO.  Assume that
+  the Solaris shared library for the FIFO model is stored as
+  /a/b/mymodels/FIFO/r0/SunOS5/FIFO.so.
+
+  FIFO.v contains the entry
+
+    initial begin
+      $mm("FIFO?rev=r0", ... other parameters...);
+    end
+
+  If MG_MODEL_PATH is set to /a/models:/a/b/mymodels:/a/b/c/moremodels,
+  the Model Manager attempts to load the FIFO model using the following
+  sequence of path names:
+
+   1. ${DIR_FIFO}/FIFO
+
+   2. ${DIR_FIFO}/FIFO.so
+
+   3. /a/models/FIFO/r0/SunOS5/FIFO
+
+   4. /a/models/FIFO/r0/SunOS5/FIFO.so
+
+   5. /a/b/mymodels/FIFO/r0/SunOS5/FIFO
+
+   6. /a/b/mymodels/FIFO/r0/SunOS5/FIFO.so
+
+  The search ends successfully here, so /a/b/c/moremodels/FIFO/r0/SunOS5
+  is never examined.
+
+ModelGen models containing SWIFT models
+---------------------------------------
+
+Models built with ModelGen 4 can contain compiled-HDL models with a
+SWIFT interface, such as those built with VMC from Synopsys.  The
+release notes for each model describe the details.  Before you can
+simulate these models you must ensure that the environment variables
+LMC_HOME, LMC_PATH and LMC_CONFIG are set appropriately.  The Synopsys
+VMC documentation provides further details and is available on-line at
+the Synopsys website, www.synopsys.com.
+
+Selecting the appropriate timing model
+--------------------------------------
+
+Releases of ModelGen prior to version 4 generated a separate model for
+each timing shell variants.  In ModelGen 4 a single model is generated 
+with two separate Verilog wrappers:
+
+ - one with an SDF-based timing shell
+ - one that enables a timing shell that is built into the core of the 
+   model.
+
+Normally, all that you need to do is to select the appropriate HDL
+shell when you compile/elaborate your design.  The two files are
+generated by ModelGen as:
+
+ - <device>_sdf.v for the SDF-based timing shell
+ - <device>.v for the built-in timing shell.
+
+(In a model distribution, please see the model's README file for the
+name and location of the two HDL shells.)
+
+The built-in timing shell, if present, is controlled by the parameter
+MG_ENABLE_BUILTIN_TIMING.  Built-in timing is enabled if this
+parameter is non-zero during elaboration and disabled otherwise.  This
+can be useful if you want to entirely disable the timing shell on a
+model that contains built-in timing.
+
+Do not try to enable the built-in timing shell when using the SDF
+timing shell wrappers.  The model will not function correctly with
+this configuration.
+
+Timing data for annotating the built-in timing shell is normally
+obtained by reading a timing defaults file.  The format is fairly 
+simple and can usually be understood by examining an existing example.
+You can find several examples in the examples subdirectory of the
+ModelGen distribution.  Distributions of models that contain a timing 
+shell contain an appropriate file for the model.  For full details,
+see the ModelGen Language Reference Manual (ARM DDI 0064).
+
+The timing defaults file is read during model elaboration.  The Model
+Manager searches for this as follows:
+
+ 1. The current directory is searched for a file of the name
+    <device>.tdef.
+
+ 2. The file name specified by the parameter <device>_TimingFile 
+    contained in the HDL wrapper is searched for.
+
+ 3. A file named <device>.tdef is searched for according to where the
+    model's shared library was found.  If the library was found from
+    MG_MODEL_PATH, the parent directory of the library's location is
+    searched.  If the library was found from DIR_<device>, the library's
+    location itself is searched.
+
+If using the built-in timing shell, you can specify a single fixed 
+delay for all outputs.  To do this, set the value of the top-level
+Verilog parameter MG_FORCED_DELAY to the number of picoseconds you
+want to delay by.  Any output delays that have been read from a
+timing defaults file are overridden by the forced delay.  To remove
+all forced delays, set MG_FORCED_DELAY to have the value 0.
+
+Do not set MG_FORCED_DELAY to any value other than 0 when using the
+SDF timing shell wrapper.

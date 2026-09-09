@@ -1,0 +1,267 @@
+##########################################################################
+# Used by TSMC Reference Flow
+# Product : T025_A1_0_10
+# Date : 2000/03/31
+# Launch by: dc_shell and dc_shell-t
+##########################################################################
+set designer {YS.Chang}
+set company {SMT}
+set user_home [getenv {HOME}]
+set proj_home .
+set corner {worst}
+set sh_source_uses_search_path {true}
+set search_path [list .]
+
+
+# ---------------------------------------------
+# TSMC For Ultra Compile
+# ---------------------------------------------
+set synthetic_library [list dw_foundation.sldb 	\
+dw01.sldb dw02.sldb dw03.sldb dw04.sldb dw05.sldb \
+dw06.sldb dw07.sldb dw08.sldb ]
+set link_library [concat $link_library $synthetic_library]
+#set search_path  [concat $search_path ${synopsys_root}/libraries/syn} ]
+set search_path  [concat $search_path /Stools/syn_vV-2003.12/libraries/syn} ]
+
+# -----------------------------------------------
+# TSMC 013g sc, mem, pad, symbols for TOP module
+# -----------------------------------------------
+set search_path [concat $search_path  /Slibs/artisan/TSMC_0.13-micron-FB/G/aci/sc-x/synopsys]
+set search_path [concat $search_path  /user/hkkim/DESIGNS/UWB/DB0]
+set search_path [concat $search_path  /user/hkkim/DESIGNS/UWB/LIB]
+set search_path [concat $search_path  /user/hkkim/DESIGNS/UWB/LIB/DB]
+set search_path [concat $search_path  /Slibs/artisan/TSMC_0.13-micron-FB/G/fb_TSMCHOME_tpz013g3_210a/digital/Front_End/timing_power/tpz013g3_210a]
+# ---------------------------------------------
+# TSMC 015g mixed PLL
+# ---------------------------------------------
+#set search_path [concat $search_path  /libs/artisan/TSMC_0.15-micron-FB/G/pg15e2_220_PLL/mixed_signal/Front_End/timing_power/pg15e2_220a]
+# ---------------------------------------------
+# TSMC 013g mem for ARM
+# ---------------------------------------------
+#set search_path [concat $search_path  /prj/sm02/mem/RO]
+#set search_path [concat $search_path [list [format "%s%s" $synopsys_root \
+#{/libraries/syn}]]]
+#
+#tpz013g3wc.db			tpz013g3bc.db			\
+# set link_library [list {*}]
+# Please add your own libraries into the following settings for all corners
+# Worst corner
+#
+if { $corner == {worst} } {
+set link_path [ list * \
+typical.db 			typical.db				\
+tpd013g3_lvdswc.db		\
+am0021_wc.db 			am0021_wc.db			\
+tpz013g3wc.db			tpz013g3wc.db			\
+pg13a1g3_200a_wc.db		pg13a1g3_200a_wc.db		\
+RA2SH128X40_slow_syn.db   	\
+RF2SH32X84_slow_syn.db     	\
+RA2SH128X48_slow_syn.db    	\
+RF2SH32X8_slow_syn.db      	\
+RA2SH2064X8_slow_syn.db    	\
+RF2SH32X96_slow_syn.db     	\
+RA2SH4096X24_slow_syn.db   	\
+RF2SH20X40_slow_syn.db     	\
+RF2SH32X128_slow_syn.db    	\
+RF2SH32X20M1c_slow_syn.db  	\
+RF2SH32X24_slow_syn.db     	\
+RF2SH32X80_slow_syn.db     	\
+rom_32x24_10c_slow_syn.db	\
+rom_32x24_11c_slow_syn.db	\
+rom_32x24_12c_slow_syn.db	\
+rom_16x24_00c_slow_syn.db  	\
+rom_32x24_13c_slow_syn.db	\
+rom_257x30c_slow_syn.db    	\
+rom_32x24_14c_slow_syn.db	\
+rom_32x24_00c_slow_syn.db  	\
+rom_32x24_15c_slow_syn.db	\
+rom_32x24_01c_slow_syn.db	\
+rom_32x36_00c_slow_syn.db	\
+rom_32x24_02c_slow_syn.db	\
+rom_32x36_01c_slow_syn.db	\
+rom_32x24_03c_slow_syn.db	\
+rom_40x6c_slow_syn.db		\
+dw01.sldb	\
+dw02.sldb	\
+dw03.sldb	\
+dw04.sldb	\
+dw05.sldb	\
+dw06.sldb	\
+dw07.sldb	\
+dw08.sldb	\
+dw_foundation.sldb	\
+]
+
+set target_library [ list 	\
+typical.db 			\
+tpd013g3_lvdswc.db		\
+tpz013g3wc.db			\
+pg13a1g3_200a_wc.db		\
+RA2SH128X40_slow_syn.db         \
+RF2SH32X84_slow_syn.db          \
+RA2SH128X48_slow_syn.db         \
+RF2SH32X8_slow_syn.db           \
+RA2SH2064X8_slow_syn.db         \
+RF2SH32X96_slow_syn.db          \
+RA2SH4096X24_slow_syn.db        \
+RF2SH20X40_slow_syn.db          \
+RF2SH32X128_slow_syn.db         \
+RF2SH32X20M1c_slow_syn.db       \
+RF2SH32X24_slow_syn.db          \
+RF2SH32X80_slow_syn.db          \
+rom_32x24_10c_slow_syn.db       \
+rom_32x24_11c_slow_syn.db       \
+rom_32x24_12c_slow_syn.db       \
+rom_16x24_00c_slow_syn.db       \
+rom_32x24_13c_slow_syn.db       \
+rom_257x30c_slow_syn.db         \
+rom_32x24_14c_slow_syn.db       \
+rom_32x24_00c_slow_syn.db       \
+rom_32x24_15c_slow_syn.db       \
+rom_32x24_01c_slow_syn.db       \
+rom_32x36_00c_slow_syn.db       \
+rom_32x24_02c_slow_syn.db       \
+rom_32x36_01c_slow_syn.db       \
+rom_32x24_03c_slow_syn.db       \
+rom_40x6c_slow_syn.db           \
+dw01.sldb       \
+dw02.sldb       \
+dw03.sldb       \
+dw04.sldb       \
+dw05.sldb       \
+dw06.sldb       \
+dw07.sldb       \
+dw08.sldb       \
+dw_foundation.sldb      \
+]
+}
+
+if { $corner == {typical} } {
+  set target_library [list {../../../libs/synopsys/tsmccore_110a/tsmccoretc.db}]
+  set link_library [concat  $link_library [list $target_library]]
+  set link_library [concat  $link_library [list \
+      {../../../libs/synopsys/tsmcio_100a/tsmciotc.db}]]
+  # Add the other your own typical-process libraries below
+}
+#
+# Best corner
+#
+if { $corner == {best} } {
+  set target_library [list {../../../libs/synopsys/tsmccore_110a/tsmccorebc.db}]
+  set link_library [concat  $link_library [list $target_library]]
+  set link_library [concat  $link_library [list \
+      {../../../libs/synopsys/tsmcio_100a/tsmciobc.db}]]
+  # Add the other your own best-process libraries below
+}
+#
+# DesignWare Cache
+#
+set cache_read {/tmp}
+set cache_write {/tmp}
+#
+# Log file Variables
+#
+set command_log_file {./dc_shell_command.log}
+if { $dc_shell_mode == "tcl"} {
+  set sh_command_log_file {./dc_shell_command.log}
+}
+set view_command_log_file {./view_command.log}
+set reoptimize_design_changed_list_file_name {inplace_chg.lst}
+#
+# Site Specific Variables 
+#
+set plot_command {lpr -Plj}
+set text_print_command {lpr -Plj}
+set text_edit_command {vi}
+#
+# hdl variables 
+#
+set design_library_file {.synopsys_vss.setup} 
+set hdlin_auto_save_templates {FALSE}
+#redefine by vhdl user
+define_design_lib {work} -path {work}
+#
+# vhdlio variables 
+#
+# set vhdlout_use_packages [list IEEE.std_logic_1164 GATE_LIB.all WORK.all]
+#
+# Design Analyzer variables
+#
+set default_schematic_options {-size infinite}
+set view_read_file_suffix [list db lib  edn sdb edf edif eqn fnc lsi mif NET pla st tdl v vhd vhdl xnf]
+set view_write_file_suffix [list db lib sdb do edf edif eqn fnc lsi NET neted pla st tdl v vhd vhdl xnf]
+#
+# Synopsys to EDIF interface 
+#
+# set edifin_ground_name {VSS} <- obsolete
+set edifin_ground_net_name {VSS}
+set edifin_ground_net_property_name {global}
+set edifin_ground_net_property_value {VSS}
+# set edifin_ground_pin_name {VSS} <- obsolete
+set edifin_ground_port_name {VSS}
+# set edifin_netlist_only {true} <- obsolete
+# set edifin_power_name {VDD} <- obsolete
+set edifin_power_net_name {VDD}
+set edifin_power_net_property_name {global}
+set edifin_power_net_property_value {VDD}
+# set edifin_power_pin_name {VDD} <- obsolete
+set edifin_power_port_name {VDD}
+# set edifin_power_and_ground_representation {net} <- obsolete
+set edifout_design_name {Synopsys_edif}
+set edifout_designs_library_name {DESIGN_LIB}
+set edifout_ground_name {VSS}
+set edifout_ground_net_name {VSS}
+set edifout_ground_net_property_name {global}
+set edifout_ground_net_property_value {VSS}
+set edifout_ground_pin_name {VSS}
+set edifout_ground_port_name {VSS}
+set edifout_power_name {VDD}
+set edifout_power_net_name {VDD}
+set edifout_power_net_property_name {global}
+set edifout_power_net_property_value {VDD}
+set edifout_power_pin_name {VDD}
+set edifout_power_port_name {VDD}
+set edifout_power_and_ground_representation {net}
+set edifout_no_array {true}
+set edifout_netlist_only {true}
+set write_name_nets_same_as_ports {false}
+set edifout_external {false}
+set edifout_target_system {cadence}
+set edifout_instantiate_ports {true}
+#
+# Bus Inference 
+#
+set bus_dimension_separator_style {][}
+set bus_extraction_style {%s[%d:%d]}
+set bus_inference_descending_sort {true}
+set bus_naming_style {%s[%d]}
+set bus_range_separator_style {:}
+#
+# Internal bus Inference
+#
+set hdlout_internal_busses {false}
+set bus_inference_style  {%s[%d]}
+#
+# Verilog Interface
+#
+set verilogout_higher_designs_first {true}
+set verilogout_no_tri {true}
+set verilogout_single_bit {false}
+# ALIASES 
+alias rt {report_timing -nets -input_pins -significant_digits 4 \
+-transition_time}
+alias r2o {rt -from [all_registers -clock_pins] -to}
+alias i2oe {rt -to [all_outputs] -path end -max_paths 100 -from}
+alias i2e {rt -path end -max_paths 100 -from}
+alias i2r {rt -to [all_registers -data_pins] -from}
+alias rn {report_net -verbose -connections}
+alias rp {report_port -verbose}
+alias rc {report_cell -connections -verbose}
+alias rv {report_constraint -all_violators -max_delay -max_capacitance \
+-max_transition -significant_digits 4}
+alias ac {all_connected}
+alias maxi {rt -path end -nosplit -max_paths 1000 -from}
+alias maxir {rt -path end -nosplit -max_paths 1000 -delay max_rise -from}
+alias maxif {rt -path end -nosplit -max_paths 1000 -delay max_fall -from}
+alias maxr {rt -delay max_rise -to}
+alias maxf {rt -delay max_fall -to}

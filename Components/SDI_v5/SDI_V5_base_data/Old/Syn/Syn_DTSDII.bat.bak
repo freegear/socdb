@@ -1,0 +1,347 @@
+dc_shell <<! | tee ./Log/DTSDI003_Syn.log
+
+sh mkdir WORK
+define_design_lib WORK -path "./WORK"
+
+/************ Reset_Controller ************************************************************/
+analyze -f verilog  Reset_Controller.v
+elaborate Reset_Controller
+current_design Reset_Controller
+link
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/Reset_Controller_Area.txt
+report_power > ./POWER/Reset_Controller_Power.txt
+write -f db -hier -out ./DB/Reset_Controller.TSMC_018.db
+
+
+/*********** System_Decoder ************************************************************/
+analyze -f verilog  System_Decoder.v
+elaborate System_Decoder
+current_design System_Decoder
+link
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/System_Decoder_Area.G.018.txt
+report_power > ./POWER/System_Decoder_Power.G.018.txt
+write -f db -hier -out ./DB/System_Decoder.TSMC_018.db
+
+/************ APBif_DTS ************************************************************/
+analyze -f verilog APBif_DTS.v
+elaborate APBif_DTS
+current_design APBif_DTS
+link
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/APBif_DTS_Area.txt
+report_power > ./POWER/APBif_DTS_Power.txt
+write -f db -hier -out ./DB/APBif_DTS.TSMC_018.db
+
+
+/*********** APB_PowerManager ************************************************************/
+analyze -f verilog  APB_PowerManager.v
+elaborate APB_PowerManager
+current_design APB_PowerManager
+
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+report_area > ./AREA/APB_PowerManager_Area.G.018.txt
+report_power > ./POWER/APB_PowerManager_Power.G.018.txt
+write -f db -hier -out ./DB/APB_PowerManager.TSMC_018.db
+
+/***********A/D-Converter Controller ************************************************************/
+analyze -f verilog  APB_ADC_Ctrl.v
+elaborate APB_ADC_Ctrl
+current_design APB_ADC_Ctrl
+
+compile -map_effort medium
+report_area > ./AREA/APB_ADC_Ctrl.AREA.G.018.txt
+report_power > ./POWER/APB_ADC_Ctrl.POWER.G.018.txt
+write -f db -hier -out ./DB/APB_ADC_Ctrl.TSMC_018.db
+
+/***********Timers0 ************************************************************/
+define_design_lib WORK -path "./WORK"
+analyze -f verilog  APB_Timers_EAX0.v
+elaborate APB_Timers_EAX0
+current_design APB_Timers_EAX0
+
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+report_area > ./AREA/APB_Timers_EAX0.AREA.G.018.txt
+report_power > ./POWER/APB_Timers_EAX0.POWER.G.018.txt
+write -f db -hier -out ./DB/APB_Timers_EAX0.TSMC_018.db
+
+/***********Timers1 ************************************************************/      
+define_design_lib WORK -path "./WORK"   
+analyze -f verilog  APB_Timers_EAX1.v                                                          
+elaborate APB_Timers_EAX1                                                                      
+current_design APB_Timers_EAX1                                                                 
+                                                                                               
+compile -map_effort medium                                                                     
+ungroup -all                                                                                   
+compile -map_effort medium                                                                     
+report_area > ./AREA/APB_Timers_EAX1.AREA.G.018.txt                                            
+report_power > ./POWER/APB_Timers_EAX1.POWER.G.018.txt                                         
+write -f db -hier -out ./DB/APB_Timers_EAX1.TSMC_018.db                                        
+
+/***********Timers2 ************************************************************/      
+define_design_lib WORK -path "./WORK"   
+analyze -f verilog  APB_Timers_EAX2.v                                                          
+elaborate APB_Timers_EAX2                                                                      
+current_design APB_Timers_EAX2                                                                 
+                                                                                               
+compile -map_effort medium                                                                     
+ungroup -all                                                                                   
+compile -map_effort medium                                                                     
+report_area > ./AREA/APB_Timers_EAX2.AREA.G.018.txt                                            
+report_power > ./POWER/APB_Timers_EAX2.POWER.G.018.txt                                         
+write -f db -hier -out ./DB/APB_Timers_EAX2.TSMC_018.db                                        
+
+/***********Timers3 ************************************************************/      
+define_design_lib WORK -path "./WORK"   
+analyze -f verilog  APB_Timers_EAX3.v                                                          
+elaborate APB_Timers_EAX3                                                                      
+current_design APB_Timers_EAX3                                                                 
+                                                                                               
+compile -map_effort medium                                                                     
+ungroup -all                                                                                   
+compile -map_effort medium                                                                     
+report_area > ./AREA/APB_Timers_EAX3.AREA.G.018.txt                                            
+report_power > ./POWER/APB_Timers_EAX3.POWER.G.018.txt                                         
+write -f db -hier -out ./DB/APB_Timers_EAX3.TSMC_018.db                                        
+
+
+/***********Timers4 ************************************************************/      
+define_design_lib WORK -path "./WORK"   
+analyze -f verilog  APB_Timers_EAX4.v                                                          
+elaborate APB_Timers_EAX4                                                                      
+current_design APB_Timers_EAX4                                                                 
+                                                                                               
+compile -map_effort medium                                                                     
+ungroup -all                                                                                   
+compile -map_effort medium                                                                     
+report_area > ./AREA/APB_Timers_EAX4.AREA.G.018.txt                                            
+report_power > ./POWER/APB_Timers_EAX4.POWER.G.018.txt                                         
+write -f db -hier -out ./DB/APB_Timers_EAX4.TSMC_018.db                                        
+
+/***********Timers5 ************************************************************/      
+define_design_lib WORK -path "./WORK"   
+analyze -f verilog  APB_Timers_EAX5.v                                                          
+elaborate APB_Timers_EAX5                                                                      
+current_design APB_Timers_EAX5                                                                 
+                                                                                               
+compile -map_effort medium                                                                     
+ungroup -all                                                                                   
+compile -map_effort medium                                                                     
+report_area > ./AREA/APB_Timers_EAX5.AREA.G.018.txt                                            
+report_power > ./POWER/APB_Timers_EAX5.POWER.G.018.txt                                         
+write -f db -hier -out ./DB/APB_Timers_EAX5.TSMC_018.db                                        
+
+/***********Timers6 ************************************************************/      
+define_design_lib WORK -path "./WORK"   
+analyze -f verilog  APB_Timers_EAX6.v                                                          
+elaborate APB_Timers_EAX6                                                                      
+current_design APB_Timers_EAX6                                                                 
+                                                                                               
+compile -map_effort medium                                                                     
+ungroup -all                                                                                   
+compile -map_effort medium                                                                     
+report_area > ./AREA/APB_Timers_EAX6.AREA.G.018.txt                                            
+report_power > ./POWER/APB_Timers_EAX6.POWER.G.018.txt                                         
+write -f db -hier -out ./DB/APB_Timers_EAX6.TSMC_018.db                                        
+
+/***********Timers7 ************************************************************/      
+define_design_lib WORK -path "./WORK"   
+analyze -f verilog  APB_Timers_EAX7.v                                                          
+elaborate APB_Timers_EAX7                                                                      
+current_design APB_Timers_EAX7                                                                 
+                                                                                               
+compile -map_effort medium                                                                     
+ungroup -all                                                                                   
+compile -map_effort medium                                                                     
+report_area > ./AREA/APB_Timers_EAX7.AREA.G.018.txt                                            
+report_power > ./POWER/APB_Timers_EAX7.POWER.G.018.txt                                         
+write -f db -hier -out ./DB/APB_Timers_EAX7.TSMC_018.db                                        
+
+/***********APB_Timers_PWM0_0 ************************************************************/      
+define_design_lib WORK -path "./WORK"   
+analyze -f verilog  APB_Timers_PWM0_0.v                                                          
+elaborate APB_Timers_PWM0_0                                                                      
+current_design APB_Timers_PWM0_0                                                                 
+                                                                                               
+compile -map_effort medium                                                                     
+ungroup -all                                                                                   
+compile -map_effort medium                                                                     
+report_area > ./AREA/APB_Timers_PWM0_0.AREA.G.018.txt                                            
+report_power > ./POWER/APB_Timers_PWM0_0.POWER.G.018.txt                                         
+write -f db -hier -out ./DB/APB_Timers_PWM0_0.TSMC_018.db                       
+
+/************ APB_WDT ************************************************************/
+define_design_lib WORK -path "./WORK"   
+analyze -f verilog  APB_WDT.v                                                          
+elaborate APB_WDT                                                                      
+current_design APB_WDT                                                                 
+                                                                                               
+compile -map_effort medium                                                                     
+ungroup -all                                                                                   
+compile -map_effort medium                                                                     
+report_area > ./AREA/APB_WDT.AREA.G.018.txt                                            
+report_power > ./POWER/APB_WDT.POWER.G.018.txt                                         
+write -f db -hier -out ./DB/APB_WDT.TSMC_018.db             
+
+/************ RemapPause ************************************************************/
+read -f verilog /user/jys/Twin_ARM/ARM_ADK_REL1v1/design/global_ADK/verilog/RevAnd.v
+read -f verilog RemapPause.v
+elaborate RemapPause
+current_design RemapPause
+link
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/RemapPause_Area.txt
+report_power > ./POWER/RemapPause_Power.txt
+write -f db -hier -out ./DB/RemapPause.TSMC_018.db
+
+/************ Arbiter3 ************************************************************/
+analyze -f verilog  ArbSchm3.v
+analyze -f verilog  Arbiter3.v
+elaborate Arbiter3
+current_design Arbiter3
+link
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/Arbiter3_Area.txt
+report_power > ./POWER/Arbiter3_Power.txt
+write -f db -hier -out ./DB/Arbiter3.TSMC_018.db
+
+/************ DefaultSlave ************************************************************/
+analyze -f verilog  DefaultSlave.v
+elaborate DefaultSlave
+current_design DefaultSlave
+link
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/DefaultSlave_Area.txt
+report_power > ./POWER/DefaultSlave_Power.txt
+write -f db -hier -out ./DB/DefaultSlave.TSMC_018.db
+
+/************ MuxM2S ************************************************************/
+analyze -f verilog  MuxM2S.v
+elaborate MuxM2S
+current_design MuxM2S
+link
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/MuxM2S_Area.txt
+report_power > ./POWER/MuxM2S_Power.txt
+write -f db -hier -out ./DB/MuxM2S.TSMC_018.db
+
+
+/************ MuxS2M ************************************************************/
+analyze -f verilog  MuxS2M.v
+elaborate MuxS2M
+current_design MuxS2M
+link
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/MuxS2M_Area.txt
+report_power > ./POWER/MuxS2M_Power.txt
+write -f db -hier -out ./DB/MuxS2M.TSMC_018.db
+
+
+
+/************ TIC ************************************************************/
+analyze -f verilog  TIC.v
+elaborate TIC
+current_design TIC
+link
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/TIC_Area.txt
+report_power > ./POWER/TIC_Power.txt
+write -f db -hier -out ./DB/TIC.TSMC_018.db
+
+
+/************ A7TWrap.v ************************************************************/
+analyze -f verilog /user/jys/Twin_ARM/ARM_ADK_REL1v1/design/global_ADK/verilog/ClockNand.v
+analyze -f verilog /user/jys/Twin_ARM/ARM_ADK_REL1v1/design/global_ADK/verilog/ClockInv.v
+analyze -f verilog /user/jys/Twin_ARM/ARM_ADK_REL1v1/design/global_ADK/verilog/LATS.v
+/* Not Synthesis */
+/*analyze -f verilog   A7TWrapCtrl.v
+analyze -f verilog   A7TWrapTest.v
+analyze -f verilog   A7WrapMaster.v
+analyze -f verilog   A7WrapSM.v
+analyze -f verilog   A7TWrap.v
+analyze -f verilog   A7TDMI.v */
+
+
+/************ Lite2AHB ************************************************************/
+analyze -f verilog Lite2AHB.v
+elaborate Lite2AHB
+current_design Lite2AHB
+link
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/Lite2AHB_Area.txt
+report_power > ./POWER/Lite2AHB_Power.txt
+write -f db -hier -out ./DB/Lite2AHB.TSMC_018.db
+
+
+
+
+/************ MuxP2B ************************************************************/
+analyze -f verilog MuxP2B.v
+elaborate MuxP2B
+current_design MuxP2B
+link
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/MuxP2B_Area.txt
+report_power > ./POWER/MuxP2B_Power.txt
+write -f db -hier -out ./DB/MuxP2B.TSMC_018.db
+
+/************ Timers ************************************************************/
+analyze -f verilog /user/jys/Twin_ARM/ARM_ADK_REL1v1/design/global_ADK/verilog/RevAnd.v
+analyze -f verilog TimersPackage.v
+/* Not Synthesis */
+analyze -f verilog TimersFrc.v
+analyze -f verilog Timers.v
+elaborate Timers
+current_design Timers
+link
+
+compile -map_effort medium
+ungroup -all
+compile -map_effort medium
+ungroup -all
+report_area > ./AREA/Timers_Area.txt
+report_power > ./POWER/Timers_Power.txt
+write -f db -hier -out ./DB/Timers.TSMC_018.db
+
+
+exit
+!
+

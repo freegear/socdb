@@ -1,0 +1,11 @@
+
+analyze -f verilog  ../../../global_ADK/verilog/Lite2AHB.v 
+analyze -f verilog EgMasterCore.v 
+analyze -f verilog EgMaster.v 
+
+elaborate EgMaster
+current_design EgMaster
+link
+
+write -f db -hier -out EgMaster.gtech.db
+

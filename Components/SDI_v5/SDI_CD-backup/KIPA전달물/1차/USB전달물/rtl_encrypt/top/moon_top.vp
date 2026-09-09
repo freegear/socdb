@@ -1,0 +1,312 @@
+//  ========================================================================
+//  This is confidential and proprietary software
+//  ------------------------------------------------------------------------
+//  Version and Release Control Information:
+//
+//  File Name            : moon_top.v
+//
+//  First release        : 2003. 05. 28.  by jeonghe
+//  Revision Information :
+//
+//  ========================================================================
+
+module moon_top (
+
+// Clock and reset
+  clk_main,        // Main clock
+  clk_usb,         // USB clock
+  clk_bus,         // USB line clock
+  rst_main,        // Main reset
+  rst_usb,         // USB reset
+  ext_utm,         // 1: use external UTM
+  dbus16,          // 1: 16bytes mode
+  big_endian,      // 1: big endian, 0: little endian
+  scan_test,       // 1: scan test mode
+  uclk_pre,        // Source of clk_bus
+  intr_usb,        // USB interrupt
+  intr_buffer,     // Buffer allocation request interrupt
+
+// AHB for internal register
+  hready_in,       // AHB ready in
+  hwrite,          // AHB write
+  htrans,          // AHB transfer type
+  hsize,           // AHB data size
+  haddr,           // AHB address
+  hwdata,          // AHB write data
+
+  hsel_usb,        // AHB select USB
+  hready_outusb,   // AHB ready out USB
+  hresp_usb,       // AHB response USB
+  hrdata_usb,      // AHB read data USB
+
+  hsel_dma,        // AHB select DMA
+  hready_outdma,   // AHB ready out DMA
+  hresp_dma,       // AHB response DMA
+  hrdata_dma,      // AHB read data DMA
+
+// AHB for DMA
+  hgrant_mdma,     // AHB grant
+  hmaster_mdma,    // AHB master
+  hresp_mdma,      // AHB response (retry/error/split support)
+  hready_mdma,     // AHB ready
+  hrdata_mdma,     // AHB data for read
+  hbusreq_mdma,    // AHB request
+  htrans_mdma,     // AHB Transfer Type
+  hburst_mdma,     // AHB Burst Type
+  hsize_mdma,      // AHB HSIZE : word or byte
+  hwrite_mdma,     // AHB Write control
+  haddr_mdma,      // AHB address
+  hwdata_mdma,     // AHB data for write
+  HLOCK_DMA,       // AHB lock
+  HPROT_DMA,       // AHB 
+
+// USB
+// For USB1.1
+  rxdp,            // RX data plus
+  rxdm,            // RX data minus
+  rxd,             // RX data
+  usbd_oe,         // USB data out enable
+  txdp,            // TX data plus
+  txdm,            // TX data minus
+
+// For USB2.0
+  rst_bus,         // USB bus reset
+  line_state,      // Line state
+  tx_valid,        // TX data valid
+  txvalid_h,       // TX valid high
+  tx_data,         // TX data
+  tx_ready,        // TX data ready
+  rx_active,       // RX data ready
+  rx_valid,        // RX valid
+  rxvalid_h,       // RX valid high
+  rx_error,        // RX error
+  rx_data,         // RX data
+  psuspend,        // 0: Suspend USB
+  xcvr_select,     // 0: High speed XCVR
+  term_select,     // 0: High speed termination
+  op_mode          // UTM operation mode
+
+);
+
+// Clock and reset
+input          clk_main;
+input          clk_usb;
+input          clk_bus;
+input          rst_main;
+input          rst_usb;
+input          ext_utm;
+input          dbus16;
+input          big_endian;
+input          scan_test;
+output         uclk_pre;
+output         intr_usb;
+output         intr_buffer;
+
+
+// AHB for internal register
+input          hready_in;
+input          hwrite;
+input   [1:0]  htrans;
+input   [1:0]  hsize;
+input  [23:0]  haddr;
+input  [31:0]  hwdata;
+
+input          hsel_usb;
+output         hready_outusb;
+output  [1:0]  hresp_usb;
+output [31:0]  hrdata_usb;
+
+input          hsel_dma;
+output         hready_outdma;
+output  [1:0]  hresp_dma;
+output [31:0]  hrdata_dma;
+
+// AHB for DMA
+input          hgrant_mdma;
+input   [2:0]  hmaster_mdma;
+input          hready_mdma;
+input   [1:0]  hresp_mdma;
+input  [31:0]  hrdata_mdma;
+output         hbusreq_mdma;
+output  [1:0]  htrans_mdma;
+output  [2:0]  hburst_mdma;
+output  [1:0]  hsize_mdma;
+output         hwrite_mdma;
+output [31:0]  haddr_mdma;
+output [31:0]  hwdata_mdma;
+output         HLOCK_DMA;
+output  [3:0]  HPROT_DMA;
+
+// USB
+input          rxdp;
+input          rxdm;
+input          rxd;
+output         usbd_oe;
+output         txdp;
+output         txdm;
+
+input   [1:0]  line_state;
+input          rx_active;
+input          rx_valid;
+input          rxvalid_h;
+input          rx_error;
+input  [15:0]  rx_data;
+input          tx_ready;
+output         rst_bus;
+output         tx_valid;
+output         txvalid_h;
+output [15:0]  tx_data;
+output         psuspend;
+output         xcvr_select;
+output         term_select;
+output  [1:0]  op_mode;
+
+`protected
+V3F7^SQd5DT^<n=`JT9F2T3\[RgDAh0^:7hp:e^9W3J9Gf3\W[>QECh?hUgSD7?b
+pZ5[c\Q:nNZkj5OBoI07PZ]Em\6RUfRlY[0^mfk@?^d?2R7]0;9UY3mU;8lK;C_Q
+ZOBK3kh:qh]:?S4pBcX1Z18cW79764mFOB1g8<=M@B6=J77K?T:qk5^d46X4U:<l
+i^Gc2K]Ln\[p=HF]IS?hb;IUOfBFA_hE]@pnSaUnClfD\^?O9e>nMBo`b;7GW@@<
+C>k02\?q[hLaU836eFfC_YTJ?>8kJ`jNoPAKo2n^cM\jkGXQqohHX^7b=\mGcBU;
+73][NZHKQ6mbjH42Uc?MVe9AJpi`fZE_nQcfT<O=Q^HBF[GJj?=NlfkJLM@[Y2@l
+Wlpo[mL[;7HO^hHd03UT82j0LLXbZ;8>P`5^8R^K3=69k1n3UdpEG94Tg8On_W8a
+kNiMA=]HOA^78aA^<B\`SAhhSVQq`V3B90XEHlFIla=8iOXAUMbJ9ZCHemk9D;5p
+c?dE?\J^cBQ@F<@>^2=2:>7fk>JOk^G^b2HgA>phcT_KcV_Zh>BMcS4Rkd[C:FFI
+D@_LOZJ0i3:oReqa`biAfgZ\]ge040c`\KIe>K\:V7YE=10h6OOqPDMBm028LClo
+?Wi_Hbc0k55F;:\PJ\<7E^G7LTWidcoD:G5V^K]K>0bqfFTPaOS1CmF8F2OBcWX?
+KjYVUAcDW>S>La4fWQoIqf<lS5BhUlnC]`9M9;ZQUMPQ4Nol0<G^\C1:lU5XTT>k
+BUE1mfnR=h\9qmjY5NQY7WjI<FbHEnO\Rl?H5RE=D16b[?aCHg>a0^QG0E:GGKQo
+`7TUpo`;HJ^GS@[QeWf2l0^IqMC[7C:?1X1k^oh1ibl9agG`8M7RH=15?HZGL1l9
+eY2nk[UL8\JIDU?lm_6GJH<R?phEn`8C@CYcPA2HbXTl\KW@Q<R[3B^5SJMKWmgF
+Cpf?CMEOGVAji1BGEFj14_;@S=E1g]DQ=16X72M[<BF`A8LUSPoOW?;[3MP3`J4@
+[8pYRfX;4HMNV0\5NT^DbhN7H3n=]nVHT^P<IXhEM\k9@bO@AVjafYZlaYPROm9>
+a2ipBW<na48kR[ZH:64`BN8n9X7d2lA9LnoQ@7gp7HO95m8I]2J5GKh65S7P`Dqg
+WC;19h<@SFD^IXp?elf^nYYaj:eIoMdg=b6B:q9BbEAS6=R9U:^23dGjUb[Rm0kH
+R57ePNf;<qacJWh=9D1_MK4M;SebB71M4kN?aRJMRP<h@gq?^J<3e?fQU>CMT1PE
+<Y=MU?GbgX@F`J][lq?I4HbkKnCcEli`iCdE^Bk<UARilG<ki;a>beiipbomES>V
+O@a7WZmhUaT@in2FPo93@K]`7\XKqnMd1DSb7foj5AGLg<nnM[lRnd^`;4ZmnSfL
+WREq=C9gI^WUC]W>NcKS2nDJ?4NRgTXX>1k?dE]TCojqiEJ`RFT>g0:UlI@4Jlmd
+TLhV@edm@R3WC7hkmm8<1T]Jb5_5aL4m:TDq_IU]KVCih^>\;?6_P^2B1`b:]X7P
+GYc;]S:d[BmRplm?1_a:<<i_dT_h9=UH1?n4O@[:A^Tjl^i8R9A9N[K:mjRg2>Sh
+ecXMp@Hk3YOV??P[9<EYJZ@8?S@S>_@`Q4e3@J=2=@D<o\18X4``H]0jk3TVpNDI
+=K_f[fXao[0TnVgILWWgPj9e]QKAC8AhKJM:;=JdnA2YCS=XC]c`;e3pleW7JRAe
+MBXD?kdWNo8IEmXecL]lScNahL4D0CZQ^B]ZXOA]acCFGaV@NQ]8nm=iPHpUL=:V
+eo;lQnDE`4f:_Z1io]:VIABj<[:^jN_B1]dqlR^:2N\B:TOEBanXVPo0=YoL0=^?
+;bFmG_]VW2aC27]lLH5adknfO=km<RCBCkUOndp=EaNC]<MHdKYe13<alGYMh@@7
+QUnj9[GSTQkYKROemm9ZoT00kRYU4P6kf>Fef1jL9p`l>RO`mK61G\E6A[W7DC9<
+\OmLIlhNT@jPLLL=]?DY7?[A>pC^]c0@3k=oW4j\TZ9EU37_6pQT;?7ldii5Y99W
+E[nJm;EFlJO>pB;I<jh9N\TN6UOZ4InJm@0MC`e]JD87>0S1eXV^20OidI4c^=Gj
+oTMfLDDC[E2`VQFdVZ]IqaOE22knBW`_`O^4hEL_HfhhUi=Yqj\GW7W7W@Y<ndeb
+J9_k3ja@4qWBFRUjePVL69\X:>iPgMBe^9`V[A^UaD2^chIhlJPXVBih7ql3Q2YM
+8Fhhhh4IUiiCdonFID38oWY@qN3EMT=4Jo4DI\gl<0=nPVQ8c6YN:a\C`kMPTpjA
+R@0=34fT]_o`I_\W>KCPipd_^[K@i3dAAaN05L>3NFhCZY\D<`MN`0:2q`l:]@H`
+P]PhW1K]jnT0I4\feB^ZkSgS\G6pWSaAW=9GW5CNMQ1U0EKI\UZa@WH::>ml`_b9
+pfZ9gL\Tcl0nEiBY]j041^_I1;L[LJjihf1q3CBcJ:AamR6Phd:K6DjlN4=TORdL
+5enR\Tj`BekL<f59Ej7>TKWhYNJBD^WRL7QWVmq9:WNmeHmjCC=HC1835`POlX2X
+KCRTUajU3p]]oV][lYQE0;FWU?WHBWYPlJHD=:kPbp]lLe9KPVQLX^mCah6o3R^@
+WGPlc:6enBDN>OaDE[^_qEXY>1\_TfJ_n\@\5KHOTY0EG_Y4ZBUgecjH?LcXp=bQ
+280na28ddfiBjd772@NJ;0403M2P[NDPfq]ZEbWde7i8[WGTOga^beGKR8LQf4<R
+h4U@>hq[mO9l:nmAQYkZKLYMc9Yd\_Q@b3S^iaD2MkDqR`gFJGbLioV<NJRWhQ;e
+Oloa0I67EbOIeX:Nf01qB@^dP41jVX?fk:;O3\3ILOWjh4f4[_SpR1i:E2B0nVDX
+S<GG1PQlRN^[N?S`p]2\o3JWmVhVhl[LK_V?efD@Di`RKD\=q4`8kII__;H4UUID
+_98HnRjRJh8>MqnWBOZlN0\2932kOOT6h:6oYKj>KBp_l4C0;BbZmOBEmMW7KiAR
+ZFDTR2_fUSq>NhDVTH0dd8EZQ0Hp=oD;Ae\^`UCL:29egheJn\Y]\SmPI1ABYELW
+b\cmPPM?I=qSW:=@:Le61OP6KB7Xdm4Q03BL@U:>_;<`QpeD<GWBj<ERGBenc=ch
+I3bk<A9K;N0fdgZN8jpWHgcAB]LUBBn1h\=_R:b;Ed[]6q:PE9ZRW;>OFc:3g4:M
+9_Z2Z>aMqEdg4?n26fcl`<?;`MRBcP@8qF=PTZR=:g4T0@8V\I07g:81AGVR:Z3`
+fV4qG9<=Vm>5KgT10;1QoQL?`JBL^<p4B>Yl_@;k<F6h`TPUe]_n6=U_`ZFb8YcX
+[IL?ikOha@bm]aqXQ[Pj>8O=Gl4kGF]\a_EB5:[E1pl[QeGLUj6okV7VZN3I^lFX
+0KkYc62VY`36opaToh5?omdg`5eN63VjdKRi1i6W]ST@kZLoBaSDEcN:pW=ARQ8H
+F?IVao2g>62d=U:Go<]7YdfNEMZ4iqK;=F`WTO\:GVIkTfVa0LefXlOQX<Bj>Vma
+Y=N4=p86W13V1[GH^hHL@3gOYPiP;>m575RKMX:7qagQj2Ln=nkN9Gj@gJVZd]1V
+fKELYf@c3=IT;pChQ=N0f7O95`eIG`nBmeMN5h@=6j^aa5TK]c<A\BRbXg2jQVeU
+B]QXPPed5q]`bGAQ738S>gLT^0Nk[BLSG7;3bDK=D@;\V\1Jop5iO[<ZNF2l_U>:
+X:gBF=_JkCG93iW5451g[Hq3;2<>`ZMOEUQ\C?BN9K_La\F4g0SeSQB[HSBX6;qN
+==f2laIHO9VMHCJLX]UL_R95[_RedZ:Ki?YIEUVq[nEi7IGL[S:27QHRnOEN:`n3
+XDH>UMC?n^3Kp8Qf4c;[9RL0;Q12NkeH<\fHQE9bMgi6_BkpOH@<:\Q32\9n?n<i
+93h\4jLWNOBW<<`YCXFWp>9EHGd7ijGoiDI\lWViDY]ke]Z:J86HO=g7;ceVZe4i
+Aqo4Re_]2PkZB<6_80BYK7jg]9ci[Lm@B9UR4U`d?YcJ6fp;BgO:Nng[nQgkINUA
+C6ChjG2F9TNgZ<N:=p>HMXeZf`ER5:_dA6=koooEU1FYHM2adQEJ;;CaBVpKR^Le
+3n[iHh;mBO0D_KR`7Sb\aHEPCBX0DHi3loiW`q]]gJc2`G;B7U_0[SMI5Em6EZWK
+FoAOe=0efJJXmqDm<0@5X^=GZojD5YGboFcQ<AqDTFf7n]AnF4Lcn^dUnO^2`[T4
+]5^3aJ<a=dljKNlIJpiGf^mnd8C;MjC4B>96R8:b9:Enm0;[XHGbB2CJ[m1?K=l9
+qE6@lOU43=aP^_0c8D2LoKlBWcn2Y3LXahWnfXRfBp@BHL?6R6]<?Zk4:;M;^_eU
+4N4<_BXneW`VW_^5]@8LLVhYp]ghggWhoTonj<M`QY3NMe<9ndL]B_:8IIl2VMHj
+d@flSb9_TqoI@Pe[ElH8cmUEZg<egho4]\ZW7He?aOjH>Sm@PZga1qWXMOIYUHQC
+X`Yb=4b<`UC_lT<f7oVDK3I]TDE7k7NHEf22N4pHWSRFKXFThh?3hEJR[4:gT1MZ
+HafOb?B[9`CL^g;C;QpSZ8Y\`6@L^iH\<^1bS=?bKaZc[[MW_@CRJ5jZN<l>Ml:b
+dAIA]HV5KGq`6fgRSf?IadhGHl]]`Wl=lYX8HeI3Ul2:K@NV3@Gp3mkMkVc:5`S\
+FHX`;F]`_9c@NLfAFMn4Y5?hS\mqL[?RQWEiN@\Vc\CAB@4f1d_Nk<nL^jhfCh`e
+T53pk:diK:diE@OgLKc\0f`?2>VbE;mRP;14mAe^\53qgW7H1flPZGQnZ7<V6JPE
+<8mbR4MFgM1>f0OgPK7dU6q7]ZhGl31_S3eA@::BcQMG`N>jN7I^BGAJ]m7^lFgF
+jp?n]<HDbf<KLhkD?ePD2XZ:]2:Sm2mH0e1:K<pb5DABh9g\VEPe98Me4eM@ZSHl
+[1hALnoQ\iRQIEWqiDg[dXTWBlTENXjNSlohFNd`c`K\ZhEW`>96h^DPm_5d6JqH
+];;n8g^m<3PS3M>>W;oH55:a[3@@UDVPL9<N?U9j_<WdSFcqkD5B2jBR>^^5a?Cl
+3\BXDY^?k`f8G?9?P0`=MUG:P`QYkb2]q6<Xeaahok:R^@oHMkIM1;TXEcYQ^CfZ
+>d8VXDfgVX@aHpGjmKPb?pgAk`BC\;c<:;P8V_j]YE>?Z\4V^pkgiTJEdG6^5iE]
+;37bmbAeY05=CVAad^ol1o_I6A232hEiCloBb7<_::al8NJ3^RlbqJnHDA?3AOlK
+\J8=jOk\oK:USEV]Ej<?[W_29_TbUFY;jPld87o0728XM_]dnLWXa>PT8B=\q6gH
+]3cTc=n=8X4WA?hMI]H2a<AYN>1CQ9ehO3[kg:cGI5eHO_7dhEm>>KAcV\aMf2YV
+VPTSRi6q08U?BD\3nJ==NmaoWg]O3k:0jnWiHEOCc0FOE^=mb1`M`kK_cL`>j3X_
+kF7Noa]K]?32qJ\VW_UjLgLmTaNGBXOJcc]4oXC[2VQQ66;@O:Z5RgbP571ph]B=
+BW6]bdC_F_c>@3ZmgDQLd8G@E^a6WiSXFKG^>;4c\`Qa25HP87G0>EIRH840L4qM
+nU7i>]@h]_Hd;TbgJ73G;Im2eWQe\4cDEYZ_AVICm1[L<dG[0CbR<lnVeQ;dN\[5
+EbgShYp:j\aSgYP6K:XaA;7c1j?7Pojn3=OlNP]HZLj\=7S<m2Y_PGh3mfV:49_G
+5XTOYG8hTUgC1f0F5p5dRbB1<G`bT\ZP83e631K;qUIfTk3jVBkk4CJ9ah7PLeIJ
+:4R;[SPLp6lA_:\6L8;We@TKVRFD0V8QaQikCmG18Hj@Yp1JZKo[C`[cXg[Fl__O
+H0K6b5f<fkM15R6aHDqd`ZEO_dVJhOWI;j<nc3J=N8D9Kf1fRE`nN7KgI6JW2p\[
+]<?B7^Bi9n`hBT>[ml0;FIPO<5=B4>hUDo[hFmdEJkD@=]3@9XP_?F7@NY]jcMQJ
+M0Q_bp9T^loQ_U1SD8m25;VgfRaF^_b2e8HOdo@`]n^g9q89O<elbcFLhnm5fXlV
+bmdGcMkbjk1WdeeX^gm>a?Z`U_poF9>BCm649Q=;X10j8ekc4PNW8eGfPUD4<W5q
+SiB\;X[g0lOO9UEFEQb`hDe5cUFh^MKj]]kj79in\6fO[oEhg[CdN7qaUajk;>1G
+O8fMQWmF]JNbG;B[RI7fGlHVRgnBe_pd8D1X`jbabHn<WkMi_\neVSJAV[KX;Tp4
+b4iJE:9FjKKNKcQY86hdaJfS[OlIk;qANmAga\MeTGLimEoh1[hY>l`N0EFqJ4En
+L9:P9O>3bjGWRk=;@bK\fM03p;=7i9aH29;?Y2]7aWS4S_A0JDk;7o]hpLi=[aoE
+ida1Nk[Uj7Qb\n`SZTc619^3lM4=]n_7d9Fc3G_qYh6Z32^gNWEJEM_bW7l`>fBV
+U8QEePhYTPDZ\5G>QN4cB9@k@@7??FVZT<gHqFOV58@T>haV]`U?@TKB718Z\7>I
+EXVOTY7pA;cRe9SN37I_Z;N5DDO6kPVO:8;XeE_FWKTPqgRiI<><R_\bMVQDC;o:
+7\XflHh2J_gSYhAGa1@4DIJp9mP0Ccg8S?\3d`Aj7QQZF3d4Rlb4WUa3GGaQhC1b
+p_RMg=`ZSJi3>YGDMLYM84\\jbGMRV_cj@m=p9Wc?DePFm^lh2TT\C_h<Jb[VVDL
+SK\JKN`NBaVq0m]c4Im4PZ0e8dW7E8A=po8A5Ibf4iY=RF>TLR@Q_;oVOh?bUEea
+]9]QnIapB2]Y=i1C3ZIiiU>`>=^UkLSkXa5]XQ[0Nf_e57jMS\Q9q4H<iDMIIaOb
+AfGdnLEc=UZP:ST:KMY9RaHFcdDq]AeP9eCZTe[\jGZnX^HM6]]3jY=i25j^RT=G
+CkpSmWlj8@>5XEoV_7]4?6cBMiY>hgLi014Ha2pXcneSglc8LmRMFeACa]Bg`L:I
+8I5fJMM=A:ZWIqie<gojiPQfja5XU83o^CL1;NL8kC]\[VMXH0PP?EVlp`lW\EDj
+JEbY<f1UmTT`0T]ejb?MPJ^;o2g3qVX`gj:0]J\ikM1Q>OhT9kb]=<WdcoladZb_
+f`^p48JkogoL:1n7bOi]mmXJNicKWTfE0`?ic^k08G3qbZ_>^Y4OSH6X=QZHi?1L
+`\NS:Cn2YDpDKPIWP<Y]KFH2omDGLP\T7XSlDZhgj505bWbWT?mm;Zmplln6XLQX
+aN3ISmC4225X5SJ0ic_gh7k`Ph:l_g1<ALUb@oSpl45iEPAc^55O9Lg?>dPeN8m\
+9XUCb1JmRm<=24Cej1p[?[^h<j:S7_Zikoc6IVXme405C;7PWQS1D53\Z5ga0oTf
+E5hN3NmK`MZNObZK\iDqR1O_hW6mfi7OM:WRHg=[1O<9o?c?7?Q\C[UklY?]U1?[
+@3Ua]X2U0YB9\RXQ5Wk>qa=kVOi^VZk`F?35Z7@k6_4H>N3k^JFaYNa4k8dDCoXI
+Vh\XKbP[?ggRof8AS8>f4pc9E@AI:@B0F:_<k?9W=beETD67HZ;FlP];>Mnf\HN8
+@AIZ<Bj1:H2>A9\IXcfnA0pGZ;^8YH0UVY1d2g?7FDb?3F6?G@6FHP:mGVU6jK75
+kNqk:chYMniD0_lDlH1Z1TJGEQN7\jANB^aT<f>Vam<>@:Jq:J;DVAD_Nol<F7Wg
+IW]f]a4da\jP`B_jTZ6gZL6Y=9\Jp]YGg5DcTa2Kc]]=C5NC15WODWJ?J1Bh8QMU
+oAaN8kPM]pdJAAfjFKK7KMVV[[h_YJKY^DC8Lk__1?fKMoENh`ao@8qgaXbQMb>Q
+;nQL8]`F[<5X9dKMi25RhL^V0PKMGip\IQTB40hl8^kJ;`JCObhb5^eOPKaDKglf
+GG0^CeDlTqWIPRM\\Ge@>NTbF?Z1M\\SP__?Jc9VH<]NLg3P0QflDf7]Zcec353>
+5AE:9pR;h5AanG5SeNSgnSa2e>Uc@AGE:SZ=IW@@4017RqhY@9DB3RVQf3Co^D2A
+kZXXdd6kKMCPSD9L_BX]34:2po7]ObJ>h[ajGY9GAS5QiMdh_MgWPD?fLG\1Hb80
+7hO;I=1`qC3c]MF^;3iP@5[n6N9SMd4]A8kac:CSH59Tfdo9C;PQ1SOhpSaSZAXF
+?_8XhO=gWj;bU1I2=Vd\AOX0]W2e@`YNoUSoRR@hphMHn<R8mV7MY^@34Ol1c;f=
+hXE:?T]2BQ8YMPCnMa4ef\hPp[`2W3eL\=KBI9HkT[LVLKLXU:N_`79MhS:1gSNC
+q19nm5:RcQ41]n@9A<XcRg9h7IDE8A:N<o3@nFYVdXlGiV^fegO0Xk@0hGh?AH5D
+pXd1;d0iFaW2gTlf[V7f8=XVkL;I9>]N;RS[6ak0U`S7Oqojm`D^9nR5MD4bn9]A
+@h`FTXn@iENN`[bbQ^gCjE8Qb]XJfp7C@0PHi^TRWdBn>Y\YTG=2`MgR[`m\M1mD
+PEliH:Cn?blLWMK:F=6T0SOJ]Xi^[3qW`]^dImjZHai^Qi7Q=5J[PLF@G91eI1NE
+RSg<_3H2^^<iC\?4KlfgJX1A<SN7PJ7pl:kYeiV]NCW1X^0:62SA[:85OPBogZ4p
+V^FSa^J?^5L?2h<8F><R5<gDY8]>Vi[hkFRH8@3=;Hl9B]\b=2G8Bnf=0RjH5833
+p97fU4W8A6fL^d;AQQfJ\g[W_3R9mdNe?k`IaCZ^Efec`3K\^d?77;=T_mG\9`YS
+CpmXXIB;QkQQFTKEAlA^K_[7?W@@LNiHbd=2F;E<jndQ=<00=p1WRYg4khFiTA]`
+Re0>m@@6V<@1285HABe:aW;PAi=o^DUjMqJC\Bfi_M=g<IF=`e1aKBZH0\A2X:k[
+9jR0@J87ebP9G>jVPp>RVX6ki0eBmcZF[^m>gH6@^P[ifjM7YnR6Jo9j\ZG:6j^A
+Ip=eO2M``MIR7hlda=]PJj:a@?l<hOnRh2NE?=V0ep\gA42M[PLJj]ijDgFJJd>W
+SLnOH4BiO3ZI;=lQeFqH9RDMeMTG=i7mBEGaD0fYi9[D4Z5eKL]H_2_APFO]e^pQ
+CQKd<:Y^YdnPRW44AL?XC@XYQF5@N7CP;JnRh6@ZM<M:>S0h=oH@4h<Jl2lc2HIq
+_G6:MJ>48]l]ZD`1KeERJN1RN3P3aST_=62J3Y?fpl?oV\Y:c1OW[db<gDM99D:J
+McjYhB9D5T<nN`R<K7oq0a9hFa5<SSaL549F]kFLU3fZD[iYH`EbB1BgP;faqT1=
+B]F_pC;h[AlG\k1:kBd:aegVo3VI3;ZCmH\UY?X2p3TIKY>`NhPoCDc=l;UR?P0B
+K\8?DPcNK1Q9D0hjRiSPb3kX$
+`endprotected
+
+endmodule

@@ -1,0 +1,33 @@
+/********************************************************************/
+/* This confidential and proprietary software may be used only as   */
+/* authorised by a licensing agreement from ARM Limited             */
+/*   (C) COPYRIGHT 2001 ARM Limited                                 */
+/*       ALL RIGHTS RESERVED                                        */
+/* The entire notice above must be reproduced on all authorised     */
+/* copies and copies may only be made to the extent permitted       */
+/* by a licensing agreement from ARM Limited.                       */
+/*                                                                  */
+/********************************************************************/
+/* Version and Release Control Information:                         */
+/*                                                                  */
+/* File Name           : Watchdog_pre_sdf.scr,v */	    
+/* File Revision       : 1.2 */			    
+/*                                                                  */
+/* Release Information : ADK_REL1v1 */			    
+/*                                                                  */
+/********************************************************************/
+/* Purpose             : Synthesis constraints for the Watchdog     */
+/*                       to ensure that SDF describes clock and     */  
+/*                       reset nets as ideal                        */
+/********************************************************************/
+
+set_resistance 0 find(net, PCLK)
+set_resistance 0 find(net, WDOGCLK)
+set_resistance 0 find(net, PRESETn)
+set_resistance 0 find(net, WDOGRESn)
+
+set_load 0 PCLK
+set_load 0 WDOGCLK
+set_load 0 PRESETn
+set_load 0 WDOGRESn
+

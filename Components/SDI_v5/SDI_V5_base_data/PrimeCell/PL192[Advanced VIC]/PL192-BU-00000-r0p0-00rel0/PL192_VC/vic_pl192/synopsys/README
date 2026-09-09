@@ -1,0 +1,133 @@
+-- --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2002 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- -----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : README.rca
+-- File Revision          : 1.6
+--
+-- Release Information    : PrimeCell(TM)-PL192-r0p0-00rel0
+--
+-- -----------------------------------------------------------------------------
+-- Purpose : 
+--           Synopsys synthesis README file 
+--
+-- --=========================================================================--
+
+This directory contains the following sub-directories:
+
+ 1. work           - contains the intermediate files produced by the 
+                     Synopsys 'analyze' command.
+ 2. db             - contains the synthesised blocks in Synopsys .db
+                     format.
+ 3. log            - contains log files of the commands run during 
+                     synthesis for each block.
+ 4. scripts        - contains Synopsys scripts which are specific to 
+                     the VIC design.
+ 5. report         - contains reports written out by Synopsys. 
+
+Before start of synthesis scripts may require user modification.
+
+1. The setup script, 'setup.scr' in the 
+   $GLOBAL/synopsys_shared/scr_common directory may need modifying for
+     - the cell library location 
+     - location of the Synopsys read and write cache
+     - Synopsys version specific variable settings 
+
+   Refer to comments in the 'setup.scr' script file for other
+   parameters that might need to be modified.
+
+2. The global script, 'global.scr' in the
+   $GLOBAL/synopsys_shared/scr_common directory may need modifying for
+     - max_transition and max_area settings 
+
+3. The timing parameters for the AMBA APB interface are defined by
+   'apb_params.scr' and the constraints set in 'apb_slave.scr' in 
+   $GLOBAL/synopsys_shared/scr_common 
+
+4. The timing parameters for the non-AMBA signals are defined in the
+   'Vic.scr' file located in the ./scripts directory. 
+   These may require modification based on the target chip into which 
+   the VIC is being integrated.
+
+5. The master compile script - 'Vic.cmd' - is present in the ./scripts
+   directory. 
+
+6. The scan-insertion script - 'Vic_scan.cmd' - is present in the 
+   ./scripts directory. 
+
+===============================================================================
+NOTE :
+======
+1. If daisy chaining the VICs, VIC0 blocking mode configuration (without the
+   VICIRQACKOUT connection) is highly recommended.
+
+2. If the daisy chained VICs have to be used in a Daisy Chain blocking mode
+   (with the VICIRQACKOUT connected) then DC-Ultra optimization will be
+   require for synthesis. This is particularly the case when in 166Mhz
+   operation and using a flow 0.18um process.
+===============================================================================
+
+Synthesis Invocation 
+====================
+The specific synthesis run is controlled by the following variables:
+
+TEST_METH
+---------
+The scan methodology adopted during synthesis is defined by
+the 'TEST_METH' variable.
+It can take the following three values
+   - noscan     - creates a netlist without scan structures 
+   - scanready  - creates a netlist with scan F/Fs but
+                  without scan routing. 
+   - scaninsert - creates a fully routed scan netlist.
+
+eg : setenv TEST_METH noscan
+     setenv TEST_METH scanready
+     setenv TEST_METH scaninsert
+
+HDL_SOURCE
+----------
+The source code type is defined by the 'HDL_SOURCE' variable.
+It can take the following two values
+    - vhdl      [VHDL RTL]
+    - verilog   [Verilog RTL]
+
+eg : setenv HDL_SOURCE vhdl
+     setenv HDL_SOURCE verilog
+
+HDL_NETL
+--------
+The netlist type is defined by the 'HDL_NETL' variable.
+It can take the following two values
+    - vhdl      [VHDL netlist]
+    - verilog   [Verilog netlist]
+
+eg : setenv HDL_NETL vhdl
+     setenv HDL_NETL verilog
+
+LIB_SYNOP
+---------
+This location of the synopsys .db files is defined by the 
+'LIB_SYNOP' variable.
+setenv LIB_SYNOP /h/arm/global/AVANT/cb18/v1.0/synopsys/cb18os120/1999.05/models 
+
+BATCH_CMD
+---------
+The command to queue jobs on a server is defined by the 'BATCH_CMD'
+variable.
+
+eg:
+setenv BATCH_CMD 'lbrun -b -h <hostname>'
+
+dc_shell < scripts/Vic.cmd >
+    log/Vic_$(TEST_METH)_$(HDL_SOURCE)_$(HDL_NETL)_run.log'
+
+/******************************* End of README ********************************/

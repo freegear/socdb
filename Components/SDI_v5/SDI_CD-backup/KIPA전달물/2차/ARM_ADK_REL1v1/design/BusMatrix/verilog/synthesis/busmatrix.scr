@@ -1,0 +1,15 @@
+
+analyze -f verilog MatrixDecode.v
+analyze -f verilog InputStage.v
+analyze -f verilog OutputArb.v
+analyze -f verilog OutputStage.v
+analyze -f verilog BusMatrix.v
+
+
+
+elaborate BusMatrix
+current_design BusMatrix
+link
+
+write -f db -hier -out BusMatrix.gtech.db
+

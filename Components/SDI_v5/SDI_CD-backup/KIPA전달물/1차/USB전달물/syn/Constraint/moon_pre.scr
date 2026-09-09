@@ -1,0 +1,71 @@
+##
+## MOON pre_synthesis for RTL budget
+##
+
+## source synopsys_setup
+source .synopsys_dc.setup
+
+## Read RTL
+source Constraint/read_rtl.scr
+elaborate moon_top -arch "verilog" -lib WORK
+
+current_design moon_top
+set hdlin_infer_multibit default_all
+set_multibit_options -minimum_width 2
+set_operating_conditions -library std110 -max V230WTP1250
+check_design > Report/moon_top.check_design
+
+uniquify
+write -format db -hier moon_top -output db/moon_top.Uniq.db
+
+## GENERAL Constraints
+set_fix_multiple_port_nets -all -buffer_constants
+set auto_wire_load_selection true
+set_max_fanout 16 $current_design
+
+## Default constraints
+# Clock define
+############################################################################
+# clk_main >>>> freq.: 100MHz 
+############################################################################
+create_clock -n clk_main -p 10 -w {0 5} [find port clk_main]
+
+############################################################################
+# clk_usb >>>> freq.: 60 MHz 
+############################################################################
+create_clock -n clk_usb -p 16 -w {0 8} [find port clk_usb]
+
+############################################################################
+# clk_bus >>>> freq.: 48 MHz 
+############################################################################
+create_clock -n clk_bus -p 20 -w {0 10} [find port clk_bus]
+
+set_clock_uncertainty -setup 0.3 [all_clocks]
+set_clock_uncertainty -hold 0.2 [all_clocks]
+set_dont_touch_network [all_clocks]
+set_resistance 0 [all_clocks]
+set_drive 0 [all_clocks]
+
+###################################################################
+# Set clock transition of each FF's clock pin
+###################################################################
+set_clock_transition 1 [all_clocks]
+
+## Constrain design
+source Constraint/moon_top_false.scr
+source Constraint/moon_top_io.scr
+
+write -format db -hier moon_top -output db/moon_top.db
+
+## Budget
+current_design moon_top
+check_timing > Report/moon_top_budget.check_timing
+cd Budget_Result
+dc_allocate_budget -mode rtl -no_interblock_logic \
+                   -write_script -levels all
+cd ..
+report_path_budget > Report/moon_top_budget.path_rpt
+
+remove_design -all
+
+exit

@@ -1,0 +1,186 @@
+/* --=================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- ---------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : Interrupt.scr,v
+-- File Revision          : 1.5
+--
+-- Release Information    : ADK_REL1v1
+--
+-- ---------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the
+--           Interrupt component.
+--
+--           Located in the synopsys/scripts directory.
+--
+--           This file specifies the input and output delay
+--           constraints for the non-AMBA I/O in the Interrupt
+--           component.
+--
+-- --=================================================================*/
+
+/**********************************************************************/
+/* INTERRUPT CONTROLLER BLOCK-SPECIFIC TIMING PARAMETERS              */
+/**********************************************************************/
+
+/**********************************************************************/
+/* Input Delays                                                       */
+/**********************************************************************/
+
+/***************************/
+/* Interrupt Source Inputs */
+/***************************/
+
+/* The ICINTSOURCE input can be asynchronous and */
+/* the path has been constrained nethertheless to */
+/* optimise the path                              */
+
+tidmaxicintsource = 0.05 * tclk    /* ICINTSOURCE */
+tidminicintsource = 0.0
+
+/********************************/
+/* Daisy Chain Interrupt Inputs */
+/********************************/
+
+tidmaxnicfiqin = 0.2 * tclk       /* nICFIQIN */
+tidminnicfiqin = 0.0
+
+tidmaxnicirqin = 0.2 * tclk       /* nICIRQIN */
+tidminnicirqin = 0.0
+
+tidmaxicvectaddrin = 0.7 * tclk   /* ICVECTADDRIN */
+tidminicvectaddrin = 0.0
+
+/***************/
+/* Scan Inputs */
+/***************/
+
+/* The input delay on the Scan related input signals has been set to  */
+/* zero value to prevent addition of extra gates in these paths.      */
+tidscanmax = 0.0
+tidscanmin = 0.0
+
+/**********************************************************************/
+/* Output Delays                                                      */
+/**********************************************************************/
+
+/*********************/
+/* Interrupt Outputs */
+/*********************/
+todmaxnicfiq = 0.6 * tclk         /* nICFIQ */
+todminnicfiq = 0
+
+todmaxnicirq = 0.6 * tclk         /* nICIRQ */
+todminnicirq = 0
+
+todmaxicvectaddrout = 0.6 * tclk  /* ICVECTADDROUT */
+todminicvectaddrout = 0
+
+/****************/
+/* Scan Outputs */
+/****************/
+
+/* The output delay on the Scan related output signals has been set   */
+/* to a zero value to prevent addition of extra gates in these paths. */
+todscanmax = 0.0
+todscanmin = 0.0
+
+/**********************************************************************/
+/* INPUT CONSTRAINTS FOR NON-AMBA PORTS                               */
+/**********************************************************************/
+
+/***************************/
+/* Interrupt Source Inputs */
+/***************************/
+
+/* ICINTSOURCE */
+set_input_delay -clock HCLK -min tidminicintsource ICINTSOURCE
+set_input_delay -clock HCLK -max tidmaxicintsource ICINTSOURCE
+
+/********************************/
+/* Daisy Chain Interrupt Inputs */
+/********************************/
+
+/* nICFIQIN */
+set_input_delay -clock HCLK -min tidminnicfiqin nICFIQIN
+set_input_delay -clock HCLK -max tidmaxnicfiqin nICFIQIN
+
+/* nICIRQIN */
+set_input_delay -clock HCLK -min tidminnicirqin nICIRQIN
+set_input_delay -clock HCLK -max tidmaxnicirqin nICIRQIN
+
+/* ICVECTADDRIN */
+set_input_delay -clock HCLK -min tidminicvectaddrin ICVECTADDRIN
+set_input_delay -clock HCLK -max tidmaxicvectaddrin ICVECTADDRIN
+
+/***************/
+/* Scan Inputs */
+/***************/
+
+set_input_delay -clock HCLK -min tidscanmin SCANINHCLK
+set_input_delay -clock HCLK -max tidscanmax SCANINHCLK
+
+set_input_delay -clock HCLK -min tidscanmin SCANENABLE
+set_input_delay -clock HCLK -max tidscanmax SCANENABLE
+
+/**********************************************************************/
+/* SCAN SIGNAL CONSTRAINTS                                           */
+/**********************************************************************/
+
+set_drive 0 SCANENABLE
+/* Infinite drive strength Scan Enable signal */
+
+set_load 0 SCANENABLE
+/* Zero load Scan Enable signal */
+
+remove_driving_cell find(port, SCANENABLE)
+/* Set no driving cell on Scan Enable */
+
+set_dont_touch_network find(port, SCANENABLE)
+/* Preserve the Scan Enable net during optimisation */
+
+set_drive 0 SCANINHCLK
+/* Infinite drive strength Scan input signal */
+
+set_load 0 SCANINHCLK
+/* Zero load Scan input signal */
+
+remove_driving_cell find(port, SCANINHCLK)
+/* Set no driving cell on Scan input */
+
+set_dont_touch_network find(port, SCANINHCLK)
+/* Preserve the Scan input net during optimisation */
+/**********************************************************************/
+/* OUTPUT CONSTRAINTS FOR NON-AMBA PORTS                              */
+/**********************************************************************/
+
+/*********************/
+/* Interrupt Outputs */
+/*********************/
+
+set_output_delay -clock HCLK -min todminnicfiq nICFIQ
+set_output_delay -clock HCLK -max todmaxnicfiq nICFIQ
+
+set_output_delay -clock HCLK -min todminnicirq nICIRQ
+set_output_delay -clock HCLK -max todmaxnicirq nICIRQ
+
+set_output_delay -clock HCLK -min todminicvectaddrout ICVECTADDROUT
+set_output_delay -clock HCLK -max todmaxicvectaddrout ICVECTADDROUT
+
+/****************/
+/* Scan Outputs */
+/****************/
+
+set_output_delay -clock HCLK -min todscanmin SCANOUTHCLK
+set_output_delay -clock HCLK -max todscanmax SCANOUTHCLK
+
+/************************* End of Interrupt.scr *************************/

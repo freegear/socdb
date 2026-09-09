@@ -1,0 +1,11 @@
+analyze -f verilog  EbiParams.v 
+analyze -f verilog  EbiArbCntl.v 
+analyze -f verilog  EbiMux.v 
+analyze -f verilog  Ebi.v
+
+
+elaborate Ebi
+current_design Ebi
+link
+
+write -f db -hier -out Ebi.gtech.db

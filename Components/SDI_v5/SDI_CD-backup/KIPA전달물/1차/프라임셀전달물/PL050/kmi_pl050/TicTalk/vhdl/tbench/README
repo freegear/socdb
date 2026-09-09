@@ -1,0 +1,94 @@
+#-------------------------------------------------------------------------------
+# This confidential and proprietary software may be used only as
+# authorised by a licensing agreement from ARM Limited
+#   (C) COPYRIGHT 1999 ARM Limited
+#       ALL RIGHTS RESERVED
+# The entire notice above must be reproduced on all authorised
+# copies and copies may only be made to the extent permitted
+# by a licensing agreement from ARM Limited.
+#-------------------------------------------------------------------------------
+# 
+# Version and Release Control Information:
+# 
+# File Name              : README,v
+# File Revision          : 1.4
+# 
+# Release Information    : PL050-REL1v1
+# 
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Purpose : README file for TicTalk VHDL simulations 
+#
+#-------------------------------------------------------------------------------
+
+Note : 
+------
+At the start of each simulation session, ensure that the file 
+kmi_pl050/SourceMe is sourced to initialise certain environment variables.
+--------------------------------------------------------------------------------
+
+Steps for running TicTalk VHDL simulations. 
+
+Clock Enabled Tests - (Production)
+------------------------------------------------
+1. VHDL RTL simulations
+------------------------
+
+- Ensure that the Kmi_prod.tif has been copied to
+  TicTalk/tictests/invec/infile.tif
+  (Note that the Kmi_prod.tif file would be generated from the BusTalk
+  source file, Kmi_prod.c, residing in the BusTalk/bustests directory.)
+
+- Additionally verify that a link exists from TicTalk/vhdl/tbench/infile.tif
+  to TicTalk/tictests/invec/infile.tif. This link should have been created
+  automatically by the build_Kmi script at the start of the setup process.
+
+- In the TicTalk/vhdl/modeltech directory edit file 'libmap'
+  so that the library 'uut' points to the VHDL RTL
+  uut         = $PERIPH/vhdl/uut/work
+
+- Do a 'make clean' in the kmi_pl050/vhdl/uut directory
+
+- Do a 'make clean' in the TicTalk/vhdl directory
+  (Alternatively one can selectively compile the following files in the
+   order given below:
+   1. In the TicTalk/vhdl/sys    directory  : vcom rps.vhd
+   2. In the TicTalk/vhdl/chip   directory  : vcom easy.vhd
+   3. In the TicTalk/vhdl/tbench directory  : vcom tb_tic.vhd)
+
+- In the TicTalk/vhdl/tbench directory, run simulations using
+  vsim tb_tic
+
+2. VHDL NETLIST simulations
+---------------------------
+
+- Ensure that the Kmi_prod.tif has been copied to
+  TicTalk/tictests/invec/infile.tif
+  (Note that the Kmi_prod.tif file would be generated from the BusTalk
+  source file, Kmi_prod.c, residing in the BusTalk/bustests directory.)
+
+- Additionally verify that a link exists from TicTalk/vhdl/tbench/infile.tif
+  to TicTalk/tictests/invec/infile.tif. This link should have been created
+  automatically by the build_Kmi script at the start of the setup process.
+
+- In the TicTalk/vhdl/modeltech directory edit file 'libmap'
+  so that the library 'uut' points to the VHDL NETLIST
+  uut         = $PERIPH/vhdl/uutNetlist/work
+
+- Do a 'make clean' in the kmi_pl050/vhdl/uutNetlist directory
+
+- Do a 'make clean' in the TicTalk/vhdl directory
+  (Alternatively one can selectively compile the following files in the
+   order given below:
+   1. In the TicTalk/vhdl/sys    directory  : vcom rps.vhd
+   2. In the TicTalk/vhdl/chip   directory  : vcom easy.vhd
+   3. In the TicTalk/vhdl/tbench directory  : vcom tb_tic.vhd)
+
+- In the TicTalk/vhdl/tbench directory, run simulations using
+  vsim -sdfmax u_easy/u_rps/uKmi=../../../vhdl/uutNetlist/Kmi_Vhdl.sdf21
+      tb_tic
+  vsim -sdfmin u_easy/u_rps/uKmi=../../../vhdl/uutNetlist/Kmi_Vhdl.sdf21 
+      tb_tic
+
+#-------------------------------------- End ------------------------------------

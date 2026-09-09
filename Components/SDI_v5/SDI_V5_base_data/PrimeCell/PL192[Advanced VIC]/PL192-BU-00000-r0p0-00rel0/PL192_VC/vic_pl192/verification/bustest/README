@@ -1,0 +1,85 @@
+#- --=========================================================================--
+#- This confidential and proprietary software may be used only as
+#- authorised by a licensing agreement from ARM Limited
+#-   (C) COPYRIGHT 2002 ARM Limited
+#-       ALL RIGHTS RESERVED
+#- The entire notice above must be reproduced on all authorised
+#- copies and copies may only be made to the extent permitted
+#- by a licensing agreement from ARM Limited.
+#-
+#- -----------------------------------------------------------------------------
+#- Version and Release Control Information:
+#-
+#- File Name              : README.rca
+#- File Revision          : 1.10
+#-
+#- Release Information    : PrimeCell(TM)-PL192-r0p0-00rel0
+#-
+#- -----------------------------------------------------------------------------
+#- Purpose : 
+#-           README file for creation of .bif and .sim formatted
+#-           vectors from BusTalk code
+#-
+#- --=========================================================================--
+
+NOTE : For a verilog verification run the option "all", the simulator may have
+       problems with allocating memory, due to the large size of the stimulus
+       reader file. This problem has been observed on both LDV and Modelsim.
+       The make options Vic2, Vic3 may create the same problem as
+       mentioned above for Modelsim (verilog).
+
+       The Error message displayed for each simulator is as follows:
+
+       Modelsim
+       ========
+       # Note: Significant memory allocation has occurred in this simulation
+       #  - Setting the LockedMemory variable in your .ini file may help
+       # performance
+       # ****** Memory allocation failure. *****
+       # Please check your system for available memory and swap space
+
+       LDV
+       ===
+       Data structure takes 927447416 bytes of memory
+       Error!    No more memory available (allocating 16376
+       bytes)                                            [Verilog-NOMEM]
+       "../../bustest/invec/bif.sim", 558605:
+
+       TESTS
+       =====
+       1. VHDL
+          ====
+          All tests can run in VHDL. 
+
+       2. VERILOG
+          =======
+          Using ModelSim -> All tests can run except "Vic2", "Vic3" & "all".
+          Using LDV      -> All tests can run except "all" option.
+
+================================================================================
+
+Steps to create .bif and .sim formatted vectors from the BusTalk 
+code (default)
+--------------------------------------------------------------------------------
+make <testname>
+
+This will create infile.bif and bif.sim in the ./invec directory
+
+Please refer to the 'makefile' for legal 'testname's. 
+
+RTL simulations
+---------------
+The following directive in the Vic.h file should be set as follows:
+#define VICrtl_sim 1
+
+Netlist simulations
+-------------------
+The following directive in the Vic.h file should be set as follows:
+#define VICrtl_sim 0
+
+NOTE : Option "all" for make option may create memory allocation problem
+       during simulation as large number of vectors are loaded.
+       For verilog simulation with modelsim, the make options Vic1, Vic2 and
+       Vic3 may create the same problem as mentioned above.
+
+#- --=============================== End =====================================--

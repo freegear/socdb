@@ -1,0 +1,25 @@
+/*         Copyright (c) 2004  Evatronix S.A.                        */
+/* Please review the terms of the license agreement before using     */
+/* this file. If you are not an authorized user, please destroy this */
+/* file and notify Evatronix S.A. immediately that you               */
+/* inadvertently received an unauthorized copy.                      */
+/* ***************************************************************** */
+/* ----------------------------------------------------------------- */
+/*    Project name:  MAC_1G_AMBA                                          */
+/*    File name: scan.scr					     */
+/*    File contents: Sample Script for Synopsys DFT Compiler         */
+/*    Version: 1.00                                                  */
+/*    Last modification 2004-08-12                                   */
+
+set_scan_configuration -replace false
+check_scan
+preview_scan
+estimate_test_coverage
+insert_scan
+report_test -scan_path
+check_scan
+estimate_test_coverage
+test_stil_netlist_format = verilog
+write_test_protocol -format stil -out result_dir + top + ".spf"
+
+

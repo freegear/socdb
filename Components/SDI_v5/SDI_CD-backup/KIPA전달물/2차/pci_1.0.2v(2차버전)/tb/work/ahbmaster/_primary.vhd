@@ -1,0 +1,65 @@
+library verilog;
+use verilog.vl_types.all;
+entity ahbmaster is
+    generic(
+        addr_width      : integer := 32;
+        htrans_idle     : integer := 0;
+        htrans_busy     : integer := 1;
+        htrans_nonseq   : integer := 2;
+        htrans_seq      : integer := 3;
+        hburst_single   : integer := 0;
+        hburst_incr     : integer := 1;
+        hburst_wrap4    : integer := 2;
+        hburst_incr4    : integer := 3;
+        hburst_wrap8    : integer := 4;
+        hburst_incr8    : integer := 5;
+        hburst_wrap16   : integer := 6;
+        hburst_incr16   : integer := 7;
+        hresp_okay      : integer := 0;
+        hresp_error     : integer := 1;
+        hresp_retry     : integer := 2;
+        hresp_split     : integer := 3;
+        hsize_1b        : integer := 0;
+        hsize_2b        : integer := 1;
+        hsize_4b        : integer := 2;
+        hsize_8b        : integer := 3;
+        amidle          : integer := 0;
+        ambreq          : integer := 1;
+        amaddr          : integer := 2;
+        amdata          : integer := 3;
+        amterm          : integer := 4
+    );
+    port(
+        hclk            : in     vl_logic;
+        hresetn         : in     vl_logic;
+        mhgrant         : in     vl_logic;
+        mhready         : in     vl_logic;
+        mhresp          : in     vl_logic_vector(1 downto 0);
+        mhrdata         : in     vl_logic_vector(31 downto 0);
+        iaddr           : in     vl_logic_vector;
+        iben            : in     vl_logic_vector(3 downto 0);
+        itxinit         : in     vl_logic;
+        iwr             : in     vl_logic;
+        iburst          : in     vl_logic;
+        iprefetch       : in     vl_logic_vector(3 downto 0);
+        wbae            : in     vl_logic;
+        wbte            : in     vl_logic;
+        rbaf            : in     vl_logic;
+        rbtf            : in     vl_logic;
+        wbdata          : in     vl_logic_vector(31 downto 0);
+        mhaddr          : out    vl_logic_vector;
+        mhbusreq        : out    vl_logic;
+        mhlock          : out    vl_logic;
+        mhwrite         : out    vl_logic;
+        mhtrans         : out    vl_logic_vector(1 downto 0);
+        mhsize          : out    vl_logic_vector(2 downto 0);
+        mhburst         : out    vl_logic_vector(2 downto 0);
+        mhwdata         : out    vl_logic_vector(31 downto 0);
+        idrdy           : out    vl_logic;
+        itxerr          : out    vl_logic;
+        itxidle         : out    vl_logic;
+        wbrd            : out    vl_logic;
+        rbwr            : out    vl_logic;
+        rbdata          : out    vl_logic_vector(31 downto 0)
+    );
+end ahbmaster;

@@ -1,0 +1,210 @@
+#- --=========================================================================--
+#- This confidential and proprietary software may be used only as
+#- authorised by a licensing agreement from ARM Limited
+#-   (C) COPYRIGHT 2001-2002 ARM Limited
+#-       ALL RIGHTS RESERVED
+#- The entire notice above must be reproduced on all authorised
+#- copies and copies may only be made to the extent permitted
+#- by a licensing agreement from ARM Limited.
+#-
+#- -----------------------------------------------------------------------------
+#- Version and Release Control Information:
+#-
+#- File Name              : README.rca
+#- File Revision          : 1.9
+#-
+#- Release Information    : PrimeCell(TM)-PL172-r2p3-00rel0
+#-
+#- -----------------------------------------------------------------------------
+#- Purpose : 
+#-           Verification test code README file. 
+#-
+#- -----------------------------------------------------------------------------
+#- README file for creation of .bif and .sim formatted
+#-           vectors from BusTalk code as well as list of tbench and
+#-            test cases.
+#-
+#- --=========================================================================--
+
+Summary
+-------
+
+  This README file describes how the .bif and .sim formatted vector files
+are generate from the BusTalk verification code. 
+
+  This file also indicates which testbench should be used with each
+test case.
+
+--------------------------------------------------------------------------------
+
+Building the verification code
+------------------------------
+
+  The verification BusTalk code is built using the verification/bustest 
+makefile. This will generate .bif and a .sim files in the 
+verification/bustest/invec directory. 
+
+eg : To build the POResetTest
+> make POResetTest
+
+Note: Please refer to the 'makefile' for legal 'testname's.
+
+Note: The files generated in the invec directory are:
+bif0.sim    : Verilog testbench AHB0 stimulus.
+bif1.sim    : Verilog testbench AHB1 stimulus.
+bif2.sim    : Verilog testbench AHB2 stimulus.
+bif3.sim    : Verilog testbench AHB3 stimulus.
+infile0.bif : VHDL testbench AHB0 stimulus.
+infile1.bif : VHDL testbench AHB1 stimulus.
+infile2.bif : VHDL testbench AHB2 stimulus.
+infile3.bif : VHDL testbench AHB3 stimulus.
+
+Note: The make "all" option should not be used. This option will not compile
+all the tests. An error message is flagged if a make "all" is attempted.
+
+--------------------------------------------------------------------------------
+
+Running a simulation
+--------------------
+
+  The verification code makes use of 14 testbenches (tbench and
+tbench1 to tbench13). This allows the MPMC to be tested with a large
+number of different memory device configurations.
+
+  The verification tests are required to be executed an appropriate 
+testbench. A list of which tests should be executed on which testbench
+can be found in the section below.
+
+To run the simulation using modelsim, from the verification/vhdl or the
+verification/verilog directory type,
+"make -f SimMakefile_modelsim.mk TBENCH=<testbench_number> rtl"
+ 
+eg : To run a simulation using tbench7
+> make -f SimMakefile_modelsim.mk TBENCH=7 rtl
+
+eg : To run a simulation using tbench
+> make -f SimMakefile_modelsim.mk TBENCH= rtl
+
+To run the simulation using Verilog-XL, from the verification/verilog
+directory type, 
+"make -f SimMakefile_LDV.mk TBENCH=<testbench_number> rtl"
+
+eg : To run a simulation using tbench5
+> make -f SimMakefile_LDV.mk TBENCH=5 rtl
+
+eg : To run a simulation using tbench
+> make -f SimMakefile_LDV.mk TBENCH= rtl
+
+--------------------------------------------------------------------------------
+
+Test case vs testbench
+----------------------
+
+  The following lists which testbench should be used for each testcase.
+
+Test Cases                 testbench
+----------                 ---------
+AddrMirrTest              : tbench
+AddrToggleTest            : tbench7
+Arb2DySt                  : tbench
+Arb2DyWrRd                : tbench7
+Arb2StWrRd                : tbench
+Arb3DySt                  : tbench 
+Arb3DyWrRd                : tbench7
+Arb3StWrRd                : tbench
+Arb4DyStWrRd              : tbench7
+Arb4DyWrRdClkRat          : tbench7  
+Arb4DyWrRd                : tbench7
+Arb4IdleBusy              : tbench
+Arb4StWrRd                : tbench 
+BLSDelayValueTests        : tbench
+BigEndHburstTest          : tbench
+BigEndianPinTest          : tbench
+BusDegrantTest            : tbench
+BusyInsertionTest         : tbench
+CSPolarityTest            : tbench
+ClkCtrlTest               : tbench
+ClkEnableTest             : tbench
+ControllerBusyTest        : tbench
+CornerCases1              : tbench
+CornerCases2              : tbench3
+CornerCases3              : tbench
+Arb2CornerCase4           : tbench10
+DelayValueTests           : tbench
+MemModelHburstTest        : tbench7
+DyHburstClkRatTB7Test     : tbench7
+DyHburstClkRatTB8Test     : tbench8
+DyHburstClkRatTB9Test     : tbench9
+DyHburstTest1             : tbench
+DyHburstTest2             : tbench
+DyHburstTestTB10          : tbench10
+DyHburstTestTB5           : tbench5
+DyHburstTestTB7           : tbench7
+DyHburstTestTB8           : tbench8
+DyHburstTestTB9           : tbench9
+EndiannessTests           : tbench
+ExdWaitDelTest            : tbench  
+HResetTest                : tbench
+HburstTest                : tbench
+LowPwrModeTest            : tbench
+LowPwrSdramFunTest        : tbench4
+MPMCEnableTest            : tbench
+MpmcRegisterTests         : tbench
+POResetTest               : tbench
+ROMTest                   : tbench
+RandHburstTest            : tbench
+RandHburstTest1           : tbench
+RandHburstTest2           : tbench
+RandomTest1               : tbench
+RdRefAlnTest              : tbench
+RefFreqChk                : tbench1   
+SdramInitRtnChk           : tbench 
+SelRefPriorityTest        : tbench
+SelfRefChk                : tbench1
+StWtPgBufEnTest           : tbench
+StWtPgTest                : tbench
+SyncFlashTest             : tbench6
+TransferTest              : tbench
+WrProtTest                : tbench7
+MemModelPgROMTest         : tbench6
+MemModelROMTest           : tbench11
+MemModelStPgModeTest      : tbench8
+DyHburstCmdDelTest1       : tbench13
+Rel1HburstTest            : tbench12
+IntegrationTest           : tbench7
+SyncFlashCmdDelTest       : tbench12
+Arb2HMastLockTest         : tbench
+RefreshMissTest           : tbench
+DirectDyDtFtchTest        : tbench
+LatencyTest1              : tbench2
+LatencyTest2              : tbench2
+LatencyTest3_1            : tbench2
+LatencyTest3_2            : tbench2
+LatencyTest4_1            : tbench2
+LatencyTest4_2            : tbench2
+LatencyTest5_1            : tbench2
+LatencyTest5_2            : tbench2
+LatencyTest6_1            : tbench2
+LatencyTest6_2            : tbench2
+LatencyTest7              : tbench2
+LatencyTest8              : tbench2
+LatencyTest9              : tbench2
+LatencyTest10             : tbench2
+MultiPortPgAccessTest     : tbench2
+MultiPortPgAccessTest1    : tbench2
+MultiPortPgAccessTest2    : tbench2
+MultiPortPgAccessTest3    : tbench2
+MultiPortPgAccessTest4    : tbench2
+MultiPortPgAccessTest5    : tbench2
+MultiPortDiffComb1        : tbench2
+MultiPortDiffComb2        : tbench2
+MultiPortDiffComb3        : tbench2
+MultiPortDiffComb4        : tbench2
+MultiPortDiffComb5        : tbench2
+MultiPortDiffComb6        : tbench2
+MultiPortDiffComb7        : tbench2
+MultiPortDiffComb8        : tbench2
+MemBGntTest               : tbench
+MultiPortWrProtTest       : tbench 
+
+#- --=============================== End =====================================--

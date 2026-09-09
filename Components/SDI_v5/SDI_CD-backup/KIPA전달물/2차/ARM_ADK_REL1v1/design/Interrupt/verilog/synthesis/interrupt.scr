@@ -1,0 +1,14 @@
+
+analyze -f verilog   ICAhbifReg.v
+analyze -f verilog   ICPriority.v
+analyze -f verilog   ../../../global_ADK/verilog/RevAnd.v
+analyze -f verilog   ICSynctoHCLK.v
+analyze -f verilog   Interrupt.v
+
+
+elaborate Interrupt
+current_design Interrupt
+link
+
+write -f db -hier -out Interrupt.gtech.db
+

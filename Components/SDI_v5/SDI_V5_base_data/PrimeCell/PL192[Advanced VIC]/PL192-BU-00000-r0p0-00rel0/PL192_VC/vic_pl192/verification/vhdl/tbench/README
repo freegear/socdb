@@ -1,0 +1,95 @@
+#- --=========================================================================--
+#- This confidential and proprietary software may be used only as
+#- authorised by a licensing agreement from ARM Limited
+#-   (C) COPYRIGHT 2002 ARM Limited
+#-       ALL RIGHTS RESERVED
+#- The entire notice above must be reproduced on all authorised
+#- copies and copies may only be made to the extent permitted
+#- by a licensing agreement from ARM Limited.
+#-
+#- -----------------------------------------------------------------------------
+#- Version and Release Control Information:
+#-
+#- File Name              : README.rca
+#- File Revision          : 1.6
+#-
+#- Release Information    : PrimeCell(TM)-PL192-r0p0-00rel0
+#-
+#- -----------------------------------------------------------------------------
+#- Purpose :
+#-           README file for Functional Test Vector simulations 
+#- --=========================================================================--
+
+Steps for running simulations 
+-----------------------------
+
+Ensure that the following variables are set as per the user's
+local environment settings.
+
+eg : setenv GLOBAL /h/arm/global 
+
+eg : setenv LIB_VHDL /h/arm/global/AVANT/cb18/v1.0/vital/cb18os120/zero
+
+eg : setenv LIB_SYNOP /h/arm/global/AVANT/cb18/v1.0/synopsys/cb18os120/1999.05/models
+
+Please note that the above paths are EXAMPLE paths.
+
+Additionally set the following environment variables to control
+simulation. 
+
+setenv PERIPH Vic
+setenv SIMULATOR modelsim
+setenv TEST_METH scaninsert
+setenv HDL_SOURCE vhdl
+setenv HDL_NETL vhdl
+
+1. VHDL RTL simulations
+-----------------------
+- In the verification/bustest/Vic.h file, ensure that the
+  'VICrtl_sim' macro is set to 1. i.e. ensure that the 
+  following statement is present :
+
+  #define VICrtl_sim     1
+
+- In the verification/bustest directory 'make <testname>'
+  where <testname> refers to the specific test vector set
+  that needs to be used for simulations.
+
+  [Please refer to verification/bustest/makefile for the 
+   complete list of <testname>s.]
+
+  This will create verification/bustest/invec/infile.bif
+
+- In the verification/vhdl directory
+  'make rtl'
+
+2. VERILOG SCANINSERT NETLIST simulations (For modelsim simulator)
+------------------------------------------------------------
+- In the verification/bustest/Vic.h file, ensure that the
+  'VICrtl_sim' macro is set to 0 or to any value other than
+  1. i.e. ensure that the following statement is present :
+
+  #define VICrtl_sim     0
+
+  This bypasses test code accesses to Integration test
+  registers during netlist simulations. Note that the
+  read paths to these regiaters are false paths in
+  non-test mode.
+
+- In the verification/bustest directory 'make <testname>'
+  where <testname> refers to the specific test vector set
+  that needs to be used for simulations.
+
+  [Please refer to verification/bustest/makefile for the
+   complete list of <testname>s.]
+
+  This will create verification/bustest/invec/tif.sim
+
+- In the verification/verilog directory
+  'make net_max'
+
+  This will perform a MAXIMUM timing annotated simulation
+  on the scaninsert VHDL netlist generated from VHDL
+  RTL.
+
+#- --================================= End ===================================--

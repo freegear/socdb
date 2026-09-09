@@ -1,0 +1,51 @@
+#-------------------------------------------------------------------------------
+#-  This confidential and proprietary software may be used only as
+#-  authorised by a licensing agreement from ARM Limited
+#-    (C) COPYRIGHT 2000 ARM Limited
+#-        ALL RIGHTS RESERVED
+#-  The entire notice above must be reproduced on all authorised
+#-  copies and copies may only be made to the extent permitted
+#-  by a licensing agreement from ARM Limited.
+#-------------------------------------------------------------------------------
+#-
+#-  Version and Release Control Information:
+#-
+#-  File Name              : makefile.rca
+#-  File Revision          : 1.6
+#-
+#-  Release Information    : PrimeCell(TM)-PL011-REL1v3
+#-
+#-------------------------------------------------------------------------------
+ 
+#-------------------------------------------------------------------------------
+#-  Purpose  : Standard Verilog Library Makefile
+#-------------------------------------------------------------------------------
+
+MODULES = UartRegBlock.v \
+          UartSynctoUCLK.v \
+          UartSynctoPCLK.v \
+          UartBaudCntr.v \
+          UartApbif.v \
+          UartModem.v \
+          UartIrDA.v \
+          UartRXFCntl.v \
+          UartRXRegFile.v \
+          UartRXFIFO.v \
+          UartDataStp.v \
+          UartRXParShft.v \
+          UartRXCntl.v \
+          UartReceive.v \
+          UartTest.v \
+          UartTXCntl.v \
+          UartTXFCntl.v \
+          UartTXRegFile.v \
+          UartTXFIFO.v \
+          UartDMA.v \
+          UartRevAnd.v \
+          UartInterrupt.v \
+          Uart.v
+
+include $(GLOBAL)/$(SIMULATOR)/RtlMakefile.mk
+
+############################# End of file ######################################
+

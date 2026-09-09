@@ -1,0 +1,86 @@
+/* ************************************************** */
+/* ************************************************** */
+/* ***                                            *** */
+/* ***    (conditions library definition 1.8V)    *** */
+/* ***                                            *** */
+/* ***           rev. 3.0, 10-May-2000            *** */
+/* ***                                            *** */
+/* ***         (c) Avant! Corporation             *** */
+/* ***             46871 Bayside Parkway          *** */
+/* ***             Fremont, CA 94538              *** */
+/* ***             (510) 413-8000                 *** */
+/* ************************************************** */
+/* ************************************************** */
+
+library (conditions_1.8v) {
+  operating_conditions("WCCOM"){
+    process : 1.2
+    temperature : 70
+    voltage : 1.62
+  }
+  operating_conditions("WCIND"){
+    process : 1.2
+    temperature : 85
+    voltage : 1.62
+  }
+  operating_conditions("WCMIL"){
+    process : 1.2
+    temperature : 125
+    voltage : 1.62
+  }
+  operating_conditions("BCCOM"){
+    process : 0.8
+    temperature : 0
+    voltage : 1.98
+  }
+  operating_conditions("BCIND"){
+    process : 0.8
+    temperature : -40
+    voltage : 1.98
+  }
+  operating_conditions("BCMIL"){
+    process : 0.8
+    temperature : -55
+    voltage : 1.98
+  }
+  operating_conditions("NOMINAL"){
+    process : 1
+    temperature : 25
+    voltage : 1.8
+  }
+
+  default_operating_conditions : WCIND
+
+/* Threshold Definitions for Delay */
+
+  input_threshold_pct_rise  : 50.0;
+  input_threshold_pct_fall  : 50.0;
+  output_threshold_pct_rise : 50.0;
+  output_threshold_pct_fall : 50.0;
+
+/* Threshold Definitions for Transition Time */
+
+  slew_derate_from_library      : 0.4;
+  slew_lower_threshold_pct_rise : 30.0;
+  slew_upper_threshold_pct_rise : 70.0;
+  slew_upper_threshold_pct_fall : 70.0;
+  slew_lower_threshold_pct_fall : 30.0;
+
+/* CMOS Default Attributes */
+
+  default_fanout_load           : 1.0;
+  default_inout_pin_cap         : 0.043;
+  default_input_pin_cap         : 0.011;
+  default_output_pin_cap        : 0.043;
+
+  default_intrinsic_fall      : 0.0;
+  default_inout_pin_fall_res  : 0.0;
+  default_intrinsic_rise      : 0.0;
+  default_slope_rise          : 0.0;
+  default_output_pin_fall_res : 0.0;
+  default_slope_fall          : 0.0;
+  default_inout_pin_rise_res  : 0.0;
+  default_output_pin_rise_res : 0.0;
+
+} /* End of condition library 1.8v */
+

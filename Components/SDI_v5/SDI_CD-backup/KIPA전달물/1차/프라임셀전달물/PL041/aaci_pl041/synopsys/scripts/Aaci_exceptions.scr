@@ -1,0 +1,53 @@
+/* --=================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- ---------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : Aaci_exceptions.scr.rca
+-- File Revision          : 1.2
+--
+-- Release Information    : PrimeCell(TM)-PL041-REL1v0
+--
+-- ---------------------------------------------------------------------
+-- Purpose : 
+--           Synopsys synthesis timing constraint script for the 
+--           AACI block             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the point-to-point exceptions 
+--           set for the AACI block synthesis. 
+--
+-- --=================================================================*/
+
+/* False paths between the APB clock domain and the AC-Link domain   */
+/* are present due to the following reasons:                         */
+/* - Single bit signals crossing domains are double-synchronised     */ 
+/*   and can hence be declared false.                                */
+/* - Vector signals are synchronised using the 2-buffer technique    */
+/*   and are effectively multi-cycle. Since the PCLK and AACIBITCLK  */
+/*   frequencies may be completely asynchronous and non-integral,    */
+/*   setting a false path is much easier than setting an MCP.        */ 
+/* - The Integration Vector Strategy has resulted in un-synchronised */
+/*   paths between the PCLK and the AACIBITCLK domains. These can    */
+/*   also be safely declared as false.                               */ 
+/* AACIBITCLK to PCLK */ 
+set_false_path -from {AACIBITCLK} -to {PCLK}
+
+/* PCLK to AACIBITCLK */ 
+set_false_path -from {PCLK} -to {AACIBITCLK}
+
+/* nAACIBITCLK to PCLK */ 
+set_false_path -from {nAACIBITCLK} -to {PCLK}
+
+/* PCLK to nAACIBITCLK */ 
+set_false_path -from {PCLK} -to {nAACIBITCLK}
+
+/******************** End of Aaci_exceptions.scr **********************/

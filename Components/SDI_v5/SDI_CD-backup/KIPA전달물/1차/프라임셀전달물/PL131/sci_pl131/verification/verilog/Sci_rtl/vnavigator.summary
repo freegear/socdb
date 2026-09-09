@@ -1,0 +1,43 @@
+ Stment  Branch    Excl     FEC     MSC     BSC    EXPR   Trigg    Path  Toggle  Signal  Name
+
+ 100.0%   97.1%    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciApbif
+  70.1%   83.6%    ----    ----    ----    ----    ----    ----   53.5%  100.0%    ----  SciCntl
+ 100.0%   92.9%    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciDMA
+ 100.0%    ----    ----    ----    ----    ----    ----    ----    ----    ----    ----  SciIntGen
+ 100.0%   97.8%    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciRegBlkUpdate
+ 100.0%  100.0%    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciRegBlk
+ 100.0%    ----    ----    ----    ----    ----    ----    ----    ----    ----    ----  SciRevAnd
+ 100.0%  100.0%    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciRxFCntl
+   ----    ----    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciRxFIFO
+  97.1%   93.5%    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciRxRegFile
+ 100.0%  100.0%    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciSynctoPCLK
+ 100.0%  100.0%    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciSynctoSCICLK
+  94.5%   55.3%    ----    ----    ----    ----    ----    ----   33.3%  100.0%    ----  SciTest
+ 100.0%  100.0%    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciTxFCntl
+   ----    ----    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciTxFIFO
+  97.1%   93.1%    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  SciTxRegFile
+  93.1%   91.8%    ----    ----    ----    ----   88.9%    ----   77.7%  100.0%    ----  SciTxRx
+   ----    ----    ----    ----    ----    ----    ----    ----    ----  100.0%    ----  Sci
+
+  92.7%   91.1%    ----    ----    ----    ----   88.9%    ----   64.5%  100.0%    ----  TOTAL
+
+Designers Comments
+==================
+
+The law of diminishing returns was applied to the improvement of coverage for this peripheral,
+whereby the extensive man hour effort returned insignificant improvement in coverage. 
+
+The coverage figure of 70% for the SciCntl block is reasonable - this is a state machine which allows
+synchronous transactions to intercept the normal asynchrounous card transaction sequences.
+To exhaustively cover this block would mean steering it to each state then performing the
+synchronous operation ... this was deemed impractical within the time constraints.
+The State_Tests were based on original production TIC based sequences and raised the coverage
+for the SCiCntl block from 53% to its current figure of 70.1%.
+
+It should also be noted that a 4 bit state machine is a very small amount of logic i.e. four
+d-types and the related combinational logic.
+
+Martyn T. Jones
+29th November 2001
+
+

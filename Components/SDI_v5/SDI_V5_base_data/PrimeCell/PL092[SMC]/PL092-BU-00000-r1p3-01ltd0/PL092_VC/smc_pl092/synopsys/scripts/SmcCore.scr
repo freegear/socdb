@@ -1,0 +1,128 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2003 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+-------------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : SmcCore.scr.rca
+-- File Revision          : 1.17
+-- 
+-- Release Information    : PrimeCell(TM)-PL092-r1p3-01ltd0
+-- 
+-------------------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the 
+--           SMC block.             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the input and output delay     
+--           constraints for the non-AMBA I/O in the SMC block. 
+--
+-- --======================================================================-- */
+
+/******************************************************************************/
+/* SMC BLOCK-SPECIFIC TIMING PARAMETERS                                       */
+/******************************************************************************/
+
+/* BIGENDIAN and the CS7 inputs will be tied off, so a small delay is */
+/* introduced for the hold to avoid unneeded buffering                   */
+tidmintiedpin = tclk * 0.05
+
+/******************************************************************************/
+/* Input Delays                                                               */
+/******************************************************************************/
+
+tidmaxsmw  = tclk * 0.7        /* SMWAIT input */
+tidmaxcsmw = tclk * 0.7        /* CANCELSMWAIT input */
+
+/* The SMBUSGNT from the DBI is a combinational reflection of the     */
+/* SMBUSREQ ouput from SmcCore. Assuming even 3ns of logic from the   */
+/* SMBUSREQ to SMBUSGNT in the DBI the input setup time will be       */
+/* 10-2-3 = 5ns                                                       */
+tidmaxbusgnt = tclk * 0.5        /* SMBUSGNT input from DBI*/
+
+
+/******************************************************************************/
+/* Output Delays                                                              */
+/******************************************************************************/
+
+/* The SMWEN output is always from the nHCLK register and there is    */
+/* no extra logic on this path. So ideally only 50% constraining is   */
+/* possible & taking clock to o/p delay a constraint of 45% is set    */
+/* w.r.to the HCLK                                                    */
+todmaxsmwen = tclk * 0.35        /* SMWEN */
+
+/* In case of the SMBLS output signal, both negative CLOCKed and      */
+/* positive CLOCKed signal can be selected. So for constraining the   */
+/* negative CLOCKed signal, a max of 50% of HCLK is possible          */
+/* assuming zero delays. So a constraint of 40% is set on this        */
+/* output with respect to HCLK taking mux delay also into account     */
+todmaxsmbls = tclk * 0.30        /* SMBLS */
+
+/* The SMBUSREQ output from SmcCore is a registered output and it as  */
+/* result will actually be available very early in the clock cycle    */
+/* and the value used here is a pessimistic value                     */
+todmaxsmbusreq = tclk * 0.60        /* SMBUSREQ to the DBI */
+
+
+/******************************************************************************/
+/* INPUT CONSTRAINTS FOR NON-AMBA PORTS                                       */
+/******************************************************************************/
+set_input_delay -clock HCLK -min tidmintiedpin BIGENDIAN
+set_input_delay -clock HCLK -max tidmaxbigend  BIGENDIAN
+
+set_input_delay -clock HCLK -min tholdmax    REMAP
+set_input_delay -clock HCLK -max tidmaxremap REMAP
+
+set_input_delay -clock HCLK -min tholdmax     SMCDATAIN
+set_input_delay -clock HCLK -max tidmaxsmdata SMCDATAIN
+
+set_input_delay -clock HCLK -min tholdmax  SMWAIT
+set_input_delay -clock HCLK -max tidmaxsmw SMWAIT
+
+set_input_delay -clock HCLK -min tholdmax   CANCELSMWAIT
+set_input_delay -clock HCLK -max tidmaxcsmw CANCELSMWAIT
+
+set_input_delay -clock HCLK -min tidmintiedpin SMMWCS7
+
+set_input_delay -clock HCLK -min tidmintiedpin SMRBLECS7 
+
+set_input_delay -clock HCLK -min tholdmax     SMBUSGNT
+set_input_delay -clock HCLK -max tidmaxbusgnt SMBUSGNT
+
+
+/******************************************************************************/
+/* OUTPUT CONSTRAINTS FOR NON-AMBA PORTS                                      */
+/******************************************************************************/
+set_output_delay -clock HCLK -min tholdmin     SMCDATAOUT
+set_output_delay -clock HCLK -max todmaxsmdata SMCDATAOUT
+
+set_output_delay -clock HCLK -min tholdmin     nSMCDATAEN
+set_output_delay -clock HCLK -max todmaxsmdata nSMCDATAEN
+
+set_output_delay -clock HCLK -min tholdmin   SMCS
+set_output_delay -clock HCLK -max todmaxsmcs SMCS
+
+set_output_delay -clock HCLK -min tholdmin    nSMWEN
+set_output_delay -clock HCLK -max todmaxsmwen nSMWEN
+
+set_output_delay -clock HCLK -min tholdmin    nSMBLS
+set_output_delay -clock HCLK -max todmaxsmbls nSMBLS
+
+set_output_delay -clock HCLK -min tholdmin    nSMOEN
+set_output_delay -clock HCLK -max todmaxsmoen nSMOEN
+
+set_output_delay -clock HCLK -min tholdmin     SMCADDR
+set_output_delay -clock HCLK -max todmaxsmaddr SMCADDR
+
+set_output_delay -clock HCLK -min tholdmin       SMBUSREQ
+set_output_delay -clock HCLK -max todmaxsmbusreq SMBUSREQ
+
+/************************* End of SmcCore.scr *********************************/

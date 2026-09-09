@@ -1,0 +1,111 @@
+#Rtl Modeling
+#Blue 계열 :input
+# nTDOEN simulation 이후 제거 [DTSDI002에는 존재하지 않음]
+Rtl/Example : Synchronous Reset Character[Prioriry]
+-- ARM Ltd
+-- MuxM2S
+-- Rtl/Example => Synchronous Reset model : 2가지 
+-- SMT Ltd
+1.Top_DTSDI002 
+2.Reset_Controller
+-- Re-Check defram :
+TBFM_DTSDI003.v :defparam DTSDI002.PWCLK =1'b0 ;
+3.System_Decoder
+4.APBif_DST
+5.APB_PowerManager
+- Hreset 2번 이상 Trigger
+- R0[0]를 SCLKDIV_reg에 반영??
+- Reset에서 UCLKDIV가 동작 ??
+- 나중에 EINT를 Gpio0로connect
+- 186 line finish
+
+6.Gpio
+--GPIOITCR :Test Control Signal
+//-------------------------------------------------------------------
+// Decode pos edge, neg edge and both edge interrupts
+//-------------------------------------------------------------------
+
+always @(CurrentEdgeVal or NextEdgeVal)
+begin : p_PosEdge_comb
+  for (i = 7; i >= 0; i = i - 1)
+    PosEdgeDetected[i] = NextEdgeVal[i] & (~CurrentEdgeVal[i]);
+end // p_PosEdge_comb;
+
+always @(CurrentEdgeVal or NextEdgeVal)
+begin : p_NegEdge_comb
+  for (i = 7; i >= 0; i = i - 1)
+    NegEdgeDetected[i] = (~NextEdgeVal[i]) & CurrentEdgeVal[i];
+end // p_NegEdge_comb;
+
+always @(PosEdgeDetected or NegEdgeDetected)
+begin : p_BothEdge_comb
+  for (i = 7; i >= 0; i = i - 1)
+    BothEdges[i] = PosEdgeDetected[i] | NegEdgeDetected[i];
+end // p_BothEdge_comb;
+
+ begin이 없으면 Int_Rst_2d는 reset시에 Unkown value로 
+else begin//
+          Int_Rst_1d    <= EINT_OR    ;
+          Int_Rst_2d    <= Int_Rst_1d ;
+          
+          if (Int_Rst_1d == 1'b1 && Int_Rst_2d == 1'b0)
+                  Int_Clr <= 1'b1 ;
+             else Int_Clr <= 1'b0 ;
+             end 
+             
+6.MuxP2B_DTS
+7.APB_ADC_Ctrl
+-R0[6] Rechecking
+8.Timers/PWM
+-PWM-end Counter의 value가 data register보다 커야 한다.
+
+9.WDT
+- WDTLDR Minimum value : 0 => 1
+- WDOGRESn : Power-On Reset시 만 동작 
+
+10.A/D-Converter :masking 하였을 경우 actual data와 expected data가 일치하지 않았을 경우 Error message를 내보낸다.
+
+#R  01FF8C04 00000000 FFFFFFFF word single
+
+* fri
+  I
+  L 3 ==> IDLE 3번 
+    
+ always @ (posedge PCLK or negedge PRESETn)
+    begin : UARCLKDIV
+      if ((!PRESETn))  begin
+         UARTDIV_Reg    <=  3'b000 ;
+         UARTDIV2       <=  1'b0     ;
+         UARTDIV4       <=  1'b0     ;
+         UARTDIV8       <=  1'b0     ;
+                        end
+         else begin //(PRESETn)
+         
+         UARTDIV2       <=  UARTDIV_Reg[0] ;
+         UARTDIV4       <=  UARTDIV_Reg[1] ;
+         UARTDIV8       <=  UARTDIV_Reg[2] ;
+              //end ??
+               
+1Mbyte=> 8,388,608bit:
+0x00100000 => 1,048,576, 2^20 =  1,048,576,
+8,388,608bit/1,048,576[Address] = 8[bit:Data] => address, address + 4, address+8 [4++]
+
+#check List
+P.134:clock& Power mangement[SYSCON] :Reset value:1070h?
+
+#//ExampleAPBSlave local registers : APB_PowerManger & APB_ADC_Ctrl 의 value 다시 check
+//`define EGAPBSLVREG 6'b000000
+`define EGAPBSLVREG 2'b00
+
+#Size Reducing
+//하나의 process에서 가능한면 다 해결 
+
+#FileReader :
+   .HCLK    (HCLK),
+   .HRESETn (WDOGRESn),  // Not reset via HRESETn, to allow Reset test
+  의 Reset을 HRESETn으로 change //Real System
+  그러나 Simulation상에서는 반복되는 신호들이 나오므로   WDOGRESn로 Tied
+  
+  
+  
+  

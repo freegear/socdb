@@ -1,0 +1,92 @@
+-- --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2003 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- -----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : README.rca
+-- File Revision          : 1.21
+--
+-- Release Information    : PrimeCell(TM)-PL092-r1p3-01ltd0
+--
+-- -----------------------------------------------------------------------------
+-- Purpose :
+--           README file for creation of .bif and .sim formatted
+--           vectors from BusTalk code
+--
+-- --=========================================================================--
+
+Steps to create .bif and .sim formatted vectors from the BusTalk
+code (default)
+--------------------------------------------------------------------------------
+make <testname>
+
+This will create infile.bif and bif.sim in the ./invec directory
+
+Please refer to the 'makefile' for legal 'testname's.
+
+RUNNING THE COMPLETE TEST SUITE
+===============================
+All the tests for the Smc cannot be run together because of the 
+large bif/tif files that will be created because of the large number of test
+cases presnt. Instead the tests have been partitioned into 6 sub-tests to 
+facilitate running the complete tests.
+They are :
+1. Smc1
+2. Smc2
+3. Smc3
+4. Smc4
+5. Smc5
+6. Smc6
+
+Please note that Smc1-6 can be run for rtl simulations, but for netlist 
+simulations only Smc1-5 should be run.
+
+Please compile these tests seperately, and issue make rtl from the top level 
+each time to run the tests. For example, the following set of commands will
+compile and run all the tests. After setting all the environment variables 
+metioned in the smc_pl092/README file.
+
+From the smc_pl092 directory:
+
+cd verification/bustest
+make Smc1
+cd ../${HDL_SOURCE}
+make rtl
+
+cd ../bustest
+make Smc2
+cd ../${HDL_SOURCE}
+make rtl
+
+cd ../bustest
+make Smc3
+cd ../${HDL_SOURCE}
+make rtl
+
+cd ../bustest
+make Smc4
+cd ../${HDL_SOURCE}
+make -f denali.mk rtl
+
+cd ../bustest
+make Smc5
+cd ../${HDL_SOURCE}
+make -f denali.mk TBENCH=1 rtl
+
+cd ../bustest
+make Smc6
+cd ../${HDL_SOURCE}
+make rtl
+
+Alternatively, the above set of commands can be copied into a file, and run
+from the top level to perform the tests, with suitable commands to rename the
+logs which are generated so that they are not overwritten by subsequent tests.
+
+-- --================================= End ===================================--

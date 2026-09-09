@@ -1,0 +1,90 @@
+#-- Synplicity, Inc.
+#-- Version 7.6       
+#-- Project file /user/ysjoo/ip/CAST/pci_1.0.2v/src/synthesis/pci.prj
+#-- Written on Mon Sep  6 17:28:39 2004
+
+
+#add_file options
+add_file -verilog "pci_barreg.v"
+add_file -verilog "pci_cead.v"
+add_file -verilog "pci_cfgebar.v"
+add_file -verilog "pci_cfgspace.v"
+add_file -verilog "pci_chkpar64.v"
+add_file -verilog "pci_gclkbuf.v"
+add_file -verilog "pci_genack64.v"
+add_file -verilog "pci_gendevsel.v"
+add_file -verilog "pci_genframe.v"
+add_file -verilog "pci_genirdy.v"
+add_file -verilog "pci_genotad.v"
+add_file -verilog "pci_genotcbe.v"
+add_file -verilog "pci_genpar64.v"
+add_file -verilog "pci_genreq64.v"
+add_file -verilog "pci_genstop.v"
+add_file -verilog "pci_gentrdy.v"
+add_file -verilog "pci_ibuf.v"
+add_file -verilog "pci_iobuf.v"
+add_file -verilog "pci_mtfsm64.v"
+add_file -verilog "pci_obuf.v"
+add_file -verilog "pci_obufoc.v"
+add_file -verilog "pci_obuft.v"
+add_file -verilog "pci_m64core.v"
+add_file -verilog "ahbmaster.v"
+add_file -verilog "ahbslave.v"
+add_file -verilog "dma64_fiforam.v"
+add_file -verilog "dma64ahb.v"
+add_file -verilog "dma64rdfifo.v"
+add_file -verilog "dma64regs.v"
+add_file -verilog "dma64txctrl.v"
+add_file -verilog "dma64wrfifo.v"
+add_file -verilog "fifo_async.v"
+add_file -verilog "fifosram.v"
+add_file -verilog "intctrl.v"
+add_file -verilog "mailbox.v"
+add_file -verilog "mailboxblk.v"
+add_file -verilog "mt64ahb.v"
+add_file -verilog "pcim64ahb.v"
+add_file -verilog "psync.v"
+add_file -verilog "t64ahb.v"
+add_file -verilog "pcim64ahbw.v"
+
+
+#implementation: "rev_1"
+impl -add rev_1
+
+#device options
+set_option -technology VIRTEX2
+set_option -part XC2V40
+set_option -package CS144
+set_option -speed_grade -6
+
+#compilation/mapping options
+set_option -default_enum_encoding default
+set_option -symbolic_fsm_compiler 1
+set_option -resource_sharing 1
+set_option -use_fsm_explorer 0
+
+#map options
+set_option -frequency auto
+set_option -fanout_limit 10000
+set_option -disable_io_insertion 0
+set_option -pipe 0
+set_option -update_models_cp 0
+set_option -verification_mode 0
+set_option -fixgatedclocks 0
+set_option -modular 0
+set_option -retiming 0
+
+#simulation options
+set_option -write_verilog 0
+set_option -write_vhdl 0
+
+#automatic place and route (vendor) options
+set_option -write_apr_constraint 1
+
+#set result format/file last
+project -result_file "rev_1/pcim64ahbw.edf"
+
+#implementation attributes
+set_option -vlog_std v2001
+set_option -auto_constrain_io 0
+impl -active "rev_1"

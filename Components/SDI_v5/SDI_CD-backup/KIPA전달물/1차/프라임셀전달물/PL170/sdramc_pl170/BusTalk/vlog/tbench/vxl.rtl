@@ -1,0 +1,90 @@
+/**********************************************************************/
+/* This confidential and proprietary software may be used only as     */
+/* authorised by a licensing agreement from ARM Limited               */
+/*   (C) COPYRIGHT 2000 ARM Limited                                   */
+/*       ALL RIGHTS RESERVED                                          */
+/* The entire notice above must be reproduced on all authorised       */
+/* copies and copies may only be made to the extent permitted         */
+/* by a licensing agreement from ARM Limited.                         */
+/*                                                                    */
+/**********************************************************************/
+/* Version and Release Control Information:                           */
+/*
+  File Name           : vxl.rtl,v
+  File Revision       : 1.4
+
+  Release Information : PrimeCell(TM)-PL170-REL2v2
+                                                                      */
+/**********************************************************************/
+/* Purpose            : Verilog-XL command file for RTL simulations.  */
+/**********************************************************************/
+
+  +libext+.v
+
+  +incdir+../reader
+  +incdir+../../../verilog/uut
+  +incdir+../trickbox
+  +incdir+../tbench
+
+  ../common/defs.v
+  ../common/clockgen.v
+  ../common/countdown.v
+
+  ../bid/cyc_drivers.v
+  ../bid/reset_driver.v
+  ../bid/split.v
+
+  ../reader/reader0.v
+  ../reader/reader1.v
+  ../reader/reader2.v
+  ../reader/reader3.v
+
+  ../buswatcher/bus_watch.v
+
+  ../vr/Reg.v
+  ../vr/linedrv.v
+  ../vr/VIODriver.v
+  ../vr/VRCycDrivers.v
+
+  -y ../../../verilog/uut
+  -y ../trickbox
+
+/*** Note if the testbench does not instantiate a 64M_x16    ***
+ *** device the following block needs to be commented out    ***/
+
+/* START 64M_x16 */
+  -y ../../../../MODELS/denali/sdram/Nec64Mx16/verilog_xl
+/* END 64M_x16 */
+
+/*** Note if the testbench does not instantiate a 64M_x8     ***
+ *** device the following block needs to be commented out    ***/
+
+/* START 64M_x8 */
+  -y ../../../../MODELS/denali/sdram/Nec64Mx8/verilog_xl
+/* END 64M_x8 */
+
+/*** Note if the testbench does not instantiate a 16M_x16    ***
+ *** device the following block needs to be commented out    ***/
+
+/* START 16M_x16 */
+  -y ../../../../MODELS/denali/sdram/Mt16Mx16/verilog_xl
+/* END 16M_x16 */
+
+/*** Note if the testbench does not instantiate a 16M_x8     ***
+ *** device the following block needs to be commented out    ***/
+
+/* START 16M_x8 */
+  -y ../../../../MODELS/denali/sdram/Mt16Mx8/verilog_xl
+/* END 16M_x8 */
+
+  ../tbench/ahbslave0_tb.v
+  ../tbench/ahbslave1_tb.v
+  ../tbench/ahbslave2_tb.v
+  ../tbench/ahbslave3_tb.v
+  ../tbench/decoder0.v
+  ../tbench/decoder1.v
+  ../tbench/defslave.v
+  ../tbench/timing.v
+  ../tbench/BusWatch.v
+
+/********************************* End ********************************/

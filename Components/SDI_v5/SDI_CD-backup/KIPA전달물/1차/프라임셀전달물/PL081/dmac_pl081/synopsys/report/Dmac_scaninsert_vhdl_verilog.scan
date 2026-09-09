@@ -1,0 +1,1756 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Dmac
+Version: 2000.05-1
+Date   : Tue May 15 03:06:41 2001
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Dmac' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0DmacChannel/uDmacChDstXfer
+                        360      2     0     0      0     0     0   3320  10.84%
+u0DmacChannel/uDmacChLLILoad
+                         81      0     0     0      0     0     0    722  11.22%
+u0DmacChannel/uDmacChPckUnpck
+                        429      0     0     0      0     0     0   3836  11.18%
+u0DmacChannel/uDmacChRegBlock
+                       1097      0     0     0      5     0     0  10154  10.80%
+u0DmacChannel/uDmacChRegFile
+                        584      0     0     0      2     0     0   5344  10.93%
+u0DmacChannel/uDmacChReqMask
+                         53      0     0     0      0     0     0    450  11.78%
+u0DmacChannel/uDmacChReqProc
+                        457      0     0     0      1     0     0   4218  10.83%
+u0DmacChannel/uDmacChSrcXfer
+                        357      2     0     0      7     0     0   3336  10.70%
+u0DmacChannel          3429      4     0     0     15     0     0  31452  10.90%
+u0DmacRevAnd              0      0     0     0      0     0     0      6   0.00%
+u1DmacAhbMaster/uDmacArbiter
+                        222      0   130     0     88     0     0   4052   5.66%
+u1DmacAhbMaster/uDmacLiteMaster
+                       2132      5    51     0      2     0     0  19752  10.82%
+u1DmacAhbMaster/uDmacMasterWrap
+                        295      0     0     0      1     0     0   2754  10.71%
+u1DmacAhbMaster        2649      5   181     0     91     0     0  26566  10.04%
+u1DmacChannel/uDmacChDstXfer
+                        352      4     0     0      0     0     0   3274  10.75%
+u1DmacChannel/uDmacChLLILoad
+                         84      0     0     0      0     0     0    782  10.74%
+u1DmacChannel/uDmacChPckUnpck
+                        437      0     0     0      2     0     0   3970  11.01%
+u1DmacChannel/uDmacChRegBlock
+                       1088      0     0     0      3     0     0   9902  10.99%
+u1DmacChannel/uDmacChRegFile
+                        581      0     0     0      3     0     0   5304  10.95%
+u1DmacChannel/uDmacChReqMask
+                         54      0     0     0      0     0     0    446  12.11%
+u1DmacChannel/uDmacChReqProc
+                        432      1     0     0      0     0     0   3938  10.97%
+u1DmacChannel/uDmacChSrcXfer
+                        378      0     0     0      5     0     0   3502  10.79%
+u1DmacChannel          3408      5     0     0     13     0     0  31154  10.94%
+u1DmacRevAnd              0      0     1     0      1     0     0      6   0.00%
+u2DmacRevAnd              1      0     0     0      0     0     0      6  16.67%
+u3DmacRevAnd              0      0     1     0      0     0     0      6   0.00%
+uDmacAhbSlaveIf        1180      0    74     0     10     0     0  11382  10.44%
+uDmacRqstSync           175      0     0     0      0     0     0   1572  11.13%
+uDmacRspRoute           117      0    48     0      0     0     0   1546   7.81%
+Dmac                  11036     14   305     0    130     0     0 104406  10.60%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Dmac
+Version: 2000.05-1
+Date   : Tue May 15 03:06:54 2001
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Dmac
+Version: 2000.05-1
+Date   : Tue May 15 03:06:54 2001
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain (SCANINHCLK --> SCANOUTHCLK) contains 1621 cells:
+
+  SCANINHCLK	->
+  uDmacRqstSync/DMACLBREQSync1_reg_0	->
+  uDmacRqstSync/DMACLBREQSync1_reg_1	->
+  uDmacRqstSync/DMACLBREQSync1_reg_2	->
+  uDmacRqstSync/DMACLBREQSync1_reg_3	->
+  uDmacRqstSync/DMACLBREQSync1_reg_4	->
+  uDmacRqstSync/DMACLBREQSync1_reg_5	->
+  uDmacRqstSync/DMACLBREQSync1_reg_6	->
+  uDmacRqstSync/DMACLBREQSync1_reg_7	->
+  uDmacRqstSync/DMACLBREQSync1_reg_8	->
+  uDmacRqstSync/DMACLBREQSync1_reg_9	->
+  uDmacRqstSync/DMACLBREQSync1_reg_10	->
+  uDmacRqstSync/DMACLBREQSync1_reg_11	->
+  uDmacRqstSync/DMACLBREQSync1_reg_12	->
+  uDmacRqstSync/DMACLBREQSync1_reg_13	->
+  uDmacRqstSync/DMACLBREQSync1_reg_14	->
+  uDmacRqstSync/DMACLBREQSync1_reg_15	->
+  uDmacRqstSync/DMACLSREQSync1_reg_0	->
+  uDmacRqstSync/DMACLSREQSync1_reg_1	->
+  uDmacRqstSync/DMACLSREQSync1_reg_2	->
+  uDmacRqstSync/DMACLSREQSync1_reg_3	->
+  uDmacRqstSync/DMACLSREQSync1_reg_4	->
+  uDmacRqstSync/DMACLSREQSync1_reg_5	->
+  uDmacRqstSync/DMACLSREQSync1_reg_6	->
+  uDmacRqstSync/DMACLSREQSync1_reg_7	->
+  uDmacRqstSync/DMACLSREQSync1_reg_8	->
+  uDmacRqstSync/DMACLSREQSync1_reg_9	->
+  uDmacRqstSync/DMACLSREQSync1_reg_10	->
+  uDmacRqstSync/DMACLSREQSync1_reg_11	->
+  uDmacRqstSync/DMACLSREQSync1_reg_12	->
+  uDmacRqstSync/DMACLSREQSync1_reg_13	->
+  uDmacRqstSync/DMACLSREQSync1_reg_14	->
+  uDmacRqstSync/DMACLSREQSync1_reg_15	->
+  uDmacRqstSync/DMACBREQSync1_reg_0	->
+  uDmacRqstSync/DMACBREQSync1_reg_1	->
+  uDmacRqstSync/DMACBREQSync1_reg_2	->
+  uDmacRqstSync/DMACBREQSync1_reg_3	->
+  uDmacRqstSync/DMACBREQSync1_reg_4	->
+  uDmacRqstSync/DMACBREQSync1_reg_5	->
+  uDmacRqstSync/DMACBREQSync1_reg_6	->
+  uDmacRqstSync/DMACBREQSync1_reg_7	->
+  uDmacRqstSync/DMACBREQSync1_reg_8	->
+  uDmacRqstSync/DMACBREQSync1_reg_9	->
+  uDmacRqstSync/DMACBREQSync1_reg_10	->
+  uDmacRqstSync/DMACBREQSync1_reg_11	->
+  uDmacRqstSync/DMACBREQSync1_reg_12	->
+  uDmacRqstSync/DMACBREQSync1_reg_13	->
+  uDmacRqstSync/DMACBREQSync1_reg_14	->
+  uDmacRqstSync/DMACBREQSync1_reg_15	->
+  uDmacRqstSync/DMACSREQSync1_reg_0	->
+  uDmacRqstSync/DMACSREQSync1_reg_1	->
+  uDmacRqstSync/DMACSREQSync1_reg_2	->
+  uDmacRqstSync/DMACSREQSync1_reg_3	->
+  uDmacRqstSync/DMACSREQSync1_reg_4	->
+  uDmacRqstSync/DMACSREQSync1_reg_5	->
+  uDmacRqstSync/DMACSREQSync1_reg_6	->
+  uDmacRqstSync/DMACSREQSync1_reg_7	->
+  uDmacRqstSync/DMACSREQSync1_reg_8	->
+  uDmacRqstSync/DMACSREQSync1_reg_9	->
+  uDmacRqstSync/DMACSREQSync1_reg_10	->
+  uDmacRqstSync/DMACSREQSync1_reg_11	->
+  uDmacRqstSync/DMACSREQSync1_reg_12	->
+  uDmacRqstSync/DMACSREQSync1_reg_13	->
+  uDmacRqstSync/DMACSREQSync1_reg_14	->
+  uDmacRqstSync/DMACSREQSync1_reg_15	->
+  uDmacRqstSync/DMACLBREQSync_reg_0	->
+  uDmacRqstSync/DMACLBREQSync_reg_1	->
+  uDmacRqstSync/DMACLBREQSync_reg_2	->
+  uDmacRqstSync/DMACLBREQSync_reg_3	->
+  uDmacRqstSync/DMACLBREQSync_reg_4	->
+  uDmacRqstSync/DMACLBREQSync_reg_5	->
+  uDmacRqstSync/DMACLBREQSync_reg_6	->
+  uDmacRqstSync/DMACLBREQSync_reg_7	->
+  uDmacRqstSync/DMACLBREQSync_reg_8	->
+  uDmacRqstSync/DMACLBREQSync_reg_9	->
+  uDmacRqstSync/DMACLBREQSync_reg_10	->
+  uDmacRqstSync/DMACLBREQSync_reg_11	->
+  uDmacRqstSync/DMACLBREQSync_reg_12	->
+  uDmacRqstSync/DMACLBREQSync_reg_13	->
+  uDmacRqstSync/DMACLBREQSync_reg_14	->
+  uDmacRqstSync/DMACLBREQSync_reg_15	->
+  uDmacRqstSync/DMACLSREQSync_reg_0	->
+  uDmacRqstSync/DMACLSREQSync_reg_1	->
+  uDmacRqstSync/DMACLSREQSync_reg_2	->
+  uDmacRqstSync/DMACLSREQSync_reg_3	->
+  uDmacRqstSync/DMACLSREQSync_reg_4	->
+  uDmacRqstSync/DMACLSREQSync_reg_5	->
+  uDmacRqstSync/DMACLSREQSync_reg_6	->
+  uDmacRqstSync/DMACLSREQSync_reg_7	->
+  uDmacRqstSync/DMACLSREQSync_reg_8	->
+  uDmacRqstSync/DMACLSREQSync_reg_9	->
+  uDmacRqstSync/DMACLSREQSync_reg_10	->
+  uDmacRqstSync/DMACLSREQSync_reg_11	->
+  uDmacRqstSync/DMACLSREQSync_reg_12	->
+  uDmacRqstSync/DMACLSREQSync_reg_13	->
+  uDmacRqstSync/DMACLSREQSync_reg_14	->
+  uDmacRqstSync/DMACLSREQSync_reg_15	->
+  uDmacRqstSync/DMACBREQSync_reg_0	->
+  uDmacRqstSync/DMACBREQSync_reg_1	->
+  uDmacRqstSync/DMACBREQSync_reg_2	->
+  uDmacRqstSync/DMACBREQSync_reg_3	->
+  uDmacRqstSync/DMACBREQSync_reg_4	->
+  uDmacRqstSync/DMACBREQSync_reg_5	->
+  uDmacRqstSync/DMACBREQSync_reg_6	->
+  uDmacRqstSync/DMACBREQSync_reg_7	->
+  uDmacRqstSync/DMACBREQSync_reg_8	->
+  uDmacRqstSync/DMACBREQSync_reg_9	->
+  uDmacRqstSync/DMACBREQSync_reg_10	->
+  uDmacRqstSync/DMACBREQSync_reg_11	->
+  uDmacRqstSync/DMACBREQSync_reg_12	->
+  uDmacRqstSync/DMACBREQSync_reg_13	->
+  uDmacRqstSync/DMACBREQSync_reg_14	->
+  uDmacRqstSync/DMACBREQSync_reg_15	->
+  uDmacRqstSync/DMACSREQSync_reg_0	->
+  uDmacRqstSync/DMACSREQSync_reg_1	->
+  uDmacRqstSync/DMACSREQSync_reg_2	->
+  uDmacRqstSync/DMACSREQSync_reg_3	->
+  uDmacRqstSync/DMACSREQSync_reg_4	->
+  uDmacRqstSync/DMACSREQSync_reg_5	->
+  uDmacRqstSync/DMACSREQSync_reg_6	->
+  uDmacRqstSync/DMACSREQSync_reg_7	->
+  uDmacRqstSync/DMACSREQSync_reg_8	->
+  uDmacRqstSync/DMACSREQSync_reg_9	->
+  uDmacRqstSync/DMACSREQSync_reg_10	->
+  uDmacRqstSync/DMACSREQSync_reg_11	->
+  uDmacRqstSync/DMACSREQSync_reg_12	->
+  uDmacRqstSync/DMACSREQSync_reg_13	->
+  uDmacRqstSync/DMACSREQSync_reg_14	->
+  uDmacRqstSync/DMACSREQSync_reg_15	->
+  u0DmacChannel/uDmacChReqProc/iRawIntErrCh_reg (*)	->
+  u0DmacChannel/uDmacChReqProc/DelQualDstReq_reg	->
+  u0DmacChannel/uDmacChReqProc/RegSetIntErr_reg (*)	->
+  u0DmacChannel/uDmacChReqProc/iRawIntTCCh_reg (*)	->
+  u0DmacChannel/uDmacChReqProc/LLIReq_reg	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_0 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_1 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_2 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_3 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_4 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_5 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_6 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_7 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_8 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_9 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_10 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_11 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_12 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_13 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_14 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_15 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_16 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_17 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_18 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_19 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_20 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_21 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_22 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_23 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_24 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_25 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_26 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_27 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_28 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_29 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_30 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_31 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_0 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_1 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_2 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_3 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_4 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_5 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_6 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_7 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_8 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_9 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_10 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_11 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_12 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_13 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_14 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_15 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_16 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_17 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_18 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_19 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_20 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_21 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_22 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_23 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_24 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_25 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_26 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_27 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_28 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_29 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_30 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_31 (*)	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_0	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_1	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_2	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_3	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_4	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_5	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_6	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_7	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_8	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_9	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_10	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_11	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_12	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_13	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_14	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_15	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_16	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_17	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_18	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_19	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_20	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_21	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_22	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_23	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_24	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_25	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_26	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_27	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_28	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_29	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_30	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_31	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_0	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_1	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_2	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_3	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_4	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_5	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_6	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_7	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_8	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_9	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_10	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_11	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_12	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_13	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_14	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_15	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_16	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_17	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_18	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_19	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_20	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_21	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_22	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_23	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_24	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_25	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_26	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_27	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_28	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_29	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_30	->
+  u0DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_31	->
+  u0DmacChannel/uDmacChLLILoad/FinishedLLI_reg (*)	->
+  u0DmacChannel/uDmacChLLILoad/LLIDmacState_reg_3	->
+  u0DmacChannel/uDmacChLLILoad/LLIDmacState_reg_2	->
+  u0DmacChannel/uDmacChLLILoad/DisabledLLI_reg	->
+  u0DmacChannel/uDmacChLLILoad/LLIDmacState_reg_0	->
+  u0DmacChannel/uDmacChLLILoad/LLIDmacState_reg_1 (*)	->
+  u0DmacChannel/uDmacChLLILoad/AxsCntLLI_reg_1	->
+  u0DmacChannel/uDmacChLLILoad/AxsCntLLI_reg_2 (*)	->
+  u0DmacChannel/uDmacChLLILoad/AxsCntLLI_reg_3 (*)	->
+  u0DmacChannel/uDmacChLLILoad/AxsCntLLI_reg_4	->
+  u0DmacChannel/uDmacChLLILoad/AxsCntLLI_reg_0 (*)	->
+  u0DmacChannel/uDmacChDstXfer/AbortReqDst_reg (*)	->
+  u0DmacChannel/uDmacChDstXfer/iDstDmacState_reg_0 (*)	->
+  u0DmacChannel/uDmacChDstXfer/SrcTCDone_reg	->
+  u0DmacChannel/uDmacChDstXfer/iDstDmacState_reg_1 (*)	->
+  u0DmacChannel/uDmacChDstXfer/iDstDmacState_reg_3 (*)	->
+  u0DmacChannel/uDmacChDstXfer/iDstDmacState_reg_4	->
+  u0DmacChannel/uDmacChDstXfer/iDMACTCDst_reg	->
+  u0DmacChannel/uDmacChDstXfer/iDMACClrDst_reg	->
+  u0DmacChannel/uDmacChDstXfer/iDstBurstOn_reg (*)	->
+  u0DmacChannel/uDmacChDstXfer/iDstDmacState_reg_2	->
+  u0DmacChannel/uDmacChDstXfer/BrstCntDst_reg_0 (*)	->
+  u0DmacChannel/uDmacChDstXfer/BrstCntDst_reg_1	->
+  u0DmacChannel/uDmacChDstXfer/BrstCntDst_reg_2 (*)	->
+  u0DmacChannel/uDmacChDstXfer/BrstCntDst_reg_3 (*)	->
+  u0DmacChannel/uDmacChDstXfer/BrstCntDst_reg_4 (*)	->
+  u0DmacChannel/uDmacChDstXfer/BrstCntDst_reg_5	->
+  u0DmacChannel/uDmacChDstXfer/BrstCntDst_reg_6	->
+  u0DmacChannel/uDmacChDstXfer/BrstCntDst_reg_7	->
+  u0DmacChannel/uDmacChDstXfer/BrstCntDst_reg_8	->
+  u0DmacChannel/uDmacChDstXfer/BrstCntDst_reg_9	->
+  u0DmacChannel/uDmacChDstXfer/BrstCntDst_reg_10 (*)	->
+  u0DmacChannel/uDmacChDstXfer/iAxsCntDst_reg_0	->
+  u0DmacChannel/uDmacChDstXfer/iAxsCntDst_reg_1	->
+  u0DmacChannel/uDmacChDstXfer/iAxsCntDst_reg_2	->
+  u0DmacChannel/uDmacChDstXfer/iAxsCntDst_reg_3	->
+  u0DmacChannel/uDmacChDstXfer/iAxsCntDst_reg_4	->
+  u0DmacChannel/uDmacChReqMask/SrcE2LMask_reg (*)	->
+  u0DmacChannel/uDmacChReqMask/ErrorMask_reg (*)	->
+  u0DmacChannel/uDmacChReqMask/DstAxsOnMask_reg (*)	->
+  u0DmacChannel/uDmacChReqMask/SrcAxsOnMask_reg (*)	->
+  u0DmacChannel/uDmacChReqMask/LLILoadMask_reg (*)	->
+  u0DmacChannel/uDmacChPckUnpck/WrapFlag_reg	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_0	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_1	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_2	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_3	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_4	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_5	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_6	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_7	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_8	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_9	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_10	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_11	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_12	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_13 (*)	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_14	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_15 (*)	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_16	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_17 (*)	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_18 (*)	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_19	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_20	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_21 (*)	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_22	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_23	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_24	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_25	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_26	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_27	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_28	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_29	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_30	->
+  u0DmacChannel/uDmacChPckUnpck/WrBufferM_reg_31	->
+  u0DmacChannel/uDmacChPckUnpck/RdSubPtr_reg_0 (*)	->
+  u0DmacChannel/uDmacChPckUnpck/RdSubPtr_reg_1 (*)	->
+  u0DmacChannel/uDmacChPckUnpck/iFifoRdPtr_reg_1 (*)	->
+  u0DmacChannel/uDmacChPckUnpck/iFifoWrPtr_reg_0	->
+  u0DmacChannel/uDmacChPckUnpck/iFifoWrPtr_reg_1	->
+  u0DmacChannel/uDmacChPckUnpck/WrSubPtr_reg_1 (*)	->
+  u0DmacChannel/uDmacChPckUnpck/iFifoRdPtr_reg_0 (*)	->
+  u0DmacChannel/uDmacChPckUnpck/WrSubPtr_reg_0 (*)	->
+  u0DmacChannel/uDmacChSrcXfer/iDMACClrSrc_reg (*)	->
+  u0DmacChannel/uDmacChSrcXfer/iDMACTCSrc_reg (*)	->
+  u0DmacChannel/uDmacChSrcXfer/iSrcDmacState_reg_1	->
+  u0DmacChannel/uDmacChSrcXfer/SrcBurstOn_reg (*)	->
+  u0DmacChannel/uDmacChSrcXfer/iSrcDmacState_reg_0	->
+  u0DmacChannel/uDmacChSrcXfer/iSrcDmacState_reg_2	->
+  u0DmacChannel/uDmacChSrcXfer/AbortReqSrc_reg (*)	->
+  u0DmacChannel/uDmacChSrcXfer/iSrcDmacState_reg_4	->
+  u0DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_0 (*)	->
+  u0DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_1 (*)	->
+  u0DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_2	->
+  u0DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_3 (*)	->
+  u0DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_4 (*)	->
+  u0DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_5	->
+  u0DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_6	->
+  u0DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_7	->
+  u0DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_8	->
+  u0DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_9	->
+  u0DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_10	->
+  u0DmacChannel/uDmacChSrcXfer/Pr2AxsCntSrc_reg_0	->
+  u0DmacChannel/uDmacChSrcXfer/Pr2AxsCntSrc_reg_1 (*)	->
+  u0DmacChannel/uDmacChSrcXfer/Pr2AxsCntSrc_reg_2 (*)	->
+  u0DmacChannel/uDmacChSrcXfer/Pr1AxsCntSrc_reg_0 (*)	->
+  u0DmacChannel/uDmacChSrcXfer/Pr1AxsCntSrc_reg_1	->
+  u0DmacChannel/uDmacChSrcXfer/AxsCntSrc_reg_1 (*)	->
+  u0DmacChannel/uDmacChSrcXfer/AxsCntSrc_reg_2	->
+  u0DmacChannel/uDmacChSrcXfer/AxsCntSrc_reg_3	->
+  u0DmacChannel/uDmacChSrcXfer/AxsCntSrc_reg_4	->
+  u0DmacChannel/uDmacChSrcXfer/AxsCntSrc_reg_0	->
+  u0DmacChannel/uDmacChSrcXfer/Pr1AxsCntSrc_reg_2	->
+  u0DmacChannel/uDmacChSrcXfer/iSrcDmacState_reg_3	->
+  u0DmacChannel/uDmacChRegBlock/RegChEnHigh_reg (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDisabledSrc_reg (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDstErred_reg (*)	->
+  u0DmacChannel/uDmacChRegBlock/FifoPtrReset_reg	->
+  u0DmacChannel/uDmacChRegBlock/iSrcDstEn_reg	->
+  u0DmacChannel/uDmacChRegBlock/iChannelEn_reg (*)	->
+  u0DmacChannel/uDmacChRegBlock/iHalt_reg (*)	->
+  u0DmacChannel/uDmacChRegBlock/iSrcErred_reg (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDisabledDst_reg (*)	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_0	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_1	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_2	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_3	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_4	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_5	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_6	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_7	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_8	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_9	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_10	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_11	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_12	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_13	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_14	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_15	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_16	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_17	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_18	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_19	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_20	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_21	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_22	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_23	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_24	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_25	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_26	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_27	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_28	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_29	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_30	->
+  u0DmacChannel/uDmacChRegBlock/ChHRDATA_reg_31	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_0 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_1 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_2 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_3 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_4 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_5 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_6 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_7 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_8 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_9 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_10 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_11 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_12 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_13 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_1	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_2	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_3	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_4 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_5	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_6	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_7	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_8	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_10	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_11 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_14 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_15 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_16 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_2 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_3 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_4 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_5 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_6 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_7 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_8 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_9 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_10 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_11 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_12 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_13 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_14 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_15 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_16 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_17 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_18 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_19 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_20 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_21 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_22 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_23 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_24 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_25 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_26 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_27 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_28 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_29 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_30 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_31 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_0 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_1	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_2 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_3 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_4 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_5 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_6 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_7 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_8 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_9 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_10 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_11 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_12 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_13 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_14 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_15 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_16 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_21	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_22	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_24 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_25 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_26 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_27 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_28 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_29 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_30 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_31 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_0 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_1 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_2 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_3 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_4 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_5 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_6 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_7 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_8 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_9 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_10 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_11 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_12 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_13 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_14 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_15 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_16 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_17 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_18 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_19 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_20 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_21 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_22 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_23 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_24 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_25 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_26 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_27 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_28 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_29 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_30 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_31 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_0 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_1 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_2 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_3 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_4 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_5 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_6 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_7 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_8 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_9 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_10 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_11 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_12 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_13 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_14 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_15 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_16 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_17 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_18 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_19 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_20 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_21 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_22 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_23 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_24 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_25 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_26 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_27 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_28 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_29 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_30 (*)	->
+  u0DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_31 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_9	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_23	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_19	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_20 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_18	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_13 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChControl_reg_17 (*)	->
+  u0DmacChannel/uDmacChRegBlock/DMACChConfig_reg_12 (*)	->
+  uDmacAhbSlaveIf/DMACSlaveState_reg (*)	->
+  uDmacAhbSlaveIf/iRegHWrite_reg (*)	->
+  uDmacAhbSlaveIf/iHREADYOUT_reg (*)	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_0	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_1	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_2	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_3	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_4	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_5	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_6	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_7	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_8	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_9	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_10	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_11	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_12	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_13	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_14	->
+  uDmacAhbSlaveIf/BuffDMACLBREQ_reg_15	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_0	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_1	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_2	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_3	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_4	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_5	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_6	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_7	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_8	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_9	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_10	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_11	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_12	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_13	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_14	->
+  uDmacAhbSlaveIf/BuffDMACLSREQ_reg_15	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_0	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_1	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_2	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_3	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_4	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_5	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_6	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_7	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_8	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_9	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_10	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_11	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_12	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_13	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_14	->
+  uDmacAhbSlaveIf/BuffDMACBREQ_reg_15	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_0	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_1	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_2	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_3	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_4	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_5	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_6	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_7	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_8	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_9	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_10	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_11	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_12	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_13	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_14	->
+  uDmacAhbSlaveIf/BuffDMACSREQ_reg_15	->
+  uDmacAhbSlaveIf/iDMACITOP3_reg_0 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP3_reg_1 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_0 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_1 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_2 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_3 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_4 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_5 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_6 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_7 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_8 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_9 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_10 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_11 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_12 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_13 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_14 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP2_reg_15 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_0 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_1 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_2 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_3 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_4 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_5 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_6 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_7 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_8 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_9 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_10 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_11 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_12 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_13 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_14 (*)	->
+  uDmacAhbSlaveIf/iDMACITOP1_reg_15 (*)	->
+  uDmacAhbSlaveIf/DMACSync_reg_13	->
+  uDmacAhbSlaveIf/DMACConfig_reg_0 (*)	->
+  uDmacAhbSlaveIf/DMACConfig_reg_1	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_0	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_1	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_2	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_3 (*)	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_4	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_5 (*)	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_6	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_7	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_8	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_9	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_10	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_11	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_12	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_13	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_14	->
+  uDmacAhbSlaveIf/DMACSoftLSReq_reg_15	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_0	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_1	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_2	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_3 (*)	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_4 (*)	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_5	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_6 (*)	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_7	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_8	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_9	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_10	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_11	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_12 (*)	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_13	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_14	->
+  uDmacAhbSlaveIf/DMACSoftSReq_reg_15	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_0	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_1	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_2 (*)	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_3	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_4 (*)	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_5	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_6	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_7	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_8 (*)	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_9	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_10	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_11	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_12	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_13	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_14	->
+  uDmacAhbSlaveIf/DMACSoftLBReq_reg_15 (*)	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_0 (*)	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_1	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_2	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_3 (*)	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_4	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_5	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_6 (*)	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_7	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_8	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_9	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_10	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_11	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_12	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_13	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_14 (*)	->
+  uDmacAhbSlaveIf/DMACSoftBReq_reg_15	->
+  uDmacAhbSlaveIf/HAddrBuff_reg_5 (*)	->
+  uDmacAhbSlaveIf/HAddrBuff_reg_8	->
+  uDmacAhbSlaveIf/HAddrBuff_reg_9	->
+  uDmacAhbSlaveIf/HAddrBuff_reg_10	->
+  uDmacAhbSlaveIf/HAddrBuff_reg_11	->
+  uDmacAhbSlaveIf/iHRESP_reg_0	->
+  uDmacAhbSlaveIf/iHRESP_reg_1 (*)	->
+  uDmacAhbSlaveIf/HAddrBuff_reg_2 (*)	->
+  uDmacAhbSlaveIf/HAddrBuff_reg_3	->
+  uDmacAhbSlaveIf/DMACSync_reg_7	->
+  uDmacAhbSlaveIf/DMACSync_reg_15	->
+  uDmacAhbSlaveIf/DMACSync_reg_14 (*)	->
+  uDmacAhbSlaveIf/DMACSync_reg_2	->
+  uDmacAhbSlaveIf/DMACSync_reg_10	->
+  uDmacAhbSlaveIf/HAddrBuff_reg_7	->
+  uDmacAhbSlaveIf/DMACSync_reg_1	->
+  uDmacAhbSlaveIf/DMACSync_reg_0	->
+  uDmacAhbSlaveIf/DMACSync_reg_12	->
+  uDmacAhbSlaveIf/DMACSync_reg_8	->
+  uDmacAhbSlaveIf/HAddrBuff_reg_6	->
+  uDmacAhbSlaveIf/DMACTCR_reg	->
+  uDmacAhbSlaveIf/DMACSync_reg_9	->
+  uDmacAhbSlaveIf/DMACSync_reg_4	->
+  uDmacAhbSlaveIf/DMACSync_reg_5	->
+  uDmacAhbSlaveIf/DMACSync_reg_3	->
+  uDmacAhbSlaveIf/DMACSync_reg_11	->
+  uDmacAhbSlaveIf/HAddrBuff_reg_4	->
+  uDmacAhbSlaveIf/DMACSync_reg_6	->
+  u1DmacChannel/uDmacChReqProc/iRawIntErrCh_reg (*)	->
+  u1DmacChannel/uDmacChReqProc/DelQualDstReq_reg (*)	->
+  u1DmacChannel/uDmacChReqProc/RegSetIntErr_reg (*)	->
+  u1DmacChannel/uDmacChReqProc/iRawIntTCCh_reg (*)	->
+  u1DmacChannel/uDmacChReqProc/LLIReq_reg	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_0 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_1 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_2 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_3 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_4 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_5 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_6 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_7 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_8 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_9 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_10 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_11 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_12 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_13 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_14 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_15 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_16 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_17 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_18 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_19 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_20 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_21 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_22 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_23 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_24 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_25 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_26 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_27 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_28 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_29 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_30 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg3_reg_31 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_0 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_1 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_2 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_3 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_4 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_5 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_6 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_7 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_8 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_9 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_10 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_11 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_12 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_13 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_14 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_15 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_16 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_17 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_18 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_19 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_20 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_21 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_22 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_23 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_24 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_25 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_26 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_27 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_28 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_29 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_30 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg2_reg_31 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_0	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_1	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_2	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_3	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_4	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_5	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_6	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_7	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_8	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_9	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_10	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_11	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_12	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_13	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_14	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_15	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_16	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_17	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_18	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_19	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_20	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_21	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_22	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_23	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_24	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_25	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_26	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_27	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_28	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_29	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_30	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg1_reg_31 (*)	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_0	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_1	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_2	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_3	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_4	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_5	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_6	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_7	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_8	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_9	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_10	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_11	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_12	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_13	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_14	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_15	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_16	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_17	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_18	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_19	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_20	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_21	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_22	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_23	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_24	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_25	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_26	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_27	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_28	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_29	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_30	->
+  u1DmacChannel/uDmacChRegFile/ChFIFOReg0_reg_31 (*)	->
+  u1DmacChannel/uDmacChLLILoad/FinishedLLI_reg (*)	->
+  u1DmacChannel/uDmacChLLILoad/LLIDmacState_reg_3 (*)	->
+  u1DmacChannel/uDmacChLLILoad/LLIDmacState_reg_2	->
+  u1DmacChannel/uDmacChLLILoad/DisabledLLI_reg (*)	->
+  u1DmacChannel/uDmacChLLILoad/LLIDmacState_reg_0 (*)	->
+  u1DmacChannel/uDmacChLLILoad/LLIDmacState_reg_1 (*)	->
+  u1DmacChannel/uDmacChLLILoad/AxsCntLLI_reg_0 (*)	->
+  u1DmacChannel/uDmacChLLILoad/AxsCntLLI_reg_1 (*)	->
+  u1DmacChannel/uDmacChLLILoad/AxsCntLLI_reg_2 (*)	->
+  u1DmacChannel/uDmacChLLILoad/AxsCntLLI_reg_3 (*)	->
+  u1DmacChannel/uDmacChLLILoad/AxsCntLLI_reg_4 (*)	->
+  u1DmacChannel/uDmacChDstXfer/AbortReqDst_reg (*)	->
+  u1DmacChannel/uDmacChDstXfer/iDstDmacState_reg_0 (*)	->
+  u1DmacChannel/uDmacChDstXfer/SrcTCDone_reg	->
+  u1DmacChannel/uDmacChDstXfer/iDstDmacState_reg_1 (*)	->
+  u1DmacChannel/uDmacChDstXfer/iDstDmacState_reg_3 (*)	->
+  u1DmacChannel/uDmacChDstXfer/iDstDmacState_reg_4 (*)	->
+  u1DmacChannel/uDmacChDstXfer/iDMACTCDst_reg	->
+  u1DmacChannel/uDmacChDstXfer/iDMACClrDst_reg	->
+  u1DmacChannel/uDmacChDstXfer/iDstBurstOn_reg (*)	->
+  u1DmacChannel/uDmacChDstXfer/iDstDmacState_reg_2	->
+  u1DmacChannel/uDmacChDstXfer/BrstCntDst_reg_0	->
+  u1DmacChannel/uDmacChDstXfer/BrstCntDst_reg_1 (*)	->
+  u1DmacChannel/uDmacChDstXfer/BrstCntDst_reg_2 (*)	->
+  u1DmacChannel/uDmacChDstXfer/BrstCntDst_reg_3 (*)	->
+  u1DmacChannel/uDmacChDstXfer/BrstCntDst_reg_4 (*)	->
+  u1DmacChannel/uDmacChDstXfer/BrstCntDst_reg_5	->
+  u1DmacChannel/uDmacChDstXfer/BrstCntDst_reg_6	->
+  u1DmacChannel/uDmacChDstXfer/BrstCntDst_reg_7	->
+  u1DmacChannel/uDmacChDstXfer/BrstCntDst_reg_8	->
+  u1DmacChannel/uDmacChDstXfer/BrstCntDst_reg_9 (*)	->
+  u1DmacChannel/uDmacChDstXfer/BrstCntDst_reg_10 (*)	->
+  u1DmacChannel/uDmacChDstXfer/iAxsCntDst_reg_0 (*)	->
+  u1DmacChannel/uDmacChDstXfer/iAxsCntDst_reg_1 (*)	->
+  u1DmacChannel/uDmacChDstXfer/iAxsCntDst_reg_2	->
+  u1DmacChannel/uDmacChDstXfer/iAxsCntDst_reg_3	->
+  u1DmacChannel/uDmacChDstXfer/iAxsCntDst_reg_4 (*)	->
+  u1DmacChannel/uDmacChReqMask/SrcE2LMask_reg (*)	->
+  u1DmacChannel/uDmacChReqMask/DstAxsOnMask_reg	->
+  u1DmacChannel/uDmacChReqMask/SrcAxsOnMask_reg (*)	->
+  u1DmacChannel/uDmacChReqMask/LLILoadMask_reg	->
+  u1DmacChannel/uDmacChReqMask/ErrorMask_reg	->
+  u1DmacChannel/uDmacChPckUnpck/WrapFlag_reg	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_0	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_1	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_2	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_3	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_4	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_5 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_6	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_7 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_8	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_9 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_10 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_11 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_12 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_13 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_14	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_15 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_16	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_17 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_18	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_19	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_20	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_21 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_22	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_23	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_24 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_25 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_26	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_27	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_28	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_29 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_30	->
+  u1DmacChannel/uDmacChPckUnpck/WrBufferM_reg_31 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/RdSubPtr_reg_0 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/RdSubPtr_reg_1 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/iFifoRdPtr_reg_1	->
+  u1DmacChannel/uDmacChPckUnpck/iFifoWrPtr_reg_0 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/iFifoWrPtr_reg_1 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/WrSubPtr_reg_0	->
+  u1DmacChannel/uDmacChPckUnpck/WrSubPtr_reg_1 (*)	->
+  u1DmacChannel/uDmacChPckUnpck/iFifoRdPtr_reg_0	->
+  u1DmacChannel/uDmacChSrcXfer/iDMACClrSrc_reg (*)	->
+  u1DmacChannel/uDmacChSrcXfer/iDMACTCSrc_reg (*)	->
+  u1DmacChannel/uDmacChSrcXfer/iSrcDmacState_reg_1	->
+  u1DmacChannel/uDmacChSrcXfer/SrcBurstOn_reg (*)	->
+  u1DmacChannel/uDmacChSrcXfer/iSrcDmacState_reg_0	->
+  u1DmacChannel/uDmacChSrcXfer/iSrcDmacState_reg_2	->
+  u1DmacChannel/uDmacChSrcXfer/AbortReqSrc_reg (*)	->
+  u1DmacChannel/uDmacChSrcXfer/iSrcDmacState_reg_4	->
+  u1DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_0 (*)	->
+  u1DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_1 (*)	->
+  u1DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_2 (*)	->
+  u1DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_3 (*)	->
+  u1DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_4	->
+  u1DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_5	->
+  u1DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_6	->
+  u1DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_7	->
+  u1DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_8	->
+  u1DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_9 (*)	->
+  u1DmacChannel/uDmacChSrcXfer/BrstCntSrc_reg_10	->
+  u1DmacChannel/uDmacChSrcXfer/Pr2AxsCntSrc_reg_0	->
+  u1DmacChannel/uDmacChSrcXfer/Pr2AxsCntSrc_reg_2 (*)	->
+  u1DmacChannel/uDmacChSrcXfer/Pr1AxsCntSrc_reg_1 (*)	->
+  u1DmacChannel/uDmacChSrcXfer/AxsCntSrc_reg_0 (*)	->
+  u1DmacChannel/uDmacChSrcXfer/AxsCntSrc_reg_1 (*)	->
+  u1DmacChannel/uDmacChSrcXfer/AxsCntSrc_reg_2	->
+  u1DmacChannel/uDmacChSrcXfer/AxsCntSrc_reg_3	->
+  u1DmacChannel/uDmacChSrcXfer/AxsCntSrc_reg_4	->
+  u1DmacChannel/uDmacChSrcXfer/Pr2AxsCntSrc_reg_1	->
+  u1DmacChannel/uDmacChSrcXfer/Pr1AxsCntSrc_reg_2 (*)	->
+  u1DmacChannel/uDmacChSrcXfer/Pr1AxsCntSrc_reg_0 (*)	->
+  u1DmacChannel/uDmacChSrcXfer/iSrcDmacState_reg_3	->
+  u1DmacChannel/uDmacChRegBlock/RegChEnHigh_reg	->
+  u1DmacChannel/uDmacChRegBlock/iDstErred_reg (*)	->
+  u1DmacChannel/uDmacChRegBlock/FifoPtrReset_reg	->
+  u1DmacChannel/uDmacChRegBlock/iSrcDstEn_reg (*)	->
+  u1DmacChannel/uDmacChRegBlock/iChannelEn_reg (*)	->
+  u1DmacChannel/uDmacChRegBlock/iHalt_reg (*)	->
+  u1DmacChannel/uDmacChRegBlock/iSrcErred_reg (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDisabledDst_reg (*)	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_0	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_1	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_2	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_3	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_4	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_5	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_6	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_7	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_8	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_9	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_10	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_11	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_12	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_13	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_14	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_15	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_16	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_17	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_18	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_19	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_20	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_21	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_22	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_23	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_24	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_25	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_26	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_27	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_28	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_29	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_30	->
+  u1DmacChannel/uDmacChRegBlock/ChHRDATA_reg_31	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_0 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_1 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_2 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_3 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_4 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_5 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_6 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_7 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_8 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_9 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_10 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_11 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_12 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeDst_reg_13 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_1	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_3	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_4	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_5	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_6	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_7	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_9	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_10	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_11 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_14 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_15 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_16 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_2 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_3 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_4 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_5 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_6 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_7 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_8 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_9 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_10 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_11 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_12 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_13 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_14 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_15 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_16 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_17 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_18 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_19 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_20 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_21 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_22 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_23 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_24 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_25 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_26 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_27 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_28 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_29 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_30 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChLLIReg_reg_31 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_0 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_1 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_2 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_3 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_4 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_5 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_6 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_7 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_8 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_9 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_10 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iTrfSizeSrc_reg_11 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_13 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_15 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_16 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_19 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_21	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_24	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_25	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_26 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_27 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_28 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_29 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_30 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_31 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_0 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_1 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_2 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_3 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_4 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_5 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_6 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_7 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_8 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_9 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_10 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_11 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_12 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_13 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_14 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_15 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_16 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_17 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_18 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_19 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_20 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_21 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_22 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_23 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_24 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_25 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_26 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_27 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_28 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_29 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_30 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChDstAddr_reg_31 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_0	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_1	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_2 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_3 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_4 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_5 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_6 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_7 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_8 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_9 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_10 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_11 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_12 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_13 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_14 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_15 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_16 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_17 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_18 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_19 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_20 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_21 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_22 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_23 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_24 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_25 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_26 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_27 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_28 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_29 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_30 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDMACChSrcAddr_reg_31 (*)	->
+  u1DmacChannel/uDmacChRegBlock/iDisabledSrc_reg (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_20	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_23 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_12 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_13 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_14 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_8	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_2	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_17 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_22 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChConfig_reg_12 (*)	->
+  u1DmacChannel/uDmacChRegBlock/DMACChControl_reg_18 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BusAvlblMV2_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMLock_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/DMAMasterState_reg_3 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErIncrXfer_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/LastXfer_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/DMAMasterState_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/iBusAvlblM_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMLock_reg (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInRstDueToAb_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErRstDueToAb_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInBuffPrio_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/BusAvlblMV4_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMWrite_reg (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErBuffPrio_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1IncrXfer_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1XferDir_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/StartFrmBuff_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1Priority_reg (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BusAvlblMV3_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/iXferAborted_reg (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/DMAMasterState_reg_1 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInIncrXfer_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErWaitOneClk_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInWaitOneClk_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMWrite_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HLOCK_reg (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/ArbStopSeq_reg	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_3	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_4	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_5	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_6	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_7	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_8	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_9	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_10	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_11	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_12	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_13	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_14	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_15	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_16	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_17	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_18	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_19	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_20	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_21	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_22	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_23	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_24	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_25	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_26	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_27	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_28	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_29	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_30	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_31	->
+  u1DmacAhbMaster/uDmacLiteMaster/SizeForData_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/SizeForData_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/SizeForData_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/AddrForData_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/AddrForData_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/FrstBuffSize_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/FrstBuffSize_reg_1 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/FrstBuffSize_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/FrstBuffAddr_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/FrstBuffAddr_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1NumOfXfers_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1NumOfXfers_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1NumOfXfers_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1NumOfXfers_reg_3	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1NumOfXfers_reg_4	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_3 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_4 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_5 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_6	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_7	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_8	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_9	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_10 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_11 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_12 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_13 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_14 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_15 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_16 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_17 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_18 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_19 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_20 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_21 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_22 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_23 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_24 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_25 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_26 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_27 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_28 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_29 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_30 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HADDR_reg_31 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HSIZE_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HSIZE_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HSIZE_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HPROT_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HPROT_reg_1 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/Buf1HPROT_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_3	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_4	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_5	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_6	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_7	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_8	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_9	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_10	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_11	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_12	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_13	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_14	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_15	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_16	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_17	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_18	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_19	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_20	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_21	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_22	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_23	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_24	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_25	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_26	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_27	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_28	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_29	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_30	->
+  u1DmacAhbMaster/uDmacLiteMaster/MasterAddress_reg_31	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInRmnFrmBurst_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInRmnFrmBurst_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInRmnFrmBurst_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInRmnFrmBurst_reg_3	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInRmnFrmBurst_reg_4	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInNumOfXfers_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInNumOfXfers_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInNumOfXfers_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInNumOfXfers_reg_3	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInNumOfXfers_reg_4	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErRmnFrmBurst_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErRmnFrmBurst_reg_1 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErRmnFrmBurst_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErRmnFrmBurst_reg_3 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErRmnFrmBurst_reg_4 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErNumOfXfers_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErNumOfXfers_reg_1 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErNumOfXfers_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErNumOfXfers_reg_3 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErNumOfXfers_reg_4 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_1 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_3 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_4 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_5 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_6 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_7 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_8 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_9 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_10 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_11 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_12 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_13 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_14 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_15 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_16 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_17 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_18 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_19 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_20 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_21 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_22 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_23 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_24 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_25 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_26 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_27 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_28 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_29 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_30 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_31 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_3	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_4	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_5	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_6	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_7	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_8	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_9	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_10	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_11	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_12	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_13	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_14	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_15	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_16	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_17	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_18	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_19	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_20	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_21	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_22	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_23	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_24	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_25	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_26	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_27	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_28	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_29	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_30	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgMasterAddr1_reg_31	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_3	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_4	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_5	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_6	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_7	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_8	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_9	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_10	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_11	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_12	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_13	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_14	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_15	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_16	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_17	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_18	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_19	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_20	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_21	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_22	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_23	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_24	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_25	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_26	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_27	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_28	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_29	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_30	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMAddr_reg_31	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMProt_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMProt_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMProt_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMSize_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMSize_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMSize_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMBurst_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMBurst_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMBurst_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMTrans_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMTrans_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_2	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_3 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_4 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_5 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_6 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_7 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_8 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_9 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_10 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_11 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_12 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_13 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_14 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_15 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_16 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_17 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_18 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_19 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_20 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_21 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_22 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_23 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_24 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_25 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_26 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_27 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_28 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_29 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_30 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMAddr_reg_31 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMProt_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMProt_reg_1 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMProt_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMSize_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMSize_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMSize_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMBurst_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMBurst_reg_1	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMBurst_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMTrans_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgErMTrans_reg_1 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/RgInMasterAddr1_reg_0	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_1 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_3 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_4 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_5 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_6 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_7 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_16 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_17 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_18 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_19 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_20 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_21 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_22 (*)	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_23	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_24	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_25	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_26	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_27	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_28	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_29	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_30	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_31	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_15	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_14	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_13	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_12	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_11	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_10	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_9	->
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHRData_reg_8	->
+  u1DmacAhbMaster/uDmacLiteMaster/DMAMasterState_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/BusyOverride_reg (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/iHREQReg_reg	->
+  u1DmacAhbMaster/uDmacMasterWrap/ReBuild_reg	->
+  u1DmacAhbMaster/uDmacMasterWrap/HoldReg_reg	->
+  u1DmacAhbMaster/uDmacMasterWrap/AddrDrive_reg	->
+  u1DmacAhbMaster/uDmacMasterWrap/HlockHold_reg (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/Wrapped_reg	->
+  u1DmacAhbMaster/uDmacMasterWrap/DataDrive_reg	->
+  u1DmacAhbMaster/uDmacMasterWrap/LockIdle_reg_0	->
+  u1DmacAhbMaster/uDmacMasterWrap/LockIdle_reg_1	->
+  u1DmacAhbMaster/uDmacMasterWrap/HtransHold_reg_0	->
+  u1DmacAhbMaster/uDmacMasterWrap/HtransHold_reg_1 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HburstHold_reg_0	->
+  u1DmacAhbMaster/uDmacMasterWrap/HburstHold_reg_1	->
+  u1DmacAhbMaster/uDmacMasterWrap/HburstHold_reg_2	->
+  u1DmacAhbMaster/uDmacMasterWrap/HprotHold_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HprotHold_reg_3 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HsizeHold_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HsizeHold_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_1	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_2	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_3	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_4	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_6 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_7 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_11 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_14 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_19 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_20 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_22 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_28 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_30 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/State_reg_0 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/State_reg_1	->
+  u1DmacAhbMaster/uDmacMasterWrap/State_reg_2 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/State_reg_3 (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/IncrOverride_reg	->
+  u1DmacAhbMaster/uDmacMasterWrap/HwriteHold_reg (*)	->
+  u1DmacAhbMaster/uDmacMasterWrap/ReGrant_reg	->
+  u1DmacAhbMaster/uDmacMasterWrap/SplitRetry_reg	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_31	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_29	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_27	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_26	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_24	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_21	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_18	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_16	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_15	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_13	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_12	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_9	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_8	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_5	->
+  u1DmacAhbMaster/uDmacMasterWrap/HsizeHold_reg_1	->
+  u1DmacAhbMaster/uDmacMasterWrap/HprotHold_reg_1	->
+  u1DmacAhbMaster/uDmacMasterWrap/HprotHold_reg_0	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_0	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_25	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_23	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_17	->
+  u1DmacAhbMaster/uDmacMasterWrap/HaddrHold_reg_10	->
+  SCANOUTHCLK
+

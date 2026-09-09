@@ -1,0 +1,56 @@
+ 
+****************************************
+Report : transitive_fanout
+	-clock_tree
+Design : DefaultSlave
+Version: V-2003.12-SP1
+Date   : Fri Jun 18 13:17:01 2004
+****************************************
+
+The fanout network of source HCLK is as follows:
+
+Driver Pin       Load Pin          Type        Sense
+------------------------------------------------------------
+HCLK             HRESP_reg_1/clocked_on (net arc) same
+HCLK             HRESP_reg_0/clocked_on (net arc) same
+HCLK             iHREADYOUT_reg/clocked_on (net arc) same
+
+Performing report_transitive_fanout on port 'HRESETn'. 
+ 
+****************************************
+Report : transitive_fanout
+Design : DefaultSlave
+Version: V-2003.12-SP1
+Date   : Fri Jun 18 13:17:01 2004
+****************************************
+
+The fanout network of source HRESETn is as follows:
+
+Driver Pin       Load Pin          Type        Sense
+------------------------------------------------------------
+HRESETn          U33/A             (net arc)   same
+HRESETn          U32/A             (net arc)   same
+HRESETn          U30/A             (net arc)   same
+HRESETn          U25/A             (net arc)   same
+HRESETn          U24/A             (net arc)   same
+HRESETn          U11/A             (net arc)   same
+HRESETn          U10/A             (net arc)   same
+
+
+Load Pin         Driver Pin        Type        Sense
+------------------------------------------------------------
+U33/A            U33/Z             GTECH_NOT   opposite
+U32/A            U32/Z             GTECH_NOT   opposite
+U30/A            U30/Z             GTECH_NOT   opposite
+U25/A            U25/Z             GTECH_BUF   same
+U24/A            U24/Z             GTECH_NOT   opposite
+U11/A            U11/Z             GTECH_BUF   same
+U10/A            U10/Z             GTECH_NOT   opposite
+
+
+Driver Pin       Load Pin          Type        Sense
+------------------------------------------------------------
+U33/Z            HRESP_reg_0/clear (net arc)   opposite
+U32/Z            HRESP_reg_1/clear (net arc)   opposite
+U30/Z            iHREADYOUT_reg/preset (net arc) opposite
+

@@ -1,0 +1,26 @@
+
+analyze -f verilog  SciApbif.v         
+analyze -f verilog  SciTest.v          
+analyze -f verilog  SciRegBlk.v        
+analyze -f verilog  SciRegBlkUpdate.v  
+analyze -f verilog  SciTxFCntl.v      
+analyze -f verilog  SciTxRegFile.v    
+analyze -f verilog  SciTxFIFO.v        
+analyze -f verilog  SciRxRegFile.v     
+analyze -f verilog  SciRxFCntl.v       
+analyze -f verilog  SciRxFIFO.v        
+analyze -f verilog  SciSynctoPCLK.v    
+analyze -f verilog  SciSynctoSCICLK.v  
+analyze -f verilog  SciTxRx.v         
+analyze -f verilog  SciCntl.v          
+analyze -f verilog  SciDMA.v           
+analyze -f verilog  SciIntGen.v        
+analyze -f verilog  SciRevAnd.v        
+analyze -f verilog  Sci.v
+
+
+elaborate Sci
+current_design Sci
+link
+
+write -f db -hier -out Sci.gtech.db

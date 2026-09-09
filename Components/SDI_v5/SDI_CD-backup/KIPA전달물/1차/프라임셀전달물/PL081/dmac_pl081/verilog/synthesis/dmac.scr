@@ -1,0 +1,29 @@
+
+#analyze -f verilog   DmacParams.v 
+analyze -f verilog   DmacRevAnd.v 
+analyze -f verilog   DmacRqstSync.v 
+analyze -f verilog   DmacRspRoute.v 
+analyze -f verilog   DmacAhbSlaveIf.v 
+analyze -f verilog   DmacLiteMaster.v 
+analyze -f verilog   DmacArbiter.v 
+analyze -f verilog   DmacMasterWrap.v 
+analyze -f verilog   DmacAhbMaster.v 
+analyze -f verilog   DmacChPckUnpck.v 
+analyze -f verilog   DmacChRegFile.v 
+analyze -f verilog   DmacChSrcXfer.v 
+analyze -f verilog   DmacChReqMask.v 
+analyze -f verilog   DmacChReqProc.v 
+analyze -f verilog   DmacChRegBlock.v 
+analyze -f verilog   DmacChDstXfer.v 
+analyze -f verilog   DmacChLLILoad.v 
+analyze -f verilog   DmacChannel.v 
+analyze -f verilog   Dmac.v
+
+
+elaborate Dmac
+current_design Dmac
+link
+
+write -f db -hier -out Dmac.gtech.db
+
+

@@ -1,0 +1,413 @@
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap4.htm">Previous Chapter</a>
+ * <a href="chap6.htm">Next Chapter</a>
+<p>
+<a name="19683: chap head: End-User License Administration"></a><a name="_IX_75"></a><title>FLEXlm End User Manual: Chapter 5 
+The Options File</title>
+<h1>Chapter 5 
+The Options File</h1>
+<p>
+The options file allows the license administrator to control various operating 
+parameters of 
+FLEXlm<I></I>. Specifically the license administrator can:<p>
+<ul><li>Allow the use of features based on user, hostname, display name, or IP-address.<li>Deny the use of features based on user, hostname, display name, or IP-address.<li>Reserve licenses based on user, hostname, display name, or IP-address.<li>Control the amount of information logged about license usage.</ul><p>
+Options files allow you, as the license administrator, to be as secure or open with 
+licenses as you like.<p>
+<p>
+Lines in the options file were limited to 200 characters prior to 
+FLEXlm<I></I> v3.0. In v3.0 
+and later, the line length is 2048 characters. 
+FLEXlm<I></I> v4.0 allows the `\' character as 
+a continuation character in options file lines.<p>
+<a name="5.1"></a><h2>5.1  Creating an Options File</h2>
+<p>
+To create an options file:<p>
+<ol><li>Use the appropriate options listed in 
+<a href="chap5.htm#49364: 1head: 5.2 Customizing the Options File">Section 5.2, `Customizing the Options File,' 
+on page 31</a> to create the options file using any text editor. You can put the options 
+file anywhere; however, we recommend that the options file for vendor 
+<I>xyz</I> be 
+placed in 
+<pre><TT>	/usr/local/flexlm/options/xyz.opt</TT> (Unix)</pre>
+<pre>	C:\flexlm\options\xyz.opt	 	(Windows/NT)</pre>
+<li>Add the pathname to the options file in the license file as the fourth field on the 
+DAEMON line for the application's vendor daemon. For example, 
+<pre>	DAEMON xyzd /etc/xyzd /usr/local/flexlm/options/xyz.opt</pre>
+<ul><li>would enable the xyzd vendor daemon to look at the specified options file.<li>In 
+FLEXlm<I></I> v5 or later, you can put `options=' before the path.<li>In 
+FLEXlm<I></I> v6 or later, adding the options path to the license file is optional. 
+Instead, name the file 
+<I>vendor</I>.opt, where vendor is the vendor daemon name, and 
+place it in the same directory as the license used by lmgrd, and it will 
+automatically be used at server startup.</ul><a name="49364: 1head: 5.2 Customizing the Options File"></a><a name="5.2"></a><h2>5.2  Customizing the Options File</h2>
+<p>
+Below is an overview of the options file syntax. See 
+<a href="chap5.htm#94657: 1head: 5.2 Understanding Options Files">Section 5.4, `Understanding 
+Options Files,' on page 37</a> for examples and additional information. 
+<p>
+<p>
+Each line of the file controls one option. The options are:<p>
+<dl><dt>EXCLUDE 
+<dd>deny a user access to a feature.<dt>EXCLUDEALL<dd>deny a user access to 
+<I>all</I> features served by this vendor 
+daemon.<dt>GROUP 
+<dd>define a group of users for use with any options.<dt>HOST_GROUP 
+<dd>define a group of hosts for use with any options.<dt>INCLUDE 
+<dd>allow a user to use a feature.<dt>INCLUDEALL<dd>allow a user to use 
+<I>all</I> features served by this vendor 
+daemon.<dt>LINGER<dd>cause licenses to be held by the vendor daemon for a 
+
+period after the application checks them in or exits.<dt>MAX<dd>limit usage for a particular feature/group - prioritizes 
+usage among users.<dt>MAX_OVERDRAFT<dd>limit overdraft usage to less than the amount specified in 
+the license.<dt>NOLOG 
+<dd>turn off logging certain items.<dt>REPORTLOG<dd>specify that a logfile be written suitable for use by the 
+
+FLEXadmin<I></I> End-User Administration Tool.<dt>RESERVE 
+<dd>reserve licenses for a user.<dt>TIMEOUT 
+<dd>specify idle timeout for a feature, returning it to the free 
+pool for use by another user.<dt>TIMEOUTALL<dd>Set timeout on all features.</dl><p>
+You can include comments in your options file by starting each comment line with a 
+pound sign `#'. Everything in an options file is case sensitive. Be sure that user names 
+and feature names, for example, are entered correctly.<p>
+<h4>Featurename specification</h4>
+<p>
+Starting with 
+FLEXlm<I></I> v5, you can select a particular line of a given featurename, as 
+follows:<p>
+<pre><I>	featurename</I>:<I>name</I>=<I>value</I></pre>
+</ol></ul><p>
+For example:<p>
+<pre>	f1:VERSION=2.0</pre>
+</ol></ul><p>
+You can specify a feature by any of the following fields:<p>
+<pre>	VERSION HOSTID EXPDATE KEY VENDOR_STRING ISSUER NOTICE dist_info
+	user_info asset_info</pre>
+</ol></ul><p>
+In 
+FLEXlm<I></I> v5.11 or later, you can use a PACKAGE name in place of a feature name, 
+and the option will apply to the whole package.<p>
+<h3>5.2.1	 <a name="_IX_76"></a>EXCLUDE</h3>
+<pre>EXCLUDE <I>featurename type name</I></pre>
+</ol></ul><p>
+Excludes a user, host, display, or group from the list of who is allowed to use the 
+feature. Excluded users will not be allowed to use the feature.<p>
+<ul><li><I>featurename</I> - name of the feature being affected<li><I>type</I> - one of USER, HOST, DISPLAY, GROUP, HOST_GROUP, or 
+INTERNET (see 
+<a href="chap5.htm#54729: 2head: 5.2.7 Group">Section 5.2.3, `GROUP</a>' and 
+<a href="chap5.htm#16409: 2Head: 6.2.2 HOST_GROUP">Section 5.2.4, `HOST_GROUP,' 
+on page 34</a><li><I>name</I> - name of the user or group to exclude</ul><p>
+To exclude the user `hank' from the list of users able to use feature f1:<p>
+<pre>	EXCLUDE f1 USER hank</pre>
+<h3>5.2.2	 <a name="_IX_77"></a>EXCLUDEALL 
+</h3>
+<pre>EXCLUDEALL <I>type</I> <I>name</I></pre>
+</ol></ul><p>
+Excludes a user, host, display, or group from the list of who is allowed to use all 
+features served by this vendor daemon.<p>
+<ul><li><I>type</I> - one of USER, HOST, DISPLAY, GROUP, HOST_GROUP or INTERNET 
+(see 
+<a href="chap5.htm#54729: 2head: 5.2.7 Group">Section 5.2.3, `GROUP</a>' and 
+<a href="chap5.htm#16409: 2Head: 6.2.2 HOST_GROUP">Section 5.2.4, `HOST_GROUP,' on page 34</a><li><I>name</I> - name of the user or group to exclude</ul><p>
+To exclude any user on the machine `chaos' from using all features served by this 
+vendor daemon:<p>
+<pre>	EXCLUDEALL HOST chaos</pre>
+<h3>5.2.3	 <a name="54729: 2head: 5.2.7 Group"></a>GROUP</h3>
+<pre>GROUP <I>groupname usernamelist</I></pre>
+</ol></ul><p>
+Defines a group of users for use in INCLUDE, INCLUDEALL, EXCLUDE, 
+EXCLUDEALL, and RESERVE option lines.<p>
+<ul><li><I>groupname</I> - name of the group being defined<li><I>usernamelist</I> - list of user names in that group</ul><p>
+To define the group Hackers consisting of bob, howard, and james:<p>
+<pre>	GROUP Hackers bob howard james</pre>
+</ol></ul><p>
+In 
+FLEXlm<I></I> v3.0 multiple GROUP lines will add all the users specified into the group. 
+Pre-v3.0 
+FLEXlm<I></I> daemons do not allow multiple GROUP lines to concatenate. In fact, 
+the second GROUP line would re-define the GROUP.<p>
+<p>
+In 
+FLEXlm<I></I> v4.0 or later, USER_GROUP is an alias for GROUP.<p>
+<h3>5.2.4	 <a name="16409: 2Head: 6.2.2 HOST_GROUP"></a>HOST_GROUP</h3>
+<pre>HOST_GROUP <I>groupname hostnamelist</I></pre>
+</ol></ul><p>
+Defines a group of hosts for use in INCLUDE, INCLUDEALL, EXCLUDE, 
+EXCLUDEALL, and RESERVE option lines.<p>
+<ul><li><I>groupname</I> - name of the group being defined<li><I>hostnamelist</I> - list of host names in that group</ul><h3>5.2.5	 <a name="_IX_78"></a>INCLUDE</h3>
+<pre>INCLUDE <I>featurename type name</I></pre>
+</ol></ul><p>
+Includes a user, host, display, or group in the list of who is allowed to use the feature. 
+Anyone not in an INCLUDE statement will not be allowed to use that feature.<p>
+<ul><li><I>featurename</I> - name of the feature being affected<li><I>type</I> - one of USER, HOST, DISPLAY, GROUP, HOST_GROUP or INTERNET 
+(see 
+<a href="chap5.htm#54729: 2head: 5.2.7 Group">Section 5.2.3, `GROUP</a>' and 
+<a href="chap5.htm#16409: 2Head: 6.2.2 HOST_GROUP">Section 5.2.4, `HOST_GROUP,' on page 34</a><li><I>name</I> - name of the user or group to include</ul><p>
+To include user `bob' in the list of users able to use feature f1:<p>
+<pre>	INCLUDE f1 USER bob</pre>
+</ol></ul><p>
+INCLUDE is required for USER_BASED or HOST_BASED features. The system 
+administrator specifies which users are allowed to use the product, via INCLUDE, and 
+the license limits the number of users that can be INCLUDEd.<p>
+<h3>5.2.6	 <a name="_IX_79"></a>INCLUDEALL 
+</h3>
+<pre>INCLUDEALL <I>type</I> <I>name</I></pre>
+</ol></ul><p>
+Includes a user, host, display, or group in the list of who is allowed to use all features 
+served by this vendor daemon. Anyone not in an INCLUDEALL statement will not be 
+allowed to use these features.<p>
+<ul><li><I>type</I> - one of USER, HOST, DISPLAY, GROUP, HOST_GROUP or INTERNET 
+(see 
+<a href="chap5.htm#54729: 2head: 5.2.7 Group">Section 5.2.3, `GROUP</a>' and 
+<a href="chap5.htm#16409: 2Head: 6.2.2 HOST_GROUP">Section 5.2.4, `HOST_GROUP,' on page 34</a><li><I>name</I> - name of the user or group to include</ul><p>
+To allow the user `jane' to use all features served by this vendor daemon:<p>
+<pre>	INCLUDEALL USER jane</pre>
+<h3>5.2.7	 <a name="_IX_80"></a>LINGER</h3>
+<pre>LINGER <I>featurename interval</I></pre>
+</ol></ul><p>
+Rarely used. This causes the daemon to `hold on' to the license for 
+<I>featurename 
+</I>for<I> 
+interval 
+</I>seconds after the application checks the license in or exits. This could be 
+useful for short-duration programs which will be used many times in a row by the same 
+user, to ensure that the user will be able to re-acquire the license repeatedly. On the 
+other hand, other users have to wait until the first user is completely finished, plus a 
+linger interval. This is only useful if the application uses duplicate grouping. 
+Otherwise, LINGER will cause you to use extra licenses. Contact your software 
+vendor for information about how they implemented duplicate grouping in their 
+product. 
+<p>
+<h3>5.2.8	 <a name="_IX_81"></a>MAX 
+</h3>
+<p>
+(v5.11+ vendor daemon only).<p>
+<pre>MAX <I>numlic</I> <I>featurename</I> <I>type name</I></pre>
+</ol></ul><p>
+Limits usage for a group or user.<p>
+<ul><li><I>numlic</I> - usage limit for this user or group<li><I>featurename</I> - feature this limit applies to<li><I>type</I> - USER, HOST, DISPLAY, GROUP, HOST_GROUP or INTERNET.<li><I>name</I> - name of the user or group to limit</ul><h3>5.2.9	 <a name="_IX_82"></a>MAX_OVERDRAFT</h3>
+<pre>MAX_OVERDRAFT <I>featurename</I> <I>numlic</I></pre>
+</ol></ul><p>
+Limits usage below the OVERDRAFT allowed by the license file.<p>
+<h3>5.2.10	 <a name="17761: 2Head: 6.2.15 NOLOG"></a><a name="_IX_83"></a>NOLOG</h3>
+<pre>NOLOG <I>what</I></pre>
+</ol></ul><p>
+Turns off logging of specific events by the 
+FLEXlm<I></I> daemons.<p>
+<ul><li><I>what</I> - what to turn off; one of IN, OUT, DENIED, or QUEUED</ul><p>
+To turn off logging of checkins:<p>
+<pre>NOLOG IN	</pre>
+</ol></ul><p>
+To turn off logging of checkouts and queued requests two separate NOLOG lines are 
+required:<p>
+<pre>	NOLOG DENIED</pre>
+<pre>	NOLOG QUEUED</pre>
+</ol></ul><p>
+License administrators might use this option to reduce the size of the 
+lmgrd<I></I> or `debug' 
+log file. 
+<p>
+<h3>5.2.11	 <a name="37654: 2Head: 6.2.17 REPORTLOG"></a><a name="_IX_84"></a>REPORTLOG</h3>
+<pre>REPORTLOG filename</pre>
+</ol></ul><p>
+REPORTLOG specifies the file which will contain the report-writer log for this vendor 
+daemon. If 
+<I>filename 
+</I>begins with a '+' character, the file will be opened for append, 
+otherwise the file will be overwritten each time the daemon is started. 
+<I>FLEXadmin</I><TT>'</TT>, 
+a separate product available from Globetrotter, can be used to read and report on 
+REPORTLOG files.<p>
+<p>
+This file is only useful with the 
+FLEXadmin<I></I> license administration utility. 
+<p>
+<a name="_IX_85"></a><h4>LM_PROJECT</h4>
+<p>
+The 
+FLEXadmin<I></I> report writer can report on `projects.' A project is set up by having 
+all users working on a project set their LM_PROJECT environment variable (or 
+registry on Windows) to a string that describes the project. 
+FLEXadmin<I></I> can then group 
+usage by project, as defined by what LM_PROJECT was set to when the application 
+was run.<p>
+<h3>5.2.12	 <a name="_IX_86"></a>RESERVE</h3>
+<pre>RESERVE <I>numlic featurename type name</I></pre>
+</ol></ul><p>
+Reserves licenses for a specific user.<p>
+<ul><li><I>numlic</I> - number of licenses to reserve<li><I>featurename</I> - name of feature to reserve<li><I>type</I> - one of USER, HOST, DISPLAY, GROUP, HOST_GROUP or INTERNET 
+(see 
+<a href="chap5.htm#54729: 2head: 5.2.7 Group">Section 5.2.3, `GROUP</a>' and 
+<a href="chap5.htm#16409: 2Head: 6.2.2 HOST_GROUP">Section 5.2.4, `HOST_GROUP,' on page 34</a><li><I>name</I> - name of the user or group to reserve licenses for.</ul><p>
+To reserve one license of feature f1 for user `mel':<p>
+<pre>	RESERVE 1 f1 USER mel</pre>
+</ol></ul><p>
+Any licenses reserved for a user are dedicated to that user. Even when that user is not 
+actively using the license it will be unavailable to other users. However, a RESERVED 
+license will not cause an overdraft to be reported by 
+FLEXadmin<I></I> if the license is not 
+actually in use.<p>
+<h3>5.2.13	 <a name="_IX_87"></a>TIMEOUT</h3>
+<pre>TIMEOUT <I>featurename seconds</I></pre>
+</ol></ul><p>
+Sets the time after which an inactive license is reclaimed by the vendor daemon.<p>
+<ul><li><I>featurename</I> - name of the feature<li><I>seconds</I>- number of seconds after which inactive license is reclaimed</ul><p>
+To set the timeout for feature f1 to one hour (3600 seconds):<p>
+<pre>	TIMEOUT f1 3600</pre>
+</ol></ul><p>
+TIMEOUT checks in the licenses if the process has been `idle' for a period longer than 
+the specified time period, and someone else wants the license. The daemon declares a 
+process idle when it has not heard from the process (the client sends heartbeats). The 
+application must explicitly declare itself idle for this to work, or (on Unix) the 
+application must be stopped (^Z). That is, unless the application explicitly supports 
+this feature, it will not work. Contact your software vendor for information about how 
+they implemented this feature in their product. 
+<p>
+<p>
+The application vendor can also disable the timeout feature, in which case the 
+TIMEOUT option has no effect. The vendor can set a minimum value for the timeout. 
+If you specify a timeout value smaller than the minimum, the minimum is used. The 
+default minimum value is 900 seconds (15 minutes).<p>
+<p>
+If you do not specify a timeout value in your options file, then there will be no timeout 
+for that feature. Before v5, licenses are only freed by TIMEOUT when a new request 
+for a license would require a license that can be freed with TIMEOUT. With v5, 
+licenses are freed when they are timed out.<p>
+<a name="_IX_88"></a><a name="5.3"></a><h2>5.3  TIMEOUTALL</h2>
+<p>
+(v5.11+ vendor daemon only)<p>
+<pre>TIMEOUTALL <I>seconds</I></pre>
+</ol></ul><p>
+Same as TIMEOUT, but applies to all features.<p>
+<a name="94657: 1head: 5.2 Understanding Options Files"></a><a name="_IX_89"></a><a name="5.4"></a><h2>5.4  Understanding Options Files</h2>
+<p>
+The following information gives an overview of the syntax of a complete options file 
+and some samples intended to illustrate ways to effectively control access to your 
+licenses.<p>
+<h3>5.4.1	 How the Vendor Daemon Uses the Options File</h3>
+<p>
+When the vendor daemon is started by 
+lmgrd<I></I>, it is passed the location of the options 
+file. If you modify the options file while the server is running, you must stop lmgrd, 
+and restart it for the changes to take effect. There can only be one options file per 
+vendor daemon and each vendor needs a separate options file.<p>
+<h3>5.4.2	 Rules of Precedence in Options Files</h3>
+<p>
+Before you can use options to utilize licenses effectively you must understand the 
+options file precedence. INCLUDE and EXCLUDE statements can be combined in the 
+same options file and control access to the same features. When doing so, keep in mind 
+the following:<p>
+<ul><li>If there is only an EXCLUDE list, everyone who is not on the list will be allowed 
+to use the feature. 
+<li>If there is only an INCLUDE list, only those users on the list will be allowed to 
+use the feature. 
+<li>If neither list exists, then everyone is allowed to use the feature. 
+<li>The EXCLUDE list is checked before the INCLUDE list; so someone who is on 
+both lists will not be allowed to use the feature.</ul><p>
+Once you create an INCLUDE or EXCLUDE list everyone else is 
+<I>implicitly</I> `outside' 
+the group. This feature allows you, as an administrator, the ability to control licenses 
+without having to 
+<I>explicitly</I> list each user that you wish to allow or deny access to. In 
+other words there are two approaches; you can either:<p>
+<ul><li>Give most users access and list only the exceptions or<li>Severely limit access and list only the those users that have access privileges. 
+</ul><h3>5.4.3	 Simple 
+<a name="_IX_90"></a>Options File Example</h3>
+<pre>RESERVE	 1 compile 	USER robert</pre>
+<pre>RESERVE	 3 compile 	HOST mainline</pre>
+<pre>EXCLUDE compile USER lori</pre>
+<pre>NOLOG QUEUED</pre>
+</ol></ul><p>
+This options file would:<p>
+<ul><li>Reserve one license for the feature `compile' for the user `robert.'<li>Reserve three licenses for the feature `compile' for anyone on a computer with 
+the hostname `mainline.'<li>Prevent the user `lori' from using the `compile' feature on any node on the 
+network.<li>Cause QUEUED messages to be omitted from the debug log file.</ul><p>
+The sum total of the licenses reserved must be less than or equal to the number of 
+licenses specified in the FEATURE line. In the example above, there must be a 
+minimum of four licenses on the `compile' FEATURE line. If fewer licenses are 
+available, only the first set of reservations (up to the license limit) is used. 
+<p>
+<p>
+If this data were in file 
+<TT>/usr/local/flexlm/options/local.options</TT>, 
+then you would modify the license file DAEMON line as follows:<p>
+<pre><TT>DAEMON xyzd /usr/local/xyzd /usr/local/flexlm/options/local.options</TT></pre>
+<h3>5.4.4	 Limiting Access for Multiple Users</h3>
+<p>
+Each INCLUDE, INCLUDEALL, EXCLUDE, EXCLUDEALL, and RESERVE line 
+must have a single user name (or group) listed. To affect more than one user name 
+create a GROUP. For example to exclude `bob,' `howard,' and `james' from using 
+the feature called `toothbrush' we could create the following options file:<p>
+<pre>EXCLUDE toothbrush USER bob</pre>
+<pre>EXCLUDE toothbrush USER howard</pre>
+<pre>EXCLUDE toothbrush USER james</pre>
+</ol></ul><p>
+There is an easier way though. Create a GROUP and exclude the list of users from 
+using the feature. Like the previous example, the following options file would exclude 
+`bob', `howard' and `james' from using the feature called `toothbrush':<p>
+<pre># First define the group"Hackers"</pre>
+<pre>GROUP Hackers bob howard james</pre>
+<pre># Then exclude the group</pre>
+<pre>EXCLUDE toothbrush GROUP Hackers</pre>
+</ol></ul><p>
+Now when you want to allow or deny access to any feature to that group, you have an 
+`alias' list to make it simple.<p>
+<p>
+The GROUP function works for a list of user names prior to 
+FLEXlm<I></I> v4.0. To control 
+access to multiple displays (and hosts in pre-v4.0 
+FLEXlm<I></I>) you must use multiple 
+option lines in your options file. For example, in pre-v4.0 
+FLEXlm<I></I> to exclude all users 
+logged in on the hosts `fred' and `barney' from using a feature called `f1' add these 
+lines to your options file:<p>
+<pre>EXCLUDE f1 USER fred</pre>
+<pre>EXCLUDE f1 USER barney</pre>
+</ol></ul><p>
+In 
+FLEXlm<I></I> v4.0, you can use HOST_GROUP to allow, deny or reserve licenses for 
+multiple hosts. For example, to exclude all users logged in on the hosts `fred' and 
+`barney' from using a feature called `f1' add these lines to your options file:<p>
+<pre>HOST_GROUP writers fred barney</pre>
+<pre>EXCLUDE f1 HOST_GROUP writers</pre>
+</ol></ul><p>
+See 
+<a href="chap5.htm#54729: 2head: 5.2.7 Group">Section 5.2.3, `GROUP</a>' and 
+<a href="chap5.htm#16409: 2Head: 6.2.2 HOST_GROUP">Section 5.2.4, `HOST_GROUP,' on page 34</a> for 
+more information about defining groups.<p>
+<h3>5.4.5	 <a name="_IX_91"></a>EXCLUDE Example</h3>
+<pre>#First Define the group"painters"</pre>
+<pre>GROUP painters picasso mondrian klee</pre>
+<pre>EXCLUDE spell GROUP painters</pre>
+<pre>EXCLUDE spell USER bob</pre>
+<pre>EXCLUDE spell INTERNET 123.123.123.*</pre>
+</ol></ul><p>
+This options file would:<p>
+<ul><li>Prevent the users `picasso,' `mondrian,' and `klee' from using the feature 
+`spell' on any machine on the network.<li>Prevent the user `bob' from using the feature `spell' on any machine on the 
+network.<li>Prevent any user logged into a host with an IP-Address in the range 
+123.123.123.0 through 123.123.123.255 from using the feature `spell'<li>Allow any other user, as long as they are not on the excluded IP-Addresses , 
+<I>and</I> 
+they are not a member of the `painters' GROUP 
+<I>and</I> they are not `bob' to use 
+feature `spell' (By implication.)</ul><p>
+Note that `bob' could have been added to the group painters. However, `painters' 
+might be used for some other purpose in the future so the license administrator chose 
+to handle `bob' as a special case here. In this case, the two EXCLUDE statements 
+concatenate to create a list of four users. 
+<p>
+<h3>5.4.6	 <a name="_IX_92"></a>INCLUDE Example</h3>
+<pre>INCLUDE paint USER picasso</pre>
+<pre>INCLUDE paint USER mondrain</pre>
+<pre>INCLUDE paint HOST bigbrush</pre>
+</ol></ul><p>
+This options file would:<p>
+<ul><li>Allow the user `picasso' to use the feature `paint' on any machine on the 
+network.<li>Allow the user `mondrain' to use the feature `paint' on any machine on the 
+network.<li>Allow any user, as long as they are on the host `bigbrush', to use feature `paint'<li>Deny access to the feature `paint' to anyone except `picasso', `mondrain' or 
+anyone from the host `bigbrush' (By implication.)</ul>
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap4.htm">Previous Chapter</a>
+ * <a href="chap6.htm">Next Chapter</a>
+<p>

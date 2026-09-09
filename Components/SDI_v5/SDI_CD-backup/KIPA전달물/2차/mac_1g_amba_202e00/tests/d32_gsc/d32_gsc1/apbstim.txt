@@ -1,0 +1,94 @@
+// ******************************************************************* //
+//  Copyright (c) 2002  Evatronix SA                                   //
+// ******************************************************************* //
+//  Please review the terms of the license agreement before using      //
+//  this file. If you are not an authorized user, please destroy this  //
+//  source code file and notify Evatronix SA immediately that you      //
+//  inadvertently received an unauthorized copy.                       //
+// ******************************************************************* //
+// ------------------------------------------------------------------- //
+// Project name         : MAC
+// Project description  : Ethernet Media Access Controller
+//
+// File name            : 
+// File contents        : 
+// Purpose              : 
+// Design Engineer      : 
+// Quality Engineer     : 
+// Test version         : 1.00
+// Last modification    : 2002-08-01
+// ------------------------------------------------------------------- //
+
+0  50            // wait
+2  00  FE000000  // write PBL=0
+2  20  00003000  // write transmit list base address
+2  30  32012240  // write start transmit command, half duplex, GB mode
+
+0  300           // wait
+// ------------------------------------------------------------------- //
+//   Reading Counters Test
+// ------------------------------------------------------------------- //
+2  A8  00008120  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+0  5             // wait
+1  A8  00000000  // read CSR21 register status 
+
+1  B0  00000000  // read TxFrmOK
+2  A8  00008121  // write SC address and set READ opeartion 
+1  B0  00000000  // read TxOctOK
+2  A8  00008122  // write SC address and set READ opeartion 
+1  B0  00000000  // read TxUniOK
+2  A8  00008123  // write SC address and set READ opeartion 
+1  B0  00000000  // read TxMultiOK
+2  A8  00008124  // write SC address and set READ opeartion 
+1  B0  00000000  // read TxBroadOK
+2  A8  00008125  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll0
+2  A8  00008126  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll1
+2  A8  00008127  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll2
+2  A8  00008128  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll3
+2  A8  00008129  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll4 
+2  A8  0000812A  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll5 
+2  A8  0000812B  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll6
+2  A8  0000812C  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll7
+2  A8  0000812D  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll8
+2  A8  0000812E  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll9
+2  A8  0000812F  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll10 
+2  A8  00008130  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll11 
+2  A8  00008131  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll12 
+2  A8  00008132  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll13 
+2  A8  00008133  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll14 
+2  A8  00008134  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll15 
+2  A8  00008135  // write SC address and set READ opeartion 
+1  B0  00000000  // read Coll16 
+2  A8  00008136  // write SC address and set READ opeartion 
+1  B0  00000000  // read TxDefer 
+2  A8  00008137  // write SC address and set READ opeartion 
+1  B0  00000000  // read TxPause 
+2  A8  00008138  // write SC address and set READ opeartion 
+1  B0  00000000  // read TxLCErr 
+2  A8  00008139  // write SC address and set READ opeartion 
+1  B0  00000000  // read TxMACErr
+2  A8  0000813A  // write SC address and set READ opeartion 
+1  B0  00000000  // read TxCSErr
+
+2  A8  00000100  // write SC address, clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+0  5             // wait
+1  A8  00000000  // read CSR21 register status 
+

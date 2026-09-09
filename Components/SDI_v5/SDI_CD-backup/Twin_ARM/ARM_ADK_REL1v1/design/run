@@ -1,0 +1,8 @@
+#!/bin/sh
+SRC_DIR=/user/bhchoi/Twin_ARM/ARM_ADK_REL1v1/design/
+for FILE in `find $SRC_DIR -name "*.vp" -print`
+do
+	NEW_FILE=`echo $FILE | sed -e 's/.vp/.v/'`
+	mv $FILE $NEW_FILE
+	echo "$FILE -> $NEW_FILE" >> run.log
+done

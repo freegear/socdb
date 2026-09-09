@@ -1,0 +1,155 @@
+//--========================================================================--
+// This confidential and proprietary software may be used only as
+//  authorised by a licensing agreement from ARM Limited
+//    (C) COPYRIGHT  2001 ARM Limited
+//       ALL RIGHTS RESERVED
+//  The entire notice above must be reproduced on all authorised
+//  copies and copies may only be made to the extent permitted
+//  by a licensing agreement from ARM Limited.
+//
+//----------------------------------------------------------------------------
+//  Version and Release Control Information:
+//
+//  File Name           :uart.h,v
+//  File Revision       :1.6
+//
+//  Release Information :ADK_REL1v1
+//
+//----------------------------------------------------------------------------
+//
+//  Purpose             : MPMC registers
+//
+//--========================================================================--
+
+
+#ifndef MPMC_H
+#define MPMC_H
+
+#include "globals.h"
+
+typedef struct
+{ 
+ volatile Word MPMCControl;   // @0x000 
+ volatile Word MPMCStatus;    // @0x004 
+ volatile Word MPMCConfig;    // @0x008 
+
+ const Word fill0[5];         // @0x00C-0x01C
+
+ volatile Word MPMCDyCntl;    // @0x020 
+ volatile Word MPMCDyRef;     // @0x024 
+ volatile Word MPMCDyRdCfg;   // @0x028 
+
+ const Word fill1;            // @0x02C
+
+ volatile Word MPMCDytRP;     // @0x030 
+ volatile Word MPMCDytRAS;    // @0x034 
+ volatile Word MPMCDytSREX;   // @0x038 
+ volatile Word MPMCDytAPR;    // @0x03C 
+ volatile Word MPMCDytDAL;    // @0x040 
+ volatile Word MPMCDytWR;     // @0x044 
+ volatile Word MPMCDytRC;     // @0x048 
+ volatile Word MPMCDytRFC;    // @0x04C 
+ volatile Word MPMCDytXSR;    // @0x050 
+ volatile Word MPMCDytRRD;    // @0x054 
+ volatile Word MPMCDytMRD;    // @0x058 
+
+ const Word fill2[9];         // @0x05C-0x07C
+
+ volatile Word MPMCStExdWt;   // @0x080
+
+ const Word fill3[31];        // @0x084-0x09C
+ 
+ volatile Word MPMCDyConfig0; // @0x100 
+ volatile Word MPMCDyRasCas0; // @0x104 
+
+ const Word fill4[6];         // @0x108-0x11C
+
+ volatile Word MPMCDyConfig1; // @0x120 
+ volatile Word MPMCDyRasCas1; // @0x124 
+
+ const Word fill5[6];         // @0x128-0x13C
+
+ volatile Word MPMCDyConfig2; // @0x140 
+ volatile Word MPMCDyRasCas2; // @0x144 
+
+ const Word fill6[6];         // @0x148-0x15C
+
+ volatile Word MPMCDyConfig3; // @0x160 
+ volatile Word MPMCDyRasCas3; // @0x164 
+
+ const Word fill7[38];        // @0x168-0x1FC
+
+ volatile Word MPMCStConfig0; // @0x200 
+ volatile Word MPMCStWtWen0;  // @0x204 
+ volatile Word MPMCStWtOen0;  // @0x208 
+ volatile Word MPMCStWtRd0;   // @0x20C 
+ volatile Word MPMCStWtPg0;   // @0x210 
+ volatile Word MPMCStWtWr0;   // @0x214 
+ volatile Word MPMCStWtTurn0; // @0x218 
+
+ const Word fill8;            // @0x21C
+
+ volatile Word MPMCStConfig1; // @0x220 
+ volatile Word MPMCStWtWen1;  // @0x224 
+ volatile Word MPMCStWtOen1;  // @0x228 
+ volatile Word MPMCStWtRd1;   // @0x22C 
+ volatile Word MPMCStWtPg1;   // @0x230 
+ volatile Word MPMCStWtWr1;   // @0x234 
+ volatile Word MPMCStWtTurn1; // @0x238 
+
+ const Word fill9;            // @0x23C
+
+ volatile Word MPMCStConfig2; // @0x240 
+ volatile Word MPMCStWtWen2;  // @0x244 
+ volatile Word MPMCStWtOen2;  // @0x248 
+ volatile Word MPMCStWtRd2;   // @0x24C 
+ volatile Word MPMCStWtPg2;   // @0x250 
+ volatile Word MPMCStWtWr2;   // @0x254 
+ volatile Word MPMCStWtTurn2; // @0x258 
+
+ const Word fill10;           // @0x25C
+
+ volatile Word MPMCStConfig3; // @0x260 
+ volatile Word MPMCStWtWen3;  // @0x264 
+ volatile Word MPMCStWtOen3;  // @0x268 
+ volatile Word MPMCStWtRd3;   // @0x26C 
+ volatile Word MPMCStWtPg3;   // @0x270 
+ volatile Word MPMCStWtWr3;   // @0x274 
+ volatile Word MPMCStWtTurn3; // @0x278 
+
+ const Word fill11[35];       // @0x27C-0xEFC
+
+ volatile Word MPMCITCR;      // @0xF00
+
+ const Word fill12[7];        // @0xF04-0xF1C
+
+ volatile Word MPMCITIP;      // @0xF20
+
+ const Word fill13[7];        // @0xF24-0xF3C
+
+ volatile Word MPMCITOP;      // @0xF40
+
+ const Word fill14[35];       // @0xF44-0xFCC
+
+ volatile Word MPMCPeriphId4; // @0xFD0 
+ volatile Word MPMCPeriphId5; // @0xFD4 
+ volatile Word MPMCPeriphId6; // @0xFD8 
+ volatile Word MPMCPeriphId7; // @0xFDC 
+ volatile Word MPMCPeriphId0; // @0xFE0 
+ volatile Word MPMCPeriphId1; // @0xFE4 
+ volatile Word MPMCPeriphId2; // @0xFE8 
+ volatile Word MPMCPeriphId3; // @0xFEC 
+
+ volatile Word MPMCPCellId0;  // @0xFF0
+ volatile Word MPMCPCellId1;  // @0xFF4
+ volatile Word MPMCPCellId2;  // @0xFF8
+ volatile Word MPMCPCellId3;  // @0xFFC
+ }  Mpmc;
+
+extern Mpmc mpmc;
+
+// Peripheral ID
+
+#endif // defined( MPMC_H )
+
+// end of file mpmc.h

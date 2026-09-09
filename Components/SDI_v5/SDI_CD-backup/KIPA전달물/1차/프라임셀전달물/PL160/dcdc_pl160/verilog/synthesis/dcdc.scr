@@ -1,0 +1,18 @@
+
+analyze -f verilog  Dcdc.v 
+analyze -f verilog  DcdcApbif.v 
+analyze -f verilog  DcdcClkSync.v 
+analyze -f verilog  DcdcCntl.v 
+analyze -f verilog  DcdcDrive.v 
+analyze -f verilog  DcdcPclkSync.v 
+analyze -f verilog  DcdcSync.v
+
+
+
+elaborate Dcdc
+current_design Dcdc
+link
+
+write -f db -hier -out Dcdc.gtech.db
+
+

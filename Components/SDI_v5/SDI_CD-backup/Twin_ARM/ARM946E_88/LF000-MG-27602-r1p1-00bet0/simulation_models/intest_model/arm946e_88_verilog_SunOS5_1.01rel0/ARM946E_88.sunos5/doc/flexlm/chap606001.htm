@@ -1,0 +1,568 @@
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap5.htm">Previous Chapter</a>
+ * <a href="chap7.htm">Next Chapter</a>
+<p>
+<a name="78920: chap head: Chapter 6 License Administration Tools"></a><title>FLEXlm End User Manual: Chapter 6 
+License Administration Tools</title>
+<h1>Chapter 6 
+License Administration Tools</h1>
+<p>
+FLEXlm<I></I> provides utilities for the license administrator to help manage the licensing 
+activities on the network. These utilities are:<p>
+<ul><li><I><a href="chap6.htm#28319: 2head: 11.2.1 lmborrow">lmcksum</a></I> (v2.4 or later) - prints license checksums. (<I><a href="chap6.htm#28319: 2head: 11.2.1 lmborrow">page 42</a></I>)<li><I><a href="chap6.htm#36648: 1head: 8.4 lmdiag">lmdiag</a></I> (v4.0 or later) - diagnoses license checkout problems. (<I><a href="chap6.htm#36648: 1head: 8.4 lmdiag">page 42</a></I>)<li><I><a href="chap6.htm#24678: 1Head: 7.3 lmdown">lmdown</a></I> - gracefully shuts down all license daemons (both 
+lmgrd<I></I> and all vendor 
+daemons) on the license server node (or on all three nodes in the case of 
+redundant servers). (<I><a href="chap6.htm#24678: 1Head: 7.3 lmdown">page 43</a></I>)<li><I><a href="chap6.htm#14947: 1head: 6.1 lmgrd">lmgrd</a></I> - the main daemon program for 
+FLEXlm<I></I>. (<I><a href="chap6.htm#14947: 1head: 6.1 lmgrd">page 44</a></I>)<li><I><a href="chap6.htm#77046: 1head: 6.7 lmhostid">lmhostid</a></I> - reports the hostid of a system. (<I><a href="chap6.htm#77046: 1head: 6.7 lmhostid">page 45</a></I>)<li><I>lminstall</I> - install a decimal format license. (<a href="chap6.htm#40007: 1Head: 6.6 lminstall">page 45</a>)<li><I><a href="chap6.htm#39835: 1Head: 7.6 lmremove">lmremove</a></I> - removes a single user's license for a specified feature. (<I><a href="chap6.htm#39835: 1Head: 7.6 lmremove">page 46</a></I>)<li><I><a href="chap6.htm#20570: 1Head: 7.7 lmreread">lmreread</a></I> - causes the license daemon to reread the license file and start any new 
+vendor daemons. (<I><a href="chap6.htm#20570: 1Head: 7.7 lmreread">page 47</a></I>)<li><I><a href="chap6.htm#18622: 1Head: 7.8 lmstat">lmstat</a></I> - helps you monitor the status of all network licensing activities. (<I><a href="chap6.htm#18622: 1Head: 7.8 lmstat">page 47</a></I>)<li><I><a href="chap6.htm#10694: 1Head: 7.9 lmswitch">lmswitch</a></I> (VMS only) -switches the debug logfile. (<I><a href="chap6.htm#10694: 1Head: 7.9 lmswitch">page 48</a></I>)<li><I><a href="chap6.htm#18044: 1Head: 7.10 lmswitchr">lmswitchr</a></I> - switches the report log file. (<I><a href="chap6.htm#18044: 1Head: 7.10 lmswitchr">page 48</a></I>)<li><I><a href="chap6.htm#19215: 1Head: 7.11 lmver">lmver</a></I> - reports the 
+FLEXlm<I></I> version of a library or binary file. (<I><a href="chap6.htm#19215: 1Head: 7.11 lmver">page 49</a></I>)</ul><p>
+Beginning in 
+FLEXlm<I></I> v2.4, all 
+FLEXlm<I></I> utility programs (except 
+lmgrd<I></I>) are packaged 
+as a single executable called 
+<I>lmutil</I>. lmutil can either be installed as the individual 
+commands (either by creating links to the individual command names, or making 
+copies of lmutil as the individual command names), or the commands can be run as 
+`lmutil command', e.g. `lmutil lmstat', or `lmutil lmdown'. On Windows or 
+Windows/NT systems, the `lmutil command_name' form of the commands are 
+available. There is also a Windows version of these commands - see 
+<a href="#29049: 1Head: 7.12 License Administration Tools\xd1 LMUTIL for Windows">Section 6.13.1, 
+`License Administration Tools - LMTOOLS for Windows,' on page 49</a>.<p>
+<h4>Arguments valid for all lmutil utilities</h4>
+<dl><dt>-c 
+<I>license_file</I><dd>Most 
+<I>lmutil</I> utilities need to know the path to the license 
+file. This can be specified with a `-c 
+<I>license_file</I>' argument, 
+or by setting the LM_LICENSE_FILE environment 
+variable. Otherwise, the default location is used.<dt>-verbose<dd>Prints longer description for all errors found. The output 
+from the utilities may be harder to read with this option, but 
+is useful for diagnostics. (version 6+ only)</dl><a name="28319: 2head: 11.2.1 lmborrow"></a><a name="_IX_93"></a><a name="_IX_94"></a><a name="6.1"></a><h2>6.1  lmcksum</h2>
+<p>
+The 
+<TT><a name="_IX_95"></a>lmcksum</TT> program (FLEXlm<I></I> v2.4 or later) will perform a checksum of a license 
+file. This is useful to verify data entry errors at your location. 
+<TT>lmcksum</TT> will print a line-by-line checksum for the file as well as an overall file checksum. 
+<TT>lmcksum</TT> takes the 
+`-k' switch to force the encryption key checksum to be case-sensitive. 
+<p>
+<p>
+<TT>lmcksum</TT> will ignore all fields that do not enter into the encryption key computation; 
+thus the server node name and port number, as well as the daemon pathname and 
+options file names are not checksummed. In addition, 
+<TT>lmcksum</TT> will treat non-case 
+sensitive fields correctly (in general, 
+<TT>lmcksum</TT> is not case-sensitive).<p>
+<p>
+<TT>lmcksum</TT> takes an optional daemon name; if specified, only license file lines for the 
+selected daemon are used to compute the checksums.<p>
+<p>
+For FEATURE lines that contain 
+<I>ck=nnn</I>, lmcksum prints simply OK or BAD.<p>
+<p>
+Usage is:<p>
+<pre>lmcksum [-c <I>license_file</I>]</pre>
+</ol></ul><p>
+<p>
+<dl><dt>-c 
+<I>license_file</I><dd>path to the file to checksum. By default lmcksum uses 
+`license.dat' in the current directory (unlike other 
+<I>lmutil</I> 
+commands).</dl><p>
+Example output is:<p>
+<pre>lmcksum - Copyright (C) 1989, 1997 GLOBEtrotter Software<I></I>, Inc.
+lmcksum: using license file"/usr/local/flexlm/licenses/license.dat"
+
+	189: SERVER speedy 08002b32b161 2837
+	166: DAEMON xyzd C:\flexlm\xyzd.exe 
+	  8: FEATURE f1 xyzd 1.000 01-jan-99 0 3B2BC33CE4E1B8F3A0BF""
+OK:  	231: FEATURE f2 xyzd 1.0 01-jan-0 1 8B1C30015351B7737F5E \
+		DUP_GROUP=HD ck=231
+	109: (overall file checksum)</pre>
+<a name="36648: 1head: 8.4 lmdiag"></a><a name="_IX_96"></a><a name="_IX_97"></a><a name="6.2"></a><h2>6.2  lmdiag</h2>
+<p>
+<TT>lmdiag</TT> (FLEXlm<I></I> v4.0 or later) allows 
+	you to diagnose problems when you cannot 
+check out a license.<p>
+<p>
+Usage is:<p>
+<pre>lmdiag [-c <I>license_file</I>] [-n] [<I>feature</I>]</pre>
+</ol></ul><p>
+<p>
+<dl><dt>-c 
+<I>license_file</I><dd>path to the file to diagnose.<dt>-n 
+<dd>run in non-interactive mode; 
+<TT>lmdiag</TT> will not prompt for 
+any input in this mode. In this mode, extended connection 
+diagnostics are not available. 
+<dt><I>feature</I><dd>diagnose this feature only. 
+</dl><p>
+If no 
+<I>feature</I> is specified, 
+<TT>lmdiag</TT> will operate on all features in the license file(s) 
+in your path. 
+<TT>lmdiag</TT> will first print information about the license, then attempt to 
+check out each license. If the checkout succeeds, 
+<TT>lmdiag</TT> will indicate this. If the 
+checkout fails, 
+<TT>lmdiag</TT> will give you the reason for the failure. If the checkout fails 
+because 
+<TT>lmdiag</TT> cannot connect to the license server, then you have the option of 
+running `extended connection diagnostics'. 
+<p>
+<p>
+These extended diagnostics attempt to connect to each port on the license server node, 
+and can detect if the port number in the license file is incorrect. 
+<TT>lmdiag</TT> will indicate 
+each port number that is listening, and if it is an 
+lmgrd<I></I> process, 
+<TT>lmdiag</TT> will indicate 
+this as well. If 
+<TT>lmdiag</TT> finds the vendor daemon for the feature being tested, then it 
+will indicate the correct port number for the license file to correct the problem. 
+<p>
+<p>
+See Also: 
+<a href="chap8.htm#33814: 1HeadApp: B.2 FLEXLM_DIAGNOSTICS">Appendix B, `FLEXLM_DIAGNOSTICS' on page 56</a>.<p>
+<a name="24678: 1Head: 7.3 lmdown"></a><a name="_IX_98"></a><a name="6.3"></a><h2>6.3  lmdown</h2>
+<p>
+The 
+<TT>lmdown</TT> utility allows for the graceful shutdown of all license daemons (both 
+<a name="_IX_99"></a>lmgrd<I></I> and all vendor daemons) on all nodes. 
+<p>
+<p>
+Usage is:<p>
+<pre><TT>lmdown [-c </TT><I>license_file</I><TT>] [-vendor </TT><TT>name</TT><TT>] [-q]</TT></pre>
+</ol></ul><p>
+<p>
+<dl><dt>-c 
+<I>license_file</I><dd>Use the specified license file.<dt>-vendor 
+<I>name</I><dd>Only shutdown this one vendor daemon. 
+<TT>lmgrd</TT> will 
+always continue running if this option is specified. 
+Requires v6.0 
+<TT>lmdown</TT> and 
+<TT>lmgrd</TT> (the vendor daemon 
+can be any version).<dt>-q<dd>Don't prompt or print a header. Otherwise 
+<TT>lmdown</TT> asks 
+`Are you sure? [y/n]: `.</dl><p>
+You may want to protect the execution of<B> 
+</B><TT>lmdown</TT>, since shutting down the servers 
+causes users to lose their licenses. See the `<TT>-p</TT>' or the `-x' options in 
+<a href="chap6.htm#14947: 1head: 6.1 lmgrd">Section 6.4, 
+`lmgrd,' on page 44</a> for details about securing access to 
+<TT>lmdown</TT>.<p>
+<p>
+If lmdown encounters more than one server (for example if -c specifies a directory with 
+many *.lic files) a choice of servers to shutdown is presented.<p>
+<p>
+To stop and restart a single vendor daemon, use lmdown -vendor name, then, use 
+lmreread -vendor name, which restarts the vendor daemon.<p>
+<p>
+When shutting down redundant servers, there is a one-minute delay before the servers 
+shut down. Do 
+<B>not</B> use `kill -9' to shut down the license servers.<p>
+<p>
+See Also: 
+<a href="chap6.htm#20570: 1Head: 7.7 lmreread">Section 6.8, `lmreread,' on page 47</a>.<p>
+<a name="14947: 1head: 6.1 lmgrd"></a><a name="_IX_100"></a><a name="6.4"></a><h2>6.4  lmgrd</h2>
+<p>
+<TT>lmgrd</TT> is the main daemon program for 
+FLEXlm<I></I>. When you invoke 
+lmgrd<I></I>, it looks 
+for the license file which contains the information about vendors and features. On Unix 
+systems, it is strongly recommended that lmgrd be run as a non-privileged user (not 
+<I>root</I>).<p>
+<p>
+Usage is:<p>
+<pre>lmgrd<I></I> [<I> -</I>app ] [ -c <I>license_file</I> ] [ -t <I>timeout_interval</I> ] [ -l <I>logfile </I>]
+[ -s <I>timestamp_interval</I> ] [ -2 -p ] [ -v ] [ -x lmdown ] [ -x lmremove ]</pre>
+</ol></ul><p>
+<p>
+<dl><dt>-app<dd>Required for Windows/NT systems when run as a 
+command, but not used when run as a service.<dt>-c 
+<I>license_file</I><dd>Use the license file named.<dt>-t 
+<I>timeout_interval</I><dd>Sets a timeout interval, in seconds, during which redundant 
+daemons must complete their connections to each other. 
+The default value is 10 seconds. A larger value may be 
+desirable if the daemons are being run on busy systems or 
+a very heavily loaded network.<dt>-l 
+<I>logfile</I><dd>Write the debug log to 
+<I>logfile</I>.<dt> -s 
+<I>timestamp_interval</I><dd>Specifies the logfile timestamp interval, in minutes. The 
+default is 360 minutes.<dt>-2 -p<dd>Restricts usage of 
+<TT>lmdown</TT>, 
+<TT>lmreread</TT>, and 
+<TT>lmremove 
+</TT>to a 
+FLEXlm<I></I> administrator who is by default root. If there 
+a 
+<I>Unix</I> group called `lmadmin' then use is restricted to 
+only members of that group. If root is not a member of this 
+group, then root does not have permission to use any of the 
+above utilities. The `<TT>-p</TT>' option is available in 
+FLEXlm<I></I> 
+v2.4 and later.<dt>-v<dd>Prints 
+lmgrd<I></I>'s version number and copyright and exits.<dt>-x lmdown<dd>Disallow the lmdown command (no user can run lmdown). 
+If lmdown is disabled, you will need to stop lmgrd via 
+`<TT>kill 
+</TT><I>pid</I>' (Unix) or CTRL-ALT-DEL and stop the 
+lmgrd and vendor daemon processes (Windows 95). On 
+Unix, be sure the kill command does not have a -9 
+argument.<dt>-x lmremove<dd>Disallow the lmremove command (no user can run 
+lmremove)</dl><p>
+The -x lmdown and -x lmremove options are available in 
+FLEXlm<I></I> v4.0 and later.<p>
+<a name="77046: 1head: 6.7 lmhostid"></a><a name="_IX_101"></a><a name="6.5"></a><h2>6.5  lmhostid</h2>
+<p>
+The 
+<TT>lmhostid</TT> utility reports the hostid of a system.<p>
+<p>
+Usage is:<p>
+<pre><TT>lmhostid [-n]</TT></pre>
+</ol></ul><p>
+The output of this command looks as follows:<p>
+<pre><TT>lmhostid - Copyright (c) 1989, 1997 Globetrotter Software, Inc.
+The </TT>FLEXlm<I></I><TT> hostid of this machine is"69021c89"</TT></pre>
+</ol></ul><p>
+With the `-n' argument, no header is printed; only the hostid. 
+<p>
+<p>
+See 
+<a href="#88781: AppTitle1: Appendix\x11 A Hostids for FLEXlm-Supported Machines">Appendix A, `Hostids for FLEXlm-Supported Machines'</a>.<p>
+<a name="40007: 1Head: 6.6 lminstall"></a><a name="_IX_102"></a><a name="6.6"></a><h2>6.6  lminstall</h2>
+<p>
+New in version 6, 
+lminstall is designed primarily for typing in 
+<a name="_IX_103"></a>decimal format licenses 
+to generate a readable format license file.<p>
+<p>
+Usage is:<p>
+<pre>	lminstall [-i {<I>infile</I> | -}] [-o <I>outfile</I>] \
+		[-overfmt {2 | 3 | 4 | 5 | 5.1 | 6}] [-odecimal]</pre>
+</ol></ul><p>
+Normally, lminstall is used with no arguments; you are prompted for the name of the 
+output license file. The default name is today's date in 
+<I>yyyyddmm</I>.lic format. The file 
+should be moved to the application's default license file directory, if specified by the 
+software vendor. Otherwise, use LM_LICENSE_FILE or 
+<I>VENDOR</I>_LICENSE_FILE 
+to specify the directory where the *.lic files are located.<p>
+<p>
+Decimal format input is verified by checksum of each line.<p>
+<p>
+To finish entering, type `q' on a line by itself, or enter 2 blank lines.<p>
+<p>
+If 
+<I>infile</I> is a dash ('-'), it takes input from stdin.When '-i' is used, default output is 
+stdout; otherwise if -o is not specified, lminstall prompts the user for an output file 
+name.<p>
+<h4>lminstall As A Conversion Tool:</h4>
+<p>
+lminstall can alternatively be used to convert licenses between decimal and readable 
+format, and between different versions of 
+FLEXlm<I></I> license formats.<p>
+<p>
+To convert from readable to decimal:<p>
+<pre>	% lminstall -i infile -o outfile -odecimal</pre>
+</ol></ul><p>
+To convert to 
+FLEXlm<I></I> Version 2 format:<p>
+<pre>	% lminstall -i infile -o outfile -verfmt 2</pre>
+</ol></ul><p>
+Conversion errors are reported as necessary. lminstall has a limit of 1000 lines of input.<p>
+<a name="39835: 1Head: 7.6 lmremove"></a><a name="_IX_104"></a><a name="6.7"></a><h2>6.7  lmremove</h2>
+<p>
+The 
+<TT>lmremove</TT> utility allows you to remove a single user's license for a specified 
+feature. This is only needed when a client node crashes, since that's the only condition 
+where a license is not automatically freed. If the application is active, it will re-checkout the license after it is freed by lmremove.<p>
+<p>
+Usage is:<p>
+<pre>lmremove [ -c <I>file</I> ] <I>feature</I> <I>user</I> <I>host</I> <I>display</I></pre>
+<pre>	or</pre>
+<pre>lmremove [ -c file ] -h <I>feature host port handle</I></pre>
+</ol></ul><p>
+<p>
+<dl><dt>-c 
+<I>license_file</I><dd>license file<dt><I>feature</I><dd>name of the feature checked out by the user.<dt><I>user</I><dd>name of the user whose license you are removing (from 
+lmstat -a).<dt><I>host</I><dd>name of the host the user is logged in to (from lmstat -a).<dt><I>display</I><dd>name of the display where the user is working (from lmstat 
+-a).<dt><I>port</I><dd>port, as reported by lmstat -a<dt><I>handle</I><dd>handle, as reported by lmstat -a</dl><p>
+The 
+<I>user host display port and handle 
+</I>information must be obtained from the output 
+of 
+<TT>lmstat -a</TT>.<p>
+<p>
+<I>lmremove</I> removes all instances of 
+<I>user</I> on 
+<I>host</I> on 
+<I>display</I> from usage of 
+<I>feature</I>. If the 
+optional `-c 
+<I>file</I>' is specified, the indicated file is used as the license file.You should 
+protect the execution of 
+<TT>lmremove</TT><B>, 
+</B>since removing a user's license can be disruptive. 
+See the `<TT>-p</TT>' or the `-x' options in 
+<a href="chap6.htm#14947: 1head: 6.1 lmgrd">Section 6.4, `lmgrd,' on page 44</a> for details about 
+securing access to 
+<TT>lmremove</TT>.<p>
+<p>
+The 
+<TT>-h</TT> variation uses the serverhost, port, and license handle, as reported by 
+<TT>lmstat -a</TT>. Consider this example 
+<TT>lmstat 
+-a</TT> output:<p>
+<pre>joe cloud7 /dev/ttyp5 (v1.000) (cloud9/7654 102), start Fri 10/29 18:40</pre>
+</ol></ul><p>
+In this example, the serverhost is `cloud9', the port is `7654' and the license handle 
+is 102. To remove this license, issue the following command:<p>
+<pre>lmremove -h f1 cloud9 7654 102</pre>
+</ol></ul><p>
+or<p>
+<pre>lmremove f1 joe cloud7 /dev/ttyp5</pre>
+</ol></ul><p>
+When removing by handle, if licenses are grouped as duplicates, all duplicate licenses 
+will also be removed.<p>
+<a name="20570: 1Head: 7.7 lmreread"></a><a name="_IX_105"></a><a name="6.8"></a><h2>6.8  lmreread</h2>
+<p>
+The<B> 
+</B><TT>lmreread</TT> utility causes the license daemon to reread the 
+<a name="_IX_106"></a>license file and start 
+any new vendor daemons that have been added. In addition, all running daemons will 
+be signaled to reread the license file for changes in feature licensing information. 
+<p>
+<p>
+Usage is:<p>
+<pre>lmreread [-c <I>license_file</I>] [-vendor name]</pre>
+</ol></ul><p>
+<p>
+<dl><dt>-c 
+<I>license_file</I><dd>Use the specified license file.<dt>-vendor 
+<I>name</I><dd>Only this one vendor daemon should reread the license file. 
+lmgrd will restart the vendor daemon if necessary. Requires 
+v6.0 
+<TT>lmreread</TT> and 
+<TT>lmgrd</TT> (the vendor daemon can be 
+any version).</dl><p>
+The license administrator may want to protect the execution of 
+<TT>lmreread</TT>. See the `<TT>-p</TT>' and `-x' 
+<a name="_IX_107"></a>options in 
+<a href="chap6.htm#14947: 1head: 6.1 lmgrd">Section 6.4, `lmgrd,' on page 44</a> for details about securing 
+access to 
+<TT>lmreread</TT>.<p>
+<p>
+To stop and restart a single vendor daemon, use 
+<TT>lmdown</TT> -vendor 
+<I>name</I>, then use 
+<TT>lmreread</TT> -vendor 
+<I>name</I>, which restarts the vendor daemon.<p>
+<p>
+If you use the `<TT>-c</TT>' option, the license file specified will be read by 
+<TT>lmreread</TT>, not 
+by 
+lmgrd<I></I>; 
+lmgrd<I></I> rereads the file it read originally. Also, 
+<TT>lmreread</TT> cannot be used to 
+change server node names or port numbers. Vendor daemons will not reread their 
+option files as a result of 
+<TT>lmreread</TT>.<p>
+<p>
+lmreread does not cause the vendor daemon to reread the options file. For options file 
+changes to take effect, lmgrd must be stopped (lmdown) and restarted.<p>
+<p>
+See Also: 
+<a href="chap6.htm#20570: 1Head: 7.7 lmreread">Section 6.8, `lmreread,' on page 47</a>.<p>
+<a name="18622: 1Head: 7.8 lmstat"></a><a name="_IX_108"></a><a name="6.9"></a><h2>6.9  lmstat</h2>
+<p>
+The 
+<TT>lmstat</TT> utility helps you monitor the status of all network licensing activities.<p>
+<p>
+Usage is:<p>
+<pre>lmstat 	[-a] [ -A ] [-c <I>license_file</I>] [-f <I>feature</I>] [-i <I>[feature]]
+</I>	[-S <I>vendor</I>] [-s <I>hostname</I>] [-t <I>value</I>]</pre>
+</ol></ul><p>
+<p>
+<dl><dt>-a<dd>Display all information<dt>-A<dd>List all active licenses<dt>-c 
+<I>license_file</I><dd>Use the license file named. 
+<dt>-f 
+<I>feature_name</I><dd><a name="_IX_109"></a>List users of 
+<I>feature_name</I>.<dt>-i [<I>feature_name</I>]<dd>Print information about the named 
+<I>feature</I>, or all 
+features if no 
+<I>feature_name</I> is given. This option is usually 
+not recommended, since the information does not come 
+from the license server, and may not reflect what the server 
+actually supports.<dt>-S [<I>vendor</I>]<dd>List all users of 
+<I>vendor</I>'s features.<dt>-s 
+<I>hostname</I><dd>Display status of clients running on 
+<I>hostname</I>.<dt>-t 
+<I>value</I><dd>Set 
+<TT>lmstat</TT> timeout to `value'.</dl><a name="_IX_110"></a><a name="10694: 1Head: 7.9 lmswitch"></a><a name="6.10"></a><h2>6.10  lmswitch</h2>
+<p>
+The 
+<TT>lmswitch</TT> command is available on VMS only.<p>
+<p>
+The<B> 
+</B><TT>lmswitch</TT> utility switches the debug log file for the daemon serving the specified 
+feature while the daemon is running. 
+<p>
+<p>
+Usage is:<p>
+<pre>lmswitch <I>feature new-file</I></pre>
+</ol></ul><p>
+<p>
+<dl><dt><I>feature</I><dd>any feature this daemon supports.<dt><I>new-file</I><dd>the new file path.</dl><p>
+Of course, for this syntax to work, 
+<TT>lmswitch</TT> needs to be installed as a foreign 
+command. 
+<p>
+<p>
+The new logfile will be opened for write, rather than append, so it is possible to 
+`switch' to the same filename in order to be able to view the old log file.<p>
+<a name="18044: 1Head: 7.10 lmswitchr"></a><a name="_IX_111"></a><a name="6.11"></a><h2>6.11  lmswitchr</h2>
+<p>
+The<B> 
+</B><TT>lmswitchr</TT> utility switches the report writer (REPORTLOG) log file. It will also 
+start a new REPORTLOG file if one does not already exist.<p>
+<p>
+Usage is:<p>
+<pre>lmswitchr [-c license_file] <I>feature new-file</I></pre>
+<pre>lmswitchr [-c license_file] vendor new-file [v5.0+ only]</pre>
+</ol></ul><p>
+<p>
+<dl><dt>-c<dd>license file path<dt><I>feature</I><dd>any feature this daemon supports<dt><I>new-file</I><dd>new file path</dl><p>
+lmswitchr does not work with 
+FLEXlm<I></I> v3.0 vendor daemons. Ask your vendor for a 
+later version of their vendor daemon.<p>
+<a name="19215: 1Head: 7.11 lmver"></a><a name="_IX_112"></a><a name="6.12"></a><h2>6.12  lmver</h2>
+<p>
+The 
+<TT>lmver</TT> utility reports the 
+FLEXlm<I></I> version of a library or binary file.<p>
+<p>
+Usage is:<p>
+<pre><TT>lmver </TT><I>filename</I></pre>
+</ol></ul><p>
+<p>
+<dl><dt><I>filename</I><dd> name of the executable of the product. 
+</dl><p>
+For example if you have an application called `spell' type:<p>
+<pre>	% lmver spell</pre>
+</ol></ul><p>
+Alternatively, on Unix systems, you can use the following commands to get the 
+FLEXlm<I></I> version of a binary:<p>
+<pre>	strings <I>file</I> | grep Copy</pre>
+<a name="_IX_113"></a><a name="6.13"></a><h2>6.13  License Administration Tools for Windows</h2>
+<h3>6.13.1	 <a name="29049: 1Head: 7.12 License Administration Tools\xd1 LMUTIL for Windows"></a>License Administration Tools - <a name="_IX_114"></a>LMTOOLS for Windows</h3>
+<p>
+For the 32 Bit Windows Platforms, an 
+LMTOOLS.EXE Windows program is 
+provided. It has the same functionality as listed in the previous sections but is 
+graphically-oriented. Simply run the program and choose a button for the functionality 
+required. Refer to the previous sections for information about the options of each 
+feature. The command line interface is replaced by pop-up dialogs that can be filled 
+out. The central EDIT field is where the license file path is placed. This will be used 
+for all other functions and replaces the `-c 
+<I>license_file</I>' argument in lmutil.<p>
+<p>
+The HOSTID button displays the hostid's for the computer on which the program is 
+running. The TIME button prints out the system's internal time settings, intended to 
+diagnose any time zone problems. The TCP Settings button is intended to fix a bug in 
+the Microsoft TCP protocol stack which has a symptom of very slow connections to 
+computers. After pressing this button, the system will need to be rebooted for the 
+settings to become effective.<p>
+<h3>6.13.2	 <a name="12312: 2Head: 6.12.2 The FLEXlm Control Panel"></a>The 
+FLEXlm<I></I> 
+<a name="_IX_115"></a>Control Panel</h3>
+<p>
+The 
+FLEXlm<I></I> control panel, FLEXLM.CPL, is an applet that installs into the Control 
+Panel of Windows and is used to control the execution of the 
+FLEXlm<I></I> license manager. 
+If the software you are installing includes the Control Panel, it will be installed in your 
+Windows System Directory.<p>
+<p>
+The library LMGR325B.DLL needs to be available for FLEXLM.CPL. In this 
+example it is placed in the same directory, but it could be placed anywhere in the 
+system search path.<p>
+<h3>6.13.3	 <a name="28088: 1Head: 9.6 Controlling LMGRD with the Windows Control Panel"></a>Controlling LMGRD with the Windows Control Panel</h3>
+<p>
+LMGRD.EXE can be run manually or using the Control Panel. 
+FLEXlm<I></I> for Windows 
+comes with a Control Panel applet for controlling LMGRD.EXE without using the 
+DOS prompt.<p>
+<h3>6.13.4	 Using The Control Panel on 
+<a name="_IX_116"></a>NT</h3>
+<p>
+To start the 
+FLEXlm<I></I> Control Panel, open the Control Panel and double-click on the 
+FLEXlm<I></I> License Manager icon<B><img src="2.0 internal inset">.</B><p>
+<p>
+From the Control tab you can start, stop, and check the status of your license server. 
+Select the Setup tab to enter information about your license server.<img src="2.0 internal inset"><p>
+<p>
+The Service Name of `FLEXlm<I></I> License Manager' is the default (for backwards 
+compatibility). You should change this to a name that your vendor recommends. 
+Complete the form to configure 
+<I>lmgrd</I> to serve licenses.<p>
+<p>
+The information you enter is stored in the registry under the service name you created:<p>
+<pre>HKEY_LOCAL_MACHINE\SOFTWARE\FLEXlm License Manager\<B>Se</B><B>rvice-Name</B><I>\..</I>.</pre>
+</ol></ul><p>
+Select the 
+<I>Control</I> tab and click the 
+<I>Start</I> button to turn on your license server. 
+LMGRD.EXE will be launched as a background application with the license file and 
+debug log file locations passed as parameters.<p>
+<p>
+If you want LMGRD.EXE to start automatically, select the `Use NT Services' box and 
+LMGRD.EXE will be installed as an NT service. You can then use the NT's Services 
+control panel to adjust the start/stop behavior of LMGRD.EXE. Since NT services do 
+not have command line parameters, LMGRD.EXE, when started as a service, locates 
+its service name under `FLEXlm<I></I> License Manager' in the registry and from there 
+recovers the license file and log file locations. Multiple instances of LMGRD.EXE can 
+be run as services provided each occurrence has a different service name.<p>
+<p>
+You can switch back and forth between different instances of LMGRD.EXE by using 
+the 
+<I>Setup</I> tab and changing the selection in `Service Name'. This is only necessary if 
+you have more than one product licensed with 
+FLEXlm<I></I>.<p>
+<p>
+The remaining tabs in the control panel allow you a subset of control similar to the 
+LMUTIL.EXE program. The Licenses tab provides information about the license file 
+and the Advanced tab allows you to perform diagnostics and check versions.<p>
+<h3>6.13.5	 Using the 
+<a name="_IX_117"></a>Control Panel on 
+<a name="_IX_118"></a>Windows 95</h3>
+<p>
+The behavior of the control panel applet FLEXLM.CPL is almost identical under 
+Windows 95 and NT. FLEXLM.CPL is located in the Windows\System directory. If 
+you are starting LMGRD.EXE manually from the 
+<I>Control</I> tab, there is no difference 
+between the two. But, since services are not available on Windows 95, the 
+<I>Use NT 
+Service</I> check box is not available.   Instead a 
+<I>Start Server at Power-UP</I> check box 
+gives you the option to start the server when the system is booted.<p>
+<p>
+On Windows 95, 
+FLEXlm<I></I> makes use of a registry feature that launches programs 
+automatically. The `Microsoft\Windows\CurrentVersion\RunServices' registry is 
+used to launch the program LMGRD95.EXE at power-on. This program scans the 
+`FLEXlm<I></I> License Manager' area of the registry and launches an instance of 
+LMGRD.EXE for each service-name it finds.<p>
+<p>
+If someone switches users (i.e. selects `shutdown' and chooses `close all programs 
+and log on as a different user') on Windows 95, all instances of LMGRD.EXE will 
+be terminated (see Microsoft documentation). This is one of the reasons we do not 
+recommend using Windows 95 as a license server.<p>
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap5.htm">Previous Chapter</a>
+ * <a href="chap7.htm">Next Chapter</a>
+<p>

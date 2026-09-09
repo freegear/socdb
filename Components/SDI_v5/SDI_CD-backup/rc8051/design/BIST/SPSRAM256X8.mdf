@@ -1,0 +1,29 @@
+%GLOBAL
+{
+   	%TIMESCALE   	1ns/10ps;
+	%CLK_CYCLE 	100;
+}
+	
+%MEMORY SPSRAM256X8
+{
+   	%TYPE        	SRAM;
+   	%DATA_BITS   	8;
+   	%ADDR_BITS   	8;
+   	%LOW_ADDR    	8'b00000000;
+   	%HIGH_ADDR   	8'b11111111;
+   	%SYNC_RESET  	TRUE;
+   	%LATENCY     	0;
+	%NO_MUX		FALSE;
+
+   	%PORT 		a
+   	{
+       		%TYPE       		rw;
+       		%ADDRESS    		A ;
+       		%DATA_IN    		D ;
+       		%DATA_OUT   		Q ;
+       		%CLOCK      		CLK;
+       		%WRITE_EN   		-WEN;
+       		%SELECT     		-CEN;
+    	}
+
+}

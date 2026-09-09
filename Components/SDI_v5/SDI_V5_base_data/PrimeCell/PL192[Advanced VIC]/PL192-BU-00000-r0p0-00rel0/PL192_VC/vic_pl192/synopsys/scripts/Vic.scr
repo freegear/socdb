@@ -1,0 +1,249 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2002 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--------------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : Vic.scr.rca
+-- File Revision          : 1.5
+-- 
+-- Release Information    : PrimeCell(TM)-PL192-r0p0-00rel0
+-- 
+--------------------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the 
+--           VIC block.             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the input and output delay     
+--           constraints for the non-AMBA I/O in the VIC block. 
+--
+-- --=======================================================================--*/
+
+/******************************************************************************/
+/* VIC BLOCK-SPECIFIC TIMING PARAMETERS                                       */
+/******************************************************************************/
+
+/******************************************************************************/
+/* Input Delays                                                               */
+/******************************************************************************/
+
+/********************************/
+/* Daisy Chain Interrupt Inputs */
+/********************************/
+/* The input-valid times for intrachip inputs                                 */
+/*  (80% input setup time)*/
+tisvicintrachipipmax = 0.8 * tclk
+
+/* Calculating the maximum allowable input delay on the intra-chip inputs     */
+tidvicintrachipipmax  = tclk - tisvicintrachipipmax
+
+/* The input-valid times for intrachip inputs                                 */
+/*  (25% input setup time)*/
+tisvicirqackipmax = 0.25 * tclk
+
+/* Calculating the maximum allowable input delay on the intra-chip inputs     */
+tidvicirqackipmax  = tclk - tisvicirqackipmax
+
+/* Minimum input delay on the intrachip inputs                                */
+tihvicintrachipipmin  = 0.0
+
+/* Minimum input delay on the inputs                                          */
+tidvicintrachipipmin  = tihvicintrachipipmin
+
+/******************************************************************************/
+/* Intrachip Output ports.                                                    */
+/* Output valid and hold times. Constraints used are similar to AHB output    */
+/* signals                                                                    */
+/******************************************************************************/
+
+/* The output-valid times for VICIRQACKOUT outputs (85% of tclk period)       */
+tovvicirqackoutopmax    = 0.85 * tclk
+
+/* Calculating the maximum allowable output delay on VICIRQACKOUT output      */
+todvicirqackoutopmax    = tclk - tovvicirqackoutopmax
+
+/* The output-valid times for nVICIRQ output (55% of tclk period)             */
+tovnvicirqopmax    = 0.55 * tclk 
+
+/* Calculating the maximum allowable output delay on nVICIRQ output           */
+todnvicirqopmax    = tclk - tovnvicirqopmax
+
+/* The output-valid times for nVICFIQ output (55% of tclk period)             */
+tovnvicfiqopmax    = 0.55 * tclk      
+
+/* Calculating the maximum allowable output delay on nVICFIQ output           */
+todnvicfiqopmax    = tclk - tovnvicfiqopmax
+
+/* The output-valid times for intrachip outputs (50% of tclk period)          */
+tovvicintrachipopmax    = 0.50 * tclk 
+
+/* Calculating the maximum allowable output delay on intrachip outputs        */
+todvicintrachipopmax    = tclk - tovvicintrachipopmax
+
+/* Minimum output delay on the intrachip outputs                              */
+tovvicintrachipopmin    = 0
+
+/* Calculating the minimum allowable output delay on intrachip outputs        */
+todvicintrachipopmin    = tovvicintrachipopmin
+
+/* The output-valid times for VICVECTADDRV output(40% of tclk period)         */
+tovvicvectaddrvopmax    = 0.40 * tclk 
+
+/* Calculating the maximum allowable output delay on intrachip outputs        */
+todvicvectaddrvopmax    = tclk - tovvicvectaddrvopmax 
+
+/* Minimum output delay on the intrachip outputs                              */
+tovvicvectaddrvopmin    = 0
+
+/* Calculating the minimum allowable output delay on intrachip outputs        */
+todvicvectaddrvopmin    = tovvicvectaddrvopmin
+/******************************************************************************/
+/* Scan Inputs                                                                */
+/******************************************************************************/
+/* The input delay on the Scan related input signals has been set to          */
+/* minimal value to prevent addition of extra gates in these paths.           */
+tidscanmax = 0.0
+tidscanmin = 0.0
+
+/******************************************************************************/
+/* Scan Outputs                                                               */
+/******************************************************************************/
+/* The output delay on the Scan related output signals has been set   */
+/* to a zero value to prevent addition of extra gates in these paths. */
+todscanmax = 0.0
+todscanmin = 0.0
+
+/******************************************************************************/
+/* NON AMBA SIGNALS CONSTRAINTS.                                              */
+/******************************************************************************/
+
+/***************************/
+/* Interrupt Source Inputs */
+/***************************/
+
+/* VICINTSOURCE */
+set_input_delay -clock HCLK -min tidvicintrachipipmin VICINTSOURCE
+set_input_delay -clock HCLK -max tidvicintrachipipmax VICINTSOURCE
+
+/********************************/
+/* Daisy Chain Interrupt Inputs */
+/********************************/
+
+/* nVICFIQIN */
+set_input_delay -clock HCLK -min tidvicintrachipipmin nVICFIQIN
+set_input_delay -clock HCLK -max tidvicintrachipipmax nVICFIQIN
+
+/* nVICIRQIN */
+set_input_delay -clock HCLK -min tidvicintrachipipmin nVICIRQIN
+set_input_delay -clock HCLK -max tidvicintrachipipmax nVICIRQIN
+
+/* VICVECTADDRIN */
+set_input_delay -clock HCLK -min tidvicintrachipipmin VICVECTADDRIN
+set_input_delay -clock HCLK -max tidvicintrachipipmax VICVECTADDRIN
+
+/* VICFIQINREG */
+set_input_delay -clock HCLK -min tidvicintrachipipmin VICFIQINREG
+set_input_delay -clock HCLK -max tidvicintrachipipmax VICFIQINREG
+
+/* VICIRQINREG */
+set_input_delay -clock HCLK -min tidvicintrachipipmin VICIRQINREG
+set_input_delay -clock HCLK -max tidvicintrachipipmax VICIRQINREG
+
+/************/
+/* VIC Port */
+/************/
+
+/* nVICSYNCEN */
+set_input_delay -clock HCLK -min tidvicintrachipipmin nVICSYNCEN
+set_input_delay -clock HCLK -max tidvicintrachipipmax nVICSYNCEN
+
+/* VICIRQACK */
+set_input_delay -clock HCLK -min tidvicintrachipipmin VICIRQACK
+set_input_delay -clock HCLK -max tidvicirqackipmax VICIRQACK
+
+/***************/
+/* Scan Inputs */
+/***************/
+
+set_input_delay -clock HCLK -min tidscanmin SCANINHCLK
+set_input_delay -clock HCLK -max tidscanmax SCANINHCLK
+
+set_input_delay -clock HCLK -min tidscanmin SCANENABLE
+set_input_delay -clock HCLK -max tidscanmax SCANENABLE
+
+/******************************************************************************/
+/* SCAN SIGNAL CONSTRAINTS                                                    */
+/******************************************************************************/
+
+set_drive 0 SCANENABLE
+/* Infinite drive strength Scan Enable signal */
+
+set_load 0 SCANENABLE
+/* Zero load Scan Enable signal */
+
+remove_driving_cell find(port, SCANENABLE)
+/* Set no driving cell on Scan Enable */
+
+set_dont_touch_network find(port, SCANENABLE)
+/* Preserve the Scan Enable net during optimisation */
+
+set_drive 0 SCANINHCLK
+/* Infinite drive strength Scan input signal */
+
+set_load 0 SCANINHCLK
+/* Zero load Scan input signal */
+
+remove_driving_cell find(port, SCANINHCLK)
+/* Set no driving cell on Scan input */
+
+set_dont_touch_network find(port, SCANINHCLK)
+/* Preserve the Scan input net during optimisation */
+
+/******************************************************************************/
+/* OUTPUT CONSTRAINTS FOR NON-AMBA PORTS                                      */
+/******************************************************************************/
+
+/*********************/
+/* Interrupt Outputs */
+/*********************/
+
+set_output_delay -clock HCLK -min todvicintrachipopmin nVICFIQ
+set_output_delay -clock HCLK -max todnvicfiqopmax nVICFIQ
+
+set_output_delay -clock HCLK -min todvicintrachipopmin nVICIRQ
+set_output_delay -clock HCLK -max todnvicirqopmax nVICIRQ
+
+
+/***********************/
+/* Daisy Chain Outputs */
+/***********************/
+
+set_output_delay -clock HCLK -min todvicintrachipopmin VICVECTADDROUT
+set_output_delay -clock HCLK -max todvicintrachipopmax VICVECTADDROUT
+
+set_output_delay -clock HCLK -min todvicintrachipopmin VICIRQACKOUT
+set_output_delay -clock HCLK -max todvicirqackoutopmax VICIRQACKOUT
+
+/********************/
+/* VIC Port Outputs */
+/********************/
+
+set_output_delay -clock HCLK -min todvicvectaddrvopmin VICVECTADDRV
+set_output_delay -clock HCLK -max todvicvectaddrvopmax VICVECTADDRV
+
+/****************/
+/* Scan Outputs */
+/****************/
+
+set_output_delay -clock HCLK -min todscanmin SCANOUTHCLK
+set_output_delay -clock HCLK -max todscanmax SCANOUTHCLK
+
+/***************************** End of Vic.scr *********************************/

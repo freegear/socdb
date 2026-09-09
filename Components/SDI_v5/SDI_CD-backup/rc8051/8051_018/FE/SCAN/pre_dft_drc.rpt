@@ -1,0 +1,91 @@
+  Loading test protocol
+  Loading design 'rc8051RtlTop'
+  Pre-DFT DRC enabled
+
+Information: Starting test design rule checking. (TEST-222)
+  ...basic checks...
+  ...basic sequential cell checks...
+  	...checking for scan equivalents...
+  ...checking vector rules...
+  ...checking pre-dft rules...
+
+-----------------------------------------------------------------
+Begin Modeling violations...
+
+Warning: Cell uBisted_SPSRAM256X8/WRAPPED_RAM_i0/SRAM_i0 (SPSRAM256X8) is unknown (black box) because functionality for output pin Q[7] is bad or incomplete. (TEST-451)
+Warning: No scan equivalent exists for cell U3_cpu/U0_con/en_itcnt_reg (TLATX1). (TEST-120)
+Information: There are 10 other cells with the same violation. (TEST-171)
+
+Modeling violations completed...
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+Begin Topology violations...
+
+Warning: Three-state net uBisted_SPSRAM256X8/WRAPPED_RAM_i0/Q[7] is not properly driven. (TEST-115)
+Information: There are 7 other nets with the same violation. (TEST-289)
+
+Topology violations completed...
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+Begin Pre-DFT violations...
+
+ Warning: Set input SN of DFF wr_xdat_d1_reg was not controlled. (D2-1)
+Information: There are 44 other cells with the same violation. (TEST-171)
+ Warning: Reset input RN of DFF addr_xdat_reg_15_ was not controlled. (D3-1)
+Information: There are 463 other cells with the same violation. (TEST-171)
+ Warning: Clock rst_p cannot capture data with other clocks off. (D8-1)
+
+Pre-DFT violations completed...
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+Begin Other violations...
+
+Warning: Cell U3_cpu/U1_datapath/U1_sfr/U27_int/prio/int_lev_reg1 has constant 0 value. (TEST-504)
+Information: There are 2 other cells with the same violation. (TEST-171)
+
+Other violations completed...
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+  DRC Report
+
+  Total violations: 533
+
+-----------------------------------------------------------------
+
+12 MODELING VIOLATIONS
+     1 Cell has unknown model violation (TEST-451)
+    11 Cell has no scan equivalent violations (TEST-120)
+
+8 TOPOLOGY VIOLATIONS
+     8 Improperly driven three-state net violations (TEST-115)
+
+510 PRE-DFT VIOLATIONS
+    45 DFF set/reset line not controlled violations (D2)
+   464 DFF set/reset line not controlled violations (D3)
+     1 Clock not able to capture violation (D8)
+
+3 OTHER VIOLATIONS
+     3 Cell is constant 0 violations (TEST-504)
+
+
+Warning: Violations occurred during test design rule checking. (TEST-124)
+
+-----------------------------------------------------------------
+  Sequential Cell Report
+
+  523 out of 560 sequential cells have violations
+
+-----------------------------------------------------------------
+
+SEQUENTIAL CELLS WITH VIOLATIONS
+      * 520 cells have test design rule violations
+      *   3 cells have constant 0 value
+SEQUENTIAL CELLS WITHOUT VIOLATIONS
+      *  37 cells are valid scan cells
+
+Information: Test design rule checking completed. (TEST-123)
+1

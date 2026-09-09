@@ -1,0 +1,55 @@
+#! /bin/csh -f 
+if ($#argv < 4)  then
+	echo "USAGE : sdfchange_run <filename_head> <arm_kind> <arm_instance_name> <min|typ|max>"
+	echo " >example	: sdfchange_run TOP  arm7tdmir3a u_arm7tdmir3a typ"
+	echo " >filename 	: TOP.sdf => TOP (the name except for .sdf )"
+	echo " >kind     	:  arm7tdmir3a "
+	echo " >arm_instance_name : The instance name for arm in your design "
+        echo " >                   ex) arm7tdmir3a uarm7tdmir3a ==> uarm7tdmir3a"
+        echo " >                   !!! arm instance name must be unique...."
+        echo " >simulation condition : min , typ , max                     "
+	exit 0
+else 
+	echo "==> inputfile : $1.sdf" 
+	echo "==> arm_kind   : $2"
+	echo "==> arm_instance_name : $3"
+	echo "==> simulation condition : $4"
+	echo "============================> Outfile ==> ${1}_$4.SDF"
+endif
+set filename = $1
+set kind     = $2
+set instance_name = $3
+set condition = $4
+if(! -e $filename.sdf) then
+	echo "ERROR: The file $filename.sdf does not exist"
+	exit 0
+endif
+if(! -e $kind.sdft) then
+	echo "ERROR: The file $kind.sdft does not exist"
+	exit 0
+endif
+set inst1 = `grep "INSTANCE" $filename.sdf | grep  $instance_name `
+set differce = `grep "INSTANCE" $filename.sdf | grep  $instance_name | grep "/" `
+if("$inst1" == "") then
+	echo "ERROR: $instance_name (your_instance) does not exist in input sdf file"
+	exit 0
+endif
+if(($condition == "min") || ($condition == "typ") || ($condition == "max")) then
+else
+	echo "ERROR: $condition is not right condition.(min,typ,max)"
+	exit 0
+endif
+if ("$differce" == "") then
+  set inst2 = "\.thetiming"
+else
+  set inst2 = "\/thetiming"
+endif
+set kind1 = \"$kind\"
+sed -e s/$instance_name/$instance_name$inst2/g \
+    -e s/$kind1/\"ARM7TDMIr3_timing\"/g  $filename.sdf > ${filename}_re.sdf
+
+echo sdfremap -v -$condition -lsdfremap_$condition.log -cell $kind ${filename}_re.sdf ${filename}_$condition.SDF
+sdfremap -v -$condition -lsdfremap_$condition.log -cell ARM7TDMIr3 ${filename}_re.sdf ${filename}_$condition.SDF
+rm ${filename}_re.sdf
+#sdfremap -v -max -lsdfremap_max.log -cell $kind $top.sdf ${top}_max.SDF
+#sdfremap -v -min -lsdfremap_min.log -cell $kind $top.sdf ${top}_min.SDF

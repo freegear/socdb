@@ -1,0 +1,267 @@
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap2.htm">Next Chapter</a>
+<p>
+<a name="89711: chap head: Chapter 1 Introduction and Overview"></a><title>FLEXlm End User Manual: Chapter 1 
+Introduction and Overview</title>
+<h1>Chapter 1 
+Introduction and Overview</h1>
+<p>
+This chapter explains the basics of floating (network) licensing, and gives a quick 
+overview of the components of 
+FLEXlm<I></I>. It explains where license administrators have 
+control and where end-users have control. A section called 
+<a href="chap1.htm#33030: 1head: 1.2 Getting Started Checklist">`Getting Started Checklist' 
+on page 4</a> tells both license administrators and end-users how to start managing 
+FLEXlm<I></I>.<p>
+<a name="1.1"></a><h2>1.1  Introduction to FLEXlm<I></I></h2>
+<p>
+FLEXlm<I></I> is the most popular license manager used in the software industry. 
+FLEXlm<I></I> 
+is best known for its ability to allow software licenses to be available (or float) 
+anywhere on a network, instead of being tied to specific machines. Floating licensing 
+benefits both users and license administrators. Users can make more efficient use of 
+fewer licenses by sharing them on the network. License administrators can control who 
+uses the licensed application, and the node(s) where the licenses will be available. See 
+<a href="chap2.htm#18841: 1Head: 2.4 Types of License Files">Section 2.4, `Types of License Files,' on page 19</a> for details about the different 
+licensing models supported by 
+FLEXlm<I></I>.<p>
+<h3>1.1.1	 FLEXlm<I></I> Components</h3>
+<p>
+The four main components of 
+FLEXlm<I></I> are:<p>
+<ul><li>license manager daemon<li>vendor daemon<li>license file<li>application program</ul><h4>The License Manager Daemon (lmgrd<I></I>)</h4>
+<p>
+The 
+<I>license manager daemon</I> (lmgrd<I></I>) handles the initial contact with the client 
+application programs, passing the connection on to the appropriate vendor daemon. It 
+also starts and restarts the vendor daemons. 
+FLEXlm<I></I> permits multiple redundant 
+license manager daemons on three server nodes, allowing you to make your license 
+available if any two out of the three server nodes is running. Redundancy can be 
+achieved with 3-server redundant servers, or by using a license file list with any 
+number of servers.<p>
+<p>
+lmgrd<I></I> is not present on VMS or Netware systems.<p>
+<h4>The 
+Vendor Daemon</h4>
+<p>
+In 
+FLEXlm<I></I>, licenses are granted by running processes (unless they're node locked, 
+uncounted, in which case they need only read the license file to run). There is one 
+process for each vendor who has a 
+FLEXlm<I></I>-licensed product on the network. This 
+process is called the 
+<I>vendor daemon</I>. The vendor daemon keeps track of how many 
+licenses are checked out, and who has them. If the vendor daemon terminates for any 
+reason, all users lose their licenses (though this does not mean the applications 
+suddenly stop running). Users normally regain their license automatically when 
+lmgrd<I></I> 
+restarts the vendor daemon, though they may exit if the vendor daemon remains 
+unavailable.<p>
+<p>
+Client programs communicate with the vendor daemon, usually through TCP/IP 
+network communications. The client application and the daemon processes (the 
+license server) can run on separate nodes on your network, across any size wide-area 
+network. Also, the format of the traffic between the client and the vendor daemon is 
+machine-independent, allowing for heterogenous networks. This means the license 
+server and the computer running an application can be either different hardware 
+platforms or even different operating systems (Windows and Unix, for example).<p>
+<h4>The License File</h4>
+<p>
+Licensing data is stored in a text file called the 
+<a name="_IX_1"></a>license file. The 
+<a name="_IX_2"></a>license file is created 
+by the software vendor, and edited and installed by the license administrator. It 
+contains information about the server nodes and vendor daemons, and at least one line 
+of data (called 
+<a name="_IX_3"></a>FEATURE or INCREMENT lines) for each licensed product. Each 
+FEATURE line contains a license key based on the data in that line, the hostids 
+specified in the SERVER lines, and other vendor-specific data.<p>
+<p>
+In some environments, the licensing information for several vendors may be combined 
+into a single 
+<a name="_IX_4"></a>license file. The default location is:<p>
+<pre>	/usr/local/flexlm/licenses/license.dat (Unix)</pre>
+<pre>	C:\flexlm\license.dat (Windows, Windows/NT, OS/2)</pre>
+<pre>	SYS$COMMON:[SYSMGR]flexlm.dat (VMS)</pre>
+<pre>	SYS:\SYSTEM\flexlm\license.dat (Netware)</pre>
+</ol></ul><p>
+End-users can usually override this location by setting the environment variable 
+LM_LICENSE_FILE<TT></TT> to point elsewhere, or by following instructions supplied with 
+the licensed application. If your site has software from multiple vendors with 
+incompatible license files (due to different sets of servers), you can keep the data in 
+separate files and set the 
+<a name="_IX_5"></a>LM_LICENSE_FILE<TT></TT> variable to reference multiple files.<p>
+<p>
+The default location should be used with caution: setting LM_LICENSE_FILE may 
+actually cause applications to fail if their license is located in the default location, but 
+that location is not included in LM_LICENSE_FILE. This is because setting 
+LM_LICENSE_FILE removes the default location from the license file list.<p>
+<p>
+It's strongly recommended that you keep a copy or link (on Unix) of the license file in 
+the vendor's `default' location, so that users will not need to set LM_LICENSE_FILE 
+to run their applications. For details, see 
+<a href="chap2.htm#31549: chap head: Chapter 1">Chapter 2, `The License File' on page 7</a>. 
+<p>
+<h4>The Application Program</h4>
+<p>
+The application program using 
+FLEXlm<I></I> is linked with the program module (called the 
+FLEXlm<I></I> client library) that provides the communication with the license server. On 
+Windows, this module is called LMGR<I>xxx</I>.DLL, where 
+<I>xxx</I> indicates the 
+FLEXlm<I></I> 
+version. During execution, the application program communicates with the vendor 
+daemon to request a license.<p>
+<h3>1.1.2	 <a name="48645: 2head: 1.1.2 The License Request Process"></a>The License Request Process</h3>
+<p>
+When you run a `counted' 
+<a name="_IX_6"></a>FLEXlm<I></I>-licensed application the following occurs:<p>
+<ol><li>The license module in the client application finds the license file, which includes 
+the host name of the license server node and port number of the license manager 
+daemon, 
+lmgrd<I></I>.<li>The client establishes a connection with the license manager daemon (lmgrd<I></I>) and 
+tells it what vendor daemon it needs to talk to.<li>lmgrd<I></I> determines which machine and port correspond to the master vendor 
+daemon and sends that information back to the client.<li>The client establishes a connection with the specified vendor daemon and sends 
+its request for a license.<li>The vendor daemon checks in its memory to see if any licenses are available and 
+sends a grant or denial back to the client.<li>The license module in the application grants or denies use of the feature, as 
+appropriate.</ol>
+<p>
+`Uncounted' features (where the number of licenses is '0') do not require a server, and 
+the 
+FLEXlm<I></I> client library routines in the application grant or deny usage based solely 
+upon the license contents.<p>
+<h3>1.1.3	 Configuring 
+FLEXlm<I></I></h3>
+<p>
+Most of the parameters of 
+FLEXlm<I></I> are configurable by the license administrator. The 
+license administrator can set:<p>
+<ul><li>the location of the license file (though it's recommended that a copy or link of the 
+license remains at the location where the application expects it)<li>the location of all executables<li>the location of all log files<li>the TCP/IP port number used by the license manager process, 
+lmgrd<I></I>.</ul><p>
+In addition, the license administrator can reserve licenses for specific users, nodes, or 
+groups, and control other license-related options. Changing parameters is discussed in 
+<a href="chap5.htm#19683: chap head: End-User License Administration">Chapter 5, `The Options File' on page 31</a>.<p>
+<p>
+Refer to your vendor's documentation before attempting to change file names, 
+locations, or contents. 
+<p>
+<a name="33030: 1head: 1.2 Getting Started Checklist"></a><a name="1.2"></a><h2>1.2  Getting Started Checklist</h2>
+<p>
+The following sections provide a quick overview of how to set up and use licensing for 
+FLEXlm<I></I>-licensed products. By scanning the list, you should be able to quickly find the 
+areas of interest. Cross-references point to more details in other parts of this manual.<p>
+<h3>1.2.1	 <a name="_IX_7"></a>Installing Licensed Software</h3>
+<p>
+As a license administrator you are responsible for setting up licensing on your system 
+or network. This section tells you how to do that. If you are an end-user of the 
+application and you will not be involved in installing it, then go to 
+<a href="chap1.htm#16787: 2head: 1.2.2 Notes for the End User">Section 1.2.2, 
+`Notes for End-Users,' on page 5</a>.<p>
+<p>
+Remember that the installation guide for your application software is the final word on 
+installing and configuring 
+FLEXlm<I></I>.Generally, however, installing 
+FLEXlm<I></I> licensing 
+requires the following steps:<p>
+<ol><li>Select your license server nodes and get their hostids. See 
+<a href="#88781: AppTitle1: Appendix\x11 A Hostids for FLEXlm-Supported Machines">Appendix A, `Hostids 
+for FLEXlm-Supported Machines'</a>. 
+<li>Give the hostids to your software vendor and get a license file (or the data to enter 
+in the license file) in return.<li>Consider combining the new license file with any existing license files. See 
+<a href="chap3.htm#17416: chap head: Chapter 2">Chapter 3, `Multiple License Files' on page 21</a>.<li>Determine if an options file is desired, and if so, set it up.<li>Determine where to install the 
+FLEXlm<I></I> utility programs such as 
+<TT>lmgrd</TT><I></I><TT></TT>, and 
+<TT>lmutil</TT> (<TT>lmstat</TT>/<TT>lmdown</TT>/etc.) and install them unless the your vendor's 
+installation script does so for you.<li>Start 
+lmgrd<I></I> (the license daemon) manually; you may also want to set it up to start 
+automatically at boot time. See 
+<a href="chap2.htm#31889: 2Head: 2.1.1 Setting the Path at Start-Up">Section 2.1.1, `Setting the Path to the License File 
+at Start-Up (Unix),' on page 8</a>.</ol>
+<p>
+These steps are discussed briefly below, with cross-references to the appropriate 
+locations for more detail.<p>
+<h4>License Servers and Hostids</h4>
+<p>
+Before running any 
+FLEXlm<I></I>-licensed program using floating licenses, you will need 
+
+to set up your license server node (or nodes). You must select which node or nodes to 
+run your license servers on, and provide the hostid of those machines to your software 
+vendor. For pointers on selecting your server machine, see 
+<a href="chap4.htm#15827: chap head: Chapter 4">Chapter 4, `Selecting 
+Server Nodes' on page 25</a>. 
+<p>
+<p>
+You can get the hostid of the server machine by running 
+FLEXlm<I></I>'s 
+<TT>lmhostid</TT> utility 
+on that machine. If you don't have 
+<TT>lmhostid</TT>, you can get the hostid of your machine 
+by using the appropriate command as described in 
+<a href="#88781: AppTitle1: Appendix\x11 A Hostids for FLEXlm-Supported Machines">Appendix A, `Hostids for FLEXlm-Supported Machines'</a>.<p>
+<p>
+Using the hostid of your server machines your vendor will send you a license file that 
+enables their application software.<p>
+<h4>lmgrd and License Files</h4>
+<p>
+Once you have received a license file from your vendor, you must install it on your 
+system and start up the license manager daemon, 
+lmgrd<I></I>.<p>
+<ul><li>Your software vendor may have selected a default location for your license file. 
+If not, you can use any location you wish. For more details, see 
+<a href="chap2.htm#31549: chap head: Chapter 1">Chapter 2, `The 
+License File' on page 7</a>.<li>To start 
+<a name="_IX_8"></a>lmgrd<I></I> automatically at boot time, you will have to modify your system 
+files (Unix), or use the 
+FLEXlm<I></I> Control Panel (Windows). For details see 
+<a href="chap2.htm#31889: 2Head: 2.1.1 Setting the Path at Start-Up">Section 2.1.1, `Setting the Path to the License File at Start-Up (Unix),' on 
+page 8</a>.</ul><h4>Administration Tools 
+</h4>
+<p>
+GLOBEtrotter Software<I></I> supplies administration tools to your software vendor. The 
+vendor usually includes them with their product. The recommended location for the 
+tools is 
+<TT>/usr/local/bin 
+</TT>(Unix)<TT>, C:\flexlm 
+</TT>(Windows)<TT>, 
+</TT>or<TT> 
+SYS$COMMON:[SYSMGR] 
+</TT>(<TT>VMS</TT>), but you can install them in a different location (or 
+not at all). See 
+<a href="chap6.htm#78920: chap head: Chapter 6 License Administration Tools">Chapter 6, `License Administration Tools' on page 41</a> for more 
+information.<p>
+<a name="_IX_9"></a><h4>Options Files</h4>
+<p>
+The options file controls various options such as reservations and timeouts of licenses. 
+Most users run without an options file, but you may decide you want to use some 
+options. For example, many administrators use an option to limit the quantity and 
+content of logged messages. To set up an options file, see 
+<a href="chap5.htm#19683: chap head: End-User License Administration">Chapter 5, `The Options 
+File' on page 31</a>. 
+<p>
+<h3>1.2.2	 <a name="16787: 2head: 1.2.2 Notes for the End User"></a>Notes for End-Users</h3>
+<p>
+As a user of a 
+FLEXlm<I></I>-licensed application, you may need to know a few things to use 
+the system effectively. The main things you need to know are:<p>
+<ul><li>How to tell an application which license file to use.<li>How to query the system to find out who is using a license.</ul><h4>How to Specify a License File</h4>
+<p>
+The license file determines what features are available to a program. It also contains 
+information telling the application how to connect to the license server.<p>
+<p>
+For information about the standard way of specifying a license file for an application, 
+see 
+<a href="chap2.htm#31549: chap head: Chapter 1">Chapter 2, `The License File' on page 7</a>.<p>
+<h4>Getting Information About Licenses</h4>
+<p>
+To find out who is using a license run 
+<TT>lmstat</TT>, described in 
+<a href="chap6.htm#78920: chap head: Chapter 6 License Administration Tools">Chapter 6, `License 
+Administration Tools' on page 41</a>.<p>
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap2.htm">Next Chapter</a>
+<p>

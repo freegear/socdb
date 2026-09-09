@@ -1,0 +1,354 @@
+APPLICATION NOTE
+
+Using ModelGen 4.3.2 models with Cadence Verilog-XL
+===================================================
+
+Introduction
+------------
+
+This application note provides information on running simulations
+containing ModelGen 4 models on the Verilog-XL simulator from Cadence.
+ModelGen 4 models use a Model Manager that provides a set of standard
+services to a model and handles all communication with the simulator.
+A single Model Manager can service multiple instances of multiple
+models in a simulation.  There is no need to rebuild the simulator
+executable or libraries when a new ModelGen model is added to a
+simulation.
+
+Intended audience
+-----------------
+
+This application note is intended for users of ModelGen models in the
+Verilog-XL environment.  It provides information on:
+
+ - initial preparations
+ - configuring the simulator to use the Model Manager
+ - how the Model Manager locates a model during elaboration
+ - ModelGen models containing SWIFT models
+ - selecting the appropriate timing model.
+
+You are strongly encouraged to read this document even if you are
+familiar with previous ModelGen model releases, because many of the
+details have changed.
+
+Initial preparations
+--------------------
+
+Before you can run any simulation that contains a ModelGen model you
+must set the environment variable MG_LIB to point to the directory
+containing the Model Manager for the simulator.
+
+ - In a full ModelGen distribution, set MG_LIB to:
+
+   On Solaris	<ModelGen_install_area>/SunOS5/MM
+
+   On HPUX	<ModelGen_install_area>/HPUX/MM
+
+   On Linux	<ModelGen_install_area>/RH_Linux_x86/MM
+
+   On AIX	<ModelGen_install_area>/AIX4/MM
+
+   On WinNT	<ModelGen_install_area>\WinNT\MM
+
+ - In a model distribution, set MG_LIB to:
+
+   On Solaris	<Model_Manager_root>/SunOS5/MM
+
+   On HPUX	<Model_Manager_root>/HPUX/MM
+
+   On Linux	<Model_Manager_root>/RH_Linux_x86/MM
+
+   On AIX	<Model_Manager_root>/AIX4/MM
+
+   On WinNT	<Model_Manager_root>\WinNT\MM
+
+   where <Model_Manager_root> is the Model Manager root directory.
+   For a model distribution which was unpacked using mg_install, this is
+   ${MG_ROOT} as described in the README.txt file.  For other types of model
+   distribution, it is the directory described in the model's README file. 
+
+Configuring the Simulator to use the Model Manager
+--------------------------------------------------
+
+Foreign-language models, such as those produced with ModelGen can be
+loaded into Verilog-XL using the PLI (Programming Language Interface).
+
+The ModelGen 4 Model Manager has been designed so that it is not
+necessary to load each model separately into the simulation.  Instead,
+the Model Manager is loaded in once and it handles the requests to load
+all the models in that simulation.
+
+Dynamically loading the Model Manager
+.....................................
+
+For models built with ModelGen 4.3 or above, the recommended way
+to load the Model Manager into a Verilog-XL simulation is at
+elaboration time, using the "+loadpli1" Verilog command line option.
+The dynamically-loadable Model Manager is:
+
+  On Solaris/AIX/Linux	${MG_LIB}/cadence_xl_verilog/mm_xl_dynamic.so
+
+  On HPUX		${MG_LIB}/cadence_xl_verilog/mm_xl_dynamic.sl
+
+  On WinNT		%MG_LIB%\cadence_xl_verilog\mm_xl_dynamic.dll
+
+Use the function mgmm_bootstrap to set up the Model Manager.  
+
+For example, consider a simulation containing two ModelGen-generated
+models, "my_model" and "my_testbench".  Under Solaris, with MG_LIB
+set appropriately, you could start the simulation using:
+
+  verilog \
+    +loadpli1=${MG_LIB}/cadence_xl_verilog/mm_xl_dynamic:mgmm_bootstrap \
+    my_model.v my_testbench.v
+
+Under WinNT, with MG_LIB set to M:\WinNT\MM, assuming the current
+directory were somewhere on the M: drive, you could start the simulation
+using:
+
+  verilog
+    +loadpli1=/WinNT/MM/cadence_xl_verilog/mm_xl_dynamic:mgmm_bootstrap
+    my_model.v my_testbench.v
+
+(omitting line breaks).
+
+Note that Verilog-XL under Windows may not be able to interpret paths
+for its +loadpli1 argument that begin with a drive specifier or use the
+backslash '\' as the directory separator.
+
+Other methods
+.............
+
+It is also possible to link the Model Manager into the simulation by
+re-linking the "libpli" shared library or rebuilding the Verilog
+executable.
+
+The library or executable must contain the Model Manager and any other
+PLI applications in the simulation.  A template veriuser.c can be
+found in $MG_LIB (%MG_LIB% on Windows NT) in the cadence_xl_verilog
+subdirectory.  You must merge this with any other entry points that
+you need for other PLI applications.  See the Cadence documentation on
+the PLI interface for additional information.
+
+Generating a libpli under UNIX
+..............................
+
+To create a libpli under Solaris, HPUX, Linux or AIX, run the vconfig
+script and direct the program to produce a dynamic libpli.  Give it
+the location of your modified veriuser.c when prompted and enter the
+names of the object files that you wish to link in for your other PLI
+applications.  The ModelGen Model Manager is supplied in a separate
+shared library, so you should include in the list of files the entry:
+
+	-L${MG_LIB}/cadence_xl_verilog -lmgmm
+
+This tells the linker where to find the library and directs it to add
+a reference to it in the libpli that is generated.
+
+Run the generated script to link your libpli library.
+
+Before starting the simulator, ensure that Verilog-XL knows where to
+find libpli:
+
+ - On Solaris and Linux, the directory containing libpli.so must
+   appear in the LD_LIBRARY_PATH environment variable before the
+   directory containing the Cadence simulator libraries.
+
+ - On HPUX, the directory containing libpli.sl must appear in the
+   SHLIB_PATH environment variable before the directory containing
+   the Cadence simulator libraries.
+
+ - On AIX, the directory containing libpli.so must appear in the
+   LIBPATH environment variable before the directory containing the
+   Cadence simulator libraries.
+
+Generating a libpli under Windows NT
+....................................
+
+To create a libpli under Windows NT, compile your modified veriuser.c,
+defining the WIN32 and MSC macros and specifying that the
+multi-threaded C library is to be used.  For example, to compile using
+Microsoft Visual C/C++, use a command line such as:
+
+	cl -DMSC -DWIN32 -MD veriuser.c
+
+All symbols defined in veriuser.c which are to be exported from your 
+final libpli.dll must be marked as such.  For Microsoft C/C++, this
+involves either adding a -export:<symbol> argument to the command
+line for each symbol, or inserting __declspec(dllexport) into the
+symbol's declarations in the veriuser.c.  The standard ModelGen 4
+%MG_LIB%\cadence_xl_verilog\veriuser.c uses the second method.
+
+Then link this together with:
+
+ - The Model Manager library, libmgmm.lib, found in the 
+   %MG_LIB%\cadence_xl_verilog directory;
+
+ - The Verilog-XL PLI library, pliinterface.lib, found in the
+   %CADENCE_ROOT%\tools\lib directory.
+
+Do not link against the standard C library.  If using Microsoft C/C++,
+use a command such as:
+
+	link -dll -NODEFAULTLIB:LIBC veriuser.obj
+          %MG_LIB%\cadence_xl_verilog\libmgmm.lib
+	  %CADENCE_ROOT%\tools\lib\pliinterface.lib
+
+(omitting line breaks).
+
+Before starting the simulator, ensure that the directory containing 
+libpli.dll appears in the PATH environment variable, before the
+directory containing the Cadence simulator libraries.
+
+Generating a new Verilog executable
+...................................
+
+To generate a statically-linked Verilog executable, run the vconfig 
+script and tell the program to produce a stand-alone executable with 
+a PLI application.  Answer the yes/no questions (normally the defaults
+will be adequate) until you are prompted for the location of the 
+veriuser.c file.  Supply the name of your veriuser.c file and then 
+list the object files for your other PLI applications.  Include in 
+the list the entry:
+
+	-L${MG_LIB}/cadence_xl_verilog -lmgmm
+
+Run the generated script to build your Verilog executable.
+
+How the model manager locates a model
+-------------------------------------
+
+The Model Manager extends the syntax of Verilog by adding the command
+$mm.  This command takes a number of arguments, and the first of these
+contains the compiled model's device and model (revision) name.  When 
+ModelGen creates the Verilog shell for the model, it places the name 
+of the model in this argument.
+
+The Model Manager uses this information and the environment variable 
+MG_MODEL_PATH to find the shared library containing the compiled model.
+MG_MODEL_PATH is a colon-separated list of directory paths, each of 
+which is the root of a ModelGen model installation tree (as generated 
+by the mg_install program).
+
+Every directory specified in MG_MODEL_PATH is searched, starting with 
+the leftmost.  In each location, the Model Manager looks first for a 
+library with the same name as the device.  If that fails, it looks for 
+a library with the same name as the device plus the platform's shared 
+library extension (for example, .so on Solaris).  The search terminates 
+as soon as the library is found.
+
+On some platforms, it is not possible to perform a search for a shared
+library if the filename extension is missing.  In this situation, the
+operating system code that loads a shared library into an application
+appends the appropriate shared library extension automatically.
+
+For backwards compatibility, the directory indicated by the DIR_<device> 
+environment variable is searched before MG_MODEL_PATH.  Also, if no
+shared library is found in any location in MG_MODEL_PATH, the current
+directory is examined afterwards.
+
+Example:
+
+  Consider a model revision r0 of a device called FIFO.  Assume that
+  the Solaris shared library for the FIFO model is stored as
+  /a/b/mymodels/FIFO/r0/SunOS5/FIFO.so.
+
+  FIFO.v contains the entry
+
+    initial begin
+      $mm("FIFO?rev=r0", ... other parameters...);
+    end
+
+  If MG_MODEL_PATH is set to /a/models:/a/b/mymodels:/a/b/c/moremodels,
+  the Model Manager attempts to load the FIFO model using the following
+  sequence of path names:
+
+   1. ${DIR_FIFO}/FIFO
+
+   2. ${DIR_FIFO}/FIFO.so
+
+   3. /a/models/FIFO/r0/SunOS5/FIFO
+
+   4. /a/models/FIFO/r0/SunOS5/FIFO.so
+
+   5. /a/b/mymodels/FIFO/r0/SunOS5/FIFO
+
+   6. /a/b/mymodels/FIFO/r0/SunOS5/FIFO.so
+
+  The search ends successfully here, so /a/b/c/moremodels/FIFO/r0/SunOS5
+  is never examined.
+
+ModelGen models containing SWIFT models
+---------------------------------------
+
+Models built with ModelGen 4 can contain compiled-HDL models with a
+SWIFT interface, such as those built with VMC from Synopsys.  The
+release notes for each model describe the details.  Before you can
+simulate these models you must ensure that the environment variables
+LMC_HOME, LMC_PATH and LMC_CONFIG are set appropriately.  The Synopsys
+VMC documentation provides further details and is available on-line at
+the Synopsys website, www.synopsys.com.
+
+Selecting the appropriate timing model
+--------------------------------------
+
+Releases of ModelGen prior to version 4 generated a separate model for
+each timing shell variants.  In ModelGen 4 a single model is generated 
+with two separate Verilog wrappers:
+
+ - one with an SDF-based timing shell
+ - one that enables a timing shell that is built into the core of the 
+   model.
+
+Normally, all that you need to do is to select the appropriate HDL
+shell when you compile/elaborate your design.  The two files are
+generated by ModelGen as:
+
+ - <device>_sdf.v for the SDF-based timing shell
+ - <device>.v for the built-in timing shell.
+
+(In a model distribution, please see the model's README file for the
+name and location of the two HDL shells.)
+
+The built-in timing shell, if present, is controlled by the parameter
+MG_ENABLE_BUILTIN_TIMING.  Built-in timing is enabled if this
+parameter is non-zero during elaboration and disabled otherwise.  This
+can be useful if you want to entirely disable the timing shell on a
+model that contains built-in timing.
+
+Do not try to enable the built-in timing shell when using the SDF
+timing shell wrappers.  The model will not function correctly with
+this configuration.
+
+Timing data for annotating the built-in timing shell is normally
+obtained by reading a timing defaults file.  The format is fairly 
+simple and can usually be understood by examining an existing example.
+You can find several examples in the examples subdirectory of the
+ModelGen distribution.  Distributions of models that contain a timing 
+shell contain an appropriate file for the model.  For full details,
+see the ModelGen Language Reference Manual (ARM DDI 0064).
+
+The timing defaults file is read during model elaboration.  The Model
+Manager searches for this as follows:
+
+ 1. The current directory is searched for a file of the name
+    <device>.tdef.
+
+ 2. The file name specified by the parameter <device>_TimingFile 
+    contained in the HDL wrapper is searched for.
+
+ 3. A file named <device>.tdef is searched for according to where the
+    model's shared library was found.  If the library was found from
+    MG_MODEL_PATH, the parent directory of the library's location is
+    searched.  If the library was found from DIR_<device>, the library's
+    location itself is searched.
+
+If using the built-in timing shell, you can specify a single fixed 
+delay for all outputs.  To do this, set the value of the top-level
+Verilog parameter MG_FORCED_DELAY to the number of picoseconds you
+want to delay by.  Any output delays that have been read from a
+timing defaults file are overridden by the forced delay.  To remove
+all forced delays, set MG_FORCED_DELAY to have the value 0.
+
+Do not set MG_FORCED_DELAY to any value other than 0 when using the
+SDF timing shell wrapper.

@@ -1,0 +1,462 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Gpio
+Version: 2000.05
+Date   : Tue Sep 12 13:56:21 2000
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Gpio' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0GpioRevAnd              0      0     1     0      0     0     0      6   0.00%
+u1GpioRevAnd              0      0     0     0      0     0     0      6   0.00%
+u2GpioRevAnd              0      0     0     1      0     0     0      6   0.00%
+u3GpioRevAnd              0      0     0     0      0     0     0      6   0.00%
+uGpioAfm                 71      0     0     0      0     0     0    592  11.99%
+uGpioApbif              439      0     1     1      0     0     0   4088  10.74%
+uGpioInt                 97      0     0     0      0     0     0    876  11.07%
+Gpio                    636      0     2     2      0     0     0   5818  10.94%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Gpio
+Version: 2000.05
+Date   : Tue Sep 12 13:56:21 2000
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Gpio
+Version: 2000.05
+Date   : Tue Sep 12 13:56:21 2000
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain (SCANINPCLK --> SCANOUTPCLK) contains 137 cells:
+
+  SCANINPCLK	->
+  uGpioInt/Edge_hold_reg_0	->
+  uGpioInt/Edge_hold_reg_1	->
+  uGpioInt/Edge_hold_reg_2	->
+  uGpioInt/Edge_hold_reg_3	->
+  uGpioInt/Edge_hold_reg_4	->
+  uGpioInt/Edge_hold_reg_5	->
+  uGpioInt/Edge_hold_reg_6	->
+  uGpioInt/Edge_hold_reg_7	->
+  uGpioInt/CurrentEdgeVal_reg_0	->
+  uGpioInt/CurrentEdgeVal_reg_1	->
+  uGpioInt/CurrentEdgeVal_reg_2	->
+  uGpioInt/CurrentEdgeVal_reg_3	->
+  uGpioInt/CurrentEdgeVal_reg_4 (*)	->
+  uGpioInt/CurrentEdgeVal_reg_5 (*)	->
+  uGpioInt/CurrentEdgeVal_reg_6	->
+  uGpioInt/CurrentEdgeVal_reg_7	->
+  uGpioAfm/GPINSync2_reg_0	->
+  uGpioAfm/GPINSync2_reg_1	->
+  uGpioAfm/GPINSync2_reg_2	->
+  uGpioAfm/GPINSync2_reg_3	->
+  uGpioAfm/GPINSync2_reg_4	->
+  uGpioAfm/GPINSync2_reg_5	->
+  uGpioAfm/GPINSync2_reg_6	->
+  uGpioAfm/GPINSync2_reg_7	->
+  uGpioAfm/GPINSync1_reg_0	->
+  uGpioAfm/GPINSync1_reg_1	->
+  uGpioAfm/GPINSync1_reg_2	->
+  uGpioAfm/GPINSync1_reg_3	->
+  uGpioAfm/GPINSync1_reg_4	->
+  uGpioAfm/GPINSync1_reg_5	->
+  uGpioAfm/GPINSync1_reg_6	->
+  uGpioAfm/GPINSync1_reg_7	->
+  uGpioApbif/iGPIOITCR_reg	->
+  uGpioApbif/iGPIOITIP2_reg_1 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_2 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_3 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_4 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_5 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_6 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_7 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_0 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_1 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_2 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_3 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_4 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_5 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_6 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_7 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_0 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_1 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_2 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_3 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_4 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_5 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_6 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_7 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_1 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_2 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_3 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_4 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_5 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_6 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_7 (*)	->
+  uGpioApbif/iGPIOIC_reg_1 (*)	->
+  uGpioApbif/iGPIOIC_reg_2 (*)	->
+  uGpioApbif/iGPIOIC_reg_3 (*)	->
+  uGpioApbif/iGPIOIC_reg_4 (*)	->
+  uGpioApbif/iGPIOIC_reg_5 (*)	->
+  uGpioApbif/iGPIOIC_reg_6 (*)	->
+  uGpioApbif/iGPIOIC_reg_7 (*)	->
+  uGpioApbif/iGPIOITOP1_reg_0	->
+  uGpioApbif/iGPIOITOP1_reg_1	->
+  uGpioApbif/iGPIOITOP1_reg_2	->
+  uGpioApbif/iGPIOITOP1_reg_3	->
+  uGpioApbif/iGPIOITOP1_reg_4	->
+  uGpioApbif/iGPIOITOP1_reg_5	->
+  uGpioApbif/iGPIOITOP1_reg_6	->
+  uGpioApbif/iGPIOITOP1_reg_7	->
+  uGpioApbif/iGPIOIE_reg_0 (*)	->
+  uGpioApbif/iGPIOIE_reg_1 (*)	->
+  uGpioApbif/iGPIOIE_reg_2 (*)	->
+  uGpioApbif/iGPIOIE_reg_3 (*)	->
+  uGpioApbif/iGPIOIE_reg_4 (*)	->
+  uGpioApbif/iGPIOIE_reg_5 (*)	->
+  uGpioApbif/iGPIOIE_reg_6 (*)	->
+  uGpioApbif/iGPIOIE_reg_7 (*)	->
+  uGpioApbif/iGPIOIEV_reg_0 (*)	->
+  uGpioApbif/iGPIOIEV_reg_1 (*)	->
+  uGpioApbif/iGPIOIEV_reg_2 (*)	->
+  uGpioApbif/iGPIOIEV_reg_3 (*)	->
+  uGpioApbif/iGPIOIEV_reg_4 (*)	->
+  uGpioApbif/iGPIOIEV_reg_5 (*)	->
+  uGpioApbif/iGPIOIEV_reg_6 (*)	->
+  uGpioApbif/iGPIOIEV_reg_7 (*)	->
+  uGpioApbif/iGPIOIBE_reg_0 (*)	->
+  uGpioApbif/iGPIOIBE_reg_1 (*)	->
+  uGpioApbif/iGPIOIBE_reg_2 (*)	->
+  uGpioApbif/iGPIOIBE_reg_3 (*)	->
+  uGpioApbif/iGPIOIBE_reg_4 (*)	->
+  uGpioApbif/iGPIOIBE_reg_5 (*)	->
+  uGpioApbif/iGPIOIBE_reg_6 (*)	->
+  uGpioApbif/iGPIOIBE_reg_7 (*)	->
+  uGpioApbif/iGPIOIS_reg_0 (*)	->
+  uGpioApbif/iGPIOIS_reg_1 (*)	->
+  uGpioApbif/iGPIOIS_reg_2 (*)	->
+  uGpioApbif/iGPIOIS_reg_3 (*)	->
+  uGpioApbif/iGPIOIS_reg_4 (*)	->
+  uGpioApbif/iGPIOIS_reg_5 (*)	->
+  uGpioApbif/iGPIOIS_reg_6 (*)	->
+  uGpioApbif/iGPIOIS_reg_7 (*)	->
+  uGpioApbif/iGPIODIR_reg_0	->
+  uGpioApbif/iGPIODIR_reg_1	->
+  uGpioApbif/iGPIODIR_reg_2	->
+  uGpioApbif/iGPIODIR_reg_3	->
+  uGpioApbif/iGPIODIR_reg_4	->
+  uGpioApbif/iGPIODIR_reg_5	->
+  uGpioApbif/iGPIODIR_reg_6	->
+  uGpioApbif/iGPIODIR_reg_7	->
+  uGpioApbif/iGPIODATA_reg_1 (*)	->
+  uGpioApbif/iGPIODATA_reg_2 (*)	->
+  uGpioApbif/iGPIODATA_reg_3 (*)	->
+  uGpioApbif/iGPIODATA_reg_4 (*)	->
+  uGpioApbif/iGPIODATA_reg_6 (*)	->
+  uGpioApbif/iGPIODATA_reg_7 (*)	->
+  uGpioApbif/iPRDATA_reg_0	->
+  uGpioApbif/iPRDATA_reg_1	->
+  uGpioApbif/iPRDATA_reg_2	->
+  uGpioApbif/iPRDATA_reg_3	->
+  uGpioApbif/iPRDATA_reg_4	->
+  uGpioApbif/iPRDATA_reg_5	->
+  uGpioApbif/iPRDATA_reg_6	->
+  uGpioApbif/iPRDATA_reg_7	->
+  uGpioApbif/iGPIOAFSEL_reg_0 (*)	->
+  uGpioApbif/iGPIOIC_reg_0 (*)	->
+  uGpioApbif/iGPIODATA_reg_0 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_0 (*)	->
+  uGpioApbif/iGPIODATA_reg_5	->
+  SCANOUTPCLK
+
+ 
+****************************************
+Report : test
+          -coverage
+Design : Gpio
+Version: 2000.05
+Date   : Tue Sep 12 14:23:52 2000
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Gpio' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0GpioRevAnd              0      0     1     0      0     0     0      6   0.00%
+u1GpioRevAnd              0      0     0     0      0     0     0      6   0.00%
+u2GpioRevAnd              0      0     0     1      0     0     0      6   0.00%
+u3GpioRevAnd              0      0     0     0      0     0     0      6   0.00%
+uGpioAfm                 71      0     0     0      0     0     0    592  11.99%
+uGpioApbif              439      0     1     1      0     0     0   4088  10.74%
+uGpioInt                 97      0     0     0      0     0     0    876  11.07%
+Gpio                    636      0     2     2      0     0     0   5818  10.94%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Gpio
+Version: 2000.05
+Date   : Tue Sep 12 14:23:53 2000
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Gpio
+Version: 2000.05
+Date   : Tue Sep 12 14:23:53 2000
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain (SCANINPCLK --> SCANOUTPCLK) contains 137 cells:
+
+  SCANINPCLK	->
+  uGpioInt/Edge_hold_reg_0	->
+  uGpioInt/Edge_hold_reg_1	->
+  uGpioInt/Edge_hold_reg_2	->
+  uGpioInt/Edge_hold_reg_3	->
+  uGpioInt/Edge_hold_reg_4	->
+  uGpioInt/Edge_hold_reg_5	->
+  uGpioInt/Edge_hold_reg_6	->
+  uGpioInt/Edge_hold_reg_7	->
+  uGpioInt/CurrentEdgeVal_reg_0	->
+  uGpioInt/CurrentEdgeVal_reg_1	->
+  uGpioInt/CurrentEdgeVal_reg_2	->
+  uGpioInt/CurrentEdgeVal_reg_3	->
+  uGpioInt/CurrentEdgeVal_reg_4 (*)	->
+  uGpioInt/CurrentEdgeVal_reg_5 (*)	->
+  uGpioInt/CurrentEdgeVal_reg_6	->
+  uGpioInt/CurrentEdgeVal_reg_7	->
+  uGpioAfm/GPINSync2_reg_0	->
+  uGpioAfm/GPINSync2_reg_1	->
+  uGpioAfm/GPINSync2_reg_2	->
+  uGpioAfm/GPINSync2_reg_3	->
+  uGpioAfm/GPINSync2_reg_4	->
+  uGpioAfm/GPINSync2_reg_5	->
+  uGpioAfm/GPINSync2_reg_6	->
+  uGpioAfm/GPINSync2_reg_7	->
+  uGpioAfm/GPINSync1_reg_0	->
+  uGpioAfm/GPINSync1_reg_1	->
+  uGpioAfm/GPINSync1_reg_2	->
+  uGpioAfm/GPINSync1_reg_3	->
+  uGpioAfm/GPINSync1_reg_4	->
+  uGpioAfm/GPINSync1_reg_5	->
+  uGpioAfm/GPINSync1_reg_6	->
+  uGpioAfm/GPINSync1_reg_7	->
+  uGpioApbif/iGPIOITCR_reg	->
+  uGpioApbif/iGPIOITIP2_reg_1 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_2 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_3 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_4 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_5 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_6 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_7 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_0 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_1 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_2 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_3 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_4 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_5 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_6 (*)	->
+  uGpioApbif/iGPIOITIP1_reg_7 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_0 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_1 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_2 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_3 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_4 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_5 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_6 (*)	->
+  uGpioApbif/iGPIOITOP3_reg_7 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_1 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_2 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_3 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_4 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_5 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_6 (*)	->
+  uGpioApbif/iGPIOAFSEL_reg_7 (*)	->
+  uGpioApbif/iGPIOIC_reg_1 (*)	->
+  uGpioApbif/iGPIOIC_reg_2 (*)	->
+  uGpioApbif/iGPIOIC_reg_3 (*)	->
+  uGpioApbif/iGPIOIC_reg_4 (*)	->
+  uGpioApbif/iGPIOIC_reg_5 (*)	->
+  uGpioApbif/iGPIOIC_reg_6 (*)	->
+  uGpioApbif/iGPIOIC_reg_7 (*)	->
+  uGpioApbif/iGPIOITOP1_reg_0	->
+  uGpioApbif/iGPIOITOP1_reg_1	->
+  uGpioApbif/iGPIOITOP1_reg_2	->
+  uGpioApbif/iGPIOITOP1_reg_3	->
+  uGpioApbif/iGPIOITOP1_reg_4	->
+  uGpioApbif/iGPIOITOP1_reg_5	->
+  uGpioApbif/iGPIOITOP1_reg_6	->
+  uGpioApbif/iGPIOITOP1_reg_7	->
+  uGpioApbif/iGPIOIE_reg_0 (*)	->
+  uGpioApbif/iGPIOIE_reg_1 (*)	->
+  uGpioApbif/iGPIOIE_reg_2 (*)	->
+  uGpioApbif/iGPIOIE_reg_3 (*)	->
+  uGpioApbif/iGPIOIE_reg_4 (*)	->
+  uGpioApbif/iGPIOIE_reg_5 (*)	->
+  uGpioApbif/iGPIOIE_reg_6 (*)	->
+  uGpioApbif/iGPIOIE_reg_7 (*)	->
+  uGpioApbif/iGPIOIEV_reg_0 (*)	->
+  uGpioApbif/iGPIOIEV_reg_1 (*)	->
+  uGpioApbif/iGPIOIEV_reg_2 (*)	->
+  uGpioApbif/iGPIOIEV_reg_3 (*)	->
+  uGpioApbif/iGPIOIEV_reg_4 (*)	->
+  uGpioApbif/iGPIOIEV_reg_5 (*)	->
+  uGpioApbif/iGPIOIEV_reg_6 (*)	->
+  uGpioApbif/iGPIOIEV_reg_7 (*)	->
+  uGpioApbif/iGPIOIBE_reg_0 (*)	->
+  uGpioApbif/iGPIOIBE_reg_1 (*)	->
+  uGpioApbif/iGPIOIBE_reg_2 (*)	->
+  uGpioApbif/iGPIOIBE_reg_3 (*)	->
+  uGpioApbif/iGPIOIBE_reg_4 (*)	->
+  uGpioApbif/iGPIOIBE_reg_5 (*)	->
+  uGpioApbif/iGPIOIBE_reg_6 (*)	->
+  uGpioApbif/iGPIOIBE_reg_7 (*)	->
+  uGpioApbif/iGPIOIS_reg_0 (*)	->
+  uGpioApbif/iGPIOIS_reg_1 (*)	->
+  uGpioApbif/iGPIOIS_reg_2 (*)	->
+  uGpioApbif/iGPIOIS_reg_3 (*)	->
+  uGpioApbif/iGPIOIS_reg_4 (*)	->
+  uGpioApbif/iGPIOIS_reg_5 (*)	->
+  uGpioApbif/iGPIOIS_reg_6 (*)	->
+  uGpioApbif/iGPIOIS_reg_7 (*)	->
+  uGpioApbif/iGPIODIR_reg_0	->
+  uGpioApbif/iGPIODIR_reg_1	->
+  uGpioApbif/iGPIODIR_reg_2	->
+  uGpioApbif/iGPIODIR_reg_3	->
+  uGpioApbif/iGPIODIR_reg_4	->
+  uGpioApbif/iGPIODIR_reg_5	->
+  uGpioApbif/iGPIODIR_reg_6	->
+  uGpioApbif/iGPIODIR_reg_7	->
+  uGpioApbif/iGPIODATA_reg_1 (*)	->
+  uGpioApbif/iGPIODATA_reg_2 (*)	->
+  uGpioApbif/iGPIODATA_reg_3 (*)	->
+  uGpioApbif/iGPIODATA_reg_4 (*)	->
+  uGpioApbif/iGPIODATA_reg_6 (*)	->
+  uGpioApbif/iGPIODATA_reg_7 (*)	->
+  uGpioApbif/iPRDATA_reg_0	->
+  uGpioApbif/iPRDATA_reg_1	->
+  uGpioApbif/iPRDATA_reg_2	->
+  uGpioApbif/iPRDATA_reg_3	->
+  uGpioApbif/iPRDATA_reg_4	->
+  uGpioApbif/iPRDATA_reg_5	->
+  uGpioApbif/iPRDATA_reg_6	->
+  uGpioApbif/iPRDATA_reg_7	->
+  uGpioApbif/iGPIOAFSEL_reg_0 (*)	->
+  uGpioApbif/iGPIOIC_reg_0 (*)	->
+  uGpioApbif/iGPIODATA_reg_0 (*)	->
+  uGpioApbif/iGPIOITIP2_reg_0 (*)	->
+  uGpioApbif/iGPIODATA_reg_5	->
+  SCANOUTPCLK
+

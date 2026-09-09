@@ -1,0 +1,21 @@
+analyze -f verilog KmiTest.v 
+analyze -f verilog KmiRegBlk.v 
+analyze -f verilog KmiApbif.v 
+analyze -f verilog KmiTimer.v 
+analyze -f verilog KmiTx.v 
+analyze -f verilog KmiRx.v 
+analyze -f verilog KmiBitCounter.v 
+analyze -f verilog KmiTxRx.v 
+analyze -f verilog KmiREFCLKDiv.v 
+analyze -f verilog KmiCntrl.v 
+analyze -f verilog KmiSynctoPCLK.v 
+analyze -f verilog KmiSynctoREFCLK.v 
+analyze -f verilog KmiClkInSync.v 
+analyze -f verilog Kmi.v
+ 
+elaborate Kmi
+current_design Kmi
+link
+
+write -f db -hier -out Kmi.gtech.db
+

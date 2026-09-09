@@ -1,0 +1,59 @@
+/* --=================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : Sci_exceptions.scr.rca
+-- File Revision          : 1.2
+-- 
+-- Release Information    : PrimeCell(TM)-PL131-REL1v0
+-- 
+------------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the 
+--           SCI block             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the point-to-point exceptions 
+--           set for the SCI block synthesis. 
+--
+-- --=================================================================*/
+
+/* Set false path from SCIREFCLK to  PCLK */
+set_false_path -from {SCICLK} -to {PCLK}
+
+/* Set false path from PCLK to  SCIREFCLK */
+set_false_path -from {PCLK} -to {SCICLK}
+
+/* The following interrupts outputs are fed by signals generated in   */
+/* both PCLK and SSPCLK domains. Hence, these outputs are effectively */
+/* asynchronous and will need to be synchronised externally before    */
+/* feeding the Interrupt Controller.                                  */
+/* If SCICLK and PCLK are asynchronous, then any constraint on these  */
+/* listed signals can never be accurate; hence false paths are set on */ 
+/* these outputs.                                                     */
+
+/* set_false_path -to SCICARDININTR    */
+/* set_false_path -to SCICARDOUTINTR   */
+/* set_false_path -to SCICARDUPINTR    */
+/* set_false_path -to SCICARDDNINTR    */
+/* set_false_path -to SCITXERRINTR     */
+/* set_false_path -to SCIATRSTOUTINTR  */
+/* set_false_path -to SCIATRDTOUTINTR  */
+/* set_false_path -to SCIBLKTOUTINTR   */
+/* set_false_path -to SCICHTOUTINTR    */
+/* set_false_path -to SCIRTOUTINTR     */
+/* set_false_path -to SCIRORINTR       */
+/* set_false_path -to SCICLKSTPINTR    */
+/* set_false_path -to SCICLKACTINTR    */
+/* set_false_path -to SCIINTR          */
+
+/********************** End of Sci_exceptions.scr *******************/

@@ -1,0 +1,30 @@
+ncvlog           ClcdDefine.v 
+ncvlog           ClcdConfig.v 
+ncvlog           ClcdFifoReg.vp 
+ncvlog           dpram128x32.v 
+ncvlog            pram128x32.v 
+ncvlog           tpram64x32.v 
+ncvlog           ClcdDmaFRegWrap.vp 
+ncvlog           ClcdDmaFRamWrap.vp 
+ncvlog           ClcdFifoCntl.vp 
+ncvlog           ClcdDMAFifo.vp 
+ncvlog           ClcdAhbSlaveIf.vp 
+ncvlog           ClcdAhbMasterIf.vp 
+ncvlog           ClcdAhbIf.vp 
+ncvlog           ClcdSyncCLCDCLK.vp 
+ncvlog           ClcdSyncHCLK.vp 
+ncvlog           ClcdUnpack.vp 
+ncvlog           ClcdPalette.vp 
+ncvlog           ClcdSerialiser.vp 
+ncvlog           ClcdCPGen.vp 
+ncvlog           ClcdFormat.vp 
+ncvlog           ClcdGS.vp 
+ncvlog           ClcdTiming.vp 
+ncvlog           ClcdMain.vp 
+ncvlog           ClcdOutMux.vp 
+ncvlog           ClcdTest.vp 
+ncvlog           ClcdCntl.vp 
+ncvlog           ClcdRevAnd.vp 
+ncvlog           Clcd.vp
+
+

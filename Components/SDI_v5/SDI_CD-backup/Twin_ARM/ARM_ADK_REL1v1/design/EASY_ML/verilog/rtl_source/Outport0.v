@@ -1,0 +1,1040 @@
+//  --========================================================================--
+//  This confidential and proprietary software may be used only as
+//  authorised by a licensing agreement from ARM Limited
+//    (C) COPYRIGHT 2001 ARM Limited
+//        ALL RIGHTS RESERVED
+//  The entire notice above must be reproduced on all authorised
+//  copies and copies may only be made to the extent permitted
+//  by a licensing agreement from ARM Limited.
+//  
+//  ----------------------------------------------------------------------------
+//  Version and Release Control Information:
+//  
+//  File Name           : Outport0.v,v
+//  File Revision       : 1.7
+//  
+//  Release Information : ADK_REL1v1
+//  
+//  ----------------------------------------------------------------------------
+//  Purpose             : Structural sub-block architecture of Example Amba 
+//                        SYstem Multi-layer (EASY-ML), connected to BusMatrix
+//                        Outport 0. The module contains the following AHB 
+//                        devices:
+//                       
+//                          - Lite2AHB wrapper
+//                          - SMC (which also contains TIC as a sub-block)
+//                          - SMC slave
+//                          - Local Slave-to-Master multiplexor
+//                          - Local Address Decoder
+//                          - Local Default Slave
+//                       
+//                        The TIC within the SMC is an AHB master. The TIC is  
+//                        connected directly to the ARM922T Test Interface,
+//                        which is contained within Inport0 module.
+//  --========================================================================--
+
+`timescale 1ns/1ps
+
+module Outport0 (
+		HCLK, 
+		HRESETn, 
+		HADDR, 
+		HBURST, 
+		HMASTLOCK, 
+		HPROT, 
+		HREADYmtrx,
+                HSELmtrx, 
+		HSIZE, 
+		HTRANS, 
+		HWDATA, 
+		HWRITE, 
+		HRDATA, 
+		HREADYOUT,
+                HRESP, 
+		Remap, 
+                EBIEXTDATAIN,  
+                EBIEXTDATAOUT, 
+                nEBIEXTDATAEN, 
+                EBIEXTADDROUT, 
+		SMCS,
+                nSMBLS, 
+		nSMOEN, 
+		HADDRtst, 
+		HSELtst, 
+		HTRANStst, 
+		HWRITEtst,
+                HWDATAtst, 
+		HREADYtst, 
+		HRESPtst, 
+		HRDATAtst, 
+		TESTREQA, 
+		TESTREQB,
+
+                // MPMC Off-chip memory bus
+		// input
+		MPMCBIGENDIAN,
+		MPMCDATAIN,
+		MPMCFBCLKIN0,
+		MPMCFBCLKIN1,
+		MPMCFBCLKIN2,
+		MPMCFBCLKIN3,
+		MPMCSTCS1MW,
+		MPMCSTCS0POL,
+		MPMCSTCS1POL,
+		MPMCSTCS2POL,
+		MPMCSTCS3POL,
+	        MPMCTESTIN,	
+		// output
+		MPMCADDROUT,
+		MPMCCKEOUT,
+		MPMCCLKOUT,
+		MPMCDATAOUT,
+		MPMCDQMOUT,
+		MPMCRPVHHOUT,
+		nMPMCBLSOUT,
+		nMPMCCASOUT,
+		nMPMCDYCSOUT,
+		nMPMCOEOUT,
+		nMPMCRASOUT,
+		nMPMCRPOUT,
+		nMPMCSTCSOUT,
+		nMPMCWEOUT,
+                nMPMCDATAEN,   
+
+                HRDATAdmac,
+                HREADYdmac,
+                HRESPdmac,
+                HSELdmac,
+
+                TESTACK, 
+		SCANENABLE, 
+		SCANINHCLK, 
+		SCANOUTHCLK
+		);
+  // Common AHB signals
+  input         HCLK;
+  input         HRESETn;
+  // Matrix AHB connections
+  input [31:0]  HADDR;
+  input [2:0]   HBURST;
+  input         HMASTLOCK;
+  input [3:0]   HPROT;
+  input         HREADYmtrx;
+  input         HSELmtrx;
+  input [2:0]   HSIZE;
+  input [1:0]   HTRANS;
+  input [31:0]  HWDATA;
+  input         HWRITE;
+
+  output [31:0] HRDATA;
+  output        HREADYOUT;
+  output [1:0]  HRESP;
+
+  // Remap control signal
+  input         Remap;
+
+  // EBI external connections
+  input  [31:0] EBIEXTDATAIN;       
+  output [31:0] EBIEXTDATAOUT;      
+  output [3:0]  nEBIEXTDATAEN;      
+  output [25:0] EBIEXTADDROUT;  
+
+  output [7:0]  SMCS;           
+  output [3:0]  nSMBLS;         
+  output        nSMOEN;         
+
+  // TIC connections (AHB)
+  output [31:0] HADDRtst;
+  output        HSELtst;
+  output [1:0]  HTRANStst;
+  output        HWRITEtst;
+  output [31:0] HWDATAtst;
+
+  input         HREADYtst;
+  input [1:0]   HRESPtst;
+  input [31:0]  HRDATAtst;
+
+  // TIC test signals
+  input         TESTREQA;
+  input         TESTREQB;
+  output        TESTACK;
+
+  // MPMC PAD
+  // input
+  input         MPMCBIGENDIAN; 
+  input         MPMCFBCLKIN0;  
+  input         MPMCFBCLKIN1;  
+  input         MPMCFBCLKIN2;  
+  input         MPMCFBCLKIN3;  
+  input  [31:0] MPMCDATAIN;    
+  input   [1:0] MPMCSTCS1MW;   
+  input         MPMCSTCS0POL;  
+  input         MPMCSTCS1POL; 
+  input         MPMCSTCS2POL;  
+  input         MPMCSTCS3POL;  
+  input         MPMCTESTIN;    
+  // output
+  output [27:0] MPMCADDROUT;   
+  output  [3:0] MPMCCKEOUT;    
+  output  [3:0] MPMCCLKOUT;    
+  output [31:0] MPMCDATAOUT;   
+  output  [3:0] MPMCDQMOUT;    
+  output        MPMCRPVHHOUT;  
+  output  [3:0] nMPMCBLSOUT;   
+  output        nMPMCCASOUT;   
+  output  [3:0] nMPMCDYCSOUT;  
+  output        nMPMCOEOUT;    
+  output        nMPMCRASOUT;   
+  output        nMPMCRPOUT;    
+  output  [3:0] nMPMCSTCSOUT;  
+  output        nMPMCWEOUT;    
+  // Pad control
+  output [3:0]  nMPMCDATAEN;    // Tri-state I/O pad enables of
+                               // MPMCDATA[31:0]
+  
+  // Scan test dummy signals; not connected until scan insertion
+  input         SCANENABLE;    // Scan Test Mode Enbl
+  input         SCANINHCLK;    // Scan Chain Input
+  output        SCANOUTHCLK;   // Scan Chain Output
+
+  // dmac
+  input [31:0]  HRDATAdmac;
+  input         HREADYdmac;
+  input [1:0]   HRESPdmac;
+  output        HSELdmac;
+  reg        HSELdmac;
+
+  // Port wires
+  wire          HCLK;
+  wire          HRESETn;
+
+  wire [31:0]   HADDR;
+  wire [2:0]    HBURST;
+  wire          HMASTLOCK;
+  wire [3:0]    HPROT;
+  wire          HREADYmtrx;
+  wire          HSELmtrx;
+  wire [2:0]    HSIZE;
+  wire [1:0]    HTRANS;
+  wire [31:0]   HWDATA;
+  wire          HWRITE;
+
+  wire [31:0]   HRDATA;
+  wire          HREADYOUT;
+  wire [1:0]    HRESP;
+
+  wire          Remap;
+
+  wire [31:0]   SMDATAIN;
+
+  wire [31:0]   SMDATAOUT; 
+  wire [3:0]    nSMDATAEN;
+  wire [25:0]   SMADDR;
+  wire [7:0]    SMCS;
+  wire [3:0]    nSMBLS;
+  wire          nSMOEN;
+
+  wire          HREADYtst;
+  wire [1:0]    HRESPtst;
+  wire [31:0]   HRDATAtst;
+  wire [31:0]   HADDRtst;
+  wire          HSELtst;
+  wire [1:0]    HTRANStst;
+  wire          HWRITEtst;
+  wire [31:0]   HWDATAtst;
+  wire [31:0]   EBIDATAIN;   
+
+  wire          TESTREQA;
+  wire          TESTREQB;
+  wire          TESTACK;
+
+  wire          SCANENABLE;
+  wire          SCANINHCLK;
+  wire          SCANOUTHCLK;
+
+//----------------------------------------------------------------------------
+// Signal declarations: AHB
+//----------------------------------------------------------------------------
+
+// Local AHB backbone
+  wire [31:0]   iHADDR;
+  wire [1:0]    iHTRANS;
+  wire          iHWRITE;
+  wire [2:0]    iHSIZE;
+  wire [2:0]    iHBURST;
+  wire [3:0]    iHPROT;
+  wire [31:0]   iHWDATA;
+  wire          iHLOCK;
+
+// Multiplexed Local slave output signals
+  wire          iHREADY;
+  wire [1:0]    iHRESP;
+  wire [31:0]   iHRDATA;
+
+// Local Slave specific output signals
+  wire          HSELS0B;
+  wire          HSELS0R;
+
+  wire          HSELS0;
+  wire [31:0]   HRDATAS0;
+  wire          HREADYS0;
+  wire [1:0]    HRESPS0;
+
+  wire          HSELS1;
+  wire [31:0]   HRDATAS1;
+  wire          HREADYS1;
+  wire [1:0]    HRESPS1;
+
+  wire          HSELS2;
+  wire [31:0]   HRDATAS2;
+  wire          HREADYS2;
+  wire [1:0]    HRESPS2;
+
+  wire          HSELS3;
+  wire [31:0]   HRDATAS3;
+  wire          HREADYS3;
+  wire [1:0]    HRESPS3;
+
+  wire          HSELS4;
+  wire [31:0]   HRDATAS4;
+  wire          HREADYS4;
+  wire [1:0]    HRESPS4;
+
+  wire          HSELS5;
+  wire [31:0]   HRDATAS5;
+  wire          HREADYS5;
+  wire [1:0]    HRESPS5;
+
+  wire          HSELS6;
+  wire [31:0]   HRDATAS6;
+  wire          HREADYS6;
+  wire [1:0]    HRESPS6;
+
+  wire          HSELS7;
+  wire [31:0]   HRDATAS7;
+  wire          HREADYS7;
+  wire [1:0]    HRESPS7;
+
+  wire          HSELS8;
+  wire          HSELS9;
+  wire          HSELS10;
+  wire          HSELS11;
+  wire          HSELS12;
+  wire          HSELS13;
+  wire          HSELS14;
+  wire          HSELS15;
+
+  wire          HSELDefault;
+  wire          HREADYDefault;
+  wire [1:0]    HRESPDefault;
+
+// Miscellaneous signals
+  wire          HSELSmi;
+
+  wire          iHBUSREQ;
+  wire          iHGRANT;
+
+  wire [31:0]   HRDATASmi;
+  wire          HREADYSmi;
+  wire [1:0]    HRESPSmi;
+
+  wire [20:0]   HRDATAMpmc;
+  wire          HREADYMpmc;
+  wire [1:0]    HRESPMpmc;
+ 
+  wire [31:0]   HRDATARSlv;
+  wire          HREADYRSlv;
+  wire [1:0]    HRESPRSlv;
+
+  wire [2:0]    HBURSTtst;
+  wire          HBUSREQtst;
+  reg           HGRANTtst;
+  wire          HLOCKtst;
+  wire [3:0]    HPROTtst;
+  wire [2:0]    HSIZEtst;
+  wire [31:0]   iHADDRtst;
+
+// Unused SMC outputs
+  wire          TICBUSREQEBI;
+  wire          SMBUSREQEBI;
+  wire          MCBUSGNT;
+  wire          nSMWEN;
+  wire          TICREADEBI;
+  wire [31:0]   TBUSOUTEBI;
+
+
+//------------------------------------------------------------------------------
+// Signal declarations: Scan chain
+//------------------------------------------------------------------------------
+
+  wire          SCANINsmi;
+  wire          SCANINnsmi;
+  wire          SCANOUTsmi;
+  wire          SCANOUTnsmi;
+  wire          SCANINs2m;
+  wire          SCANOUTs2m;
+  wire          SCANINdefslv;
+  wire          SCANOUTdefslv;
+  wire          SCANINretry;
+  wire          SCANOUTretry;
+  wire          SCANINwpr;
+  wire          SCANOUTwpr;
+
+//------------------------------------------------------------------------------
+// Signal declarations: Tie-offs
+//------------------------------------------------------------------------------
+
+  wire          TieOffLo1;
+  wire          TieOffHi1;
+  wire [1:0]    TieOffLo2;
+  wire [2:0]    TieOffLo3;
+  wire [3:0]    TieOffLo4;
+  wire [7:0]    TieOffLo8;
+  wire [10:0]   TieOffLo10;
+  wire [25:0]   TieOffLo26;
+  wire [27:0]   TieOffLo28;
+  wire [31:0]   TieOffLo32;
+
+  reg HSELmpmc;
+
+//------------------------------------------------------------------------------
+// Beginning of main code
+//------------------------------------------------------------------------------
+
+// The TieOff signals must be assigned explicitly within the body of the HDL.
+// Using initial values (in the signal declaration, above) will not work in
+//  Synopsys. Signals are used rather than constants as constants can not be
+//  connected directly to sub-component instantiations
+  assign TieOffHi1 = 1'b1;
+  assign TieOffLo1 = 1'b0;
+  assign TieOffLo2 = {2{1'b0}};
+  assign TieOffLo3 = {3{1'b0}};
+  assign TieOffLo4 = {4{1'b0}};
+  assign TieOffLo6 = {6{1'b0}};
+  assign TieOffLo8 = {8{1'b0}};
+  assign TieOffLo10 = {10{1'b0}};
+  assign TieOffLo26 = {26{1'b0}};
+  assign TieOffLo28 = {28{1'b0}};
+  assign TieOffLo32 = {32{1'b0}};
+
+// The Lite to AHB Wrapper (only master in this module)
+  Lite2AHB uLite2AHB 
+    (
+     // Global signals
+     .HCLK        (HCLK),
+     .HRESETn     (HRESETn),
+
+     // Signals from AHB
+     .HRDATA      (iHRDATA),
+     .HREADY      (iHREADY),
+     .HRESP       (iHRESP),
+     .HGRANT      (iHGRANT),
+
+     // Signals from AHB-Lite
+     .MADDR       (HADDR),
+     .MTRANS      (HTRANS),
+     .MWRITE      (HWRITE),
+     .MSIZE       (HSIZE),
+     .MBURST      (HBURST),
+     .MPROT       (HPROT),
+     .MMASTLOCK   (HMASTLOCK),
+     .MWDATA      (HWDATA),
+
+     // Signals to AHB
+     .HADDR       (iHADDR),
+     .HPROT       (iHPROT),
+     .HWDATA      (iHWDATA),
+     .HBUSREQ     (iHBUSREQ),
+     .HLOCK       (iHLOCK),
+     .HTRANS      (iHTRANS),
+     .HWRITE      (iHWRITE),
+     .HSIZE       (iHSIZE),
+     .HBURST      (iHBURST),
+
+     // Signals to AHB-Lite
+     .MRDATA      (HRDATA),
+     .MREADY      (HREADYOUT),
+     .MERROR      (HRESP[0]),
+
+     // Scan test dummy signals; not connected until scan insertion 
+     .SCANENABLE  (SCANENABLE), // Scan Test Mode Enbl
+     .SCANINHCLK  (SCANINwpr),  // Scan Chain Input
+     .SCANOUTHCLK (SCANOUTwpr)  // Scan Chain Output
+    );
+
+  // This signal is not driven by the Lite2AHB Wrapper
+  assign HRESP[1] = 1'b0;
+
+  // Always grant the Lite2AHB Wrapper
+  assign iHGRANT = 1'b1;
+
+// External Bus Interface
+    // Device1 TIC
+     wire		EBIREQ1;       
+     wire[3:0]  	EBIDATAEN1;  
+     assign EBIDATAEN1 = {~TICREADEBI,~TICREADEBI,~TICREADEBI,~TICREADEBI};  
+
+   // Device2 PL172 
+     wire		EBIREQ2;       
+     wire		EBIGNT1;
+     wire		EBIGNT2;
+     wire		EBIGNT3;
+     wire               MPMCEBIGNT;
+
+   // Device3 SMC 
+     wire		EBIREQ3;       
+     wire               EBIBACKOFF3;
+     wire[31:0]         EBIADDR3; 
+
+     assign	EBIADDR3 = {TieOffLo6, SMADDR};               
+
+     wire[9:0]          SamePriority;
+     assign SamePriority = 10'h80;
+
+     reg 		EBIREQ1r; 
+     reg 		EBIREQ2r; 
+     reg 		EBIREQ3r; 
+
+always @(HRESETn or EBIREQ1 or EBIREQ2 or EBIREQ3)
+     if(!HRESETn)begin
+	EBIREQ1r <= 1'b0;
+        EBIREQ2r <= 1'b0;
+        EBIREQ3r <= 1'b0;
+     end else begin
+	EBIREQ1r <= 1'b1;
+        EBIREQ2r <= 1'b1;
+        EBIREQ3r <= 1'b1;
+     end
+
+ Ebi uEbi(
+// Inputs
+     .EBICLK            (HCLK),
+     .nPOR              (HRESETn),
+     //1 TIC 
+     .EBIREQ1           (TICBUSREQEBI),
+     .EBIADDR1          (TieOffLo32),
+     .EBIDATA1          (SMDATAOUT),
+     .nEBIDATAEN1       (EBIDATAEN1),
+     .EBITIMEOUTVALUE1  (SamePriority),
+     //2 MPMC
+     .EBIREQ2           (0),
+     .EBIADDR2          (0),
+     .EBIDATA2          (0),
+     .nEBIDATAEN2       (0),
+     .EBITIMEOUTVALUE2  (SamePriority),
+     //3 SMC
+//     .EBIREQ3           (TieOffHi1 ),
+     .EBIREQ3           (EBIREQ3r),
+     .EBIADDR3          (EBIADDR3),
+     .EBIDATA3          (SMDATAOUT),
+     .nEBIDATAEN3       (nSMDATAEN),
+     .EBITIMEOUTVALUE3  (SamePriority),
+  
+     .EBIEXTDATAIN      (EBIEXTDATAIN),
+
+     // Scan test Signals
+     .SCANENABLE        (),
+     .SCANINEBICLK      (),
+// Outputs
+      //1
+     .EBIGNT1           (TICBUSGNTEBI),
+     .EBIBACKOFF1       (),
+      //2
+     .EBIGNT2           (MPMCEBIGNT),
+     .EBIBACKOFF2       (),
+      //3
+     .EBIGNT3           (EBIGNT3),
+     .EBIBACKOFF3       (EBIBACKOFF3),
+
+     .EBIEXTDATAOUT     (EBIEXTDATAOUT),
+     .EBIEXTADDROUT     (EBIEXTADDROUT),
+     .nEBIEXTDATAEN     (nEBIEXTDATAEN),
+     .EBIDATAIN         (EBIDATAIN    ),
+     // Scan test Signals
+     .SCANOUTEBICLK     ()
+      );
+
+  wire SMBUSGNTEBI;
+  assign SMBUSGNTEBI = EBIGNT3 & ~EBIBACKOFF3;
+
+// Static Memory Interface instantiated as AHB slave 3 (aliased to Slot 0
+//  at boot)
+
+  wire nCLK;
+  assign nHCLK = ~HCLK;
+
+  wire[1:0] WIDTH32;
+  assign WIDTH32 = 2'b10; 
+
+  Smc uSmc 
+    (
+     // Common AHB signals
+     .nHCLK        (nHCLK),            // Not used
+     .HCLK         (HCLK),
+     .HRESETn      (HRESETn),
+
+     .HREADYIN     (iHREADY),
+
+     // SMC slave interface signals (AHB)
+     .HADDR        (iHADDR[28:0]),
+     .HBURST       (iHBURST),              // Not used
+     .HTRANS       (iHTRANS),
+     .HWRITE       (iHWRITE),
+     .HSIZE        (iHSIZE),
+     .HWDATA       (iHWDATA),
+     .HSELSMC      (HSELSmi),            // Decoder slots 0 (boot) and 3
+     .HSELREG      (HSELS13),            // SMC Slave   
+
+     // TIC master interface signals (AHB)
+     .HRESPTIC     (HRESPtst),
+     .HRDATATIC    (HRDATAtst),
+     .HGRANTTIC    (HGRANTtst),
+
+     .BIGENDIAN    (TieOffLo1),            // Not used
+     .REMAP        (Remap),
+
+     .TICBUSGNTEBI (TICBUSGNTEBI),         // used
+     .SMBUSGNTEBI  (SMBUSGNTEBI),             // used
+
+     .SCANENABLE   (SCANENABLE),           // Not used
+     .SCANINHCLK   (SCANINsmi),            // Not used
+     .SCANINnHCLK  (SCANINnsmi),           // Not used
+
+     .SMWAIT       (TieOffLo1),            // Not used
+     .CANCELSMWAIT (TieOffLo1),            // Not used
+     .SMMWCS7      (WIDTH32),             // Not used
+     .SMDATAIN     (EBIDATAIN),             // Data from Memory to SMC
+
+     .TESTREQA     (TESTREQA),             // Test bus request A
+     .TESTREQB     (TESTREQB),             // Test bus request B
+
+     .MCBUSREQ     (TieOffLo1),            // Not used
+     .MCADDR       (TieOffLo26),           // Not used
+     .MCDATAOUT    (TieOffLo32),           // Not used
+     .MCDATAEN     (TieOffLo4),            // Not used
+
+     .EXTBUSMUX    (TieOffHi1),            // Not used
+
+     // SMC slave interface signals (AHB)
+     .HRDATA       (HRDATASmi),            // Channel 0 of MuxS2M
+     .HREADYOUT    (HREADYSmi),
+     .HRESP        (HRESPSmi),
+
+     // TIC master interface signals (AHB)
+     .HADDRTIC     (iHADDRtst),
+     .HTRANSTIC    (HTRANStst),
+     .HWRITETIC    (HWRITEtst),
+     .HSIZETIC     (HSIZEtst),
+     .HBURSTTIC    (HBURSTtst),
+     .HPROTTIC     (HPROTtst),
+     .HWDATATIC    (HWDATAtst),
+     .HBUSREQTIC   (HBUSREQtst),
+     .HLOCKTIC     (HLOCKtst),
+
+     .TICBUSREQEBI (TICBUSREQEBI),         // Not used
+     .SMBUSREQEBI  (EBIREQ3),              // used
+
+     .SCANOUTnHCLK (SCANOUTnsmi),          // Not used
+     .SCANOUTHCLK  (SCANOUTsmi),           // Not used
+
+     .SMDATAOUT    (SMDATAOUT),            // Data from SMC to Memory
+     .nSMDATAEN    (nSMDATAEN),            // Data tri-state pad enable
+     .SMADDR       (SMADDR),               // External address bus
+     .SMCS         (SMCS),                 // External chip selects
+     .nSMBLS       (nSMBLS),               // External byte lane write enable
+     .nSMWEN       (nSMWEN),               // Not used
+     .nSMOEN       (nSMOEN),               // External read enable
+
+     .TICREADEBI   (TICREADEBI),           // Not used
+     .TBUSOUTEBI   (TBUSOUTEBI),           // used
+     .TESTACK      (TESTACK),              // Test acknowledge
+
+     .MCBUSGNT     (MCBUSGNT)              // Not used
+    );
+
+// MPMC 
+//  
+Mpmc  uMpmc (
+// Inputs
+      // Clock and Resets
+     .HCLK           (HCLK),
+     .MPMCCLK        (HCLK),
+     
+     .MPMCFBCLKIN0   (HCLK), //SDRAM
+     .MPMCFBCLKIN1   (HCLK), //SDRAM
+     .MPMCFBCLKIN2   (HCLK), //SDRAM
+     .MPMCFBCLKIN3   (HCLK), //SDRAM
+
+     .MPMCCLKDELAY   (HCLK),
+     .HRESETn        (HRESETn),
+     .nPOR           (HRESETn),
+     // AHB0 slave interface signals
+     .HWRITE0        (TieOffLo1),
+     .HTRANS0        (TieOffLo2),
+     .HSIZE0         (TieOffLo3),
+     .HBURST0        (TieOffLo3),
+     .HREADYIN0      (TieOffLo1),
+     .HSELMPMC0G     (TieOffLo1),
+     .HSELMPMC0CS    (TieOffLo8),
+     .HMASTLOCK0     (TieOffLo8),
+     .HADDR0         (TieOffLo28),
+     .HWDATA0        (TieOffLo32),
+     // AHB1 slave interface signals
+     .HWRITE1        (TieOffLo1),
+     .HTRANS1        (TieOffLo2),
+     .HSIZE1         (TieOffLo3),
+     .HBURST1        (TieOffLo3),
+     .HREADYIN1      (TieOffLo1),
+     .HSELMPMC1G     (TieOffLo1),
+     .HSELMPMC1CS    (TieOffLo8),
+     .HMASTLOCK1     (TieOffLo1),
+     .HADDR1         (TieOffLo28),
+     .HWDATA1        (TieOffLo32),
+     // AHB2 slave interface signals
+     .HWRITE2        (TieOffLo1),
+     .HTRANS2        (TieOffLo2),
+     .HSIZE2         (TieOffLo3),
+     .HBURST2        (TieOffLo3),
+     .HREADYIN2      (TieOffLo1),
+     .HSELMPMC2G     (TieOffLo1),
+     .HSELMPMC2CS    (TieOffLo8),
+     .HMASTLOCK2     (TieOffLo1),
+     .HADDR2         (TieOffLo28),
+     .HWDATA2        (TieOffLo32),
+     // AHB3 slave interface signals
+     .HWRITE3        (TieOffLo1),
+     .HTRANS3        (TieOffLo2),
+     .HSIZE3         (TieOffLo3),
+     .HBURST3        (TieOffLo3),
+     .HREADYIN3      (TieOffLo1),
+     .HSELMPMC3G     (TieOffLo1),
+     .HSELMPMC3CS    (TieOffLo8),
+     .HMASTLOCK3     (TieOffLo1),
+     .HADDR3         (TieOffLo28),
+     .HWDATA3        (TieOffLo32),
+     // AHBREG slave interface signals
+     .HWRITEREG      (iHWRITE),
+     .HTRANSREG      (iHTRANS[1]),
+     .HSIZEREG       (iHSIZE),
+     .HREADYINREG    (iHREADY),
+     .HSELMPMCREG    (HSELmpmc),
+     .HADDRREG       (iHADDR[11:2]),
+     .HWDATAREG20TO19(iHWDATA[20:19]),
+     .HWDATAREG15TO0 (iHWDATA[15:0]),
+     // AHBTIC Master interface signals
+     .HRDATATIC      (HRDATAtst),
+     .HREADYINTIC    (HREADYtst),
+     .HGRANTTIC      (HGRANTtst),
+     .HRESPTIC       (HRESPtst),
+     // Pad interface signals
+     //.MPMCTESTIN     (MPMCTESTINT),
+     .MPMCTESTIN     (TieOffLo1),
+     .MPMCDATAIN     (TieOffLo32), // PAD
+    // .MPMCDATAIN     (MPMCDATAIN), // PAD
+     // EBI signals
+     .MPMCEBIGNT     (MPMCEBIGNT),
+     //.MPMCEBIBACKOFF (MPMCEBIBACKOFF),
+     .MPMCEBIBACKOFF (TieOffLo1),
+     // Miscellaneous signals
+     .MPMCSREFREQ    (TieOffLo1),
+     .MPMCBIGENDIAN  (TieOffLo1),
+     //.MPMCSTCS1MW    (2'b10),
+     .MPMCSTCS1MW    (TieOffLo2),
+     .MPMCSTCS0POL   (TieOffLo1),
+     .MPMCSTCS1POL   (TieOffLo1),
+     .MPMCSTCS2POL   (TieOffLo1),
+     .MPMCSTCS3POL   (TieOffLo1),
+     .MPMCSTCS1PB    (TieOffLo1),
+     .MPMCREL1CONFIG (TieOffLo1),
+     .MPMCTESTREQA   (TESTREQA),
+     .MPMCTESTREQB   (TESTREQB),
+     // Scan test signals
+     .SCANINHCLK     (SCANINHCLK),
+     .SCANINMPMCCLK  (SCANINMPMCCLK),
+     .SCANINFBCLKIN0 (SCANINFBCLKIN0),
+     .SCANINFBCLKIN1 (SCANINFBCLKIN1),
+     .SCANINFBCLKIN2 (SCANINFBCLKIN2),
+     .SCANINFBCLKIN3 (SCANINFBCLKIN3),
+     .SCANINCLKDELAY (SCANINCLKDELAY),
+     .SCANENABLE     (SCANINEBICLK),
+// Outputs
+      // AHB0 slave interface signals
+     .HREADYOUT0     (HREADYOUT0),
+     .HRESP0         (HRESP0),
+     .HRDATA0        (HRDATA0),
+     // AHB1 slave interface signals
+     .HREADYOUT1     (HREADYOUT1),
+     .HRESP1         (HRESP1),
+     .HRDATA1        (HRDATA1),
+     // AHB2 slave interface signals
+     .HREADYOUT2     (HREADYOUT2),
+     .HRESP2         (HRESP2),
+     .HRDATA2        (HRDATA2),
+     // AHB3 slave interface signals
+     .HREADYOUT3     (HREADYOUT3),
+     .HRESP3         (HRESP3),
+     .HRDATA3        (HRDATA3),
+ // AHBREG slave interface signals
+     .HREADYOUTREG   (HREADYMpmc),
+     .HRESPREG       (HRESPMpmc),
+     .HRDATAREG      (HRDATAMpmc),
+     // AHBTIC Master interface signals
+     .HWRITETIC      (HWRITEtst),
+     .HTRANSTIC      (HTRANStst),
+     .HSIZETIC       (HSIZEtst),
+     .HBURSTTIC      (HBURSTtst),
+     .HLOCKTIC       (HLOCKtst),
+     .HPROTTIC       (HPROTtst),
+     .HBUSREQTIC     (HBURSTtst),
+     .HADDRTIC       (iHADDRtst),
+     .HWDATATIC      (HWDATAtst),
+     // Pad Interface signals
+     .MPMCCLKOUT     (MPMCCLKOUT), //SDRAM
+     .MPMCCKEOUT     (MPMCCKEOUT), //SDRAM
+     .MPMCDQMOUT     (MPMCDQMOUT), //SDRAM
+     .nMPMCBLSOUT    (nMPMCBLSOUT),
+     .nMPMCRASOUT    (nMPMCRASOUT),//SDRAM
+     .nMPMCCASOUT    (nMPMCCASOUT),//SDRAM
+     .nMPMCOEOUT     (nMPMCOEOUT),
+     .nMPMCWEOUT     (nMPMCWEOUT),
+     .nMPMCSTCSOUT   (nMPMCSTCSOUT),
+     .nMPMCDYCSOUT   (nMPMCDYCSOUT),//SDRAM
+     .MPMCADDROUT    (MPMCADDROUT),
+     .MPMCDATAOUT    (MPMCDATAOUT),
+     .nMPMCRPOUT     (nMPMCRPOUT),
+     .MPMCRPVHHOUT   (MPMCRPVHHOUT),
+     .nMPMCDATAEN    (nMPMCDATAEN),
+     // EBI signal
+     .MPMCEBIREQ     (MPMCEBIREQ),
+     // Miscellaneous signals
+     .MPMCSREFACK    (MPMCSREFACK),
+     // Scan test signals
+     .SCANOUTHCLK    (SCANOUTHCLK),
+     .SCANOUTMPMCCLK (SCANOUTMPMCCLK),
+     .SCANOUTFBCLKIN0(SCANOUTFBCLKIN0),
+     .SCANOUTFBCLKIN1(SCANOUTFBCLKIN1),
+     .SCANOUTFBCLKIN2(SCANOUTFBCLKIN2),
+     .SCANOUTFBCLKIN3(SCANOUTFBCLKIN3),
+     .SCANOUTCLKDELAY(SCANOUTCLKDELAY)
+);
+
+
+// Local Address Decoder
+  Decoder uDecoder 
+    (
+     .HADDR   (HADDR[31:20]),
+
+     .Remap   (Remap),
+
+     .HSELS0B (HSELS0B),
+     .HSELS0R (HSELS0R),
+     .HSELS0  (HSELS0),
+     .HSELS1  (HSELS1),
+     .HSELS2  (HSELS2),
+     .HSELS3  (HSELS3),
+     .HSELS4  (HSELS4),
+     .HSELS5  (HSELS5),
+     .HSELS6  (HSELS6),
+     .HSELS7  (HSELS7),
+     .HSELS8  (HSELS8),
+     .HSELS9  (HSELS9),
+     .HSELS10 (HSELS10),
+     .HSELS11 (HSELS11),
+     .HSELS12 (HSELS12),
+     .HSELS13 (HSELS13),
+     .HSELS14 (HSELS14),
+     .HSELS15 (HSELS15)
+    );
+
+ always@ (HADDR[31:24]) begin
+
+        HSELmpmc = 1'b0;
+        HSELdmac = 1'b0;
+
+        case(HADDR[31:24])
+         8'hd2: begin
+                         HSELmpmc = 1'b1;
+                        end
+         8'hd1: begin
+                         HSELdmac = 1'b1;
+                        end
+         default: begin
+                        // NULL
+                end
+        endcase
+  end
+
+  // SMC occupies Slot 3 or Slot 0 (at boot) 
+  assign HSELSmi = (HSELS3 | HSELS0B);
+
+  // Default Slave is selected by all unused HSEL lines
+  assign HSELDefault = 
+    // HSELS0B |
+    HSELS0R |                           
+    HSELS0 |
+    HSELS1 |
+    HSELS2 |
+    // HSELS3 |                         
+    HSELS4 |
+    HSELS5 |                           
+    HSELS6 |
+    HSELS7 |                            
+    HSELS8 |
+    HSELS9 |
+    HSELS10 |
+    HSELS11 |
+    HSELS12 |                           
+    // HSELS13 |                        
+    HSELS14 |                           
+    HSELS15 |                           
+    (~HSELmtrx)
+    ;
+
+// Default Slave (selected when no other slaves are accessed)
+  DefaultSlave uDefaultSlave
+    (
+     .HCLK        (HCLK),
+     .HRESETn     (HRESETn),
+
+     .HTRANS      (iHTRANS),
+     .HSEL        (HSELDefault),
+     .HREADY      (iHREADY),
+
+     .HREADYOUT   (HREADYDefault),
+     .HRESP       (HRESPDefault),
+
+     // Scan test dummy signals; not connected until scan insertion
+     .SCANENABLE  (SCANENABLE),   // Scan Test Mode Enbl
+     .SCANINHCLK  (SCANINdefslv), // Scan Chain Input
+     .SCANOUTHCLK (SCANOUTdefslv) // Scan Chain Output
+    );
+
+// Local multiplexer - slaves to masters
+//  This 8-input multiplexor is used in place of the 16-input version 
+//  because it is faster to synthesise. However, in this application,
+//  the input channel names do not always match the names of the signals
+//  they are assigned to, though the multiplexor operation is unaffected.
+  MuxS2M uMuxS2M
+    (
+     .HCLK          (HCLK),
+     .HRESETn       (HRESETn),
+     
+     .HSELS0        (HSELSmi),          // Decoder slots 0 (boot) and 3
+     .HSELS1        (HSELS13),          // Decoder slot 13
+     .HSELS2        (TieOffLo1),         
+     .HSELS3        (HSELmpmc),         // MPMC slave
+     .HSELS4        (TieOffLo1),
+     .HSELS5        (HSELdmac),         // DMAC slave
+     .HSELS6        (TieOffLo1),
+     .HSELS7        (TieOffLo1),
+     .HSELDefault   (HSELDefault),
+
+     .HRDATAS0      (HRDATAS0),         // SMC
+     .HREADYS0      (HREADYS0),
+     .HRESPS0       (HRESPS0),
+
+     .HRDATAS1      (HRDATAS1),         // SMC slave
+     .HREADYS1      (HREADYS1),
+     .HRESPS1       (HRESPS1),
+
+     .HRDATAS2      (HRDATAS2),         
+     .HREADYS2      (HREADYS2),
+     .HRESPS2       (HRESPS2),
+
+     .HRDATAS3      (HRDATAS3),        // MPMC slave 
+     .HREADYS3      (HREADYS3),
+     .HRESPS3       (HRESPS3),
+
+     .HRDATAS4      (HRDATAS4),        
+     .HREADYS4      (HREADYS4),
+     .HRESPS4       (HRESPS4),
+
+     .HRDATAS5      (HRDATAS5),        // Dmac slave
+     .HREADYS5      (HREADYS5),
+     .HRESPS5       (HRESPS5),
+
+     .HRDATAS6      (HRDATAS6),
+     .HREADYS6      (HREADYS6),
+     .HRESPS6       (HRESPS6),
+
+     .HRDATAS7      (HRDATAS7),
+     .HREADYS7      (HREADYS7),
+     .HRESPS7       (HRESPS7),
+
+     .HREADYDefault (HREADYDefault),
+     .HRESPDefault  (HRESPDefault),
+
+     .HRDATA        (iHRDATA),          // Connected to the Lite2AHB Wrapper
+     .HREADY        (iHREADY),
+     .HRESP         (iHRESP),
+
+     // Scan test dummy signals; not connected until scan insertion 
+     .SCANENABLE    (SCANENABLE), // Scan Test Mode Enbl
+     .SCANINHCLK    (SCANINs2m),  // Scan Chain Input
+     .SCANOUTHCLK   (SCANOUTs2m)  // Scan Chain Output
+    );
+
+  assign HRDATAS0 = HRDATASmi;        // SMC
+  assign HREADYS0 = HREADYSmi;
+  assign HRESPS0  = HRESPSmi;
+
+  assign HRDATAS1 = HRDATASmi;        // SMC
+  assign HREADYS1 = HREADYSmi;
+  assign HRESPS1  = HRESPSmi;
+
+  assign HRDATAS3 = {11'b00000000000,HRDATAMpmc};        // MPMC 
+  assign HREADYS3 = HREADYMpmc;
+  assign HRESPS3  = HRESPMpmc;
+
+  assign HRDATAS5 = HRDATAdmac;        // DMAC 
+  assign HREADYS5 = HREADYdmac;
+  assign HRESPS5  = HRESPdmac;
+
+
+
+// Tie-off the unused channels of MuxS2M
+
+  // Tie off HRDATA for unused slave ports
+   assign HRDATAS2 = TieOffLo32;        
+  assign HRDATAS4 = TieOffLo32;         
+  assign HRDATAS6 = TieOffLo32;
+  assign HRDATAS7 = TieOffLo32;
+
+  // Tie off HREADY for unused slave ports
+   assign HREADYS2 = TieOffHi1;         
+  assign HREADYS4 = TieOffHi1;          
+  assign HREADYS6 = TieOffHi1;
+  assign HREADYS7 = TieOffHi1;
+
+  // Tie off HRESP for unused slave ports
+   assign HRESPS2 = TieOffLo2;          
+  assign HRESPS4 = TieOffLo2;		  
+  assign HRESPS6 = TieOffLo2;
+  assign HRESPS7 = TieOffLo2;
+
+// TIC control logic
+
+  // Since TIC is the only master on its AHB layer, it can be granted as soon
+  //  as a request is asserted. Note that HGRANTtst is not constantly asserted
+  //  for power reasons
+  always @ (negedge HRESETn or posedge HCLK)
+    begin : p_HGRANTtstSeq
+      if (!HRESETn)
+        HGRANTtst <= 1'b0;
+      else
+        HGRANTtst <= HBUSREQtst;
+    end
+
+  // Decode TIC address to create slave select signal to ARM core. Note that
+  //  TIC tests from ARM will assume a base address of either 0xC0000000 or
+  //  0x50000000 - the following is therefore a generic solution
+  assign HSELtst = ((iHADDRtst[31:28] != 4'b0000) ? 1'b1 : 1'b0);
+
+  // Connect internal signal to port
+  assign HADDRtst = iHADDRtst;
+
+
+endmodule
+
+// --================================= End ===================================--
+

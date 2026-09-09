@@ -1,0 +1,58 @@
+/* --=================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- ---------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : Interrupt_exceptions.scr,v
+-- File Revision          : 1.5
+--
+-- Release Information    : ADK_REL1v1
+--
+-- ---------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the Interrupt block
+--
+--           Located in the synopsys/scripts directory.
+--
+--           This file specifies the point-to-point exceptions
+--           set for the Interrupt block synthesis.
+--
+-- --=================================================================*/
+
+/* False paths between IC non-AMBA inputs and HRDATA are present as */
+/* these paths are used in Integration test mode only.               */
+/* The normal-mode paths from non-AMBA inputs to non-AMBA outputs    */
+/* are still being constrained.                                      */
+
+/* ICINTSOURCE to HRDATA */
+set_false_path -from find(port,{"ICINTSOURCE*"}) \
+               -to find(port,{"HRDATA*"})
+
+/* nICFIQIN to HRDATA */
+set_false_path -from find(port,{"nICFIQIN"}) \
+               -to find(port,{"HRDATA*"})
+
+/* nICIRQIN to HRDATA */
+set_false_path -from find(port,{"nICIRQIN"}) \
+               -to find(port,{"HRDATA*"})
+
+/* ICVECTADDRIN to HRDATA */
+set_false_path -from find(port,{"ICVECTADDRIN*"}) \
+               -to find(port,{"HRDATA*"})
+
+/* ICITCR to nICIRQ */
+set_false_path -from find(pin,{"uICAhbifReg/ICITCR*/*"}) \
+               -to find(port,{"nICIRQ"})
+
+/* ICITCR to nICFIQ */
+set_false_path -from find(pin,{"uICAhbifReg/ICITCR*/*"}) \
+               -to find(port,{"nICFIQ"})
+
+/******************** End of Interrupt_exceptions.scr **********************/

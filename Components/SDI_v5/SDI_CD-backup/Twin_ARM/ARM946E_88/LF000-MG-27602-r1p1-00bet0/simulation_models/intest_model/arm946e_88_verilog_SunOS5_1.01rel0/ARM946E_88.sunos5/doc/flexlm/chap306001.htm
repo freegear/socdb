@@ -1,0 +1,196 @@
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap2.htm">Previous Chapter</a>
+ * <a href="chap4.htm">Next Chapter</a>
+<p>
+<a name="17416: chap head: Chapter 2"></a><a name="_IX_51"></a><title>FLEXlm End User Manual: Chapter 3 
+Multiple License Files</title>
+<h1>Chapter 3 
+Multiple License Files</h1>
+<p>
+Since more than 1500 vendors have chosen 
+FLEXlm<I></I> as their license manager, chances 
+are good that you will have to administer licenses from more than one vendor or 
+multiple products from the same vendor.<p>
+<a name="33199: 1Head: 3.1 Overview of Combining License Files"></a><a name="3.1"></a><h2>3.1  Overview of Combining License Files</h2>
+<p>
+When you are running 
+FLEXlm<I></I>-licensed products from multiple vendors, you may 
+need to take steps to prevent licensing conflicts during installation. There are three 
+ways you can accomplish this:<p>
+<ul><li>Multiple license server nodes; each running one 
+lmgrd<I></I> and one license file<li>One license server node running one 
+lmgrd<I></I> and several license files<li>One license server node running multiple 
+lmgrd<I></I>s and multiple license files</ul><p>
+Note that before version 6, each 
+lmgrd<I></I> could read only a single license file. In the first 
+option mentioned above, you will have more license servers to monitor; in the third 
+option you have only one server but multiple 
+lmgrd<I></I>s to administer. 
+<p>
+<p>
+If all applications and vendor daemons are 
+FLEXlm<I></I> v6 (or later), lmgrd can process 
+multiple license files, even when the hostids are different, so long as they refer to the 
+same node.<p>
+<p>
+Your product's license file(s) define the license server(s) by hostname and hostid in the 
+SERVER line(s) in the 
+<a name="_IX_52"></a>license file. If the license files for two or more products contain 
+identical hostids on the SERVER line(s), then these files can be combined. If the 
+license files for two products contain different hostids on a SERVER line, then the 
+license servers for those products will be running on different nodes and the license 
+files cannot be combined.<p>
+<p>
+If you have two or more products whose license servers run on the same node (as 
+specified by the SERVER lines in the license files), you may be able to combine the 
+license files into a single license file. If the SERVER lines in those files have identical 
+hostids, then you can combine the files into a single file. If the SERVER lines have 
+different hostids, then you must keep the license files separate. 
+<p>
+<p>
+More precisely, you can combine two license files under the following conditions:<p>
+<ol><li>The number of SERVER lines in each file is the same. 
+<li>The hostid field of each SERVER line in one file exactly matches the hostid field 
+of each SERVER line in the other file. 
+</ol>
+<p>
+ Some possible reasons license files may not be compatible are: 
+<p>
+<ul><li>License files are set up to run on different server nodes, so hostids are different. 
+<li>One file is set up for single server (has only one SERVER line), the other is set 
+up for redundant servers (has multiple SERVER lines).<li>One vendor uses a custom hostid algorithm, so the hostids on the SERVER lines 
+are different even though the files are for the same machine. 
+</ul><p>
+If your license files are compatible as described above, then you have the option of 
+combining license files and running a single 
+lmgrd<I></I>, as described below in 
+<a href="chap3.htm#42205: 2head: 3.1.1 Combining License Files for Multiple Vendors">Section 3.1.1, `Combining License Files from Multiple Vendors,' on page 22</a>. If the 
+license files are not compatible, then you must keep the license files separate and run 
+separate copies of 
+lmgrd<I></I> for each license file, as described in 
+<a href="chap3.htm#15425: 2head: 3.1.2 Using Separate License Files on the Same Server Node">Section 3.1.3, `Using 
+Separate License Files on the Same Server Node,' on page 23</a>. 
+<p>
+<p>
+Note that you are not required to combine compatible license files; you always have 
+the option of running separate 
+lmgrd<I></I><I>s</I>, and there is virtually no performance or system-load penalty for running separate lmgrd processes.<p>
+<h3>3.1.1	 <a name="42205: 2head: 3.1.1 Combining License Files for Multiple Vendors"></a>Combining License Files from Multiple Vendors</h3>
+<p>
+If your license files are compatible, you can combine them with any text editor. To 
+combine license files, read all of the 
+<a name="_IX_53"></a>compatible license files into one file, then edit out 
+the extra 
+<a name="_IX_54"></a>SERVER lines so that only one set of SERVER lines remains. Write out this 
+data, and you have your combined license file. If you combine license files from 
+multiple vendors, it is a good idea to keep a copy of the combined license file in each 
+vendor's default license file location. This way, your users can avoid having to set 
+LM_LICENSE_FILE, because each package finds it's license information in the 
+default place. On UNIX, you can do this with a symbolic link from each default 
+location to the location of the combined license file.<p>
+<h3>3.1.2	 FLEXlm 
+Version Component Compatibility</h3>
+<p>
+When you combine license files for two different 
+FLEXlm<I></I>-licensed products, it may 
+be the case that those products do not use the same version of 
+FLEXlm<I></I>. 
+FLEXlm<I></I> is 
+designed to handle this situation. There are two basic compatibility rules for 
+FLEXlm<I></I>:<p>
+<ol><li>A newer 
+lmgrd<I></I> can be used with an older vendor daemon, but a newer vendor 
+daemon might not work properly with an older 
+lmgrd<I></I>.<li>A newer 
+vendor daemon (or 
+lmgrd<I></I>) can be used with an older client program, but 
+a newer client program might not work properly with an older vendor daemon. 
+</ol>
+<p>
+From these two compatibility rules come the simple rules for selecting which version 
+of administration tools to use: 
+<p>
+<ol><li>Always use the newest version of 
+<a name="_IX_55"></a>lmgrd<I></I> and the newest version of each vendor 
+daemon.<li>Use the newest 
+FLEXlm<I></I> utilities.</ol>
+<p>
+For specific application programs, you can use either the new or the old version (of 
+course the vendor daemon for that application must be at least as new as the application 
+itself).<p>
+<h3>3.1.3	 <a name="15425: 2head: 3.1.2 Using Separate License Files on the Same Server Node"></a><a name="_IX_56"></a>Using Separate License Files on the Same Server Node</h3>
+<p>
+You must run a separate copy of 
+lmgrd<I></I> for each license file. When you run multiple 
+copies of 
+lmgrd<I></I>, there are two details to remember:<p>
+<ol><li>The port number on the SERVER line of each license file must be unique. You can 
+use a standard text editor to change the port number in each license file so that they 
+are all different. 
+<li>You must make sure that you are using a compatible version of 
+lmgrd<I></I> when you 
+start it up for a particular license file. This can be done by using an explicit path 
+to 
+lmgrd<I></I>.</ol>
+<p>
+When running client programs (such as a licensed application), you can set the 
+LM_LICENSE_FILE<TT></TT> environment variable to point to multiple license files. For 
+example, you may have a license file from vendor ABC and a license file from vendor 
+XYZ with incompatible servers. You can place the license file from vendor ABC into:<p>
+<pre>/usr/flexlm/abc.dat</pre>
+</ol></ul><p>
+and the license file from vendor XYZ into:<p>
+<pre>/usr/flexlm/xyz.dat</pre>
+</ol></ul><p>
+then set the 
+LM_LICENSE_FILE<TT></TT> environment variable to point to both of them. Each 
+name in 
+LM_LICENSE_FILE<TT></TT> should be separated by a colon (`:') on Unix systems, a 
+semicolon (`;') on Windows and Windows/NT systems (in 
+FLEXlm<I></I> v4.1, a comma 
+was used on Windows and NT), and a space ("") on VMS systems.
+In the C shell:<p>
+<pre>% setenv LM_LICENSE_FILE<TT></TT> /usr/flexlm/abc.dat:/usr/flexlm/xyz.dat</pre>
+</ol></ul><p>
+In the Korn and Bourne shells:<p>
+<pre># LM_LICENSE_FILE<TT></TT>=/usr/flexlm/abc.dat:/usr/flexlm/xyz.dat
+# export LM_LICENSE_FILE<TT></TT> </pre>
+<a name="_IX_57"></a><a name="_IX_58"></a><a name="_IX_59"></a><a name="3.2"></a><h2>3.2  Using LM_LICENSE_FILE License File List </h2>
+<p>
+If products use different license server nodes, each set of license servers requires 
+separate license files. (When multiple software vendors use the same set of license 
+server nodes, the technique described above in 
+<a href="chap3.htm#33199: 1Head: 3.1 Overview of Combining License Files">Section 3.1, `Overview of Combining 
+License Files,' on page 21</a> can be used to combine license files.) The resulting 
+(multiple) license files can be installed in convenient locations. On Unix you would set 
+the 
+LM_LICENSE_FILE<TT></TT> environment variable as follows:<p>
+<pre>% setenv LM_LICENSE_FILE<TT></TT> <I>lfpath1</I>:<I>lfpath2</I>:....:<I>lfpathN</I></pre>
+</ol></ul><p>
+Use a colon (":") to separate the license file names on Unix, on Windows and 
+Windows/NT use a semicolon (";"), and on VMS use a space ("").<p>
+<p>
+<p>
+<dl><dt>lfpath1<dd>path to the first license file 
+<dd><dd><dd><dt>lfpath2<dd>path to the second license file.</dl><pre>.</pre>
+<pre>.</pre>
+<pre>.</pre>
+<dl><dt>lfpathN<dd>path to the last (Nth) license file 
+<dd><dd><dd></dl><p>
+Each application queries each license file in the order it is listed in the 
+LM_LICENSE_FILE<TT></TT> path. If the license server serving the license file listed in 
+<TT>lfpath1</TT> is unreachable, the other files listed in 
+LM_LICENSE_FILE<TT></TT> allow a user 
+to obtain a license from another server. 
+<I>lfpath</I> can also be"<I>port@host"</I>, using the port-number and hostname from the SERVER line in the license file.<p>
+<p>
+For more information about 
+LM_LICENSE_FILE<TT></TT> and setting the location of the 
+license file, see 
+<a href="chap2.htm#32236: 1head: 2.1 Location of the License File">Section 2.1, `Specifying Location of the License File,' on page 7</a>.<p>
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap2.htm">Previous Chapter</a>
+ * <a href="chap4.htm">Next Chapter</a>
+<p>

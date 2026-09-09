@@ -1,0 +1,116 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+-- -----------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : Mmci_exceptions.scr.rca
+-- File Revision          : 1.4
+-- 
+-- Release Information    : PrimeCell(TM)-PL181-REL1v0
+-- 
+-- -----------------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the 
+--           MMCI block             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the point-to-point exceptions 
+--           set for the MMCI block synthesis. 
+--
+-- --=========================================================================*/
+
+/* MMCICMDIN setup exception */
+/* The input delay constraint on MMCICMDIN is placed wrt the virtual */
+/* clock - vMMCICLKcard. Since there is a 3 ns delay between the     */
+/* vMMCICLKcard and MMCIFBCLK, Synopsys would assume that MMCICMDIN  */
+/* launched on the rising edge of vMMCICLKcard should meet setup to  */
+/* the MMCIFBCLK edge occurring 3 ns later. From the MM Card         */
+/* specifications, it is known that the hold time on MMCICMDIN       */
+/* wrt vMMCICLKcard is 5 ns. Hence the setup check should be done on */
+/* the next edge of MMCIFBCLK. This constitutes a 2 cycle MCP.       */
+set_multicycle_path 2 -setup -from MMCICMDIN \
+  -to uMmciOPReSync/CMDIN_reg
+
+/* MMCICMDIN hold exception */
+/* When the setup check is made an MCP, the hold check should also */
+/* be declared as MCP.                                             */ 
+set_multicycle_path 1 -hold -from MMCICMDIN \
+  -to uMmciOPReSync/CMDIN_reg
+
+/* MMCIDATIN setup exception */
+/* The input delay constraint on MMCIDATIN is placed wrt the virtual */
+/* clock - vMMCICLKcard. Since there is a 3 ns delay between the     */
+/* vMMCICLKcard and MMCIFBCLK, Synopsys would assume that MMCIDATIN  */
+/* launched on the rising edge of vMMCICLKcard should meet setup to  */
+/* the MMCIFBCLK edge occurring 3 ns later. From the MM Card         */
+/* specifications, it is known that the hold time on MMCIDATIN       */
+/* wrt vMMCICLKcard is 5 ns. Hence the setup check should be done on */
+/* the next edge of MMCIFBCLK. This constitutes a 2 cycle MCP.       */
+set_multicycle_path 2 -setup -from MMCIDATIN \
+  -to uMmciOPReSync/DATIN_reg*
+
+/* MMCIDATIN hold exception */
+/* When the setup check is made an MCP, the hold check should also */
+/* be declared as MCP.                                             */ 
+set_multicycle_path 1 -hold -from MMCIDATIN \
+  -to uMmciOPReSync/DATIN_reg*
+
+/* All paths between the following clock domains are due to the    */ 
+/* additional paths created to support the Integration Test Vector */
+/* Strategy and are false.                                         */
+/* MMCIFBCLK to PCLK */ 
+set_false_path -from {MMCIFBCLK} -to {PCLK}
+
+/* PCLK to MMCIFBCLK */ 
+set_false_path -from {PCLK} -to {MMCIFBCLK}
+
+/* vMMCICLKcard to PCLK */ 
+set_false_path -from {vMMCICLKcard} -to {PCLK}
+
+/* PCLK to vMMCICLKcard */ 
+set_false_path -from {PCLK} -to {vMMCICLKcard}
+
+/* PCLK to MCLK */ 
+set_false_path -from {PCLK} -to {MCLK}
+
+/* MCLK to PCLK */ 
+set_false_path -from {MCLK} -to {PCLK}
+
+/* MMCIFBCLK to nMCLK */ 
+/* An input delay constraint has been set on SCANENABLE wrt all      */
+/* clocks. The clock waveforms are defined such that the rising edge */ 
+/* of MMCIFBCLK occurs 0.5 ns before the rising edge of nMCLK.       */
+/* Since Synopsys uses the most pessimistic edge relationships for   */
+/* timing analysis, it would expect the SCANENABLE signal launched   */
+/* on the rising edge of MMCIFBCLK to be captured on the rising edge */ 
+/* of nMCLK occuring 0.5 ns later. However on a real tester, when    */
+/* the nMCLK domain F/Fs are being scanned [shift or capture], the   */
+/* SCANENABLE signal will be toggled wrt the nMCLK rising edge after */
+/* ensuring that setup is met. Hence a false path is set between     */
+/* these domains.                                                    */
+set_false_path -from {MMCIFBCLK} -to {nMCLK}
+
+/* MMCIINTR0/1 exceptions */ 
+
+/* The MMCIINTR0 and MMCIINTR1 interrupt outputs are fed by signals */
+/* generated in both PCLK and MCLK domains. Hence these outputs     */
+/* are effectively asynchronous and will need to be synchronised    */
+/* externally before feeding the Interrupt Controller. Any          */
+/* constraint on these asynchronous pins can never be accurate;     */
+/* hence false paths are set on these outputs.                      */ 
+
+/* If PCLK and MCLK are fed from the same source, the false path    */
+/* settings should be removed.                                      */
+
+set_false_path -to MMCIINTR0 
+set_false_path -to MMCIINTR1 
+
+/************************* End of Mmci_exceptions.scr *************************/

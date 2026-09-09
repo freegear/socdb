@@ -1,0 +1,321 @@
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap7.htm">Previous Chapter</a>
+ * <a href="chap9.htm">Next Chapter</a>
+<p>
+<a name="23527: apphead: Appendix B"></a><a name="_IX_120"></a><title>FLEXlm End User Manual: Appendix B  
+Troubleshooting Guide</title>
+<h1>Appendix B  
+Troubleshooting Guide</h1>
+<p>
+This appendix documents areas of 
+FLEXlm<I></I> that have given customers difficulty in the 
+past. We hope it helps you debug any problems you might experience at your site.<p>
+<a name="B.1"></a><h2>B.1  General Debugging Hints</h2>
+<p>
+The following are tips for debugging:<p>
+<ul><li>When you start the license server (lmgrd<I></I>) be sure that you direct the output into 
+a log file where you can examine it. The log file often contains useful 
+information. You should examine it when you have a problem, and be prepared 
+to answer questions about it when you talk to a support person.<li>If the license server appears to have started correctly (which you should be able 
+to determine from the log file), try running 
+<TT><a name="_IX_121"></a>lmstat -a</TT> and 
+<TT><a name="_IX_122"></a>lmdiag</TT> to see if 
+that program has the same problem as your application.<li>If your application is 
+FLEXlm<I></I> v4.1 or later (v5 on Windows), you can use the 
+FLEXLM_DIAGNOSTICS environment variable. Set 
+FLEXLM_DIAGNOSTICS to 1 or 2. (2 gives more information than 1, in 
+particular, the feature name that was denied.)</ul><p>
+When you talk to a support person, you should be prepared to answer the following 
+questions:<p>
+<ul><li>What kind of machine is your license server running on? What version of the 
+operating system? What machine and operating system is the application running 
+on?<li>What version of 
+FLEXlm<I></I> does the program use? Use the 
+<TT>lmver</TT> script, or, on 
+Unix, execute the following command on your 
+lmgrd<I></I>, vendor daemon, and 
+application</ul><pre><TT>	strings &lt;program&gt; | grep Copy</TT></pre>
+Alternatively, lmgrd -v gives the version, and this works with the vendor daemon 
+also.<ul><li>What error or warning messages appear in the log file? Did the server start 
+correctly? Look for a message such as: 
+</ul><pre><TT>	server xyz started for: feature1 feature2</TT>.</pre>
+<ul><li>What is the output from running 
+<TT>lmstat -a</TT>?<li>Are you running other products which are also licensed by 
+FLEXlm<I></I>? Are you 
+using a combined license file or separate license files?<li>Are you using redundant servers (multiple SERVER lines in your license file)?</ul><a name="_IX_123"></a><a name="33814: 1HeadApp: B.2 FLEXLM_DIAGNOSTICS"></a><a name="B.2"></a><h2>B.2  FLEXLM_DIAGNOSTICS</h2>
+<p>
+Available only with applications using 
+FLEXlm<I></I> v4.1 or higher for Unix, and v5.0 or 
+higher with Windows. Also, applications may choose not to provide this functionality.<p>
+<p>
+FLEXLM_DIAGNOSTICS is an environment variable that will cause the application 
+to produce diagnostic information when a checkout is denied. The format of the 
+diagnostic information may change over time.<p>
+<p>
+To set FLEXLM_DIAGNOSTICS, on Unix:<p>
+<pre>(csh): % setenv FLEXLM_DIAGNOSTICS 1</pre>
+<pre>(sh): $ FLEXLM_DIAGNOSTICS=1; export FLEXLM_DIAGNOSTICS</pre>
+</ol></ul><p>
+On Windows 3.1 and 95, add the following line to C:\autoexec.bat:<p>
+<pre>SET FLEXLM_DIAGNOSTICS=1</pre>
+</ol></ul><p>
+On NT, use the System Control Panel applet to change the global environment, adding 
+
+FLEXLM_DIAGNOSTICS to 1.<p>
+<p>
+On Unix, the diagnostic output goes to 
+<I>stderr</I>.<p>
+<p>
+On Windows, if the application is v5.11 or higher, the output is a file in the current 
+directory called 
+<TT>flex</TT><I>nnn</I><TT>.log</TT>, where 
+<I>nnn</I> is the application's process ID. If the 
+application is v5.0, the output file is called 
+<TT>flex_err.log</TT>.<p>
+<h3>B.2.1	 Level 1 Content</h3>
+<p>
+If FLEXLM_DIAGNOSTICS is set to 1, then the standard 
+FLEXlm<I></I> error message will 
+be presented, plus a complete list of license files that the application tried to use. For 
+example:<p>
+<pre>% setenv FLEXLM_DIAGNOSTICS 1
+FLEXlm checkout error: Cannot find license file (-1,73:2) No such file or directory
+license file(s):  /usr/myproduct/licenses/testing.dat license.dat</pre>
+<h3>B.2.2	 Level 2 Content</h3>
+<p>
+If FLEXLM_DIAGNOSTICS is set to 2, then, in addition to level 1 output, the 
+checkout arguments are presented. For example:<p>
+<pre>% setenv FLEXLM_DIAGNOSTICS 2
+FLEXlm checkout error: No such feature exists (-5,116:2) No such file or directory
+license file(s):  /usr/myproduct/licenses/testing.dat license.dat
+lm_checkout("f1", 1.0, 1, 0x0, ..., 0x4000)</pre>
+</ol></ul><p>
+Note that the error message actually contains 2 separate problems, which both 
+occurred during the checkout: there's no such feature in the license it did find, and it 
+was unable to find the other license file, which is what produces the message `No such 
+file or directory'.<p>
+<p>
+Following is a description of the arguments to 
+<I>lm_checkout()</I><p>
+<pre>lm_checkout(<I>feature_name</I>, <I>version</I>, <I>nlic</I>, <I>queue_flag</I>, ..., <I>dupgroup_mask</I>)</pre>
+</ol></ul><p>
+<p>
+<dl><dt><I>feature_name</I><dd>the requested feature<dt><I>version</I><dd>requested version. The license file must contain a version 
+&gt;= the requested version.<dt><I>nlic</I><dd>number of licenses requested. Usually 1.<dt><I>queue_flag</I><dd>If 0, no queueing
+If 1, queue for license (`blocking' queue)
+If 2, queue for licenses, but return to application (`non-blocking' queue)<dt><I>dupgroup_mask</I><dd>Indicates duplicate grouping, also called license sharing. 
+User, host and display are as shown by lmstat -a.</dl><h3>B.2.3	 Level 3 Content (FLEXlm<I></I> v6 or later only)</h3>
+<p>
+If FLEXLM_DIAGNOSTICS is set to 3, then, in addition to level 1 and 2 output, if a 
+checkout is successful, information is printed explaining how the license was granted:<p>
+<pre>% setenv FLEXLM_DIAGNOSTICS 3
+% application
+Checkout succeeded: f0/14263EAEA8E0
+License file: ./servtest.lic
+No server used
+% application2
+Checkout succeeded: f1/BC64A7B120AE
+License file: @localhost
+License Server: @localhost
+% application3
+Checkout succeeded: f1/BC64A7B120AE
+License file: servtest.lic
+License Server: @speedy</pre>
+</ol></ul><p>
+Note that the feature name and license key are printed, along with the license file 
+location (or hostname if @host were used) and hostname of the server, where 
+applicable.<p>
+<a name="_IX_124"></a><a name="B.3"></a><h2>B.3  FLEXlm<I></I> Troubleshooting List</h2>
+<h3>B.3.1	 Problem Description Format</h3>
+<p>
+Each problem is presented in three parts:<p>
+<p>
+A description of the problem.<p>
+<p>
+A discussion of what causes the problem described in the `Symptom' 
+section.<p>
+<p>
+ Instructions on how to solve the problem.<p>
+<p>
+You can scan through the list of problems to find any which appear to relate to your 
+concerns. In order to solve your problem, you may have to use all or some of the 
+solutions listed here.<p>
+<h3>B.3.2	 Hostid Problems</h3>
+<p>
+When I run the license manager on my machine, it tells me it 
+
+is the wrong hostid.<p>
+<p>
+The vendor daemon checks the hostid listed on the SERVER line in the 
+license file; if it does not match the hostid of the machine it is running 
+on, this message will be printed. Possible causes include 1) you are trying 
+to run the license server on a different machine from the machine the file 
+was made for; 2) the hostid of the machine you are running on changed 
+(for example, the dongle hostid was moved (Windows), or the CPU 
+board was replaced); 3) the hostid in the license file was modified.<p>
+<p>
+Verify that the hostid of the machine on which the vendor daemon (or 
+node locked client program) is being run matches the hostid specified in 
+the license file (on the SERVER line for the vendor, or on the FEATURE 
+line for a node locked client). You can run the 
+<TT>lmhostid</TT> program to 
+see what 
+FLEXlm<I></I> thinks the hostid is. You may not modify the hostid in 
+the license file. If the hostid of your server machine changes, you will 
+have to get a new license file from your software vendor.<p>
+<h3>B.3.3	 Connection Problems</h3>
+<p>
+The application program (or 
+<I>lmstat</I>) can't connect to the server to check 
+out a license.<p>
+<p>
+The 
+FLEXlm<I></I> routines in the application are unable to make a TCP 
+connection to the server and port specified in the license file. Possible 
+reasons for this are: 1) the wrong license file is being referenced by the 
+application program; 2) the server machine specified in the license file is 
+down; 3) the vendor daemon specified in the license file is not running; 
+4) the hostname in the license file is not recognized by the system; 5) the 
+network between the client machine and the server machine is down; 6) 
+You are mixing 
+FLEXlm<I></I> v1.5 (or earlier) and v2.1 (or later) vendor 
+daemons in one license file, and have run 
+lmgrd<I></I> without the -b command 
+line option; 7) TCP is not running on your machine.<p>
+<p>
+The 
+<a name="_IX_125"></a><a name="_IX_126"></a>lmdiag utility is designed primarily to debug this problem, so first, 
+try lmdiag. Verify that the application is using the proper license file. 
+Verify that specified server machine is up and reachable by executing 
+another command that uses TCP, such as 
+<TT>telnet</TT>, from the client to the 
+server. Verify that the vendor daemon is running (you can use 
+<TT>ps</TT> on the 
+server to look for it). Examine the license log file to see if any problems 
+are reported, particularly messages indicating that the vendor daemon 
+has quit. Run 
+<TT>lmstat -a</TT> from the server machine to verify that the 
+vendor daemon is alive. Run 
+<TT>lmstat -a</TT> from the client machine to 
+verify the connection from client to vendor daemon across the network. 
+Try using 
+<TT>telnet &lt;hostname&gt; &lt;portnum&gt;</TT> where 
+<TT>hostname</TT> 
+and 
+<TT>portnum</TT> are the same as on the SERVER line in your license file.<p>
+<a name="B.4"></a><h2>B.4  Other Client Problems</h2>
+<p>
+When I run my application program (or vendor daemon), I get the error 
+<TT>bad code</TT> or 
+<TT>inconsistent encryption code</TT>. 
+<p>
+<p>
+Possible causes for this are 1) the license file was modified (either the 
+hostid on a SERVER line or anything on the FEATURE line was 
+changed); 2) the vendor used the wrong version of his license creation 
+program to generate your license file (or there is a bug in that process).<p>
+<p>
+You may not modify the license file (except for specific fields, see 
+<a href="chap2.htm#31549: chap head: Chapter 1">Chapter 2, `The License File' on page 7</a>). If you need to change 
+something in your license file, you must get a new license file from your 
+software vendor.<p>
+<p>
+When the second user tries to check out a license, the vendor daemon 
+prints an error concerning 
+<TT>Parameter mismatch</TT> in the log file and 
+refuses the license.<p>
+<p>
+The most likely cause of this problem is that you are simultaneously 
+trying to run two different versions of the application program, and the 
+software vendor has not specifically set up the new version for this kind 
+of compatibility. Check the license server log file for a 
+<TT>comm version 
+mismatch</TT> warning message; this indicates that someone is running an 
+older client than the license server daemon, 
+lmgrd<I></I>.<p>
+<p>
+Run only the new version of the application (or only the old version).<p>
+<a name="B.5"></a><h2>B.5  Other Server Problems</h2>
+<p>
+When I run the vendor daemon on my VMS system, I get the error 
+message 
+<TT>socket bind: permission denied (13)</TT>.<p>
+<p>
+The daemon needs to bind the socket address in order to be able to listen 
+for connections from clients. This is done in the system name table, so it 
+requires the SYSNAM privilege.<p>
+<p>
+Run the daemon in a process with the SYSNAM privilege set.<p>
+<p>
+When I start up 
+lmgrd<I></I>, it says 
+<TT>execl failed</TT> on my vendor daemon.<p>
+<p>
+lmgrd<I></I> uses 
+<TT>execl</TT> to start each vendor daemon running. If there is a 
+problem starting the vendor daemon, this message is output to the log 
+file. This error is typically caused by one of the following: 1) there is no 
+executable at the location referred to by the license file (and printed out 
+in the log file); 2) the executable does not have the proper permissions to 
+be run (the file does not have the `x' bit set, or one of the directories in 
+the path is not readable); 3) there was an error building the executable, 
+and it can not be run; 4) the executable is for a different machine 
+architecture.<p>
+<p>
+Verify that the path to the vendor daemon is absolute (i.e. starts with a 
+slash character, and that it points to the executable program itself, not the 
+containing directory (for 
+FLEXlm<I></I> v1.5). Ensure that the file exists by 
+doing an 
+<TT>ls -l</TT> of the vendor daemon filename(s) specified in the log 
+file. Make sure you do this as the same user that started 
+lmgrd<I></I>. Verify that 
+the file is executable. Note that if you are running as root and using an 
+NFS-mounted filesystem, the relevant protection bits are the `other' bits 
+(<I>not</I> the `user' bits), even if the file is owned by root. Do a 
+<TT>whatis</TT> on 
+the file (if your system has that program). 
+<TT>whatis</TT> should tell you the 
+file is an executable for the machine you are trying to run it on. Run the 
+vendor daemon directly from the command line. If the vendor daemon is 
+properly linked, it will tell you that it must be run from 
+lmgrd<I></I>; if it 
+crashes or fails to execute, then it is not properly linked.<p>
+<p>
+The license server keeps reporting `lost lock' errors in the log file and 
+exiting.<p>
+<p>
+The lockfile (normally placed in 
+<TT>/usr/tmp 
+</TT>on Unix, 
+<TT>C:\flexlm</TT> on 
+Windows/NT, 
+<TT>SYS:\SYSTEM\FLEXLM</TT> on Netware) is being removed 
+by someone else. There could be another daemon running, or the license 
+administrator (or a script he set up) could have deleted the file.<p>
+<p>
+Check to see if there is more than one copy of the daemon running. On 
+Unix use a command like 
+<TT>ps -aux | grep vendorname</TT> to search 
+for it. Check for more than one 
+lmgrd<I></I> running as well, since it will restart 
+your vendor daemon when it is killed. If more than one 
+lmgrd<I></I> is running, 
+kill them all (using the 
+<TT>kill</TT> command, not 
+<TT>kill -9 
+</TT>on Unix or the 
+Control Panel Services dialog on Windows/NT), then kill any remaining 
+vendor daemons (on Unix, try a simple kill, if that fails then try 
+<TT>kill -9 the lmgrd</TT> and all vendor daemons) and start one fresh copy of 
+lmgrd<I></I>. On Unix, check to see if there is a shell script running that cleans 
+out 
+<TT>/tmp</TT> (or 
+<TT>/usr/tmp</TT>). If so, try modifying it so that it does not 
+delete zero length files.<p>
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap7.htm">Previous Chapter</a>
+ * <a href="chap9.htm">Next Chapter</a>
+<p>

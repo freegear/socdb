@@ -1,0 +1,13 @@
+
+analyze -f verilog  GpioApbif.v 
+analyze -f verilog  GpioAfm.v 
+analyze -f verilog  GpioInt.v 
+analyze -f verilog  GpioRevAnd.v 
+analyze -f verilog  Gpio.v
+
+
+elaborate Gpio
+current_design Gpio
+link
+
+write -f db -hier -out Gpio.gtech.db

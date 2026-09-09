@@ -1,0 +1,12 @@
+
+analyze -f verilog  ../../../global_ADK/verilog/RevAnd.v
+analyze -f verilog WdogPackage.v
+analyze -f verilog WdogFrc.v
+analyze -f verilog Watchdog.v
+
+elaborate Watchdog
+current_design Watchdog
+link
+
+write -f db -hier -out Watchdog.gtech.db
+

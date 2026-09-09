@@ -1,0 +1,131 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- -----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : ahb_master.scr.rca
+-- File Revision          : 1.16
+--
+-- Release Information    : PrimeCell(TM)-PL092-r1p3-01ltd0
+--
+-- -----------------------------------------------------------------------------
+-- Purpose : 
+--           Synopsys synthesis script to define AMBA AHB Master timing
+--           constraints.
+--           Located in the synopsys_shared/scr_common directory.
+--           Called by master compile script.
+--
+-- --=========================================================================*/
+
+/******************************************************************************/
+/* HCLK DEFINTION                                                             */
+/******************************************************************************/
+
+create_clock -p tclk -w {0 tclkh} find(port, "HCLK")
+/* period tclk, rise at 0, fall after tclkh High phase */
+
+set_clock_skew -ideal -plus_uncertainty tpskew find(clock, HCLK)
+/* set plus clock skew */
+
+set_clock_transition 0 HCLK
+/* ignore all transition times as it is an ideal clock */
+
+set_drive 0 HCLK
+/* Infinite drive strength clock signal */
+
+set_load 0 HCLK
+/* Zero load clock signal */
+
+remove_driving_cell find(port, HCLK)
+/* Set no driving cell on clock */
+
+set_resistance 0 find(net, HCLK)
+/* Zero resistance for zero net delay(interconnect delay) on */
+/* ideal clock net                                           */
+
+set_dont_touch_network find(clock, HCLK)
+/* Preserve the clock net during optimisation */
+
+
+/******************************************************************************/
+/* RESET SIGNAL CONSTRAINTS                                                   */
+/******************************************************************************/
+ 
+set_input_delay -clock HCLK -max tidmaxresetn HRESETn
+set_input_delay -clock HCLK -min tidminresetn HRESETn
+
+set_drive 0 HRESETn
+/* Infinite drive strength reset signal */
+
+set_load 0 HRESETn
+/* Zero load reset signal */
+
+remove_driving_cell find(port, HRESETn)
+/* Set no driving cell on reset */
+
+set_resistance 0 find(net, HRESETn)
+/* Zero resistance for zero net delay(interconnect delay) on */
+/* ideal reset net                                           */
+
+set_dont_touch_network find(port, HRESETn)
+/* Preserve the reset net during optimisation */
+
+/******************************************************************************/
+/* INPUT CONSTRAINTS                                                          */
+/******************************************************************************/
+/* These settings are specific to the TIC, which is AHB master interface */
+/* of the SMC                                                           */
+
+set_input_delay -clock HCLK -min tholdmax     HREADYIN
+set_input_delay -clock HCLK -max tidmaxhready HREADYIN
+
+set_input_delay -clock HCLK -min tholdmax     HRESPTIC
+set_input_delay -clock HCLK -max tidmaxhresp  HRESPTIC
+
+set_input_delay -clock HCLK -min tholdmax     HGRANTTIC
+set_input_delay -clock HCLK -max tidmaxhgrant HGRANTTIC
+
+set_input_delay -clock HCLK -min tholdmax     HRDATATIC
+set_input_delay -clock HCLK -max tidmaxhrdata HRDATATIC
+
+/******************************************************************************/
+/* OUTPUT CONSTRAINTS                                                         */
+/******************************************************************************/
+/* These settings are specific to the TIC, which is AHB master interface */
+/* of the SMC                                                            */
+
+set_output_delay -clock HCLK -min tholdmin      HADDRTIC
+set_output_delay -clock HCLK -max todmaxhaddr   HADDRTIC
+
+set_output_delay -clock HCLK -min tholdmin      HTRANSTIC
+set_output_delay -clock HCLK -max todmaxhtrans  HTRANSTIC
+
+set_output_delay -clock HCLK -min tholdmin      HBUSREQTIC
+set_output_delay -clock HCLK -max todmaxhbusreq HBUSREQTIC
+
+set_output_delay -clock HCLK -min tholdmin      HLOCKTIC
+set_output_delay -clock HCLK -max todmaxhlock   HLOCKTIC
+
+set_output_delay -clock HCLK -min tholdmin      HPROTTIC
+set_output_delay -clock HCLK -max todmaxhprot   HPROTTIC
+
+set_output_delay -clock HCLK -min tholdmin      HBURSTTIC
+set_output_delay -clock HCLK -max todmaxhburst  HBURSTTIC
+
+set_output_delay -clock HCLK -min tholdmin      HSIZETIC
+set_output_delay -clock HCLK -max todmaxhsize   HSIZETIC
+
+set_output_delay -clock HCLK -min tholdmin      HWRITETIC
+set_output_delay -clock HCLK -max todmaxhwrite  HWRITETIC
+
+set_output_delay -clock HCLK -min tholdmin      HWDATATIC
+set_output_delay -clock HCLK -max todmaxhwdata  HWDATATIC
+
+/********************************* End ****************************************/

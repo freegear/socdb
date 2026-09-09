@@ -1,0 +1,17 @@
+#!/usr/local/bin/perl
+
+foreach $file (@ARGV) {
+  open (INFILE,"./$file");
+  $outfile = "edited_"."$file";
+  open (OUTFILE,">./$outfile");
+  while ($line = <INFILE>) {
+    printf OUTFILE ("$line");
+    if ($line =~ /START +OF +PROTOCOL +CHECKERS/) {
+      while ($line = <INFILE>) {
+        if ($line =~ /END +OF +PROTOCOL +CHECKERS/) {
+          last;
+        }
+      }
+    }
+  }
+}

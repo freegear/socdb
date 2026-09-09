@@ -1,0 +1,60 @@
+ 
+****************************************
+Report : transitive_fanout
+	-clock_tree
+Design : MuxS2M
+Version: V-2003.12-SP1
+Date   : Fri Jun 18 13:14:52 2004
+****************************************
+
+The fanout network of source HCLK is as follows:
+
+Driver Pin       Load Pin          Type        Sense
+------------------------------------------------------------
+HCLK             HselReg_reg_2/clocked_on (net arc) same
+HCLK             HselReg_reg_1/clocked_on (net arc) same
+HCLK             HselReg_reg_0/clocked_on (net arc) same
+HCLK             HselDefReg_reg/clocked_on (net arc) same
+
+Performing report_transitive_fanout on port 'HRESETn'. 
+ 
+****************************************
+Report : transitive_fanout
+Design : MuxS2M
+Version: V-2003.12-SP1
+Date   : Fri Jun 18 13:14:52 2004
+****************************************
+
+The fanout network of source HRESETn is as follows:
+
+Driver Pin       Load Pin          Type        Sense
+------------------------------------------------------------
+HRESETn          U37/A             (net arc)   same
+HRESETn          U36/A             (net arc)   same
+HRESETn          U35/A             (net arc)   same
+HRESETn          U34/A             (net arc)   same
+HRESETn          U27/A             (net arc)   same
+HRESETn          U26/A             (net arc)   same
+HRESETn          U13/A             (net arc)   same
+HRESETn          U12/A             (net arc)   same
+
+
+Load Pin         Driver Pin        Type        Sense
+------------------------------------------------------------
+U37/A            U37/Z             GTECH_NOT   opposite
+U36/A            U36/Z             GTECH_NOT   opposite
+U35/A            U35/Z             GTECH_NOT   opposite
+U34/A            U34/Z             GTECH_NOT   opposite
+U27/A            U27/Z             GTECH_BUF   same
+U26/A            U26/Z             GTECH_NOT   opposite
+U13/A            U13/Z             GTECH_BUF   same
+U12/A            U12/Z             GTECH_NOT   opposite
+
+
+Driver Pin       Load Pin          Type        Sense
+------------------------------------------------------------
+U37/Z            HselReg_reg_1/clear (net arc) opposite
+U36/Z            HselReg_reg_0/clear (net arc) opposite
+U35/Z            HselDefReg_reg/preset (net arc) opposite
+U34/Z            HselReg_reg_2/clear (net arc) opposite
+

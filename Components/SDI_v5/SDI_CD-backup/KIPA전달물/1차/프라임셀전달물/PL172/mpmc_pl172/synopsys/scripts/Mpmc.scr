@@ -1,0 +1,688 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2001-2002 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+-- -----------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : Mpmc.scr.rca
+-- File Revision          : 1.8
+-- 
+-- Release Information    : PrimeCell(TM)-PL172-r2p3-00rel0
+-- 
+-- -----------------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the 
+--           top-level MPMC block.             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the input and output delay     
+--           constraints for the non-AMBA intra-chip signals 
+--           and Primary I/O signals
+--
+-- --=========================================================================*/
+/******************************************************************************/
+/* MPMC BLOCK-SPECIFIC TIMING PARAMETERS                                      */
+/******************************************************************************/
+
+/******************************************************************************/
+/* Primary Input ports.                                                       */
+/* Input Delays. Constraints used are tighter than AHB Input signals.         */
+/******************************************************************************/
+/* The offchip primary inputs require a setup time which is 20% of clock      */
+tismpmcprimaryipmax  = 0.2 * tclk
+
+/* Calculating the maximum allowable input delay on the inputs                */
+tihmpmcprimaryipmin  = 0.0
+
+/******************************************************************************/
+/* Primary Output ports.                                                      */
+/* Output valid and hold times. Constraints used are tighter than AHB output  */
+/* signals                                                                    */
+/******************************************************************************/
+/* The output-valid times for primary outputs (25% of tclk period)            */
+tovmpmcprimaryopmax    = 0.25 * tclk
+
+/* Minimum allowable output delay on the primary outputs                      */
+tovmpmcprimaryopmin    = 0
+
+/* Calculating the maximum allowable output delay on primary outputs          */
+todmpmcprimaryopmax    = tclk - tovmpmcprimaryopmax
+
+/* Calculating the minimum allowable output delay on primary outputs          */
+todmpmcprimaryopmin    = tovmpmcprimaryopmin
+
+/******************************************************************************/
+/* Intrachip Input ports.                                                     */
+/* Input Delays. Constraints used are the same as AHB Input signals.          */
+/******************************************************************************/
+
+/* Maximum allowable input delay on the primary inputs (30% input setup time)*/
+tismpmcintrachipipmax  = 0.3 * tclk
+
+/* Calculating the maximum allowable input delay on the intra-chip inputs     */
+tidmpmcintrachipipmax  = tclk - tismpmcintrachipipmax
+
+/* Minimum input delay on the intrachip inputs */
+tihmpmcintrachipipmin  = 0.0
+
+/* Minimum input delay on the inputs                                          */
+tidmpmcintrachipipmin  = tihmpmcintrachipipmin
+
+/******************************************************************************/
+/* Intrachip Output ports.                                                    */
+/* Output valid and hold times. Constraints used are similar to AHB output    */
+/* signals                                                                    */
+/******************************************************************************/
+
+/* The output-valid times for intrachip outputs (40% of tclk period)          */
+tovmpmcintrachipopmax    = 0.40 * tclk
+
+/* Calculating the maximum allowable output delay on intrachip outputs        */
+todmpmcintrachipopmax    = tclk - tovmpmcintrachipopmax
+
+/* Minimum output delay on the intrachip outputs */
+tovmpmcintrachipopmin    = 0
+
+/* Calculating the minimum allowable output delay on intrachip outputs        */
+todmpmcintrachipopmin    = tovmpmcintrachipopmin
+
+/******************************************************************************/
+/* Scan Inputs                                                                */
+/******************************************************************************/
+/* The input delay on the Scan related input signals has been set to          */
+/* minimal value to prevent addition of extra gates in these paths.           */
+tidscanmax = 0.3
+tidscanmin = 0.3
+
+/******************************************************************************/
+/* Scan Outputs                                                               */
+/******************************************************************************/
+/* The output delay on the Scan related output signals has been set   */
+/* to a zero value to prevent addition of extra gates in these paths. */
+todscanmax = 0.0
+todscanmin = 0.0
+
+/******************************************************************************/
+/* PRIMARY INPUT PORT CONSTRAINTS.                                            */
+/******************************************************************************/
+
+/* Read Data is constrained with respect MPMCFBCLKIN as well as HCLK, to get  */
+/* correct constraining with respect to both HCLK and MPMCFBCLKIN3..0.        */
+
+set_max_delay tismpmcprimaryipmax -from find(port, "MPMCDATAIN*") -to \
+                                        find(clock, HCLK)
+
+/* In MPMC, feedback clock MPMCFBCLKIN3 is used to clock in MPMCDATAIN[31:24],*/
+/* MPMCFBCLKIN2 is used to clock in MPMCDATAIN[23:16], MPMCFBCLKIN1 is used   */
+/* to clock in MPMCDATAIN[15:8] and MPMCFBCLKIN0 is used to clock in          */
+/* MPMCDATAIN[7:0]                                                            */
+/* For simplicity, all the byte lanes of MPMCDATAIN[31:0] are constrained     */
+/* with respect to a single feedback clock, MPMCFBCLKIN0. This is done        */
+/* assuming that all the feedback clocks are synchronous                      */
+
+set_max_delay tismpmcprimaryipmax -from find(port, "MPMCDATAIN*") -to \
+  find(clock, MPMCFBCLKIN0)
+
+set_input_delay -clock MPMCFBCLKIN0 -min 0 find(port, "MPMCDATAIN*")
+
+/******************************************************************************/
+/* INTRACHIP INPUT PORT CONSTRAINTS.                                          */
+/******************************************************************************/
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCSREFREQ")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCSREFREQ")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCBIGENDIAN")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCBIGENDIAN")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCSTCS1MW")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCSTCS1MW")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCSTCS0POL")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCSTCS0POL")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCSTCS1POL")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCSTCS1POL")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCSTCS2POL")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCSTCS2POL")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCSTCS3POL")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCSTCS3POL")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCSTCS1PB")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCSTCS1PB")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCREL1CONFIG")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCREL1CONFIG")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCEBIGNT")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCEBIGNT")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCEBIBACKOFF")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCEBIBACKOFF")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "HMASTLOCK*")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "HMASTLOCK*")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCTESTREQA")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCTESTREQA")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCTESTREQB")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCTESTREQB")
+
+set_input_delay -clock HCLK -min tidmpmcintrachipipmin  \
+                                 find(port, "MPMCTESTIN")
+set_input_delay -clock HCLK -max tidmpmcintrachipipmax  \
+                                 find(port, "MPMCTESTIN")
+
+/******************************************************************************/
+/* SCAN INPUT PORT CONSTRAINTS                                                */
+/******************************************************************************/
+set_input_delay -clock HCLK -min tidscanmin SCANINHCLK
+set_input_delay -clock HCLK -max tidscanmax SCANINHCLK
+
+set_input_delay -clock MPMCCLK -min tidscanmin SCANINMPMCCLK
+set_input_delay -clock MPMCCLK -max tidscanmax SCANINMPMCCLK
+
+set_input_delay -clock MPMCFBCLKIN0 -min tidscanmin SCANINFBCLKIN0
+set_input_delay -clock MPMCFBCLKIN0 -max tidscanmax SCANINFBCLKIN0
+
+set_input_delay -clock MPMCFBCLKIN1 -min tidscanmin SCANINFBCLKIN1
+set_input_delay -clock MPMCFBCLKIN1 -max tidscanmax SCANINFBCLKIN1
+
+set_input_delay -clock MPMCFBCLKIN2 -min tidscanmin SCANINFBCLKIN2
+set_input_delay -clock MPMCFBCLKIN2 -max tidscanmax SCANINFBCLKIN2
+
+set_input_delay -clock MPMCFBCLKIN3 -min tidscanmin SCANINFBCLKIN3
+set_input_delay -clock MPMCFBCLKIN3 -max tidscanmax SCANINFBCLKIN3
+
+set_input_delay -clock MPMCCLKDELAY -min tidscanmin SCANINCLKDELAY
+set_input_delay -clock MPMCCLKDELAY -max tidscanmax SCANINCLKDELAY
+
+set_input_delay -clock HCLK -min tidscanmin SCANENABLE
+set_input_delay -clock HCLK -max tidscanmax SCANENABLE
+
+set_drive 0 SCANENABLE
+/* Infinite drive strength Scan Enable signal */
+
+remove_driving_cell find(port, SCANENABLE)
+/* Set no driving cell on Scan Enable signal */
+
+set_load 0 SCANENABLE
+/* Zero load Scan Enable signal */
+
+set_dont_touch_network find(port, SCANENABLE)
+/* Preserve the Scan Enable net during optimisation */
+
+/******************************************************************************/
+/* PRIMARY OUTPUT PORT CONSTRAINTS.                                           */
+/******************************************************************************/
+
+/************************************************************************/
+/* Peripheral signal Outputs for static memory                          */
+/************************************************************************/
+/* These signals are generated in the HCLK domain */
+set_output_delay -clock HCLK    -min todmpmcprimaryopmin \
+                                     find(port, "nMPMCBLSOUT")
+set_output_delay -clock HCLK    -max todmpmcprimaryopmax \
+                                     find(port, "nMPMCBLSOUT")
+
+set_output_delay -clock HCLK    -min todmpmcprimaryopmin \
+                                     find(port, "nMPMCOEOUT")
+set_output_delay -clock HCLK    -max todmpmcprimaryopmax \
+                                     find(port, "nMPMCOEOUT")
+
+set_output_delay -clock HCLK    -min todmpmcprimaryopmin \
+                                     find(port, "nMPMCSTCSOUT")
+set_output_delay -clock HCLK    -max todmpmcprimaryopmax \
+                                     find(port, "nMPMCSTCSOUT")
+
+/************************************************************************/
+/* Peripheral signal Outputs for dynamic memory                         */
+/************************************************************************/
+/* These signals are generated in the MPMCCLK domain. However, in      */
+/* command delayed mode of operation, they are clocked on MPMCCLKDELAY */
+
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                       find(port, "MPMCCKEOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                       find(port, "MPMCCKEOUT*")
+
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                       find(port, "MPMCDQMOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                       find(port, "MPMCDQMOUT*")
+
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                      find(port, "nMPMCRASOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                      find(port, "nMPMCRASOUT*")
+
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                      find(port, "nMPMCCASOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                      find(port, "nMPMCCASOUT*")
+
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "nMPMCDYCSOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "nMPMCDYCSOUT*")
+
+/* Set min delays */
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                       find(port, "MPMCCKEOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                       find(port, "MPMCCKEOUT*")
+
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                       find(port, "MPMCDQMOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                       find(port, "MPMCDQMOUT*")
+
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                      find(port, "nMPMCRASOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                      find(port, "nMPMCRASOUT*")
+
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                      find(port, "nMPMCCASOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                      find(port, "nMPMCCASOUT*")
+
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                     find(port, "nMPMCDYCSOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                     find(port, "nMPMCDYCSOUT*")
+
+/* These signals are generated in the HCLK domain */
+set_output_delay -clock HCLK    -min todmpmcprimaryopmin \
+                                     find(port, "nMPMCRPOUT")
+set_output_delay -clock HCLK    -max todmpmcprimaryopmax \
+                                     find(port, "nMPMCRPOUT")
+
+/************************************************************************/
+/* Peripheral Outputs that are shared by dynamic and static memory      */
+/************************************************************************/
+/* These signals are generated from combinational logic after MPMCCLK and */
+/* HCLK flip-flops. In case of command delayed mode, the dynamic memory   */
+/* values are driven on MPMCCLKDELAY                                      */
+
+set_output_delay -clock HCLK           -max -add_delay todmpmcprimaryopmax \
+                                                       find(port, "nMPMCWEOUT")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                       find(port, "nMPMCWEOUT")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                       find(port, "nMPMCWEOUT")
+
+set_output_delay -clock HCLK           -max -add_delay todmpmcprimaryopmax \
+                                                      find(port, "MPMCADDROUT*")
+if (hdl_out == vhdl)
+{
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "MPMCADDROUT_0")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "MPMCADDROUT_1")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "MPMCADDROUT_2")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "MPMCADDROUT_3")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "MPMCADDROUT_4")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "MPMCADDROUT_5")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "MPMCADDROUT_6")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "MPMCADDROUT_7")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "MPMCADDROUT_8")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                     find(port, "MPMCADDROUT_9")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_10")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_11")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_12")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_13")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_14")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_0")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_1")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_2")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_3")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_4")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_5")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_6")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_7")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_8")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_9")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_10")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_11")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_12")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_13")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                    find(port, "MPMCADDROUT_14")
+} else if (hdl_out == verilog) {
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[0]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[1]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[2]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[3]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[4]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[5]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[6]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[7]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[8]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[9]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[10]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[11]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[12]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[13]")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[14]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[0]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[1]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[2]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[3]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[4]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[5]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[6]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[7]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[8]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[9]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[10]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[11]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[12]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[13]")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCADDROUT[14]")
+}
+
+set_output_delay -clock HCLK           -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCDATAOUT*")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCDATAOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "MPMCDATAOUT*")
+
+set_output_delay -clock HCLK           -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "nMPMCDATAEN*")
+set_output_delay -clock MPMCCLK        -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "nMPMCDATAEN*")
+set_output_delay -clock v_MPMCCLKDELAY -max -add_delay todmpmcprimaryopmax \
+                                                   find(port, "nMPMCDATAEN*")
+
+set_output_delay -clock HCLK           -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "nMPMCWEOUT")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "nMPMCWEOUT")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "nMPMCWEOUT")
+
+set_output_delay -clock HCLK           -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT*")
+if (hdl_out == vhdl)
+{
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_0")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_1")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_2")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_3")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_4")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_5")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_6")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_7")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_8")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_9")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_10")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_11")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_12")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_13")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_14")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_0")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_1")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_2")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_3")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_4")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_5")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_6")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_7")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_8")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_9")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_10")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_11")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_12")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_13")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT_14")
+} else if (hdl_out == verilog) {
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[0]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[1]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[2]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[3]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[4]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[5]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[6]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[7]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[8]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[9]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[10]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[11]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[12]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[13]")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[14]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[0]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[1]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[2]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[3]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[4]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[5]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[6]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[7]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[8]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[9]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[10]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[11]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[12]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[13]")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCADDROUT[14]")
+}
+
+set_output_delay -clock HCLK           -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCDATAOUT*")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCDATAOUT*")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "MPMCDATAOUT*")
+
+set_output_delay -clock HCLK           -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "nMPMCDATAEN*")
+set_output_delay -clock MPMCCLK        -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "nMPMCDATAEN*")
+set_output_delay -clock v_MPMCCLKDELAY -min -add_delay todmpmcprimaryopmin \
+                                                   find(port, "nMPMCDATAEN*")
+
+/************************************************************************/
+/* INTRACHIP OUTPUT PORT CONSTRAINTS                                    */
+/************************************************************************/
+set_output_delay -clock HCLK    -min todmpmcintrachipopmin \
+                                     find(port, "MPMCRPVHHOUT")
+set_output_delay -clock HCLK    -max todmpmcintrachipopmax \
+                                     find(port, "MPMCRPVHHOUT")
+
+set_output_delay -clock HCLK    -min todmpmcintrachipopmin \
+                                     find(port, "MPMCSREFACK")
+set_output_delay -clock HCLK    -max todmpmcintrachipopmax \
+                                     find(port, "MPMCSREFACK")
+
+set_output_delay -clock MPMCCLK -max todmpmcintrachipopmax \
+                                     find(port, "MPMCEBIREQ")
+set_output_delay -clock HCLK    -max -add_delay todmpmcintrachipopmax \
+                                                find(port, "MPMCEBIREQ")
+
+set_output_delay -clock MPMCCLK -min -add_delay todmpmcintrachipopmin \
+                                                find(port, "MPMCEBIREQ")
+set_output_delay -clock HCLK    -min -add_delay todmpmcintrachipopmin \
+                                                find(port, "MPMCEBIREQ")
+
+/************************************************************************/
+/* SCAN OUTPUT PORT CONSTRAINTS                                         */
+/************************************************************************/
+set_output_delay -clock HCLK -min todscanmin SCANOUTHCLK
+set_output_delay -clock HCLK -max todscanmax SCANOUTHCLK
+
+set_output_delay -clock MPMCCLK -min todscanmin SCANOUTMPMCCLK
+set_output_delay -clock MPMCCLK -max todscanmax SCANOUTMPMCCLK
+
+set_output_delay -clock MPMCFBCLKIN0 -min todscanmin SCANOUTFBCLKIN0
+set_output_delay -clock MPMCFBCLKIN0 -max todscanmax SCANOUTFBCLKIN0
+
+set_output_delay -clock MPMCFBCLKIN1 -min todscanmin SCANOUTFBCLKIN1
+set_output_delay -clock MPMCFBCLKIN1 -max todscanmax SCANOUTFBCLKIN1
+
+set_output_delay -clock MPMCFBCLKIN2 -min todscanmin SCANOUTFBCLKIN2
+set_output_delay -clock MPMCFBCLKIN2 -max todscanmax SCANOUTFBCLKIN2
+
+set_output_delay -clock MPMCFBCLKIN3 -min todscanmin SCANOUTFBCLKIN3
+set_output_delay -clock MPMCFBCLKIN3 -max todscanmax SCANOUTFBCLKIN3
+
+set_output_delay -clock MPMCCLKDELAY -min todscanmin SCANOUTCLKDELAY
+set_output_delay -clock MPMCCLKDELAY -max todscanmax SCANOUTCLKDELAY
+
+/************************* End of Mpmc.scr ************************************/

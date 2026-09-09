@@ -1,0 +1,41 @@
+
+Firmware Release Notes for uHAL 1.1
+===================================
+
+History:
+========
+
+version 1.1:	18th January 2000
+
+Known Problems
+==============
+
+Empty Object Module Warnings
+----------------------------
+
+The source modules pci.c and uart.c are redundent and
+will be removed from future versions of the ARM Firmware
+Suite.  However, these modules are still referenced by 
+the uHAL library project files for the different build
+variants.   This means that when these variants are built
+using either Code Warrior or the ARM Project Manager you
+will see empty object module warnings from the C compiler.
+Please ignore these harmless warnings.
+
+PID Applications and Angel
+--------------------------
+
+The port of uHAL to the PID board makes use of IRQs.  
+Unfortunately, so does the angel port for the PID board.
+This means that any semihosted uHAL applications that make
+use of interrupts (for example, those using system timers)
+will not run on the PID board.
+
+General Problems
+================
+
+None known at this time.
+
+
+
+

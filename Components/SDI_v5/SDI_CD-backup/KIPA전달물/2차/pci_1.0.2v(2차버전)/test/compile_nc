@@ -1,0 +1,131 @@
+#!/bin/csh -f
+
+#----------------------------------------------------------------------
+#
+# Copyright (c) 2004 CAST, inc.
+#
+# Please review the terms of the license agreement before using this
+# file.  If you are not an authorized user, please destroy this source
+# code file and notify CAST immediately that you inadvertently received
+# an unauthorized copy.
+#----------------------------------------------------------------------
+#
+#  Project       : PCI-M64AHB
+#
+#  Description   : PCI Master/Slave with AHB interface
+#
+#  File          : compile_nc
+#
+#  Purpose       : Compile script for Cadence NC-Sim
+#
+#  Designer      : NA
+#
+#  QA Engineer   : JH
+#
+#  Creation Date : 25-Aug-2004
+#
+#  Last Update   : 25-Aug-2004
+#
+#  Version       : 1.0
+#
+#----------------------------------------------------------------------
+
+#
+# Directories location
+#
+setenv core_dir ../src/m64core
+setenv ahb_dir ../src/ahb
+setenv tb_dir ../tb
+setenv work_dir ./work
+
+#
+# Library creation
+#
+
+echo "define worklib ./work" > cds.lib
+echo " " > hdl.var
+mkdir -p $work_dir
+
+# copy test vector file to the working directory
+#
+cp ../tb/ram_burst.vec .
+cp ../tb/t64_t1.vec .
+cp ../tb/t64_t2.vec .
+
+# Compile design files
+#
+# I/O buffers
+
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_gclkbuf.v 
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_ibuf.v    
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_iobuf.v   
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_obuf.v   
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_obufoc.v  
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_obuft.v   
+#
+# M64 Core source files
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir $core_dir/pci_chkpar64.v          
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir/ $core_dir/pci_genpar64.v
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_cead.v
+
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_barreg.v
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir/ $core_dir/pci_cfgebar.v
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir/ $core_dir/pci_cfgspace.v
+
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_genframe.v
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_genreq64.v
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_genirdy.v
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_gendevsel.v
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_genack64.v
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir $core_dir/pci_genotad.v
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir $core_dir/pci_genotcbe.v
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_gentrdy.v
+ncvlog -linedebug -neverwarn -work worklib $core_dir/pci_genstop.v
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir $core_dir/pci_mtfsm64.v
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir $core_dir/pci_m64core.v
+
+#
+# M64AHB 
+#
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/psync.v
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/dma64_fiforam.v  
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/dma64wrfifo.v  
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/dma64rdfifo.v  
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/dma64txctrl.v  
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/dma64regs.v  
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/fifosram.v
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/fifo_async.v
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir $ahb_dir/t64ahb.v
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/intctrl.v
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/mailbox.v
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/mailboxblk.v
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir $ahb_dir/ahbslave.v
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir $ahb_dir/ahbmaster.v
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/dma64ahb.v
+ncvlog -linedebug -neverwarn -work worklib -incdir $ahb_dir $ahb_dir/mt64ahb.v
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/pcim64ahb.v
+ncvlog -linedebug -neverwarn -work worklib $ahb_dir/pcim64ahbw.v
+#
+# Testbench compile
+#
+ncvlog -linedebug -work worklib -incdir $tb_dir $tb_dir/pci_master64model.v
+ncvlog -linedebug -work worklib -incdir $tb_dir $tb_dir/pci64_busmonitor.v
+ncvlog -linedebug -work worklib $tb_dir/pci_arbiter_model.v 
+ncvlog -linedebug -work worklib -incdir $tb_dir $tb_dir/pci_target64model.v
+ncvlog -linedebug -work worklib -incdir $tb_dir -incdir $ahb_dir $tb_dir/ahbslaveram_model.v
+ncvlog -linedebug -neverwarn -work worklib -incdir $tb_dir -incdir $ahb_dir $tb_dir/pci_m64w_tb.v 
+#
+#cvlog -neverwarn -work worklib -incdir $tb_dir $tb_dir/pci_master64model.v
+#cvlog -neverwarn -work worklib -incdir $tb_dir $tb_dir/pci64_busmonitor.v
+#cvlog -neverwarn -work worklib $tb_dir/pci_arbiter_model.v 
+#cvlog -neverwarn -work worklib -incdir $tb_dir $tb_dir/pci_target64model.v
+#cvlog -neverwarn -work worklib -incdir $tb_dir -incdir $ahb_dir $tb_dir/ahbslaveram_model.v
+#cvlog -neverwarn -work worklib -incdir $tb_dir -incdir $ahb_dir $tb_dir/pci_m64w_tb.v 
+
+# Elaborate the Design
+#
+ncelab pcim64ahbw_tb
+
+# Simulate the Design
+#
+ncsim -gui pcim64ahbw_tb -input ../scripts/wave_nc.do

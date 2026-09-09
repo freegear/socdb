@@ -1,0 +1,174 @@
+########################################################################
+#
+# This confidential and proprietary software may be used only as
+# authorised by a licensing agreement from ARM Limited
+#   (c) COPYRIGHT 1999-2002 ARM Limited
+#       ALL RIGHTS RESERVED
+# The entire notice above must be reproduced on all authorised
+# copies and copies may only be made to the extent permitted
+# by a licensing agreement from ARM Limited.
+#
+########################################################################
+
+The model exports certain aspects of the programmers model as signals available in
+the top level.
+
+        r0         User and System Mode R0
+        r1         User and System Mode R1
+        r2         User and System Mode R2
+        r3         User and System Mode R3
+        r4         User and System Mode R4
+        r5         User and System Mode R5
+        r6         User and System Mode R6
+        r7         User and System Mode R7
+        r8         User and System Mode R8
+        r9         User and System Mode R9
+        r10        User and System Mode R10
+        r11        User and System Mode R11
+        r12        User and System Mode R12
+        r13        User and System Mode R13
+        r14        User and System Mode R14
+        r15        Pseudo Program Counter
+        r13irq     IRQ Mode R14
+        r14irq     IRQ Mode R14
+        r13svc     Supervisor Mode R13
+        r14svc     Supervisor Mode R14
+        r13abt     Abort Mode R13
+        r14abt     Abort Mode R14
+        r13und     Undefined Mode R13
+        r14und     Undefined Mode R14
+        r8fiq      FIQ Mode R8
+        r9fiq      FIQ Mode R9
+        r10fiq     FIQ Mode R10
+        r11fiq     FIQ Mode R11
+        r12fiq     FIQ Mode R12
+        r13fiq     FIQ Mode R13
+        r14fiq     FIQ Mode R14
+        cpsr       Current Processor Status Register
+        spsrfiq    FIQ Mode SPSR 
+        spsrirq    IRQ Mode SPSR 
+        spsrsvc    Supervisor Mode SPSR
+        spsrabt    Abort Mode SPSR
+        spsrund    Undefined Mode SPSR
+
+
+
+Please note that the values of the cpsr and spsrs are shown as follows:
+
+  Bit         11-8    7     6     5     4        3-0
+             Flags    Q     I     F     T    Mode Bits[3:0] 
+                                              
+
+
+
+
+
+For revision history, please ref <install_area>/DOCS/release.notes
+===========================================
+     Memories Configurability  
+     Multi Processor Designs
+===========================================
+
+The following features can be configured for the ARM946ES DSM : 
+
+	1- The device identifier, for multi processor designs. 
+	   Up to 8 ARM946ES DSMs can run concurrently in a single design
+
+	2- The sizes of the memories :
+              * ICACHE and DCACHE - Default values : 8 Kbytes
+          Maximum size : 1 Mb  
+
+	
+
+
+To configure the DSM, the user must modify the component instanciation 
+of the ARM946ES, by adding the lines of the required generic(s) Verilog 
+'defparam' mappings.
+
+For example, to configure the 5 th processor of the design with 16 Kb of ICache and 32Kb of DCache, the user will 
+add the following mappings : 
+
+
+     If the ARM946ES model is instantiated as theARM946ES add the following :
+
+           defparam theARM946ES.ID              = 5     ; 
+           defparam theARM946ES.ICACHE_SIZE     = 16384 ;     // size in bytes
+           defparam theARM946ES.DCACHE_SIZE     = 32768 ;     // size in bytes
+
+           // COMPONENT INSTANCIATION
+           ARM946ES theARM946ES (HADDR, ... etc ... )
+
+
+
+
+
+             NOTE THAT : 
+    ===============================
+
+1- To set one generic parameter, and let the others to their default values, the user 
+   just needs to add the line of this particular parameter, and not to bother about 
+   the others. 
+
+2- Default values : 
+   - ICACHE and DCACHE sizes : 8 Kbytes
+   - the device identifier is 0
+
+3- The sizes of the memories must be integers, powers of 2, and be given in bytes.
+
+4- The 'model identifier' (generic/defparam 'ID') is an integer from 0 to 7.
+   This identifier allows the software to distinguish different instanciations
+   of the same model in a single design. 
+
+===========================================
+            EIS Tracing
+===========================================
+
+This model supports the use of multiple 'log.eis' EIS trace files. 
+The log file written to is controlled by means of the generic/defparam 'ID'.
+
+For example if 'ID' is 3, the output is written to 'log.eis3'
+By default 'ID' is '0' and the output goes to 'log.eis'
+
+To set the value of 'ID', follow the instructions given at the previous 
+paragraph :  'Memories Configurability  
+              Multi Processor Designs'
+
+
+The EIS trace enable is comtrolled via the environment variable :
+
+eis_dont_generate
+
+To turn off eis tracing set eis_dont_generate be non zero
+eg setenv eis_dont_generate 1      
+
+- this  will turn off eis tracing 
+- if not set, outputs  to log.eis ( or log.eis<ID> )  as usual
+
+
+It has echo to stdout capability controlled by environment variable:
+
+ eis_echo_to_stdout
+
+To turn on echo to stdout set the environment variable to be non zero
+
+if not set ,only logs to file.
+
+
+Summary of EIS tracing
+======================
+
+Default EIS tracing is :
+
+EIS tracing ON 
+
+EIS is logged in file called "log.eis", or "log.eis<ID>" ( ID  1 ... 7 ) 
+in case of multiple ARM946Es instanciations in the design.
+
+NO echo to screen .
+
+To turn OFF the  EIS tracing set environment variable "eis_dont_generate"
+
+To turn ON echo to stdout  set environment variable "eis_echo_to_stdout"
+
+
+

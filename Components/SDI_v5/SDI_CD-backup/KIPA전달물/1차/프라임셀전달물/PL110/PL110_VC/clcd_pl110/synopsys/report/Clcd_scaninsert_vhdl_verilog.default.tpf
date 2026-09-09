@@ -1,0 +1,272 @@
+test_protocol() {
+   period : 100.00 ;
+   delay : 5.00 ;
+   bidir_delay : 55.00 ;
+   strobe : 95.00 ;
+   strobe_width : 0.00 ;
+
+   clock() {
+      period : 100.00 ;
+      waveform : {45.00, 55.00} ;
+      sources : nCLCDCLK ;
+   }
+
+   clock() {
+      period : 100.00 ;
+      waveform : {45.00, 55.00} ;
+      sources : CLCDCLK ;
+   }
+
+   clock() {
+      period : 100.00 ;
+      waveform : {45.00, 55.00} ;
+      sources : HCLK ;
+   }
+   protocol_start() {
+      foreach_program() {
+         vector() {
+            set(all_ports,"0,[10]X,0,[78]X,0,X,[121]M");
+         }
+         vector() {
+            set(all_ports,"0,[10]X,0,[35]X,1,[42]X,0,1,[121]M");
+         }
+         foreach_pattern() {
+            stream(1405) {
+               set(all_ports,"C,[10]U,C,[35]U,1,[38]U,1,[3]Si,C,1,[118]M,[3]So");
+            }
+            vector() {
+               set(all_ports,"0,[10]Pi,0,[78]Pi,0,Pi,[121]Po");
+            }
+            vector() {
+               set(all_ports,"Cp,[10]U,Cp,[78]U,Cp,U,[121]M");
+            }
+            vector() {
+               set(all_ports,"0,[10]U,0,[35]U,1,[38]U,1,[3]U,0,1,[118]M,[3]So");
+            }
+         }
+      }
+   }
+
+/* Default Port Sets:
+
+  (The all_ports set is comprised serially of the all_inputs,
+   all_outputs, and all_bidirectionals sets)
+
+ordered `all_inputs' members:
+CLCDCLK,
+HADDRS[2],
+HADDRS[3],
+HADDRS[4],
+HADDRS[5],
+HADDRS[6],
+HADDRS[7],
+HADDRS[8],
+HADDRS[9],
+HADDRS[10],
+HADDRS[11],
+HCLK,
+HGRANTM,
+HRDATAM[0],
+HRDATAM[1],
+HRDATAM[2],
+HRDATAM[3],
+HRDATAM[4],
+HRDATAM[5],
+HRDATAM[6],
+HRDATAM[7],
+HRDATAM[8],
+HRDATAM[9],
+HRDATAM[10],
+HRDATAM[11],
+HRDATAM[12],
+HRDATAM[13],
+HRDATAM[14],
+HRDATAM[15],
+HRDATAM[16],
+HRDATAM[17],
+HRDATAM[18],
+HRDATAM[19],
+HRDATAM[20],
+HRDATAM[21],
+HRDATAM[22],
+HRDATAM[23],
+HRDATAM[24],
+HRDATAM[25],
+HRDATAM[26],
+HRDATAM[27],
+HRDATAM[28],
+HRDATAM[29],
+HRDATAM[30],
+HRDATAM[31],
+HREADYINM,
+HREADYINS,
+HRESETn,
+HRESPM[0],
+HRESPM[1],
+HSELCLCD,
+HTRANSS[0],
+HTRANSS[1],
+HWDATAS[0],
+HWDATAS[1],
+HWDATAS[2],
+HWDATAS[3],
+HWDATAS[4],
+HWDATAS[5],
+HWDATAS[6],
+HWDATAS[7],
+HWDATAS[8],
+HWDATAS[9],
+HWDATAS[10],
+HWDATAS[11],
+HWDATAS[12],
+HWDATAS[13],
+HWDATAS[14],
+HWDATAS[15],
+HWDATAS[16],
+HWDATAS[17],
+HWDATAS[18],
+HWDATAS[19],
+HWDATAS[20],
+HWDATAS[21],
+HWDATAS[22],
+HWDATAS[23],
+HWDATAS[24],
+HWDATAS[25],
+HWDATAS[26],
+HWDATAS[27],
+HWDATAS[28],
+HWDATAS[29],
+HWDATAS[30],
+HWDATAS[31],
+HWRITES,
+SCANENABLE,
+SCANINCLCDCLK,
+SCANINHCLK,
+SCANINnCLCDCLK,
+nCLCDCLK,
+nCLCLKRESET
+ordered `all_outputs' members:
+CLAC,
+CLCDCLKSEL,
+CLCDFUFINTR,
+CLCDINTR,
+CLCDLNBUINTR,
+CLCDMBEINTR,
+CLCDVCOMPINTR,
+CLCP,
+CLD[0],
+CLD[1],
+CLD[2],
+CLD[3],
+CLD[4],
+CLD[5],
+CLD[6],
+CLD[7],
+CLD[8],
+CLD[9],
+CLD[10],
+CLD[11],
+CLD[12],
+CLD[13],
+CLD[14],
+CLD[15],
+CLD[16],
+CLD[17],
+CLD[18],
+CLD[19],
+CLD[20],
+CLD[21],
+CLD[22],
+CLD[23],
+CLFP,
+CLLE,
+CLLP,
+CLPOWER,
+HADDRM[0],
+HADDRM[1],
+HADDRM[2],
+HADDRM[3],
+HADDRM[4],
+HADDRM[5],
+HADDRM[6],
+HADDRM[7],
+HADDRM[8],
+HADDRM[9],
+HADDRM[10],
+HADDRM[11],
+HADDRM[12],
+HADDRM[13],
+HADDRM[14],
+HADDRM[15],
+HADDRM[16],
+HADDRM[17],
+HADDRM[18],
+HADDRM[19],
+HADDRM[20],
+HADDRM[21],
+HADDRM[22],
+HADDRM[23],
+HADDRM[24],
+HADDRM[25],
+HADDRM[26],
+HADDRM[27],
+HADDRM[28],
+HADDRM[29],
+HADDRM[30],
+HADDRM[31],
+HBURSTM[0],
+HBURSTM[1],
+HBURSTM[2],
+HBUSREQM,
+HLOCK,
+HPROT[0],
+HPROT[1],
+HPROT[2],
+HPROT[3],
+HRDATAS[0],
+HRDATAS[1],
+HRDATAS[2],
+HRDATAS[3],
+HRDATAS[4],
+HRDATAS[5],
+HRDATAS[6],
+HRDATAS[7],
+HRDATAS[8],
+HRDATAS[9],
+HRDATAS[10],
+HRDATAS[11],
+HRDATAS[12],
+HRDATAS[13],
+HRDATAS[14],
+HRDATAS[15],
+HRDATAS[16],
+HRDATAS[17],
+HRDATAS[18],
+HRDATAS[19],
+HRDATAS[20],
+HRDATAS[21],
+HRDATAS[22],
+HRDATAS[23],
+HRDATAS[24],
+HRDATAS[25],
+HRDATAS[26],
+HRDATAS[27],
+HRDATAS[28],
+HRDATAS[29],
+HRDATAS[30],
+HRDATAS[31],
+HREADYOUTS,
+HRESPS[0],
+HRESPS[1],
+HSIZEM[0],
+HSIZEM[1],
+HSIZEM[2],
+HTRANSM[0],
+HTRANSM[1],
+HWRITEM,
+SCANOUTCLCDCLK,
+SCANOUTHCLK,
+SCANOUTnCLCDCLK
+No `all_bidirectionals' members:
+*/
+}

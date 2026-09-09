@@ -1,0 +1,98 @@
+####################################################
+## This is the flow for ARM Core model generation ##
+####################################################
+
+** Prepare (Refer MM_cadence_xl_verilog.txt )
+
+   setenv MG_LIB   $ARM_DIR/MM
+   setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${MG_LIB}/cadence_xl_verilog
+
+
+** List
+
+   ./ARM7TDMIr3.so
+   $MG_LIB/cadence_xl_verilog/libmgmm.so
+                              veriuser.c
+                              libpli.so
+   
+** Generation flow
+
+[1] Generating a libpli.so
+
+1. $> vconfig <enter> : This scripts is in $CADENCE/tools/bin/ directory.
+
+2. select default options to all questions, except for
+
+   Please enter the the name of the output script.
+   [cr_vlog] :  cr_vlog_pli
+
+   Please choose a target.            
+   valid choices: 1) Stand Alone,   
+                  2) Backplane,     
+                  3) Verilog Export,
+                  4) VHDL Import,   
+                  5) Dynamic PLI libraries only,   
+ <Enter 1-5> [1] : 5
+
+   Please choose a target.
+   Valid choices: 1) build libpli,
+                  2) build libvpi,
+                  3) both 
+ <Enter 1-3> [1] : 1
+
+   The user template file 'veriuser.c' must always be
+   included in the link statement.  What is the path
+   name of this file ?
+   [/cad/tools/cadence/LDV2.2/tools/verilog/src/veriuser.c] : 
+   List the files one at a time,terminating
+    the list with a single '.' 
+   -------------------> -L${MG_LIB}/cadence_xl_verilog -lmgmm
+   ------------------> .
+
+3. if you don't have 'cc' (C compiler) and have 'gcc',
+   edit cr_vlog like this.
+
+   cc ==> gcc
+
+4. $> ./cr_vlog_pli <enter>
+
+5. $> mv libpli.so $MG_LIB/cadence_xl_verilog
+
+
+
+[2] Generating a statically-linked verilog executable
+
+1. $> vconfig <enter> : This scripts is in $CADENCE/tools/bin/ directory.
+
+2. select default options to all questions, except for
+
+   Pls choose how to link in PLI applications.
+     Valid choices: 1) Dynamic with no user PLI Application,
+                    2) Static with no user PLI Application ,
+                    3) Dynamic with user PLI Application,
+                    4) Static with user PLI Application 
+   <Enter 1-4> [1] : 4
+
+
+   The user template file 'veriuser.c' must always be
+   included in the link statement.  What is the path
+   name of this file ?
+   [/cad/tools/cadence/IC442/tools/verilog/src/veriuser.c] : $MG_LIB/cadence_xl_verilog/veriuser.c 
+
+
+   List the files one at a time, terminating
+   the list with a single '.'
+   ----------->  ./ARM7TDMIr3.so
+   ----------->  -L${MG_LIB}/cadence_xl_verilog -lmgmm
+   ----------->  .
+
+3. if you don't have 'cc' (C compiler) and have 'gcc',
+   edit cr_vlog like this.
+
+   cc ==> gcc
+
+4. $> ./cr_vlog <enter>
+
+5. done !!!
+
+

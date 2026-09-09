@@ -1,0 +1,16 @@
+
+analyze -f verilog  ArbSchm3.v
+analyze -f verilog  Arbiter3.v
+analyze -f verilog  MuxS2M.v
+analyze -f verilog  MuxM2S.v
+analyze -f verilog  DefaultSlave.v
+analyze -f verilog  Decoder.v
+
+
+
+elaborate Decoder
+current_design Decoder
+link
+
+write -f db -hier -out Decoder.gtech.db
+

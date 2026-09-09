@@ -1,0 +1,91 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- -----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : Dmac_exceptions.scr.rca
+-- File Revision          : 1.5
+--
+-- Release Information    : PrimeCell(TM)-PL081-REL1v0
+--
+-- -----------------------------------------------------------------------------
+-- Purpose : 
+--           Synopsys synthesis timing constraint script for the 
+--           DMAC block             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the point-to-point exceptions 
+--           set for the DMAC block synthesis. 
+--
+-- --=========================================================================*/
+
+/* False paths between DMAC non-AMBA inputs and HRDATA are present as         */
+/* these paths are used in Integration test mode only.                        */
+/* The normal-mode paths from non-AMBA inputs to non-AMBA outputs             */
+/* are still being constrained.                                               */
+
+/******************************************************************************/
+/* False path setting for DMACCLR Integration test read paths                 */
+/******************************************************************************/
+/* For verilog, HRDATA[*] has been replaced by HRDATA_                        */
+if (hdl == vhdl) {
+set_false_path -through find (pin, {"u*DmacChannel/*ClearReq*"}) \
+               -through find (pin, {"uDmacRspRoute/DMACCLR*"}) \
+               -to find (port, {"HRDATA_*"})
+} else if (hdl == verilog) {
+set_false_path -through find (pin, {"u*DmacChannel/*ClearReq*"}) \
+               -through find (pin, {"uDmacRspRoute/DMACCLR*"}) \
+               -to find (port, {"HRDATA[*]"})
+}
+
+/******************************************************************************/
+/* False path setting for DMACINTERR Integration test read paths              */
+/******************************************************************************/
+/* For verilog, HRDATA[*] has been replaced by HRDATA_                        */
+if (hdl == vhdl) {
+set_false_path -through find (pin, "u*DmacChannel/*IntErrCh*") \
+               -through find (pin, "uDmacRspRoute/DMACINTERR*") \
+               -to find (port, {"HRDATA_*"})
+} else if (hdl == verilog) {
+set_false_path -through find (pin, "u*DmacChannel/*IntErrCh*") \
+               -through find (pin, "uDmacRspRoute/DMACINTERR*") \
+               -to find (port, {"HRDATA[*]"})
+}
+
+/******************************************************************************/
+/* False path setting for DMACINTTC Integration test read paths               */
+/******************************************************************************/
+/* For verilog, HRDATA[*] has been replaced by HRDATA_                        */
+if (hdl == vhdl) {
+set_false_path -through find (pin, "u*DmacChannel/*IntTCCh*") \
+               -through find (pin, "uDmacRspRoute/DMACINTTC*") \
+               -to find (port, {"HRDATA_*"})
+} else if (hdl == verilog) {
+set_false_path -through find (pin, "u*DmacChannel/*IntTCCh*") \
+               -through find (pin, "uDmacRspRoute/DMACINTTC*") \
+               -to find (port, {"HRDATA[*]"})
+}
+
+/******************************************************************************/
+/* False path setting for DMACTC Integration test read paths                  */
+/******************************************************************************/
+/* For verilog, HRDATA[*] has been replaced by HRDATA_                        */
+if (hdl == vhdl) {
+set_false_path -through find (pin, "u*DmacChannel/*SigTC*") \
+               -through find (pin, "uDmacRspRoute/DMACTC*") \
+               -to find (port, {"HRDATA_*"})
+} else if (hdl == verilog) {
+set_false_path -through find (pin, "u*DmacChannel/*SigTC*") \
+               -through find (pin, "uDmacRspRoute/DMACTC*") \
+               -to find (port, {"HRDATA[*]"})
+}
+
+/************************ End of Dmac_exceptions.scr **************************/

@@ -1,0 +1,180 @@
+#- --=================================================================--
+#- This confidential and proprietary software may be used only as
+#- authorised by a licensing agreement from ARM Limited
+#-   (C) COPYRIGHT 2000 ARM Limited
+#-       ALL RIGHTS RESERVED
+#- The entire notice above must be reproduced on all authorised
+#- copies and copies may only be made to the extent permitted
+#- by a licensing agreement from ARM Limited.
+#-
+#- ---------------------------------------------------------------------
+#- Version and Release Control Information:
+#-
+#- File Name              : addargs_script.rca
+#- File Revision          : 1.1
+#-
+#- Release Information    : PrimeCell(TM)-GLOBAL-REL1v2
+#-
+#- ---------------------------------------------------------------------
+#- Purpose : 
+#-           Invoked by the makefile to pre-preprocess the C source.
+#-           This script gives the default values for some arguments
+#-           wherever they have been left out in the C source.
+#-
+#-           When the tag is not specified in any of the commands, the 
+#-           tag field is given a default value of "no_tag".
+#-
+#- --=================================================================--
+
+BEGIN {
+        def_delay = 0      # This line must be changed to agree with busheader.h
+        v_ref = 0
+        temp = 0
+        in_comment = 0
+}
+{
+split($0,a,"(")                        # $0 is the entire line                 
+if (a[1] ~ /\/\*/) {in_comment = 1}
+{a[1] = a[1]"("}
+if (in_comment == 0) {
+if (a[1] ~ /#/) {
+        print > (cat "temp." FILENAME )
+        }
+else if (a[1] ~ /HSA/) {
+        v_ref = 0
+	args[1] = "address"
+	args[2] = "trans"
+	args[3] = "burst"
+	args[4] = "response"
+	args[5] = "size"
+	args[6] = "limit"
+        args[7] = "masternum"
+        args[8] = "masterlock"
+	args[9] = "num_cyc"
+	args[10] ="idl_cyc"
+	args[11] ="rs_limit"
+	args[12] = "prot"
+	split(a[2],b,")")
+	split(b[1],c,",")
+	for ( i = 1; i<=12; i++) {
+		if (c[i] ~ /^ *$/ ) {c[i] = "def_"args[i]}
+        }
+}
+        
+else if (a[1] ~ /HSW/){
+        v_ref = 0
+        args[3] = "supp_msg" 
+        split(a[2],d,")") # $0 is the entire line                 
+        split(d[1],e,",") # $0 is the entire line                 
+        if (e[1] ~ /^ *$/) {e[1] = "0x00000000"}
+        if (e[2] ~ /^ *$/) {e[2] = "0x00000000"}
+        if (e[3] ~ /^ *$/ ) {e[3] = "def_"args[3]}
+        if (e[4] ~ /^ *$/) {e[4] = "no_tag"}
+          print "SW("e[1]","e[2]","c[1]","c[2]","c[3]","c[4]","c[5]","c[6]","c[7]","c[8]","c[9]","c[10]","c[11]","e[3]","c[12]",\""e[4]"\");" > (cat "temp." FILENAME )
+         c[1] = "def_address"
+         c[2] = "def_trans"       
+}
+else if (a[1] ~ /HSR/) {
+        v_ref = 0
+        args[5] = "supp_msg"
+        split(a[2],d,")") # $0 is the entire line                 
+        split(d[1],e,",") # $0 is the entire line                 
+        if (e[1] ~ /^ *$/) {e[1] = "0x00000000"}
+        if (e[2] ~ /^ *$/) {e[2] = "0x00000000"}
+        if (e[3] ~ /^ *$/) {e[3] = "0x00000000"}
+        if (e[4] ~ /^ *$/) {e[4] = "0x00000000"}
+        if (e[5] ~ /^ *$/ ) {e[5] = "def_"args[5]}
+        if (e[6] ~ /^ *$/) {e[6] = "no_tag"}
+ print "SR( "e[1]", "e[2]","e[3]","e[4]","c[1]","c[2]","c[3]","c[4]","c[5]","c[6]","c[7]" ,"c[8]","c[9]","c[10]","c[11]","e[5]","c[12]",\""e[6]"\");" > (cat "temp." FILENAME )
+         c[1] = "def_address"
+         c[2] = "def_trans"       
+}       
+else if (a[1] ~ /HPO/) {
+        v_ref = 0
+        args[5] = "supp_msg"
+        split(a[2],d,")") # $0 is the entire line
+        split(d[1],e,",") # $0 is the entire line
+        if (e[1] ~ /^ *$/) {e[1] = "0x00000000"}
+        if (e[2] ~ /^ *$/) {e[2] = "0x00000000"}
+        if (e[3] ~ /^ *$/) {e[3] = "0x00000000"}
+        if (e[4] ~ /^ *$/) {e[4] = "0x00000000"}
+        if (e[5] ~ /^ *$/ ) {e[5] = "TRUE"}
+        if (e[6] ~ /^ *$/) {e[6] = "0x00000000"}
+        if (e[7] ~ /^ *$/) {e[7] = "no_tag"}
+ print "PO( "e[1]", "e[2]","e[3]","e[4]","c[1]","c[2]","c[3]",OK,"c[5]","c[6]","c[7]" ,"c[8]","c[9]","c[10]","c[11]","e[5]","c[12]","e[6]",\""e[7]"\");" > (cat "temp." FILENAME )
+         c[1] = "def_address"
+         c[2] = "def_trans"
+}
+else if (a[1] ~ /HSP/) {
+  split(a[2],b,")")
+  split(b[1],c,",")
+  args[1]  = "Exphsplit"
+  args[2]  = "num_cyc"
+  args[3]  = "num_cyc"
+  args[4]  = "num_cyc"
+  args[5]  = "num_cyc"
+  args[6]  = "num_cyc"
+  args[7]  = "num_cyc"
+  args[8]  = "num_cyc"
+  args[9]  = "num_cyc"
+  args[10] = "num_cyc"
+  args[11] = "num_cyc"
+  args[12] = "num_cyc"
+  args[13] = "num_cyc"
+  args[14] = "num_cyc"
+  args[15] = "num_cyc"
+  args[16] = "num_cyc"
+  args[17] = "num_cyc"
+  args[18]  = "limit" 
+  for ( i = 1; i<= 18; i++) {
+                if (c[i] ~ /^ *$/ ) {c[i] = "def_"args[i]}
+        }
+  print "HSP("c[1]","c[2]","c[3]","c[4]","c[5]","c[6]","c[7]","c[8]","c[9]","c[10]","c[11]","c[12]","c[13]","c[14]","c[15]","c[16]","c[17]","c[18]");" > (cat "temp." FILENAME )
+  }
+        
+else if (a[1] ~ /HSEN/) {
+  split(a[2],b,")")
+  split(b[1],d,",")
+  args[1] = "togendianess"
+  if (d[1] ~ /^ *$/ ) {d[1] = "def_"args[1]}
+  print "HSEN("d[1]");" > (cat "temp." FILENAME )
+  }
+  
+else if (a[1] ~ /RES/) {
+	split(a[2],b,")")
+	split(b[1],c,",")
+ 	if (c[2] ~ /^ *$/) {c[2] = "def_delay";v_ref = def_delay+1}
+        else {temp = c[2];}  #c[2] = c[2] - v_ref;v_ref = temp+1}
+        if (c[3] ~ /^ *$/) {c[3] = def_num_cyc+1}
+	print "RES("c[1]","c[2]","c[3]");" > (cat "temp." FILENAME )
+	}
+ else if (a[1] ~ /C\(/) {
+         split($0,c,";")
+         x = length(c[1])
+         x = x - 1
+         z = substr(c[1], 1, x)
+         split(z,b,"\",")
+         if (b[2] ~ /^ *$/) {
+         b[2] = "no_tag"
+         print b[1]",\""b[2]"\");" > (cat "temp." FILENAME )
+           }
+         else
+           {
+           split(b[2],c,")")
+          print b[1]"\",\""c[1]"\");" > (cat "temp." FILENAME )
+          }
+        }
+  else if (a[1] ~ /TCV/) {
+    split(a[2],b,")")
+    split(b[1],d,",")
+    print "TCV("d[1]","d[2]","d[3]","d[4]","d[5]");" > (cat "temp." FILENAME )
+    }
+  
+else print > (cat "temp." FILENAME )
+}
+if ($0 ~ /\*\//) {in_comment = 0}
+#print("eee"$0)  > (cat "temp." FILENAME )
+
+}
+
+#- --============================ End ================================--

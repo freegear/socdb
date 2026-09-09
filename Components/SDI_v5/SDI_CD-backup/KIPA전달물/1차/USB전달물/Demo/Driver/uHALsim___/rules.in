@@ -1,0 +1,344 @@
+# -----------------------------------------------------
+# Makefile.rules
+# This Makefile contains global settings that are
+# included in other Makefiles.
+# -----------------------------------------------------
+# This set of rules generate GNU make variables that
+# get used all throughout the ARM Firmware Components.
+# Names *DEFS are definitions, names *FLAGS are arguments
+# to the tools.
+#
+# *****************************************************
+# Initialise variables
+# *****************************************************
+# Initialise the variables - FLAGS
+AFLAGS			= $(UHAL_BOARD_AFLAGS)
+CFLAGS			= $(UHAL_BOARD_CFLAGS)
+LFLAGS			= $(UHAL_BOARD_LFLAGS)
+ELFFLAGS		= $(UHAL_BOARD_ELFFLAGS)
+ARFLAGS			= $(UHAL_BOARD_ARFLAGS)
+
+# Initialise the variablers - DEFS (from board.in)
+ADEFS			= $(UHAL_BOARD_ADEFS)
+CDEFS			= $(UHAL_BOARD_CDEFS)
+LDEFS			= $(UHAL_BOARD_LDEFS)
+ELFDEFS			= $(UHAL_BOARD_ELFDEFS)
+ARDEFS			= $(UHAL_BOARD_ARDEFS)
+
+# *****************************************************
+# Default some things normally in board.in
+# *****************************************************
+# NOTE: board.in is kept in uHAL/Build/<blah>.b 
+# What type of board is this?
+ifndef BOARD_TYPE
+BOARD_TYPE		= INTEGRATOR
+endif
+# What type of processor is fitted?
+ifndef PROCESSOR_NAME
+PROCESSOR_NAME		= ARM7T
+endif
+# What is the set of sources for this board?
+ifndef UHAL_BOARD_SOURCES	
+UHAL_BOARD_SOURCES	= $(UHALBOARDDIR)/board.c $(UHALBOARDDIR)/driver.s \
+	$(UHALBOARDDIR)/memmap.s 
+endif
+# What is the set of include files for this board?
+ifndef UHAL_BOARD_INCLUDES	
+UHAL_BOARD_INCLUDES	= $(UHALBOARDDIR)/platform.h \
+	$(UHALBOARDDIR)/platform.s $(UHALBOARDDIR)/target.s
+endif
+
+# *****************************************************
+# Build variants/information (and their default values)
+# *****************************************************
+#
+# Build using ADS or SDT.  Overwrite on the command line
+# by ADS_BUILD=1 or ADS_BUILD=0
+#
+ADS_BUILD=1
+#
+# Use the ARM C libraries.   Overwrite on the command line
+# by USE_C_LIBRARY=1 or USE_C_LIBRARY=0
+#
+USE_C_LIBRARY=1
+#
+# Big/little endian.   Overwrite on the command line by ENDIAN=BIG
+#
+ENDIAN = LITTLE
+#
+# Thumb support/no thumb support.   Overwrite on the command line
+# by THUMB_AWARE=1.   This can also be set in the build variant's
+# board.in (eg Build/IntegratorT.b/board.in).
+#
+ifndef THUMB_AWARE	
+THUMB_AWARE		= 0
+endif
+#
+# Debug.  Overwrite on the command line by DEBUG=1.
+#
+DEBUG			= 0
+#
+# Floating point support. Overwrite on the command line
+# by FP_SUPPORT=1
+#
+FP_SUPPORT		=0
+
+# *****************************************************
+# Set up assembler, compile and link options based on
+# Build variants/information
+# *****************************************************
+# -----------------------------------------------------
+# Build time defines (both C and assembler)
+# -----------------------------------------------------
+# board type
+ADEFS			:= $(ADEFS) -PD "$(BOARD_TYPE) SETL {TRUE}"
+CDEFS			:= $(CDEFS) -D$(BOARD_TYPE)=1
+# processor name
+ADEFS			:= $(ADEFS) -PD "$(PROCESSOR_NAME) SETL {TRUE}" 
+CDEFS			:= $(CDEFS) -D$(PROCESSOR_NAME)=1
+# c library 
+ADEFS			:= $(ADEFS) -PD "USE_C_LIBRARY SETA $(USE_C_LIBRARY)"
+CDEFS			:= $(CDEFS) -DUSE_C_LIBRARY=$(USE_C_LIBRARY)
+# thumb awareness
+ifeq ($(THUMB_AWARE),1) 
+ADEFS		    	:= $(ADEFS) -PD "THUMB_AWARE SETA $(THUMB_AWARE)"
+CDEFS		    	:= $(CDEFS) -DTHUMB_AWARE=$(THUMB_AWARE)
+endif
+# ADS building
+ADEFS			:= $(ADEFS) -PD "ADS_BUILD SETA $(ADS_BUILD)"
+CDEFS			:= $(CDEFS) -DADS_BUILD=$(ADS_BUILD)
+# Debug
+ifeq ($(DEBUG),1)
+ADEFS	   		:= $(ADEFS) -g -PD "DEBUG SETA $(DEBUG)"
+CDEFS	   		:= $(CDEFS) -g+ -O0 -DDEBUG=$(DEBUG)
+endif
+# semihosted?
+ifeq ($(TARGET),semihosted)
+ADEFS			:= $(ADEFS) -PD "SEMIHOSTED SETL {TRUE}"
+CDEFS			:= $(CDEFS) -DSEMIHOSTED=1
+endif
+
+# -----------------------------------------------------
+# Tool arguments
+# -----------------------------------------------------
+ifeq ($(DEBUG),1)
+LFLAGS	   		:= $(LFLAGS) -debug
+else
+ELFFLAGS   		:= $(ELFFLAGS) -nodebug
+endif
+
+# Generate the appropriate apcs definitions (the APCSDEFS variable
+# is a temporary).  Note that the -zpq262144 flag works around an
+# SDT toolkit C compiler problem.
+ifeq ($(ADS_BUILD),1)
+	APCSDEFS	= /noswst
+ifdef UHAL_PROCESSOR_ARCHITECTURE
+	AFLAGS		:= $(AFLAGS) -cpu $(UHAL_PROCESSOR_ARCHITECTURE)
+	CFLAGS		:= $(CFLAGS) -cpu $(UHAL_PROCESSOR_ARCHITECTURE)
+endif
+else
+	APCSDEFS	= 3/32bit/noswst
+	CFLAGS		:= $(CFLAGS) -fz -zpq262144
+endif
+ifeq ($(THUMB_AWARE),1) 
+APCSDEFS	    	:= $(APCSDEFS)/interwork
+endif
+CFLAGS			:= $(CFLAGS) -apcs $(APCSDEFS) 
+AFLAGS			:= $(AFLAGS) -apcs $(APCSDEFS) 
+
+# endianess
+LITTLE_ENDIANFLAG= -li
+LITTLE_ENDIANDEFN= -DLITTLE_ENDIAN
+LITTLE_ENDIANSFX= l
+
+BIG_ENDIANFLAG= -bi
+BIG_ENDIANDEFN= -DBIG_ENDIAN
+BIG_ENDIANSFX=  b
+
+ENDIANFLAG= $($(ENDIAN)_ENDIANFLAG)
+ENDIANDEFN= $($(ENDIAN)_ENDIANDEFN)
+ENDIANSFX= $($(ENDIAN)_ENDIANSFX)
+
+CFLAGS			:= $(CFLAGS) $(ENDIANFLAG) $(ENDIANDEFN)
+AFLAGS			:= $(AFLAGS) $(ENDIANFLAG)
+
+# Floating point support
+ifeq ($(FP_SUPPORT),0) 
+AFLAGS			:= $(AFLAGS) -fpu NONE
+CFLAGS			:= $(CFLAGS) -fpu NONE
+endif
+
+# *****************************************************
+# Where are the tools that we are using?
+# *****************************************************
+ifndef ARMLINK
+ARMLINK    	= armlink
+endif
+ifndef ARMCC
+ARMCC      	= armcc
+endif
+ifndef ARMASM
+ARMASM	    	= armasm
+endif
+ifndef FROMELF
+FROMELF		= fromelf
+endif
+
+# tools vary with toolkit
+ifeq ($(ADS_BUILD),1)
+	AR		= armar
+	ARFLAGS		:= $(ARFLAGS) -create
+	LIB_EXT		= a
+	SYM_LIST	= -symbols -list
+	ELF_OUTPUT	= -o
+else
+	AR		= armlib
+	ARFLAGS		:= $(ARFLAGS) -c -o
+	LIB_EXT		= alf
+	SYM_LIST	= -symbols
+ifeq ($(TARGET),standalone) 
+	ELFFLAGS	:= $(ELFFLAGS) -nozeropad
+endif
+endif
+
+HOSTCC	   = cc -g 
+CLEAN	   = /usr/bin/rcsclean
+MAKE	   = gnumake 
+
+
+# *****************************************************
+# Where are the sources?
+# *****************************************************
+
+# where stuff is (in uHAL)
+# [A] The directories
+UHALINCLUDEDIR   	= $(UHAL_BASE)/h
+UHALBOARDDIR     	= $(UHAL_BASE)/Boards/$(BOARD_TYPE)
+UHALPROCESSORDIR 	= $(UHAL_BASE)/Processors
+UHALARMDIR 		= $(UHAL_BASE)/Processors/$(PROCESSOR_NAME)
+UHALLIBDIR	     	= $(UHAL_BASE)/Sources/
+UHALTOOLDIR	     	= $(UHAL_BASE)/tools/
+
+# [B] Sources 
+UHALLIBSOURCES		= $(UHALLIBDIR)/crt.c $(UHALLIBDIR)/external.s \
+	$(UHALLIBDIR)/iolib.c $(UHALLIBDIR)/irqlib.s $(UHALLIBDIR)/led.c \
+	$(UHALLIBDIR)/pci.c $(UHALLIBDIR)/uart.c $(UHALLIBDIR)/boot.s \
+	$(UHALLIBDIR)/divide.s $(UHALLIBDIR)/heap.c $(UHALLIBDIR)/irqtrap.s \
+	$(UHALLIBDIR)/timer.c $(UHALLIBDIR)/support.s
+UHALPROCESSORSOURCES	= $(UHALPROCESSORDIR)/cache.c \
+	$(UHALPROCESSORDIR)/control.s $(UHALPROCESSORDIR)/mmu.s
+
+# [C] Include files
+UHALLIBINCLUDES		= $(UHALINCLUDEDIR)/uhal.h $(UHALINCLUDEDIR)/cdefs.h \
+	$(UHALINCLUDEDIR)/bits.h $(UHALINCLUDEDIR)/sizes.h 
+UHALPROCESSORINCLUDES	= $(UHALPROCESSORDIR)/mmu_h.h \
+	$(UHALPROCESSORDIR)/mmu_h.s $(UHALPROCESSORDIR)/mmumacro.s
+
+#
+# Variables used in compilation/dependencies
+#
+# [A] The list of include files
+UHAL_INCLUDE_FILES = $(UHALLIBINCLUDES) $(UHAL_BOARD_INCLUDES) $(UHALPROCESSORINCLUDES)
+# [B] Every file in the uHAL library
+UHAL_SOURCE_FILES = $(UHALLIBSOURCES) $(UHALLIBINCLUDES) \
+	$(UHAL_BOARD_SOURCES) $(UHAL_BOARD_INCLUDES) \
+	$(UHALPROCESSORSOURCES) $(UHALPROCESSORINCLUDES)
+# [C] The include path 
+INCL = -I$(UHALINCLUDEDIR),$(UHALLIBDIR),$(UHALBOARDDIR),$(UHALPROCESSORDIR),$(UHALARMDIR)
+
+# Where stuff is (in PCI library)
+PCIINCLUDEDIR = $(PCILIB_BASE)/Sources
+PCI_SOURCE_FILES = $(PCILIB_BASE)/Sources/pci.c
+PCI_INCLUDE_FILES = $(PCIINCLUDEDIR)/pcilib.h
+
+# Where stuff is (in Flash library)
+FLASHINCLUDEDIR = $(FLASHLIB_BASE)/h
+FLASH_INCLUDE_FILES = $(FLASHINCLUDEDIR)/flash_lib.h $(FLASHINCLUDEDIR)/sib.h
+
+# *****************************************************
+# Where are the libraries?
+# *****************************************************
+
+UHALLIB	     = $(UHAL_BASE)/Build/$(BOARD_NAME).b/$(TARGET)/uHALlibrary.$(LIB_EXT)
+PCILIB	     = $(PCILIB_BASE)/Build/$(BOARD_NAME).b/$(TARGET)/PCIlib.$(LIB_EXT)
+FLASHLIB     = $(FLASHLIB_BASE)/Build/$(BOARD_NAME).b/$(TARGET)/Flash_Lib.$(LIB_EXT)
+
+# *****************************************************
+# Work out where to link this image
+# *****************************************************
+ifeq ($(TARGET),semihosted) 
+
+ifndef UHAL_DEFAULT_SEMIHOSTED_TEXT
+TEXT		= 0x8000
+else
+TEXT		= $(UHAL_DEFAULT_SEMIHOSTED_TEXT)
+endif
+
+else
+
+ifndef TEXT
+ifdef UHAL_DEFAULT_STANDALONE_TEXT
+TEXT		= $(UHAL_DEFAULT_STANDALONE_TEXT)
+endif
+
+endif
+
+ifndef DATA
+ifdef UHAL_DEFAULT_STANDALONE_DATA
+DATA		= $(UHAL_DEFAULT_STANDALONE_DATA)
+endif
+endif
+
+endif
+
+#------------------------------------------------------------
+# This is the default endianess - it can be overwritten on the
+# make command line by ENDIAN=BIG
+ENDIAN = LITTLE
+
+# work out the OS that we're running in.
+ifeq ($(CONFIG),Windows)
+OS_TYPE		= Windows
+else
+ifeq ($(OS),Windows_NT)
+OS_TYPE		= Windows
+else
+OS_TYPE		= Unix
+endif
+endif
+
+ifeq ($(OS_TYPE),Windows)
+# Bash/GNU running under DOS/windows
+
+ifeq ($(TARGET),semihosted)
+LFLAGS	:= $(LFLAGS) $(ARMCLIBRARY) -first 'boot.o(SelfBoot)' -ro-base $(TEXT) -noremove
+endif
+
+ifeq ($(TARGET),standalone) 
+LFLAGS	:= $(LFLAGS) -first 'boot.o(SelfBoot)' -rw-base $(DATA) -ro-base $(TEXT) -noremove
+endif
+
+else
+# 'Normal' Unix
+ifeq ($(TARGET),semihosted)
+LFLAGS	:= $(LFLAGS) $(ARMCLIBRARY) -first 'boot.o(SelfBoot)' -ro-base $(TEXT) -noremove
+endif
+
+ifeq ($(TARGET),standalone) 
+LFLAGS	:= $(LFLAGS) -first 'boot.o(SelfBoot)' -rw-base $(DATA) -ro-base $(TEXT) -noremove
+endif
+
+endif
+
+# *****************************************************
+# EXPORTED SYMBOLS (usable in makefiles)
+# *****************************************************
+#
+# TOOL			DEFS/FLAGS
+#
+# ARMASM		ADEFS, AFLAGS
+# ARMCC			CDEFS, CFLAGS
+# armlink		LDEFS, LFLAGS
+# fromelf		EDEFS, EFLAGS
+# ar			ARDEFS, ARFLAGS	
+#

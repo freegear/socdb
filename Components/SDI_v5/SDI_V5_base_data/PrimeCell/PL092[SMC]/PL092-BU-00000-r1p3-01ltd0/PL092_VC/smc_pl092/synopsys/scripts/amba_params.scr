@@ -1,0 +1,326 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- ----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : amba_params.scr.rca
+-- File Revision          : 1.16
+--
+-- Release Information    : PrimeCell(TM)-PL092-r1p3-01ltd0
+--
+-- ----------------------------------------------------------------------------
+-- Purpose : 
+--           Synopsys synthesis script for AMBA timing parameters.
+--           Located in the synopsys_shared/scr_common directory.
+--           Called by the master compile script.
+--
+-- --======================================================================-- */
+
+/*** This file contains a generic set of parameters for synthesis           ***/
+/*** AHB/APB modules.                                                       ***/
+/*** A number of timing parameters are defined for each AMBA module         ***/
+/*** and these use the following nomenclature:                              ***/
+/***                                                                        ***/
+/***  Tis - Input setup time                                                ***/
+/***  Tih - Input hold time                                                 ***/
+/***  Tov - Output valid time                                               ***/
+/***  Toh - Output hold time                                                ***/
+/***                                                                        ***/
+/*** For the purpose of synthesis this script takes a target set of         ***/
+/*** parameters and converts them into those suitable to constrain          ***/
+/*** synthesis. For synthesis the following nomenclature is used:           ***/
+/***                                                                        ***/
+/***  Tidmax - Input delay maximum                                          ***/
+/***  Tidmin - Input delay minimum                                          ***/
+/***  Todmax - Output delay maximum                                         ***/
+/***  Todmin - Output delay minimum                                         ***/
+/***                                                                        ***/
+/*** Conversion between the target module parameters and the                ***/
+/*** synthesis constraints is done using the following equations:           ***/
+/***                                                                        ***/
+/***  Tidmax = tclk * (1 - Tis)                                             ***/
+/***  Tidmin = Tih                                                          ***/
+/***  Todmax = tclk * (1 - Tov)                                             ***/
+/***  Todmin = Toh                                                          ***/
+/***                                                                        ***/
+/*** The system timing budget is split as follows:                          ***/
+/***                                                                        ***/
+/*** Point to point signals:                                                ***/
+/***  40% output valid   Todmax = 0.6                                       ***/
+/***  50% input setup    Tidmax = 0.5                                       ***/
+/***  10% spare slack                                                       ***/
+/***                                                                        ***/
+/*** Multiplexed signals:                                                   ***/
+/***  40% output valid   Todmax = 0.6                                       ***/
+/***  20% multiplexer                                                       ***/
+/***  30% input setup    Tidmax = 0.7                                       ***/
+/***  10% spare slack                                                       ***/
+/***                                                                        ***/
+/*** The timing parameters are only defined as Tidmax and Todmax,           ***/
+/*** taking into account the multiplexer delays and 10% slack.              ***/
+/***                                                                        ***/
+/***        __________            ___                                       ***/
+/*** CLK __|          |__________|                                          ***/
+/***                                                                        ***/
+/***                 _______________ STANDARD OUTPUT (eg HWRITE)            ***/
+/*** O/P ___________/                                                       ***/
+/***                                                                        ***/
+/***                |------------| todmax                                   ***/
+/***                                                                        ***/
+/***                 _______________ STANDARD INPUT (eg HBUSREQ)            ***/
+/*** I/P ___________/_/               (Slack)                               ***/
+/***                                                                        ***/
+/***       |----------| tidmax                                              ***/
+/***                                                                        ***/
+/***                 _______________ MULTIPLEXED INPUT (eg HADDR)           ***/
+/*** I/P ___________/__/_/            (Mux delay + slack)                   ***/
+/***                                                                        ***/
+/***       |-------------| tidmax                                           ***/
+/***                                                                        ***/
+
+/* Two signals paths do not use the default timings:                          */
+/*  - HADDR to HSEL                                                           */
+/*  - PRDATA to HRDATA.                                                       */
+
+/* As HSEL is generated from HADDR, which passes through the M2S              */
+/* multiplexer and the Decoder, it is valid relatively late in the            */
+/* cycle. So to ease the system timing, the default slack of 10% on           */
+/* all signals is not included on the Decoder to slave path, so               */
+/* tidmaxhsel is valid after 80% of the cycle instead of 90%.                 */
+/* If extra time is required, the 10% slack included on the address           */
+/* timing may also be removed.                                                */
+ 
+/* The path from PRDATA on the APB to HRDATA on the AHB is long,              */
+/* including:                                                                 */
+/*  - output delay of APB slave                                               */
+/*  - multiplexer delay of MuxP2B                                             */
+/*  - bridge delay from PRDATA to HRDATA                                      */
+/*  - multiplexer delay of MuxS2M                                             */
+/*  - slack on both multiplexer paths.                                        */
+/* To reduce the input timing on HRDATA, the default slack of 10% on          */
+/* the two multiplexer paths is removed, and the standard delay on            */
+/* the P2B multiplexer is reduced to 10%, therefore allowing:                 */
+/*  - 40% APB slave output delay                                              */
+/*  - 10% MuxP2B delay                                                        */
+/*  - 10% bridge delay                                                        */
+/*  - 20% MuxS2M delay                                                        */
+/* giving a total HRDATA input delay of 80%.                                  */
+
+/******************************************************************************/
+/* CLOCK PARAMETERS                                                           */
+/******************************************************************************/
+
+/* tclk is the period of HCLK/PCLK and by default all other  */
+/* parameters are automatically defined from this parameter. */
+
+/* HIGH phase of clock */
+/* tclkh = 5.0 */
+
+/* Clock LOW phase equals clock HIGH phase */
+/* tclkl = tclkh */
+
+/* Clock period of HCLK/PCLK, period 10ns for 100.0MHz */
+/* tclk  = tclkl + tclkh */
+
+/* Max and Min hold times applied to the input and output ports */
+/* respectively                                                 */
+/* These values should be changed if a default hold delay is    */
+/* required.                                                    */
+tholdmax =  0.00 * tclk /* max  0% clock period set for input  hold */
+tholdmin = -0.00 * tclk /* min -0% clock period set for output hold */
+
+/******************************************************************************/
+/* AHB PARAMETERS                                                             */
+/******************************************************************************/
+/* This section defines the timing parameters for all standard AHB */
+/* signals. The AHB timing values are based around the timing of a */
+/* 66MHz ARM7TDMI core in a 50MHz AMBA system.                     */
+
+/* Only HADDR, HTRANS, HWRITE, HSIZE, HBURST, HPROT, HWDATA and */
+/* HRDATA pass through the central multiplexers                 */
+
+/*** Input setup and hold times ***/
+
+/* Inputs to the AHB slaves */
+tidmaxhaddr     = tclk * 0.7
+tidmaxhtrans    = tclk * 0.7 /* Slow cpu nMREQ SEQ outputs */
+tidmaxhwrite    = tclk * 0.7
+tidmaxhsize     = tclk * 0.7
+tidmaxhburst    = tclk * 0.7
+tidmaxhwdata    = tclk * 0.7
+
+tidmaxhprot     = tclk * 0.7 /* Slow cpu nOPC output */
+tidmaxhbusreq   = tclk * 0.7
+tidmaxhlock     = tclk * 0.7
+
+/* Arbiter outputs */
+tidmaxhgrant    = tclk * 0.4
+tidmaxhmaster   = tclk * 0.7
+tidmaxhmastlock = tclk * 0.7
+
+/* Decoder output */
+tidmaxhsel      = tclk * 0.7 /* Address decode */
+
+/* Inputs to the master */
+tidmaxhrdata    = tclk * 0.4 /* APB read data through bridge */
+tidmaxhready    = tclk * 0.7
+tidmaxhresp     = tclk * 0.4
+tidmaxhsplit    = tclk * 0.7
+
+/*** Output valid and hold ***/
+
+/* AHB master outputs */
+todmaxhaddr     = tclk * 0.4
+todmaxhtrans    = tclk * 0.4 /* Slow cpu nMREQ SEQ outputs */
+todmaxhwrite    = tclk * 0.4
+todmaxhsize     = tclk * 0.4
+todmaxhburst    = tclk * 0.4
+todmaxhprot     = tclk * 0.4 /* Slow wrapper HPROT generation */
+todmaxhwdata    = tclk * 0.4
+todmaxhbusreq   = tclk * 0.4
+todmaxhlock     = tclk * 0.4
+
+/* Arbiter outputs */
+todmaxhgrant    = tclk * 0.6
+todmaxhmaster   = tclk * 0.6
+todmaxhmastlock = tclk * 0.6
+
+/* Decoder output for the slave selection */
+todmaxhsel      = tclk * 0.6 /* Address decode */
+
+/* Slave outputs */
+todmaxhrdata    = tclk * 0.6 /* AHB read data through bridge */
+todmaxhready    = tclk * 0.6
+todmaxhresp     = tclk * 0.6
+todmaxhsplit    = tclk * 0.6
+
+/******************************************************************************/
+/* APB PARAMETERS                                                             */
+/******************************************************************************/
+/* This section defines the timing parameters for all standard APB   */
+/* signals.                                                          */
+
+/* All APB output timing assumes registered outputs, so the default  */
+/* values must be changed if combinational APB outputs are used.     */
+
+/* Only PRDATA passes through the central P2B multiplexers. Due to   */
+/* the long path from PRDATA to HRDATA, the APB central multiplexer  */
+/* delay value is set at 10% instead of the standard 20% for a       */
+/* multiplexer, so effectively becomes valid at the same time as the */
+/* other APB signals, which include a 10% slack value.               */
+
+/* Input setup and hold times */
+
+tidmaxpenable = tclk * 0.5
+tidmaxpsel    = tclk * 0.5
+tidmaxpaddr   = tclk * 0.5
+tidmaxpwrite  = tclk * 0.5
+tidmaxpwdata  = tclk * 0.5
+tidmaxprdata  = tclk * 0.5
+
+/* Output valid and hold */
+
+todmaxpenable = tclk * 0.6
+todmaxpsel    = tclk * 0.6
+todmaxpaddr   = tclk * 0.6
+todmaxpwrite  = tclk * 0.6
+todmaxpwdata  = tclk * 0.6
+todmaxprdata  = tclk * 0.6
+
+
+/******************************************************************************/
+/* MULTIPLEXER PARAMETERS                                                     */
+/******************************************************************************/
+/* As the three system multiplexers have fully combinatorial paths    */
+/* from the inputs to the outputs, the specific signal timing is not  */
+/* required.                                                          */
+/* A default input delay of 20% and a default output delay of 60% are */
+/* used for all multiplexer signals, allowing 20% for the multiplexer */
+/* io path.                                                           */
+
+tidmaxmux = tclk * 0.2
+todmaxmux = tclk * 0.6
+
+/******************************************************************************/
+/* OTHER PARAMETERS                                                           */
+/******************************************************************************/
+/* This section defines the timing values for other non-AMBA system */
+/* signals.                                                         */
+
+/* Asynchronous interrupts from IntCntl */
+/* In standard system there is no FIQ source, so a standard delay is */
+/* used.                                                             */
+/* This value should be changed when a FIQ source is used.           */
+tidmaxnfiq = tclk * 0.5
+tidmaxnirq = tclk * 0.7 /* Valid after irq source */
+todmaxnfiq = tclk * 0.6
+todmaxnirq = tclk * 0.4 /* Valid after irq source */
+
+/* Remap and Pause outputs from RemPause module */
+/* Registered outputs */
+tidmaxremap = tclk * 0.7
+tidmaxpause = tclk * 0.5
+todmaxremap = tclk * 0.6
+todmaxpause = tclk * 0.6
+
+/* BIGENDIAN Input to the slave. As this input is tied off, it can */
+/* be assumed to be valid within 1ns i.e. setup of 9ns available   */
+tidmaxbigend = tclk * 0.1
+
+/* Timer module interrupts */
+/* Registered outputs */
+tidmaxintct = tclk * 0.5
+todmaxintct = tclk * 0.6
+
+/* System interrupt sources to IntCntl */
+/* IRQESource is comprised of all interrupt sources in the system. */
+/* The core COMMRX/TX outputs are not used during full speed       */
+/* operation, so the Timer interrupt sources are the only valid    */
+/* interrupts.                                                     */
+tidmaxirqesource = tidmaxintct
+
+/* External bus settings */
+/* The timing of signals on the external bus is not defined, as in */
+/* the default system all external modules are behavioural. The    */
+/* following timing parameters are set to allow the SMI to be      */
+/* synthesised with sensible input and output settings.            */
+
+/* Inputs */
+tidmaxsmdata   = tclk * 0.7        /* SMDATAIN input */
+
+/* Outputs */
+todmaxsmdata   = tclk * 0.6        /* SMDATAOUT and SMDATAEN */
+todmaxsmaddr   = tclk * 0.6        /* SMADDR */
+todmaxsmcs     = tclk * 0.6        /* SMCS */
+todmaxsmoen    = tclk * 0.6        /* SMOEN */
+todmaxsmwen    = tclk * 0.6        /* SMWEN */
+todmaxsmbls    = tclk * 0.6        /* SMBLS */
+
+/* Test mode signals */
+tidmaxtestreq = tclk * 0.7 /* TESTREQA and TESTREQB */
+tidmaxticread = tclk * 0.4 /* Direct connection to SMI, so slack not */
+                           /* needed */
+todmaxtestack = tclk * 0.2 /* TESTACK output which is combinational. It will */
+                           /* have delay due to HREADYIN and internal        */
+                           /* combinational logic, so setting 10% of CLK     */
+todmaxticread = tclk * 0.6
+
+/******************************************************************************/
+/* RESET SIGNAL PARAMETERS                                                    */
+/* THESE SHOULD BE CONFIRMED AGAINST THE RESET CONTROLLER                     */
+/* SPECIFICATION                                                              */
+/******************************************************************************/
+
+tidminresetn = tclk * 0.05 /* Defined output hold time of reset */
+                           /* signal */
+tidmaxresetn = tclk * 0.5  /* Registered de-assertion of reset */
+todmaxresetn = tclk * 0.6
+
+/******************************** End *****************************************/

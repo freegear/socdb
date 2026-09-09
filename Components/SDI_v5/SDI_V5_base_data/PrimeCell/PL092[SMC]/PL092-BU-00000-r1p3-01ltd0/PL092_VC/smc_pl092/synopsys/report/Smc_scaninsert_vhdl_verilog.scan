@@ -1,0 +1,795 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Smc
+Version: 2001.08-SP2-2
+Date   : Wed Sep  3 19:03:33 2003
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Smc' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0SmcRevAnd               0      0     1     0      0     0     0      6   0.00%
+u1SmcRevAnd               0      0     1     0      0     0     0      6   0.00%
+u2SmcRevAnd               0      0     0     0      0     0     0      6   0.00%
+u3SmcRevAnd               0      0     0     0      0     0     0      6   0.00%
+uDBI                    212      0     0     0      0     0     0   1916  11.06%
+uSmcCore/uSmcAhbif     1887      2     1     0      0     0     0  17118  11.02%
+uSmcCore/uSmcEIB        988      3     0     0      3     0     0   9148  10.80%
+uSmcCore/uSmcSynchroniser
+                          8      0     0     0      0     0     0     68  11.76%
+uSmcCore/uSmcTSM        315      0     0     0      0     0     0   2840  11.09%
+uSmcCore/uSmcTimerWaitCont
+                        176      0     0     0      0     0     0   1594  11.04%
+uSmcCore/uSmcWrEnGen     13      0     0     0      0     0     0    112  11.61%
+uSmcCore               3388      5     1     0      3     0     0  30892  10.97%
+uTIC                    412      0     0     0      0     0     0   3686  11.18%
+Smc                    4112      5    14     0      3     0     0  37574  10.95%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Smc
+Version: 2001.08-SP2-2
+Date   : Wed Sep  3 19:03:33 2003
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Insert Lockups at the end of scan chains : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Smc
+Version: 2001.08-SP2-2
+Date   : Wed Sep  3 19:03:33 2003
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain #1 (SCANINHCLK --> SCANOUTHCLK) contains 682 cells:
+
+  SCANINHCLK	->
+  uTIC/iHADDRTIC_reg[3]	->
+  uTIC/iHADDRTIC_reg[4]	->
+  uTIC/iHADDRTIC_reg[5]	->
+  uTIC/iHADDRTIC_reg[6]	->
+  uTIC/iHADDRTIC_reg[7]	->
+  uTIC/iHADDRTIC_reg[8]	->
+  uTIC/iHADDRTIC_reg[9]	->
+  uTIC/iHADDRTIC_reg[18]	->
+  uTIC/iHADDRTIC_reg[21]	->
+  uTIC/iHADDRTIC_reg[22]	->
+  uTIC/iHADDRTIC_reg[25]	->
+  uTIC/iHADDRTIC_reg[27]	->
+  uTIC/iHADDRTIC_reg[12]	->
+  uTIC/iHADDRTIC_reg[13]	->
+  uTIC/iHADDRTIC_reg[16]	->
+  uTIC/iHADDRTIC_reg[17]	->
+  uTIC/iHADDRTIC_reg[19]	->
+  uTIC/iHADDRTIC_reg[29]	->
+  uTIC/iHADDRTIC_reg[10]	->
+  uTIC/iHADDRTIC_reg[11]	->
+  uTIC/iHADDRTIC_reg[20]	->
+  uTIC/iHADDRTIC_reg[30]	->
+  uTIC/CurrentVect_reg[0]	->
+  uTIC/iHPROTTIC_reg[1]	->
+  uTIC/iHPROTTIC_reg[3] (*)	->
+  uTIC/SR2_reg	->
+  uTIC/SyncTestReqA_reg	->
+  uTIC/iHPROTTIC_reg[2] (*)	->
+  uTIC/iHPROTTIC_reg[0]	->
+  uTIC/SplitRetry_reg	->
+  uTIC/HSizeInt_reg[0]	->
+  uTIC/iHLOCK_reg (*)	->
+  uTIC/iHWDATATIC_reg[0] (*)	->
+  uTIC/iHWDATATIC_reg[1] (*)	->
+  uTIC/iHWDATATIC_reg[2] (*)	->
+  uTIC/iHWDATATIC_reg[3] (*)	->
+  uTIC/iHWDATATIC_reg[4] (*)	->
+  uTIC/iHWDATATIC_reg[5] (*)	->
+  uTIC/iHWDATATIC_reg[6] (*)	->
+  uTIC/iHWDATATIC_reg[7] (*)	->
+  uTIC/iHWDATATIC_reg[8] (*)	->
+  uTIC/iHWDATATIC_reg[9] (*)	->
+  uTIC/iHWDATATIC_reg[10] (*)	->
+  uTIC/iHWDATATIC_reg[11] (*)	->
+  uTIC/iHWDATATIC_reg[12] (*)	->
+  uTIC/iHWDATATIC_reg[13] (*)	->
+  uTIC/iHWDATATIC_reg[14] (*)	->
+  uTIC/iHWDATATIC_reg[15] (*)	->
+  uTIC/iHWDATATIC_reg[16] (*)	->
+  uTIC/iHWDATATIC_reg[17] (*)	->
+  uTIC/iHWDATATIC_reg[18] (*)	->
+  uTIC/iHWDATATIC_reg[19] (*)	->
+  uTIC/iHWDATATIC_reg[20] (*)	->
+  uTIC/iHWDATATIC_reg[21] (*)	->
+  uTIC/iHWDATATIC_reg[22] (*)	->
+  uTIC/iHWDATATIC_reg[23] (*)	->
+  uTIC/iHWDATATIC_reg[24] (*)	->
+  uTIC/iHWDATATIC_reg[25] (*)	->
+  uTIC/iHWDATATIC_reg[26] (*)	->
+  uTIC/iHWDATATIC_reg[27] (*)	->
+  uTIC/iHWDATATIC_reg[28] (*)	->
+  uTIC/iHWDATATIC_reg[29] (*)	->
+  uTIC/iHWDATATIC_reg[30] (*)	->
+  uTIC/iHWDATATIC_reg[31] (*)	->
+  uTIC/HaddrPrev_reg[0]	->
+  uTIC/HaddrPrev_reg[1] (*)	->
+  uTIC/HaddrPrev_reg[2] (*)	->
+  uTIC/HaddrPrev_reg[3] (*)	->
+  uTIC/HaddrPrev_reg[4] (*)	->
+  uTIC/HaddrPrev_reg[5] (*)	->
+  uTIC/HaddrPrev_reg[6] (*)	->
+  uTIC/HaddrPrev_reg[7] (*)	->
+  uTIC/HaddrPrev_reg[8] (*)	->
+  uTIC/HaddrPrev_reg[9] (*)	->
+  uTIC/iHADDRTIC_reg[0]	->
+  uTIC/iHADDRTIC_reg[1]	->
+  uTIC/iHADDRTIC_reg[2]	->
+  uTIC/iHADDRTIC_reg[14] (*)	->
+  uTIC/iHADDRTIC_reg[15] (*)	->
+  uTIC/iHADDRTIC_reg[23] (*)	->
+  uTIC/iHADDRTIC_reg[24] (*)	->
+  uTIC/iHADDRTIC_reg[26] (*)	->
+  uTIC/iHADDRTIC_reg[28] (*)	->
+  uTIC/iHADDRTIC_reg[31] (*)	->
+  uTIC/LastVect_reg[0]	->
+  uTIC/LastVect_reg[1]	->
+  uTIC/LastVect_reg[2] (*)	->
+  uTIC/CurrentVect_reg[1] (*)	->
+  uTIC/CurrentVect_reg[2]	->
+  uTIC/CurrentGrant_reg[0]	->
+  uTIC/CurrentGrant_reg[1] (*)	->
+  uTIC/BoundReg_reg (*)	->
+  uTIC/IncrmReg_reg (*)	->
+  uTIC/HSizeInt_reg[1] (*)	->
+  uSmcCore/uSmcTimerWaitCont/iDelayEnd_reg	->
+  uSmcCore/uSmcTimerWaitCont/iWaitToutErrQ_reg	->
+  uSmcCore/uSmcTimerWaitCont/WaitPolPrev_reg	->
+  uSmcCore/uSmcTimerWaitCont/iCntEZEnd_reg	->
+  uSmcCore/uSmcTimerWaitCont/DelayState_reg	->
+  uSmcCore/uSmcTimerWaitCont/iCntEnd_reg	->
+  uSmcCore/uSmcTimerWaitCont/DelayCnt_reg[0]	->
+  uSmcCore/uSmcTimerWaitCont/DelayCnt_reg[1]	->
+  uSmcCore/uSmcTimerWaitCont/DelayCnt_reg[2]	->
+  uSmcCore/uSmcTimerWaitCont/DelayCnt_reg[3]	->
+  uSmcCore/uSmcTimerWaitCont/TimerCnt_reg[0]	->
+  uSmcCore/uSmcTimerWaitCont/TimerCnt_reg[1]	->
+  uSmcCore/uSmcTimerWaitCont/TimerCnt_reg[2]	->
+  uSmcCore/uSmcTimerWaitCont/TimerCnt_reg[3]	->
+  uSmcCore/uSmcTimerWaitCont/TimerCnt_reg[4] (*)	->
+  uSmcCore/uSmcTimerWaitCont/TimerState_reg[0] (*)	->
+  uSmcCore/uSmcTimerWaitCont/TimerState_reg[1]	->
+  uSmcCore/uSmcTSM/SMCsEn_reg	->
+  uSmcCore/uSmcTSM/iSMBUSREQ_reg (*)	->
+  uSmcCore/uSmcTSM/iFastRdOp_reg (*)	->
+  uSmcCore/uSmcTSM/MemRdReqQ_reg	->
+  uSmcCore/uSmcTSM/RdRemain_reg (*)	->
+  uSmcCore/uSmcTSM/RdReqStr_reg	->
+  uSmcCore/uSmcTSM/WaitToutErrD1_reg	->
+  uSmcCore/uSmcTSM/RbleD1_reg (*)	->
+  uSmcCore/uSmcTSM/iBMRdTrans_reg (*)	->
+  uSmcCore/uSmcTSM/WrReqStr_reg (*)	->
+  uSmcCore/uSmcTSM/MemRdInd_reg (*)	->
+  uSmcCore/uSmcTSM/BufWrOvStrT_reg	->
+  uSmcCore/uSmcTSM/BusDeGnt_reg (*)	->
+  uSmcCore/uSmcTSM/iSmcState_reg[1] (*)	->
+  uSmcCore/uSmcTSM/iSmcState_reg[2] (*)	->
+  uSmcCore/uSmcTSM/BnkAddStrQ_reg[0]	->
+  uSmcCore/uSmcTSM/BnkAddStrQ_reg[1]	->
+  uSmcCore/uSmcTSM/BnkAddStrQ_reg[2]	->
+  uSmcCore/uSmcTSM/HTransRegQ_reg[0]	->
+  uSmcCore/uSmcTSM/HTransRegQ_reg[1]	->
+  uSmcCore/uSmcTSM/iSmcState_reg[0] (*)	->
+  uSmcCore/uSmcTSM/iSmcState_reg[3] (*)	->
+  uSmcCore/uSmcTSM/Wait1cyc_reg (*)	->
+  uSmcCore/uSmcEIB/iAhbRdEn_reg	->
+  uSmcCore/uSmcEIB/iMemRdOver_reg	->
+  uSmcCore/uSmcEIB/iMemWrOver_reg	->
+  uSmcCore/uSmcEIB/inSMOEN_reg (*)	->
+  uSmcCore/uSmcEIB/BufWrOvStrE_reg	->
+  uSmcCore/uSmcEIB/iBMlenEnd_reg	->
+  uSmcCore/uSmcEIB/iPosSMBLS_reg[0] (*)	->
+  uSmcCore/uSmcEIB/iPosSMBLS_reg[1] (*)	->
+  uSmcCore/uSmcEIB/iPosSMBLS_reg[2] (*)	->
+  uSmcCore/uSmcEIB/iPosSMBLS_reg[3] (*)	->
+  uSmcCore/uSmcEIB/inSMCDATAEN_reg[0] (*)	->
+  uSmcCore/uSmcEIB/inSMCDATAEN_reg[1] (*)	->
+  uSmcCore/uSmcEIB/inSMCDATAEN_reg[3] (*)	->
+  uSmcCore/uSmcEIB/iSMCS_reg[1] (*)	->
+  uSmcCore/uSmcEIB/iSMCS_reg[2] (*)	->
+  uSmcCore/uSmcEIB/iSMCS_reg[3] (*)	->
+  uSmcCore/uSmcEIB/iSMCS_reg[4] (*)	->
+  uSmcCore/uSmcEIB/iSMCS_reg[5] (*)	->
+  uSmcCore/uSmcEIB/iSMCS_reg[6] (*)	->
+  uSmcCore/uSmcEIB/iSMCS_reg[7] (*)	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[0]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[1] (*)	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[2] (*)	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[3] (*)	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[4] (*)	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[5]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[6]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[7]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[8]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[9]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[10]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[11]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[12]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[13]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[14]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[15]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[16]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[17]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[18]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[19]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[20]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[21]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[22]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[23]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[24]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[25]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[26]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[27]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[28]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[29]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[30]	->
+  uSmcCore/uSmcEIB/iSMCDATAOUT_reg[31]	->
+  uSmcCore/uSmcEIB/WrBufWrEn_reg[0]	->
+  uSmcCore/uSmcEIB/WrBufWrEn_reg[1]	->
+  uSmcCore/uSmcEIB/WrBufWrEn_reg[2]	->
+  uSmcCore/uSmcEIB/WrBufWrEn_reg[3] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[0] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[1] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[2] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[3] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[4] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[5] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[6] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[7] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[8] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[9] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[10] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[11] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[12] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[13] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[14] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[15] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[16] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[17] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[18] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[19] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[20] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[21] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[22] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[23] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[24] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[25] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[26] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[27] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[28] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[29] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[30] (*)	->
+  uSmcCore/uSmcEIB/iRdWrBuf_reg[31] (*)	->
+  uSmcCore/uSmcEIB/SmcAddrReg_reg[1]	->
+  uSmcCore/uSmcEIB/SmcAddrReg_reg[2]	->
+  uSmcCore/uSmcEIB/SmcAddrReg_reg[3]	->
+  uSmcCore/uSmcEIB/BurstAddr_reg[0]	->
+  uSmcCore/uSmcEIB/BurstAddr_reg[2] (*)	->
+  uSmcCore/uSmcEIB/BurstAddr_reg[3] (*)	->
+  uSmcCore/uSmcEIB/BurstAddr_reg[4]	->
+  uSmcCore/uSmcEIB/BurstAddr_reg[5]	->
+  uSmcCore/uSmcEIB/BurstAddr_reg[6] (*)	->
+  uSmcCore/uSmcEIB/BurstAddr_reg[7] (*)	->
+  uSmcCore/uSmcEIB/BurstAddr_reg[8] (*)	->
+  uSmcCore/uSmcEIB/BurstAddr_reg[9]	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[0] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[1] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[2]	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[3]	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[4]	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[5]	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[6]	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[7]	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[8]	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[9]	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[10] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[11] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[12] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[13] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[14] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[15] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[16] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[17] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[18] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[19] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[20] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[21] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[22] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[23] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[24] (*)	->
+  uSmcCore/uSmcEIB/iSMCADDR_reg[25] (*)	->
+  uSmcCore/uSmcEIB/iPosSMWEN_reg (*)	->
+  uSmcCore/uSmcEIB/iSMCS_reg[0] (*)	->
+  uSmcCore/uSmcEIB/inSMCDATAEN_reg[2] (*)	->
+  uSmcCore/uSmcEIB/BurstAddr_reg[1] (*)	->
+  uSmcCore/uSmcWrEnGen/PosBlsSel_reg (*)	->
+  uSmcCore/uSmcAhbif/iHREADYOUTMem_reg	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR7_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/WPErrReg2_reg (*)	->
+  uSmcCore/uSmcAhbif/HSizeErrR4_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR3_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR0_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/ToutErrR0_reg (*)	->
+  uSmcCore/uSmcAhbif/iMwPgm_reg (*)	->
+  uSmcCore/uSmcAhbif/BufWrOvStr_reg (*)	->
+  uSmcCore/uSmcAhbif/CrntMemWrBa_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBCR5_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR6_reg[3]	->
+  uSmcCore/uSmcAhbif/HSizeErr_reg	->
+  uSmcCore/uSmcAhbif/SMBCR4_reg[6]	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR2_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBCR0_reg[4]	->
+  uSmcCore/uSmcAhbif/MemRdTrans_reg (*)	->
+  uSmcCore/uSmcAhbif/BusyInBM_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBCR0_reg[6] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR2_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBCR4_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBCR5_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR6_reg[1]	->
+  uSmcCore/uSmcAhbif/HWriteReg_reg (*)	->
+  uSmcCore/uSmcAhbif/iMW_reg[0]	->
+  uSmcCore/uSmcAhbif/ToutErrR4_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR3_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/HSizeErrR0_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBCR0_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/HResetDet2_reg	->
+  uSmcCore/uSmcAhbif/iMemWrReq_reg	->
+  uSmcCore/uSmcAhbif/SMBCR5_reg[7]	->
+  uSmcCore/uSmcAhbif/iHREADYOUTReg_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR7_reg[2]	->
+  uSmcCore/uSmcAhbif/WPErrReg6_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBCR4_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR2_reg[6]	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR0_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBCR6_reg[4]	->
+  uSmcCore/uSmcAhbif/HSelREGD1_reg	->
+  uSmcCore/uSmcAhbif/AhbRdOver_reg	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR4_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/WPErrReg0_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR1_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR2_reg[2]	->
+  uSmcCore/uSmcAhbif/iBufWrOver_reg	->
+  uSmcCore/uSmcAhbif/ToutErrR2_reg (*)	->
+  uSmcCore/uSmcAhbif/PartWtdWr_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR5_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR6_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/HSizeErrR6_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR5_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/HSizeErrR2_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBCR6_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/ToutErrR6_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR1_reg[2]	->
+  uSmcCore/uSmcAhbif/WPErrReg4_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBCR2_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR4_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBCR6_reg[6]	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR0_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBCR2_reg[4]	->
+  uSmcCore/uSmcAhbif/RegWrEn_reg	->
+  uSmcCore/uSmcAhbif/WtdMemWr_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR4_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR6_reg[7]	->
+  uSmcCore/uSmcAhbif/RegRdEn_reg	->
+  uSmcCore/uSmcAhbif/iRemapReg_reg	->
+  uSmcCore/uSmcAhbif/HSelSmcD1_reg	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR0_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR2_reg[5]	->
+  uSmcCore/uSmcAhbif/WpErrTmp_reg	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR5_reg[1]	->
+  uSmcCore/uSmcAhbif/WPErrReg1_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBCR6_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR1_reg[3]	->
+  uSmcCore/uSmcAhbif/HSizeErrR7_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBCR2_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/ToutErrR3_reg (*)	->
+  uSmcCore/uSmcAhbif/ToutErrR7_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR1_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/iWaitEn_reg	->
+  uSmcCore/uSmcAhbif/SMBCR2_reg[3]	->
+  uSmcCore/uSmcAhbif/HSizeErrR3_reg (*)	->
+  uSmcCore/uSmcAhbif/HResetDet1_reg	->
+  uSmcCore/uSmcAhbif/WPErrReg5_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR5_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR6_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR2_reg[7]	->
+  uSmcCore/uSmcAhbif/WaitStatus_reg	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR0_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBCR6_reg[5]	->
+  uSmcCore/uSmcAhbif/WtdRegWr_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR4_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/iMW_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/AhbRdEnStr_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR3_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/WPErrReg3_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBCR0_reg[3]	->
+  uSmcCore/uSmcAhbif/CrntMemWr_reg (*)	->
+  uSmcCore/uSmcAhbif/ToutErrR1_reg	->
+  uSmcCore/uSmcAhbif/SMBCR5_reg[6] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR7_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/HSizeErrR5_reg (*)	->
+  uSmcCore/uSmcAhbif/Wait1Cyc_reg	->
+  uSmcCore/uSmcAhbif/SMBCR4_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBCR0_reg[7] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR2_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/AddrContStr_reg	->
+  uSmcCore/uSmcAhbif/SMBCR4_reg[5] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR5_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR6_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR5_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR6_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR4_reg[7]	->
+  uSmcCore/uSmcAhbif/WtdRegRd_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR2_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR0_reg[5] (*)	->
+  uSmcCore/uSmcAhbif/HSizeErrR1_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR7_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBCR4_reg[3]	->
+  uSmcCore/uSmcAhbif/ToutErrR5_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBCR5_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBWSTWENR3_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR0_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/WPErrReg7_reg (*)	->
+  uSmcCore/uSmcAhbif/BankAddr_reg[0]	->
+  uSmcCore/uSmcAhbif/BankAddr_reg[1]	->
+  uSmcCore/uSmcAhbif/BankAddr_reg[2]	->
+  uSmcCore/uSmcAhbif/iCSPol_reg[0]	->
+  uSmcCore/uSmcAhbif/iCSPol_reg[1]	->
+  uSmcCore/uSmcAhbif/iCSPol_reg[2]	->
+  uSmcCore/uSmcAhbif/iCSPol_reg[3]	->
+  uSmcCore/uSmcAhbif/iCSPol_reg[4]	->
+  uSmcCore/uSmcAhbif/iCSPol_reg[5]	->
+  uSmcCore/uSmcAhbif/iCSPol_reg[6]	->
+  uSmcCore/uSmcAhbif/iCSPol_reg[7]	->
+  uSmcCore/uSmcAhbif/SMBCR7_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR7_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBCR7_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBCR7_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBCR7_reg[5]	->
+  uSmcCore/uSmcAhbif/SMBCR7_reg[6] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR7_reg[7]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR7_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR7_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR7_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR7_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R7_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R7_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBWST2R7_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R7_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST2R7_reg[4] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R7_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R7_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R7_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R7_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R7_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR7_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBIDCYR7_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR7_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR7_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR6_reg[0]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR6_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR6_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR6_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R6_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R6_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R6_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R6_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST2R6_reg[4] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R6_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R6_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R6_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R6_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST1R6_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR6_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBIDCYR6_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR6_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBIDCYR6_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR5_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR5_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR5_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR5_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R5_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R5_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R5_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWST2R5_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST2R5_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBWST1R5_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R5_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R5_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R5_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST1R5_reg[4] (*)	->
+  uSmcCore/uSmcAhbif/SMBIDCYR5_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBIDCYR5_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR5_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR5_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR4_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR4_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR4_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR4_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST2R4_reg[0]	->
+  uSmcCore/uSmcAhbif/SMBWST2R4_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R4_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWST2R4_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R4_reg[4] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R4_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R4_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R4_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R4_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R4_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR4_reg[0]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR4_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR4_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBIDCYR4_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR3_reg[0]	->
+  uSmcCore/uSmcAhbif/SMBCR3_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBCR3_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBCR3_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBCR3_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBCR3_reg[5]	->
+  uSmcCore/uSmcAhbif/SMBCR3_reg[6]	->
+  uSmcCore/uSmcAhbif/SMBCR3_reg[7]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR3_reg[0]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR3_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR3_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR3_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST2R3_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R3_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R3_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWST2R3_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST2R3_reg[4] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R3_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R3_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R3_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWST1R3_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R3_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR3_reg[0]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR3_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBIDCYR3_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR3_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR2_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR2_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR2_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR2_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST2R2_reg[0]	->
+  uSmcCore/uSmcAhbif/SMBWST2R2_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBWST2R2_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWST2R2_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST2R2_reg[4] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R2_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R2_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R2_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R2_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST1R2_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR2_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBIDCYR2_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR2_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR2_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBCR1_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR1_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBCR1_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBCR1_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBCR1_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBCR1_reg[5]	->
+  uSmcCore/uSmcAhbif/SMBCR1_reg[6] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR1_reg[7] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR1_reg[0]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR1_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR1_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR1_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST2R1_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R1_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBWST2R1_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWST2R1_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST2R1_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBWST1R1_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R1_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R1_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWST1R1_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R1_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR1_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBIDCYR1_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR1_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR1_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR0_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR0_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR0_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWSTOENR0_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST2R0_reg[0]	->
+  uSmcCore/uSmcAhbif/SMBWST2R0_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBWST2R0_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWST2R0_reg[3]	->
+  uSmcCore/uSmcAhbif/SMBWST2R0_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBWST1R0_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R0_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R0_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBWST1R0_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/SMBWST1R0_reg[4]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR0_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/SMBIDCYR0_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR0_reg[2]	->
+  uSmcCore/uSmcAhbif/SMBIDCYR0_reg[3]	->
+  uSmcCore/uSmcAhbif/iHBurstReg_reg[0]	->
+  uSmcCore/uSmcAhbif/iHBurstReg_reg[1]	->
+  uSmcCore/uSmcAhbif/iHBurstReg_reg[2]	->
+  uSmcCore/uSmcAhbif/HBurstWtd_reg[0]	->
+  uSmcCore/uSmcAhbif/HBurstWtd_reg[1]	->
+  uSmcCore/uSmcAhbif/HBurstWtd_reg[2]	->
+  uSmcCore/uSmcAhbif/HBurstCrnt_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/HBurstCrnt_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/HBurstCrnt_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/iBnkAddStr_reg[0]	->
+  uSmcCore/uSmcAhbif/iBnkAddStr_reg[1]	->
+  uSmcCore/uSmcAhbif/iBnkAddStr_reg[2]	->
+  uSmcCore/uSmcAhbif/BnkAddWtd_reg[0]	->
+  uSmcCore/uSmcAhbif/BnkAddWtd_reg[1]	->
+  uSmcCore/uSmcAhbif/BnkAddWtd_reg[2]	->
+  uSmcCore/uSmcAhbif/HAddrReg_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/HAddrReg_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/HAddrReg_reg[4] (*)	->
+  uSmcCore/uSmcAhbif/HAddrReg_reg[5] (*)	->
+  uSmcCore/uSmcAhbif/HAddrReg_reg[6]	->
+  uSmcCore/uSmcAhbif/HAddrReg_reg[7] (*)	->
+  uSmcCore/uSmcAhbif/HAddrReg_reg[8]	->
+  uSmcCore/uSmcAhbif/HAddrReg_reg[9]	->
+  uSmcCore/uSmcAhbif/HAddrReg_reg[10]	->
+  uSmcCore/uSmcAhbif/HAddrReg_reg[11]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[0]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[1]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[2]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[3]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[4]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[5]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[6]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[7]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[8]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[9]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[10]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[11]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[12]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[13]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[14]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[15]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[16]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[17]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[18]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[19]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[20]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[21]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[22]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[23]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[24]	->
+  uSmcCore/uSmcAhbif/iHAddrWtd_reg[25]	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[3] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[4] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[5] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[6] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[7] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[8] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[9] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[10] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[11] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[12] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[13] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[14] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[15] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[16] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[17] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[18] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[19] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[20] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[21] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[22] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[23] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[24] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[25] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[26] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[27] (*)	->
+  uSmcCore/uSmcAhbif/iHAddrCrnt_reg[28] (*)	->
+  uSmcCore/uSmcAhbif/iHSizeReg_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/iHSizeReg_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/HSizeWtd_reg[0]	->
+  uSmcCore/uSmcAhbif/HSizeWtd_reg[1]	->
+  uSmcCore/uSmcAhbif/HSizeCrnt_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/HSizeCrnt_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/iHTransReg_reg[0]	->
+  uSmcCore/uSmcAhbif/iHTransReg_reg[1]	->
+  uSmcCore/uSmcAhbif/HTransWtd_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/HTransWtd_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/HTransCrnt_reg[0]	->
+  uSmcCore/uSmcAhbif/HTransCrnt_reg[1] (*)	->
+  uSmcCore/uSmcAhbif/iHRESPMem_reg[0] (*)	->
+  uSmcCore/uSmcAhbif/iHRESPReg_reg[1]	->
+  uSmcCore/uSmcAhbif/SMBCR4_reg[2] (*)	->
+  uSmcCore/uSmcAhbif/SMBCR5_reg[5] (*)	->
+  uSmcCore/uSmcAhbif/iHRESPReg_reg[0]	->
+  uSmcCore/uSmcAhbif/NewTrans_reg	->
+  uSmcCore/uSmcAhbif/WtdRegRdEn_reg (*)	->
+  uSmcCore/uSmcAhbif/SMBCR7_reg[0]	->
+  uSmcCore/uSmcAhbif/iHRESPMem_reg[1]	->
+  uSmcCore/uSmcAhbif/iWtdWrReq_reg	->
+  uSmcCore/uSmcAhbif/iMemRdReq_reg (*)	->
+  uSmcCore/uSmcAhbif/iWtdRdReq_reg	->
+  uSmcCore/uSmcAhbif/iMWCfgDone_reg (*)	->
+  uSmcCore/uSmcSynchroniser/CnclSmWaitS2_reg	->
+  uSmcCore/uSmcSynchroniser/SmWaitS2_reg (*)	->
+  uSmcCore/uSmcSynchroniser/CnclSmWaitS1_reg	->
+  uSmcCore/uSmcSynchroniser/SmWaitS1_reg (*)	->
+  uDBI/ArbState_reg[0]	->
+  uDBI/ArbState_reg[1]	->
+  uDBI/ArbState_reg[2] (*)	->
+  uDBI/ArbState_reg[3]	->
+  SCANOUTHCLK
+
+Complete scan chain #2 (SCANINnHCLK --> SCANOUTnHCLK) contains 5 cells:
+
+  SCANINnHCLK	->
+  uSmcCore/uSmcWrEnGen/nSMWEN_reg	->
+  uSmcCore/uSmcWrEnGen/NegSMBLS_reg[0]	->
+  uSmcCore/uSmcWrEnGen/NegSMBLS_reg[1]	->
+  uSmcCore/uSmcWrEnGen/NegSMBLS_reg[2]	->
+  uSmcCore/uSmcWrEnGen/NegSMBLS_reg[3]	->
+  SCANOUTnHCLK
+

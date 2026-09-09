@@ -1,0 +1,2838 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Mmci
+Version: 2000.05
+Date   : Wed Dec 20 11:39:32 2000
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Mmci' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0MmciRevAnd              0      0     0     0      0     0     0      6   0.00%
+u1MmciRevAnd              0      0     1     0      1     0     0      6   0.00%
+u2MmciRevAnd              0      0     1     0      0     0     0      6   0.00%
+u3MmciRevAnd              0      0     0     0      0     0     0      6   0.00%
+uMmciApbifReg           996      0     1     0      0     0     0   8974  11.10%
+uMmciCPSM               622      0     0     0      0     0     0   5732  10.85%
+uMmciClockAnd             0      0     0     0      0     0     0      6   0.00%
+uMmciClockMux             0      0     0     0      2     0     0      8   0.00%
+uMmciDPSM               917      0     0     0      1     0     0   8310  11.03%
+uMmciFIFOReg           1598      0     0     0      0     0     0  14556  10.98%
+uMmciFifoDmaCtr         352      3     0     0      7     0     0   3268  10.77%
+uMmciIntGen              22      0     0     0      0     0     0    248   8.87%
+uMmciOPReSync            27      0     0     0      0     0     0    234  11.54%
+uMmciPwrClkCtr           48      0     0     0      0     0     0    450  10.67%
+uMmciRegUpd              94      0     0     0      0     0     0    830  11.33%
+uMmciSynctoMCLK          48      0     0     0      0     0     0    464  10.34%
+uMmciSynctoPCLK          48      0     0     0      0     0     0    440  10.91%
+Mmci                   4804      3     3     0     11     0     0  43824  10.96%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Mmci
+Version: 2000.05
+Date   : Wed Dec 20 11:39:36 2000
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Mmci
+Version: 2000.05
+Date   : Wed Dec 20 11:39:36 2000
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain #1 (SCANINPCLK --> SCANOUTPCLK) contains 826 cells:
+
+  SCANINPCLK	->
+  uMmciFIFOReg/Reg15_reg_0	->
+  uMmciFIFOReg/Reg15_reg_1	->
+  uMmciFIFOReg/Reg15_reg_2	->
+  uMmciFIFOReg/Reg15_reg_3	->
+  uMmciFIFOReg/Reg15_reg_4	->
+  uMmciFIFOReg/Reg15_reg_5	->
+  uMmciFIFOReg/Reg15_reg_6	->
+  uMmciFIFOReg/Reg15_reg_7	->
+  uMmciFIFOReg/Reg15_reg_8	->
+  uMmciFIFOReg/Reg15_reg_9	->
+  uMmciFIFOReg/Reg15_reg_10	->
+  uMmciFIFOReg/Reg15_reg_11	->
+  uMmciFIFOReg/Reg15_reg_12	->
+  uMmciFIFOReg/Reg15_reg_13	->
+  uMmciFIFOReg/Reg15_reg_14	->
+  uMmciFIFOReg/Reg15_reg_15	->
+  uMmciFIFOReg/Reg15_reg_16	->
+  uMmciFIFOReg/Reg15_reg_17	->
+  uMmciFIFOReg/Reg15_reg_18	->
+  uMmciFIFOReg/Reg15_reg_19	->
+  uMmciFIFOReg/Reg15_reg_20	->
+  uMmciFIFOReg/Reg15_reg_21	->
+  uMmciFIFOReg/Reg15_reg_22	->
+  uMmciFIFOReg/Reg15_reg_23	->
+  uMmciFIFOReg/Reg15_reg_24	->
+  uMmciFIFOReg/Reg15_reg_25	->
+  uMmciFIFOReg/Reg15_reg_26	->
+  uMmciFIFOReg/Reg15_reg_27	->
+  uMmciFIFOReg/Reg15_reg_28	->
+  uMmciFIFOReg/Reg15_reg_29	->
+  uMmciFIFOReg/Reg15_reg_30	->
+  uMmciFIFOReg/Reg15_reg_31	->
+  uMmciFIFOReg/Reg14_reg_0	->
+  uMmciFIFOReg/Reg14_reg_1	->
+  uMmciFIFOReg/Reg14_reg_2	->
+  uMmciFIFOReg/Reg14_reg_3	->
+  uMmciFIFOReg/Reg14_reg_4	->
+  uMmciFIFOReg/Reg14_reg_5	->
+  uMmciFIFOReg/Reg14_reg_6	->
+  uMmciFIFOReg/Reg14_reg_7	->
+  uMmciFIFOReg/Reg14_reg_8	->
+  uMmciFIFOReg/Reg14_reg_9	->
+  uMmciFIFOReg/Reg14_reg_10	->
+  uMmciFIFOReg/Reg14_reg_11	->
+  uMmciFIFOReg/Reg14_reg_12	->
+  uMmciFIFOReg/Reg14_reg_13	->
+  uMmciFIFOReg/Reg14_reg_14	->
+  uMmciFIFOReg/Reg14_reg_15	->
+  uMmciFIFOReg/Reg14_reg_16	->
+  uMmciFIFOReg/Reg14_reg_17	->
+  uMmciFIFOReg/Reg14_reg_18	->
+  uMmciFIFOReg/Reg14_reg_19	->
+  uMmciFIFOReg/Reg14_reg_20	->
+  uMmciFIFOReg/Reg14_reg_21	->
+  uMmciFIFOReg/Reg14_reg_22	->
+  uMmciFIFOReg/Reg14_reg_23	->
+  uMmciFIFOReg/Reg14_reg_24	->
+  uMmciFIFOReg/Reg14_reg_25	->
+  uMmciFIFOReg/Reg14_reg_26	->
+  uMmciFIFOReg/Reg14_reg_27	->
+  uMmciFIFOReg/Reg14_reg_28	->
+  uMmciFIFOReg/Reg14_reg_29	->
+  uMmciFIFOReg/Reg14_reg_30	->
+  uMmciFIFOReg/Reg14_reg_31	->
+  uMmciFIFOReg/Reg13_reg_0	->
+  uMmciFIFOReg/Reg13_reg_1	->
+  uMmciFIFOReg/Reg13_reg_2	->
+  uMmciFIFOReg/Reg13_reg_3	->
+  uMmciFIFOReg/Reg13_reg_4	->
+  uMmciFIFOReg/Reg13_reg_5	->
+  uMmciFIFOReg/Reg13_reg_6	->
+  uMmciFIFOReg/Reg13_reg_7	->
+  uMmciFIFOReg/Reg13_reg_8	->
+  uMmciFIFOReg/Reg13_reg_9	->
+  uMmciFIFOReg/Reg13_reg_10	->
+  uMmciFIFOReg/Reg13_reg_11	->
+  uMmciFIFOReg/Reg13_reg_12	->
+  uMmciFIFOReg/Reg13_reg_13	->
+  uMmciFIFOReg/Reg13_reg_14	->
+  uMmciFIFOReg/Reg13_reg_15	->
+  uMmciFIFOReg/Reg13_reg_16	->
+  uMmciFIFOReg/Reg13_reg_17	->
+  uMmciFIFOReg/Reg13_reg_18	->
+  uMmciFIFOReg/Reg13_reg_19	->
+  uMmciFIFOReg/Reg13_reg_20	->
+  uMmciFIFOReg/Reg13_reg_21	->
+  uMmciFIFOReg/Reg13_reg_22	->
+  uMmciFIFOReg/Reg13_reg_23	->
+  uMmciFIFOReg/Reg13_reg_24	->
+  uMmciFIFOReg/Reg13_reg_25	->
+  uMmciFIFOReg/Reg13_reg_26	->
+  uMmciFIFOReg/Reg13_reg_27	->
+  uMmciFIFOReg/Reg13_reg_28	->
+  uMmciFIFOReg/Reg13_reg_29	->
+  uMmciFIFOReg/Reg13_reg_30	->
+  uMmciFIFOReg/Reg13_reg_31	->
+  uMmciFIFOReg/Reg12_reg_0	->
+  uMmciFIFOReg/Reg12_reg_1	->
+  uMmciFIFOReg/Reg12_reg_2	->
+  uMmciFIFOReg/Reg12_reg_3	->
+  uMmciFIFOReg/Reg12_reg_4	->
+  uMmciFIFOReg/Reg12_reg_5	->
+  uMmciFIFOReg/Reg12_reg_6	->
+  uMmciFIFOReg/Reg12_reg_7	->
+  uMmciFIFOReg/Reg12_reg_8	->
+  uMmciFIFOReg/Reg12_reg_9	->
+  uMmciFIFOReg/Reg12_reg_10	->
+  uMmciFIFOReg/Reg12_reg_11	->
+  uMmciFIFOReg/Reg12_reg_12	->
+  uMmciFIFOReg/Reg12_reg_13	->
+  uMmciFIFOReg/Reg12_reg_14	->
+  uMmciFIFOReg/Reg12_reg_15	->
+  uMmciFIFOReg/Reg12_reg_16	->
+  uMmciFIFOReg/Reg12_reg_17	->
+  uMmciFIFOReg/Reg12_reg_18	->
+  uMmciFIFOReg/Reg12_reg_19	->
+  uMmciFIFOReg/Reg12_reg_20	->
+  uMmciFIFOReg/Reg12_reg_21	->
+  uMmciFIFOReg/Reg12_reg_22	->
+  uMmciFIFOReg/Reg12_reg_23	->
+  uMmciFIFOReg/Reg12_reg_24	->
+  uMmciFIFOReg/Reg12_reg_25	->
+  uMmciFIFOReg/Reg12_reg_26	->
+  uMmciFIFOReg/Reg12_reg_27	->
+  uMmciFIFOReg/Reg12_reg_28	->
+  uMmciFIFOReg/Reg12_reg_29	->
+  uMmciFIFOReg/Reg12_reg_30	->
+  uMmciFIFOReg/Reg12_reg_31	->
+  uMmciFIFOReg/Reg11_reg_0	->
+  uMmciFIFOReg/Reg11_reg_1	->
+  uMmciFIFOReg/Reg11_reg_2	->
+  uMmciFIFOReg/Reg11_reg_3	->
+  uMmciFIFOReg/Reg11_reg_4	->
+  uMmciFIFOReg/Reg11_reg_5	->
+  uMmciFIFOReg/Reg11_reg_6	->
+  uMmciFIFOReg/Reg11_reg_7	->
+  uMmciFIFOReg/Reg11_reg_8	->
+  uMmciFIFOReg/Reg11_reg_9	->
+  uMmciFIFOReg/Reg11_reg_10	->
+  uMmciFIFOReg/Reg11_reg_11	->
+  uMmciFIFOReg/Reg11_reg_12	->
+  uMmciFIFOReg/Reg11_reg_13	->
+  uMmciFIFOReg/Reg11_reg_14	->
+  uMmciFIFOReg/Reg11_reg_15	->
+  uMmciFIFOReg/Reg11_reg_16	->
+  uMmciFIFOReg/Reg11_reg_17	->
+  uMmciFIFOReg/Reg11_reg_18	->
+  uMmciFIFOReg/Reg11_reg_19	->
+  uMmciFIFOReg/Reg11_reg_20	->
+  uMmciFIFOReg/Reg11_reg_21	->
+  uMmciFIFOReg/Reg11_reg_22	->
+  uMmciFIFOReg/Reg11_reg_23	->
+  uMmciFIFOReg/Reg11_reg_24	->
+  uMmciFIFOReg/Reg11_reg_25	->
+  uMmciFIFOReg/Reg11_reg_26	->
+  uMmciFIFOReg/Reg11_reg_27	->
+  uMmciFIFOReg/Reg11_reg_28	->
+  uMmciFIFOReg/Reg11_reg_29	->
+  uMmciFIFOReg/Reg11_reg_30	->
+  uMmciFIFOReg/Reg11_reg_31	->
+  uMmciFIFOReg/Reg10_reg_0	->
+  uMmciFIFOReg/Reg10_reg_1	->
+  uMmciFIFOReg/Reg10_reg_2	->
+  uMmciFIFOReg/Reg10_reg_3	->
+  uMmciFIFOReg/Reg10_reg_4	->
+  uMmciFIFOReg/Reg10_reg_5	->
+  uMmciFIFOReg/Reg10_reg_6	->
+  uMmciFIFOReg/Reg10_reg_7	->
+  uMmciFIFOReg/Reg10_reg_8	->
+  uMmciFIFOReg/Reg10_reg_9	->
+  uMmciFIFOReg/Reg10_reg_10	->
+  uMmciFIFOReg/Reg10_reg_11	->
+  uMmciFIFOReg/Reg10_reg_12	->
+  uMmciFIFOReg/Reg10_reg_13	->
+  uMmciFIFOReg/Reg10_reg_14	->
+  uMmciFIFOReg/Reg10_reg_15	->
+  uMmciFIFOReg/Reg10_reg_16	->
+  uMmciFIFOReg/Reg10_reg_17	->
+  uMmciFIFOReg/Reg10_reg_18	->
+  uMmciFIFOReg/Reg10_reg_19	->
+  uMmciFIFOReg/Reg10_reg_20	->
+  uMmciFIFOReg/Reg10_reg_21	->
+  uMmciFIFOReg/Reg10_reg_22	->
+  uMmciFIFOReg/Reg10_reg_23	->
+  uMmciFIFOReg/Reg10_reg_24	->
+  uMmciFIFOReg/Reg10_reg_25	->
+  uMmciFIFOReg/Reg10_reg_26	->
+  uMmciFIFOReg/Reg10_reg_27	->
+  uMmciFIFOReg/Reg10_reg_28	->
+  uMmciFIFOReg/Reg10_reg_29	->
+  uMmciFIFOReg/Reg10_reg_30	->
+  uMmciFIFOReg/Reg10_reg_31	->
+  uMmciFIFOReg/Reg9_reg_0	->
+  uMmciFIFOReg/Reg9_reg_1	->
+  uMmciFIFOReg/Reg9_reg_2	->
+  uMmciFIFOReg/Reg9_reg_3	->
+  uMmciFIFOReg/Reg9_reg_4	->
+  uMmciFIFOReg/Reg9_reg_5	->
+  uMmciFIFOReg/Reg9_reg_6	->
+  uMmciFIFOReg/Reg9_reg_7	->
+  uMmciFIFOReg/Reg9_reg_8	->
+  uMmciFIFOReg/Reg9_reg_9	->
+  uMmciFIFOReg/Reg9_reg_10	->
+  uMmciFIFOReg/Reg9_reg_11	->
+  uMmciFIFOReg/Reg9_reg_12	->
+  uMmciFIFOReg/Reg9_reg_13	->
+  uMmciFIFOReg/Reg9_reg_14	->
+  uMmciFIFOReg/Reg9_reg_15	->
+  uMmciFIFOReg/Reg9_reg_16	->
+  uMmciFIFOReg/Reg9_reg_17	->
+  uMmciFIFOReg/Reg9_reg_18	->
+  uMmciFIFOReg/Reg9_reg_19	->
+  uMmciFIFOReg/Reg9_reg_20	->
+  uMmciFIFOReg/Reg9_reg_21	->
+  uMmciFIFOReg/Reg9_reg_22	->
+  uMmciFIFOReg/Reg9_reg_23	->
+  uMmciFIFOReg/Reg9_reg_24	->
+  uMmciFIFOReg/Reg9_reg_25	->
+  uMmciFIFOReg/Reg9_reg_26	->
+  uMmciFIFOReg/Reg9_reg_27	->
+  uMmciFIFOReg/Reg9_reg_28	->
+  uMmciFIFOReg/Reg9_reg_29	->
+  uMmciFIFOReg/Reg9_reg_30	->
+  uMmciFIFOReg/Reg9_reg_31	->
+  uMmciFIFOReg/Reg8_reg_0	->
+  uMmciFIFOReg/Reg8_reg_1	->
+  uMmciFIFOReg/Reg8_reg_2	->
+  uMmciFIFOReg/Reg8_reg_3	->
+  uMmciFIFOReg/Reg8_reg_4	->
+  uMmciFIFOReg/Reg8_reg_5	->
+  uMmciFIFOReg/Reg8_reg_6	->
+  uMmciFIFOReg/Reg8_reg_7	->
+  uMmciFIFOReg/Reg8_reg_8	->
+  uMmciFIFOReg/Reg8_reg_9	->
+  uMmciFIFOReg/Reg8_reg_10	->
+  uMmciFIFOReg/Reg8_reg_11	->
+  uMmciFIFOReg/Reg8_reg_12	->
+  uMmciFIFOReg/Reg8_reg_13	->
+  uMmciFIFOReg/Reg8_reg_14	->
+  uMmciFIFOReg/Reg8_reg_15	->
+  uMmciFIFOReg/Reg8_reg_16	->
+  uMmciFIFOReg/Reg8_reg_17	->
+  uMmciFIFOReg/Reg8_reg_18	->
+  uMmciFIFOReg/Reg8_reg_19	->
+  uMmciFIFOReg/Reg8_reg_20	->
+  uMmciFIFOReg/Reg8_reg_21	->
+  uMmciFIFOReg/Reg8_reg_22	->
+  uMmciFIFOReg/Reg8_reg_23	->
+  uMmciFIFOReg/Reg8_reg_24	->
+  uMmciFIFOReg/Reg8_reg_25	->
+  uMmciFIFOReg/Reg8_reg_26	->
+  uMmciFIFOReg/Reg8_reg_27	->
+  uMmciFIFOReg/Reg8_reg_28	->
+  uMmciFIFOReg/Reg8_reg_29	->
+  uMmciFIFOReg/Reg8_reg_30	->
+  uMmciFIFOReg/Reg8_reg_31	->
+  uMmciFIFOReg/Reg7_reg_0	->
+  uMmciFIFOReg/Reg7_reg_1	->
+  uMmciFIFOReg/Reg7_reg_2	->
+  uMmciFIFOReg/Reg7_reg_3	->
+  uMmciFIFOReg/Reg7_reg_4	->
+  uMmciFIFOReg/Reg7_reg_5	->
+  uMmciFIFOReg/Reg7_reg_6	->
+  uMmciFIFOReg/Reg7_reg_7	->
+  uMmciFIFOReg/Reg7_reg_8	->
+  uMmciFIFOReg/Reg7_reg_9	->
+  uMmciFIFOReg/Reg7_reg_10	->
+  uMmciFIFOReg/Reg7_reg_11	->
+  uMmciFIFOReg/Reg7_reg_12	->
+  uMmciFIFOReg/Reg7_reg_13	->
+  uMmciFIFOReg/Reg7_reg_14	->
+  uMmciFIFOReg/Reg7_reg_15	->
+  uMmciFIFOReg/Reg7_reg_16	->
+  uMmciFIFOReg/Reg7_reg_17	->
+  uMmciFIFOReg/Reg7_reg_18	->
+  uMmciFIFOReg/Reg7_reg_19	->
+  uMmciFIFOReg/Reg7_reg_20	->
+  uMmciFIFOReg/Reg7_reg_21	->
+  uMmciFIFOReg/Reg7_reg_22	->
+  uMmciFIFOReg/Reg7_reg_23	->
+  uMmciFIFOReg/Reg7_reg_24	->
+  uMmciFIFOReg/Reg7_reg_25	->
+  uMmciFIFOReg/Reg7_reg_26	->
+  uMmciFIFOReg/Reg7_reg_27	->
+  uMmciFIFOReg/Reg7_reg_28	->
+  uMmciFIFOReg/Reg7_reg_29	->
+  uMmciFIFOReg/Reg7_reg_30	->
+  uMmciFIFOReg/Reg7_reg_31	->
+  uMmciFIFOReg/Reg6_reg_0	->
+  uMmciFIFOReg/Reg6_reg_1	->
+  uMmciFIFOReg/Reg6_reg_2	->
+  uMmciFIFOReg/Reg6_reg_3	->
+  uMmciFIFOReg/Reg6_reg_4	->
+  uMmciFIFOReg/Reg6_reg_5	->
+  uMmciFIFOReg/Reg6_reg_6	->
+  uMmciFIFOReg/Reg6_reg_7	->
+  uMmciFIFOReg/Reg6_reg_8	->
+  uMmciFIFOReg/Reg6_reg_9	->
+  uMmciFIFOReg/Reg6_reg_10	->
+  uMmciFIFOReg/Reg6_reg_11	->
+  uMmciFIFOReg/Reg6_reg_12	->
+  uMmciFIFOReg/Reg6_reg_13	->
+  uMmciFIFOReg/Reg6_reg_14	->
+  uMmciFIFOReg/Reg6_reg_15	->
+  uMmciFIFOReg/Reg6_reg_16	->
+  uMmciFIFOReg/Reg6_reg_17	->
+  uMmciFIFOReg/Reg6_reg_18	->
+  uMmciFIFOReg/Reg6_reg_19	->
+  uMmciFIFOReg/Reg6_reg_20	->
+  uMmciFIFOReg/Reg6_reg_21	->
+  uMmciFIFOReg/Reg6_reg_22	->
+  uMmciFIFOReg/Reg6_reg_23	->
+  uMmciFIFOReg/Reg6_reg_24	->
+  uMmciFIFOReg/Reg6_reg_25	->
+  uMmciFIFOReg/Reg6_reg_26	->
+  uMmciFIFOReg/Reg6_reg_27	->
+  uMmciFIFOReg/Reg6_reg_28	->
+  uMmciFIFOReg/Reg6_reg_29	->
+  uMmciFIFOReg/Reg6_reg_30	->
+  uMmciFIFOReg/Reg6_reg_31	->
+  uMmciFIFOReg/Reg5_reg_0	->
+  uMmciFIFOReg/Reg5_reg_1	->
+  uMmciFIFOReg/Reg5_reg_2	->
+  uMmciFIFOReg/Reg5_reg_3	->
+  uMmciFIFOReg/Reg5_reg_4	->
+  uMmciFIFOReg/Reg5_reg_5	->
+  uMmciFIFOReg/Reg5_reg_6	->
+  uMmciFIFOReg/Reg5_reg_7	->
+  uMmciFIFOReg/Reg5_reg_8	->
+  uMmciFIFOReg/Reg5_reg_9	->
+  uMmciFIFOReg/Reg5_reg_10	->
+  uMmciFIFOReg/Reg5_reg_11	->
+  uMmciFIFOReg/Reg5_reg_12	->
+  uMmciFIFOReg/Reg5_reg_13	->
+  uMmciFIFOReg/Reg5_reg_14	->
+  uMmciFIFOReg/Reg5_reg_15	->
+  uMmciFIFOReg/Reg5_reg_16	->
+  uMmciFIFOReg/Reg5_reg_17	->
+  uMmciFIFOReg/Reg5_reg_18	->
+  uMmciFIFOReg/Reg5_reg_19	->
+  uMmciFIFOReg/Reg5_reg_20	->
+  uMmciFIFOReg/Reg5_reg_21	->
+  uMmciFIFOReg/Reg5_reg_22	->
+  uMmciFIFOReg/Reg5_reg_23	->
+  uMmciFIFOReg/Reg5_reg_24	->
+  uMmciFIFOReg/Reg5_reg_25	->
+  uMmciFIFOReg/Reg5_reg_26	->
+  uMmciFIFOReg/Reg5_reg_27	->
+  uMmciFIFOReg/Reg5_reg_28	->
+  uMmciFIFOReg/Reg5_reg_29	->
+  uMmciFIFOReg/Reg5_reg_30	->
+  uMmciFIFOReg/Reg5_reg_31	->
+  uMmciFIFOReg/Reg4_reg_0	->
+  uMmciFIFOReg/Reg4_reg_1	->
+  uMmciFIFOReg/Reg4_reg_2	->
+  uMmciFIFOReg/Reg4_reg_3	->
+  uMmciFIFOReg/Reg4_reg_4	->
+  uMmciFIFOReg/Reg4_reg_5	->
+  uMmciFIFOReg/Reg4_reg_6	->
+  uMmciFIFOReg/Reg4_reg_7	->
+  uMmciFIFOReg/Reg4_reg_8	->
+  uMmciFIFOReg/Reg4_reg_9	->
+  uMmciFIFOReg/Reg4_reg_10	->
+  uMmciFIFOReg/Reg4_reg_11	->
+  uMmciFIFOReg/Reg4_reg_12	->
+  uMmciFIFOReg/Reg4_reg_13	->
+  uMmciFIFOReg/Reg4_reg_14	->
+  uMmciFIFOReg/Reg4_reg_15	->
+  uMmciFIFOReg/Reg4_reg_16	->
+  uMmciFIFOReg/Reg4_reg_17	->
+  uMmciFIFOReg/Reg4_reg_18	->
+  uMmciFIFOReg/Reg4_reg_19	->
+  uMmciFIFOReg/Reg4_reg_20	->
+  uMmciFIFOReg/Reg4_reg_21	->
+  uMmciFIFOReg/Reg4_reg_22	->
+  uMmciFIFOReg/Reg4_reg_23	->
+  uMmciFIFOReg/Reg4_reg_24	->
+  uMmciFIFOReg/Reg4_reg_25	->
+  uMmciFIFOReg/Reg4_reg_26	->
+  uMmciFIFOReg/Reg4_reg_27	->
+  uMmciFIFOReg/Reg4_reg_28	->
+  uMmciFIFOReg/Reg4_reg_29	->
+  uMmciFIFOReg/Reg4_reg_30	->
+  uMmciFIFOReg/Reg4_reg_31	->
+  uMmciFIFOReg/Reg3_reg_0	->
+  uMmciFIFOReg/Reg3_reg_1	->
+  uMmciFIFOReg/Reg3_reg_2	->
+  uMmciFIFOReg/Reg3_reg_3	->
+  uMmciFIFOReg/Reg3_reg_4	->
+  uMmciFIFOReg/Reg3_reg_5	->
+  uMmciFIFOReg/Reg3_reg_6	->
+  uMmciFIFOReg/Reg3_reg_7	->
+  uMmciFIFOReg/Reg3_reg_8	->
+  uMmciFIFOReg/Reg3_reg_9	->
+  uMmciFIFOReg/Reg3_reg_10	->
+  uMmciFIFOReg/Reg3_reg_11	->
+  uMmciFIFOReg/Reg3_reg_12	->
+  uMmciFIFOReg/Reg3_reg_13	->
+  uMmciFIFOReg/Reg3_reg_14	->
+  uMmciFIFOReg/Reg3_reg_15	->
+  uMmciFIFOReg/Reg3_reg_16	->
+  uMmciFIFOReg/Reg3_reg_17	->
+  uMmciFIFOReg/Reg3_reg_18	->
+  uMmciFIFOReg/Reg3_reg_19	->
+  uMmciFIFOReg/Reg3_reg_20	->
+  uMmciFIFOReg/Reg3_reg_21	->
+  uMmciFIFOReg/Reg3_reg_22	->
+  uMmciFIFOReg/Reg3_reg_23	->
+  uMmciFIFOReg/Reg3_reg_24	->
+  uMmciFIFOReg/Reg3_reg_25	->
+  uMmciFIFOReg/Reg3_reg_26	->
+  uMmciFIFOReg/Reg3_reg_27	->
+  uMmciFIFOReg/Reg3_reg_28	->
+  uMmciFIFOReg/Reg3_reg_29	->
+  uMmciFIFOReg/Reg3_reg_30	->
+  uMmciFIFOReg/Reg3_reg_31	->
+  uMmciFIFOReg/Reg2_reg_0	->
+  uMmciFIFOReg/Reg2_reg_1	->
+  uMmciFIFOReg/Reg2_reg_2	->
+  uMmciFIFOReg/Reg2_reg_3	->
+  uMmciFIFOReg/Reg2_reg_4	->
+  uMmciFIFOReg/Reg2_reg_5	->
+  uMmciFIFOReg/Reg2_reg_6	->
+  uMmciFIFOReg/Reg2_reg_7	->
+  uMmciFIFOReg/Reg2_reg_8	->
+  uMmciFIFOReg/Reg2_reg_9	->
+  uMmciFIFOReg/Reg2_reg_10	->
+  uMmciFIFOReg/Reg2_reg_11	->
+  uMmciFIFOReg/Reg2_reg_12	->
+  uMmciFIFOReg/Reg2_reg_13	->
+  uMmciFIFOReg/Reg2_reg_14	->
+  uMmciFIFOReg/Reg2_reg_15	->
+  uMmciFIFOReg/Reg2_reg_16	->
+  uMmciFIFOReg/Reg2_reg_17	->
+  uMmciFIFOReg/Reg2_reg_18	->
+  uMmciFIFOReg/Reg2_reg_19	->
+  uMmciFIFOReg/Reg2_reg_20	->
+  uMmciFIFOReg/Reg2_reg_21	->
+  uMmciFIFOReg/Reg2_reg_22	->
+  uMmciFIFOReg/Reg2_reg_23	->
+  uMmciFIFOReg/Reg2_reg_24	->
+  uMmciFIFOReg/Reg2_reg_25	->
+  uMmciFIFOReg/Reg2_reg_26	->
+  uMmciFIFOReg/Reg2_reg_27	->
+  uMmciFIFOReg/Reg2_reg_28	->
+  uMmciFIFOReg/Reg2_reg_29	->
+  uMmciFIFOReg/Reg2_reg_30	->
+  uMmciFIFOReg/Reg2_reg_31	->
+  uMmciFIFOReg/Reg1_reg_0	->
+  uMmciFIFOReg/Reg1_reg_1	->
+  uMmciFIFOReg/Reg1_reg_2	->
+  uMmciFIFOReg/Reg1_reg_3	->
+  uMmciFIFOReg/Reg1_reg_4	->
+  uMmciFIFOReg/Reg1_reg_5	->
+  uMmciFIFOReg/Reg1_reg_6	->
+  uMmciFIFOReg/Reg1_reg_7	->
+  uMmciFIFOReg/Reg1_reg_8	->
+  uMmciFIFOReg/Reg1_reg_9	->
+  uMmciFIFOReg/Reg1_reg_10	->
+  uMmciFIFOReg/Reg1_reg_11	->
+  uMmciFIFOReg/Reg1_reg_12	->
+  uMmciFIFOReg/Reg1_reg_13	->
+  uMmciFIFOReg/Reg1_reg_14	->
+  uMmciFIFOReg/Reg1_reg_15	->
+  uMmciFIFOReg/Reg1_reg_16	->
+  uMmciFIFOReg/Reg1_reg_17	->
+  uMmciFIFOReg/Reg1_reg_18	->
+  uMmciFIFOReg/Reg1_reg_19	->
+  uMmciFIFOReg/Reg1_reg_20	->
+  uMmciFIFOReg/Reg1_reg_21	->
+  uMmciFIFOReg/Reg1_reg_22	->
+  uMmciFIFOReg/Reg1_reg_23	->
+  uMmciFIFOReg/Reg1_reg_24	->
+  uMmciFIFOReg/Reg1_reg_25	->
+  uMmciFIFOReg/Reg1_reg_26	->
+  uMmciFIFOReg/Reg1_reg_27	->
+  uMmciFIFOReg/Reg1_reg_28	->
+  uMmciFIFOReg/Reg1_reg_29	->
+  uMmciFIFOReg/Reg1_reg_30	->
+  uMmciFIFOReg/Reg1_reg_31	->
+  uMmciFIFOReg/Reg0_reg_0	->
+  uMmciFIFOReg/Reg0_reg_1	->
+  uMmciFIFOReg/Reg0_reg_2	->
+  uMmciFIFOReg/Reg0_reg_3	->
+  uMmciFIFOReg/Reg0_reg_4	->
+  uMmciFIFOReg/Reg0_reg_5	->
+  uMmciFIFOReg/Reg0_reg_6	->
+  uMmciFIFOReg/Reg0_reg_7	->
+  uMmciFIFOReg/Reg0_reg_8	->
+  uMmciFIFOReg/Reg0_reg_9	->
+  uMmciFIFOReg/Reg0_reg_10	->
+  uMmciFIFOReg/Reg0_reg_11	->
+  uMmciFIFOReg/Reg0_reg_12	->
+  uMmciFIFOReg/Reg0_reg_13	->
+  uMmciFIFOReg/Reg0_reg_14	->
+  uMmciFIFOReg/Reg0_reg_15	->
+  uMmciFIFOReg/Reg0_reg_16	->
+  uMmciFIFOReg/Reg0_reg_17	->
+  uMmciFIFOReg/Reg0_reg_18	->
+  uMmciFIFOReg/Reg0_reg_19	->
+  uMmciFIFOReg/Reg0_reg_20	->
+  uMmciFIFOReg/Reg0_reg_21	->
+  uMmciFIFOReg/Reg0_reg_22	->
+  uMmciFIFOReg/Reg0_reg_23	->
+  uMmciFIFOReg/Reg0_reg_24	->
+  uMmciFIFOReg/Reg0_reg_25	->
+  uMmciFIFOReg/Reg0_reg_26	->
+  uMmciFIFOReg/Reg0_reg_27	->
+  uMmciFIFOReg/Reg0_reg_28	->
+  uMmciFIFOReg/Reg0_reg_29	->
+  uMmciFIFOReg/Reg0_reg_30	->
+  uMmciFIFOReg/Reg0_reg_31	->
+  uMmciFifoDmaCtr/DelRxActiveSync_reg	->
+  uMmciFifoDmaCtr/iRxOverrun_reg	->
+  uMmciFifoDmaCtr/DelTxFRdIncSync_reg	->
+  uMmciFifoDmaCtr/Wrap_reg (*)	->
+  uMmciFifoDmaCtr/iDMALSREQ_reg (*)	->
+  uMmciFifoDmaCtr/DelRxWrEnSync_reg	->
+  uMmciFifoDmaCtr/FifoEmpty_reg	->
+  uMmciFifoDmaCtr/TxDataAvl_reg (*)	->
+  uMmciFifoDmaCtr/FifoFull_reg (*)	->
+  uMmciFifoDmaCtr/RxFifoEmpty_reg (*)	->
+  uMmciFifoDmaCtr/iRxWrDone_reg	->
+  uMmciFifoDmaCtr/iDMALBREQ_reg (*)	->
+  uMmciFifoDmaCtr/DelTxActive_reg	->
+  uMmciFifoDmaCtr/DelDATEnUpd_reg	->
+  uMmciFifoDmaCtr/iDMABREQ_reg (*)	->
+  uMmciFifoDmaCtr/RxFifoHF_reg	->
+  uMmciFifoDmaCtr/TxFifoHE_reg (*)	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_0	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_1	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_2 (*)	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_3 (*)	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_4 (*)	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_5	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_6	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_7	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_8	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_9	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_10	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_11	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_12	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_13	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_14	->
+  uMmciFifoDmaCtr/iRdPtr_reg_0 (*)	->
+  uMmciFifoDmaCtr/iRdPtr_reg_2 (*)	->
+  uMmciFifoDmaCtr/iRdPtr_reg_3 (*)	->
+  uMmciFifoDmaCtr/iWrPtr_reg_0 (*)	->
+  uMmciFifoDmaCtr/iWrPtr_reg_2 (*)	->
+  uMmciFifoDmaCtr/iWrPtr_reg_3 (*)	->
+  uMmciFifoDmaCtr/iRdPtr_reg_1 (*)	->
+  uMmciFifoDmaCtr/iDMASREQ_reg (*)	->
+  uMmciFifoDmaCtr/iWrPtr_reg_1 (*)	->
+  uMmciSynctoPCLK/RxWrEnSync_reg	->
+  uMmciSynctoPCLK/CSentSync1_reg	->
+  uMmciSynctoPCLK/DCtrDoneSync1_reg	->
+  uMmciSynctoPCLK/PowerUpdDoneSync_reg	->
+  uMmciSynctoPCLK/RxWrEnSync1_reg	->
+  uMmciSynctoPCLK/DBEndSync1_reg	->
+  uMmciSynctoPCLK/PowerDoneSync1_reg	->
+  uMmciSynctoPCLK/RxActiveSync_reg	->
+  uMmciSynctoPCLK/CSentSync_reg	->
+  uMmciSynctoPCLK/TxRdPtrIncSync1_reg	->
+  uMmciSynctoPCLK/DToutSync1_reg	->
+  uMmciSynctoPCLK/TxUndSync1_reg	->
+  uMmciSynctoPCLK/DCtrUpdDoneSync_reg	->
+  uMmciSynctoPCLK/DToutSync_reg	->
+  uMmciSynctoPCLK/ClockDoneSync1_reg	->
+  uMmciSynctoPCLK/TxActClrSync_reg	->
+  uMmciSynctoPCLK/DEndSync_reg	->
+  uMmciSynctoPCLK/DCrcFSync1_reg	->
+  uMmciSynctoPCLK/CCrcFSync_reg	->
+  uMmciSynctoPCLK/CmdActClrSync1_reg	->
+  uMmciSynctoPCLK/TxActClrSync1_reg	->
+  uMmciSynctoPCLK/DCrcFSync_reg	->
+  uMmciSynctoPCLK/DEndSync1_reg	->
+  uMmciSynctoPCLK/CRspESync_reg	->
+  uMmciSynctoPCLK/CmdActClrSync_reg	->
+  uMmciSynctoPCLK/CToutSync_reg	->
+  uMmciSynctoPCLK/TxRdPtrIncSync_reg	->
+  uMmciSynctoPCLK/DBEndSync_reg	->
+  uMmciSynctoPCLK/CmdUpdDoneSync_reg	->
+  uMmciSynctoPCLK/TxUndSync_reg	->
+  uMmciSynctoPCLK/CCrcFSync1_reg	->
+  uMmciSynctoPCLK/ClockUpdDoneSync_reg	->
+  uMmciSynctoPCLK/CRspESync1_reg	->
+  uMmciSynctoPCLK/CmdDoneSync1_reg	->
+  uMmciSynctoPCLK/RxActiveSync1_reg	->
+  uMmciSynctoPCLK/CToutSync1_reg	->
+  uMmciApbifReg/CMDEnUpd_reg	->
+  uMmciApbifReg/MMCITCR_reg_5	->
+  uMmciApbifReg/DATEnUpd_reg	->
+  uMmciApbifReg/DelTxActClrSync_reg	->
+  uMmciApbifReg/iCRspEClr_reg	->
+  uMmciApbifReg/iMMCIITIP_reg	->
+  uMmciApbifReg/MMCITCR_reg_2	->
+  uMmciApbifReg/iDBEndClr_reg	->
+  uMmciApbifReg/iCmdActive_reg (*)	->
+  uMmciApbifReg/iCToutClr_reg	->
+  uMmciApbifReg/MMCITCR_reg_3 (*)	->
+  uMmciApbifReg/iDCrcFClr_reg	->
+  uMmciApbifReg/iClockUpd_reg	->
+  uMmciApbifReg/MMCITCR_reg_4	->
+  uMmciApbifReg/iTxUndClr_reg	->
+  uMmciApbifReg/DelCmdActClrSync_reg	->
+  uMmciApbifReg/iCmdUpd_reg	->
+  uMmciApbifReg/iDToutClr_reg	->
+  uMmciApbifReg/iCCrcFClr_reg	->
+  uMmciApbifReg/IntDATEnUpd_reg	->
+  uMmciApbifReg/IntCMDEnUpd_reg	->
+  uMmciApbifReg/iPowerUpd_reg	->
+  uMmciApbifReg/iDCtrUpd_reg	->
+  uMmciApbifReg/MMCITCR_reg_1 (*)	->
+  uMmciApbifReg/iTxActive_reg	->
+  uMmciApbifReg/MMCITCR_reg_0	->
+  uMmciApbifReg/iMMCITxFIFOWr_reg	->
+  uMmciApbifReg/iDEndClr_reg	->
+  uMmciApbifReg/iCSentClr_reg	->
+  uMmciApbifReg/iMMCIITOP_reg_0	->
+  uMmciApbifReg/iMMCIITOP_reg_1	->
+  uMmciApbifReg/iMMCIITOP_reg_2	->
+  uMmciApbifReg/iMMCIITOP_reg_3	->
+  uMmciApbifReg/iMMCIITOP_reg_4	->
+  uMmciApbifReg/iMMCIITOP_reg_5	->
+  uMmciApbifReg/iMMCIITOP_reg_6	->
+  uMmciApbifReg/iMMCIITOP_reg_8 (*)	->
+  uMmciApbifReg/iMMCIITOP_reg_9 (*)	->
+  uMmciApbifReg/iMMCIITOP_reg_10	->
+  uMmciApbifReg/iMMCIITOP_reg_11 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_0 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_1	->
+  uMmciApbifReg/iMMCIMask1_reg_2	->
+  uMmciApbifReg/iMMCIMask1_reg_3 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_4 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_5 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_6 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_7	->
+  uMmciApbifReg/iMMCIMask1_reg_8	->
+  uMmciApbifReg/iMMCIMask1_reg_10 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_11 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_12	->
+  uMmciApbifReg/iMMCIMask1_reg_13	->
+  uMmciApbifReg/iMMCIMask1_reg_14	->
+  uMmciApbifReg/iMMCIMask1_reg_15	->
+  uMmciApbifReg/iMMCIMask1_reg_16	->
+  uMmciApbifReg/iMMCIMask1_reg_17	->
+  uMmciApbifReg/iMMCIMask1_reg_18	->
+  uMmciApbifReg/iMMCIMask1_reg_19	->
+  uMmciApbifReg/iMMCIMask1_reg_20	->
+  uMmciApbifReg/iMMCIMask1_reg_21	->
+  uMmciApbifReg/iMMCIMask0_reg_0	->
+  uMmciApbifReg/iMMCIMask0_reg_1	->
+  uMmciApbifReg/iMMCIMask0_reg_2	->
+  uMmciApbifReg/iMMCIMask0_reg_3 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_4	->
+  uMmciApbifReg/iMMCIMask0_reg_5 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_6 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_7	->
+  uMmciApbifReg/iMMCIMask0_reg_8 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_9	->
+  uMmciApbifReg/iMMCIMask0_reg_10 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_11 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_12	->
+  uMmciApbifReg/iMMCIMask0_reg_13	->
+  uMmciApbifReg/iMMCIMask0_reg_14	->
+  uMmciApbifReg/iMMCIMask0_reg_15	->
+  uMmciApbifReg/iMMCIMask0_reg_16	->
+  uMmciApbifReg/iMMCIMask0_reg_17	->
+  uMmciApbifReg/iMMCIMask0_reg_18	->
+  uMmciApbifReg/iMMCIMask0_reg_19	->
+  uMmciApbifReg/iMMCIMask0_reg_20	->
+  uMmciApbifReg/iMMCIMask0_reg_21	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_0	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_1	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_2	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_3 (*)	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_4	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_5	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_6	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_7	->
+  uMmciApbifReg/iMMCIDataLength_reg_0 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_1	->
+  uMmciApbifReg/iMMCIDataLength_reg_2 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_3	->
+  uMmciApbifReg/iMMCIDataLength_reg_4 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_5 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_6 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_7 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_8 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_9	->
+  uMmciApbifReg/iMMCIDataLength_reg_10	->
+  uMmciApbifReg/iMMCIDataLength_reg_11 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_12	->
+  uMmciApbifReg/iMMCIDataLength_reg_13	->
+  uMmciApbifReg/iMMCIDataLength_reg_14	->
+  uMmciApbifReg/iMMCIDataLength_reg_15	->
+  uMmciApbifReg/iMMCIDataTimer_reg_0	->
+  uMmciApbifReg/iMMCIDataTimer_reg_1	->
+  uMmciApbifReg/iMMCIDataTimer_reg_2	->
+  uMmciApbifReg/iMMCIDataTimer_reg_3	->
+  uMmciApbifReg/iMMCIDataTimer_reg_4	->
+  uMmciApbifReg/iMMCIDataTimer_reg_5	->
+  uMmciApbifReg/iMMCIDataTimer_reg_6	->
+  uMmciApbifReg/iMMCIDataTimer_reg_7	->
+  uMmciApbifReg/iMMCIDataTimer_reg_8	->
+  uMmciApbifReg/iMMCIDataTimer_reg_9	->
+  uMmciApbifReg/iMMCIDataTimer_reg_10	->
+  uMmciApbifReg/iMMCIDataTimer_reg_11	->
+  uMmciApbifReg/iMMCIDataTimer_reg_12	->
+  uMmciApbifReg/iMMCIDataTimer_reg_13	->
+  uMmciApbifReg/iMMCIDataTimer_reg_14	->
+  uMmciApbifReg/iMMCIDataTimer_reg_15	->
+  uMmciApbifReg/iMMCIDataTimer_reg_16	->
+  uMmciApbifReg/iMMCIDataTimer_reg_17	->
+  uMmciApbifReg/iMMCIDataTimer_reg_18	->
+  uMmciApbifReg/iMMCIDataTimer_reg_19	->
+  uMmciApbifReg/iMMCIDataTimer_reg_20	->
+  uMmciApbifReg/iMMCIDataTimer_reg_21	->
+  uMmciApbifReg/iMMCIDataTimer_reg_22	->
+  uMmciApbifReg/iMMCIDataTimer_reg_23	->
+  uMmciApbifReg/iMMCIDataTimer_reg_24	->
+  uMmciApbifReg/iMMCIDataTimer_reg_25	->
+  uMmciApbifReg/iMMCIDataTimer_reg_26	->
+  uMmciApbifReg/iMMCIDataTimer_reg_27	->
+  uMmciApbifReg/iMMCIDataTimer_reg_28	->
+  uMmciApbifReg/iMMCIDataTimer_reg_29	->
+  uMmciApbifReg/iMMCIDataTimer_reg_30	->
+  uMmciApbifReg/iMMCIDataTimer_reg_31	->
+  uMmciApbifReg/iMMCICommand_reg_0	->
+  uMmciApbifReg/iMMCICommand_reg_1	->
+  uMmciApbifReg/iMMCICommand_reg_2	->
+  uMmciApbifReg/iMMCICommand_reg_3	->
+  uMmciApbifReg/iMMCICommand_reg_4	->
+  uMmciApbifReg/iMMCICommand_reg_5	->
+  uMmciApbifReg/iMMCICommand_reg_6	->
+  uMmciApbifReg/iMMCICommand_reg_7	->
+  uMmciApbifReg/iMMCICommand_reg_8	->
+  uMmciApbifReg/iMMCICommand_reg_9	->
+  uMmciApbifReg/iMMCICommand_reg_10	->
+  uMmciApbifReg/iMMCIArgument_reg_0	->
+  uMmciApbifReg/iMMCIArgument_reg_1	->
+  uMmciApbifReg/iMMCIArgument_reg_2	->
+  uMmciApbifReg/iMMCIArgument_reg_3	->
+  uMmciApbifReg/iMMCIArgument_reg_4	->
+  uMmciApbifReg/iMMCIArgument_reg_5	->
+  uMmciApbifReg/iMMCIArgument_reg_6	->
+  uMmciApbifReg/iMMCIArgument_reg_7	->
+  uMmciApbifReg/iMMCIArgument_reg_8	->
+  uMmciApbifReg/iMMCIArgument_reg_9	->
+  uMmciApbifReg/iMMCIArgument_reg_10	->
+  uMmciApbifReg/iMMCIArgument_reg_11	->
+  uMmciApbifReg/iMMCIArgument_reg_12	->
+  uMmciApbifReg/iMMCIArgument_reg_13	->
+  uMmciApbifReg/iMMCIArgument_reg_14	->
+  uMmciApbifReg/iMMCIArgument_reg_15	->
+  uMmciApbifReg/iMMCIArgument_reg_16	->
+  uMmciApbifReg/iMMCIArgument_reg_17	->
+  uMmciApbifReg/iMMCIArgument_reg_18	->
+  uMmciApbifReg/iMMCIArgument_reg_19	->
+  uMmciApbifReg/iMMCIArgument_reg_20	->
+  uMmciApbifReg/iMMCIArgument_reg_21	->
+  uMmciApbifReg/iMMCIArgument_reg_22	->
+  uMmciApbifReg/iMMCIArgument_reg_23	->
+  uMmciApbifReg/iMMCIArgument_reg_24	->
+  uMmciApbifReg/iMMCIArgument_reg_25	->
+  uMmciApbifReg/iMMCIArgument_reg_26	->
+  uMmciApbifReg/iMMCIArgument_reg_27	->
+  uMmciApbifReg/iMMCIArgument_reg_28	->
+  uMmciApbifReg/iMMCIArgument_reg_29	->
+  uMmciApbifReg/iMMCIArgument_reg_30	->
+  uMmciApbifReg/iMMCIArgument_reg_31	->
+  uMmciApbifReg/iMMCIClock_reg_0	->
+  uMmciApbifReg/iMMCIClock_reg_1	->
+  uMmciApbifReg/iMMCIClock_reg_2	->
+  uMmciApbifReg/iMMCIClock_reg_3	->
+  uMmciApbifReg/iMMCIClock_reg_4	->
+  uMmciApbifReg/iMMCIClock_reg_5	->
+  uMmciApbifReg/iMMCIClock_reg_6	->
+  uMmciApbifReg/iMMCIClock_reg_7	->
+  uMmciApbifReg/iMMCIClock_reg_8	->
+  uMmciApbifReg/iMMCIClock_reg_9	->
+  uMmciApbifReg/iMMCIClock_reg_10	->
+  uMmciApbifReg/iMMCIPower_reg_0	->
+  uMmciApbifReg/iMMCIPower_reg_1	->
+  uMmciApbifReg/iMMCIPower_reg_2 (*)	->
+  uMmciApbifReg/iMMCIPower_reg_3 (*)	->
+  uMmciApbifReg/iMMCIPower_reg_4	->
+  uMmciApbifReg/iMMCIPower_reg_5 (*)	->
+  uMmciApbifReg/iMMCIPower_reg_6	->
+  uMmciApbifReg/iMMCIPower_reg_7 (*)	->
+  uMmciApbifReg/PRDATA_reg_0	->
+  uMmciApbifReg/PRDATA_reg_1	->
+  uMmciApbifReg/PRDATA_reg_2	->
+  uMmciApbifReg/PRDATA_reg_3	->
+  uMmciApbifReg/PRDATA_reg_4	->
+  uMmciApbifReg/PRDATA_reg_5	->
+  uMmciApbifReg/PRDATA_reg_6	->
+  uMmciApbifReg/PRDATA_reg_7	->
+  uMmciApbifReg/PRDATA_reg_8	->
+  uMmciApbifReg/PRDATA_reg_9	->
+  uMmciApbifReg/PRDATA_reg_10	->
+  uMmciApbifReg/PRDATA_reg_11	->
+  uMmciApbifReg/PRDATA_reg_12	->
+  uMmciApbifReg/PRDATA_reg_13	->
+  uMmciApbifReg/PRDATA_reg_14	->
+  uMmciApbifReg/PRDATA_reg_15	->
+  uMmciApbifReg/PRDATA_reg_16	->
+  uMmciApbifReg/PRDATA_reg_17	->
+  uMmciApbifReg/PRDATA_reg_18	->
+  uMmciApbifReg/PRDATA_reg_19	->
+  uMmciApbifReg/PRDATA_reg_20	->
+  uMmciApbifReg/PRDATA_reg_21	->
+  uMmciApbifReg/PRDATA_reg_22	->
+  uMmciApbifReg/PRDATA_reg_23	->
+  uMmciApbifReg/PRDATA_reg_24	->
+  uMmciApbifReg/PRDATA_reg_25	->
+  uMmciApbifReg/PRDATA_reg_26	->
+  uMmciApbifReg/PRDATA_reg_27	->
+  uMmciApbifReg/PRDATA_reg_28	->
+  uMmciApbifReg/PRDATA_reg_29	->
+  uMmciApbifReg/PRDATA_reg_30	->
+  uMmciApbifReg/PRDATA_reg_31	->
+  uMmciApbifReg/iRxFRdPtrInc_reg (*)	->
+  uMmciApbifReg/iMMCIITOP_reg_7 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_9	->
+  uMmciApbifReg/WrEn_reg	->
+  SCANOUTPCLK
+
+Complete scan chain #2 (SCANINMCLK --> SCANOUTMCLK) contains 466 cells:
+
+  SCANINMCLK	->
+  uMmciCPSM/CMDShift_reg_12	->
+  uMmciCPSM/CPSMStL_reg (*)	->
+  uMmciCPSM/CMDTxShiftEn_reg (*)	->
+  uMmciCPSM/CMDCnt_reg_5	->
+  uMmciCPSM/CMDShift_reg_3	->
+  uMmciCPSM/CMDShift_reg_27	->
+  uMmciCPSM/CMDShift_reg_4	->
+  uMmciCPSM/CMDShift_reg_20	->
+  uMmciCPSM/CMDCnt_reg_2 (*)	->
+  uMmciCPSM/CMDShift_reg_29	->
+  uMmciCPSM/CMDShift_reg_15	->
+  uMmciCPSM/CMDCnt_reg_3 (*)	->
+  uMmciCPSM/iCCrcF_reg	->
+  uMmciCPSM/CMDShift_reg_5	->
+  uMmciCPSM/CMDShift_reg_21	->
+  uMmciCPSM/CMDShift_reg_14	->
+  uMmciCPSM/iCRspE_reg	->
+  uMmciCPSM/CMDRxShiftEn_reg	->
+  uMmciCPSM/CMDShift_reg_28	->
+  uMmciCPSM/PendLatch_reg	->
+  uMmciCPSM/DelCSentClrSync_reg	->
+  uMmciCPSM/CMDShift_reg_13	->
+  uMmciCPSM/nIntCMDEN_reg	->
+  uMmciCPSM/CMDShift_reg_2	->
+  uMmciCPSM/CMDShift_reg_26	->
+  uMmciCPSM/DelCCrcFClrSync_reg	->
+  uMmciCPSM/CMDCnt_reg_4 (*)	->
+  uMmciCPSM/CMDShift_reg_11	->
+  uMmciCPSM/iCmdActClr_reg (*)	->
+  uMmciCPSM/CMDShift_reg_9	->
+  uMmciCPSM/iCTout_reg	->
+  uMmciCPSM/CMDShift_reg_18	->
+  uMmciCPSM/CMDCnt_reg_6 (*)	->
+  uMmciCPSM/CMDShift_reg_0	->
+  uMmciCPSM/CMDShift_reg_24	->
+  uMmciCPSM/CMDShift_reg_23	->
+  uMmciCPSM/Del1CMDEnUpdSync_reg	->
+  uMmciCPSM/CMDShift_reg_7	->
+  uMmciCPSM/DelCToutClrSync_reg	->
+  uMmciCPSM/CMDCnt_reg_1	->
+  uMmciCPSM/CMDCRCRxEn_reg (*)	->
+  uMmciCPSM/Del2CMDEnUpdSync_reg	->
+  uMmciCPSM/iCSent_reg	->
+  uMmciCPSM/CMDShift_reg_31	->
+  uMmciCPSM/CMDShift_reg_16	->
+  uMmciCPSM/CMDCnt_reg_0 (*)	->
+  uMmciCPSM/CMDShift_reg_22	->
+  uMmciCPSM/CMDShift_reg_6	->
+  uMmciCPSM/CMDShift_reg_30 (*)	->
+  uMmciCPSM/iCmdPSave_reg	->
+  uMmciCPSM/CMDShift_reg_17	->
+  uMmciCPSM/CMDShift_reg_8	->
+  uMmciCPSM/CMDShift_reg_10	->
+  uMmciCPSM/CMDShift_reg_1	->
+  uMmciCPSM/CMDShift_reg_25	->
+  uMmciCPSM/DelCRspEClrSync_reg	->
+  uMmciCPSM/CMDCnt_reg_7	->
+  uMmciCPSM/CMDCRCTxEn_reg (*)	->
+  uMmciCPSM/CMDShift_reg_19	->
+  uMmciCPSM/CPSMState_reg_0	->
+  uMmciCPSM/CPSMState_reg_1	->
+  uMmciCPSM/CPSMState_reg_2	->
+  uMmciCPSM/iMMCIResponse3_reg_0	->
+  uMmciCPSM/iMMCIResponse3_reg_1	->
+  uMmciCPSM/iMMCIResponse3_reg_2	->
+  uMmciCPSM/iMMCIResponse3_reg_3	->
+  uMmciCPSM/iMMCIResponse3_reg_4	->
+  uMmciCPSM/iMMCIResponse3_reg_5	->
+  uMmciCPSM/iMMCIResponse3_reg_6	->
+  uMmciCPSM/iMMCIResponse3_reg_7	->
+  uMmciCPSM/iMMCIResponse3_reg_8	->
+  uMmciCPSM/iMMCIResponse3_reg_9	->
+  uMmciCPSM/iMMCIResponse3_reg_10	->
+  uMmciCPSM/iMMCIResponse3_reg_11	->
+  uMmciCPSM/iMMCIResponse3_reg_12	->
+  uMmciCPSM/iMMCIResponse3_reg_13	->
+  uMmciCPSM/iMMCIResponse3_reg_14	->
+  uMmciCPSM/iMMCIResponse3_reg_15	->
+  uMmciCPSM/iMMCIResponse3_reg_16	->
+  uMmciCPSM/iMMCIResponse3_reg_17	->
+  uMmciCPSM/iMMCIResponse3_reg_18	->
+  uMmciCPSM/iMMCIResponse3_reg_19	->
+  uMmciCPSM/iMMCIResponse3_reg_20	->
+  uMmciCPSM/iMMCIResponse3_reg_21	->
+  uMmciCPSM/iMMCIResponse3_reg_22	->
+  uMmciCPSM/iMMCIResponse3_reg_23	->
+  uMmciCPSM/iMMCIResponse3_reg_24	->
+  uMmciCPSM/iMMCIResponse3_reg_25	->
+  uMmciCPSM/iMMCIResponse3_reg_26	->
+  uMmciCPSM/iMMCIResponse3_reg_27	->
+  uMmciCPSM/iMMCIResponse3_reg_28	->
+  uMmciCPSM/iMMCIResponse3_reg_29	->
+  uMmciCPSM/iMMCIResponse3_reg_30	->
+  uMmciCPSM/iMMCIResponse2_reg_0	->
+  uMmciCPSM/iMMCIResponse2_reg_1	->
+  uMmciCPSM/iMMCIResponse2_reg_2	->
+  uMmciCPSM/iMMCIResponse2_reg_3	->
+  uMmciCPSM/iMMCIResponse2_reg_4	->
+  uMmciCPSM/iMMCIResponse2_reg_5	->
+  uMmciCPSM/iMMCIResponse2_reg_6	->
+  uMmciCPSM/iMMCIResponse2_reg_7	->
+  uMmciCPSM/iMMCIResponse2_reg_8	->
+  uMmciCPSM/iMMCIResponse2_reg_9	->
+  uMmciCPSM/iMMCIResponse2_reg_10	->
+  uMmciCPSM/iMMCIResponse2_reg_11	->
+  uMmciCPSM/iMMCIResponse2_reg_12	->
+  uMmciCPSM/iMMCIResponse2_reg_13	->
+  uMmciCPSM/iMMCIResponse2_reg_14	->
+  uMmciCPSM/iMMCIResponse2_reg_15	->
+  uMmciCPSM/iMMCIResponse2_reg_16	->
+  uMmciCPSM/iMMCIResponse2_reg_17	->
+  uMmciCPSM/iMMCIResponse2_reg_18	->
+  uMmciCPSM/iMMCIResponse2_reg_19	->
+  uMmciCPSM/iMMCIResponse2_reg_20	->
+  uMmciCPSM/iMMCIResponse2_reg_21	->
+  uMmciCPSM/iMMCIResponse2_reg_22	->
+  uMmciCPSM/iMMCIResponse2_reg_23	->
+  uMmciCPSM/iMMCIResponse2_reg_24	->
+  uMmciCPSM/iMMCIResponse2_reg_25	->
+  uMmciCPSM/iMMCIResponse2_reg_26	->
+  uMmciCPSM/iMMCIResponse2_reg_27	->
+  uMmciCPSM/iMMCIResponse2_reg_28	->
+  uMmciCPSM/iMMCIResponse2_reg_29	->
+  uMmciCPSM/iMMCIResponse2_reg_30	->
+  uMmciCPSM/iMMCIResponse2_reg_31	->
+  uMmciCPSM/iMMCIResponse1_reg_0	->
+  uMmciCPSM/iMMCIResponse1_reg_1	->
+  uMmciCPSM/iMMCIResponse1_reg_2	->
+  uMmciCPSM/iMMCIResponse1_reg_3	->
+  uMmciCPSM/iMMCIResponse1_reg_4	->
+  uMmciCPSM/iMMCIResponse1_reg_5	->
+  uMmciCPSM/iMMCIResponse1_reg_6	->
+  uMmciCPSM/iMMCIResponse1_reg_7	->
+  uMmciCPSM/iMMCIResponse1_reg_8	->
+  uMmciCPSM/iMMCIResponse1_reg_9	->
+  uMmciCPSM/iMMCIResponse1_reg_10	->
+  uMmciCPSM/iMMCIResponse1_reg_11	->
+  uMmciCPSM/iMMCIResponse1_reg_12	->
+  uMmciCPSM/iMMCIResponse1_reg_13	->
+  uMmciCPSM/iMMCIResponse1_reg_14	->
+  uMmciCPSM/iMMCIResponse1_reg_15	->
+  uMmciCPSM/iMMCIResponse1_reg_16	->
+  uMmciCPSM/iMMCIResponse1_reg_17	->
+  uMmciCPSM/iMMCIResponse1_reg_18	->
+  uMmciCPSM/iMMCIResponse1_reg_19	->
+  uMmciCPSM/iMMCIResponse1_reg_20	->
+  uMmciCPSM/iMMCIResponse1_reg_21	->
+  uMmciCPSM/iMMCIResponse1_reg_22	->
+  uMmciCPSM/iMMCIResponse1_reg_23	->
+  uMmciCPSM/iMMCIResponse1_reg_24	->
+  uMmciCPSM/iMMCIResponse1_reg_25	->
+  uMmciCPSM/iMMCIResponse1_reg_26	->
+  uMmciCPSM/iMMCIResponse1_reg_27	->
+  uMmciCPSM/iMMCIResponse1_reg_28	->
+  uMmciCPSM/iMMCIResponse1_reg_29	->
+  uMmciCPSM/iMMCIResponse1_reg_30	->
+  uMmciCPSM/iMMCIResponse1_reg_31	->
+  uMmciCPSM/iMMCIResponse0_reg_0	->
+  uMmciCPSM/iMMCIResponse0_reg_1	->
+  uMmciCPSM/iMMCIResponse0_reg_2	->
+  uMmciCPSM/iMMCIResponse0_reg_3	->
+  uMmciCPSM/iMMCIResponse0_reg_4	->
+  uMmciCPSM/iMMCIResponse0_reg_5	->
+  uMmciCPSM/iMMCIResponse0_reg_6	->
+  uMmciCPSM/iMMCIResponse0_reg_7	->
+  uMmciCPSM/iMMCIResponse0_reg_8	->
+  uMmciCPSM/iMMCIResponse0_reg_9	->
+  uMmciCPSM/iMMCIResponse0_reg_10	->
+  uMmciCPSM/iMMCIResponse0_reg_11	->
+  uMmciCPSM/iMMCIResponse0_reg_12	->
+  uMmciCPSM/iMMCIResponse0_reg_13	->
+  uMmciCPSM/iMMCIResponse0_reg_14	->
+  uMmciCPSM/iMMCIResponse0_reg_15	->
+  uMmciCPSM/iMMCIResponse0_reg_16	->
+  uMmciCPSM/iMMCIResponse0_reg_17	->
+  uMmciCPSM/iMMCIResponse0_reg_18	->
+  uMmciCPSM/iMMCIResponse0_reg_19	->
+  uMmciCPSM/iMMCIResponse0_reg_20	->
+  uMmciCPSM/iMMCIResponse0_reg_21	->
+  uMmciCPSM/iMMCIResponse0_reg_22	->
+  uMmciCPSM/iMMCIResponse0_reg_23	->
+  uMmciCPSM/iMMCIResponse0_reg_24	->
+  uMmciCPSM/iMMCIResponse0_reg_25	->
+  uMmciCPSM/iMMCIResponse0_reg_26	->
+  uMmciCPSM/iMMCIResponse0_reg_27	->
+  uMmciCPSM/iMMCIResponse0_reg_28	->
+  uMmciCPSM/iMMCIResponse0_reg_29	->
+  uMmciCPSM/iMMCIResponse0_reg_30	->
+  uMmciCPSM/iMMCIResponse0_reg_31	->
+  uMmciCPSM/iMMCIRespCmd_reg_0	->
+  uMmciCPSM/iMMCIRespCmd_reg_1	->
+  uMmciCPSM/iMMCIRespCmd_reg_2	->
+  uMmciCPSM/iMMCIRespCmd_reg_3	->
+  uMmciCPSM/iMMCIRespCmd_reg_4	->
+  uMmciCPSM/iMMCIRespCmd_reg_5	->
+  uMmciCPSM/CMDCRCShift_reg_0	->
+  uMmciCPSM/CMDCRCShift_reg_1	->
+  uMmciCPSM/CMDCRCShift_reg_2	->
+  uMmciCPSM/CMDCRCShift_reg_3	->
+  uMmciCPSM/CMDCRCShift_reg_4	->
+  uMmciCPSM/CMDCRCShift_reg_5	->
+  uMmciCPSM/CMDCRCShift_reg_6 (*)	->
+  uMmciPwrClkCtr/iMMCICLK_reg	->
+  uMmciPwrClkCtr/CntState_reg	->
+  uMmciPwrClkCtr/IntMMCIPWR_reg	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_0 (*)	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_1	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_2	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_3	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_4	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_5	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_6	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_7	->
+  uMmciSynctoMCLK/TxUndClrSync1_reg	->
+  uMmciSynctoMCLK/RxFifoEmptySync_reg	->
+  uMmciSynctoMCLK/RxFifoEmptySync1_reg	->
+  uMmciSynctoMCLK/TxDataAvlSync_reg	->
+  uMmciSynctoMCLK/CToutClrSync1_reg	->
+  uMmciSynctoMCLK/DToutClrSync1_reg	->
+  uMmciSynctoMCLK/CCrcFClrSync_reg	->
+  uMmciSynctoMCLK/CSentClrSync_reg	->
+  uMmciSynctoMCLK/CMDEnUpdSync_reg	->
+  uMmciSynctoMCLK/RxOverrunSync_reg	->
+  uMmciSynctoMCLK/DEndClrSync1_reg	->
+  uMmciSynctoMCLK/DToutClrSync_reg	->
+  uMmciSynctoMCLK/CmdUpdSync_reg	->
+  uMmciSynctoMCLK/ClockUpdSync_reg	->
+  uMmciSynctoMCLK/DCtrUpdSync1_reg	->
+  uMmciSynctoMCLK/CmdUpdSync1_reg	->
+  uMmciSynctoMCLK/PowerUpdSync_reg	->
+  uMmciSynctoMCLK/DBEndClrSync1_reg	->
+  uMmciSynctoMCLK/DEndClrSync_reg	->
+  uMmciSynctoMCLK/TxUndClrSync_reg	->
+  uMmciSynctoMCLK/DCrcFClrSync_reg	->
+  uMmciSynctoMCLK/DCrcFClrSync1_reg	->
+  uMmciSynctoMCLK/PowerUpdSync1_reg	->
+  uMmciSynctoMCLK/RxWrDoneSync_reg	->
+  uMmciSynctoMCLK/CRspEClrSync1_reg	->
+  uMmciSynctoMCLK/DATEnUpdSync_reg	->
+  uMmciSynctoMCLK/DATEnUpdSync1_reg	->
+  uMmciSynctoMCLK/CSentClrSync1_reg	->
+  uMmciSynctoMCLK/CRspEClrSync_reg	->
+  uMmciSynctoMCLK/CCrcFClrSync1_reg	->
+  uMmciSynctoMCLK/RxOverrunSync1_reg	->
+  uMmciSynctoMCLK/TxDataAvlSync1_reg	->
+  uMmciSynctoMCLK/DBEndClrSync_reg	->
+  uMmciSynctoMCLK/RxWrDoneSync1_reg	->
+  uMmciSynctoMCLK/DCtrUpdSync_reg	->
+  uMmciSynctoMCLK/ClockUpdSync1_reg	->
+  uMmciSynctoMCLK/CToutClrSync_reg	->
+  uMmciSynctoMCLK/CMDEnUpdSync1_reg	->
+  uMmciDPSM/iDATOUT_reg	->
+  uMmciDPSM/DelDToutClrSync_reg	->
+  uMmciDPSM/iDBEnd_reg	->
+  uMmciDPSM/DATCRCRxEn_reg (*)	->
+  uMmciDPSM/CRCCheck_reg	->
+  uMmciDPSM/TokenChk_reg	->
+  uMmciDPSM/ShiftNotE_reg	->
+  uMmciDPSM/iRxWrEn_reg	->
+  uMmciDPSM/iRxActive_reg	->
+  uMmciDPSM/DATCRCTxEn_reg	->
+  uMmciDPSM/iDataPSave_reg	->
+  uMmciDPSM/iPendPulse_reg	->
+  uMmciDPSM/iTxActClr_reg	->
+  uMmciDPSM/DataCntEn_reg (*)	->
+  uMmciDPSM/Del2DATEnUpd_reg	->
+  uMmciDPSM/IntOverrun_reg	->
+  uMmciDPSM/StartBit_reg	->
+  uMmciDPSM/StopBit_reg (*)	->
+  uMmciDPSM/DelDBEndClrSync_reg	->
+  uMmciDPSM/iDCrcF_reg	->
+  uMmciDPSM/inDATEN_reg (*)	->
+  uMmciDPSM/DelRxWrDoneSync_reg	->
+  uMmciDPSM/BsyMode_reg	->
+  uMmciDPSM/DelTxUndClrSync_reg	->
+  uMmciDPSM/DelDCrcFClrSync_reg	->
+  uMmciDPSM/iDEnd_reg	->
+  uMmciDPSM/iTxRdPtrInc_reg	->
+  uMmciDPSM/TokenRxSEn_reg	->
+  uMmciDPSM/Del1DATEnUpd_reg	->
+  uMmciDPSM/DelDEndClrSync_reg	->
+  uMmciDPSM/iTxUnd_reg	->
+  uMmciDPSM/Wtoken_reg	->
+  uMmciDPSM/DPSMState_reg_0	->
+  uMmciDPSM/DPSMState_reg_1 (*)	->
+  uMmciDPSM/DPSMState_reg_2	->
+  uMmciDPSM/iRxFWrData_reg_0	->
+  uMmciDPSM/iRxFWrData_reg_1	->
+  uMmciDPSM/iRxFWrData_reg_2	->
+  uMmciDPSM/iRxFWrData_reg_3	->
+  uMmciDPSM/iRxFWrData_reg_4	->
+  uMmciDPSM/iRxFWrData_reg_5	->
+  uMmciDPSM/iRxFWrData_reg_6	->
+  uMmciDPSM/iRxFWrData_reg_7	->
+  uMmciDPSM/iRxFWrData_reg_8	->
+  uMmciDPSM/iRxFWrData_reg_9	->
+  uMmciDPSM/iRxFWrData_reg_10	->
+  uMmciDPSM/iRxFWrData_reg_11	->
+  uMmciDPSM/iRxFWrData_reg_12	->
+  uMmciDPSM/iRxFWrData_reg_13	->
+  uMmciDPSM/iRxFWrData_reg_14	->
+  uMmciDPSM/iRxFWrData_reg_15	->
+  uMmciDPSM/iRxFWrData_reg_16	->
+  uMmciDPSM/iRxFWrData_reg_17	->
+  uMmciDPSM/iRxFWrData_reg_18	->
+  uMmciDPSM/iRxFWrData_reg_19	->
+  uMmciDPSM/iRxFWrData_reg_20	->
+  uMmciDPSM/iRxFWrData_reg_21	->
+  uMmciDPSM/iRxFWrData_reg_22	->
+  uMmciDPSM/iRxFWrData_reg_23	->
+  uMmciDPSM/iRxFWrData_reg_24	->
+  uMmciDPSM/iRxFWrData_reg_25	->
+  uMmciDPSM/iRxFWrData_reg_26	->
+  uMmciDPSM/iRxFWrData_reg_27	->
+  uMmciDPSM/iRxFWrData_reg_28	->
+  uMmciDPSM/iRxFWrData_reg_29	->
+  uMmciDPSM/iRxFWrData_reg_30	->
+  uMmciDPSM/iRxFWrData_reg_31	->
+  uMmciDPSM/DATCRCShift0_reg_0 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_1 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_2 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_3 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_4	->
+  uMmciDPSM/DATCRCShift0_reg_5 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_6 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_7 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_8 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_9 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_10 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_11 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_12 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_13 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_14 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_15 (*)	->
+  uMmciDPSM/DATShift_reg_0	->
+  uMmciDPSM/DATShift_reg_1	->
+  uMmciDPSM/DATShift_reg_2	->
+  uMmciDPSM/DATShift_reg_3	->
+  uMmciDPSM/DATShift_reg_4	->
+  uMmciDPSM/DATShift_reg_5	->
+  uMmciDPSM/DATShift_reg_6	->
+  uMmciDPSM/DATShift_reg_7	->
+  uMmciDPSM/DATShift_reg_8	->
+  uMmciDPSM/DATShift_reg_9	->
+  uMmciDPSM/DATShift_reg_10	->
+  uMmciDPSM/DATShift_reg_11	->
+  uMmciDPSM/DATShift_reg_12	->
+  uMmciDPSM/DATShift_reg_13	->
+  uMmciDPSM/DATShift_reg_14	->
+  uMmciDPSM/DATShift_reg_15	->
+  uMmciDPSM/DATShift_reg_16	->
+  uMmciDPSM/DATShift_reg_17	->
+  uMmciDPSM/DATShift_reg_18	->
+  uMmciDPSM/DATShift_reg_19	->
+  uMmciDPSM/DATShift_reg_20	->
+  uMmciDPSM/DATShift_reg_21	->
+  uMmciDPSM/DATShift_reg_22	->
+  uMmciDPSM/DATShift_reg_23	->
+  uMmciDPSM/DATShift_reg_24	->
+  uMmciDPSM/DATShift_reg_25	->
+  uMmciDPSM/DATShift_reg_26	->
+  uMmciDPSM/DATShift_reg_27	->
+  uMmciDPSM/DATShift_reg_28	->
+  uMmciDPSM/DATShift_reg_29	->
+  uMmciDPSM/DATShift_reg_30	->
+  uMmciDPSM/DATShift_reg_31	->
+  uMmciDPSM/TokenCnt_reg_0 (*)	->
+  uMmciDPSM/TokenCnt_reg_1 (*)	->
+  uMmciDPSM/TokenCnt_reg_2 (*)	->
+  uMmciDPSM/BitCnt_reg_0 (*)	->
+  uMmciDPSM/BitCnt_reg_1	->
+  uMmciDPSM/BitCnt_reg_2 (*)	->
+  uMmciDPSM/WRDCnt_reg_0	->
+  uMmciDPSM/WRDCnt_reg_1	->
+  uMmciDPSM/BLKTCnt_reg_0 (*)	->
+  uMmciDPSM/BLKTCnt_reg_1	->
+  uMmciDPSM/BLKTCnt_reg_2 (*)	->
+  uMmciDPSM/BLKTCnt_reg_3 (*)	->
+  uMmciDPSM/BLKTCnt_reg_4 (*)	->
+  uMmciDPSM/BLKTCnt_reg_5 (*)	->
+  uMmciDPSM/BLKTCnt_reg_6 (*)	->
+  uMmciDPSM/BLKTCnt_reg_7 (*)	->
+  uMmciDPSM/BLKTCnt_reg_8 (*)	->
+  uMmciDPSM/BLKTCnt_reg_9 (*)	->
+  uMmciDPSM/BLKTCnt_reg_10 (*)	->
+  uMmciDPSM/BLKTCnt_reg_11 (*)	->
+  uMmciDPSM/BLKTCnt_reg_12 (*)	->
+  uMmciDPSM/BLKTCnt_reg_13	->
+  uMmciDPSM/BLKTCnt_reg_14 (*)	->
+  uMmciDPSM/BLKTCnt_reg_15	->
+  uMmciDPSM/BLKTCnt_reg_16 (*)	->
+  uMmciDPSM/BLKTCnt_reg_17	->
+  uMmciDPSM/BLKTCnt_reg_18 (*)	->
+  uMmciDPSM/BLKTCnt_reg_19	->
+  uMmciDPSM/BLKTCnt_reg_20	->
+  uMmciDPSM/BLKTCnt_reg_21	->
+  uMmciDPSM/BLKTCnt_reg_22 (*)	->
+  uMmciDPSM/BLKTCnt_reg_23 (*)	->
+  uMmciDPSM/BLKTCnt_reg_24 (*)	->
+  uMmciDPSM/BLKTCnt_reg_25	->
+  uMmciDPSM/BLKTCnt_reg_26	->
+  uMmciDPSM/BLKTCnt_reg_27	->
+  uMmciDPSM/BLKTCnt_reg_28	->
+  uMmciDPSM/BLKTCnt_reg_29	->
+  uMmciDPSM/BLKTCnt_reg_30	->
+  uMmciDPSM/BLKTCnt_reg_31	->
+  uMmciDPSM/iDataCnt_reg_0 (*)	->
+  uMmciDPSM/iDataCnt_reg_1 (*)	->
+  uMmciDPSM/iDataCnt_reg_2 (*)	->
+  uMmciDPSM/iDataCnt_reg_3	->
+  uMmciDPSM/iDataCnt_reg_4	->
+  uMmciDPSM/iDataCnt_reg_5	->
+  uMmciDPSM/iDataCnt_reg_6	->
+  uMmciDPSM/iDataCnt_reg_7	->
+  uMmciDPSM/iDataCnt_reg_8	->
+  uMmciDPSM/iDataCnt_reg_9	->
+  uMmciDPSM/iDataCnt_reg_10	->
+  uMmciDPSM/iDataCnt_reg_11	->
+  uMmciDPSM/iDataCnt_reg_12	->
+  uMmciDPSM/iDataCnt_reg_13	->
+  uMmciDPSM/iDataCnt_reg_14	->
+  uMmciDPSM/iDataCnt_reg_15	->
+  uMmciDPSM/DATCRCTxSEn_reg	->
+  uMmciDPSM/DPSMStL_reg (*)	->
+  uMmciDPSM/iDTout_reg (*)	->
+  uMmciDPSM/LdDataBuffer_reg (*)	->
+  uMmciRegUpd/DelCmdUpdSync_reg	->
+  uMmciRegUpd/DelPowerUpdSync_reg	->
+  uMmciRegUpd/DelClockUpdSync_reg	->
+  uMmciRegUpd/DelDCtrUpdSync_reg	->
+  uMmciRegUpd/iCmdUpdDone_reg	->
+  uMmciRegUpd/iDCtrUpdDone_reg	->
+  uMmciRegUpd/iPowerUpdDone_reg	->
+  uMmciRegUpd/iClockUpdDone_reg	->
+  uMmciRegUpd/iDCtr_reg_1	->
+  uMmciRegUpd/iDCtr_reg_2	->
+  uMmciRegUpd/iDCtr_reg_3	->
+  uMmciRegUpd/iDCtr_reg_4	->
+  uMmciRegUpd/iDCtr_reg_5	->
+  uMmciRegUpd/iDCtr_reg_6	->
+  uMmciRegUpd/iCmd_reg_0	->
+  uMmciRegUpd/iCmd_reg_1	->
+  uMmciRegUpd/iCmd_reg_2	->
+  uMmciRegUpd/iCmd_reg_3	->
+  uMmciRegUpd/iCmd_reg_4	->
+  uMmciRegUpd/iCmd_reg_5	->
+  uMmciRegUpd/iCmd_reg_6	->
+  uMmciRegUpd/iCmd_reg_7	->
+  uMmciRegUpd/iCmd_reg_8	->
+  uMmciRegUpd/iCmd_reg_9	->
+  uMmciRegUpd/iCmd_reg_10	->
+  uMmciRegUpd/iClock_reg_0	->
+  uMmciRegUpd/iClock_reg_1	->
+  uMmciRegUpd/iClock_reg_2	->
+  uMmciRegUpd/iClock_reg_3	->
+  uMmciRegUpd/iClock_reg_4	->
+  uMmciRegUpd/iClock_reg_5	->
+  uMmciRegUpd/iClock_reg_6	->
+  uMmciRegUpd/iClock_reg_7	->
+  uMmciRegUpd/iClock_reg_8	->
+  uMmciRegUpd/iClock_reg_9	->
+  uMmciRegUpd/iClock_reg_10	->
+  uMmciRegUpd/Power_reg_0	->
+  uMmciRegUpd/Power_reg_1	->
+  uMmciRegUpd/Power_reg_2	->
+  uMmciRegUpd/iDCtr_reg_0	->
+  SCANOUTMCLK
+
+Complete scan chain #3 (SCANINnMCLK --> SCANOUTnMCLK) contains 2 cells:
+
+  SCANINnMCLK	->
+  uMmciOPReSync/NegBypass_reg	->
+  uMmciOPReSync/NegPowerDown_reg	->
+  SCANOUTnMCLK
+
+Complete scan chain #4 (SCANINMMCIFBCLK --> SCANOUTMMCIFBCLK) contains 6 cells:
+
+  SCANINMMCIFBCLK	->
+  uMmciOPReSync/nIntMMCICMDEN_reg (*)	->
+  uMmciOPReSync/CMDIN_reg (*)	->
+  uMmciOPReSync/DATIN_reg	->
+  uMmciOPReSync/IntMMCIDATOUT_reg (*)	->
+  uMmciOPReSync/IntMMCICMDOUT_reg (*)	->
+  uMmciOPReSync/nIntMMCIDATEN_reg	->
+  SCANOUTMMCIFBCLK
+
+ 
+****************************************
+Report : test
+          -coverage
+Design : Mmci
+Version: 2000.05
+Date   : Thu Dec 21 13:59:03 2000
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Mmci' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0MmciRevAnd              0      0     2     0      0     0     0      6   0.00%
+u1MmciRevAnd              0      0     0     0      0     0     0      6   0.00%
+u2MmciRevAnd              0      0     0     0      0     0     0      6   0.00%
+u3MmciRevAnd              0      0     1     0      1     0     0      6   0.00%
+uMmciApbifReg           983      0     1     0      0     0     0   8984  10.94%
+uMmciCPSM               634      0     0     0      0     0     0   5772  10.98%
+uMmciClockAnd             0      0     0     0      1     0     0      6   0.00%
+uMmciClockMux             0      0     0     0      0     0     0      8   0.00%
+uMmciDPSM               911      0     0     0      0     0     0   8310  10.96%
+uMmciFIFOReg           1585      0     0     0      0     0     0  14380  11.02%
+uMmciFifoDmaCtr         352      1     0     0      7     0     0   3248  10.84%
+uMmciIntGen              26      0     0     0      0     0     0    248  10.48%
+uMmciOPReSync            27      0     1     0      0     0     0    244  11.11%
+uMmciPwrClkCtr           49      0     0     0      0     0     0    446  10.99%
+uMmciRegUpd              93      0     0     0      0     0     0    806  11.54%
+uMmciSynctoMCLK          49      0     0     0      0     0     0    456  10.75%
+uMmciSynctoPCLK          43      0     0     0      0     0     0    432   9.95%
+Mmci                   4782      1     5     0      9     0     0  43608  10.97%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Mmci
+Version: 2000.05
+Date   : Thu Dec 21 13:59:06 2000
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Mmci
+Version: 2000.05
+Date   : Thu Dec 21 13:59:06 2000
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain #1 (SCANINPCLK --> SCANOUTPCLK) contains 826 cells:
+
+  SCANINPCLK	->
+  uMmciFIFOReg/Reg15_reg_0	->
+  uMmciFIFOReg/Reg15_reg_1	->
+  uMmciFIFOReg/Reg15_reg_2	->
+  uMmciFIFOReg/Reg15_reg_3	->
+  uMmciFIFOReg/Reg15_reg_4	->
+  uMmciFIFOReg/Reg15_reg_5	->
+  uMmciFIFOReg/Reg15_reg_6	->
+  uMmciFIFOReg/Reg15_reg_7	->
+  uMmciFIFOReg/Reg15_reg_8	->
+  uMmciFIFOReg/Reg15_reg_9	->
+  uMmciFIFOReg/Reg15_reg_10	->
+  uMmciFIFOReg/Reg15_reg_11	->
+  uMmciFIFOReg/Reg15_reg_12	->
+  uMmciFIFOReg/Reg15_reg_13	->
+  uMmciFIFOReg/Reg15_reg_14	->
+  uMmciFIFOReg/Reg15_reg_15	->
+  uMmciFIFOReg/Reg15_reg_16	->
+  uMmciFIFOReg/Reg15_reg_17	->
+  uMmciFIFOReg/Reg15_reg_18	->
+  uMmciFIFOReg/Reg15_reg_19	->
+  uMmciFIFOReg/Reg15_reg_20	->
+  uMmciFIFOReg/Reg15_reg_21	->
+  uMmciFIFOReg/Reg15_reg_22	->
+  uMmciFIFOReg/Reg15_reg_23	->
+  uMmciFIFOReg/Reg15_reg_24	->
+  uMmciFIFOReg/Reg15_reg_25	->
+  uMmciFIFOReg/Reg15_reg_26	->
+  uMmciFIFOReg/Reg15_reg_27	->
+  uMmciFIFOReg/Reg15_reg_28	->
+  uMmciFIFOReg/Reg15_reg_29	->
+  uMmciFIFOReg/Reg15_reg_30	->
+  uMmciFIFOReg/Reg15_reg_31	->
+  uMmciFIFOReg/Reg14_reg_0	->
+  uMmciFIFOReg/Reg14_reg_1	->
+  uMmciFIFOReg/Reg14_reg_2	->
+  uMmciFIFOReg/Reg14_reg_3	->
+  uMmciFIFOReg/Reg14_reg_4	->
+  uMmciFIFOReg/Reg14_reg_5	->
+  uMmciFIFOReg/Reg14_reg_6	->
+  uMmciFIFOReg/Reg14_reg_7	->
+  uMmciFIFOReg/Reg14_reg_8	->
+  uMmciFIFOReg/Reg14_reg_9	->
+  uMmciFIFOReg/Reg14_reg_10	->
+  uMmciFIFOReg/Reg14_reg_11	->
+  uMmciFIFOReg/Reg14_reg_12	->
+  uMmciFIFOReg/Reg14_reg_13	->
+  uMmciFIFOReg/Reg14_reg_14	->
+  uMmciFIFOReg/Reg14_reg_15	->
+  uMmciFIFOReg/Reg14_reg_16	->
+  uMmciFIFOReg/Reg14_reg_17	->
+  uMmciFIFOReg/Reg14_reg_18	->
+  uMmciFIFOReg/Reg14_reg_19	->
+  uMmciFIFOReg/Reg14_reg_20	->
+  uMmciFIFOReg/Reg14_reg_21	->
+  uMmciFIFOReg/Reg14_reg_22	->
+  uMmciFIFOReg/Reg14_reg_23	->
+  uMmciFIFOReg/Reg14_reg_24	->
+  uMmciFIFOReg/Reg14_reg_25	->
+  uMmciFIFOReg/Reg14_reg_26	->
+  uMmciFIFOReg/Reg14_reg_27	->
+  uMmciFIFOReg/Reg14_reg_28	->
+  uMmciFIFOReg/Reg14_reg_29	->
+  uMmciFIFOReg/Reg14_reg_30	->
+  uMmciFIFOReg/Reg14_reg_31	->
+  uMmciFIFOReg/Reg13_reg_0	->
+  uMmciFIFOReg/Reg13_reg_1	->
+  uMmciFIFOReg/Reg13_reg_2	->
+  uMmciFIFOReg/Reg13_reg_3	->
+  uMmciFIFOReg/Reg13_reg_4	->
+  uMmciFIFOReg/Reg13_reg_5	->
+  uMmciFIFOReg/Reg13_reg_6	->
+  uMmciFIFOReg/Reg13_reg_7	->
+  uMmciFIFOReg/Reg13_reg_8	->
+  uMmciFIFOReg/Reg13_reg_9	->
+  uMmciFIFOReg/Reg13_reg_10	->
+  uMmciFIFOReg/Reg13_reg_11	->
+  uMmciFIFOReg/Reg13_reg_12	->
+  uMmciFIFOReg/Reg13_reg_13	->
+  uMmciFIFOReg/Reg13_reg_14	->
+  uMmciFIFOReg/Reg13_reg_15	->
+  uMmciFIFOReg/Reg13_reg_16	->
+  uMmciFIFOReg/Reg13_reg_17	->
+  uMmciFIFOReg/Reg13_reg_18	->
+  uMmciFIFOReg/Reg13_reg_19	->
+  uMmciFIFOReg/Reg13_reg_20	->
+  uMmciFIFOReg/Reg13_reg_21	->
+  uMmciFIFOReg/Reg13_reg_22	->
+  uMmciFIFOReg/Reg13_reg_23	->
+  uMmciFIFOReg/Reg13_reg_24	->
+  uMmciFIFOReg/Reg13_reg_25	->
+  uMmciFIFOReg/Reg13_reg_26	->
+  uMmciFIFOReg/Reg13_reg_27	->
+  uMmciFIFOReg/Reg13_reg_28	->
+  uMmciFIFOReg/Reg13_reg_29	->
+  uMmciFIFOReg/Reg13_reg_30	->
+  uMmciFIFOReg/Reg13_reg_31	->
+  uMmciFIFOReg/Reg12_reg_0	->
+  uMmciFIFOReg/Reg12_reg_1	->
+  uMmciFIFOReg/Reg12_reg_2	->
+  uMmciFIFOReg/Reg12_reg_3	->
+  uMmciFIFOReg/Reg12_reg_4	->
+  uMmciFIFOReg/Reg12_reg_5	->
+  uMmciFIFOReg/Reg12_reg_6	->
+  uMmciFIFOReg/Reg12_reg_7	->
+  uMmciFIFOReg/Reg12_reg_8	->
+  uMmciFIFOReg/Reg12_reg_9	->
+  uMmciFIFOReg/Reg12_reg_10	->
+  uMmciFIFOReg/Reg12_reg_11	->
+  uMmciFIFOReg/Reg12_reg_12	->
+  uMmciFIFOReg/Reg12_reg_13	->
+  uMmciFIFOReg/Reg12_reg_14	->
+  uMmciFIFOReg/Reg12_reg_15	->
+  uMmciFIFOReg/Reg12_reg_16	->
+  uMmciFIFOReg/Reg12_reg_17	->
+  uMmciFIFOReg/Reg12_reg_18	->
+  uMmciFIFOReg/Reg12_reg_19	->
+  uMmciFIFOReg/Reg12_reg_20	->
+  uMmciFIFOReg/Reg12_reg_21	->
+  uMmciFIFOReg/Reg12_reg_22	->
+  uMmciFIFOReg/Reg12_reg_23	->
+  uMmciFIFOReg/Reg12_reg_24	->
+  uMmciFIFOReg/Reg12_reg_25	->
+  uMmciFIFOReg/Reg12_reg_26	->
+  uMmciFIFOReg/Reg12_reg_27	->
+  uMmciFIFOReg/Reg12_reg_28	->
+  uMmciFIFOReg/Reg12_reg_29	->
+  uMmciFIFOReg/Reg12_reg_30	->
+  uMmciFIFOReg/Reg12_reg_31	->
+  uMmciFIFOReg/Reg11_reg_0	->
+  uMmciFIFOReg/Reg11_reg_1	->
+  uMmciFIFOReg/Reg11_reg_2	->
+  uMmciFIFOReg/Reg11_reg_3	->
+  uMmciFIFOReg/Reg11_reg_4	->
+  uMmciFIFOReg/Reg11_reg_5	->
+  uMmciFIFOReg/Reg11_reg_6	->
+  uMmciFIFOReg/Reg11_reg_7	->
+  uMmciFIFOReg/Reg11_reg_8	->
+  uMmciFIFOReg/Reg11_reg_9	->
+  uMmciFIFOReg/Reg11_reg_10	->
+  uMmciFIFOReg/Reg11_reg_11	->
+  uMmciFIFOReg/Reg11_reg_12	->
+  uMmciFIFOReg/Reg11_reg_13	->
+  uMmciFIFOReg/Reg11_reg_14	->
+  uMmciFIFOReg/Reg11_reg_15	->
+  uMmciFIFOReg/Reg11_reg_16	->
+  uMmciFIFOReg/Reg11_reg_17	->
+  uMmciFIFOReg/Reg11_reg_18	->
+  uMmciFIFOReg/Reg11_reg_19	->
+  uMmciFIFOReg/Reg11_reg_20	->
+  uMmciFIFOReg/Reg11_reg_21	->
+  uMmciFIFOReg/Reg11_reg_22	->
+  uMmciFIFOReg/Reg11_reg_23	->
+  uMmciFIFOReg/Reg11_reg_24	->
+  uMmciFIFOReg/Reg11_reg_25	->
+  uMmciFIFOReg/Reg11_reg_26	->
+  uMmciFIFOReg/Reg11_reg_27	->
+  uMmciFIFOReg/Reg11_reg_28	->
+  uMmciFIFOReg/Reg11_reg_29	->
+  uMmciFIFOReg/Reg11_reg_30	->
+  uMmciFIFOReg/Reg11_reg_31	->
+  uMmciFIFOReg/Reg10_reg_0	->
+  uMmciFIFOReg/Reg10_reg_1	->
+  uMmciFIFOReg/Reg10_reg_2	->
+  uMmciFIFOReg/Reg10_reg_3	->
+  uMmciFIFOReg/Reg10_reg_4	->
+  uMmciFIFOReg/Reg10_reg_5	->
+  uMmciFIFOReg/Reg10_reg_6	->
+  uMmciFIFOReg/Reg10_reg_7	->
+  uMmciFIFOReg/Reg10_reg_8	->
+  uMmciFIFOReg/Reg10_reg_9	->
+  uMmciFIFOReg/Reg10_reg_10	->
+  uMmciFIFOReg/Reg10_reg_11	->
+  uMmciFIFOReg/Reg10_reg_12	->
+  uMmciFIFOReg/Reg10_reg_13	->
+  uMmciFIFOReg/Reg10_reg_14	->
+  uMmciFIFOReg/Reg10_reg_15	->
+  uMmciFIFOReg/Reg10_reg_16	->
+  uMmciFIFOReg/Reg10_reg_17	->
+  uMmciFIFOReg/Reg10_reg_18	->
+  uMmciFIFOReg/Reg10_reg_19	->
+  uMmciFIFOReg/Reg10_reg_20	->
+  uMmciFIFOReg/Reg10_reg_21	->
+  uMmciFIFOReg/Reg10_reg_22	->
+  uMmciFIFOReg/Reg10_reg_23	->
+  uMmciFIFOReg/Reg10_reg_24	->
+  uMmciFIFOReg/Reg10_reg_25	->
+  uMmciFIFOReg/Reg10_reg_26	->
+  uMmciFIFOReg/Reg10_reg_27	->
+  uMmciFIFOReg/Reg10_reg_28	->
+  uMmciFIFOReg/Reg10_reg_29	->
+  uMmciFIFOReg/Reg10_reg_30	->
+  uMmciFIFOReg/Reg10_reg_31	->
+  uMmciFIFOReg/Reg9_reg_0	->
+  uMmciFIFOReg/Reg9_reg_1	->
+  uMmciFIFOReg/Reg9_reg_2	->
+  uMmciFIFOReg/Reg9_reg_3	->
+  uMmciFIFOReg/Reg9_reg_4	->
+  uMmciFIFOReg/Reg9_reg_5	->
+  uMmciFIFOReg/Reg9_reg_6	->
+  uMmciFIFOReg/Reg9_reg_7	->
+  uMmciFIFOReg/Reg9_reg_8	->
+  uMmciFIFOReg/Reg9_reg_9	->
+  uMmciFIFOReg/Reg9_reg_10	->
+  uMmciFIFOReg/Reg9_reg_11	->
+  uMmciFIFOReg/Reg9_reg_12	->
+  uMmciFIFOReg/Reg9_reg_13	->
+  uMmciFIFOReg/Reg9_reg_14	->
+  uMmciFIFOReg/Reg9_reg_15	->
+  uMmciFIFOReg/Reg9_reg_16	->
+  uMmciFIFOReg/Reg9_reg_17	->
+  uMmciFIFOReg/Reg9_reg_18	->
+  uMmciFIFOReg/Reg9_reg_19	->
+  uMmciFIFOReg/Reg9_reg_20	->
+  uMmciFIFOReg/Reg9_reg_21	->
+  uMmciFIFOReg/Reg9_reg_22	->
+  uMmciFIFOReg/Reg9_reg_23	->
+  uMmciFIFOReg/Reg9_reg_24	->
+  uMmciFIFOReg/Reg9_reg_25	->
+  uMmciFIFOReg/Reg9_reg_26	->
+  uMmciFIFOReg/Reg9_reg_27	->
+  uMmciFIFOReg/Reg9_reg_28	->
+  uMmciFIFOReg/Reg9_reg_29	->
+  uMmciFIFOReg/Reg9_reg_30	->
+  uMmciFIFOReg/Reg9_reg_31	->
+  uMmciFIFOReg/Reg8_reg_0	->
+  uMmciFIFOReg/Reg8_reg_1	->
+  uMmciFIFOReg/Reg8_reg_2	->
+  uMmciFIFOReg/Reg8_reg_3	->
+  uMmciFIFOReg/Reg8_reg_4	->
+  uMmciFIFOReg/Reg8_reg_5	->
+  uMmciFIFOReg/Reg8_reg_6	->
+  uMmciFIFOReg/Reg8_reg_7	->
+  uMmciFIFOReg/Reg8_reg_8	->
+  uMmciFIFOReg/Reg8_reg_9	->
+  uMmciFIFOReg/Reg8_reg_10	->
+  uMmciFIFOReg/Reg8_reg_11	->
+  uMmciFIFOReg/Reg8_reg_12	->
+  uMmciFIFOReg/Reg8_reg_13	->
+  uMmciFIFOReg/Reg8_reg_14	->
+  uMmciFIFOReg/Reg8_reg_15	->
+  uMmciFIFOReg/Reg8_reg_16	->
+  uMmciFIFOReg/Reg8_reg_17	->
+  uMmciFIFOReg/Reg8_reg_18	->
+  uMmciFIFOReg/Reg8_reg_19	->
+  uMmciFIFOReg/Reg8_reg_20	->
+  uMmciFIFOReg/Reg8_reg_21	->
+  uMmciFIFOReg/Reg8_reg_22	->
+  uMmciFIFOReg/Reg8_reg_23	->
+  uMmciFIFOReg/Reg8_reg_24	->
+  uMmciFIFOReg/Reg8_reg_25	->
+  uMmciFIFOReg/Reg8_reg_26	->
+  uMmciFIFOReg/Reg8_reg_27	->
+  uMmciFIFOReg/Reg8_reg_28	->
+  uMmciFIFOReg/Reg8_reg_29	->
+  uMmciFIFOReg/Reg8_reg_30	->
+  uMmciFIFOReg/Reg8_reg_31	->
+  uMmciFIFOReg/Reg7_reg_0	->
+  uMmciFIFOReg/Reg7_reg_1	->
+  uMmciFIFOReg/Reg7_reg_2	->
+  uMmciFIFOReg/Reg7_reg_3	->
+  uMmciFIFOReg/Reg7_reg_4	->
+  uMmciFIFOReg/Reg7_reg_5	->
+  uMmciFIFOReg/Reg7_reg_6	->
+  uMmciFIFOReg/Reg7_reg_7	->
+  uMmciFIFOReg/Reg7_reg_8	->
+  uMmciFIFOReg/Reg7_reg_9	->
+  uMmciFIFOReg/Reg7_reg_10	->
+  uMmciFIFOReg/Reg7_reg_11	->
+  uMmciFIFOReg/Reg7_reg_12	->
+  uMmciFIFOReg/Reg7_reg_13	->
+  uMmciFIFOReg/Reg7_reg_14	->
+  uMmciFIFOReg/Reg7_reg_15	->
+  uMmciFIFOReg/Reg7_reg_16	->
+  uMmciFIFOReg/Reg7_reg_17	->
+  uMmciFIFOReg/Reg7_reg_18	->
+  uMmciFIFOReg/Reg7_reg_19	->
+  uMmciFIFOReg/Reg7_reg_20	->
+  uMmciFIFOReg/Reg7_reg_21	->
+  uMmciFIFOReg/Reg7_reg_22	->
+  uMmciFIFOReg/Reg7_reg_23	->
+  uMmciFIFOReg/Reg7_reg_24	->
+  uMmciFIFOReg/Reg7_reg_25	->
+  uMmciFIFOReg/Reg7_reg_26	->
+  uMmciFIFOReg/Reg7_reg_27	->
+  uMmciFIFOReg/Reg7_reg_28	->
+  uMmciFIFOReg/Reg7_reg_29	->
+  uMmciFIFOReg/Reg7_reg_30	->
+  uMmciFIFOReg/Reg7_reg_31	->
+  uMmciFIFOReg/Reg6_reg_0	->
+  uMmciFIFOReg/Reg6_reg_1	->
+  uMmciFIFOReg/Reg6_reg_2	->
+  uMmciFIFOReg/Reg6_reg_3	->
+  uMmciFIFOReg/Reg6_reg_4	->
+  uMmciFIFOReg/Reg6_reg_5	->
+  uMmciFIFOReg/Reg6_reg_6	->
+  uMmciFIFOReg/Reg6_reg_7	->
+  uMmciFIFOReg/Reg6_reg_8	->
+  uMmciFIFOReg/Reg6_reg_9	->
+  uMmciFIFOReg/Reg6_reg_10	->
+  uMmciFIFOReg/Reg6_reg_11	->
+  uMmciFIFOReg/Reg6_reg_12	->
+  uMmciFIFOReg/Reg6_reg_13	->
+  uMmciFIFOReg/Reg6_reg_14	->
+  uMmciFIFOReg/Reg6_reg_15	->
+  uMmciFIFOReg/Reg6_reg_16	->
+  uMmciFIFOReg/Reg6_reg_17	->
+  uMmciFIFOReg/Reg6_reg_18	->
+  uMmciFIFOReg/Reg6_reg_19	->
+  uMmciFIFOReg/Reg6_reg_20	->
+  uMmciFIFOReg/Reg6_reg_21	->
+  uMmciFIFOReg/Reg6_reg_22	->
+  uMmciFIFOReg/Reg6_reg_23	->
+  uMmciFIFOReg/Reg6_reg_24	->
+  uMmciFIFOReg/Reg6_reg_25	->
+  uMmciFIFOReg/Reg6_reg_26	->
+  uMmciFIFOReg/Reg6_reg_27	->
+  uMmciFIFOReg/Reg6_reg_28	->
+  uMmciFIFOReg/Reg6_reg_29	->
+  uMmciFIFOReg/Reg6_reg_30	->
+  uMmciFIFOReg/Reg6_reg_31	->
+  uMmciFIFOReg/Reg5_reg_0	->
+  uMmciFIFOReg/Reg5_reg_1	->
+  uMmciFIFOReg/Reg5_reg_2	->
+  uMmciFIFOReg/Reg5_reg_3	->
+  uMmciFIFOReg/Reg5_reg_4	->
+  uMmciFIFOReg/Reg5_reg_5	->
+  uMmciFIFOReg/Reg5_reg_6	->
+  uMmciFIFOReg/Reg5_reg_7	->
+  uMmciFIFOReg/Reg5_reg_8	->
+  uMmciFIFOReg/Reg5_reg_9	->
+  uMmciFIFOReg/Reg5_reg_10	->
+  uMmciFIFOReg/Reg5_reg_11	->
+  uMmciFIFOReg/Reg5_reg_12	->
+  uMmciFIFOReg/Reg5_reg_13	->
+  uMmciFIFOReg/Reg5_reg_14	->
+  uMmciFIFOReg/Reg5_reg_15	->
+  uMmciFIFOReg/Reg5_reg_16	->
+  uMmciFIFOReg/Reg5_reg_17	->
+  uMmciFIFOReg/Reg5_reg_18	->
+  uMmciFIFOReg/Reg5_reg_19	->
+  uMmciFIFOReg/Reg5_reg_20	->
+  uMmciFIFOReg/Reg5_reg_21	->
+  uMmciFIFOReg/Reg5_reg_22	->
+  uMmciFIFOReg/Reg5_reg_23	->
+  uMmciFIFOReg/Reg5_reg_24	->
+  uMmciFIFOReg/Reg5_reg_25	->
+  uMmciFIFOReg/Reg5_reg_26	->
+  uMmciFIFOReg/Reg5_reg_27	->
+  uMmciFIFOReg/Reg5_reg_28	->
+  uMmciFIFOReg/Reg5_reg_29	->
+  uMmciFIFOReg/Reg5_reg_30	->
+  uMmciFIFOReg/Reg5_reg_31	->
+  uMmciFIFOReg/Reg4_reg_0	->
+  uMmciFIFOReg/Reg4_reg_1	->
+  uMmciFIFOReg/Reg4_reg_2	->
+  uMmciFIFOReg/Reg4_reg_3	->
+  uMmciFIFOReg/Reg4_reg_4	->
+  uMmciFIFOReg/Reg4_reg_5	->
+  uMmciFIFOReg/Reg4_reg_6	->
+  uMmciFIFOReg/Reg4_reg_7	->
+  uMmciFIFOReg/Reg4_reg_8	->
+  uMmciFIFOReg/Reg4_reg_9	->
+  uMmciFIFOReg/Reg4_reg_10	->
+  uMmciFIFOReg/Reg4_reg_11	->
+  uMmciFIFOReg/Reg4_reg_12	->
+  uMmciFIFOReg/Reg4_reg_13	->
+  uMmciFIFOReg/Reg4_reg_14	->
+  uMmciFIFOReg/Reg4_reg_15	->
+  uMmciFIFOReg/Reg4_reg_16	->
+  uMmciFIFOReg/Reg4_reg_17	->
+  uMmciFIFOReg/Reg4_reg_18	->
+  uMmciFIFOReg/Reg4_reg_19	->
+  uMmciFIFOReg/Reg4_reg_20	->
+  uMmciFIFOReg/Reg4_reg_21	->
+  uMmciFIFOReg/Reg4_reg_22	->
+  uMmciFIFOReg/Reg4_reg_23	->
+  uMmciFIFOReg/Reg4_reg_24	->
+  uMmciFIFOReg/Reg4_reg_25	->
+  uMmciFIFOReg/Reg4_reg_26	->
+  uMmciFIFOReg/Reg4_reg_27	->
+  uMmciFIFOReg/Reg4_reg_28	->
+  uMmciFIFOReg/Reg4_reg_29	->
+  uMmciFIFOReg/Reg4_reg_30	->
+  uMmciFIFOReg/Reg4_reg_31	->
+  uMmciFIFOReg/Reg3_reg_0	->
+  uMmciFIFOReg/Reg3_reg_1	->
+  uMmciFIFOReg/Reg3_reg_2	->
+  uMmciFIFOReg/Reg3_reg_3	->
+  uMmciFIFOReg/Reg3_reg_4	->
+  uMmciFIFOReg/Reg3_reg_5	->
+  uMmciFIFOReg/Reg3_reg_6	->
+  uMmciFIFOReg/Reg3_reg_7	->
+  uMmciFIFOReg/Reg3_reg_8	->
+  uMmciFIFOReg/Reg3_reg_9	->
+  uMmciFIFOReg/Reg3_reg_10	->
+  uMmciFIFOReg/Reg3_reg_11	->
+  uMmciFIFOReg/Reg3_reg_12	->
+  uMmciFIFOReg/Reg3_reg_13	->
+  uMmciFIFOReg/Reg3_reg_14	->
+  uMmciFIFOReg/Reg3_reg_15	->
+  uMmciFIFOReg/Reg3_reg_16	->
+  uMmciFIFOReg/Reg3_reg_17	->
+  uMmciFIFOReg/Reg3_reg_18	->
+  uMmciFIFOReg/Reg3_reg_19	->
+  uMmciFIFOReg/Reg3_reg_20	->
+  uMmciFIFOReg/Reg3_reg_21	->
+  uMmciFIFOReg/Reg3_reg_22	->
+  uMmciFIFOReg/Reg3_reg_23	->
+  uMmciFIFOReg/Reg3_reg_24	->
+  uMmciFIFOReg/Reg3_reg_25	->
+  uMmciFIFOReg/Reg3_reg_26	->
+  uMmciFIFOReg/Reg3_reg_27	->
+  uMmciFIFOReg/Reg3_reg_28	->
+  uMmciFIFOReg/Reg3_reg_29	->
+  uMmciFIFOReg/Reg3_reg_30	->
+  uMmciFIFOReg/Reg3_reg_31	->
+  uMmciFIFOReg/Reg2_reg_0	->
+  uMmciFIFOReg/Reg2_reg_1	->
+  uMmciFIFOReg/Reg2_reg_2	->
+  uMmciFIFOReg/Reg2_reg_3	->
+  uMmciFIFOReg/Reg2_reg_4	->
+  uMmciFIFOReg/Reg2_reg_5	->
+  uMmciFIFOReg/Reg2_reg_6	->
+  uMmciFIFOReg/Reg2_reg_7	->
+  uMmciFIFOReg/Reg2_reg_8	->
+  uMmciFIFOReg/Reg2_reg_9	->
+  uMmciFIFOReg/Reg2_reg_10	->
+  uMmciFIFOReg/Reg2_reg_11	->
+  uMmciFIFOReg/Reg2_reg_12	->
+  uMmciFIFOReg/Reg2_reg_13	->
+  uMmciFIFOReg/Reg2_reg_14	->
+  uMmciFIFOReg/Reg2_reg_15	->
+  uMmciFIFOReg/Reg2_reg_16	->
+  uMmciFIFOReg/Reg2_reg_17	->
+  uMmciFIFOReg/Reg2_reg_18	->
+  uMmciFIFOReg/Reg2_reg_19	->
+  uMmciFIFOReg/Reg2_reg_20	->
+  uMmciFIFOReg/Reg2_reg_21	->
+  uMmciFIFOReg/Reg2_reg_22	->
+  uMmciFIFOReg/Reg2_reg_23	->
+  uMmciFIFOReg/Reg2_reg_24	->
+  uMmciFIFOReg/Reg2_reg_25	->
+  uMmciFIFOReg/Reg2_reg_26	->
+  uMmciFIFOReg/Reg2_reg_27	->
+  uMmciFIFOReg/Reg2_reg_28	->
+  uMmciFIFOReg/Reg2_reg_29	->
+  uMmciFIFOReg/Reg2_reg_30	->
+  uMmciFIFOReg/Reg2_reg_31	->
+  uMmciFIFOReg/Reg1_reg_0	->
+  uMmciFIFOReg/Reg1_reg_1	->
+  uMmciFIFOReg/Reg1_reg_2	->
+  uMmciFIFOReg/Reg1_reg_3	->
+  uMmciFIFOReg/Reg1_reg_4	->
+  uMmciFIFOReg/Reg1_reg_5	->
+  uMmciFIFOReg/Reg1_reg_6	->
+  uMmciFIFOReg/Reg1_reg_7	->
+  uMmciFIFOReg/Reg1_reg_8	->
+  uMmciFIFOReg/Reg1_reg_9	->
+  uMmciFIFOReg/Reg1_reg_10	->
+  uMmciFIFOReg/Reg1_reg_11	->
+  uMmciFIFOReg/Reg1_reg_12	->
+  uMmciFIFOReg/Reg1_reg_13	->
+  uMmciFIFOReg/Reg1_reg_14	->
+  uMmciFIFOReg/Reg1_reg_15	->
+  uMmciFIFOReg/Reg1_reg_16	->
+  uMmciFIFOReg/Reg1_reg_17	->
+  uMmciFIFOReg/Reg1_reg_18	->
+  uMmciFIFOReg/Reg1_reg_19	->
+  uMmciFIFOReg/Reg1_reg_20	->
+  uMmciFIFOReg/Reg1_reg_21	->
+  uMmciFIFOReg/Reg1_reg_22	->
+  uMmciFIFOReg/Reg1_reg_23	->
+  uMmciFIFOReg/Reg1_reg_24	->
+  uMmciFIFOReg/Reg1_reg_25	->
+  uMmciFIFOReg/Reg1_reg_26	->
+  uMmciFIFOReg/Reg1_reg_27	->
+  uMmciFIFOReg/Reg1_reg_28	->
+  uMmciFIFOReg/Reg1_reg_29	->
+  uMmciFIFOReg/Reg1_reg_30	->
+  uMmciFIFOReg/Reg1_reg_31	->
+  uMmciFIFOReg/Reg0_reg_0	->
+  uMmciFIFOReg/Reg0_reg_1	->
+  uMmciFIFOReg/Reg0_reg_2	->
+  uMmciFIFOReg/Reg0_reg_3	->
+  uMmciFIFOReg/Reg0_reg_4	->
+  uMmciFIFOReg/Reg0_reg_5	->
+  uMmciFIFOReg/Reg0_reg_6	->
+  uMmciFIFOReg/Reg0_reg_7	->
+  uMmciFIFOReg/Reg0_reg_8	->
+  uMmciFIFOReg/Reg0_reg_9	->
+  uMmciFIFOReg/Reg0_reg_10	->
+  uMmciFIFOReg/Reg0_reg_11	->
+  uMmciFIFOReg/Reg0_reg_12	->
+  uMmciFIFOReg/Reg0_reg_13	->
+  uMmciFIFOReg/Reg0_reg_14	->
+  uMmciFIFOReg/Reg0_reg_15	->
+  uMmciFIFOReg/Reg0_reg_16	->
+  uMmciFIFOReg/Reg0_reg_17	->
+  uMmciFIFOReg/Reg0_reg_18	->
+  uMmciFIFOReg/Reg0_reg_19	->
+  uMmciFIFOReg/Reg0_reg_20	->
+  uMmciFIFOReg/Reg0_reg_21	->
+  uMmciFIFOReg/Reg0_reg_22	->
+  uMmciFIFOReg/Reg0_reg_23	->
+  uMmciFIFOReg/Reg0_reg_24	->
+  uMmciFIFOReg/Reg0_reg_25	->
+  uMmciFIFOReg/Reg0_reg_26	->
+  uMmciFIFOReg/Reg0_reg_27	->
+  uMmciFIFOReg/Reg0_reg_28	->
+  uMmciFIFOReg/Reg0_reg_29	->
+  uMmciFIFOReg/Reg0_reg_30	->
+  uMmciFIFOReg/Reg0_reg_31	->
+  uMmciFifoDmaCtr/DelRxActiveSync_reg	->
+  uMmciFifoDmaCtr/iRxOverrun_reg	->
+  uMmciFifoDmaCtr/DelTxFRdIncSync_reg	->
+  uMmciFifoDmaCtr/Wrap_reg (*)	->
+  uMmciFifoDmaCtr/iDMALSREQ_reg (*)	->
+  uMmciFifoDmaCtr/DelRxWrEnSync_reg	->
+  uMmciFifoDmaCtr/FifoEmpty_reg	->
+  uMmciFifoDmaCtr/TxDataAvl_reg (*)	->
+  uMmciFifoDmaCtr/FifoFull_reg (*)	->
+  uMmciFifoDmaCtr/RxFifoEmpty_reg (*)	->
+  uMmciFifoDmaCtr/iRxWrDone_reg	->
+  uMmciFifoDmaCtr/iDMALBREQ_reg (*)	->
+  uMmciFifoDmaCtr/DelTxActive_reg	->
+  uMmciFifoDmaCtr/DelDATEnUpd_reg	->
+  uMmciFifoDmaCtr/iDMABREQ_reg (*)	->
+  uMmciFifoDmaCtr/RxFifoHF_reg	->
+  uMmciFifoDmaCtr/TxFifoHE_reg (*)	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_0	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_1	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_2 (*)	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_3 (*)	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_4 (*)	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_5	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_6	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_7	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_8	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_9	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_10	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_11	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_12	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_13	->
+  uMmciFifoDmaCtr/iMMCIFifoCnt_reg_14	->
+  uMmciFifoDmaCtr/iRdPtr_reg_0 (*)	->
+  uMmciFifoDmaCtr/iRdPtr_reg_2 (*)	->
+  uMmciFifoDmaCtr/iRdPtr_reg_3 (*)	->
+  uMmciFifoDmaCtr/iWrPtr_reg_0 (*)	->
+  uMmciFifoDmaCtr/iWrPtr_reg_2 (*)	->
+  uMmciFifoDmaCtr/iWrPtr_reg_3 (*)	->
+  uMmciFifoDmaCtr/iRdPtr_reg_1 (*)	->
+  uMmciFifoDmaCtr/iDMASREQ_reg (*)	->
+  uMmciFifoDmaCtr/iWrPtr_reg_1 (*)	->
+  uMmciSynctoPCLK/RxWrEnSync_reg	->
+  uMmciSynctoPCLK/CSentSync1_reg	->
+  uMmciSynctoPCLK/DCtrDoneSync1_reg	->
+  uMmciSynctoPCLK/PowerUpdDoneSync_reg	->
+  uMmciSynctoPCLK/RxWrEnSync1_reg	->
+  uMmciSynctoPCLK/DBEndSync1_reg	->
+  uMmciSynctoPCLK/PowerDoneSync1_reg	->
+  uMmciSynctoPCLK/RxActiveSync_reg	->
+  uMmciSynctoPCLK/CSentSync_reg	->
+  uMmciSynctoPCLK/TxRdPtrIncSync1_reg	->
+  uMmciSynctoPCLK/DToutSync1_reg	->
+  uMmciSynctoPCLK/TxUndSync1_reg	->
+  uMmciSynctoPCLK/DCtrUpdDoneSync_reg	->
+  uMmciSynctoPCLK/DToutSync_reg	->
+  uMmciSynctoPCLK/ClockDoneSync1_reg	->
+  uMmciSynctoPCLK/TxActClrSync_reg	->
+  uMmciSynctoPCLK/DEndSync_reg	->
+  uMmciSynctoPCLK/DCrcFSync1_reg	->
+  uMmciSynctoPCLK/CCrcFSync_reg	->
+  uMmciSynctoPCLK/CmdActClrSync1_reg	->
+  uMmciSynctoPCLK/TxActClrSync1_reg	->
+  uMmciSynctoPCLK/DCrcFSync_reg	->
+  uMmciSynctoPCLK/DEndSync1_reg	->
+  uMmciSynctoPCLK/CRspESync_reg	->
+  uMmciSynctoPCLK/CmdActClrSync_reg	->
+  uMmciSynctoPCLK/CToutSync_reg	->
+  uMmciSynctoPCLK/TxRdPtrIncSync_reg	->
+  uMmciSynctoPCLK/DBEndSync_reg	->
+  uMmciSynctoPCLK/CmdUpdDoneSync_reg	->
+  uMmciSynctoPCLK/TxUndSync_reg	->
+  uMmciSynctoPCLK/CCrcFSync1_reg	->
+  uMmciSynctoPCLK/ClockUpdDoneSync_reg	->
+  uMmciSynctoPCLK/CRspESync1_reg	->
+  uMmciSynctoPCLK/CmdDoneSync1_reg	->
+  uMmciSynctoPCLK/RxActiveSync1_reg	->
+  uMmciSynctoPCLK/CToutSync1_reg	->
+  uMmciApbifReg/CMDEnUpd_reg	->
+  uMmciApbifReg/MMCITCR_reg_5	->
+  uMmciApbifReg/DATEnUpd_reg	->
+  uMmciApbifReg/DelTxActClrSync_reg	->
+  uMmciApbifReg/iCRspEClr_reg	->
+  uMmciApbifReg/iMMCIITIP_reg	->
+  uMmciApbifReg/MMCITCR_reg_2	->
+  uMmciApbifReg/iDBEndClr_reg	->
+  uMmciApbifReg/iCmdActive_reg (*)	->
+  uMmciApbifReg/iCToutClr_reg	->
+  uMmciApbifReg/MMCITCR_reg_3 (*)	->
+  uMmciApbifReg/iDCrcFClr_reg	->
+  uMmciApbifReg/iClockUpd_reg	->
+  uMmciApbifReg/MMCITCR_reg_4	->
+  uMmciApbifReg/iTxUndClr_reg	->
+  uMmciApbifReg/DelCmdActClrSync_reg	->
+  uMmciApbifReg/iCmdUpd_reg	->
+  uMmciApbifReg/iDToutClr_reg	->
+  uMmciApbifReg/iCCrcFClr_reg	->
+  uMmciApbifReg/IntDATEnUpd_reg	->
+  uMmciApbifReg/IntCMDEnUpd_reg	->
+  uMmciApbifReg/iPowerUpd_reg	->
+  uMmciApbifReg/iDCtrUpd_reg	->
+  uMmciApbifReg/MMCITCR_reg_1 (*)	->
+  uMmciApbifReg/iTxActive_reg	->
+  uMmciApbifReg/MMCITCR_reg_0	->
+  uMmciApbifReg/iMMCITxFIFOWr_reg	->
+  uMmciApbifReg/iDEndClr_reg	->
+  uMmciApbifReg/iCSentClr_reg	->
+  uMmciApbifReg/iMMCIITOP_reg_0	->
+  uMmciApbifReg/iMMCIITOP_reg_1	->
+  uMmciApbifReg/iMMCIITOP_reg_2	->
+  uMmciApbifReg/iMMCIITOP_reg_3	->
+  uMmciApbifReg/iMMCIITOP_reg_4	->
+  uMmciApbifReg/iMMCIITOP_reg_5	->
+  uMmciApbifReg/iMMCIITOP_reg_6	->
+  uMmciApbifReg/iMMCIITOP_reg_8 (*)	->
+  uMmciApbifReg/iMMCIITOP_reg_9 (*)	->
+  uMmciApbifReg/iMMCIITOP_reg_10	->
+  uMmciApbifReg/iMMCIITOP_reg_11 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_0 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_1	->
+  uMmciApbifReg/iMMCIMask1_reg_2	->
+  uMmciApbifReg/iMMCIMask1_reg_3 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_4 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_5 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_6 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_7	->
+  uMmciApbifReg/iMMCIMask1_reg_8	->
+  uMmciApbifReg/iMMCIMask1_reg_10 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_11 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_12	->
+  uMmciApbifReg/iMMCIMask1_reg_13	->
+  uMmciApbifReg/iMMCIMask1_reg_14	->
+  uMmciApbifReg/iMMCIMask1_reg_15	->
+  uMmciApbifReg/iMMCIMask1_reg_16	->
+  uMmciApbifReg/iMMCIMask1_reg_17	->
+  uMmciApbifReg/iMMCIMask1_reg_18	->
+  uMmciApbifReg/iMMCIMask1_reg_19	->
+  uMmciApbifReg/iMMCIMask1_reg_20	->
+  uMmciApbifReg/iMMCIMask1_reg_21	->
+  uMmciApbifReg/iMMCIMask0_reg_0	->
+  uMmciApbifReg/iMMCIMask0_reg_1	->
+  uMmciApbifReg/iMMCIMask0_reg_2	->
+  uMmciApbifReg/iMMCIMask0_reg_3 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_4	->
+  uMmciApbifReg/iMMCIMask0_reg_5 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_6 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_7	->
+  uMmciApbifReg/iMMCIMask0_reg_8 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_9	->
+  uMmciApbifReg/iMMCIMask0_reg_10 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_11 (*)	->
+  uMmciApbifReg/iMMCIMask0_reg_12	->
+  uMmciApbifReg/iMMCIMask0_reg_13	->
+  uMmciApbifReg/iMMCIMask0_reg_14	->
+  uMmciApbifReg/iMMCIMask0_reg_15	->
+  uMmciApbifReg/iMMCIMask0_reg_16	->
+  uMmciApbifReg/iMMCIMask0_reg_17	->
+  uMmciApbifReg/iMMCIMask0_reg_18	->
+  uMmciApbifReg/iMMCIMask0_reg_19	->
+  uMmciApbifReg/iMMCIMask0_reg_20	->
+  uMmciApbifReg/iMMCIMask0_reg_21	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_0	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_1	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_2	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_3 (*)	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_4	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_5	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_6	->
+  uMmciApbifReg/iMMCIDataCtrl_reg_7	->
+  uMmciApbifReg/iMMCIDataLength_reg_0 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_1	->
+  uMmciApbifReg/iMMCIDataLength_reg_2 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_3	->
+  uMmciApbifReg/iMMCIDataLength_reg_4 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_5 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_6 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_7 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_8 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_9	->
+  uMmciApbifReg/iMMCIDataLength_reg_10	->
+  uMmciApbifReg/iMMCIDataLength_reg_11 (*)	->
+  uMmciApbifReg/iMMCIDataLength_reg_12	->
+  uMmciApbifReg/iMMCIDataLength_reg_13	->
+  uMmciApbifReg/iMMCIDataLength_reg_14	->
+  uMmciApbifReg/iMMCIDataLength_reg_15	->
+  uMmciApbifReg/iMMCIDataTimer_reg_0	->
+  uMmciApbifReg/iMMCIDataTimer_reg_1	->
+  uMmciApbifReg/iMMCIDataTimer_reg_2	->
+  uMmciApbifReg/iMMCIDataTimer_reg_3	->
+  uMmciApbifReg/iMMCIDataTimer_reg_4	->
+  uMmciApbifReg/iMMCIDataTimer_reg_5	->
+  uMmciApbifReg/iMMCIDataTimer_reg_6	->
+  uMmciApbifReg/iMMCIDataTimer_reg_7	->
+  uMmciApbifReg/iMMCIDataTimer_reg_8	->
+  uMmciApbifReg/iMMCIDataTimer_reg_9	->
+  uMmciApbifReg/iMMCIDataTimer_reg_10	->
+  uMmciApbifReg/iMMCIDataTimer_reg_11	->
+  uMmciApbifReg/iMMCIDataTimer_reg_12	->
+  uMmciApbifReg/iMMCIDataTimer_reg_13	->
+  uMmciApbifReg/iMMCIDataTimer_reg_14	->
+  uMmciApbifReg/iMMCIDataTimer_reg_15	->
+  uMmciApbifReg/iMMCIDataTimer_reg_16	->
+  uMmciApbifReg/iMMCIDataTimer_reg_17	->
+  uMmciApbifReg/iMMCIDataTimer_reg_18	->
+  uMmciApbifReg/iMMCIDataTimer_reg_19	->
+  uMmciApbifReg/iMMCIDataTimer_reg_20	->
+  uMmciApbifReg/iMMCIDataTimer_reg_21	->
+  uMmciApbifReg/iMMCIDataTimer_reg_22	->
+  uMmciApbifReg/iMMCIDataTimer_reg_23	->
+  uMmciApbifReg/iMMCIDataTimer_reg_24	->
+  uMmciApbifReg/iMMCIDataTimer_reg_25	->
+  uMmciApbifReg/iMMCIDataTimer_reg_26	->
+  uMmciApbifReg/iMMCIDataTimer_reg_27	->
+  uMmciApbifReg/iMMCIDataTimer_reg_28	->
+  uMmciApbifReg/iMMCIDataTimer_reg_29	->
+  uMmciApbifReg/iMMCIDataTimer_reg_30	->
+  uMmciApbifReg/iMMCIDataTimer_reg_31	->
+  uMmciApbifReg/iMMCICommand_reg_0	->
+  uMmciApbifReg/iMMCICommand_reg_1	->
+  uMmciApbifReg/iMMCICommand_reg_2	->
+  uMmciApbifReg/iMMCICommand_reg_3	->
+  uMmciApbifReg/iMMCICommand_reg_4	->
+  uMmciApbifReg/iMMCICommand_reg_5	->
+  uMmciApbifReg/iMMCICommand_reg_6	->
+  uMmciApbifReg/iMMCICommand_reg_7	->
+  uMmciApbifReg/iMMCICommand_reg_8	->
+  uMmciApbifReg/iMMCICommand_reg_9	->
+  uMmciApbifReg/iMMCICommand_reg_10	->
+  uMmciApbifReg/iMMCIArgument_reg_0	->
+  uMmciApbifReg/iMMCIArgument_reg_1	->
+  uMmciApbifReg/iMMCIArgument_reg_2	->
+  uMmciApbifReg/iMMCIArgument_reg_3	->
+  uMmciApbifReg/iMMCIArgument_reg_4	->
+  uMmciApbifReg/iMMCIArgument_reg_5	->
+  uMmciApbifReg/iMMCIArgument_reg_6	->
+  uMmciApbifReg/iMMCIArgument_reg_7	->
+  uMmciApbifReg/iMMCIArgument_reg_8	->
+  uMmciApbifReg/iMMCIArgument_reg_9	->
+  uMmciApbifReg/iMMCIArgument_reg_10	->
+  uMmciApbifReg/iMMCIArgument_reg_11	->
+  uMmciApbifReg/iMMCIArgument_reg_12	->
+  uMmciApbifReg/iMMCIArgument_reg_13	->
+  uMmciApbifReg/iMMCIArgument_reg_14	->
+  uMmciApbifReg/iMMCIArgument_reg_15	->
+  uMmciApbifReg/iMMCIArgument_reg_16	->
+  uMmciApbifReg/iMMCIArgument_reg_17	->
+  uMmciApbifReg/iMMCIArgument_reg_18	->
+  uMmciApbifReg/iMMCIArgument_reg_19	->
+  uMmciApbifReg/iMMCIArgument_reg_20	->
+  uMmciApbifReg/iMMCIArgument_reg_21	->
+  uMmciApbifReg/iMMCIArgument_reg_22	->
+  uMmciApbifReg/iMMCIArgument_reg_23	->
+  uMmciApbifReg/iMMCIArgument_reg_24	->
+  uMmciApbifReg/iMMCIArgument_reg_25	->
+  uMmciApbifReg/iMMCIArgument_reg_26	->
+  uMmciApbifReg/iMMCIArgument_reg_27	->
+  uMmciApbifReg/iMMCIArgument_reg_28	->
+  uMmciApbifReg/iMMCIArgument_reg_29	->
+  uMmciApbifReg/iMMCIArgument_reg_30	->
+  uMmciApbifReg/iMMCIArgument_reg_31	->
+  uMmciApbifReg/iMMCIClock_reg_0	->
+  uMmciApbifReg/iMMCIClock_reg_1	->
+  uMmciApbifReg/iMMCIClock_reg_2	->
+  uMmciApbifReg/iMMCIClock_reg_3	->
+  uMmciApbifReg/iMMCIClock_reg_4	->
+  uMmciApbifReg/iMMCIClock_reg_5	->
+  uMmciApbifReg/iMMCIClock_reg_6	->
+  uMmciApbifReg/iMMCIClock_reg_7	->
+  uMmciApbifReg/iMMCIClock_reg_8	->
+  uMmciApbifReg/iMMCIClock_reg_9	->
+  uMmciApbifReg/iMMCIClock_reg_10	->
+  uMmciApbifReg/iMMCIPower_reg_0	->
+  uMmciApbifReg/iMMCIPower_reg_1	->
+  uMmciApbifReg/iMMCIPower_reg_2 (*)	->
+  uMmciApbifReg/iMMCIPower_reg_3 (*)	->
+  uMmciApbifReg/iMMCIPower_reg_4	->
+  uMmciApbifReg/iMMCIPower_reg_5 (*)	->
+  uMmciApbifReg/iMMCIPower_reg_6	->
+  uMmciApbifReg/iMMCIPower_reg_7 (*)	->
+  uMmciApbifReg/PRDATA_reg_0	->
+  uMmciApbifReg/PRDATA_reg_1	->
+  uMmciApbifReg/PRDATA_reg_2	->
+  uMmciApbifReg/PRDATA_reg_3	->
+  uMmciApbifReg/PRDATA_reg_4	->
+  uMmciApbifReg/PRDATA_reg_5	->
+  uMmciApbifReg/PRDATA_reg_6	->
+  uMmciApbifReg/PRDATA_reg_7	->
+  uMmciApbifReg/PRDATA_reg_8	->
+  uMmciApbifReg/PRDATA_reg_9	->
+  uMmciApbifReg/PRDATA_reg_10	->
+  uMmciApbifReg/PRDATA_reg_11	->
+  uMmciApbifReg/PRDATA_reg_12	->
+  uMmciApbifReg/PRDATA_reg_13	->
+  uMmciApbifReg/PRDATA_reg_14	->
+  uMmciApbifReg/PRDATA_reg_15	->
+  uMmciApbifReg/PRDATA_reg_16	->
+  uMmciApbifReg/PRDATA_reg_17	->
+  uMmciApbifReg/PRDATA_reg_18	->
+  uMmciApbifReg/PRDATA_reg_19	->
+  uMmciApbifReg/PRDATA_reg_20	->
+  uMmciApbifReg/PRDATA_reg_21	->
+  uMmciApbifReg/PRDATA_reg_22	->
+  uMmciApbifReg/PRDATA_reg_23	->
+  uMmciApbifReg/PRDATA_reg_24	->
+  uMmciApbifReg/PRDATA_reg_25	->
+  uMmciApbifReg/PRDATA_reg_26	->
+  uMmciApbifReg/PRDATA_reg_27	->
+  uMmciApbifReg/PRDATA_reg_28	->
+  uMmciApbifReg/PRDATA_reg_29	->
+  uMmciApbifReg/PRDATA_reg_30	->
+  uMmciApbifReg/PRDATA_reg_31	->
+  uMmciApbifReg/WrEn_reg (*)	->
+  uMmciApbifReg/iMMCIITOP_reg_7 (*)	->
+  uMmciApbifReg/iMMCIMask1_reg_9	->
+  uMmciApbifReg/iRxFRdPtrInc_reg	->
+  SCANOUTPCLK
+
+Complete scan chain #2 (SCANINMCLK --> SCANOUTMCLK) contains 466 cells:
+
+  SCANINMCLK	->
+  uMmciCPSM/CMDShift_reg_12	->
+  uMmciCPSM/CPSMStL_reg (*)	->
+  uMmciCPSM/CMDTxShiftEn_reg (*)	->
+  uMmciCPSM/CMDCnt_reg_5	->
+  uMmciCPSM/CMDShift_reg_3	->
+  uMmciCPSM/CMDShift_reg_27	->
+  uMmciCPSM/CMDShift_reg_4	->
+  uMmciCPSM/CMDShift_reg_20	->
+  uMmciCPSM/CMDCnt_reg_2 (*)	->
+  uMmciCPSM/CMDShift_reg_29	->
+  uMmciCPSM/CMDShift_reg_15	->
+  uMmciCPSM/CMDCnt_reg_3 (*)	->
+  uMmciCPSM/iCCrcF_reg	->
+  uMmciCPSM/CMDShift_reg_5	->
+  uMmciCPSM/CMDShift_reg_21	->
+  uMmciCPSM/CMDShift_reg_14	->
+  uMmciCPSM/iCRspE_reg	->
+  uMmciCPSM/CMDRxShiftEn_reg	->
+  uMmciCPSM/CMDShift_reg_28	->
+  uMmciCPSM/PendLatch_reg	->
+  uMmciCPSM/DelCSentClrSync_reg	->
+  uMmciCPSM/CMDShift_reg_13	->
+  uMmciCPSM/nIntCMDEN_reg	->
+  uMmciCPSM/CMDShift_reg_2	->
+  uMmciCPSM/CMDShift_reg_26	->
+  uMmciCPSM/DelCCrcFClrSync_reg	->
+  uMmciCPSM/CMDCnt_reg_4 (*)	->
+  uMmciCPSM/CMDShift_reg_11	->
+  uMmciCPSM/iCmdActClr_reg (*)	->
+  uMmciCPSM/CMDShift_reg_9	->
+  uMmciCPSM/iCTout_reg	->
+  uMmciCPSM/CMDShift_reg_18	->
+  uMmciCPSM/CMDCnt_reg_6 (*)	->
+  uMmciCPSM/CMDShift_reg_0	->
+  uMmciCPSM/CMDShift_reg_24	->
+  uMmciCPSM/CMDShift_reg_23	->
+  uMmciCPSM/Del1CMDEnUpdSync_reg	->
+  uMmciCPSM/CMDShift_reg_7	->
+  uMmciCPSM/DelCToutClrSync_reg	->
+  uMmciCPSM/CMDCnt_reg_1	->
+  uMmciCPSM/CMDCRCRxEn_reg (*)	->
+  uMmciCPSM/Del2CMDEnUpdSync_reg	->
+  uMmciCPSM/iCSent_reg	->
+  uMmciCPSM/CMDShift_reg_31	->
+  uMmciCPSM/CMDShift_reg_16	->
+  uMmciCPSM/CMDCnt_reg_0 (*)	->
+  uMmciCPSM/CMDShift_reg_22	->
+  uMmciCPSM/CMDShift_reg_6	->
+  uMmciCPSM/CMDShift_reg_30 (*)	->
+  uMmciCPSM/iCmdPSave_reg	->
+  uMmciCPSM/CMDShift_reg_17	->
+  uMmciCPSM/CMDShift_reg_8	->
+  uMmciCPSM/CMDShift_reg_10	->
+  uMmciCPSM/CMDShift_reg_1	->
+  uMmciCPSM/CMDShift_reg_25	->
+  uMmciCPSM/DelCRspEClrSync_reg	->
+  uMmciCPSM/CMDCnt_reg_7	->
+  uMmciCPSM/CMDCRCTxEn_reg (*)	->
+  uMmciCPSM/CMDShift_reg_19	->
+  uMmciCPSM/CPSMState_reg_0	->
+  uMmciCPSM/CPSMState_reg_1	->
+  uMmciCPSM/CPSMState_reg_2	->
+  uMmciCPSM/iMMCIResponse3_reg_0	->
+  uMmciCPSM/iMMCIResponse3_reg_1	->
+  uMmciCPSM/iMMCIResponse3_reg_2	->
+  uMmciCPSM/iMMCIResponse3_reg_3	->
+  uMmciCPSM/iMMCIResponse3_reg_4	->
+  uMmciCPSM/iMMCIResponse3_reg_5	->
+  uMmciCPSM/iMMCIResponse3_reg_6	->
+  uMmciCPSM/iMMCIResponse3_reg_7	->
+  uMmciCPSM/iMMCIResponse3_reg_8	->
+  uMmciCPSM/iMMCIResponse3_reg_9	->
+  uMmciCPSM/iMMCIResponse3_reg_10	->
+  uMmciCPSM/iMMCIResponse3_reg_11	->
+  uMmciCPSM/iMMCIResponse3_reg_12	->
+  uMmciCPSM/iMMCIResponse3_reg_13	->
+  uMmciCPSM/iMMCIResponse3_reg_14	->
+  uMmciCPSM/iMMCIResponse3_reg_15	->
+  uMmciCPSM/iMMCIResponse3_reg_16	->
+  uMmciCPSM/iMMCIResponse3_reg_17	->
+  uMmciCPSM/iMMCIResponse3_reg_18	->
+  uMmciCPSM/iMMCIResponse3_reg_19	->
+  uMmciCPSM/iMMCIResponse3_reg_20	->
+  uMmciCPSM/iMMCIResponse3_reg_21	->
+  uMmciCPSM/iMMCIResponse3_reg_22	->
+  uMmciCPSM/iMMCIResponse3_reg_23	->
+  uMmciCPSM/iMMCIResponse3_reg_24	->
+  uMmciCPSM/iMMCIResponse3_reg_25	->
+  uMmciCPSM/iMMCIResponse3_reg_26	->
+  uMmciCPSM/iMMCIResponse3_reg_27	->
+  uMmciCPSM/iMMCIResponse3_reg_28	->
+  uMmciCPSM/iMMCIResponse3_reg_29	->
+  uMmciCPSM/iMMCIResponse3_reg_30	->
+  uMmciCPSM/iMMCIResponse2_reg_0	->
+  uMmciCPSM/iMMCIResponse2_reg_1	->
+  uMmciCPSM/iMMCIResponse2_reg_2	->
+  uMmciCPSM/iMMCIResponse2_reg_3	->
+  uMmciCPSM/iMMCIResponse2_reg_4	->
+  uMmciCPSM/iMMCIResponse2_reg_5	->
+  uMmciCPSM/iMMCIResponse2_reg_6	->
+  uMmciCPSM/iMMCIResponse2_reg_7	->
+  uMmciCPSM/iMMCIResponse2_reg_8	->
+  uMmciCPSM/iMMCIResponse2_reg_9	->
+  uMmciCPSM/iMMCIResponse2_reg_10	->
+  uMmciCPSM/iMMCIResponse2_reg_11	->
+  uMmciCPSM/iMMCIResponse2_reg_12	->
+  uMmciCPSM/iMMCIResponse2_reg_13	->
+  uMmciCPSM/iMMCIResponse2_reg_14	->
+  uMmciCPSM/iMMCIResponse2_reg_15	->
+  uMmciCPSM/iMMCIResponse2_reg_16	->
+  uMmciCPSM/iMMCIResponse2_reg_17	->
+  uMmciCPSM/iMMCIResponse2_reg_18	->
+  uMmciCPSM/iMMCIResponse2_reg_19	->
+  uMmciCPSM/iMMCIResponse2_reg_20	->
+  uMmciCPSM/iMMCIResponse2_reg_21	->
+  uMmciCPSM/iMMCIResponse2_reg_22	->
+  uMmciCPSM/iMMCIResponse2_reg_23	->
+  uMmciCPSM/iMMCIResponse2_reg_24	->
+  uMmciCPSM/iMMCIResponse2_reg_25	->
+  uMmciCPSM/iMMCIResponse2_reg_26	->
+  uMmciCPSM/iMMCIResponse2_reg_27	->
+  uMmciCPSM/iMMCIResponse2_reg_28	->
+  uMmciCPSM/iMMCIResponse2_reg_29	->
+  uMmciCPSM/iMMCIResponse2_reg_30	->
+  uMmciCPSM/iMMCIResponse2_reg_31	->
+  uMmciCPSM/iMMCIResponse1_reg_0	->
+  uMmciCPSM/iMMCIResponse1_reg_1	->
+  uMmciCPSM/iMMCIResponse1_reg_2	->
+  uMmciCPSM/iMMCIResponse1_reg_3	->
+  uMmciCPSM/iMMCIResponse1_reg_4	->
+  uMmciCPSM/iMMCIResponse1_reg_5	->
+  uMmciCPSM/iMMCIResponse1_reg_6	->
+  uMmciCPSM/iMMCIResponse1_reg_7	->
+  uMmciCPSM/iMMCIResponse1_reg_8	->
+  uMmciCPSM/iMMCIResponse1_reg_9	->
+  uMmciCPSM/iMMCIResponse1_reg_10	->
+  uMmciCPSM/iMMCIResponse1_reg_11	->
+  uMmciCPSM/iMMCIResponse1_reg_12	->
+  uMmciCPSM/iMMCIResponse1_reg_13	->
+  uMmciCPSM/iMMCIResponse1_reg_14	->
+  uMmciCPSM/iMMCIResponse1_reg_15	->
+  uMmciCPSM/iMMCIResponse1_reg_16	->
+  uMmciCPSM/iMMCIResponse1_reg_17	->
+  uMmciCPSM/iMMCIResponse1_reg_18	->
+  uMmciCPSM/iMMCIResponse1_reg_19	->
+  uMmciCPSM/iMMCIResponse1_reg_20	->
+  uMmciCPSM/iMMCIResponse1_reg_21	->
+  uMmciCPSM/iMMCIResponse1_reg_22	->
+  uMmciCPSM/iMMCIResponse1_reg_23	->
+  uMmciCPSM/iMMCIResponse1_reg_24	->
+  uMmciCPSM/iMMCIResponse1_reg_25	->
+  uMmciCPSM/iMMCIResponse1_reg_26	->
+  uMmciCPSM/iMMCIResponse1_reg_27	->
+  uMmciCPSM/iMMCIResponse1_reg_28	->
+  uMmciCPSM/iMMCIResponse1_reg_29	->
+  uMmciCPSM/iMMCIResponse1_reg_30	->
+  uMmciCPSM/iMMCIResponse1_reg_31	->
+  uMmciCPSM/iMMCIResponse0_reg_0	->
+  uMmciCPSM/iMMCIResponse0_reg_1	->
+  uMmciCPSM/iMMCIResponse0_reg_2	->
+  uMmciCPSM/iMMCIResponse0_reg_3	->
+  uMmciCPSM/iMMCIResponse0_reg_4	->
+  uMmciCPSM/iMMCIResponse0_reg_5	->
+  uMmciCPSM/iMMCIResponse0_reg_6	->
+  uMmciCPSM/iMMCIResponse0_reg_7	->
+  uMmciCPSM/iMMCIResponse0_reg_8	->
+  uMmciCPSM/iMMCIResponse0_reg_9	->
+  uMmciCPSM/iMMCIResponse0_reg_10	->
+  uMmciCPSM/iMMCIResponse0_reg_11	->
+  uMmciCPSM/iMMCIResponse0_reg_12	->
+  uMmciCPSM/iMMCIResponse0_reg_13	->
+  uMmciCPSM/iMMCIResponse0_reg_14	->
+  uMmciCPSM/iMMCIResponse0_reg_15	->
+  uMmciCPSM/iMMCIResponse0_reg_16	->
+  uMmciCPSM/iMMCIResponse0_reg_17	->
+  uMmciCPSM/iMMCIResponse0_reg_18	->
+  uMmciCPSM/iMMCIResponse0_reg_19	->
+  uMmciCPSM/iMMCIResponse0_reg_20	->
+  uMmciCPSM/iMMCIResponse0_reg_21	->
+  uMmciCPSM/iMMCIResponse0_reg_22	->
+  uMmciCPSM/iMMCIResponse0_reg_23	->
+  uMmciCPSM/iMMCIResponse0_reg_24	->
+  uMmciCPSM/iMMCIResponse0_reg_25	->
+  uMmciCPSM/iMMCIResponse0_reg_26	->
+  uMmciCPSM/iMMCIResponse0_reg_27	->
+  uMmciCPSM/iMMCIResponse0_reg_28	->
+  uMmciCPSM/iMMCIResponse0_reg_29	->
+  uMmciCPSM/iMMCIResponse0_reg_30	->
+  uMmciCPSM/iMMCIResponse0_reg_31	->
+  uMmciCPSM/iMMCIRespCmd_reg_0	->
+  uMmciCPSM/iMMCIRespCmd_reg_1	->
+  uMmciCPSM/iMMCIRespCmd_reg_2	->
+  uMmciCPSM/iMMCIRespCmd_reg_3	->
+  uMmciCPSM/iMMCIRespCmd_reg_4	->
+  uMmciCPSM/iMMCIRespCmd_reg_5	->
+  uMmciCPSM/CMDCRCShift_reg_0	->
+  uMmciCPSM/CMDCRCShift_reg_1	->
+  uMmciCPSM/CMDCRCShift_reg_2	->
+  uMmciCPSM/CMDCRCShift_reg_3	->
+  uMmciCPSM/CMDCRCShift_reg_4	->
+  uMmciCPSM/CMDCRCShift_reg_5	->
+  uMmciCPSM/CMDCRCShift_reg_6 (*)	->
+  uMmciPwrClkCtr/iMMCICLK_reg	->
+  uMmciPwrClkCtr/CntState_reg	->
+  uMmciPwrClkCtr/IntMMCIPWR_reg	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_0 (*)	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_1	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_2	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_3	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_4	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_5	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_6	->
+  uMmciPwrClkCtr/ClkDivCnt_reg_7	->
+  uMmciSynctoMCLK/TxUndClrSync1_reg	->
+  uMmciSynctoMCLK/RxFifoEmptySync_reg	->
+  uMmciSynctoMCLK/RxFifoEmptySync1_reg	->
+  uMmciSynctoMCLK/TxDataAvlSync_reg	->
+  uMmciSynctoMCLK/CToutClrSync1_reg	->
+  uMmciSynctoMCLK/DToutClrSync1_reg	->
+  uMmciSynctoMCLK/CCrcFClrSync_reg	->
+  uMmciSynctoMCLK/CSentClrSync_reg	->
+  uMmciSynctoMCLK/CMDEnUpdSync_reg	->
+  uMmciSynctoMCLK/RxOverrunSync_reg	->
+  uMmciSynctoMCLK/DEndClrSync1_reg	->
+  uMmciSynctoMCLK/DToutClrSync_reg	->
+  uMmciSynctoMCLK/CmdUpdSync_reg	->
+  uMmciSynctoMCLK/ClockUpdSync_reg	->
+  uMmciSynctoMCLK/DCtrUpdSync1_reg	->
+  uMmciSynctoMCLK/CmdUpdSync1_reg	->
+  uMmciSynctoMCLK/PowerUpdSync_reg	->
+  uMmciSynctoMCLK/DBEndClrSync1_reg	->
+  uMmciSynctoMCLK/DEndClrSync_reg	->
+  uMmciSynctoMCLK/TxUndClrSync_reg	->
+  uMmciSynctoMCLK/DCrcFClrSync_reg	->
+  uMmciSynctoMCLK/DCrcFClrSync1_reg	->
+  uMmciSynctoMCLK/PowerUpdSync1_reg	->
+  uMmciSynctoMCLK/RxWrDoneSync_reg	->
+  uMmciSynctoMCLK/CRspEClrSync1_reg	->
+  uMmciSynctoMCLK/DATEnUpdSync_reg	->
+  uMmciSynctoMCLK/DATEnUpdSync1_reg	->
+  uMmciSynctoMCLK/CSentClrSync1_reg	->
+  uMmciSynctoMCLK/CRspEClrSync_reg	->
+  uMmciSynctoMCLK/CCrcFClrSync1_reg	->
+  uMmciSynctoMCLK/RxOverrunSync1_reg	->
+  uMmciSynctoMCLK/TxDataAvlSync1_reg	->
+  uMmciSynctoMCLK/DBEndClrSync_reg	->
+  uMmciSynctoMCLK/RxWrDoneSync1_reg	->
+  uMmciSynctoMCLK/DCtrUpdSync_reg	->
+  uMmciSynctoMCLK/ClockUpdSync1_reg	->
+  uMmciSynctoMCLK/CToutClrSync_reg	->
+  uMmciSynctoMCLK/CMDEnUpdSync1_reg	->
+  uMmciDPSM/iDATOUT_reg	->
+  uMmciDPSM/DelDToutClrSync_reg	->
+  uMmciDPSM/iDBEnd_reg	->
+  uMmciDPSM/DATCRCRxEn_reg (*)	->
+  uMmciDPSM/CRCCheck_reg	->
+  uMmciDPSM/TokenChk_reg	->
+  uMmciDPSM/ShiftNotE_reg	->
+  uMmciDPSM/iRxWrEn_reg	->
+  uMmciDPSM/iRxActive_reg	->
+  uMmciDPSM/DATCRCTxEn_reg	->
+  uMmciDPSM/iDataPSave_reg	->
+  uMmciDPSM/iPendPulse_reg	->
+  uMmciDPSM/iTxActClr_reg	->
+  uMmciDPSM/DataCntEn_reg (*)	->
+  uMmciDPSM/Del2DATEnUpd_reg	->
+  uMmciDPSM/IntOverrun_reg	->
+  uMmciDPSM/StartBit_reg	->
+  uMmciDPSM/StopBit_reg (*)	->
+  uMmciDPSM/DelDBEndClrSync_reg	->
+  uMmciDPSM/iDCrcF_reg	->
+  uMmciDPSM/inDATEN_reg (*)	->
+  uMmciDPSM/DelRxWrDoneSync_reg	->
+  uMmciDPSM/BsyMode_reg	->
+  uMmciDPSM/DelTxUndClrSync_reg	->
+  uMmciDPSM/DelDCrcFClrSync_reg	->
+  uMmciDPSM/iDEnd_reg	->
+  uMmciDPSM/iTxRdPtrInc_reg	->
+  uMmciDPSM/TokenRxSEn_reg	->
+  uMmciDPSM/Del1DATEnUpd_reg	->
+  uMmciDPSM/DelDEndClrSync_reg	->
+  uMmciDPSM/iTxUnd_reg	->
+  uMmciDPSM/Wtoken_reg	->
+  uMmciDPSM/DPSMState_reg_0	->
+  uMmciDPSM/DPSMState_reg_1 (*)	->
+  uMmciDPSM/DPSMState_reg_2	->
+  uMmciDPSM/iRxFWrData_reg_0	->
+  uMmciDPSM/iRxFWrData_reg_1	->
+  uMmciDPSM/iRxFWrData_reg_2	->
+  uMmciDPSM/iRxFWrData_reg_3	->
+  uMmciDPSM/iRxFWrData_reg_4	->
+  uMmciDPSM/iRxFWrData_reg_5	->
+  uMmciDPSM/iRxFWrData_reg_6	->
+  uMmciDPSM/iRxFWrData_reg_7	->
+  uMmciDPSM/iRxFWrData_reg_8	->
+  uMmciDPSM/iRxFWrData_reg_9	->
+  uMmciDPSM/iRxFWrData_reg_10	->
+  uMmciDPSM/iRxFWrData_reg_11	->
+  uMmciDPSM/iRxFWrData_reg_12	->
+  uMmciDPSM/iRxFWrData_reg_13	->
+  uMmciDPSM/iRxFWrData_reg_14	->
+  uMmciDPSM/iRxFWrData_reg_15	->
+  uMmciDPSM/iRxFWrData_reg_16	->
+  uMmciDPSM/iRxFWrData_reg_17	->
+  uMmciDPSM/iRxFWrData_reg_18	->
+  uMmciDPSM/iRxFWrData_reg_19	->
+  uMmciDPSM/iRxFWrData_reg_20	->
+  uMmciDPSM/iRxFWrData_reg_21	->
+  uMmciDPSM/iRxFWrData_reg_22	->
+  uMmciDPSM/iRxFWrData_reg_23	->
+  uMmciDPSM/iRxFWrData_reg_24	->
+  uMmciDPSM/iRxFWrData_reg_25	->
+  uMmciDPSM/iRxFWrData_reg_26	->
+  uMmciDPSM/iRxFWrData_reg_27	->
+  uMmciDPSM/iRxFWrData_reg_28	->
+  uMmciDPSM/iRxFWrData_reg_29	->
+  uMmciDPSM/iRxFWrData_reg_30	->
+  uMmciDPSM/iRxFWrData_reg_31	->
+  uMmciDPSM/DATCRCShift0_reg_0 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_1 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_2 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_3 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_4	->
+  uMmciDPSM/DATCRCShift0_reg_5 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_6 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_7 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_8 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_9 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_10 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_11 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_12 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_13 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_14 (*)	->
+  uMmciDPSM/DATCRCShift0_reg_15 (*)	->
+  uMmciDPSM/DATShift_reg_0	->
+  uMmciDPSM/DATShift_reg_1	->
+  uMmciDPSM/DATShift_reg_2	->
+  uMmciDPSM/DATShift_reg_3	->
+  uMmciDPSM/DATShift_reg_4	->
+  uMmciDPSM/DATShift_reg_5	->
+  uMmciDPSM/DATShift_reg_6	->
+  uMmciDPSM/DATShift_reg_7	->
+  uMmciDPSM/DATShift_reg_8	->
+  uMmciDPSM/DATShift_reg_9	->
+  uMmciDPSM/DATShift_reg_10	->
+  uMmciDPSM/DATShift_reg_11	->
+  uMmciDPSM/DATShift_reg_12	->
+  uMmciDPSM/DATShift_reg_13	->
+  uMmciDPSM/DATShift_reg_14	->
+  uMmciDPSM/DATShift_reg_15	->
+  uMmciDPSM/DATShift_reg_16	->
+  uMmciDPSM/DATShift_reg_17	->
+  uMmciDPSM/DATShift_reg_18	->
+  uMmciDPSM/DATShift_reg_19	->
+  uMmciDPSM/DATShift_reg_20	->
+  uMmciDPSM/DATShift_reg_21	->
+  uMmciDPSM/DATShift_reg_22	->
+  uMmciDPSM/DATShift_reg_23	->
+  uMmciDPSM/DATShift_reg_24	->
+  uMmciDPSM/DATShift_reg_25	->
+  uMmciDPSM/DATShift_reg_26	->
+  uMmciDPSM/DATShift_reg_27	->
+  uMmciDPSM/DATShift_reg_28	->
+  uMmciDPSM/DATShift_reg_29	->
+  uMmciDPSM/DATShift_reg_30	->
+  uMmciDPSM/DATShift_reg_31	->
+  uMmciDPSM/TokenCnt_reg_0 (*)	->
+  uMmciDPSM/TokenCnt_reg_1 (*)	->
+  uMmciDPSM/TokenCnt_reg_2 (*)	->
+  uMmciDPSM/BitCnt_reg_0 (*)	->
+  uMmciDPSM/BitCnt_reg_1	->
+  uMmciDPSM/BitCnt_reg_2 (*)	->
+  uMmciDPSM/WRDCnt_reg_0	->
+  uMmciDPSM/WRDCnt_reg_1	->
+  uMmciDPSM/BLKTCnt_reg_0 (*)	->
+  uMmciDPSM/BLKTCnt_reg_1	->
+  uMmciDPSM/BLKTCnt_reg_2 (*)	->
+  uMmciDPSM/BLKTCnt_reg_3 (*)	->
+  uMmciDPSM/BLKTCnt_reg_4 (*)	->
+  uMmciDPSM/BLKTCnt_reg_5 (*)	->
+  uMmciDPSM/BLKTCnt_reg_6 (*)	->
+  uMmciDPSM/BLKTCnt_reg_7 (*)	->
+  uMmciDPSM/BLKTCnt_reg_8 (*)	->
+  uMmciDPSM/BLKTCnt_reg_9 (*)	->
+  uMmciDPSM/BLKTCnt_reg_10 (*)	->
+  uMmciDPSM/BLKTCnt_reg_11 (*)	->
+  uMmciDPSM/BLKTCnt_reg_12 (*)	->
+  uMmciDPSM/BLKTCnt_reg_13	->
+  uMmciDPSM/BLKTCnt_reg_14 (*)	->
+  uMmciDPSM/BLKTCnt_reg_15	->
+  uMmciDPSM/BLKTCnt_reg_16 (*)	->
+  uMmciDPSM/BLKTCnt_reg_17	->
+  uMmciDPSM/BLKTCnt_reg_18 (*)	->
+  uMmciDPSM/BLKTCnt_reg_19	->
+  uMmciDPSM/BLKTCnt_reg_20	->
+  uMmciDPSM/BLKTCnt_reg_21	->
+  uMmciDPSM/BLKTCnt_reg_22 (*)	->
+  uMmciDPSM/BLKTCnt_reg_23 (*)	->
+  uMmciDPSM/BLKTCnt_reg_24 (*)	->
+  uMmciDPSM/BLKTCnt_reg_25	->
+  uMmciDPSM/BLKTCnt_reg_26	->
+  uMmciDPSM/BLKTCnt_reg_27	->
+  uMmciDPSM/BLKTCnt_reg_28	->
+  uMmciDPSM/BLKTCnt_reg_29	->
+  uMmciDPSM/BLKTCnt_reg_30	->
+  uMmciDPSM/BLKTCnt_reg_31	->
+  uMmciDPSM/iDataCnt_reg_0 (*)	->
+  uMmciDPSM/iDataCnt_reg_1 (*)	->
+  uMmciDPSM/iDataCnt_reg_2 (*)	->
+  uMmciDPSM/iDataCnt_reg_3	->
+  uMmciDPSM/iDataCnt_reg_4	->
+  uMmciDPSM/iDataCnt_reg_5	->
+  uMmciDPSM/iDataCnt_reg_6	->
+  uMmciDPSM/iDataCnt_reg_7	->
+  uMmciDPSM/iDataCnt_reg_8	->
+  uMmciDPSM/iDataCnt_reg_9	->
+  uMmciDPSM/iDataCnt_reg_10	->
+  uMmciDPSM/iDataCnt_reg_11	->
+  uMmciDPSM/iDataCnt_reg_12	->
+  uMmciDPSM/iDataCnt_reg_13	->
+  uMmciDPSM/iDataCnt_reg_14	->
+  uMmciDPSM/iDataCnt_reg_15	->
+  uMmciDPSM/DATCRCTxSEn_reg	->
+  uMmciDPSM/DPSMStL_reg (*)	->
+  uMmciDPSM/iDTout_reg (*)	->
+  uMmciDPSM/LdDataBuffer_reg (*)	->
+  uMmciRegUpd/DelCmdUpdSync_reg	->
+  uMmciRegUpd/DelPowerUpdSync_reg	->
+  uMmciRegUpd/DelClockUpdSync_reg	->
+  uMmciRegUpd/DelDCtrUpdSync_reg	->
+  uMmciRegUpd/iCmdUpdDone_reg	->
+  uMmciRegUpd/iDCtrUpdDone_reg	->
+  uMmciRegUpd/iPowerUpdDone_reg	->
+  uMmciRegUpd/iClockUpdDone_reg	->
+  uMmciRegUpd/iDCtr_reg_1	->
+  uMmciRegUpd/iDCtr_reg_2	->
+  uMmciRegUpd/iDCtr_reg_3	->
+  uMmciRegUpd/iDCtr_reg_4	->
+  uMmciRegUpd/iDCtr_reg_5	->
+  uMmciRegUpd/iDCtr_reg_6	->
+  uMmciRegUpd/iCmd_reg_0	->
+  uMmciRegUpd/iCmd_reg_1	->
+  uMmciRegUpd/iCmd_reg_2	->
+  uMmciRegUpd/iCmd_reg_3	->
+  uMmciRegUpd/iCmd_reg_4	->
+  uMmciRegUpd/iCmd_reg_5	->
+  uMmciRegUpd/iCmd_reg_6	->
+  uMmciRegUpd/iCmd_reg_7	->
+  uMmciRegUpd/iCmd_reg_8	->
+  uMmciRegUpd/iCmd_reg_9	->
+  uMmciRegUpd/iCmd_reg_10	->
+  uMmciRegUpd/iClock_reg_0	->
+  uMmciRegUpd/iClock_reg_1	->
+  uMmciRegUpd/iClock_reg_2	->
+  uMmciRegUpd/iClock_reg_3	->
+  uMmciRegUpd/iClock_reg_4	->
+  uMmciRegUpd/iClock_reg_5	->
+  uMmciRegUpd/iClock_reg_6	->
+  uMmciRegUpd/iClock_reg_7	->
+  uMmciRegUpd/iClock_reg_8	->
+  uMmciRegUpd/iClock_reg_9	->
+  uMmciRegUpd/iClock_reg_10	->
+  uMmciRegUpd/Power_reg_0	->
+  uMmciRegUpd/Power_reg_1	->
+  uMmciRegUpd/Power_reg_2	->
+  uMmciRegUpd/iDCtr_reg_0	->
+  SCANOUTMCLK
+
+Complete scan chain #3 (SCANINnMCLK --> SCANOUTnMCLK) contains 2 cells:
+
+  SCANINnMCLK	->
+  uMmciOPReSync/NegBypass_reg	->
+  uMmciOPReSync/NegPowerDown_reg	->
+  SCANOUTnMCLK
+
+Complete scan chain #4 (SCANINMMCIFBCLK --> SCANOUTMMCIFBCLK) contains 6 cells:
+
+  SCANINMMCIFBCLK	->
+  uMmciOPReSync/nIntMMCICMDEN_reg (*)	->
+  uMmciOPReSync/CMDIN_reg (*)	->
+  uMmciOPReSync/DATIN_reg	->
+  uMmciOPReSync/IntMMCIDATOUT_reg (*)	->
+  uMmciOPReSync/IntMMCICMDOUT_reg (*)	->
+  uMmciOPReSync/nIntMMCIDATEN_reg	->
+  SCANOUTMMCIFBCLK
+

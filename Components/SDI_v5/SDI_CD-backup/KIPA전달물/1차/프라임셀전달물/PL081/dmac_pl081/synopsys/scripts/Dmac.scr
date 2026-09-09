@@ -1,0 +1,203 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+-- -----------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : Dmac.scr.rca
+-- File Revision          : 1.5
+-- 
+-- Release Information    : PrimeCell(TM)-PL081-REL1v0
+-- 
+-- -----------------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the 
+--           DMAC block.             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the input and output delay     
+--           constraints for the non-AMBA I/O in the DMAC block. 
+--
+-- --=========================================================================*/
+
+/******************************************************************************/
+/* DMAC BLOCK-SPECIFIC TIMING PARAMETERS                                      */
+/******************************************************************************/
+
+/******************************************************************************/
+/* Input Delays. Constraints used are the same as AHB Input signals.          */
+/******************************************************************************/
+
+/***************************/
+/* Peripheral Inputs       */
+/***************************/
+tisdmacbreq  = 0.7 * tclk
+tihdmacbreq  = 0.0
+
+tisdmaclbreq = 0.7 * tclk
+tihdmaclbreq = 0.0
+
+tisdmacsreq  = 0.7 * tclk
+tihdmacsreq  = 0.0
+
+tisdmaclsreq = 0.7 * tclk
+tihdmaclsreq = 0.0
+
+/* Calculating the maximum allowable input delay on the inputs */
+tiddmacbreqmax  = tisdmacbreq
+tiddmaclbreqmax = tisdmaclbreq
+tiddmacsreqmax  = tisdmacsreq
+tiddmaclsreqmax = tisdmaclsreq
+
+/* Minimum input delay on the inputs */
+tiddmacbreqmin  = tihdmacbreq
+tiddmaclbreqmin = tihdmaclbreq
+tiddmacsreqmin  = tihdmacsreq
+tiddmaclsreqmin = tihdmaclsreq
+
+/***************/
+/* Scan Inputs */
+/***************/
+/* The input delay on the Scan related input signals has been set to  */
+/* zero value to prevent addition of extra gates in these paths.      */
+tidscanmax = 0.0  
+tidscanmin = 0.0 
+
+/******************************************************************************/
+/* Output valid and hold times. Constraints used are same as AHB output       */
+/* signals                                                                    */
+/******************************************************************************/
+
+/**********************/
+/* Peripheral Outputs */
+/**********************/
+tovdmacclr    = 0.4 * tclk
+tovdmactc     = 0.4 * tclk
+tovdmacinterr = 0.4 * tclk
+tovdmacinttc  = 0.4 * tclk
+tovdmacintr   = 0.4 * tclk
+
+tohdmacclr    = 0
+tohdmactc     = 0
+tohdmacinterr = 0
+tohdmacinttc  = 0
+tohdmacintr   = 0
+
+tovdmacclrmax    = tclk - tovdmacclr
+tovdmactcmax     = tclk - tovdmactc
+tovdmacinterrmax = tclk - tovdmacinterr
+tovdmacinttcmax  = tclk - tovdmacinttc
+tovdmacintrmax   = tclk - tovdmacintr
+
+tovdmacclrmin    = tohdmacclr
+tovdmactcmin     = tohdmactc
+tovdmacinterrmin = tohdmacinterr
+tovdmacinttcmin  = tohdmacinttc
+tovdmacintrmin   = tohdmacintr
+
+/****************/
+/* Scan Outputs */
+/*****************/
+
+/* The output delay on the Scan related output signals has been set   */
+/* to a zero value to prevent addition of extra gates in these paths. */
+todscanmax = 0.0
+todscanmin = 0.0
+
+/******************************************************************************/
+/* INPUT CONSTRAINTS FOR NON-AMBA PORTS. Constraints used are same as input   */
+/* delays of AHB signals.                                                     */
+/******************************************************************************/
+
+/*********************/
+/* Peripheral Inputs */
+/*********************/
+set_input_delay -clock HCLK -min tiddmacbreqmin  DMACBREQ
+set_input_delay -clock HCLK -max tiddmacbreqmax  DMACBREQ
+
+set_input_delay -clock HCLK -min tiddmaclbreqmin DMACLBREQ
+set_input_delay -clock HCLK -max tiddmaclbreqmax DMACLBREQ
+
+set_input_delay -clock HCLK -min tiddmacsreqmin  DMACSREQ
+set_input_delay -clock HCLK -max tiddmacsreqmax  DMACSREQ
+
+set_input_delay -clock HCLK -min tiddmaclsreqmin DMACLSREQ
+set_input_delay -clock HCLK -max tiddmaclsreqmax DMACLSREQ
+
+/***************/
+/* Scan Inputs */
+/***************/
+
+set_input_delay -clock HCLK -min tidscanmin SCANINHCLK
+set_input_delay -clock HCLK -max tidscanmax SCANINHCLK
+
+set_input_delay -clock HCLK -min tidscanmin SCANENABLE
+set_input_delay -clock HCLK -max tidscanmax SCANENABLE
+
+/******************************************************************************/
+/* SCAN SIGNAL CONSTRAINTS                                                    */
+/******************************************************************************/
+
+set_drive 0 SCANENABLE
+/* Infinite drive strength Scan Enable signal */
+
+set_load 0 SCANENABLE
+/* Zero load Scan Enable signal */
+
+remove_driving_cell find(port, SCANENABLE)
+/* Set no driving cell on Scan Enable */
+
+set_dont_touch_network find(port, SCANENABLE)
+/* Preserve the Scan Enable net during optimisation */
+
+set_drive 0 SCANINHCLK
+/* Infinite drive strength Scan input signal */
+
+set_load 0 SCANINHCLK
+/* Zero load Scan input signal */
+
+remove_driving_cell find(port, SCANINHCLK)
+/* Set no driving cell on Scan input */
+
+set_dont_touch_network find(port, SCANINHCLK)
+/* Preserve the Scan input net during optimisation */
+
+/******************************************************************************/
+/* OUTPUT CONSTRAINTS FOR NON-AMBA PORTS. Constraints used are same as AHB    */
+/* output signals.                                                            */
+/******************************************************************************/
+
+/*****************************/
+/* Peripheral signal Outputs */
+/*****************************/
+
+set_output_delay -clock HCLK -min tovdmacclrmin DMACCLR
+set_output_delay -clock HCLK -max tovdmacclrmax DMACCLR
+
+set_output_delay -clock HCLK -min tovdmactcmin DMACTC
+set_output_delay -clock HCLK -max tovdmactcmax DMACTC
+
+set_output_delay -clock HCLK -min tovdmacinterrmin DMACINTERR
+set_output_delay -clock HCLK -max tovdmacinterrmax DMACINTERR
+
+set_output_delay -clock HCLK -min tovdmacinttcmin DMACINTTC
+set_output_delay -clock HCLK -max tovdmacinttcmax DMACINTTC
+
+set_output_delay -clock HCLK -min tovdmacintrmin DMACINTR
+set_output_delay -clock HCLK -max tovdmacintrmax DMACINTR
+
+/****************/
+/* Scan Outputs */
+/****************/
+
+set_output_delay -clock HCLK -min todscanmin SCANOUTHCLK
+set_output_delay -clock HCLK -max todscanmax SCANOUTHCLK
+
+/***************************** End of Dmac.scr ********************************/

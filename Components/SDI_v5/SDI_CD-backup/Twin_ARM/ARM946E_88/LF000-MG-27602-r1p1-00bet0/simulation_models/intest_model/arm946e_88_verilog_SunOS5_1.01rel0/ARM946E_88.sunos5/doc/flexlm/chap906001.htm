@@ -1,0 +1,329 @@
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap8.htm">Previous Chapter</a>
+ * <a href="chap10.htm">Next Chapter</a>
+<p>
+<a name="27042: AppTitle: Appendix C Frequently Asked Questions"></a><title>FLEXlm End User Manual: Appendix C  
+Frequently Asked Questions</title>
+<h1>Appendix C  
+Frequently Asked Questions</h1>
+<a name="_IX_127"></a><a name="C.1"></a><h2>C.1  License File Questions</h2>
+<h3>C.1.1	 I've received 
+FLEXlm license files from 2 different companies. Do I have to 
+combine them? 
+</h3>
+<p>
+You don't have to combine license files. Each license file that has any `counted' lines 
+(the `number of licenses' field is &gt;0) requires a server. It's perfectly OK to have any 
+number of separate license files, with different lmgrd server processes supporting each 
+file. Moreover, since lmgrd is a lightweight process, for sites without system 
+administrators, this is often the simplest (and therefore recommended) way to proceed. 
+With v6+ lmgrd/lmdown/lmreread, you can stop/reread/restart a single vendor daemon 
+(of any 
+FLEXlm<I></I> version). This makes combining licenses more attractive than 
+previously. Also, if the application is v6+, using dir/*.lic for license file management 
+behaves like combining licenses without physically combining them.<p>
+<h3>C.1.2	 When is it recommended to combine license files?</h3>
+<p>
+Many system administrators, especially for larger sites, prefer to combine license files 
+to ease administration of 
+FLEXlm<I></I> licenses. It's purely a matter of preference. 
+<p>
+<h3>C.1.3	 Does 
+FLEXlm<I></I> handle dates in the 
+<a name="_IX_128"></a>year 2000 and beyond?</h3>
+<p>
+Yes. The 
+FLEXlm<I></I> date format uses a 4-digit year. Dates in the 20th century (19xx) can 
+be abbreviated to the last 2 digits of the year (xx), and use of this feature is quite 
+widespread. Dates in the year 2000 and beyond must specify all 4 year digits. 
+<p>
+<a name="_IX_129"></a><a name="C.2"></a><h2>C.2  FLEX<I>lm</I> Versions</h2>
+<h3>C.2.1	 I have products from several companies at various 
+FLEXlm<I></I> version levels. Do 
+I have to worry about how these versions work together? 
+</h3>
+<p>
+If you're not combining license files from different vendors, the simplest thing to do is 
+make sure you use the tools (especially lmgrd) that are shipped by each vendor. 
+<p>
+<p>
+lmgrd will always correctly support older versions of vendor daemons and 
+applications, so it's ALWAYS safe to use the latest version of lmgrd and the lmutil 
+utilities. If you've combined license files from 2 vendors, you<I> must 
+</I>use the latest 
+version of lmgrd. 
+<p>
+<p>
+If you've received 2 versions of a product from the same vendor, you 
+<I>must</I> use the 
+latest vendor daemon they send you. An older vendor daemon with a newer client will 
+cause communication errors.<p>
+<p>
+Please ignore letters appended to 
+FLEXlm<I></I> versions, i.e., v2.4d. The appended letter 
+indicates a patch, and does NOT indicate any compatibility differences. In particular, 
+some elements of 
+FLEXlm<I></I> didn't require certain patches, so a 2.4 lmgrd will work 
+successfully with a 2.4b vendor daemon. 
+<p>
+<h3>C.2.2	 I've received a new copy of a product from a vendor, and it uses a new version 
+of 
+FLEXlm<I></I>. Is my old license file still valid?</h3>
+<p>
+Yes. Older 
+FLEXlm<I></I> license files are always valid with newer versions of 
+FLEXlm<I></I>. 
+<p>
+<h3>C.2.3	 I've received a new license file, and the format is different from the old one I 
+had from the same vendor? Why? Are they compatible?</h3>
+<p>
+As of v3.0, 
+FLEXlm<I></I> has an optional new format for license files. 
+FLEXlm<I></I> products 
+always understand older versions; therefore, the pre-v3.0 files are understood by every 
+FLEXlm<I></I> version. However, your old applications (pre-FLEXlm<I></I> v3.0) will not be able 
+to use the new license file. See Also: 
+<a href="chap2.htm#94139: 1head: 2.2 License File Format">Section 2.2, `License File Format,' on page 10</a>.<p>
+<a name="C.3"></a><h2>C.3  Using FLEX<I>lm</I></h2>
+<h3>C.3.1	 Does FLEX<I>lm</I> work across the 
+<a name="_IX_130"></a>internet?</h3>
+<p>
+Yes. A server on the internet will serve licenses to anyone else on the internet. This can 
+be limited with the INTERNET= attribute on the FEATURE line, which limits access 
+to a range of internet addresses. You can also use the INCLUDE and EXCLUDE 
+options in the daemon option file to allow (or deny) access to clients running on a range 
+of internet addresses.<p>
+<h3>C.3.2	 Does FLEX<I>lm</I> work with Internet 
+<a name="_IX_131"></a>firewalls?</h3>
+<p>
+Many firewalls require that port numbers be specified to the firewall. 
+FLEXlm<I></I> v5 
+lmgrd supports this.<p>
+<h3>C.3.3	 If my client dies, does the server free the license? 
+</h3>
+<p>
+Yes, unless the client's whole system crashes. Assuming communications is TCP, the 
+license is automatically freed immediately. If communications are UDP, then the 
+license is freed after the UDP timeout, which is set by each vendor, but defaults to 45 
+minutes. UDP communications is normally only set by the end-user, so TCP should be 
+assumed. If the whole system crashes, then the license is not freed, and you should use 
+lmremove to free the license.<p>
+<h3>C.3.4	 What happens when the license server dies? 
+</h3>
+<p>
+FLEXlm<I></I> applications send periodic heartbeats to the server to discover if it has died. 
+What happens when the server dies is then up to the application. Some will simply 
+continue periodically attempting to re-checkout the license when the server comes 
+back up. Some will attempt to re-checkout a license a few times, and then, presumably 
+with some warning, exit. Some GUI applications will present pop-ups to the user 
+periodically letting them know the server is down and needs to be re-started. 
+<p>
+<h3>C.3.5	 How do you tell if a port is already in use? 
+</h3>
+<p>
+99.44% of the time, if it's in use, it's because lmgrd is already running on the port - or 
+was recently killed, and the port isn't freed yet. Assuming this is not the case, then use 
+'telnet host port' -  if it says `can't connect', it's a free port. 
+<p>
+<h3>C.3.6	 Does FLEX<I>lm</I> require root permissions?</h3>
+<p>
+No. There is no part of 
+FLEXlm<I></I>, lmgrd, vendor daemon or application, that requires 
+root permissions. In fact, it is 
+strongly recommended that you do not run the license 
+server (lmgrd) as root, since root processes can introduce security risks. If lmgrd must 
+be started from the root user (for example, in a system boot script), we recommend that 
+you use the 
+su command to run lmgrd as a non-privileged user:<p>
+<pre>su username -c"/path/lmgrd -c /path/license.dat -l /path/log"</pre>
+</ol></ul><p>
+where 
+username is a non-privileged user, and 
+<I>path</I> is the correct paths to lmgrd, 
+license.dat and debug log file. You will have to ensure that the vendor daemons listed 
+in 
+/path-to-license/license.dat have execute permissions for 
+username. The paths to all 
+the vendor daemons in the license file are listed on each DAEMON line.<p>
+<h3>C.3.7	 Is it ok to run 
+<a name="_IX_132"></a>lmgrd as `root' (<a name="_IX_133"></a>Unix only)?</h3>
+<p>
+It is not prudent to run any command, particularly a daemon, as root on Unix, as it may 
+pose a security risk to the Operating System. Therefore, we recommend that 
+<I>lmgrd</I> be 
+run as a non-privileged user (not `root'). If you are starting lmgrd from a boot script, 
+we recommend that you use 
+<p>
+<pre>	su <I>username</I> -c"umask 022; <I>lmgrd...</I>"</pre>
+</ol></ul><p>
+to run 
+<I>lmgrd</I> as a non-privileged user.<p>
+<h3>C.3.8	 Does 
+FLEX<I>lm 
+</I>licensing impose a heavy load on the 
+<a name="_IX_134"></a>network. 
+</h3>
+<p>
+No, but partly this depends on the application, and end-user's use. A typical checkout 
+request requires 5 messages and responses between client and server, and each 
+message is &lt; 150 bytes. 
+<p>
+<p>
+When a server is not receiving requests, it requires virtually no CPU time. 
+<p>
+<p>
+When an application, or lmstat, requests the list of current users, this can significantly 
+increase the amount of networking 
+FLEXlm<I></I> uses, depending on the number of current 
+users. 
+<p>
+<p>
+Also, prior to 
+FLEXlm<I></I> v5, use of `port@host' can increase network load, since the 
+license file is down-loaded from the server to the client. port@host should be, if 
+possible, limited to small license files (say &lt; 50 features). In v5, port@host actually 
+improves performance.<p>
+<h3>C.3.9	 Does FLEX<I>lm</I> work with 
+<a name="_IX_135"></a>NFS?</h3>
+<p>
+Yes. 
+FLEXlm<I></I> has no direct interaction with NFS. 
+FLEXlm<I></I> uses an NFS-mounted file 
+like any other application. 
+<p>
+<h3>C.3.10	 Does FLEX<I>lm</I> work with 
+<a name="_IX_136"></a>ATM, 
+<a name="_IX_137"></a>ISDN, Token-Ring, etc.</h3>
+<p>
+In general, these have no impact on 
+FLEXlm<I></I>. 
+FLEXlm<I></I> requires TCP/IP or SPX 
+(Novell Netware). So long as TCP/IP works, 
+FLEXlm<I></I> will work.<p>
+<h3>C.3.11	 Does FLEX<I>lm</I> work with 
+<a name="_IX_138"></a>subnets, fully-qualified names, multiple 
+<a name="_IX_139"></a>domains, 
+etc.?</h3>
+<p>
+Yes, although this behavior was improved in v3.0, and v6.0.<p>
+<p>
+When a license server and a client are located in different domains, fully-qualified host 
+names have to be used. A `fully-qualified hostname' is of the form: node.domain, 
+where `node' is the local hostname (usually returned by the 'hostname' command or 
+'uname -n') `domain' is the internet domain name, e.g., `globes.com'.<p>
+<p>
+To ensure success with 
+FLEXlm<I></I> across domains, do the following: 
+<p>
+<ol><li>Make the sure the fully-qualified hostname is the name on the SERVER line of the 
+license file 
+<li>Make sure ALL client nodes, as well as the server node, are able to 'telnet' to that 
+fully-qualified hostname. For example, if the host is locally called `speedy', and 
+the domain name is `corp.com', local systems will be able to logon to speedy via 
+'telnet speedy'. But very often, 'telnet speedy.corp.com' will fail, locally. Note 
+that this telnet command will always succeed on hosts in other domains (assuming 
+everything is configured correctly), since the network will resolve 
+speedy.corp.com automatically. 
+<li>Finally, there must be an `alias' for speedy so it's also known locally as 
+speedy.corp.com. This alias is added to the /etc/hosts file, or if NIS/Yellow Pages 
+are being used, then it will have to be added to the NIS database. This requirement 
+goes away in version 3.0 of 
+FLEXlm<I></I>.</ol>
+<p>
+If all components (application, lmgrd and vendor daemon) are v6.0 or higher, no 
+aliases are required; the only requirement is that the fully-qualified domain name, or 
+ip-address, is used as a hostname on the SERVER, or as a hostname in 
+$LM_LICENSE_FILE 
+<I>port@host,</I> or 
+<I>@host</I>.<p>
+<h3>C.3.12	 Does FLEX<I>lm</I> work with 
+<a name="_IX_140"></a>NIS and 
+<a name="_IX_141"></a>DNS?</h3>
+<p>
+Yes. However, some sites have broken NIS or DNS, which will cause 
+FLEXlm<I></I> to fail. 
+In v5 of 
+FLEXlm<I></I>, NIS and DNS can be avoided to solve this problem. In particular, 
+sometimes DNS is configured for a server that's not current available (e.g., a dial-up 
+connection from a PC). Again, if DNS is configured, but the server is not available, 
+FLEXlm<I></I> will fail.<p>
+<p>
+In addition, some systems, particularly Sun, SGI, HP, require that applications be 
+linked dynamically to support NIS or DNS. If a vendor links statically, this can cause 
+the application to fail at a site that uses NIS or DNS. In these situations, the vendor will 
+have to relink, or recompile with v5 
+FLEXlm<I></I> (when it becomes available in Q1 of 96). 
+Vendors are strongly encouraged to use dynamic libraries for libc and networking 
+libraries, since this tends to improve quality in general, as well as making NIS/DNS 
+work.<p>
+<p>
+On PCs, if a checkout seems to take 3 minutes and then fails, this is usually because 
+the system is configured for a dial-up DNS server which is not currently available. The 
+solution here is to turn off DNS.<p>
+<p>
+Finally, hostnames must NOT have periods in the name. These are not legal 
+hostnames, although PCs will allow you to enter them, and they will not work with 
+DNS.<p>
+<h3>C.3.13	 Is the FLEX<I>lm</I> `display' the same as an 
+<a name="_IX_142"></a>X-Display?</h3>
+<p>
+Not by default. The default 
+FLEXlm<I></I> display is what is returned by the ttyname() 
+function call (or the 'tty' command), and is usually something like `/dev/ttyp4'. 
+However, the application developer can change this default to the X-Display. A paper 
+is available on this topic to 
+FLEXlm<I></I> developers from 
+GLOBEtrotter Software<I></I>.<p>
+<h3>C.3.14	 We're using FLEX<I>lm</I> over a 
+<a name="_IX_143"></a>wide-area network. What can we do to improve 
+performance? 
+</h3>
+<p>
+FLEXlm<I></I> network traffic should be minimized. With the most common uses of 
+FLEXlm<I></I>, traffic is negligible. In particular, checkout, checkin and heartbeats use very 
+little networking traffic. There are two items, however, which can send considerably 
+more data and should be avoided or used sparingly:<p>
+<ul><li>`lmstat -a' should be used sparingly. lmstat -a should not be used more than, 
+say, once every 15 minutes, and should be particularly avoided when there's 
+a lot of features, or concurrent users, and therefore a lot of data to transmit; 
+say, more than 20 concurrent users or features. 
+<li>prior to 
+FLEXlm<I></I> v5, the `port@host' mode of the LM_LICENSE_FILE 
+environment variable should be avoided, especially when the license file has 
+many features, or there are a lot of license files included in 
+$LM_LICENSE_FILE. The license file information is sent via the network, 
+and can place a heavy load. Failures due to `port@host' will generate the 
+error LM_SERVNOREADLIC (-61). 
+</ul><a name="_IX_144"></a><a name="C.4"></a><h2>C.4  Windows Questions</h2>
+<h3>C.4.1	 What PC Platforms are supported?</h3>
+<p>
+FLEXlm<I></I> supports Windows 3.1,Windows for Workgroup 3.11, Windows 95, Windows 
+NT 3.5, 3.51 and 4.0 on Intel Mips and Alpha, Netware 3.12 and 4.X, OS/2 3.0.<p>
+<p>
+	Networking is required on all 32-bit versions<p>
+<h3>C.4.2	 What is 
+<a name="_IX_145"></a>WINSOCKX.DLL</h3>
+<p>
+Winsockx.dll is a DLL provided by 
+GLOBEtrotter Software<I></I> that is used by 16 bit 
+applications to interface between 
+FLEXlm<I></I> and other networking software provided by 
+networking ISV's. It allows node locked applications to not require networking 
+software. It also interfaces between winsock.dll for TCP/IP, and the Novell DLLs that 
+provide IPX/SPX on 16 bit operating systems.<p>
+<h3>C.4.3	 Why do I need to include NWlink IPX/SPX on NT and Win 95?</h3>
+<p>
+This is necessary for either obtaining the Ethernet card address, or to provide 
+connectivity with a Netware License server.<p>
+<h3>C.4.4	 Will the Server run on 
+<a name="_IX_146"></a>Windows 95?</h3>
+<p>
+Yes, lmgrd runs in it's own window. If available, NT systems are preferred, since it can 
+be run as an NT `service'. Special software to emulate NT services is available from 
+your software vendor.<p>
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap8.htm">Previous Chapter</a>
+ * <a href="chap10.htm">Next Chapter</a>
+<p>

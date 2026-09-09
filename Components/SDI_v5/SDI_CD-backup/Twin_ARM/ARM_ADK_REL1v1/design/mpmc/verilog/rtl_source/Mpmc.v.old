@@ -1,0 +1,917 @@
+// --=========================================================================--
+// This confidential and proprietary software may be used only as
+// authorised by a licensing agreement from ARM Limited
+//   (C) COPYRIGHT 2001-2002 ARM Limited
+//       ALL RIGHTS RESERVED
+// The entire notice above must be reproduced on all authorised
+// copies and copies may only be made to the extent permitted
+// by a licensing agreement from ARM Limited.
+//
+// -----------------------------------------------------------------------------
+// Version and Release Control Information:
+//
+// File Name              : Mpmc.v.rca
+// File Revision          : 1.32
+//
+// Release Information    : PrimeCell(TM)-PL172-r2p3-00rel0
+//
+// -----------------------------------------------------------------------------
+// Purpose :
+//           This block is the top level of the MPMC PL172
+//
+// --=========================================================================--
+
+`timescale 1ns/1ps
+
+// -----------------------------------------------------------------------------
+
+module Mpmc (
+// Inputs
+             // Clock and Resets
+             HCLK,
+             MPMCCLK,
+             MPMCFBCLKIN0,
+             MPMCFBCLKIN1,
+             MPMCFBCLKIN2,
+             MPMCFBCLKIN3,
+             MPMCCLKDELAY,
+             HRESETn,
+             nPOR,
+             // AHB0 slave interface signals
+             HWRITE0,
+             HTRANS0,
+             HSIZE0,
+             HBURST0,
+             HREADYIN0,
+             HSELMPMC0G,
+             HSELMPMC0CS,
+             HMASTLOCK0,
+             HADDR0,
+             HWDATA0,
+             // AHB1 slave interface signals
+             HWRITE1,
+             HTRANS1,
+             HSIZE1,
+             HBURST1,
+             HREADYIN1,
+             HSELMPMC1G,
+             HSELMPMC1CS,
+             HMASTLOCK1,
+             HADDR1,
+             HWDATA1,
+             // AHB2 slave interface signals
+             HWRITE2,
+             HTRANS2,
+             HSIZE2,
+             HBURST2,
+             HREADYIN2,
+             HSELMPMC2G,
+             HSELMPMC2CS,
+             HMASTLOCK2,
+             HADDR2,
+             HWDATA2,
+             // AHB3 slave interface signals
+             HWRITE3,
+             HTRANS3,
+             HSIZE3,
+             HBURST3,
+             HREADYIN3,
+             HSELMPMC3G,
+             HSELMPMC3CS,
+             HMASTLOCK3,
+             HADDR3,
+             HWDATA3,
+             // AHBREG slave interface signals
+             HWRITEREG,
+             HTRANSREG,
+             HSIZEREG,
+             HREADYINREG,
+             HSELMPMCREG,
+             HADDRREG,
+             HWDATAREG20TO19,
+             HWDATAREG15TO0,
+             // AHBTIC Master interface signals
+             HRDATATIC,
+             HREADYINTIC,
+             HGRANTTIC,
+             HRESPTIC,
+             // Pad interface signals
+             MPMCTESTIN,
+             MPMCDATAIN,
+             // EBI signals
+             MPMCEBIGNT,
+             MPMCEBIBACKOFF,
+             // Miscellaneous signals
+             MPMCSREFREQ,
+             MPMCBIGENDIAN,
+             MPMCSTCS1MW,
+             MPMCSTCS0POL,
+             MPMCSTCS1POL,
+             MPMCSTCS2POL,
+             MPMCSTCS3POL,
+             MPMCSTCS1PB,
+             MPMCREL1CONFIG,
+             MPMCTESTREQA,
+             MPMCTESTREQB,
+             // Scan test signals
+             SCANINHCLK,
+             SCANINMPMCCLK,
+             SCANINFBCLKIN0,
+             SCANINFBCLKIN1,
+             SCANINFBCLKIN2,
+             SCANINFBCLKIN3,
+             SCANINCLKDELAY,
+             SCANENABLE,
+// Outputs
+             // AHB0 slave interface signals
+             HREADYOUT0,
+             HRESP0,
+             HRDATA0,
+             // AHB1 slave interface signals
+             HREADYOUT1,
+             HRESP1,
+             HRDATA1,
+             // AHB2 slave interface signals
+             HREADYOUT2,
+             HRESP2,
+             HRDATA2,
+             // AHB3 slave interface signals
+             HREADYOUT3,
+             HRESP3,
+             HRDATA3,
+             // AHBREG slave interface signals
+             HREADYOUTREG,
+             HRESPREG,
+             HRDATAREG,
+             // AHBTIC Master interface signals
+             HWRITETIC,
+             HTRANSTIC,
+             HSIZETIC,
+             HBURSTTIC,
+             HLOCKTIC,
+             HPROTTIC,
+             HBUSREQTIC,
+             HADDRTIC,
+             HWDATATIC,
+             // Pad Interface signals
+             MPMCCLKOUT,
+             MPMCCKEOUT,
+             MPMCDQMOUT,
+             nMPMCBLSOUT,
+             nMPMCRASOUT,
+             nMPMCCASOUT,
+             nMPMCOEOUT,
+             nMPMCWEOUT,
+             nMPMCSTCSOUT,
+             nMPMCDYCSOUT,
+             MPMCADDROUT,
+             MPMCDATAOUT,
+             nMPMCRPOUT,
+             MPMCRPVHHOUT,
+             nMPMCDATAEN,
+             // EBI signal
+             MPMCEBIREQ,
+             // Miscellaneous signals
+             MPMCSREFACK,
+             // Scan test signals
+             SCANOUTHCLK,
+             SCANOUTMPMCCLK,
+             SCANOUTFBCLKIN0,
+             SCANOUTFBCLKIN1,
+             SCANOUTFBCLKIN2,
+             SCANOUTFBCLKIN3,
+             SCANOUTCLKDELAY
+
+             );
+
+// Inputs
+
+// Clock and Resets
+input         HCLK;            // AHB Clock
+input         MPMCCLK;         // MPMC Clock
+input         MPMCFBCLKIN0;    // MPMC fed-back clock 0
+input         MPMCFBCLKIN1;    // MPMC fed-back clock 1
+input         MPMCFBCLKIN2;    // MPMC fed-back clock 2
+input         MPMCFBCLKIN3;    // MPMC fed-back clock 3
+input         MPMCCLKDELAY;    // Delayed MPMC Clock
+
+input         HRESETn;         // AHB Reset
+input         nPOR;            // Power On Reset
+
+// AHB0 slave interface signals
+input         HWRITE0;         // AHB0 Transfer direction
+input   [1:0] HTRANS0;         // AHB0 Transfer type
+input   [2:0] HSIZE0;          // AHB0 Transfer size
+input   [2:0] HBURST0;         // AHB0 Burst type
+input         HREADYIN0;       // Transfer done response on AHB0 from
+                               // previous Slave
+input         HSELMPMC0G;      // Slave Select for MPMC on AHB0
+input   [7:0] HSELMPMC0CS;     // Chip select based Select signal for
+                               // MPMC on AHB0
+input         HMASTLOCK0;      // Locked transfer on AHB0
+input  [27:0] HADDR0;          // AHB0 address bus
+input  [31:0] HWDATA0;         // AHB0 write data bus
+
+// AHB1 slave interface signals
+input         HWRITE1;         // AHB1 Transfer direction
+input   [1:0] HTRANS1;         // AHB1 Transfer type
+input   [2:0] HSIZE1;          // AHB1 Transfer size
+input   [2:0] HBURST1;         // AHB1 Burst type
+input         HREADYIN1;       // Transfer done response on AHB1 from
+                               // previous Slave
+input         HSELMPMC1G;      // Slave Select for MPMC on AHB1
+input   [7:0] HSELMPMC1CS;     // Chip select based Select signal for
+                               // MPMC on AHB1
+input         HMASTLOCK1;      // Locked transfer on AHB1
+input  [27:0] HADDR1;          // AHB1 address bus
+input  [31:0] HWDATA1;         // AHB1 write data bus
+
+// AHB2 slave interface signals
+input         HWRITE2;         // AHB2 Transfer direction
+input   [1:0] HTRANS2;         // AHB2 Transfer type
+input   [2:0] HSIZE2;          // AHB2 Transfer size
+input   [2:0] HBURST2;         // AHB2 Burst type
+input         HREADYIN2;       // Transfer done response on AHB2 from
+                               // previous Slave
+input         HSELMPMC2G;      // Slave Select for MPMC on AHB2
+input   [7:0] HSELMPMC2CS;     // Chip select based Select signal for
+                               // MPMC on AHB2
+input         HMASTLOCK2;      // Locked transfer on AHB2
+input  [27:0] HADDR2;          // AHB2 address bus
+input  [31:0] HWDATA2;         // AHB2 write data bus
+
+// AHB3 slave interface signals
+input         HWRITE3;         // AHB3 Transfer direction
+input   [1:0] HTRANS3;         // AHB3 Transfer type
+input   [2:0] HSIZE3;          // AHB3 Transfer size
+input   [2:0] HBURST3;         // AHB3 Burst type
+input         HREADYIN3;       // Transfer done response on AHB3 from
+                               // previous Slave
+input         HSELMPMC3G;      // Slave Select for MPMC on AHB3
+input   [7:0] HSELMPMC3CS;     // Chip select based Select signal for
+                               // MPMC on AHB3
+input         HMASTLOCK3;      // Locked transfer on AHB3
+input  [27:0] HADDR3;          // AHB3 address bus
+input  [31:0] HWDATA3;         // AHB3 write data bus
+
+// AHBREG slave interface signals
+input         HWRITEREG;       // AHBREG Transfer direction
+input     HTRANSREG;             // AHBREG Transfer type HTRANS[1]
+                               // should be connected
+input   [2:0] HSIZEREG;        // AHBREG Transfer size
+input         HREADYINREG;     // Transfer done response on AHBREG
+                               // from previous Slave
+input         HSELMPMCREG;     // Slave Select for MPMC on AHBREG
+input  [11:2] HADDRREG;        // AHBREG address bus
+input [20:19] HWDATAREG20TO19; // AHBREG write data bus bits 20:19
+input  [15:0] HWDATAREG15TO0;  // AHBREG write data bus bits 15:0
+
+// AHBTIC Master interface signals
+input  [31:0] HRDATATIC;       // Read data bus from AHB slave
+input         HREADYINTIC;     // Transfer done response from AHB
+                               // slave
+input         HGRANTTIC;       // AHBTIC bus grant
+input   [1:0] HRESPTIC;        // Transfer reponse from AHB slave
+
+// Pad interface signals
+input         MPMCTESTIN;      // TIC test mode select
+input  [31:0] MPMCDATAIN;      // Data input from memories
+
+// EBI signals
+input         MPMCEBIGNT;      // External bus grant from the EBI
+input         MPMCEBIBACKOFF;  // External bus backoff from the EBI
+
+// Miscellaneous signals
+input         MPMCSREFREQ;     // Self refresh refresh
+input         MPMCBIGENDIAN;   // Endian Mode select
+input   [1:0] MPMCSTCS1MW;     // Memory width of CS1
+input         MPMCSTCS0POL;    // Polarity of static memory CS0
+input         MPMCSTCS1POL;    // Polarity of static memory CS1 Muxed
+                               // as Test bus request B for TIC
+input         MPMCSTCS2POL;    // Polarity of static memory CS2
+input         MPMCSTCS3POL;    // Polarity of static memory CS3
+input         MPMCSTCS1PB;     // Polarity of byte lane select for
+                               // static memory CS1
+input         MPMCREL1CONFIG;  // Signal to select Rel1 or Rel2 static memory
+                               // address scheme
+input         MPMCTESTREQA;    // Test bus request A for TIC
+input         MPMCTESTREQB;    // Test bus request B for TIC
+
+// Scan test signals
+input         SCANINHCLK;      // Scan input for HCLK domain
+input         SCANINMPMCCLK;   // Scan input for MPMCCLK domain
+input         SCANINFBCLKIN0;  // Scan input for MPMCFBCLKIN0 domain
+input         SCANINFBCLKIN1;  // Scan input for MPMCFBCLKIN1 domain
+input         SCANINFBCLKIN2;  // Scan input for MPMCFBCLKIN2 domain
+input         SCANINFBCLKIN3;  // Scan input for MPMCFBCLKIN3 domain
+input         SCANINCLKDELAY;  // Scan input for MPMCCLKDELAY domain
+input         SCANENABLE;      // Scan enable
+
+// Outputs
+
+// AHB0 slave interface signals
+output        HREADYOUT0;      // Transfer done response to AHB0
+output  [1:0] HRESP0;          // Transfer response to AHB0
+output [31:0] HRDATA0;         // Read data bus to AHB0
+
+// AHB1 slave interface signals
+output        HREADYOUT1;      // Transfer done response to AHB1
+output  [1:0] HRESP1;          // Transfer response to AHB1
+output [31:0] HRDATA1;         // Read data bus to AHB1
+
+// AHB2 slave interface signals
+output        HREADYOUT2;      // Transfer done response to AHB2
+output  [1:0] HRESP2;          // Transfer response to AHB2
+output [31:0] HRDATA2;         // Read data bus to AHB2
+
+// AHB3 slave interface signals
+output        HREADYOUT3;      // Transfer done response to AHB3
+output  [1:0] HRESP3;          // Transfer response to AHB3
+output [31:0] HRDATA3;         // Read data bus to AHB3
+
+// AHBREG slave interface signals
+output        HREADYOUTREG;    // Transfer done response to AHBREG
+output  [1:0] HRESPREG;        // Transfer response to AHBREG
+output [20:0] HRDATAREG;       // Read data bus to AHBREG
+
+// AHBTIC Master interface signals
+output        HWRITETIC;       // Transfer direction on AHBTIC
+output  [1:0] HTRANSTIC;       // Transfer type on AHBTIC
+output  [2:0] HSIZETIC;        // Transfer size on AHBTIC
+output  [2:0] HBURSTTIC;       // Burst type on AHBTIC
+output        HLOCKTIC;        // Locked Transfer on AHBTIC
+output  [3:0] HPROTTIC;        // AHBTIC protection control
+output        HBUSREQTIC;      // AHBTIC bus request
+output [31:0] HADDRTIC;        // AHBTIC address bus
+output [31:0] HWDATATIC;       // AHBTIC write data bus
+
+// Pad Interface signals
+output  [3:0] MPMCCLKOUT;      // Synchronous memory clock out
+output  [3:0] MPMCCKEOUT;      // Synchronous memory clock enables
+output  [3:0] MPMCDQMOUT;      // Data mask outputs for Synchronous
+                               // memories
+output  [3:0] nMPMCBLSOUT;     // Byte lane selects for static
+                               // memories
+output        nMPMCRASOUT;     // Row address strobe for Synchronous
+                               // memories
+output        nMPMCCASOUT;     // Column address strobe for
+                               // Asynchronous memories
+output        nMPMCOEOUT;      // Output enable for asynchronous
+                               // memories
+output        nMPMCWEOUT;      // Write enable for memories; Test bus
+                               // acknowledge for TIC
+output  [3:0] nMPMCSTCSOUT;    // Asynchronous memory chip selects
+output  [3:0] nMPMCDYCSOUT;    // Synchronous memory chip selects
+output [27:0] MPMCADDROUT;     // Address output to memories
+output [31:0] MPMCDATAOUT;     // Data output to memories
+output        nMPMCRPOUT;      // Reset power down to SyncFlash
+output        MPMCRPVHHOUT;    // Reset power down to be driven to VHH
+output [3:0] nMPMCDATAEN;      // Tri-state I/O pad enables of
+                               // MPMCDATA[31:0]
+
+// EBI signal
+output        MPMCEBIREQ;      // External bus request to the EBI
+
+// Miscellaneous signals
+output        MPMCSREFACK;     // Self refresh acknowledge
+
+// Scan test signals
+output        SCANOUTHCLK;     // Scan output for HCLK domain
+output        SCANOUTMPMCCLK;  // Scan output for MPMCCLK domain
+output        SCANOUTFBCLKIN0; // Scan output for MPMCFBCLKIN0 domain
+output        SCANOUTFBCLKIN1; // Scan output for MPMCFBCLKIN1 domain
+output        SCANOUTFBCLKIN2; // Scan output for MPMCFBCLKIN2 domain
+output        SCANOUTFBCLKIN3; // Scan output for MPMCFBCLKIN3 domain
+output        SCANOUTCLKDELAY; // Scan output for MPMCCLKDELAY domain
+
+// Inputs
+
+// Clock and Resets
+wire          HCLK;            // AHB Clock
+wire          MPMCCLK;         // MPMC Clock
+wire          MPMCFBCLKIN0;    // MPMC fed-back clock 0
+wire          MPMCFBCLKIN1;    // MPMC fed-back clock 1
+wire          MPMCFBCLKIN2;    // MPMC fed-back clock 2
+wire          MPMCFBCLKIN3;    // MPMC fed-back clock 3
+wire          MPMCCLKDELAY;    // Delayed MPMC Clock
+
+wire          HRESETn;         // AHB Reset
+wire          nPOR;            // Power On Reset
+
+// AHB0 slave interface signals
+wire          HWRITE0;         // AHB0 Transfer direction
+wire    [1:0] HTRANS0;         // AHB0 Transfer type
+wire    [2:0] HSIZE0;          // AHB0 Transfer size
+wire    [2:0] HBURST0;         // AHB0 Burst type
+wire          HREADYIN0;       // Transfer done response on AHB0 from
+                               // previous Slave
+wire          HSELMPMC0G;      // Slave Select for MPMC on AHB0
+wire    [7:0] HSELMPMC0CS;     // Chip select based Select signal for
+                               // MPMC on AHB0
+wire          HMASTLOCK0;      // Locked transfer on AHB0
+wire   [27:0] HADDR0;          // AHB0 address bus
+wire   [31:0] HWDATA0;         // AHB0 write data bus
+
+// AHB1 slave interface signals
+wire          HWRITE1;         // AHB1 Transfer direction
+wire    [1:0] HTRANS1;         // AHB1 Transfer type
+wire    [2:0] HSIZE1;          // AHB1 Transfer size
+wire    [2:0] HBURST1;         // AHB1 Burst type
+wire          HREADYIN1;       // Transfer done response on AHB1 from
+                               // previous Slave
+wire          HSELMPMC1G;      // Slave Select for MPMC on AHB1
+wire    [7:0] HSELMPMC1CS;     // Chip select based Select signal for
+                               // MPMC on AHB1
+wire          HMASTLOCK1;      // Locked transfer on AHB1
+wire   [27:0] HADDR1;          // AHB1 address bus
+wire   [31:0] HWDATA1;         // AHB1 write data bus
+
+// AHB2 slave interface signals
+wire          HWRITE2;         // AHB2 Transfer direction
+wire    [1:0] HTRANS2;         // AHB2 Transfer type
+wire    [2:0] HSIZE2;          // AHB2 Transfer size
+wire    [2:0] HBURST2;         // AHB2 Burst type
+wire          HREADYIN2;       // Transfer done response on AHB2 from
+                               // previous Slave
+wire          HSELMPMC2G;      // Slave Select for MPMC on AHB2
+wire    [7:0] HSELMPMC2CS;     // Chip select based Select signal for
+                               // MPMC on AHB2
+wire          HMASTLOCK2;      // Locked transfer on AHB2
+wire   [27:0] HADDR2;          // AHB2 address bus
+wire   [31:0] HWDATA2;         // AHB2 write data bus
+
+// AHB3 slave interface signals
+wire          HWRITE3;         // AHB3 Transfer direction
+wire    [1:0] HTRANS3;         // AHB3 Transfer type
+wire    [2:0] HSIZE3;          // AHB3 Transfer size
+wire    [2:0] HBURST3;         // AHB3 Burst type
+wire          HREADYIN3;       // Transfer done response on AHB3 from
+                               // previous Slave
+wire          HSELMPMC3G;      // Slave Select for MPMC on AHB3
+wire    [7:0] HSELMPMC3CS;     // Chip select based Select signal for
+                               // MPMC on AHB3
+wire          HMASTLOCK3;      // Locked transfer on AHB3
+wire   [27:0] HADDR3;          // AHB3 address bus
+wire   [31:0] HWDATA3;         // AHB3 write data bus
+
+// AHBREG slave interface signals
+wire          HWRITEREG;       // AHBREG Transfer direction
+wire          HTRANSREG;       // AHBREG Transfer type HTRANS[1]
+                               // should be connected
+wire    [2:0] HSIZEREG;        // AHBREG Transfer size
+wire          HREADYINREG;     // Transfer done response on AHBREG
+                               // from previous Slave
+wire          HSELMPMCREG;     // Slave Select for MPMC on AHBREG
+wire   [11:2] HADDRREG;        // AHBREG address bus
+wire  [20:19] HWDATAREG20TO19; // AHBREG write data bus bits 20:19
+wire   [15:0] HWDATAREG15TO0;  // AHBREG write data bus bits 15:0
+
+// AHBTIC Master interface signals
+wire   [31:0] HRDATATIC;       // Read data bus from AHB slave
+wire          HREADYINTIC;     // Transfer done response from AHB
+                               // slave
+wire          HGRANTTIC;       // AHBTIC bus grant
+wire    [1:0] HRESPTIC;        // Transfer reponse from AHB slave
+
+// Pad interface signals
+wire          MPMCTESTIN;      // TIC test mode select
+wire   [31:0] MPMCDATAIN;      // Data input from memories
+
+// EBI signals
+wire          MPMCEBIGNT;      // External bus grant from the EBI
+wire          MPMCEBIBACKOFF;  // External bus backoff from the EBI
+
+// Miscellaneous signals
+wire          MPMCSREFREQ;     // Self refresh refresh
+wire          MPMCBIGENDIAN;   // Endian Mode select
+wire    [1:0] MPMCSTCS1MW;     // Memory width of CS1
+wire          MPMCSTCS0POL;    // Polarity of static memory CS0
+wire          MPMCSTCS1POL;    // Polarity of static memory CS1 Muxed
+                               // as Test bus request B for TIC
+wire          MPMCSTCS2POL;    // Polarity of static memory CS2
+wire          MPMCSTCS3POL;    // Polarity of static memory CS3
+wire          MPMCSTCS1PB;     // Polarity of byte lane select for
+                               // static memory CS1
+wire          MPMCREL1CONFIG;  // Signal to select Rel1 or Rel2 static memory
+                               // address scheme
+wire          MPMCTESTREQA;    // Test bus request A for TIC
+wire          MPMCTESTREQB;    // Test bus request B for TIC
+
+// Scan test signals
+wire          SCANINHCLK;      // Scan input for HCLK domain
+wire          SCANINMPMCCLK;   // Scan input for MPMCCLK domain
+wire          SCANINFBCLKIN0;  // Scan input for MPMCFBCLKIN0 domain
+wire          SCANINFBCLKIN1;  // Scan input for MPMCFBCLKIN1 domain
+wire          SCANINFBCLKIN2;  // Scan input for MPMCFBCLKIN2 domain
+wire          SCANINFBCLKIN3;  // Scan input for MPMCFBCLKIN3 domain
+wire          SCANINCLKDELAY;  // Scan input for MPMCCLKDELAY domain
+wire          SCANENABLE;      // Scan enable
+
+// Outputs
+
+// AHB0 slave interface signals
+wire          HREADYOUT0;      // Transfer done response to AHB0
+wire    [1:0] HRESP0;          // Transfer response to AHB0
+wire   [31:0] HRDATA0;         // Read data bus to AHB0
+
+// AHB1 slave interface signals
+wire          HREADYOUT1;      // Transfer done response to AHB1
+wire    [1:0] HRESP1;          // Transfer response to AHB1
+wire   [31:0] HRDATA1;         // Read data bus to AHB1
+
+// AHB2 slave interface signals
+wire          HREADYOUT2;      // Transfer done response to AHB2
+wire    [1:0] HRESP2;          // Transfer response to AHB2
+wire   [31:0] HRDATA2;         // Read data bus to AHB2
+
+// AHB3 slave interface signals
+wire          HREADYOUT3;      // Transfer done response to AHB3
+wire    [1:0] HRESP3;          // Transfer response to AHB3
+wire   [31:0] HRDATA3;         // Read data bus to AHB3
+
+// AHBREG slave interface signals
+wire          HREADYOUTREG;    // Transfer done response to AHBREG
+wire    [1:0] HRESPREG;        // Transfer response to AHBREG
+wire   [20:0] HRDATAREG;       // Read data bus to AHBREG
+
+// AHBTIC Master interface signals
+wire          HWRITETIC;       // Transfer direction on AHBTIC
+wire    [1:0] HTRANSTIC;       // Transfer type on AHBTIC
+wire    [2:0] HSIZETIC;        // Transfer size on AHBTIC
+wire    [2:0] HBURSTTIC;       // Burst type on AHBTIC
+wire          HLOCKTIC;        // Locked Transfer on AHBTIC
+wire    [3:0] HPROTTIC;        // AHBTIC protection control
+wire          HBUSREQTIC;      // AHBTIC bus request
+wire   [31:0] HADDRTIC;        // AHBTIC address bus
+wire   [31:0] HWDATATIC;       // AHBTIC write data bus
+
+// Pad Interface signals
+wire    [3:0] MPMCCLKOUT;      // Synchronous memory clock out
+wire    [3:0] MPMCCKEOUT;      // Synchronous memory clock enables
+wire    [3:0] MPMCDQMOUT;      // Data mask outputs for Synchronous
+                               // memories
+wire    [3:0] nMPMCBLSOUT;     // Byte lane selects for static
+                               // memories
+wire          nMPMCRASOUT;     // Row address strobe for Synchronous
+                               // memories
+wire          nMPMCCASOUT;     // Column address strobe for
+                               // Asynchronous memories
+wire          nMPMCOEOUT;      // Output enable for asynchronous
+                               // memories
+wire          nMPMCWEOUT;      // Write enable for memories; Test bus
+                               // acknowledge for TIC
+wire    [3:0] nMPMCSTCSOUT;    // Asynchronous memory chip selects
+wire    [3:0] nMPMCDYCSOUT;    // Synchronous memory chip selects
+wire   [27:0] MPMCADDROUT;     // Address output to memories
+wire   [31:0] MPMCDATAOUT;     // Data output to memories
+wire          nMPMCRPOUT;      // Reset power down to SyncFlash
+wire          MPMCRPVHHOUT;    // Reset power down to be driven to VHH
+wire   [3:0] nMPMCDATAEN;      // Tri-state I/O pad enables of
+                               // MPMCDATA[31:0]
+
+// EBI signal
+wire          MPMCEBIREQ;      // External bus request to the EBI
+
+// Miscellaneous signals
+wire          MPMCSREFACK;     // Self refresh acknowledge
+
+// Scan test signals
+wire          SCANOUTHCLK;     // Scan output for HCLK domain
+wire          SCANOUTMPMCCLK;  // Scan output for MPMCCLK domain
+wire          SCANOUTFBCLKIN0; // Scan output for MPMCFBCLKIN0 domain
+wire          SCANOUTFBCLKIN1; // Scan output for MPMCFBCLKIN1 domain
+wire          SCANOUTFBCLKIN2; // Scan output for MPMCFBCLKIN2 domain
+wire          SCANOUTFBCLKIN3; // Scan output for MPMCFBCLKIN3 domain
+wire          SCANOUTCLKDELAY; // Scan output for MPMCCLKDELAY domain
+
+
+// -----------------------------------------------------------------------------
+//
+//                                    Mpmc
+//                                    ====
+//
+// -----------------------------------------------------------------------------
+//
+// Overview
+// ========
+//   This block is the top level of the MPMC. This block instantiates the
+// following functional sub-blocks in the MPMC.
+//      - MpmcCore
+//          This module is the top level of the Mpmc core logic.
+//      - MpmcTIC
+//          This module contains the logic for the TIC interface of the MPMC.
+//      - MpmcClockOr(4 instances)
+//          This module takes MPMCCLK as input and drives out one bit of the
+//          MPMCCLKOUT vector
+//      - MpmcRevAnd(4 instances)
+//          This module provides the Peripheral Revision number of the MPMC.
+//
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Constant declarations
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Wire declarations
+// -----------------------------------------------------------------------------
+wire  [3:0] nTicDataEn;
+// Data enables from the MpmcTIC
+
+wire [31:0] TBUSOUT;
+// TBUSOUT output of MpmcTIC
+
+wire        TESTACK;
+// Test acknowlegde from the MpmcTIC
+
+wire        TICBUSREQ;
+// External bus request from TIC
+
+wire        TICBUSGNT;
+// External bus grant to TIC
+
+wire  [3:0] TieOff1;
+// Input 1 for RevAnd
+
+wire  [3:0] TieOff2;
+// Input 2 for RevAnd
+
+wire  [3:0] Revision;
+// Revision number of MPMC
+
+wire        ClkStpdAct;
+// When high indicates clock has to be stopped to the dynamic memories
+
+wire        DisableMCLK;
+// Disable MPMCCLK
+
+//Include Parameters File
+`include "/user/bhchoi/tmp/ARM_ADK_REL1v1/design/mpmc_pl172/verilog/rtl_source/MpmcParams.v"
+
+// -----------------------------------------------------------------------------
+// Register declarations
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Function declarations
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+//
+// Main body of code
+// =================
+//
+// -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
+// Instantiation of the MpmcCore
+// -----------------------------------------------------------------------------
+
+// Core logic of the MPMC
+MpmcCore uMpmcCore (
+        .HCLK            (HCLK),
+        .MPMCCLK         (MPMCCLK),
+        .MPMCFBCLKIN0    (MPMCFBCLKIN0),
+        .MPMCFBCLKIN1    (MPMCFBCLKIN1),
+        .MPMCFBCLKIN2    (MPMCFBCLKIN2),
+        .MPMCFBCLKIN3    (MPMCFBCLKIN3),
+        .MPMCCLKDELAY    (MPMCCLKDELAY),
+        .HRESETn         (HRESETn),
+        .nPOR            (nPOR),
+        .HWRITE0         (HWRITE0),
+        .HTRANS0         (HTRANS0),
+        .HSIZE0          (HSIZE0),
+        .HBURST0         (HBURST0),
+        .HREADYIN0       (HREADYIN0),
+        .HSELMPMC0G      (HSELMPMC0G),
+        .HSELMPMC0CS     (HSELMPMC0CS),
+        .HMASTLOCK0      (HMASTLOCK0),
+        .HADDR0          (HADDR0),
+        .HWDATA0         (HWDATA0),
+        .HWRITE1         (HWRITE1),
+        .HTRANS1         (HTRANS1),
+        .HSIZE1          (HSIZE1),
+        .HBURST1         (HBURST1),
+        .HREADYIN1       (HREADYIN1),
+        .HSELMPMC1G      (HSELMPMC1G),
+        .HSELMPMC1CS     (HSELMPMC1CS),
+        .HMASTLOCK1      (HMASTLOCK1),
+        .HADDR1          (HADDR1),
+        .HWDATA1         (HWDATA1),
+        .HWRITE2         (HWRITE2),
+        .HTRANS2         (HTRANS2),
+        .HSIZE2          (HSIZE2),
+        .HBURST2         (HBURST2),
+        .HREADYIN2       (HREADYIN2),
+        .HSELMPMC2G      (HSELMPMC2G),
+        .HSELMPMC2CS     (HSELMPMC2CS),
+        .HMASTLOCK2      (HMASTLOCK2),
+        .HADDR2          (HADDR2),
+        .HWDATA2         (HWDATA2),
+        .HWRITE3         (HWRITE3),
+        .HTRANS3         (HTRANS3),
+        .HSIZE3          (HSIZE3),
+        .HBURST3         (HBURST3),
+        .HREADYIN3       (HREADYIN3),
+        .HSELMPMC3G      (HSELMPMC3G),
+        .HSELMPMC3CS     (HSELMPMC3CS),
+        .HMASTLOCK3      (HMASTLOCK3),
+        .HADDR3          (HADDR3),
+        .HWDATA3         (HWDATA3),
+        .HWRITEREG       (HWRITEREG),
+        .HTRANSREG       (HTRANSREG),
+        .HSIZEREG        (HSIZEREG),
+        .HREADYINREG     (HREADYINREG),
+        .HSELMPMCREG     (HSELMPMCREG),
+        .HADDRREG        (HADDRREG),
+        .HWDATAREG20TO19 (HWDATAREG20TO19),
+        .HWDATAREG15TO0  (HWDATAREG15TO0),
+        .nTicDataEn      (nTicDataEn),
+        .TBUSOUT         (TBUSOUT),
+        .TESTACK         (TESTACK),
+        .TICBUSREQ       (TICBUSREQ),
+        .MPMCEBIGNT      (MPMCEBIGNT),
+        .MPMCEBIBACKOFF  (MPMCEBIBACKOFF),
+        .MPMCDATAIN      (MPMCDATAIN),
+        .Revision        (Revision),
+        .MPMCSREFREQ     (MPMCSREFREQ),
+        .MPMCBIGENDIAN   (MPMCBIGENDIAN),
+        .MPMCSTCS1MW     (MPMCSTCS1MW),
+        .MPMCSTCS0POL    (MPMCSTCS0POL),
+        .MPMCSTCS1POL    (MPMCSTCS1POL),
+        .MPMCSTCS2POL    (MPMCSTCS2POL),
+        .MPMCSTCS3POL    (MPMCSTCS3POL),
+        .MPMCSTCS1PB     (MPMCSTCS1PB),
+        .MPMCREL1CONFIG  (MPMCREL1CONFIG),
+        .HREADYOUT0      (HREADYOUT0),
+        .HRESP0          (HRESP0),
+        .HRDATA0         (HRDATA0),
+        .HREADYOUT1      (HREADYOUT1),
+        .HRESP1          (HRESP1),
+        .HRDATA1         (HRDATA1),
+        .HREADYOUT2      (HREADYOUT2),
+        .HRESP2          (HRESP2),
+        .HRDATA2         (HRDATA2),
+        .HREADYOUT3      (HREADYOUT3),
+        .HRESP3          (HRESP3),
+        .HRDATA3         (HRDATA3),
+        .HREADYOUTREG    (HREADYOUTREG),
+        .HRESPREG        (HRESPREG),
+        .HRDATAREG       (HRDATAREG),
+        .MPMCCKEOUT      (MPMCCKEOUT),
+        .MPMCDQMOUT      (MPMCDQMOUT),
+        .nMPMCBLSOUT     (nMPMCBLSOUT),
+        .nMPMCRASOUT     (nMPMCRASOUT),
+        .nMPMCCASOUT     (nMPMCCASOUT),
+        .nMPMCOEOUT      (nMPMCOEOUT),
+        .nMPMCWEOUT      (nMPMCWEOUT),
+        .nMPMCSTCSOUT    (nMPMCSTCSOUT),
+        .nMPMCDYCSOUT    (nMPMCDYCSOUT),
+        .MPMCADDROUT     (MPMCADDROUT),
+        .MPMCDATAOUT     (MPMCDATAOUT),
+        .nMPMCRPOUT      (nMPMCRPOUT),
+        .MPMCRPVHHOUT    (MPMCRPVHHOUT),
+        .nMPMCDATAEN     (nMPMCDATAEN),
+        .MPMCEBIREQ      (MPMCEBIREQ),
+        .ClkStpdAct      (ClkStpdAct),
+        .DisableMCLK     (DisableMCLK),
+        .TICBUSGNT       (TICBUSGNT),
+        .MPMCSREFACK     (MPMCSREFACK)
+           );
+
+// -----------------------------------------------------------------------------
+// Instantiation of MpmcTIC
+// -----------------------------------------------------------------------------
+
+// The TIC module of the MPMC
+MpmcTIC uMpmcTIC (
+        .HCLK            (HCLK),
+        .HRESETn         (HRESETn),
+        .HREADYINTIC     (HREADYINTIC),
+        .HRESPTIC        (HRESPTIC),
+        .HGRANTTIC       (HGRANTTIC),
+        .HRDATATIC       (HRDATATIC),
+        .TBUSIN          (MPMCDATAIN),
+        .TESTREQA        (MPMCTESTREQA),
+        .TESTREQB        (MPMCTESTREQB),
+        .TICBUSGNT       (TICBUSGNT),
+        .MPMCTESTIN      (MPMCTESTIN),
+        .HADDRTIC        (HADDRTIC),
+        .HTRANSTIC       (HTRANSTIC),
+        .HWRITETIC       (HWRITETIC),
+        .HSIZETIC        (HSIZETIC),
+        .HBURSTTIC       (HBURSTTIC),
+        .HPROTTIC        (HPROTTIC),
+        .HWDATATIC       (HWDATATIC),
+        .HBUSREQTIC      (HBUSREQTIC),
+        .HLOCKTIC        (HLOCKTIC),
+        .TBUSOUT         (TBUSOUT),
+        .TESTACK         (TESTACK),
+        .TICBUSREQ       (TICBUSREQ),
+        .nTicDataEn      (nTicDataEn)
+           );
+
+// -----------------------------------------------------------------------------
+// Instantiation of MpmcClockOr for bit 0 of MPMCCLKOUT[3:0]
+// -----------------------------------------------------------------------------
+MpmcClockOr u0MpmcClockOr (
+        .CLKIN           (MPMCCLK),
+        .ClkStpd         (ClkStpdAct),
+        .DisableMCLK     (DisableMCLK),
+        .CLKOUT          (MPMCCLKOUT[0])
+           );
+// [vhdl2vlog] The following line is NOT modified.
+    
+// -----------------------------------------------------------------------------
+// Instantiation of MpmcClockOr for bit 1 of MPMCCLKOUT[3:0]
+// -----------------------------------------------------------------------------
+MpmcClockOr u1MpmcClockOr (
+        .CLKIN           (MPMCCLK),
+        .ClkStpd         (ClkStpdAct),
+        .DisableMCLK     (DisableMCLK),
+        .CLKOUT          (MPMCCLKOUT[1])
+           );
+
+// -----------------------------------------------------------------------------
+// Instantiation of MpmcClockOr for bit 2 of MPMCCLKOUT[3:0]
+// -----------------------------------------------------------------------------
+MpmcClockOr u2MpmcClockOr (
+        .CLKIN           (MPMCCLK),
+        .ClkStpd         (ClkStpdAct),
+        .DisableMCLK     (DisableMCLK),
+        .CLKOUT          (MPMCCLKOUT[2])
+           );
+
+// -----------------------------------------------------------------------------
+// Instantiation of MpmcClockOr for bit 3 of MPMCCLKOUT[3:0]
+// -----------------------------------------------------------------------------
+MpmcClockOr u3MpmcClockOr (
+        .CLKIN           (MPMCCLK),
+        .ClkStpd         (ClkStpdAct),
+        .DisableMCLK     (DisableMCLK),
+        .CLKOUT          (MPMCCLKOUT[3])
+           );
+
+// -----------------------------------------------------------------------------
+// Instantiation of MpmcRevAnd for bit 0 of Revision
+// -----------------------------------------------------------------------------
+
+// Revision number bit 0
+MpmcRevAnd u0MpmcRevAnd (
+        .TieOff1         (TieOff1[0]),
+        .TieOff2         (TieOff2[0]),
+        .Revision        (Revision[0])
+           );
+
+// -----------------------------------------------------------------------------
+// Instantiation of MpmcRevAnd for bit 1 of Revision
+// -----------------------------------------------------------------------------
+
+// Revision number bit 1
+MpmcRevAnd u1MpmcRevAnd (
+        .TieOff1         (TieOff1[1]),
+        .TieOff2         (TieOff2[1]),
+        .Revision        (Revision[1])
+           );
+
+// -----------------------------------------------------------------------------
+// Instantiation of MpmcRevAnd for bit 2 of Revision
+// -----------------------------------------------------------------------------
+
+// Revision number bit 2
+MpmcRevAnd u2MpmcRevAnd (
+        .TieOff1         (TieOff1[2]),
+        .TieOff2         (TieOff2[2]),
+        .Revision        (Revision[2])
+           );
+
+// -----------------------------------------------------------------------------
+// Instantiation of MpmcRevAnd for bit 3 of Revision
+// -----------------------------------------------------------------------------
+
+// Revision number bit 3
+MpmcRevAnd u3MpmcRevAnd (
+        .TieOff1         (TieOff1[3]),
+        .TieOff2         (TieOff2[3]),
+        .Revision        (Revision[3])
+           );
+
+// -----------------------------------------------------------------------------
+// Assign values to inputs of RevAnd
+// -----------------------------------------------------------------------------
+assign TieOff1          = `REVNUMBER;
+assign TieOff2          = `REVNUMBER;
+
+// synopsys translate_off
+// -----------------------------------------------------------------------------
+// START OF PROTOCOL CHECKERS
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// END OF PROTOCOL CHECKERS
+// -----------------------------------------------------------------------------
+// synopsys translate_on
+
+endmodule
+// --================================== End ==================================--

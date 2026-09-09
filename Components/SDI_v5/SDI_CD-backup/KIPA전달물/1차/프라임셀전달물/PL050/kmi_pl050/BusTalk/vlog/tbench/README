@@ -1,0 +1,267 @@
+#-------------------------------------------------------------------------------
+# This confidential and proprietary software may be used only as
+# authorised by a licensing agreement from ARM Limited
+#   (C) COPYRIGHT 1999 ARM Limited
+#       ALL RIGHTS RESERVED
+# The entire notice above must be reproduced on all authorised
+# copies and copies may only be made to the extent permitted
+# by a licensing agreement from ARM Limited.
+#-------------------------------------------------------------------------------
+# 
+# Version and Release Control Information:
+# 
+# File Name              : README,v
+# File Revision          : 1.1
+# 
+# Release Information    : PL050-REL1v1
+# 
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Purpose : README file for BusTalk Verilog simulations
+#-------------------------------------------------------------------------------
+
+Note: 
+-----
+At the start of each simulation session,
+initialise the following environment variables:
+For example..
+
+# Set the peripheral path environment variable
+setenv PERIPH /home/nbray/sfwork/snowdon/kmi_pl050
+
+# Set up peripheral specific data variables
+setenv PERIPHERAL Kmi
+setenv PRODUCT PL050
+
+set prompt = `hostname`':'`whoami`':PERIPH> '
+# Set the technology library path environment variable
+
+# For VHDL gate level simulations use Avant! CB25 VITAL
+setenv LIB_VITAL $PERIPH/../cb25/v2.1/vhdl
+# For Verilog gate level simulations use Avant! CB25 Verilog
+setenv LIB_VERILOG $PERIPH/../cb25/v2.1/verilog
+setenv LIB_UDP $PERIPH/../cb25/v2.1/verilog
+setenv CELL_LIB CB25
+
+The recommended method is to create a file, SourceMe, in kmi_pl050 directory,
+containing the above commands, and run UNIX source SourceMe.
+The directory paths above need amending for each specific installation.
+
+Simulations can setup to be executed via the makefile (UNIX make utility)
+but change of cell library requires amendment to paths for netlist simulations.
+--------------------------------------------------------------------------------
+
+Steps for running BusTalk Verilog simulations. 
+
+Clock Enabled Tests - (Production)
+----------------------------------
+1. VERILOG RTL simulations
+--------------------------
+- In the BusTalk/bustests directory 'make Kmi_prod'
+  This will create invec/Kmi_prod.sim
+  
+  Change the link from BusTalk/vlog/reader/infile.sim
+  to the test vector file in BusTalk/bustests/invec/Kmi_prod.sim
+  For example,
+  cd BusTalk/vlog/reader/
+  ln -s ../../bustests/invec/Kmi_prod.sim infile.sim
+
+  For simulations using the ModelSim simulator
+  --------------------------------------------
+  - In the BusTalk/verilog/modeltech directory edit file 'libmap'
+    so that the library 'uut' points to the VERILOG RTL
+    uut = $PERIPH/verilog/uut/work
+
+  - Do a 'make clean' in the kmi_pl050/verilog/uut directory
+
+  - Do a 'make clean' in the BusTalk/vlog directory
+    (Alternatively one can selectively compile the following files:
+      In the BusTalk/vlog/reader directory  : vlog reader.v
+      In the BusTalk/vlog/tbench directory  : vlog tb_Kmi.v)
+
+  - In the BusTalk/vlog/tbench directory, run simulations using
+    vsim tb_Kmi
+    or
+    make vsim_rtl
+
+  - Use of the startup file (init.do) allows ModelSim to generate
+    a toggle coverage report.
+
+  For simulations using the Verilog-XL simulator
+  ----------------------------------------------
+  - In the BusTalk/vlog/tbench directory, run simulations using
+    make vxl_rtl
+    or
+    verilog +licq_vxl -f vxl.rtl tb_Kmi.v  
+  
+2. VERILOG NETLIST simulations
+------------------------------
+- In the BusTalk/bustests directory 'make Kmi_prod'
+  This will create invec/Kmi_prod.sim
+  
+  Change the link from BusTalk/vlog/tbench/infile.sim
+  to the test vector file in BusTalk/bustests/invec/Kmi_prod.sim
+  For example,
+  cd BusTalk/vlog/reader/
+  ln -s ../../bustests/invec/Kmi_prod.sim infile.sim
+
+  For simulations using the ModelSim simulator
+  --------------------------------------------
+  - In the BusTalk/vlog/modeltech directory edit file 'libmap'
+    so that the library 'uut' points to the VERILOG NETLIST
+    uut = $PERIPH/verilog/uutNetlist/work
+
+  - Do a 'make clean' in the kmi_pl050/verilog/uutNetlist directory
+
+  - Do a 'make clean' in the BusTalk/vlog directory
+    (Alternatively one can selectively compile the following files:
+      In the BusTalk/vlog/reader directory  : vlog reader.v
+      In the BusTalk/vlog/tbench directory  : vlog tb_Kmi.v)
+
+  - In the BusTalk/vlog/tbench directory, run simulations using
+    vsim -lic_vlog -sdfmin u_Kmi=../../../verilog/uutNetlist/Kmi_Verilog.sdf21 \
+      -L UDP -L libverilog tb_Kmi
+    vsim -lic_vlog -sdfmax u_Kmi=../../../verilog/uutNetlist/Kmi_Verilog.sdf21 \
+      -L UDP -L libverilog tb_Kmi
+    or
+    make vsim_net_max
+    make vsim_net_min
+
+  For simulations using the Verilog-XL simulator
+  ----------------------------------------------
+  - In the BusTalk/vlog/tbench directory, run simulations using
+    verilog +define+NET_MAX \
+    +licq_vxl +neg_tchk +libext+.v \
+    ../common/clockgen.v ../common/countdown.v \
+    ../bid/addrctl_driver.v ../bid/data_driver.v ../bid/penable_driver.v \
+    ../bid/buscyc_drivers.v ../bid/busline_drivers.v ../bid/reset_driver.v \
+    ../reader/reader.v ../buswatcher/buswatch.v \
+    ../vr/reg.v ../vr/linedrv.v ../vr/vio_driver.v ../vr/viregcyc_drivers.v \
+    -y $LIB_VERILOG -y $LIB_UDP -v $LIB_UDP/mtb_verilog.v \
+    ../../../verilog/uutNetlist/Kmi_net.v \
+    ../tbench/apbslave_tb.v ../tbench/apbmux.v \
+    tb_Kmi.v
+    verilog +define+NET_MIN \
+    +licq_vxl +neg_tchk +libext+.v \
+    ../common/clockgen.v ../common/countdown.v \
+    ../bid/addrctl_driver.v ../bid/data_driver.v ../bid/penable_driver.v \
+    ../bid/buscyc_drivers.v ../bid/busline_drivers.v ../bid/reset_driver.v \
+    ../reader/reader.v ../buswatcher/buswatch.v \
+    ../vr/reg.v ../vr/linedrv.v ../vr/vio_driver.v ../vr/viregcyc_drivers.v \
+    -y $LIB_VERILOG -y $LIB_UDP -v $LIB_UDP/mtb_verilog.v \
+    ../../../verilog/uutNetlist/Kmi_net.v \
+    ../tbench/apbslave_tb.v ../tbench/apbmux.v \
+    tb_Kmi.v
+    or
+    verilog +licq_vxl +define+NET_MAX +neg_tchk -f vxl.net.cb25 tb_Kmi.v
+    verilog +licq_vxl +define+NET_MIN +neg_tchk -f vxl.net.cb25 tb_Kmi.v
+    or
+    make vxl_net_max_cb25
+    make vxl_net_min_cb25
+  
+Free Running Tests
+------------------
+1. VERILOG RTL simulations
+--------------------------
+- In the BusTalk/bustests directory 'make Kmi_free'
+  This will create invec/Kmi_free.sim
+  
+  Change the link from BusTalk/vlog/tbench/infile.sim
+  to the test vector file in BusTalk/bustests/invec/Kmi_free.sim
+  For example,
+  cd BusTalk/vlog/reader/
+  ln -s ../../bustests/invec/Kmi_free.sim infile.sim
+
+  For simulations using the ModelSim simulator
+  --------------------------------------------
+  - In the BusTalk/vlog/modeltech directory edit file 'libmap'
+    so that the library 'uut' points to the VERILOG RTL
+    uut = $PERIPH/verilog/uut/work
+
+  - Do a 'make clean' in the kmi_pl050/verilog/uut directory
+
+  - Do a 'make clean' in the BusTalk/vlog directory
+    (Alternatively one can selectively compile the following files:
+      In the BusTalk/vlog/reader directory  : vlog reader.v
+      In the BusTalk/vlog/tbench directory  : vlog tb_Kmi_free.v)
+
+  - In the BusTalk/vlog/tbench directory, run simulations using
+    make vsim_rtl_free
+
+  For simulations using the Verilog-XL simulator
+  ----------------------------------------------
+  - In the BusTalk/vlog/tbench directory, run simulations using
+    vsim -lic_vlog tb_Kmi_free
+    or
+    make vxl_rtl_free
+
+2. VERILOG NETLIST simulations
+------------------------------
+- In the BusTalk/bustests directory 'make Kmi_free'
+  This will create invec/Kmi_free.sim
+  
+  Change the link from BusTalk/vlog/tbench/infile.sim
+  to the test vector file in BusTalk/bustests/invec/Kmi_free.sim
+  For example,
+  cd BusTalk/vlog/reader/
+  ln -s ../../bustests/invec/Kmi_free.sim infile.sim
+
+  For simulations using the ModelSim simulator
+  --------------------------------------------
+  - In the BusTalk/vlog/modeltech directory edit file 'libmap'
+    so that the library 'uut' points to the VERILOG NETLIST
+    uut         = $PERIPH/verilog/uutNetlist/work
+
+  - Do a 'make clean' in the kmi_pl050/verilog/uutNetlist directory
+
+  - Do a 'make clean' in the BusTalk/vlog directory
+    (Alternatively one can selectively compile the following files:
+      In the BusTalk/vlog/reader directory  : vlog reader.v
+      In the BusTalk/vlog/tbench directory  : vlog tb_Kmi_free.v)
+
+  - In the BusTalk/vlog/tbench directory, run simulations using
+    vsim -lic_vlog -sdfmax u_Kmi=../../../verilog/uutNetlist/Kmi_Verilog.sdf21 \
+      -L UDP -L libverilog tb_Kmi_free
+    vsim -lic_vlog -sdfmin u_Kmi=../../../verilog/uutNetlist/Kmi_Verilog.sdf21 \
+      -L UDP -L libverilog tb_Kmi_free
+    make vsim_net_free_max
+    make vsim_net_free_min
+
+  For simulations using the Verilog-XL simulator
+  ----------------------------------------------
+  - In the BusTalk/vlog/tbench directory, run simulations using
+    verilog +define+NET_MAX \
+    +licq_vxl +neg_tchk +libext+.v \
+    -y ../trickbox \
+    ../common/clockgen.v ../common/countdown.v \
+    ../bid/addrctl_driver.v ../bid/data_driver.v ../bid/penable_driver.v \
+    ../bid/buscyc_drivers.v ../bid/busline_drivers.v ../bid/reset_driver.v \
+    ../reader/reader.v ../buswatcher/buswatch.v \
+    ../vr/reg.v ../vr/linedrv.v ../vr/vio_driver.v ../vr/viregcyc_drivers.v \
+    -y $LIB_VERILOG -y $LIB_UDP -v $LIB_UDP/mtb_verilog.v \
+    ../../../verilog/uutNetlist/Kmi_net.v \
+    ../tbench/apbslave_tb.v ../tbench/apbmux.v \
+    tb_Kmi_free.v
+    verilog  +define+NET_MIN \
+    +licq_vxl +neg_tchk +libext+.v \
+    -y ../trickbox \
+    ../common/clockgen.v ../common/countdown.v \
+    ../bid/addrctl_driver.v ../bid/data_driver.v ../bid/penable_driver.v \
+    ../bid/buscyc_drivers.v ../bid/busline_drivers.v ../bid/reset_driver.v \
+    ../reader/reader.v ../buswatcher/buswatch.v \
+    ../vr/reg.v ../vr/linedrv.v ../vr/vio_driver.v ../vr/viregcyc_drivers.v \
+    -y $LIB_VERILOG -y $LIB_UDP -v $LIB_UDP/mtb_verilog.v \
+    ../../../verilog/uutNetlist/Kmi_net.v \
+    ../tbench/apbslave_tb.v ../tbench/apbmux.v \
+    tb_Kmi_free.v
+    or
+    verilog +licq_vxl +define+NET_MAX +neg_tchk -y ../trickbox -f vxl.net.cb25 \
+      tb_Kmi_free.v
+    verilog +licq_vxl +define+NET_MIN +neg_tchk -y ../trickbox -f vxl.net.cb25 \
+      tb_Kmi_free.v
+    or
+    make vxl_net_free_max_cb25
+    make vxl_net_free_min_cb25
+
+#-------------------------------------- End ------------------------------------

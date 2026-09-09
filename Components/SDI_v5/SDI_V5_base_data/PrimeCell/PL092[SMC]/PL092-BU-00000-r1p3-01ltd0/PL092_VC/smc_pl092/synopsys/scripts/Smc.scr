@@ -1,0 +1,240 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2003 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+-------------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : Smc.scr.rca
+-- File Revision          : 1.17
+-- 
+-- Release Information    : PrimeCell(TM)-PL092-r1p3-01ltd0
+-- 
+-------------------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the 
+--           SMC block.             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the input and output delay     
+--           constraints for the non-AMBA I/O in the SMC block. 
+--
+-- --======================================================================-- */
+
+/******************************************************************************/
+/* SMC BLOCK-SPECIFIC TIMING PARAMETERS                                       */
+/******************************************************************************/
+
+/* BIGENDIAN and the CS7 inputs will be tied off, so a small delay is */
+/* introduced for the hold to avoid unneeded buffering                   */
+tidmintiedpin = tclk * 0.05
+
+/******************************************************************************/
+/* Input Delays                                                               */
+/******************************************************************************/
+
+tidmaxsmw  = tclk * 0.7        /* SMWAIT input */
+tidmaxcsmw = tclk * 0.7        /* CANCELSMWAIT input */
+
+/******************************************************************************/
+/* Input Delays on the SMBUSGNTEBI pin (BusGnt input from EbiSdram)           */
+/******************************************************************************/
+tidmaxsmbusgntebi  = tclk * 0.5      /* SMBUSGNTEBI from EbiSdram to SmcCore  */
+
+/******************************************************************************/
+/* Input Delays from the other Memory Controller                              */
+/******************************************************************************/
+/* Presently it is not known as to what will be delay on these inputs         */
+/* from the other memory controller. As the DBI is muxing out the             */
+/* the addresses and data from SmcCore, TIC and MC, the max. gating           */
+/* levels can be assumed to be 3. This means a max.                           */
+/* 1 ns for the mux. The external output of the DBI has to be valid           */
+/* in 4 ns (tod = 60% of clk), which means that these inputs need to          */
+/* come in 3ns.                                                               */
+tidmaxmcaddr    = tclk * 0.25        /* MCADDR input */
+tidmaxmcdata    = tclk * 0.25        /* MCDATAOUT input */
+tidmaxmcdataen  = tclk * 0.25        /* MCDATAEN input */
+tidmaxmcbusreq  = tclk * 0.2         /* MCBUSREQ input */
+
+/******************************************************************************/
+/* Input Delays on the TICBUSGNTEBI (BusGnt input from EbiSdram)              */
+/******************************************************************************/
+tidmaxticbusgntebi  = tclk * 0.6    /* TICBUSGNTEBI from EbiSdram to TIC */
+
+
+/***************/
+/* Scan Inputs */
+/***************/
+
+/* The input delay on the Scan related input signals has been set to  */
+/* a small non-zero value to prevent addition of extra gates in these */
+/* paths.                                                             */
+tidscanmax = 0.3  
+tidscanmin = 0.3 
+
+
+/******************************************************************************/
+/* Output Delays                                                              */
+/******************************************************************************/
+
+/* The SMWEN output is always from the nHCLK register and there is            */
+/* no extra logic on this path. So ideally only 50% constraining is           */
+/* possible & taking clock to o/p delay a constraint of 45% is set            */
+/* w.r.to the HCLK                                                            */
+todmaxsmwen = tclk * 0.35        /* SMWEN */
+
+/* In case of the SMBLS output signal, both negative CLOCKed and              */
+/* positive CLOCKed signal can be selected. So for constraining the           */
+/* negative clocked signal, a max of 50% of HCLK is possible                  */
+/* assuming zero delays. So a constraint of 40% is set on this                */
+/* output with respect to HCLK taking mux delay also into account             */
+todmaxsmbls = tclk * 0.30        /* SMBLS */
+
+
+/******************************************************************************/
+/* Output Delays on the SMBUSREQEBI output pin from Smc to EbiSdram           */
+/******************************************************************************/
+todmaxsmbusreqebi  = tclk * 0.6    /* SMBUSREQEBI output from Smc to EbiSdram */
+
+/******************************************************************************/
+/* Output Delays of the SMC to other Memory Controller                        */
+/******************************************************************************/
+todmaxmcbusgnt = tclk * 0.6        /* MCBUSGNT output */
+
+/******************************************************************************/
+/* Output Delays on the TIC output pins which will interface with EbiSdram    */
+/******************************************************************************/
+todmaxticbusreqebi = tclk * 0.4     /* TICBUSREQEBI output to EbiSdram */
+todmaxticreadebi   = tclk * 0.6     /* TICREADEBI output pad from TIC when    */
+                                    /* interfacing with EbiSdram              */
+todmaxtbusoutebi   = tclk * 0.6     /* TBUSOUTEBI data bus output from TIC    */
+                                    /* when interfacing with EbiSdram         */
+
+/****************/
+/* Scan Outputs */
+/*****************/
+/* The output delay on the Scan related output signals has been set           */
+/* to a zero value to prevent addition of extra gates in these paths.         */
+todscanmax = 0.0
+todscanmin = 0.0
+
+
+/******************************************************************************/
+/* INPUT CONSTRAINTS FOR NON-AMBA PORTS                                       */
+/******************************************************************************/
+set_input_delay -clock HCLK -min tidmintiedpin BIGENDIAN
+
+set_input_delay -clock HCLK -min tholdmax    REMAP
+set_input_delay -clock HCLK -max tidmaxremap REMAP
+
+set_input_delay -clock HCLK -min tholdmax     SMDATAIN
+set_input_delay -clock HCLK -max tidmaxsmdata SMDATAIN
+
+set_input_delay -clock HCLK -min tholdmax  SMWAIT
+set_input_delay -clock HCLK -max tidmaxsmw SMWAIT
+
+set_input_delay -clock HCLK -min tholdmax   CANCELSMWAIT
+set_input_delay -clock HCLK -max tidmaxcsmw CANCELSMWAIT
+
+set_input_delay -clock HCLK -min tidmintiedpin SMMWCS7
+
+set_input_delay -clock HCLK -min tidmintiedpin SMRBLECS7
+
+set_input_delay -clock HCLK -min tholdmax     MCADDR
+set_input_delay -clock HCLK -max tidmaxmcaddr MCADDR
+
+set_input_delay -clock HCLK -min tholdmax     MCDATAOUT
+set_input_delay -clock HCLK -max tidmaxmcdata MCDATAOUT
+
+set_input_delay -clock HCLK -min tholdmax       MCDATAEN
+set_input_delay -clock HCLK -max tidmaxmcdataen MCDATAEN
+
+set_input_delay -clock HCLK -min tholdmax       MCBUSREQ
+set_input_delay -clock HCLK -max tidmaxmcbusreq MCBUSREQ
+
+set_input_delay -clock HCLK -min tholdmax          SMBUSGNTEBI
+set_input_delay -clock HCLK -max tidmaxsmbusgntebi SMBUSGNTEBI
+
+set_input_delay -clock HCLK -min tholdmax           TICBUSGNTEBI
+set_input_delay -clock HCLK -max tidmaxticbusgntebi TICBUSGNTEBI
+
+/***************/
+/* Scan Inputs */
+/***************/
+set_input_delay -clock HCLK -min tidscanmin SCANINHCLK
+set_input_delay -clock HCLK -max tidscanmax SCANINHCLK
+
+set_input_delay -clock nHCLK -min tidscanmin SCANINnHCLK
+set_input_delay -clock nHCLK -max tidscanmax SCANINnHCLK
+
+set_input_delay -clock HCLK -min tidscanmin SCANENABLE
+set_input_delay -clock HCLK -max tidscanmax SCANENABLE
+
+set_drive 0 SCANENABLE
+/* Infinite drive strength Scan Enable signal */
+
+remove_driving_cell find(port, SCANENABLE)
+/* Set no driving cell on Scan Enable signal */
+
+set_load 0 SCANENABLE
+/* Zero load Scan Enable signal */
+
+set_dont_touch_network find(port, SCANENABLE)
+/* Preserve the Scan Enable net during optimisation */
+
+/******************************************************************************/
+/* OUTPUT CONSTRAINTS FOR NON-AMBA PORTS OF THE SMC                           */
+/******************************************************************************/
+set_output_delay -clock HCLK -min tholdmin     SMDATAOUT
+set_output_delay -clock HCLK -max todmaxsmdata SMDATAOUT
+
+set_output_delay -clock HCLK -min tholdmin     nSMDATAEN
+set_output_delay -clock HCLK -max todmaxsmdata nSMDATAEN
+
+set_output_delay -clock HCLK -min tholdmin   SMCS
+set_output_delay -clock HCLK -max todmaxsmcs SMCS
+
+set_output_delay -clock HCLK -min tholdmin    nSMWEN
+set_output_delay -clock HCLK -max todmaxsmwen nSMWEN
+
+set_output_delay -clock HCLK -min tholdmin    nSMBLS
+set_output_delay -clock HCLK -max todmaxsmbls nSMBLS
+
+set_output_delay -clock HCLK -min tholdmin    nSMOEN
+set_output_delay -clock HCLK -max todmaxsmoen nSMOEN
+
+set_output_delay -clock HCLK -min tholdmin     SMADDR
+set_output_delay -clock HCLK -max todmaxsmaddr SMADDR
+
+set_output_delay -clock HCLK -min tholdmin       MCBUSGNT
+set_output_delay -clock HCLK -max todmaxmcbusgnt MCBUSGNT
+
+set_output_delay -clock HCLK -min tholdmin          SMBUSREQEBI
+set_output_delay -clock HCLK -max todmaxsmbusreqebi SMBUSREQEBI
+
+set_output_delay -clock HCLK -min tholdmin           TICBUSREQEBI
+set_output_delay -clock HCLK -max todmaxticbusreqebi TICBUSREQEBI
+
+set_output_delay -clock HCLK -min tholdmin         TICREADEBI
+set_output_delay -clock HCLK -max todmaxticreadebi TICREADEBI
+
+set_output_delay -clock HCLK -min tholdmin         TBUSOUTEBI
+set_output_delay -clock HCLK -max todmaxtbusoutebi TBUSOUTEBI
+
+
+/****************/
+/* Scan Outputs */
+/****************/
+set_output_delay -clock HCLK -min todscanmin SCANOUTHCLK
+set_output_delay -clock HCLK -max todscanmax SCANOUTHCLK
+
+set_output_delay -clock nHCLK -min todscanmin SCANOUTnHCLK
+set_output_delay -clock nHCLK -max todscanmax SCANOUTnHCLK
+
+/************************* End of Smc.scr *************************************/

@@ -1,0 +1,68 @@
+--------------------------------------------------------------------------------
+--  This confidential and proprietary software may be used only as
+--  authorised by a licensing agreement from ARM Limited
+--    (C) COPYRIGHT 2001 ARM Limited
+--        ALL RIGHTS RESERVED
+--  The entire notice above must be reproduced on all authorised
+--  copies and copies may only be made to the extent permitted
+--  by a licensing agreement from ARM Limited.
+--------------------------------------------------------------------------------
+--  
+--  Version and Release Control Information:
+--  
+--  File Name           : README_ARM7TDMI_LIB,v
+--  File Revision       : 1.2
+-- 
+--  Release Information : CPU_AHB_Wrappers-RELv1r1
+--  
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+--  Purpose  : README file
+--
+--------------------------------------------------------------------------------
+
+ARM7TDMI 66MHz timing libraries
+===============================
+
+Generic timing libraries for a 66MHz ARM7TDMI are supplied for use
+during synthesis, but must first be compiled from .lib format into
+synopsys format .db files.
+
+This is done using the commands 'read_lib' and 'write_lib' in
+Synopsys Design Compiler.
+
+Supplying the libraries in this format allows changes to be made to
+the core timings which is not possible with compiled .db libraries.
+
+Pre-compiled .db versions of the libraries are also supplied.
+
+
+Modifications to the default LIB file
+=====================================
+
+There are some timing arcs in the standard ARM7TDMI LIB files which
+can cause problems in synthesis.  This is due to the setup and hold
+arcs for an input pin being referenced to opposite edges of the clock,
+and occurs on ALE, APE and BL[3:0].  Without modification, these arcs
+can cause Synopsys Design-Compiler to try to fix a hold violation on a
+path which starts on one edge of the clock yet finishes on the other - 
+i.e. Design-Compiler believes that there is a hold violation of an
+entire phase of the clock.
+
+The supplied LIB files have been edited as follows:
+
+MAX LIB file: comment out the hold timing arcs for ALE, APE, BL[3:0]
+
+MIN LIB file: comment out the setup timing arcs for ALE, APE, BL[3:0]
+
+Once modified in this way, the two LIB files no longer contain the
+same timing arcs.  Loading them both into Design-Compiler or Primetime 
+may cause warnings: they should only be loaded one at a time.
+
+WARNING: When writing out final SDF (either from Design-Compiler, or
+         from a layout tool such as Avant! Apollo which can accept
+         Synopsys LIB files) the relevant unmodified LIB file should
+         be used.  This is to ensure that all paths which may be
+         referenced later in the design flow have associated timing in 
+         the SDF file.

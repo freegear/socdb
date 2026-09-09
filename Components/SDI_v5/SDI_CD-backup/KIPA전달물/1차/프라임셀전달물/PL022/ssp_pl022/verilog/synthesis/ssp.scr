@@ -1,0 +1,31 @@
+analyze -f verilog SspDefs.v 
+analyze -f verilog SspApbif.v 
+analyze -f verilog SspIntGen.v 
+analyze -f verilog SspRegCore.v 
+analyze -f verilog SspScaleCntr.v 
+analyze -f verilog SspTxRegFile.v 
+analyze -f verilog SspTxFCntl.v 
+analyze -f verilog SspTxLJustify.v 
+analyze -f verilog SspTxFIFO.v 
+analyze -f verilog SspRxRegFile.v 
+analyze -f verilog SspRxFCntl.v 
+analyze -f verilog SspRxFIFO.v 
+analyze -f verilog SspSynctoPCLK.v 
+analyze -f verilog SspSynctoSSPCLK.v 
+analyze -f verilog SspTest.v 
+analyze -f verilog SspSTxRxCntl.v 
+analyze -f verilog SspMTxRxCntl.v 
+analyze -f verilog SspDataStp.v 
+analyze -f verilog SspDMA.v 
+analyze -f verilog SspRevAnd.v 
+analyze -f verilog Ssp.v
+
+elaborate Ssp
+current_design Ssp
+link
+
+write -f db -hier -out Ssp.gtech.db
+
+
+
+

@@ -1,0 +1,52 @@
+
+######DAM Block###
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/DMA/mline_txdib.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/DMA/mtdma_ctrl.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/DMA/mballoc_ctrl.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/DMA/mline_rxdib.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/DMA/mrdma_ctrl.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/DMA/dreg_ahbif.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/MACRO/busholder.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/DMA/dma_regdec.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/DMA/dma_decoder.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/DMA/dma_arbitor.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/DMA/ahb2dma.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/DMA/mdma.v
+######USB Block###
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/e0rw_ctrl.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/device_sm.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/rxline_ctrl.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/txline_ctrl.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/uctrl_command.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/ufifo_port1.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/usb_crc.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/usb_protocol.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/sie_ctrl.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/dpll.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/eop_detect.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/make_busclk.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/usb_crc.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/sop_detect.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/rx_tranceiver.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/tx_tranceiver.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/tranceiver.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/ufifo_port2.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/ufinfo_rw.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/MACRO/SPSRAMBW192x32.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/uintr_ctrl.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/urdma_ctrl.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/ureg_ahbif.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/ureg_dec.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/MACRO/DPSRAMBW576x32.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/usb_reg.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/utdma_ctrl.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/utxpq_ctrl.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/USB/usb_top.v
+analyze -f verilog /user/ysjoo/ip/glotrex/USB2.0/MOON_2003.10/RTL/TOP/moon_top.v
+
+
+elaborate moon_top
+current_design moon_top
+link
+
+write -f db -hier -out moon_top.gtech.db

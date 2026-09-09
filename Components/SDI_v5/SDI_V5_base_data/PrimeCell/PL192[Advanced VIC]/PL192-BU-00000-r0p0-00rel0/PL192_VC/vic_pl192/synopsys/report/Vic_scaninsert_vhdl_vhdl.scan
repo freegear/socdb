@@ -1,0 +1,2136 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Vic
+Version: 2001.08
+Date   : Sat Oct 12 03:44:40 2002
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Vic' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0VicRevAnd               0      0     0     0      0     0     0      6   0.00%
+u1VicRevAnd               0      0     0     0      0     0     0      6   0.00%
+u2VicRevAnd               0      0     1     0      0     0     0      6   0.00%
+u3VicRevAnd               0      0     0     1      0     0     0      6   0.00%
+uVicAhbif              6368      0     5     2      0     0     0  57738  11.03%
+uVicCpuif              1705      5     0     2      0     0     0  15772  10.81%
+uVicInterrupt/u0VicPriority
+                        359      2    15     1      0     0     0   3506  10.29%
+uVicInterrupt/u1VicPriority
+                        345      0    19     8      0     0     0   3668   9.48%
+uVicInterrupt/u2VicPriority
+                        341      0    18     8      0     0     0   3382  10.16%
+uVicInterrupt/u3VicPriority
+                        330      0    15     2      0     0     0   3252  10.20%
+uVicInterrupt/u4VicPriority
+                        335      0    15     0      0     0     0   3284  10.25%
+uVicInterrupt/u5VicPriority
+                        343      1    15     2      0     0     0   3286  10.49%
+uVicInterrupt/u6VicPriority
+                        315      1    13     1      0     0     0   3074  10.29%
+uVicInterrupt/u7VicPriority
+                        337      1    12     1      0     0     0   3164  10.70%
+uVicInterrupt/u8VicPriority
+                        311      2    16     1      0     0     0   3058  10.23%
+uVicInterrupt/u9VicPriority
+                        320      0    15     1      0     0     0   3040  10.58%
+uVicInterrupt/u10VicPriority
+                        338      0    17    13      0     0     0   3402  10.02%
+uVicInterrupt/u11VicPriority
+                        311      1    14     1      0     0     0   3072  10.17%
+uVicInterrupt/u12VicPriority
+                        314      0    14     1      0     0     0   3078  10.25%
+uVicInterrupt/u13VicPriority
+                        304      0    13     1      0     0     0   2890  10.57%
+uVicInterrupt/u14VicPriority
+                        293      0    13     0      0     0     0   2800  10.51%
+uVicInterrupt/u15VicPriority
+                        333      0    13     1      0     0     0   3094  10.81%
+uVicInterrupt/uVicIntResolver
+                        485      2     0     2      0     0     0   4602  10.54%
+uVicInterrupt          5795     10   237    44      0     0     0  56380  10.33%
+Vic                   13909     15   243    49      0     0     0 130310  10.70%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Vic
+Version: 2001.08
+Date   : Sat Oct 12 03:44:45 2002
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Insert Lockups at the end of scan chains : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Vic
+Version: 2001.08
+Date   : Sat Oct 12 03:44:45 2002
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain (SCANINHCLK --> SCANOUTHCLK) contains 2007 cells:
+
+  SCANINHCLK	->
+  uVicAhbif/VectPrio11Q_reg_2	->
+  uVicAhbif/VectPrio18Q_reg_0	->
+  uVicAhbif/VectPrio17Q_reg_0	->
+  uVicAhbif/VectPrio8Q_reg_0	->
+  uVicAhbif/VectPrio18Q_reg_3	->
+  uVicAhbif/VectPrio10Q_reg_2	->
+  uVicAhbif/VectPrio32Q_reg_0	->
+  uVicAhbif/VectPrio32Q_reg_1	->
+  uVicAhbif/VectPrio6Q_reg_1	->
+  uVicAhbif/VectPrio11Q_reg_3	->
+  uVicAhbif/VectPrio7Q_reg_2	->
+  uVicAhbif/VectPrio7Q_reg_3	->
+  uVicAhbif/VectPrio7Q_reg_1	->
+  uVicAhbif/VectPrio14Q_reg_3	->
+  uVicAhbif/VectPrio14Q_reg_1	->
+  uVicAhbif/VectPrio14Q_reg_2	->
+  uVicAhbif/VectPrio14Q_reg_0	->
+  uVicAhbif/VectPrio15Q_reg_2	->
+  uVicAhbif/VectPrio15Q_reg_0	->
+  uVicAhbif/VectPrio19Q_reg_0	->
+  uVicAhbif/VectPrio19Q_reg_1	->
+  uVicAhbif/VectPrio9Q_reg_2	->
+  uVicAhbif/VectPrio21Q_reg_3	->
+  uVicAhbif/VectPrio21Q_reg_2	->
+  uVicAhbif/VectPrio21Q_reg_0	->
+  uVicAhbif/VectPrio17Q_reg_1	->
+  uVicAhbif/VectPrio13Q_reg_1	->
+  uVicAhbif/VectPrio13Q_reg_0	->
+  uVicAhbif/HADDRQ_reg_6	->
+  uVicAhbif/HADDRQ_reg_2	->
+  uVicAhbif/VICITCRQ_reg_0 (*)	->
+  uVicAhbif/HADDRQ_reg_10	->
+  uVicAhbif/HADDRQ_reg_11	->
+  uVicAhbif/HADDRQ_reg_7	->
+  uVicAhbif/HADDRQ_reg_8	->
+  uVicAhbif/HADDRQ_reg_9	->
+  uVicAhbif/HADDRQ_reg_3	->
+  uVicAhbif/HADDRQ_reg_4	->
+  uVicAhbif/HADDRQ_reg_5	->
+  uVicAhbif/TransSizeErrQ_reg_0	->
+  uVicAhbif/TransSizeErrQ_reg_1	->
+  uVicAhbif/VectAddr0Q_reg_31 (*)	->
+  uVicAhbif/VectAddr0Q_reg_30 (*)	->
+  uVicAhbif/VectAddr0Q_reg_29 (*)	->
+  uVicAhbif/VectAddr0Q_reg_28 (*)	->
+  uVicAhbif/VectAddr0Q_reg_27 (*)	->
+  uVicAhbif/VectAddr0Q_reg_26 (*)	->
+  uVicAhbif/VectAddr0Q_reg_25 (*)	->
+  uVicAhbif/VectAddr0Q_reg_24 (*)	->
+  uVicAhbif/VectAddr0Q_reg_23 (*)	->
+  uVicAhbif/VectAddr0Q_reg_22 (*)	->
+  uVicAhbif/VectAddr0Q_reg_21 (*)	->
+  uVicAhbif/VectAddr0Q_reg_20 (*)	->
+  uVicAhbif/VectAddr0Q_reg_19 (*)	->
+  uVicAhbif/VectAddr0Q_reg_18 (*)	->
+  uVicAhbif/VectAddr0Q_reg_17 (*)	->
+  uVicAhbif/VectAddr0Q_reg_16 (*)	->
+  uVicAhbif/VectAddr0Q_reg_15 (*)	->
+  uVicAhbif/VectAddr0Q_reg_14 (*)	->
+  uVicAhbif/VectAddr0Q_reg_13 (*)	->
+  uVicAhbif/VectAddr0Q_reg_12 (*)	->
+  uVicAhbif/VectAddr0Q_reg_11 (*)	->
+  uVicAhbif/VectAddr0Q_reg_10 (*)	->
+  uVicAhbif/VectAddr0Q_reg_9 (*)	->
+  uVicAhbif/VectAddr0Q_reg_8 (*)	->
+  uVicAhbif/VectAddr0Q_reg_7 (*)	->
+  uVicAhbif/VectAddr0Q_reg_6 (*)	->
+  uVicAhbif/VectAddr0Q_reg_5 (*)	->
+  uVicAhbif/VectAddr0Q_reg_4 (*)	->
+  uVicAhbif/VectAddr0Q_reg_3 (*)	->
+  uVicAhbif/VectAddr0Q_reg_2 (*)	->
+  uVicAhbif/VectAddr0Q_reg_1 (*)	->
+  uVicAhbif/VectAddr0Q_reg_0 (*)	->
+  uVicAhbif/VectAddr1Q_reg_31 (*)	->
+  uVicAhbif/VectAddr1Q_reg_30 (*)	->
+  uVicAhbif/VectAddr1Q_reg_29 (*)	->
+  uVicAhbif/VectAddr1Q_reg_28 (*)	->
+  uVicAhbif/VectAddr1Q_reg_27 (*)	->
+  uVicAhbif/VectAddr1Q_reg_26 (*)	->
+  uVicAhbif/VectAddr1Q_reg_25 (*)	->
+  uVicAhbif/VectAddr1Q_reg_24 (*)	->
+  uVicAhbif/VectAddr1Q_reg_23 (*)	->
+  uVicAhbif/VectAddr1Q_reg_22 (*)	->
+  uVicAhbif/VectAddr1Q_reg_21 (*)	->
+  uVicAhbif/VectAddr1Q_reg_20 (*)	->
+  uVicAhbif/VectAddr1Q_reg_19 (*)	->
+  uVicAhbif/VectAddr1Q_reg_18 (*)	->
+  uVicAhbif/VectAddr1Q_reg_17 (*)	->
+  uVicAhbif/VectAddr1Q_reg_16 (*)	->
+  uVicAhbif/VectAddr1Q_reg_15 (*)	->
+  uVicAhbif/VectAddr1Q_reg_14 (*)	->
+  uVicAhbif/VectAddr1Q_reg_13 (*)	->
+  uVicAhbif/VectAddr1Q_reg_12 (*)	->
+  uVicAhbif/VectAddr1Q_reg_11 (*)	->
+  uVicAhbif/VectAddr1Q_reg_10 (*)	->
+  uVicAhbif/VectAddr1Q_reg_9 (*)	->
+  uVicAhbif/VectAddr1Q_reg_8 (*)	->
+  uVicAhbif/VectAddr1Q_reg_7 (*)	->
+  uVicAhbif/VectAddr1Q_reg_6 (*)	->
+  uVicAhbif/VectAddr1Q_reg_5 (*)	->
+  uVicAhbif/VectAddr1Q_reg_4 (*)	->
+  uVicAhbif/VectAddr1Q_reg_3 (*)	->
+  uVicAhbif/VectAddr1Q_reg_2 (*)	->
+  uVicAhbif/VectAddr1Q_reg_1 (*)	->
+  uVicAhbif/VectAddr1Q_reg_0 (*)	->
+  uVicAhbif/VectAddr2Q_reg_31 (*)	->
+  uVicAhbif/VectAddr2Q_reg_30 (*)	->
+  uVicAhbif/VectAddr2Q_reg_29 (*)	->
+  uVicAhbif/VectAddr2Q_reg_28 (*)	->
+  uVicAhbif/VectAddr2Q_reg_27 (*)	->
+  uVicAhbif/VectAddr2Q_reg_26 (*)	->
+  uVicAhbif/VectAddr2Q_reg_25 (*)	->
+  uVicAhbif/VectAddr2Q_reg_24 (*)	->
+  uVicAhbif/VectAddr2Q_reg_23 (*)	->
+  uVicAhbif/VectAddr2Q_reg_22 (*)	->
+  uVicAhbif/VectAddr2Q_reg_21 (*)	->
+  uVicAhbif/VectAddr2Q_reg_20 (*)	->
+  uVicAhbif/VectAddr2Q_reg_19 (*)	->
+  uVicAhbif/VectAddr2Q_reg_18 (*)	->
+  uVicAhbif/VectAddr2Q_reg_17 (*)	->
+  uVicAhbif/VectAddr2Q_reg_16 (*)	->
+  uVicAhbif/VectAddr2Q_reg_15 (*)	->
+  uVicAhbif/VectAddr2Q_reg_14 (*)	->
+  uVicAhbif/VectAddr2Q_reg_13 (*)	->
+  uVicAhbif/VectAddr2Q_reg_12 (*)	->
+  uVicAhbif/VectAddr2Q_reg_11 (*)	->
+  uVicAhbif/VectAddr2Q_reg_10 (*)	->
+  uVicAhbif/VectAddr2Q_reg_9 (*)	->
+  uVicAhbif/VectAddr2Q_reg_8 (*)	->
+  uVicAhbif/VectAddr2Q_reg_7 (*)	->
+  uVicAhbif/VectAddr2Q_reg_6 (*)	->
+  uVicAhbif/VectAddr2Q_reg_5 (*)	->
+  uVicAhbif/VectAddr2Q_reg_4 (*)	->
+  uVicAhbif/VectAddr2Q_reg_3 (*)	->
+  uVicAhbif/VectAddr2Q_reg_2 (*)	->
+  uVicAhbif/VectAddr2Q_reg_1 (*)	->
+  uVicAhbif/VectAddr2Q_reg_0 (*)	->
+  uVicAhbif/VectAddr3Q_reg_31 (*)	->
+  uVicAhbif/VectAddr3Q_reg_30 (*)	->
+  uVicAhbif/VectAddr3Q_reg_29 (*)	->
+  uVicAhbif/VectAddr3Q_reg_28 (*)	->
+  uVicAhbif/VectAddr3Q_reg_27 (*)	->
+  uVicAhbif/VectAddr3Q_reg_26 (*)	->
+  uVicAhbif/VectAddr3Q_reg_25 (*)	->
+  uVicAhbif/VectAddr3Q_reg_24 (*)	->
+  uVicAhbif/VectAddr3Q_reg_23 (*)	->
+  uVicAhbif/VectAddr3Q_reg_22 (*)	->
+  uVicAhbif/VectAddr3Q_reg_21 (*)	->
+  uVicAhbif/VectAddr3Q_reg_20 (*)	->
+  uVicAhbif/VectAddr3Q_reg_19 (*)	->
+  uVicAhbif/VectAddr3Q_reg_18 (*)	->
+  uVicAhbif/VectAddr3Q_reg_17 (*)	->
+  uVicAhbif/VectAddr3Q_reg_16 (*)	->
+  uVicAhbif/VectAddr3Q_reg_15 (*)	->
+  uVicAhbif/VectAddr3Q_reg_14 (*)	->
+  uVicAhbif/VectAddr3Q_reg_13 (*)	->
+  uVicAhbif/VectAddr3Q_reg_12 (*)	->
+  uVicAhbif/VectAddr3Q_reg_11 (*)	->
+  uVicAhbif/VectAddr3Q_reg_10 (*)	->
+  uVicAhbif/VectAddr3Q_reg_9 (*)	->
+  uVicAhbif/VectAddr3Q_reg_8 (*)	->
+  uVicAhbif/VectAddr3Q_reg_7 (*)	->
+  uVicAhbif/VectAddr3Q_reg_6 (*)	->
+  uVicAhbif/VectAddr3Q_reg_5 (*)	->
+  uVicAhbif/VectAddr3Q_reg_4 (*)	->
+  uVicAhbif/VectAddr3Q_reg_3 (*)	->
+  uVicAhbif/VectAddr3Q_reg_2 (*)	->
+  uVicAhbif/VectAddr3Q_reg_1 (*)	->
+  uVicAhbif/VectAddr3Q_reg_0 (*)	->
+  uVicAhbif/VectAddr4Q_reg_31 (*)	->
+  uVicAhbif/VectAddr4Q_reg_30 (*)	->
+  uVicAhbif/VectAddr4Q_reg_29 (*)	->
+  uVicAhbif/VectAddr4Q_reg_28 (*)	->
+  uVicAhbif/VectAddr4Q_reg_27 (*)	->
+  uVicAhbif/VectAddr4Q_reg_26 (*)	->
+  uVicAhbif/VectAddr4Q_reg_25 (*)	->
+  uVicAhbif/VectAddr4Q_reg_24 (*)	->
+  uVicAhbif/VectAddr4Q_reg_23 (*)	->
+  uVicAhbif/VectAddr4Q_reg_22 (*)	->
+  uVicAhbif/VectAddr4Q_reg_21 (*)	->
+  uVicAhbif/VectAddr4Q_reg_20 (*)	->
+  uVicAhbif/VectAddr4Q_reg_19 (*)	->
+  uVicAhbif/VectAddr4Q_reg_18 (*)	->
+  uVicAhbif/VectAddr4Q_reg_17 (*)	->
+  uVicAhbif/VectAddr4Q_reg_16 (*)	->
+  uVicAhbif/VectAddr4Q_reg_15 (*)	->
+  uVicAhbif/VectAddr4Q_reg_14 (*)	->
+  uVicAhbif/VectAddr4Q_reg_13 (*)	->
+  uVicAhbif/VectAddr4Q_reg_12 (*)	->
+  uVicAhbif/VectAddr4Q_reg_11 (*)	->
+  uVicAhbif/VectAddr4Q_reg_10 (*)	->
+  uVicAhbif/VectAddr4Q_reg_9 (*)	->
+  uVicAhbif/VectAddr4Q_reg_8 (*)	->
+  uVicAhbif/VectAddr4Q_reg_7 (*)	->
+  uVicAhbif/VectAddr4Q_reg_6 (*)	->
+  uVicAhbif/VectAddr4Q_reg_5 (*)	->
+  uVicAhbif/VectAddr4Q_reg_4 (*)	->
+  uVicAhbif/VectAddr4Q_reg_3 (*)	->
+  uVicAhbif/VectAddr4Q_reg_2 (*)	->
+  uVicAhbif/VectAddr4Q_reg_1 (*)	->
+  uVicAhbif/VectAddr4Q_reg_0 (*)	->
+  uVicAhbif/VectAddr5Q_reg_31 (*)	->
+  uVicAhbif/VectAddr5Q_reg_30 (*)	->
+  uVicAhbif/VectAddr5Q_reg_29 (*)	->
+  uVicAhbif/VectAddr5Q_reg_28 (*)	->
+  uVicAhbif/VectAddr5Q_reg_27 (*)	->
+  uVicAhbif/VectAddr5Q_reg_26 (*)	->
+  uVicAhbif/VectAddr5Q_reg_25 (*)	->
+  uVicAhbif/VectAddr5Q_reg_24 (*)	->
+  uVicAhbif/VectAddr5Q_reg_23 (*)	->
+  uVicAhbif/VectAddr5Q_reg_22 (*)	->
+  uVicAhbif/VectAddr5Q_reg_21 (*)	->
+  uVicAhbif/VectAddr5Q_reg_20 (*)	->
+  uVicAhbif/VectAddr5Q_reg_19 (*)	->
+  uVicAhbif/VectAddr5Q_reg_18 (*)	->
+  uVicAhbif/VectAddr5Q_reg_17 (*)	->
+  uVicAhbif/VectAddr5Q_reg_16 (*)	->
+  uVicAhbif/VectAddr5Q_reg_15 (*)	->
+  uVicAhbif/VectAddr5Q_reg_14 (*)	->
+  uVicAhbif/VectAddr5Q_reg_13 (*)	->
+  uVicAhbif/VectAddr5Q_reg_12 (*)	->
+  uVicAhbif/VectAddr5Q_reg_11 (*)	->
+  uVicAhbif/VectAddr5Q_reg_10 (*)	->
+  uVicAhbif/VectAddr5Q_reg_9 (*)	->
+  uVicAhbif/VectAddr5Q_reg_8 (*)	->
+  uVicAhbif/VectAddr5Q_reg_7 (*)	->
+  uVicAhbif/VectAddr5Q_reg_6 (*)	->
+  uVicAhbif/VectAddr5Q_reg_5 (*)	->
+  uVicAhbif/VectAddr5Q_reg_4 (*)	->
+  uVicAhbif/VectAddr5Q_reg_3 (*)	->
+  uVicAhbif/VectAddr5Q_reg_2 (*)	->
+  uVicAhbif/VectAddr5Q_reg_1 (*)	->
+  uVicAhbif/VectAddr5Q_reg_0 (*)	->
+  uVicAhbif/VectAddr6Q_reg_31 (*)	->
+  uVicAhbif/VectAddr6Q_reg_30 (*)	->
+  uVicAhbif/VectAddr6Q_reg_29 (*)	->
+  uVicAhbif/VectAddr6Q_reg_28 (*)	->
+  uVicAhbif/VectAddr6Q_reg_27 (*)	->
+  uVicAhbif/VectAddr6Q_reg_26 (*)	->
+  uVicAhbif/VectAddr6Q_reg_25 (*)	->
+  uVicAhbif/VectAddr6Q_reg_24 (*)	->
+  uVicAhbif/VectAddr6Q_reg_23 (*)	->
+  uVicAhbif/VectAddr6Q_reg_22 (*)	->
+  uVicAhbif/VectAddr6Q_reg_21 (*)	->
+  uVicAhbif/VectAddr6Q_reg_20 (*)	->
+  uVicAhbif/VectAddr6Q_reg_19 (*)	->
+  uVicAhbif/VectAddr6Q_reg_18 (*)	->
+  uVicAhbif/VectAddr6Q_reg_17 (*)	->
+  uVicAhbif/VectAddr6Q_reg_16 (*)	->
+  uVicAhbif/VectAddr6Q_reg_15 (*)	->
+  uVicAhbif/VectAddr6Q_reg_14 (*)	->
+  uVicAhbif/VectAddr6Q_reg_13 (*)	->
+  uVicAhbif/VectAddr6Q_reg_12 (*)	->
+  uVicAhbif/VectAddr6Q_reg_11 (*)	->
+  uVicAhbif/VectAddr6Q_reg_10 (*)	->
+  uVicAhbif/VectAddr6Q_reg_9 (*)	->
+  uVicAhbif/VectAddr6Q_reg_8 (*)	->
+  uVicAhbif/VectAddr6Q_reg_7 (*)	->
+  uVicAhbif/VectAddr6Q_reg_6 (*)	->
+  uVicAhbif/VectAddr6Q_reg_5 (*)	->
+  uVicAhbif/VectAddr6Q_reg_4 (*)	->
+  uVicAhbif/VectAddr6Q_reg_3 (*)	->
+  uVicAhbif/VectAddr6Q_reg_2 (*)	->
+  uVicAhbif/VectAddr6Q_reg_1 (*)	->
+  uVicAhbif/VectAddr6Q_reg_0 (*)	->
+  uVicAhbif/VectAddr7Q_reg_31 (*)	->
+  uVicAhbif/VectAddr7Q_reg_30 (*)	->
+  uVicAhbif/VectAddr7Q_reg_29 (*)	->
+  uVicAhbif/VectAddr7Q_reg_28 (*)	->
+  uVicAhbif/VectAddr7Q_reg_27 (*)	->
+  uVicAhbif/VectAddr7Q_reg_26 (*)	->
+  uVicAhbif/VectAddr7Q_reg_25 (*)	->
+  uVicAhbif/VectAddr7Q_reg_24 (*)	->
+  uVicAhbif/VectAddr7Q_reg_23 (*)	->
+  uVicAhbif/VectAddr7Q_reg_22 (*)	->
+  uVicAhbif/VectAddr7Q_reg_21 (*)	->
+  uVicAhbif/VectAddr7Q_reg_20 (*)	->
+  uVicAhbif/VectAddr7Q_reg_19 (*)	->
+  uVicAhbif/VectAddr7Q_reg_18 (*)	->
+  uVicAhbif/VectAddr7Q_reg_17 (*)	->
+  uVicAhbif/VectAddr7Q_reg_16 (*)	->
+  uVicAhbif/VectAddr7Q_reg_15 (*)	->
+  uVicAhbif/VectAddr7Q_reg_14 (*)	->
+  uVicAhbif/VectAddr7Q_reg_13 (*)	->
+  uVicAhbif/VectAddr7Q_reg_12 (*)	->
+  uVicAhbif/VectAddr7Q_reg_11 (*)	->
+  uVicAhbif/VectAddr7Q_reg_10 (*)	->
+  uVicAhbif/VectAddr7Q_reg_9 (*)	->
+  uVicAhbif/VectAddr7Q_reg_8 (*)	->
+  uVicAhbif/VectAddr7Q_reg_7 (*)	->
+  uVicAhbif/VectAddr7Q_reg_6 (*)	->
+  uVicAhbif/VectAddr7Q_reg_5 (*)	->
+  uVicAhbif/VectAddr7Q_reg_4 (*)	->
+  uVicAhbif/VectAddr7Q_reg_3 (*)	->
+  uVicAhbif/VectAddr7Q_reg_2 (*)	->
+  uVicAhbif/VectAddr7Q_reg_1 (*)	->
+  uVicAhbif/VectAddr7Q_reg_0 (*)	->
+  uVicAhbif/VectAddr8Q_reg_31 (*)	->
+  uVicAhbif/VectAddr8Q_reg_30 (*)	->
+  uVicAhbif/VectAddr8Q_reg_29 (*)	->
+  uVicAhbif/VectAddr8Q_reg_28 (*)	->
+  uVicAhbif/VectAddr8Q_reg_27 (*)	->
+  uVicAhbif/VectAddr8Q_reg_26 (*)	->
+  uVicAhbif/VectAddr8Q_reg_25 (*)	->
+  uVicAhbif/VectAddr8Q_reg_24 (*)	->
+  uVicAhbif/VectAddr8Q_reg_23 (*)	->
+  uVicAhbif/VectAddr8Q_reg_22 (*)	->
+  uVicAhbif/VectAddr8Q_reg_21 (*)	->
+  uVicAhbif/VectAddr8Q_reg_20 (*)	->
+  uVicAhbif/VectAddr8Q_reg_19 (*)	->
+  uVicAhbif/VectAddr8Q_reg_18 (*)	->
+  uVicAhbif/VectAddr8Q_reg_17 (*)	->
+  uVicAhbif/VectAddr8Q_reg_16 (*)	->
+  uVicAhbif/VectAddr8Q_reg_15 (*)	->
+  uVicAhbif/VectAddr8Q_reg_14 (*)	->
+  uVicAhbif/VectAddr8Q_reg_13 (*)	->
+  uVicAhbif/VectAddr8Q_reg_12 (*)	->
+  uVicAhbif/VectAddr8Q_reg_11 (*)	->
+  uVicAhbif/VectAddr8Q_reg_10 (*)	->
+  uVicAhbif/VectAddr8Q_reg_9 (*)	->
+  uVicAhbif/VectAddr8Q_reg_8 (*)	->
+  uVicAhbif/VectAddr8Q_reg_7 (*)	->
+  uVicAhbif/VectAddr8Q_reg_6 (*)	->
+  uVicAhbif/VectAddr8Q_reg_5 (*)	->
+  uVicAhbif/VectAddr8Q_reg_4 (*)	->
+  uVicAhbif/VectAddr8Q_reg_3 (*)	->
+  uVicAhbif/VectAddr8Q_reg_2 (*)	->
+  uVicAhbif/VectAddr8Q_reg_1 (*)	->
+  uVicAhbif/VectAddr8Q_reg_0 (*)	->
+  uVicAhbif/VectAddr9Q_reg_31 (*)	->
+  uVicAhbif/VectAddr9Q_reg_30 (*)	->
+  uVicAhbif/VectAddr9Q_reg_29 (*)	->
+  uVicAhbif/VectAddr9Q_reg_28 (*)	->
+  uVicAhbif/VectAddr9Q_reg_27 (*)	->
+  uVicAhbif/VectAddr9Q_reg_26 (*)	->
+  uVicAhbif/VectAddr9Q_reg_25 (*)	->
+  uVicAhbif/VectAddr9Q_reg_24 (*)	->
+  uVicAhbif/VectAddr9Q_reg_23 (*)	->
+  uVicAhbif/VectAddr9Q_reg_22 (*)	->
+  uVicAhbif/VectAddr9Q_reg_21 (*)	->
+  uVicAhbif/VectAddr9Q_reg_20 (*)	->
+  uVicAhbif/VectAddr9Q_reg_19 (*)	->
+  uVicAhbif/VectAddr9Q_reg_18 (*)	->
+  uVicAhbif/VectAddr9Q_reg_17 (*)	->
+  uVicAhbif/VectAddr9Q_reg_16 (*)	->
+  uVicAhbif/VectAddr9Q_reg_15 (*)	->
+  uVicAhbif/VectAddr9Q_reg_14 (*)	->
+  uVicAhbif/VectAddr9Q_reg_13 (*)	->
+  uVicAhbif/VectAddr9Q_reg_12 (*)	->
+  uVicAhbif/VectAddr9Q_reg_11 (*)	->
+  uVicAhbif/VectAddr9Q_reg_10 (*)	->
+  uVicAhbif/VectAddr9Q_reg_9 (*)	->
+  uVicAhbif/VectAddr9Q_reg_8 (*)	->
+  uVicAhbif/VectAddr9Q_reg_7 (*)	->
+  uVicAhbif/VectAddr9Q_reg_6 (*)	->
+  uVicAhbif/VectAddr9Q_reg_5 (*)	->
+  uVicAhbif/VectAddr9Q_reg_4 (*)	->
+  uVicAhbif/VectAddr9Q_reg_3 (*)	->
+  uVicAhbif/VectAddr9Q_reg_2 (*)	->
+  uVicAhbif/VectAddr9Q_reg_1 (*)	->
+  uVicAhbif/VectAddr9Q_reg_0 (*)	->
+  uVicAhbif/VectAddr10Q_reg_31 (*)	->
+  uVicAhbif/VectAddr10Q_reg_30 (*)	->
+  uVicAhbif/VectAddr10Q_reg_29 (*)	->
+  uVicAhbif/VectAddr10Q_reg_28 (*)	->
+  uVicAhbif/VectAddr10Q_reg_27 (*)	->
+  uVicAhbif/VectAddr10Q_reg_26 (*)	->
+  uVicAhbif/VectAddr10Q_reg_25 (*)	->
+  uVicAhbif/VectAddr10Q_reg_24 (*)	->
+  uVicAhbif/VectAddr10Q_reg_23 (*)	->
+  uVicAhbif/VectAddr10Q_reg_22 (*)	->
+  uVicAhbif/VectAddr10Q_reg_21 (*)	->
+  uVicAhbif/VectAddr10Q_reg_20 (*)	->
+  uVicAhbif/VectAddr10Q_reg_19 (*)	->
+  uVicAhbif/VectAddr10Q_reg_18 (*)	->
+  uVicAhbif/VectAddr10Q_reg_17 (*)	->
+  uVicAhbif/VectAddr10Q_reg_16 (*)	->
+  uVicAhbif/VectAddr10Q_reg_15 (*)	->
+  uVicAhbif/VectAddr10Q_reg_14 (*)	->
+  uVicAhbif/VectAddr10Q_reg_13 (*)	->
+  uVicAhbif/VectAddr10Q_reg_12 (*)	->
+  uVicAhbif/VectAddr10Q_reg_11 (*)	->
+  uVicAhbif/VectAddr10Q_reg_10 (*)	->
+  uVicAhbif/VectAddr10Q_reg_9 (*)	->
+  uVicAhbif/VectAddr10Q_reg_8 (*)	->
+  uVicAhbif/VectAddr10Q_reg_7 (*)	->
+  uVicAhbif/VectAddr10Q_reg_6 (*)	->
+  uVicAhbif/VectAddr10Q_reg_5 (*)	->
+  uVicAhbif/VectAddr10Q_reg_4 (*)	->
+  uVicAhbif/VectAddr10Q_reg_3 (*)	->
+  uVicAhbif/VectAddr10Q_reg_2 (*)	->
+  uVicAhbif/VectAddr10Q_reg_1 (*)	->
+  uVicAhbif/VectAddr10Q_reg_0 (*)	->
+  uVicAhbif/VectAddr11Q_reg_31 (*)	->
+  uVicAhbif/VectAddr11Q_reg_30 (*)	->
+  uVicAhbif/VectAddr11Q_reg_29 (*)	->
+  uVicAhbif/VectAddr11Q_reg_28 (*)	->
+  uVicAhbif/VectAddr11Q_reg_27 (*)	->
+  uVicAhbif/VectAddr11Q_reg_26 (*)	->
+  uVicAhbif/VectAddr11Q_reg_25 (*)	->
+  uVicAhbif/VectAddr11Q_reg_24 (*)	->
+  uVicAhbif/VectAddr11Q_reg_23 (*)	->
+  uVicAhbif/VectAddr11Q_reg_22 (*)	->
+  uVicAhbif/VectAddr11Q_reg_21 (*)	->
+  uVicAhbif/VectAddr11Q_reg_20 (*)	->
+  uVicAhbif/VectAddr11Q_reg_19 (*)	->
+  uVicAhbif/VectAddr11Q_reg_18 (*)	->
+  uVicAhbif/VectAddr11Q_reg_17 (*)	->
+  uVicAhbif/VectAddr11Q_reg_16 (*)	->
+  uVicAhbif/VectAddr11Q_reg_15 (*)	->
+  uVicAhbif/VectAddr11Q_reg_14 (*)	->
+  uVicAhbif/VectAddr11Q_reg_13 (*)	->
+  uVicAhbif/VectAddr11Q_reg_12 (*)	->
+  uVicAhbif/VectAddr11Q_reg_11 (*)	->
+  uVicAhbif/VectAddr11Q_reg_10 (*)	->
+  uVicAhbif/VectAddr11Q_reg_9 (*)	->
+  uVicAhbif/VectAddr11Q_reg_8 (*)	->
+  uVicAhbif/VectAddr11Q_reg_7 (*)	->
+  uVicAhbif/VectAddr11Q_reg_6 (*)	->
+  uVicAhbif/VectAddr11Q_reg_5 (*)	->
+  uVicAhbif/VectAddr11Q_reg_4 (*)	->
+  uVicAhbif/VectAddr11Q_reg_3 (*)	->
+  uVicAhbif/VectAddr11Q_reg_2 (*)	->
+  uVicAhbif/VectAddr11Q_reg_1 (*)	->
+  uVicAhbif/VectAddr11Q_reg_0 (*)	->
+  uVicAhbif/VectAddr12Q_reg_31 (*)	->
+  uVicAhbif/VectAddr12Q_reg_30 (*)	->
+  uVicAhbif/VectAddr12Q_reg_29 (*)	->
+  uVicAhbif/VectAddr12Q_reg_28 (*)	->
+  uVicAhbif/VectAddr12Q_reg_27 (*)	->
+  uVicAhbif/VectAddr12Q_reg_26 (*)	->
+  uVicAhbif/VectAddr12Q_reg_25 (*)	->
+  uVicAhbif/VectAddr12Q_reg_24 (*)	->
+  uVicAhbif/VectAddr12Q_reg_23 (*)	->
+  uVicAhbif/VectAddr12Q_reg_22 (*)	->
+  uVicAhbif/VectAddr12Q_reg_21 (*)	->
+  uVicAhbif/VectAddr12Q_reg_20 (*)	->
+  uVicAhbif/VectAddr12Q_reg_19 (*)	->
+  uVicAhbif/VectAddr12Q_reg_18 (*)	->
+  uVicAhbif/VectAddr12Q_reg_17 (*)	->
+  uVicAhbif/VectAddr12Q_reg_16 (*)	->
+  uVicAhbif/VectAddr12Q_reg_15 (*)	->
+  uVicAhbif/VectAddr12Q_reg_14 (*)	->
+  uVicAhbif/VectAddr12Q_reg_13 (*)	->
+  uVicAhbif/VectAddr12Q_reg_12 (*)	->
+  uVicAhbif/VectAddr12Q_reg_11 (*)	->
+  uVicAhbif/VectAddr12Q_reg_10 (*)	->
+  uVicAhbif/VectAddr12Q_reg_9 (*)	->
+  uVicAhbif/VectAddr12Q_reg_8 (*)	->
+  uVicAhbif/VectAddr12Q_reg_7 (*)	->
+  uVicAhbif/VectAddr12Q_reg_6 (*)	->
+  uVicAhbif/VectAddr12Q_reg_5 (*)	->
+  uVicAhbif/VectAddr12Q_reg_4 (*)	->
+  uVicAhbif/VectAddr12Q_reg_3 (*)	->
+  uVicAhbif/VectAddr12Q_reg_2 (*)	->
+  uVicAhbif/VectAddr12Q_reg_1 (*)	->
+  uVicAhbif/VectAddr12Q_reg_0 (*)	->
+  uVicAhbif/VectAddr13Q_reg_31 (*)	->
+  uVicAhbif/VectAddr13Q_reg_30 (*)	->
+  uVicAhbif/VectAddr13Q_reg_29 (*)	->
+  uVicAhbif/VectAddr13Q_reg_28 (*)	->
+  uVicAhbif/VectAddr13Q_reg_27 (*)	->
+  uVicAhbif/VectAddr13Q_reg_26 (*)	->
+  uVicAhbif/VectAddr13Q_reg_25 (*)	->
+  uVicAhbif/VectAddr13Q_reg_24 (*)	->
+  uVicAhbif/VectAddr13Q_reg_23 (*)	->
+  uVicAhbif/VectAddr13Q_reg_22 (*)	->
+  uVicAhbif/VectAddr13Q_reg_21 (*)	->
+  uVicAhbif/VectAddr13Q_reg_20 (*)	->
+  uVicAhbif/VectAddr13Q_reg_19 (*)	->
+  uVicAhbif/VectAddr13Q_reg_18 (*)	->
+  uVicAhbif/VectAddr13Q_reg_17 (*)	->
+  uVicAhbif/VectAddr13Q_reg_16 (*)	->
+  uVicAhbif/VectAddr13Q_reg_15 (*)	->
+  uVicAhbif/VectAddr13Q_reg_14 (*)	->
+  uVicAhbif/VectAddr13Q_reg_13 (*)	->
+  uVicAhbif/VectAddr13Q_reg_12 (*)	->
+  uVicAhbif/VectAddr13Q_reg_11 (*)	->
+  uVicAhbif/VectAddr13Q_reg_10 (*)	->
+  uVicAhbif/VectAddr13Q_reg_9 (*)	->
+  uVicAhbif/VectAddr13Q_reg_8 (*)	->
+  uVicAhbif/VectAddr13Q_reg_7 (*)	->
+  uVicAhbif/VectAddr13Q_reg_6 (*)	->
+  uVicAhbif/VectAddr13Q_reg_5 (*)	->
+  uVicAhbif/VectAddr13Q_reg_4 (*)	->
+  uVicAhbif/VectAddr13Q_reg_3 (*)	->
+  uVicAhbif/VectAddr13Q_reg_2 (*)	->
+  uVicAhbif/VectAddr13Q_reg_1 (*)	->
+  uVicAhbif/VectAddr13Q_reg_0 (*)	->
+  uVicAhbif/VectAddr14Q_reg_31 (*)	->
+  uVicAhbif/VectAddr14Q_reg_30 (*)	->
+  uVicAhbif/VectAddr14Q_reg_29 (*)	->
+  uVicAhbif/VectAddr14Q_reg_28 (*)	->
+  uVicAhbif/VectAddr14Q_reg_27 (*)	->
+  uVicAhbif/VectAddr14Q_reg_26 (*)	->
+  uVicAhbif/VectAddr14Q_reg_25 (*)	->
+  uVicAhbif/VectAddr14Q_reg_24 (*)	->
+  uVicAhbif/VectAddr14Q_reg_23 (*)	->
+  uVicAhbif/VectAddr14Q_reg_22 (*)	->
+  uVicAhbif/VectAddr14Q_reg_21 (*)	->
+  uVicAhbif/VectAddr14Q_reg_20 (*)	->
+  uVicAhbif/VectAddr14Q_reg_19 (*)	->
+  uVicAhbif/VectAddr14Q_reg_18 (*)	->
+  uVicAhbif/VectAddr14Q_reg_17 (*)	->
+  uVicAhbif/VectAddr14Q_reg_16 (*)	->
+  uVicAhbif/VectAddr14Q_reg_15 (*)	->
+  uVicAhbif/VectAddr14Q_reg_14 (*)	->
+  uVicAhbif/VectAddr14Q_reg_13 (*)	->
+  uVicAhbif/VectAddr14Q_reg_12 (*)	->
+  uVicAhbif/VectAddr14Q_reg_11 (*)	->
+  uVicAhbif/VectAddr14Q_reg_10 (*)	->
+  uVicAhbif/VectAddr14Q_reg_9 (*)	->
+  uVicAhbif/VectAddr14Q_reg_8 (*)	->
+  uVicAhbif/VectAddr14Q_reg_7 (*)	->
+  uVicAhbif/VectAddr14Q_reg_6	->
+  uVicAhbif/VectAddr14Q_reg_5 (*)	->
+  uVicAhbif/VectAddr14Q_reg_4 (*)	->
+  uVicAhbif/VectAddr14Q_reg_3 (*)	->
+  uVicAhbif/VectAddr14Q_reg_2 (*)	->
+  uVicAhbif/VectAddr14Q_reg_1 (*)	->
+  uVicAhbif/VectAddr14Q_reg_0 (*)	->
+  uVicAhbif/VectAddr15Q_reg_31 (*)	->
+  uVicAhbif/VectAddr15Q_reg_30 (*)	->
+  uVicAhbif/VectAddr15Q_reg_29 (*)	->
+  uVicAhbif/VectAddr15Q_reg_28 (*)	->
+  uVicAhbif/VectAddr15Q_reg_27 (*)	->
+  uVicAhbif/VectAddr15Q_reg_26 (*)	->
+  uVicAhbif/VectAddr15Q_reg_25 (*)	->
+  uVicAhbif/VectAddr15Q_reg_24 (*)	->
+  uVicAhbif/VectAddr15Q_reg_23 (*)	->
+  uVicAhbif/VectAddr15Q_reg_22 (*)	->
+  uVicAhbif/VectAddr15Q_reg_21 (*)	->
+  uVicAhbif/VectAddr15Q_reg_20 (*)	->
+  uVicAhbif/VectAddr15Q_reg_19 (*)	->
+  uVicAhbif/VectAddr15Q_reg_18 (*)	->
+  uVicAhbif/VectAddr15Q_reg_17 (*)	->
+  uVicAhbif/VectAddr15Q_reg_16 (*)	->
+  uVicAhbif/VectAddr15Q_reg_15 (*)	->
+  uVicAhbif/VectAddr15Q_reg_14 (*)	->
+  uVicAhbif/VectAddr15Q_reg_13 (*)	->
+  uVicAhbif/VectAddr15Q_reg_12 (*)	->
+  uVicAhbif/VectAddr15Q_reg_11 (*)	->
+  uVicAhbif/VectAddr15Q_reg_10 (*)	->
+  uVicAhbif/VectAddr15Q_reg_9 (*)	->
+  uVicAhbif/VectAddr15Q_reg_8 (*)	->
+  uVicAhbif/VectAddr15Q_reg_7 (*)	->
+  uVicAhbif/VectAddr15Q_reg_6 (*)	->
+  uVicAhbif/VectAddr15Q_reg_5 (*)	->
+  uVicAhbif/VectAddr15Q_reg_4 (*)	->
+  uVicAhbif/VectAddr15Q_reg_3 (*)	->
+  uVicAhbif/VectAddr15Q_reg_2 (*)	->
+  uVicAhbif/VectAddr15Q_reg_1 (*)	->
+  uVicAhbif/VectAddr15Q_reg_0 (*)	->
+  uVicAhbif/VectAddr16Q_reg_31 (*)	->
+  uVicAhbif/VectAddr16Q_reg_30 (*)	->
+  uVicAhbif/VectAddr16Q_reg_29 (*)	->
+  uVicAhbif/VectAddr16Q_reg_28 (*)	->
+  uVicAhbif/VectAddr16Q_reg_27 (*)	->
+  uVicAhbif/VectAddr16Q_reg_26 (*)	->
+  uVicAhbif/VectAddr16Q_reg_25 (*)	->
+  uVicAhbif/VectAddr16Q_reg_24 (*)	->
+  uVicAhbif/VectAddr16Q_reg_23 (*)	->
+  uVicAhbif/VectAddr16Q_reg_22 (*)	->
+  uVicAhbif/VectAddr16Q_reg_21 (*)	->
+  uVicAhbif/VectAddr16Q_reg_20 (*)	->
+  uVicAhbif/VectAddr16Q_reg_19 (*)	->
+  uVicAhbif/VectAddr16Q_reg_18 (*)	->
+  uVicAhbif/VectAddr16Q_reg_17 (*)	->
+  uVicAhbif/VectAddr16Q_reg_16 (*)	->
+  uVicAhbif/VectAddr16Q_reg_15 (*)	->
+  uVicAhbif/VectAddr16Q_reg_14 (*)	->
+  uVicAhbif/VectAddr16Q_reg_13 (*)	->
+  uVicAhbif/VectAddr16Q_reg_12 (*)	->
+  uVicAhbif/VectAddr16Q_reg_11 (*)	->
+  uVicAhbif/VectAddr16Q_reg_10 (*)	->
+  uVicAhbif/VectAddr16Q_reg_9 (*)	->
+  uVicAhbif/VectAddr16Q_reg_8 (*)	->
+  uVicAhbif/VectAddr16Q_reg_7 (*)	->
+  uVicAhbif/VectAddr16Q_reg_6 (*)	->
+  uVicAhbif/VectAddr16Q_reg_5 (*)	->
+  uVicAhbif/VectAddr16Q_reg_4 (*)	->
+  uVicAhbif/VectAddr16Q_reg_3 (*)	->
+  uVicAhbif/VectAddr16Q_reg_2 (*)	->
+  uVicAhbif/VectAddr16Q_reg_1 (*)	->
+  uVicAhbif/VectAddr16Q_reg_0 (*)	->
+  uVicAhbif/VectAddr17Q_reg_31 (*)	->
+  uVicAhbif/VectAddr17Q_reg_30 (*)	->
+  uVicAhbif/VectAddr17Q_reg_29 (*)	->
+  uVicAhbif/VectAddr17Q_reg_28 (*)	->
+  uVicAhbif/VectAddr17Q_reg_27 (*)	->
+  uVicAhbif/VectAddr17Q_reg_26 (*)	->
+  uVicAhbif/VectAddr17Q_reg_25 (*)	->
+  uVicAhbif/VectAddr17Q_reg_24 (*)	->
+  uVicAhbif/VectAddr17Q_reg_23 (*)	->
+  uVicAhbif/VectAddr17Q_reg_22 (*)	->
+  uVicAhbif/VectAddr17Q_reg_21 (*)	->
+  uVicAhbif/VectAddr17Q_reg_20 (*)	->
+  uVicAhbif/VectAddr17Q_reg_19 (*)	->
+  uVicAhbif/VectAddr17Q_reg_18 (*)	->
+  uVicAhbif/VectAddr17Q_reg_17 (*)	->
+  uVicAhbif/VectAddr17Q_reg_16 (*)	->
+  uVicAhbif/VectAddr17Q_reg_15 (*)	->
+  uVicAhbif/VectAddr17Q_reg_14 (*)	->
+  uVicAhbif/VectAddr17Q_reg_13 (*)	->
+  uVicAhbif/VectAddr17Q_reg_12 (*)	->
+  uVicAhbif/VectAddr17Q_reg_11 (*)	->
+  uVicAhbif/VectAddr17Q_reg_10 (*)	->
+  uVicAhbif/VectAddr17Q_reg_9 (*)	->
+  uVicAhbif/VectAddr17Q_reg_8 (*)	->
+  uVicAhbif/VectAddr17Q_reg_7 (*)	->
+  uVicAhbif/VectAddr17Q_reg_6 (*)	->
+  uVicAhbif/VectAddr17Q_reg_5 (*)	->
+  uVicAhbif/VectAddr17Q_reg_4 (*)	->
+  uVicAhbif/VectAddr17Q_reg_3 (*)	->
+  uVicAhbif/VectAddr17Q_reg_2 (*)	->
+  uVicAhbif/VectAddr17Q_reg_1 (*)	->
+  uVicAhbif/VectAddr17Q_reg_0 (*)	->
+  uVicAhbif/VectAddr18Q_reg_31 (*)	->
+  uVicAhbif/VectAddr18Q_reg_30 (*)	->
+  uVicAhbif/VectAddr18Q_reg_29 (*)	->
+  uVicAhbif/VectAddr18Q_reg_28 (*)	->
+  uVicAhbif/VectAddr18Q_reg_27 (*)	->
+  uVicAhbif/VectAddr18Q_reg_26 (*)	->
+  uVicAhbif/VectAddr18Q_reg_25 (*)	->
+  uVicAhbif/VectAddr18Q_reg_24 (*)	->
+  uVicAhbif/VectAddr18Q_reg_23 (*)	->
+  uVicAhbif/VectAddr18Q_reg_22 (*)	->
+  uVicAhbif/VectAddr18Q_reg_21 (*)	->
+  uVicAhbif/VectAddr18Q_reg_20 (*)	->
+  uVicAhbif/VectAddr18Q_reg_19 (*)	->
+  uVicAhbif/VectAddr18Q_reg_18 (*)	->
+  uVicAhbif/VectAddr18Q_reg_17 (*)	->
+  uVicAhbif/VectAddr18Q_reg_16 (*)	->
+  uVicAhbif/VectAddr18Q_reg_15 (*)	->
+  uVicAhbif/VectAddr18Q_reg_14 (*)	->
+  uVicAhbif/VectAddr18Q_reg_13 (*)	->
+  uVicAhbif/VectAddr18Q_reg_12 (*)	->
+  uVicAhbif/VectAddr18Q_reg_11 (*)	->
+  uVicAhbif/VectAddr18Q_reg_10 (*)	->
+  uVicAhbif/VectAddr18Q_reg_9 (*)	->
+  uVicAhbif/VectAddr18Q_reg_8 (*)	->
+  uVicAhbif/VectAddr18Q_reg_7 (*)	->
+  uVicAhbif/VectAddr18Q_reg_6 (*)	->
+  uVicAhbif/VectAddr18Q_reg_5 (*)	->
+  uVicAhbif/VectAddr18Q_reg_4 (*)	->
+  uVicAhbif/VectAddr18Q_reg_3 (*)	->
+  uVicAhbif/VectAddr18Q_reg_2 (*)	->
+  uVicAhbif/VectAddr18Q_reg_1 (*)	->
+  uVicAhbif/VectAddr18Q_reg_0 (*)	->
+  uVicAhbif/VectAddr19Q_reg_31 (*)	->
+  uVicAhbif/VectAddr19Q_reg_30 (*)	->
+  uVicAhbif/VectAddr19Q_reg_29 (*)	->
+  uVicAhbif/VectAddr19Q_reg_28 (*)	->
+  uVicAhbif/VectAddr19Q_reg_27 (*)	->
+  uVicAhbif/VectAddr19Q_reg_26 (*)	->
+  uVicAhbif/VectAddr19Q_reg_25 (*)	->
+  uVicAhbif/VectAddr19Q_reg_24 (*)	->
+  uVicAhbif/VectAddr19Q_reg_23 (*)	->
+  uVicAhbif/VectAddr19Q_reg_22 (*)	->
+  uVicAhbif/VectAddr19Q_reg_21 (*)	->
+  uVicAhbif/VectAddr19Q_reg_20 (*)	->
+  uVicAhbif/VectAddr19Q_reg_19 (*)	->
+  uVicAhbif/VectAddr19Q_reg_18 (*)	->
+  uVicAhbif/VectAddr19Q_reg_17 (*)	->
+  uVicAhbif/VectAddr19Q_reg_16 (*)	->
+  uVicAhbif/VectAddr19Q_reg_15 (*)	->
+  uVicAhbif/VectAddr19Q_reg_14 (*)	->
+  uVicAhbif/VectAddr19Q_reg_13 (*)	->
+  uVicAhbif/VectAddr19Q_reg_12 (*)	->
+  uVicAhbif/VectAddr19Q_reg_11 (*)	->
+  uVicAhbif/VectAddr19Q_reg_10 (*)	->
+  uVicAhbif/VectAddr19Q_reg_9 (*)	->
+  uVicAhbif/VectAddr19Q_reg_8 (*)	->
+  uVicAhbif/VectAddr19Q_reg_7 (*)	->
+  uVicAhbif/VectAddr19Q_reg_6 (*)	->
+  uVicAhbif/VectAddr19Q_reg_5 (*)	->
+  uVicAhbif/VectAddr19Q_reg_4 (*)	->
+  uVicAhbif/VectAddr19Q_reg_3 (*)	->
+  uVicAhbif/VectAddr19Q_reg_2 (*)	->
+  uVicAhbif/VectAddr19Q_reg_1 (*)	->
+  uVicAhbif/VectAddr19Q_reg_0 (*)	->
+  uVicAhbif/VectAddr20Q_reg_31 (*)	->
+  uVicAhbif/VectAddr20Q_reg_30 (*)	->
+  uVicAhbif/VectAddr20Q_reg_29 (*)	->
+  uVicAhbif/VectAddr20Q_reg_28 (*)	->
+  uVicAhbif/VectAddr20Q_reg_27 (*)	->
+  uVicAhbif/VectAddr20Q_reg_26 (*)	->
+  uVicAhbif/VectAddr20Q_reg_25 (*)	->
+  uVicAhbif/VectAddr20Q_reg_24 (*)	->
+  uVicAhbif/VectAddr20Q_reg_23 (*)	->
+  uVicAhbif/VectAddr20Q_reg_22 (*)	->
+  uVicAhbif/VectAddr20Q_reg_21 (*)	->
+  uVicAhbif/VectAddr20Q_reg_20 (*)	->
+  uVicAhbif/VectAddr20Q_reg_19 (*)	->
+  uVicAhbif/VectAddr20Q_reg_18 (*)	->
+  uVicAhbif/VectAddr20Q_reg_17 (*)	->
+  uVicAhbif/VectAddr20Q_reg_16 (*)	->
+  uVicAhbif/VectAddr20Q_reg_15 (*)	->
+  uVicAhbif/VectAddr20Q_reg_14 (*)	->
+  uVicAhbif/VectAddr20Q_reg_13 (*)	->
+  uVicAhbif/VectAddr20Q_reg_12 (*)	->
+  uVicAhbif/VectAddr20Q_reg_11 (*)	->
+  uVicAhbif/VectAddr20Q_reg_10 (*)	->
+  uVicAhbif/VectAddr20Q_reg_9 (*)	->
+  uVicAhbif/VectAddr20Q_reg_8 (*)	->
+  uVicAhbif/VectAddr20Q_reg_7 (*)	->
+  uVicAhbif/VectAddr20Q_reg_6 (*)	->
+  uVicAhbif/VectAddr20Q_reg_5 (*)	->
+  uVicAhbif/VectAddr20Q_reg_4 (*)	->
+  uVicAhbif/VectAddr20Q_reg_3 (*)	->
+  uVicAhbif/VectAddr20Q_reg_2 (*)	->
+  uVicAhbif/VectAddr20Q_reg_1 (*)	->
+  uVicAhbif/VectAddr20Q_reg_0 (*)	->
+  uVicAhbif/VectAddr21Q_reg_31 (*)	->
+  uVicAhbif/VectAddr21Q_reg_30 (*)	->
+  uVicAhbif/VectAddr21Q_reg_29 (*)	->
+  uVicAhbif/VectAddr21Q_reg_28 (*)	->
+  uVicAhbif/VectAddr21Q_reg_27 (*)	->
+  uVicAhbif/VectAddr21Q_reg_26 (*)	->
+  uVicAhbif/VectAddr21Q_reg_25 (*)	->
+  uVicAhbif/VectAddr21Q_reg_24 (*)	->
+  uVicAhbif/VectAddr21Q_reg_23 (*)	->
+  uVicAhbif/VectAddr21Q_reg_22 (*)	->
+  uVicAhbif/VectAddr21Q_reg_21 (*)	->
+  uVicAhbif/VectAddr21Q_reg_20 (*)	->
+  uVicAhbif/VectAddr21Q_reg_19 (*)	->
+  uVicAhbif/VectAddr21Q_reg_18 (*)	->
+  uVicAhbif/VectAddr21Q_reg_17 (*)	->
+  uVicAhbif/VectAddr21Q_reg_16 (*)	->
+  uVicAhbif/VectAddr21Q_reg_15 (*)	->
+  uVicAhbif/VectAddr21Q_reg_14 (*)	->
+  uVicAhbif/VectAddr21Q_reg_13 (*)	->
+  uVicAhbif/VectAddr21Q_reg_12 (*)	->
+  uVicAhbif/VectAddr21Q_reg_11 (*)	->
+  uVicAhbif/VectAddr21Q_reg_10 (*)	->
+  uVicAhbif/VectAddr21Q_reg_9 (*)	->
+  uVicAhbif/VectAddr21Q_reg_8 (*)	->
+  uVicAhbif/VectAddr21Q_reg_7 (*)	->
+  uVicAhbif/VectAddr21Q_reg_6 (*)	->
+  uVicAhbif/VectAddr21Q_reg_5 (*)	->
+  uVicAhbif/VectAddr21Q_reg_4 (*)	->
+  uVicAhbif/VectAddr21Q_reg_3 (*)	->
+  uVicAhbif/VectAddr21Q_reg_2 (*)	->
+  uVicAhbif/VectAddr21Q_reg_1 (*)	->
+  uVicAhbif/VectAddr21Q_reg_0 (*)	->
+  uVicAhbif/VectAddr22Q_reg_31	->
+  uVicAhbif/VectAddr22Q_reg_30	->
+  uVicAhbif/VectAddr22Q_reg_29	->
+  uVicAhbif/VectAddr22Q_reg_28	->
+  uVicAhbif/VectAddr22Q_reg_27	->
+  uVicAhbif/VectAddr22Q_reg_26	->
+  uVicAhbif/VectAddr22Q_reg_25	->
+  uVicAhbif/VectAddr22Q_reg_24	->
+  uVicAhbif/VectAddr22Q_reg_23	->
+  uVicAhbif/VectAddr22Q_reg_22	->
+  uVicAhbif/VectAddr22Q_reg_21	->
+  uVicAhbif/VectAddr22Q_reg_20	->
+  uVicAhbif/VectAddr22Q_reg_19	->
+  uVicAhbif/VectAddr22Q_reg_18	->
+  uVicAhbif/VectAddr22Q_reg_17	->
+  uVicAhbif/VectAddr22Q_reg_16	->
+  uVicAhbif/VectAddr22Q_reg_15	->
+  uVicAhbif/VectAddr22Q_reg_14	->
+  uVicAhbif/VectAddr22Q_reg_13	->
+  uVicAhbif/VectAddr22Q_reg_12	->
+  uVicAhbif/VectAddr22Q_reg_11	->
+  uVicAhbif/VectAddr22Q_reg_10	->
+  uVicAhbif/VectAddr22Q_reg_9	->
+  uVicAhbif/VectAddr22Q_reg_8	->
+  uVicAhbif/VectAddr22Q_reg_7	->
+  uVicAhbif/VectAddr22Q_reg_6	->
+  uVicAhbif/VectAddr22Q_reg_5	->
+  uVicAhbif/VectAddr22Q_reg_4	->
+  uVicAhbif/VectAddr22Q_reg_3	->
+  uVicAhbif/VectAddr22Q_reg_2	->
+  uVicAhbif/VectAddr22Q_reg_1	->
+  uVicAhbif/VectAddr22Q_reg_0	->
+  uVicAhbif/VectAddr23Q_reg_31	->
+  uVicAhbif/VectAddr23Q_reg_30	->
+  uVicAhbif/VectAddr23Q_reg_29	->
+  uVicAhbif/VectAddr23Q_reg_28	->
+  uVicAhbif/VectAddr23Q_reg_27	->
+  uVicAhbif/VectAddr23Q_reg_26	->
+  uVicAhbif/VectAddr23Q_reg_25	->
+  uVicAhbif/VectAddr23Q_reg_24	->
+  uVicAhbif/VectAddr23Q_reg_23	->
+  uVicAhbif/VectAddr23Q_reg_22	->
+  uVicAhbif/VectAddr23Q_reg_21	->
+  uVicAhbif/VectAddr23Q_reg_20	->
+  uVicAhbif/VectAddr23Q_reg_19	->
+  uVicAhbif/VectAddr23Q_reg_18	->
+  uVicAhbif/VectAddr23Q_reg_17	->
+  uVicAhbif/VectAddr23Q_reg_16	->
+  uVicAhbif/VectAddr23Q_reg_15	->
+  uVicAhbif/VectAddr23Q_reg_14	->
+  uVicAhbif/VectAddr23Q_reg_13	->
+  uVicAhbif/VectAddr23Q_reg_12	->
+  uVicAhbif/VectAddr23Q_reg_11	->
+  uVicAhbif/VectAddr23Q_reg_10	->
+  uVicAhbif/VectAddr23Q_reg_9	->
+  uVicAhbif/VectAddr23Q_reg_8	->
+  uVicAhbif/VectAddr23Q_reg_7	->
+  uVicAhbif/VectAddr23Q_reg_6	->
+  uVicAhbif/VectAddr23Q_reg_5	->
+  uVicAhbif/VectAddr23Q_reg_4	->
+  uVicAhbif/VectAddr23Q_reg_3	->
+  uVicAhbif/VectAddr23Q_reg_2	->
+  uVicAhbif/VectAddr23Q_reg_1	->
+  uVicAhbif/VectAddr23Q_reg_0	->
+  uVicAhbif/VectAddr24Q_reg_31	->
+  uVicAhbif/VectAddr24Q_reg_30	->
+  uVicAhbif/VectAddr24Q_reg_29	->
+  uVicAhbif/VectAddr24Q_reg_28	->
+  uVicAhbif/VectAddr24Q_reg_27	->
+  uVicAhbif/VectAddr24Q_reg_26	->
+  uVicAhbif/VectAddr24Q_reg_25	->
+  uVicAhbif/VectAddr24Q_reg_24	->
+  uVicAhbif/VectAddr24Q_reg_23	->
+  uVicAhbif/VectAddr24Q_reg_22	->
+  uVicAhbif/VectAddr24Q_reg_21	->
+  uVicAhbif/VectAddr24Q_reg_20	->
+  uVicAhbif/VectAddr24Q_reg_19	->
+  uVicAhbif/VectAddr24Q_reg_18	->
+  uVicAhbif/VectAddr24Q_reg_17	->
+  uVicAhbif/VectAddr24Q_reg_16	->
+  uVicAhbif/VectAddr24Q_reg_15	->
+  uVicAhbif/VectAddr24Q_reg_14	->
+  uVicAhbif/VectAddr24Q_reg_13	->
+  uVicAhbif/VectAddr24Q_reg_12	->
+  uVicAhbif/VectAddr24Q_reg_11	->
+  uVicAhbif/VectAddr24Q_reg_10	->
+  uVicAhbif/VectAddr24Q_reg_9	->
+  uVicAhbif/VectAddr24Q_reg_8	->
+  uVicAhbif/VectAddr24Q_reg_7	->
+  uVicAhbif/VectAddr24Q_reg_6	->
+  uVicAhbif/VectAddr24Q_reg_5	->
+  uVicAhbif/VectAddr24Q_reg_4	->
+  uVicAhbif/VectAddr24Q_reg_3	->
+  uVicAhbif/VectAddr24Q_reg_2	->
+  uVicAhbif/VectAddr24Q_reg_1	->
+  uVicAhbif/VectAddr24Q_reg_0	->
+  uVicAhbif/VectAddr25Q_reg_31	->
+  uVicAhbif/VectAddr25Q_reg_30	->
+  uVicAhbif/VectAddr25Q_reg_29	->
+  uVicAhbif/VectAddr25Q_reg_28	->
+  uVicAhbif/VectAddr25Q_reg_27	->
+  uVicAhbif/VectAddr25Q_reg_26	->
+  uVicAhbif/VectAddr25Q_reg_25	->
+  uVicAhbif/VectAddr25Q_reg_24	->
+  uVicAhbif/VectAddr25Q_reg_23	->
+  uVicAhbif/VectAddr25Q_reg_22	->
+  uVicAhbif/VectAddr25Q_reg_21	->
+  uVicAhbif/VectAddr25Q_reg_20	->
+  uVicAhbif/VectAddr25Q_reg_19	->
+  uVicAhbif/VectAddr25Q_reg_18	->
+  uVicAhbif/VectAddr25Q_reg_17	->
+  uVicAhbif/VectAddr25Q_reg_16	->
+  uVicAhbif/VectAddr25Q_reg_15	->
+  uVicAhbif/VectAddr25Q_reg_14	->
+  uVicAhbif/VectAddr25Q_reg_13	->
+  uVicAhbif/VectAddr25Q_reg_12	->
+  uVicAhbif/VectAddr25Q_reg_11	->
+  uVicAhbif/VectAddr25Q_reg_10	->
+  uVicAhbif/VectAddr25Q_reg_9	->
+  uVicAhbif/VectAddr25Q_reg_8	->
+  uVicAhbif/VectAddr25Q_reg_7	->
+  uVicAhbif/VectAddr25Q_reg_6	->
+  uVicAhbif/VectAddr25Q_reg_5	->
+  uVicAhbif/VectAddr25Q_reg_4	->
+  uVicAhbif/VectAddr25Q_reg_3	->
+  uVicAhbif/VectAddr25Q_reg_2	->
+  uVicAhbif/VectAddr25Q_reg_1	->
+  uVicAhbif/VectAddr25Q_reg_0	->
+  uVicAhbif/VectAddr26Q_reg_31	->
+  uVicAhbif/VectAddr26Q_reg_30	->
+  uVicAhbif/VectAddr26Q_reg_29	->
+  uVicAhbif/VectAddr26Q_reg_28	->
+  uVicAhbif/VectAddr26Q_reg_27	->
+  uVicAhbif/VectAddr26Q_reg_26	->
+  uVicAhbif/VectAddr26Q_reg_25	->
+  uVicAhbif/VectAddr26Q_reg_24	->
+  uVicAhbif/VectAddr26Q_reg_23	->
+  uVicAhbif/VectAddr26Q_reg_22	->
+  uVicAhbif/VectAddr26Q_reg_21	->
+  uVicAhbif/VectAddr26Q_reg_20	->
+  uVicAhbif/VectAddr26Q_reg_19	->
+  uVicAhbif/VectAddr26Q_reg_18	->
+  uVicAhbif/VectAddr26Q_reg_17	->
+  uVicAhbif/VectAddr26Q_reg_16	->
+  uVicAhbif/VectAddr26Q_reg_15	->
+  uVicAhbif/VectAddr26Q_reg_14	->
+  uVicAhbif/VectAddr26Q_reg_13	->
+  uVicAhbif/VectAddr26Q_reg_12	->
+  uVicAhbif/VectAddr26Q_reg_11	->
+  uVicAhbif/VectAddr26Q_reg_10	->
+  uVicAhbif/VectAddr26Q_reg_9	->
+  uVicAhbif/VectAddr26Q_reg_8	->
+  uVicAhbif/VectAddr26Q_reg_7	->
+  uVicAhbif/VectAddr26Q_reg_6	->
+  uVicAhbif/VectAddr26Q_reg_5 (*)	->
+  uVicAhbif/VectAddr26Q_reg_4	->
+  uVicAhbif/VectAddr26Q_reg_3 (*)	->
+  uVicAhbif/VectAddr26Q_reg_2	->
+  uVicAhbif/VectAddr26Q_reg_1	->
+  uVicAhbif/VectAddr26Q_reg_0	->
+  uVicAhbif/VectAddr27Q_reg_31	->
+  uVicAhbif/VectAddr27Q_reg_30	->
+  uVicAhbif/VectAddr27Q_reg_29	->
+  uVicAhbif/VectAddr27Q_reg_28	->
+  uVicAhbif/VectAddr27Q_reg_27	->
+  uVicAhbif/VectAddr27Q_reg_26	->
+  uVicAhbif/VectAddr27Q_reg_25	->
+  uVicAhbif/VectAddr27Q_reg_24	->
+  uVicAhbif/VectAddr27Q_reg_23	->
+  uVicAhbif/VectAddr27Q_reg_22	->
+  uVicAhbif/VectAddr27Q_reg_21	->
+  uVicAhbif/VectAddr27Q_reg_20	->
+  uVicAhbif/VectAddr27Q_reg_19	->
+  uVicAhbif/VectAddr27Q_reg_18	->
+  uVicAhbif/VectAddr27Q_reg_17	->
+  uVicAhbif/VectAddr27Q_reg_16	->
+  uVicAhbif/VectAddr27Q_reg_15	->
+  uVicAhbif/VectAddr27Q_reg_14	->
+  uVicAhbif/VectAddr27Q_reg_13	->
+  uVicAhbif/VectAddr27Q_reg_12	->
+  uVicAhbif/VectAddr27Q_reg_11	->
+  uVicAhbif/VectAddr27Q_reg_10	->
+  uVicAhbif/VectAddr27Q_reg_9	->
+  uVicAhbif/VectAddr27Q_reg_8	->
+  uVicAhbif/VectAddr27Q_reg_7	->
+  uVicAhbif/VectAddr27Q_reg_6	->
+  uVicAhbif/VectAddr27Q_reg_5	->
+  uVicAhbif/VectAddr27Q_reg_4	->
+  uVicAhbif/VectAddr27Q_reg_3	->
+  uVicAhbif/VectAddr27Q_reg_2	->
+  uVicAhbif/VectAddr27Q_reg_1	->
+  uVicAhbif/VectAddr27Q_reg_0	->
+  uVicAhbif/VectAddr28Q_reg_31	->
+  uVicAhbif/VectAddr28Q_reg_30	->
+  uVicAhbif/VectAddr28Q_reg_29	->
+  uVicAhbif/VectAddr28Q_reg_28	->
+  uVicAhbif/VectAddr28Q_reg_27	->
+  uVicAhbif/VectAddr28Q_reg_26	->
+  uVicAhbif/VectAddr28Q_reg_25	->
+  uVicAhbif/VectAddr28Q_reg_24	->
+  uVicAhbif/VectAddr28Q_reg_23	->
+  uVicAhbif/VectAddr28Q_reg_22	->
+  uVicAhbif/VectAddr28Q_reg_21	->
+  uVicAhbif/VectAddr28Q_reg_20	->
+  uVicAhbif/VectAddr28Q_reg_19	->
+  uVicAhbif/VectAddr28Q_reg_18	->
+  uVicAhbif/VectAddr28Q_reg_17	->
+  uVicAhbif/VectAddr28Q_reg_16	->
+  uVicAhbif/VectAddr28Q_reg_15	->
+  uVicAhbif/VectAddr28Q_reg_14	->
+  uVicAhbif/VectAddr28Q_reg_13	->
+  uVicAhbif/VectAddr28Q_reg_12	->
+  uVicAhbif/VectAddr28Q_reg_11	->
+  uVicAhbif/VectAddr28Q_reg_10	->
+  uVicAhbif/VectAddr28Q_reg_9	->
+  uVicAhbif/VectAddr28Q_reg_8	->
+  uVicAhbif/VectAddr28Q_reg_7	->
+  uVicAhbif/VectAddr28Q_reg_6	->
+  uVicAhbif/VectAddr28Q_reg_5	->
+  uVicAhbif/VectAddr28Q_reg_4	->
+  uVicAhbif/VectAddr28Q_reg_3 (*)	->
+  uVicAhbif/VectAddr28Q_reg_2	->
+  uVicAhbif/VectAddr28Q_reg_1	->
+  uVicAhbif/VectAddr28Q_reg_0	->
+  uVicAhbif/VectAddr29Q_reg_31	->
+  uVicAhbif/VectAddr29Q_reg_30	->
+  uVicAhbif/VectAddr29Q_reg_29	->
+  uVicAhbif/VectAddr29Q_reg_28	->
+  uVicAhbif/VectAddr29Q_reg_27	->
+  uVicAhbif/VectAddr29Q_reg_26	->
+  uVicAhbif/VectAddr29Q_reg_25	->
+  uVicAhbif/VectAddr29Q_reg_24	->
+  uVicAhbif/VectAddr29Q_reg_23	->
+  uVicAhbif/VectAddr29Q_reg_22	->
+  uVicAhbif/VectAddr29Q_reg_21	->
+  uVicAhbif/VectAddr29Q_reg_20	->
+  uVicAhbif/VectAddr29Q_reg_19	->
+  uVicAhbif/VectAddr29Q_reg_18	->
+  uVicAhbif/VectAddr29Q_reg_17	->
+  uVicAhbif/VectAddr29Q_reg_16	->
+  uVicAhbif/VectAddr29Q_reg_15	->
+  uVicAhbif/VectAddr29Q_reg_14	->
+  uVicAhbif/VectAddr29Q_reg_13	->
+  uVicAhbif/VectAddr29Q_reg_12	->
+  uVicAhbif/VectAddr29Q_reg_11	->
+  uVicAhbif/VectAddr29Q_reg_10	->
+  uVicAhbif/VectAddr29Q_reg_9	->
+  uVicAhbif/VectAddr29Q_reg_8	->
+  uVicAhbif/VectAddr29Q_reg_7	->
+  uVicAhbif/VectAddr29Q_reg_6	->
+  uVicAhbif/VectAddr29Q_reg_5	->
+  uVicAhbif/VectAddr29Q_reg_4	->
+  uVicAhbif/VectAddr29Q_reg_3	->
+  uVicAhbif/VectAddr29Q_reg_2	->
+  uVicAhbif/VectAddr29Q_reg_1	->
+  uVicAhbif/VectAddr29Q_reg_0	->
+  uVicAhbif/VectAddr30Q_reg_31	->
+  uVicAhbif/VectAddr30Q_reg_30	->
+  uVicAhbif/VectAddr30Q_reg_29	->
+  uVicAhbif/VectAddr30Q_reg_28	->
+  uVicAhbif/VectAddr30Q_reg_27	->
+  uVicAhbif/VectAddr30Q_reg_26	->
+  uVicAhbif/VectAddr30Q_reg_25	->
+  uVicAhbif/VectAddr30Q_reg_24	->
+  uVicAhbif/VectAddr30Q_reg_23	->
+  uVicAhbif/VectAddr30Q_reg_22	->
+  uVicAhbif/VectAddr30Q_reg_21	->
+  uVicAhbif/VectAddr30Q_reg_20	->
+  uVicAhbif/VectAddr30Q_reg_19	->
+  uVicAhbif/VectAddr30Q_reg_18	->
+  uVicAhbif/VectAddr30Q_reg_17	->
+  uVicAhbif/VectAddr30Q_reg_16	->
+  uVicAhbif/VectAddr30Q_reg_15	->
+  uVicAhbif/VectAddr30Q_reg_14	->
+  uVicAhbif/VectAddr30Q_reg_13	->
+  uVicAhbif/VectAddr30Q_reg_12	->
+  uVicAhbif/VectAddr30Q_reg_11	->
+  uVicAhbif/VectAddr30Q_reg_10	->
+  uVicAhbif/VectAddr30Q_reg_9	->
+  uVicAhbif/VectAddr30Q_reg_8	->
+  uVicAhbif/VectAddr30Q_reg_7	->
+  uVicAhbif/VectAddr30Q_reg_6	->
+  uVicAhbif/VectAddr30Q_reg_5	->
+  uVicAhbif/VectAddr30Q_reg_4	->
+  uVicAhbif/VectAddr30Q_reg_3 (*)	->
+  uVicAhbif/VectAddr30Q_reg_2	->
+  uVicAhbif/VectAddr30Q_reg_1	->
+  uVicAhbif/VectAddr30Q_reg_0	->
+  uVicAhbif/VectAddr31Q_reg_31	->
+  uVicAhbif/VectAddr31Q_reg_30	->
+  uVicAhbif/VectAddr31Q_reg_29	->
+  uVicAhbif/VectAddr31Q_reg_28	->
+  uVicAhbif/VectAddr31Q_reg_27	->
+  uVicAhbif/VectAddr31Q_reg_26	->
+  uVicAhbif/VectAddr31Q_reg_25	->
+  uVicAhbif/VectAddr31Q_reg_24	->
+  uVicAhbif/VectAddr31Q_reg_23	->
+  uVicAhbif/VectAddr31Q_reg_22	->
+  uVicAhbif/VectAddr31Q_reg_21	->
+  uVicAhbif/VectAddr31Q_reg_20	->
+  uVicAhbif/VectAddr31Q_reg_19	->
+  uVicAhbif/VectAddr31Q_reg_18	->
+  uVicAhbif/VectAddr31Q_reg_17	->
+  uVicAhbif/VectAddr31Q_reg_16	->
+  uVicAhbif/VectAddr31Q_reg_15	->
+  uVicAhbif/VectAddr31Q_reg_14	->
+  uVicAhbif/VectAddr31Q_reg_13	->
+  uVicAhbif/VectAddr31Q_reg_12	->
+  uVicAhbif/VectAddr31Q_reg_11	->
+  uVicAhbif/VectAddr31Q_reg_10	->
+  uVicAhbif/VectAddr31Q_reg_9	->
+  uVicAhbif/VectAddr31Q_reg_8	->
+  uVicAhbif/VectAddr31Q_reg_7	->
+  uVicAhbif/VectAddr31Q_reg_6	->
+  uVicAhbif/VectAddr31Q_reg_5	->
+  uVicAhbif/VectAddr31Q_reg_4	->
+  uVicAhbif/VectAddr31Q_reg_3	->
+  uVicAhbif/VectAddr31Q_reg_2	->
+  uVicAhbif/VectAddr31Q_reg_1	->
+  uVicAhbif/VectAddr31Q_reg_0	->
+  uVicAhbif/VectPrio0Q_reg_3	->
+  uVicAhbif/VectPrio0Q_reg_2	->
+  uVicAhbif/VectPrio0Q_reg_1	->
+  uVicAhbif/VectPrio0Q_reg_0	->
+  uVicAhbif/VectPrio1Q_reg_3	->
+  uVicAhbif/VectPrio1Q_reg_2	->
+  uVicAhbif/VectPrio1Q_reg_1	->
+  uVicAhbif/VectPrio1Q_reg_0	->
+  uVicAhbif/VectPrio2Q_reg_3 (*)	->
+  uVicAhbif/VectPrio2Q_reg_2	->
+  uVicAhbif/VectPrio2Q_reg_1 (*)	->
+  uVicAhbif/VectPrio2Q_reg_0	->
+  uVicAhbif/VectPrio3Q_reg_3	->
+  uVicAhbif/VectPrio3Q_reg_2	->
+  uVicAhbif/VectPrio3Q_reg_1 (*)	->
+  uVicAhbif/VectPrio3Q_reg_0	->
+  uVicAhbif/VectPrio4Q_reg_3 (*)	->
+  uVicAhbif/VectPrio4Q_reg_2 (*)	->
+  uVicAhbif/VectPrio4Q_reg_1 (*)	->
+  uVicAhbif/VectPrio4Q_reg_0	->
+  uVicAhbif/VectPrio5Q_reg_3 (*)	->
+  uVicAhbif/VectPrio5Q_reg_2	->
+  uVicAhbif/VectPrio5Q_reg_1	->
+  uVicAhbif/VectPrio5Q_reg_0	->
+  uVicAhbif/VectPrio6Q_reg_3	->
+  uVicAhbif/VectPrio6Q_reg_2 (*)	->
+  uVicAhbif/VectPrio6Q_reg_0	->
+  uVicAhbif/VectPrio7Q_reg_0	->
+  uVicAhbif/VectPrio8Q_reg_3	->
+  uVicAhbif/VectPrio8Q_reg_2	->
+  uVicAhbif/VectPrio8Q_reg_1	->
+  uVicAhbif/VectPrio9Q_reg_3	->
+  uVicAhbif/VectPrio9Q_reg_1	->
+  uVicAhbif/VectPrio9Q_reg_0	->
+  uVicAhbif/VectPrio10Q_reg_3	->
+  uVicAhbif/VectPrio10Q_reg_1	->
+  uVicAhbif/VectPrio10Q_reg_0	->
+  uVicAhbif/VectPrio11Q_reg_1	->
+  uVicAhbif/VectPrio11Q_reg_0	->
+  uVicAhbif/VectPrio12Q_reg_3	->
+  uVicAhbif/VectPrio12Q_reg_2 (*)	->
+  uVicAhbif/VectPrio12Q_reg_1	->
+  uVicAhbif/VectPrio12Q_reg_0	->
+  uVicAhbif/VectPrio13Q_reg_2	->
+  uVicAhbif/VectPrio15Q_reg_3	->
+  uVicAhbif/VectPrio15Q_reg_1 (*)	->
+  uVicAhbif/VectPrio16Q_reg_3 (*)	->
+  uVicAhbif/VectPrio16Q_reg_2 (*)	->
+  uVicAhbif/VectPrio16Q_reg_1 (*)	->
+  uVicAhbif/VectPrio16Q_reg_0 (*)	->
+  uVicAhbif/VectPrio17Q_reg_2	->
+  uVicAhbif/VectPrio18Q_reg_2	->
+  uVicAhbif/VectPrio18Q_reg_1	->
+  uVicAhbif/VectPrio19Q_reg_3 (*)	->
+  uVicAhbif/VectPrio20Q_reg_2 (*)	->
+  uVicAhbif/VectPrio20Q_reg_1 (*)	->
+  uVicAhbif/VectPrio20Q_reg_0	->
+  uVicAhbif/VectPrio21Q_reg_1	->
+  uVicAhbif/VectPrio22Q_reg_3	->
+  uVicAhbif/VectPrio22Q_reg_2 (*)	->
+  uVicAhbif/VectPrio22Q_reg_1	->
+  uVicAhbif/VectPrio22Q_reg_0	->
+  uVicAhbif/VectPrio23Q_reg_3 (*)	->
+  uVicAhbif/VectPrio23Q_reg_2 (*)	->
+  uVicAhbif/VectPrio23Q_reg_1 (*)	->
+  uVicAhbif/VectPrio23Q_reg_0 (*)	->
+  uVicAhbif/VectPrio24Q_reg_3	->
+  uVicAhbif/VectPrio24Q_reg_2	->
+  uVicAhbif/VectPrio24Q_reg_1	->
+  uVicAhbif/VectPrio24Q_reg_0	->
+  uVicAhbif/VectPrio25Q_reg_3	->
+  uVicAhbif/VectPrio25Q_reg_2	->
+  uVicAhbif/VectPrio25Q_reg_1	->
+  uVicAhbif/VectPrio25Q_reg_0	->
+  uVicAhbif/VectPrio26Q_reg_2	->
+  uVicAhbif/VectPrio26Q_reg_1	->
+  uVicAhbif/VectPrio27Q_reg_3 (*)	->
+  uVicAhbif/VectPrio27Q_reg_2 (*)	->
+  uVicAhbif/VectPrio27Q_reg_1 (*)	->
+  uVicAhbif/VectPrio27Q_reg_0 (*)	->
+  uVicAhbif/VectPrio28Q_reg_3 (*)	->
+  uVicAhbif/VectPrio28Q_reg_2 (*)	->
+  uVicAhbif/VectPrio28Q_reg_1 (*)	->
+  uVicAhbif/VectPrio28Q_reg_0 (*)	->
+  uVicAhbif/VectPrio29Q_reg_3	->
+  uVicAhbif/VectPrio29Q_reg_2	->
+  uVicAhbif/VectPrio29Q_reg_1	->
+  uVicAhbif/VectPrio29Q_reg_0	->
+  uVicAhbif/VectPrio30Q_reg_3 (*)	->
+  uVicAhbif/VectPrio30Q_reg_2 (*)	->
+  uVicAhbif/VectPrio30Q_reg_1 (*)	->
+  uVicAhbif/VectPrio30Q_reg_0 (*)	->
+  uVicAhbif/VectPrio31Q_reg_3	->
+  uVicAhbif/VectPrio31Q_reg_2 (*)	->
+  uVicAhbif/VectPrio31Q_reg_1 (*)	->
+  uVicAhbif/VectPrio31Q_reg_0 (*)	->
+  uVicAhbif/VectPrio32Q_reg_3 (*)	->
+  uVicAhbif/VectPrio32Q_reg_2 (*)	->
+  uVicAhbif/VICADDRESSQ_reg_31	->
+  uVicAhbif/VICADDRESSQ_reg_30	->
+  uVicAhbif/VICADDRESSQ_reg_29	->
+  uVicAhbif/VICADDRESSQ_reg_28	->
+  uVicAhbif/VICADDRESSQ_reg_27	->
+  uVicAhbif/VICADDRESSQ_reg_26	->
+  uVicAhbif/VICADDRESSQ_reg_25	->
+  uVicAhbif/VICADDRESSQ_reg_24	->
+  uVicAhbif/VICADDRESSQ_reg_23	->
+  uVicAhbif/VICADDRESSQ_reg_22	->
+  uVicAhbif/VICADDRESSQ_reg_21	->
+  uVicAhbif/VICADDRESSQ_reg_20	->
+  uVicAhbif/VICADDRESSQ_reg_19	->
+  uVicAhbif/VICADDRESSQ_reg_18	->
+  uVicAhbif/VICADDRESSQ_reg_17	->
+  uVicAhbif/VICADDRESSQ_reg_16	->
+  uVicAhbif/VICADDRESSQ_reg_15	->
+  uVicAhbif/VICADDRESSQ_reg_14	->
+  uVicAhbif/VICADDRESSQ_reg_13	->
+  uVicAhbif/VICADDRESSQ_reg_12	->
+  uVicAhbif/VICADDRESSQ_reg_11	->
+  uVicAhbif/VICADDRESSQ_reg_10	->
+  uVicAhbif/VICADDRESSQ_reg_9	->
+  uVicAhbif/VICADDRESSQ_reg_8	->
+  uVicAhbif/VICADDRESSQ_reg_7	->
+  uVicAhbif/VICADDRESSQ_reg_6	->
+  uVicAhbif/VICADDRESSQ_reg_5	->
+  uVicAhbif/VICADDRESSQ_reg_4	->
+  uVicAhbif/VICADDRESSQ_reg_3	->
+  uVicAhbif/VICADDRESSQ_reg_2	->
+  uVicAhbif/VICADDRESSQ_reg_1	->
+  uVicAhbif/VICADDRESSQ_reg_0	->
+  uVicAhbif/VICSoftIntQ_reg_31 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_30 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_29 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_28 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_27 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_26 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_25 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_24 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_23 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_22 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_21 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_20 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_19 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_18 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_17 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_16 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_15 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_14 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_13 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_12 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_11 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_10 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_9 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_8 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_7 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_6 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_5 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_4 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_3 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_2 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_1 (*)	->
+  uVicAhbif/VICSoftIntQ_reg_0 (*)	->
+  uVicAhbif/VICIntEnQ_reg_31 (*)	->
+  uVicAhbif/VICIntEnQ_reg_30 (*)	->
+  uVicAhbif/VICIntEnQ_reg_29 (*)	->
+  uVicAhbif/VICIntEnQ_reg_28 (*)	->
+  uVicAhbif/VICIntEnQ_reg_27 (*)	->
+  uVicAhbif/VICIntEnQ_reg_26 (*)	->
+  uVicAhbif/VICIntEnQ_reg_25 (*)	->
+  uVicAhbif/VICIntEnQ_reg_24 (*)	->
+  uVicAhbif/VICIntEnQ_reg_23 (*)	->
+  uVicAhbif/VICIntEnQ_reg_22 (*)	->
+  uVicAhbif/VICIntEnQ_reg_21 (*)	->
+  uVicAhbif/VICIntEnQ_reg_20 (*)	->
+  uVicAhbif/VICIntEnQ_reg_19 (*)	->
+  uVicAhbif/VICIntEnQ_reg_18 (*)	->
+  uVicAhbif/VICIntEnQ_reg_17 (*)	->
+  uVicAhbif/VICIntEnQ_reg_16 (*)	->
+  uVicAhbif/VICIntEnQ_reg_15 (*)	->
+  uVicAhbif/VICIntEnQ_reg_14 (*)	->
+  uVicAhbif/VICIntEnQ_reg_13 (*)	->
+  uVicAhbif/VICIntEnQ_reg_12 (*)	->
+  uVicAhbif/VICIntEnQ_reg_11 (*)	->
+  uVicAhbif/VICIntEnQ_reg_10 (*)	->
+  uVicAhbif/VICIntEnQ_reg_9 (*)	->
+  uVicAhbif/VICIntEnQ_reg_8 (*)	->
+  uVicAhbif/VICIntEnQ_reg_7 (*)	->
+  uVicAhbif/VICIntEnQ_reg_6 (*)	->
+  uVicAhbif/VICIntEnQ_reg_5 (*)	->
+  uVicAhbif/VICIntEnQ_reg_4 (*)	->
+  uVicAhbif/VICIntEnQ_reg_3 (*)	->
+  uVicAhbif/VICIntEnQ_reg_2 (*)	->
+  uVicAhbif/VICIntEnQ_reg_1 (*)	->
+  uVicAhbif/VICIntEnQ_reg_0 (*)	->
+  uVicAhbif/VICIntSelQ_reg_31 (*)	->
+  uVicAhbif/VICIntSelQ_reg_30 (*)	->
+  uVicAhbif/VICIntSelQ_reg_29 (*)	->
+  uVicAhbif/VICIntSelQ_reg_28 (*)	->
+  uVicAhbif/VICIntSelQ_reg_27 (*)	->
+  uVicAhbif/VICIntSelQ_reg_26 (*)	->
+  uVicAhbif/VICIntSelQ_reg_25 (*)	->
+  uVicAhbif/VICIntSelQ_reg_24 (*)	->
+  uVicAhbif/VICIntSelQ_reg_23 (*)	->
+  uVicAhbif/VICIntSelQ_reg_22 (*)	->
+  uVicAhbif/VICIntSelQ_reg_21 (*)	->
+  uVicAhbif/VICIntSelQ_reg_20 (*)	->
+  uVicAhbif/VICIntSelQ_reg_19 (*)	->
+  uVicAhbif/VICIntSelQ_reg_18 (*)	->
+  uVicAhbif/VICIntSelQ_reg_17 (*)	->
+  uVicAhbif/VICIntSelQ_reg_16 (*)	->
+  uVicAhbif/VICIntSelQ_reg_15 (*)	->
+  uVicAhbif/VICIntSelQ_reg_14 (*)	->
+  uVicAhbif/VICIntSelQ_reg_13 (*)	->
+  uVicAhbif/VICIntSelQ_reg_12 (*)	->
+  uVicAhbif/VICIntSelQ_reg_11 (*)	->
+  uVicAhbif/VICIntSelQ_reg_10 (*)	->
+  uVicAhbif/VICIntSelQ_reg_9 (*)	->
+  uVicAhbif/VICIntSelQ_reg_8 (*)	->
+  uVicAhbif/VICIntSelQ_reg_7 (*)	->
+  uVicAhbif/VICIntSelQ_reg_6 (*)	->
+  uVicAhbif/VICIntSelQ_reg_5 (*)	->
+  uVicAhbif/VICIntSelQ_reg_4 (*)	->
+  uVicAhbif/VICIntSelQ_reg_3 (*)	->
+  uVicAhbif/VICIntSelQ_reg_2 (*)	->
+  uVicAhbif/VICIntSelQ_reg_1 (*)	->
+  uVicAhbif/VICIntSelQ_reg_0 (*)	->
+  uVicAhbif/SWPrioMaskQ_reg_15	->
+  uVicAhbif/SWPrioMaskQ_reg_14	->
+  uVicAhbif/SWPrioMaskQ_reg_13	->
+  uVicAhbif/SWPrioMaskQ_reg_12	->
+  uVicAhbif/SWPrioMaskQ_reg_11	->
+  uVicAhbif/SWPrioMaskQ_reg_10 (*)	->
+  uVicAhbif/SWPrioMaskQ_reg_9 (*)	->
+  uVicAhbif/SWPrioMaskQ_reg_8 (*)	->
+  uVicAhbif/SWPrioMaskQ_reg_7 (*)	->
+  uVicAhbif/SWPrioMaskQ_reg_6	->
+  uVicAhbif/SWPrioMaskQ_reg_5 (*)	->
+  uVicAhbif/SWPrioMaskQ_reg_4 (*)	->
+  uVicAhbif/SWPrioMaskQ_reg_3	->
+  uVicAhbif/SWPrioMaskQ_reg_2	->
+  uVicAhbif/SWPrioMaskQ_reg_1	->
+  uVicAhbif/SWPrioMaskQ_reg_0	->
+  uVicAhbif/VICITCRQ_reg_1 (*)	->
+  uVicAhbif/VICITIP1Q_reg_8 (*)	->
+  uVicAhbif/VICITIP1Q_reg_7 (*)	->
+  uVicAhbif/VICITIP1Q_reg_6 (*)	->
+  uVicAhbif/VICITIP2Q_reg_31	->
+  uVicAhbif/VICITIP2Q_reg_30 (*)	->
+  uVicAhbif/VICITIP2Q_reg_29 (*)	->
+  uVicAhbif/VICITIP2Q_reg_28 (*)	->
+  uVicAhbif/VICITIP2Q_reg_27 (*)	->
+  uVicAhbif/VICITIP2Q_reg_26 (*)	->
+  uVicAhbif/VICITIP2Q_reg_25 (*)	->
+  uVicAhbif/VICITIP2Q_reg_24	->
+  uVicAhbif/VICITIP2Q_reg_23 (*)	->
+  uVicAhbif/VICITIP2Q_reg_22 (*)	->
+  uVicAhbif/VICITIP2Q_reg_21 (*)	->
+  uVicAhbif/VICITIP2Q_reg_20 (*)	->
+  uVicAhbif/VICITIP2Q_reg_19 (*)	->
+  uVicAhbif/VICITIP2Q_reg_18 (*)	->
+  uVicAhbif/VICITIP2Q_reg_17 (*)	->
+  uVicAhbif/VICITIP2Q_reg_16 (*)	->
+  uVicAhbif/VICITIP2Q_reg_15 (*)	->
+  uVicAhbif/VICITIP2Q_reg_14 (*)	->
+  uVicAhbif/VICITIP2Q_reg_13 (*)	->
+  uVicAhbif/VICITIP2Q_reg_12 (*)	->
+  uVicAhbif/VICITIP2Q_reg_11 (*)	->
+  uVicAhbif/VICITIP2Q_reg_10	->
+  uVicAhbif/VICITIP2Q_reg_9 (*)	->
+  uVicAhbif/VICITIP2Q_reg_8	->
+  uVicAhbif/VICITIP2Q_reg_7 (*)	->
+  uVicAhbif/VICITIP2Q_reg_6 (*)	->
+  uVicAhbif/VICITIP2Q_reg_5	->
+  uVicAhbif/VICITIP2Q_reg_4	->
+  uVicAhbif/VICITIP2Q_reg_3 (*)	->
+  uVicAhbif/VICITIP2Q_reg_2 (*)	->
+  uVicAhbif/VICITIP2Q_reg_1	->
+  uVicAhbif/VICITIP2Q_reg_0 (*)	->
+  uVicAhbif/VICITOP1Q_reg_9 (*)	->
+  uVicAhbif/VICITOP1Q_reg_8 (*)	->
+  uVicAhbif/VICITOP1Q_reg_7 (*)	->
+  uVicAhbif/VICITOP1Q_reg_6 (*)	->
+  uVicAhbif/VICITOP2Q_reg_31 (*)	->
+  uVicAhbif/VICITOP2Q_reg_30 (*)	->
+  uVicAhbif/VICITOP2Q_reg_29 (*)	->
+  uVicAhbif/VICITOP2Q_reg_28 (*)	->
+  uVicAhbif/VICITOP2Q_reg_27 (*)	->
+  uVicAhbif/VICITOP2Q_reg_26 (*)	->
+  uVicAhbif/VICITOP2Q_reg_25 (*)	->
+  uVicAhbif/VICITOP2Q_reg_24 (*)	->
+  uVicAhbif/VICITOP2Q_reg_23 (*)	->
+  uVicAhbif/VICITOP2Q_reg_22 (*)	->
+  uVicAhbif/VICITOP2Q_reg_21 (*)	->
+  uVicAhbif/VICITOP2Q_reg_20 (*)	->
+  uVicAhbif/VICITOP2Q_reg_19 (*)	->
+  uVicAhbif/VICITOP2Q_reg_18 (*)	->
+  uVicAhbif/VICITOP2Q_reg_17 (*)	->
+  uVicAhbif/VICITOP2Q_reg_16 (*)	->
+  uVicAhbif/VICITOP2Q_reg_15 (*)	->
+  uVicAhbif/VICITOP2Q_reg_14 (*)	->
+  uVicAhbif/VICITOP2Q_reg_13 (*)	->
+  uVicAhbif/VICITOP2Q_reg_12 (*)	->
+  uVicAhbif/VICITOP2Q_reg_11 (*)	->
+  uVicAhbif/VICITOP2Q_reg_10	->
+  uVicAhbif/VICITOP2Q_reg_9 (*)	->
+  uVicAhbif/VICITOP2Q_reg_8 (*)	->
+  uVicAhbif/VICITOP2Q_reg_7 (*)	->
+  uVicAhbif/VICITOP2Q_reg_6 (*)	->
+  uVicAhbif/VICITOP2Q_reg_5 (*)	->
+  uVicAhbif/VICITOP2Q_reg_4 (*)	->
+  uVicAhbif/VICITOP2Q_reg_3 (*)	->
+  uVicAhbif/VICITOP2Q_reg_2	->
+  uVicAhbif/VICITOP2Q_reg_1	->
+  uVicAhbif/VICITOP2Q_reg_0 (*)	->
+  uVicAhbif/VICFIQStatusQ1_reg_31	->
+  uVicAhbif/VICFIQStatusQ1_reg_30	->
+  uVicAhbif/VICFIQStatusQ1_reg_29	->
+  uVicAhbif/VICFIQStatusQ1_reg_28	->
+  uVicAhbif/VICFIQStatusQ1_reg_27	->
+  uVicAhbif/VICFIQStatusQ1_reg_26	->
+  uVicAhbif/VICFIQStatusQ1_reg_25	->
+  uVicAhbif/VICFIQStatusQ1_reg_24	->
+  uVicAhbif/VICFIQStatusQ1_reg_23	->
+  uVicAhbif/VICFIQStatusQ1_reg_22	->
+  uVicAhbif/VICFIQStatusQ1_reg_21	->
+  uVicAhbif/VICFIQStatusQ1_reg_20	->
+  uVicAhbif/VICFIQStatusQ1_reg_19	->
+  uVicAhbif/VICFIQStatusQ1_reg_18	->
+  uVicAhbif/VICFIQStatusQ1_reg_17	->
+  uVicAhbif/VICFIQStatusQ1_reg_16	->
+  uVicAhbif/VICFIQStatusQ1_reg_15	->
+  uVicAhbif/VICFIQStatusQ1_reg_14	->
+  uVicAhbif/VICFIQStatusQ1_reg_13	->
+  uVicAhbif/VICFIQStatusQ1_reg_12	->
+  uVicAhbif/VICFIQStatusQ1_reg_11	->
+  uVicAhbif/VICFIQStatusQ1_reg_10	->
+  uVicAhbif/VICFIQStatusQ1_reg_9	->
+  uVicAhbif/VICFIQStatusQ1_reg_8	->
+  uVicAhbif/VICFIQStatusQ1_reg_7	->
+  uVicAhbif/VICFIQStatusQ1_reg_6	->
+  uVicAhbif/VICFIQStatusQ1_reg_5	->
+  uVicAhbif/VICFIQStatusQ1_reg_4	->
+  uVicAhbif/VICFIQStatusQ1_reg_3	->
+  uVicAhbif/VICFIQStatusQ1_reg_2	->
+  uVicAhbif/VICFIQStatusQ1_reg_1	->
+  uVicAhbif/VICFIQStatusQ1_reg_0	->
+  uVicAhbif/VICFIQStatusQ2_reg_31	->
+  uVicAhbif/VICFIQStatusQ2_reg_30	->
+  uVicAhbif/VICFIQStatusQ2_reg_29	->
+  uVicAhbif/VICFIQStatusQ2_reg_28	->
+  uVicAhbif/VICFIQStatusQ2_reg_27	->
+  uVicAhbif/VICFIQStatusQ2_reg_26	->
+  uVicAhbif/VICFIQStatusQ2_reg_25	->
+  uVicAhbif/VICFIQStatusQ2_reg_24	->
+  uVicAhbif/VICFIQStatusQ2_reg_23	->
+  uVicAhbif/VICFIQStatusQ2_reg_22	->
+  uVicAhbif/VICFIQStatusQ2_reg_21	->
+  uVicAhbif/VICFIQStatusQ2_reg_20	->
+  uVicAhbif/VICFIQStatusQ2_reg_19	->
+  uVicAhbif/VICFIQStatusQ2_reg_18	->
+  uVicAhbif/VICFIQStatusQ2_reg_17	->
+  uVicAhbif/VICFIQStatusQ2_reg_16	->
+  uVicAhbif/VICFIQStatusQ2_reg_15	->
+  uVicAhbif/VICFIQStatusQ2_reg_14	->
+  uVicAhbif/VICFIQStatusQ2_reg_13	->
+  uVicAhbif/VICFIQStatusQ2_reg_12	->
+  uVicAhbif/VICFIQStatusQ2_reg_11	->
+  uVicAhbif/VICFIQStatusQ2_reg_10	->
+  uVicAhbif/VICFIQStatusQ2_reg_9	->
+  uVicAhbif/VICFIQStatusQ2_reg_8	->
+  uVicAhbif/VICFIQStatusQ2_reg_7	->
+  uVicAhbif/VICFIQStatusQ2_reg_6	->
+  uVicAhbif/VICFIQStatusQ2_reg_5	->
+  uVicAhbif/VICFIQStatusQ2_reg_4	->
+  uVicAhbif/VICFIQStatusQ2_reg_3	->
+  uVicAhbif/VICFIQStatusQ2_reg_2	->
+  uVicAhbif/VICFIQStatusQ2_reg_1	->
+  uVicAhbif/VICFIQStatusQ2_reg_0	->
+  uVicAhbif/VICIRQStatusQ1_reg_31	->
+  uVicAhbif/VICIRQStatusQ1_reg_30	->
+  uVicAhbif/VICIRQStatusQ1_reg_29	->
+  uVicAhbif/VICIRQStatusQ1_reg_28	->
+  uVicAhbif/VICIRQStatusQ1_reg_27	->
+  uVicAhbif/VICIRQStatusQ1_reg_26	->
+  uVicAhbif/VICIRQStatusQ1_reg_25	->
+  uVicAhbif/VICIRQStatusQ1_reg_24	->
+  uVicAhbif/VICIRQStatusQ1_reg_23	->
+  uVicAhbif/VICIRQStatusQ1_reg_22	->
+  uVicAhbif/VICIRQStatusQ1_reg_21	->
+  uVicAhbif/VICIRQStatusQ1_reg_20	->
+  uVicAhbif/VICIRQStatusQ1_reg_19	->
+  uVicAhbif/VICIRQStatusQ1_reg_18	->
+  uVicAhbif/VICIRQStatusQ1_reg_17	->
+  uVicAhbif/VICIRQStatusQ1_reg_16	->
+  uVicAhbif/VICIRQStatusQ1_reg_15	->
+  uVicAhbif/VICIRQStatusQ1_reg_14	->
+  uVicAhbif/VICIRQStatusQ1_reg_13	->
+  uVicAhbif/VICIRQStatusQ1_reg_12	->
+  uVicAhbif/VICIRQStatusQ1_reg_11	->
+  uVicAhbif/VICIRQStatusQ1_reg_10	->
+  uVicAhbif/VICIRQStatusQ1_reg_9	->
+  uVicAhbif/VICIRQStatusQ1_reg_8	->
+  uVicAhbif/VICIRQStatusQ1_reg_7	->
+  uVicAhbif/VICIRQStatusQ1_reg_6	->
+  uVicAhbif/VICIRQStatusQ1_reg_5	->
+  uVicAhbif/VICIRQStatusQ1_reg_4	->
+  uVicAhbif/VICIRQStatusQ1_reg_3	->
+  uVicAhbif/VICIRQStatusQ1_reg_2	->
+  uVicAhbif/VICIRQStatusQ1_reg_1	->
+  uVicAhbif/VICIRQStatusQ1_reg_0	->
+  uVicAhbif/VICIRQStatusQ2_reg_31	->
+  uVicAhbif/VICIRQStatusQ2_reg_30	->
+  uVicAhbif/VICIRQStatusQ2_reg_29	->
+  uVicAhbif/VICIRQStatusQ2_reg_28	->
+  uVicAhbif/VICIRQStatusQ2_reg_27	->
+  uVicAhbif/VICIRQStatusQ2_reg_26	->
+  uVicAhbif/VICIRQStatusQ2_reg_25	->
+  uVicAhbif/VICIRQStatusQ2_reg_24	->
+  uVicAhbif/VICIRQStatusQ2_reg_23	->
+  uVicAhbif/VICIRQStatusQ2_reg_22	->
+  uVicAhbif/VICIRQStatusQ2_reg_21	->
+  uVicAhbif/VICIRQStatusQ2_reg_20	->
+  uVicAhbif/VICIRQStatusQ2_reg_19	->
+  uVicAhbif/VICIRQStatusQ2_reg_18	->
+  uVicAhbif/VICIRQStatusQ2_reg_17	->
+  uVicAhbif/VICIRQStatusQ2_reg_16	->
+  uVicAhbif/VICIRQStatusQ2_reg_15	->
+  uVicAhbif/VICIRQStatusQ2_reg_14	->
+  uVicAhbif/VICIRQStatusQ2_reg_13	->
+  uVicAhbif/VICIRQStatusQ2_reg_12	->
+  uVicAhbif/VICIRQStatusQ2_reg_11	->
+  uVicAhbif/VICIRQStatusQ2_reg_10	->
+  uVicAhbif/VICIRQStatusQ2_reg_9	->
+  uVicAhbif/VICIRQStatusQ2_reg_8	->
+  uVicAhbif/VICIRQStatusQ2_reg_7	->
+  uVicAhbif/VICIRQStatusQ2_reg_6	->
+  uVicAhbif/VICIRQStatusQ2_reg_5	->
+  uVicAhbif/VICIRQStatusQ2_reg_4	->
+  uVicAhbif/VICIRQStatusQ2_reg_3	->
+  uVicAhbif/VICIRQStatusQ2_reg_2	->
+  uVicAhbif/VICIRQStatusQ2_reg_1	->
+  uVicAhbif/VICIRQStatusQ2_reg_0	->
+  uVicAhbif/VICRawIntrQ1_reg_31	->
+  uVicAhbif/VICRawIntrQ1_reg_30	->
+  uVicAhbif/VICRawIntrQ1_reg_29	->
+  uVicAhbif/VICRawIntrQ1_reg_28	->
+  uVicAhbif/VICRawIntrQ1_reg_27	->
+  uVicAhbif/VICRawIntrQ1_reg_26	->
+  uVicAhbif/VICRawIntrQ1_reg_25	->
+  uVicAhbif/VICRawIntrQ1_reg_24	->
+  uVicAhbif/VICRawIntrQ1_reg_23	->
+  uVicAhbif/VICRawIntrQ1_reg_22	->
+  uVicAhbif/VICRawIntrQ1_reg_21	->
+  uVicAhbif/VICRawIntrQ1_reg_20	->
+  uVicAhbif/VICRawIntrQ1_reg_19	->
+  uVicAhbif/VICRawIntrQ1_reg_18	->
+  uVicAhbif/VICRawIntrQ1_reg_17	->
+  uVicAhbif/VICRawIntrQ1_reg_16	->
+  uVicAhbif/VICRawIntrQ1_reg_15	->
+  uVicAhbif/VICRawIntrQ1_reg_14	->
+  uVicAhbif/VICRawIntrQ1_reg_13	->
+  uVicAhbif/VICRawIntrQ1_reg_12	->
+  uVicAhbif/VICRawIntrQ1_reg_11	->
+  uVicAhbif/VICRawIntrQ1_reg_10	->
+  uVicAhbif/VICRawIntrQ1_reg_9	->
+  uVicAhbif/VICRawIntrQ1_reg_8	->
+  uVicAhbif/VICRawIntrQ1_reg_7	->
+  uVicAhbif/VICRawIntrQ1_reg_6	->
+  uVicAhbif/VICRawIntrQ1_reg_5	->
+  uVicAhbif/VICRawIntrQ1_reg_4	->
+  uVicAhbif/VICRawIntrQ1_reg_3	->
+  uVicAhbif/VICRawIntrQ1_reg_2	->
+  uVicAhbif/VICRawIntrQ1_reg_1	->
+  uVicAhbif/VICRawIntrQ1_reg_0	->
+  uVicAhbif/VICRawIntrQ2_reg_31	->
+  uVicAhbif/VICRawIntrQ2_reg_30	->
+  uVicAhbif/VICRawIntrQ2_reg_29	->
+  uVicAhbif/VICRawIntrQ2_reg_28	->
+  uVicAhbif/VICRawIntrQ2_reg_27	->
+  uVicAhbif/VICRawIntrQ2_reg_26	->
+  uVicAhbif/VICRawIntrQ2_reg_25	->
+  uVicAhbif/VICRawIntrQ2_reg_24	->
+  uVicAhbif/VICRawIntrQ2_reg_23	->
+  uVicAhbif/VICRawIntrQ2_reg_22	->
+  uVicAhbif/VICRawIntrQ2_reg_21	->
+  uVicAhbif/VICRawIntrQ2_reg_20	->
+  uVicAhbif/VICRawIntrQ2_reg_19	->
+  uVicAhbif/VICRawIntrQ2_reg_18	->
+  uVicAhbif/VICRawIntrQ2_reg_17	->
+  uVicAhbif/VICRawIntrQ2_reg_16	->
+  uVicAhbif/VICRawIntrQ2_reg_15	->
+  uVicAhbif/VICRawIntrQ2_reg_14	->
+  uVicAhbif/VICRawIntrQ2_reg_13	->
+  uVicAhbif/VICRawIntrQ2_reg_12	->
+  uVicAhbif/VICRawIntrQ2_reg_11	->
+  uVicAhbif/VICRawIntrQ2_reg_10	->
+  uVicAhbif/VICRawIntrQ2_reg_9	->
+  uVicAhbif/VICRawIntrQ2_reg_8	->
+  uVicAhbif/VICRawIntrQ2_reg_7	->
+  uVicAhbif/VICRawIntrQ2_reg_6	->
+  uVicAhbif/VICRawIntrQ2_reg_5	->
+  uVicAhbif/VICRawIntrQ2_reg_4	->
+  uVicAhbif/VICRawIntrQ2_reg_3	->
+  uVicAhbif/VICRawIntrQ2_reg_2	->
+  uVicAhbif/VICRawIntrQ2_reg_1	->
+  uVicAhbif/VICRawIntrQ2_reg_0	->
+  uVicAhbif/VICIntSourceQ1_reg_31	->
+  uVicAhbif/VICIntSourceQ1_reg_30	->
+  uVicAhbif/VICIntSourceQ1_reg_29	->
+  uVicAhbif/VICIntSourceQ1_reg_28	->
+  uVicAhbif/VICIntSourceQ1_reg_27	->
+  uVicAhbif/VICIntSourceQ1_reg_26	->
+  uVicAhbif/VICIntSourceQ1_reg_25	->
+  uVicAhbif/VICIntSourceQ1_reg_24	->
+  uVicAhbif/VICIntSourceQ1_reg_23	->
+  uVicAhbif/VICIntSourceQ1_reg_22	->
+  uVicAhbif/VICIntSourceQ1_reg_21	->
+  uVicAhbif/VICIntSourceQ1_reg_20	->
+  uVicAhbif/VICIntSourceQ1_reg_19	->
+  uVicAhbif/VICIntSourceQ1_reg_18	->
+  uVicAhbif/VICIntSourceQ1_reg_17	->
+  uVicAhbif/VICIntSourceQ1_reg_16	->
+  uVicAhbif/VICIntSourceQ1_reg_15	->
+  uVicAhbif/VICIntSourceQ1_reg_14	->
+  uVicAhbif/VICIntSourceQ1_reg_13	->
+  uVicAhbif/VICIntSourceQ1_reg_12	->
+  uVicAhbif/VICIntSourceQ1_reg_11	->
+  uVicAhbif/VICIntSourceQ1_reg_10	->
+  uVicAhbif/VICIntSourceQ1_reg_9	->
+  uVicAhbif/VICIntSourceQ1_reg_8	->
+  uVicAhbif/VICIntSourceQ1_reg_7	->
+  uVicAhbif/VICIntSourceQ1_reg_6	->
+  uVicAhbif/VICIntSourceQ1_reg_5	->
+  uVicAhbif/VICIntSourceQ1_reg_4	->
+  uVicAhbif/VICIntSourceQ1_reg_3	->
+  uVicAhbif/VICIntSourceQ1_reg_2	->
+  uVicAhbif/VICIntSourceQ1_reg_1	->
+  uVicAhbif/VICIntSourceQ1_reg_0	->
+  uVicAhbif/VICIntSourceQ2_reg_31 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_30 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_29 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_28 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_27 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_26 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_25 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_24 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_23 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_22 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_21 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_20 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_19 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_18 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_17 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_16 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_15 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_14 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_13 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_12 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_11 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_10 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_9 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_8 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_7 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_6 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_5 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_4 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_3 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_2 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_1 (*)	->
+  uVicAhbif/VICIntSourceQ2_reg_0 (*)	->
+  uVicAhbif/IntSStatusQ_reg_31	->
+  uVicAhbif/IntSStatusQ_reg_30	->
+  uVicAhbif/IntSStatusQ_reg_29	->
+  uVicAhbif/IntSStatusQ_reg_28	->
+  uVicAhbif/IntSStatusQ_reg_27	->
+  uVicAhbif/IntSStatusQ_reg_26	->
+  uVicAhbif/IntSStatusQ_reg_25	->
+  uVicAhbif/IntSStatusQ_reg_24	->
+  uVicAhbif/IntSStatusQ_reg_23	->
+  uVicAhbif/IntSStatusQ_reg_22	->
+  uVicAhbif/IntSStatusQ_reg_21	->
+  uVicAhbif/IntSStatusQ_reg_20	->
+  uVicAhbif/IntSStatusQ_reg_19	->
+  uVicAhbif/IntSStatusQ_reg_18	->
+  uVicAhbif/IntSStatusQ_reg_17	->
+  uVicAhbif/IntSStatusQ_reg_16	->
+  uVicAhbif/IntSStatusQ_reg_15	->
+  uVicAhbif/IntSStatusQ_reg_14	->
+  uVicAhbif/IntSStatusQ_reg_13	->
+  uVicAhbif/IntSStatusQ_reg_12	->
+  uVicAhbif/IntSStatusQ_reg_11	->
+  uVicAhbif/IntSStatusQ_reg_10	->
+  uVicAhbif/IntSStatusQ_reg_9	->
+  uVicAhbif/IntSStatusQ_reg_8	->
+  uVicAhbif/IntSStatusQ_reg_7	->
+  uVicAhbif/IntSStatusQ_reg_6	->
+  uVicAhbif/IntSStatusQ_reg_5	->
+  uVicAhbif/IntSStatusQ_reg_4	->
+  uVicAhbif/IntSStatusQ_reg_3	->
+  uVicAhbif/IntSStatusQ_reg_2	->
+  uVicAhbif/IntSStatusQ_reg_1	->
+  uVicAhbif/IntSStatusQ_reg_0	->
+  uVicAhbif/HRDATA1_reg_31	->
+  uVicAhbif/HRDATA1_reg_30	->
+  uVicAhbif/HRDATA1_reg_29	->
+  uVicAhbif/HRDATA1_reg_28	->
+  uVicAhbif/HRDATA1_reg_27	->
+  uVicAhbif/HRDATA1_reg_26	->
+  uVicAhbif/HRDATA1_reg_25	->
+  uVicAhbif/HRDATA1_reg_24	->
+  uVicAhbif/HRDATA1_reg_23	->
+  uVicAhbif/HRDATA1_reg_22	->
+  uVicAhbif/HRDATA1_reg_21	->
+  uVicAhbif/HRDATA1_reg_20	->
+  uVicAhbif/HRDATA1_reg_19	->
+  uVicAhbif/HRDATA1_reg_18	->
+  uVicAhbif/HRDATA1_reg_17	->
+  uVicAhbif/HRDATA1_reg_16	->
+  uVicAhbif/HRDATA1_reg_15	->
+  uVicAhbif/HRDATA1_reg_14	->
+  uVicAhbif/HRDATA1_reg_13	->
+  uVicAhbif/HRDATA1_reg_12	->
+  uVicAhbif/HRDATA1_reg_11	->
+  uVicAhbif/HRDATA1_reg_10	->
+  uVicAhbif/HRDATA1_reg_9	->
+  uVicAhbif/HRDATA1_reg_8	->
+  uVicAhbif/HRDATA1_reg_7	->
+  uVicAhbif/HRDATA1_reg_6	->
+  uVicAhbif/HRDATA1_reg_5	->
+  uVicAhbif/HRDATA1_reg_4	->
+  uVicAhbif/HRDATA1_reg_3	->
+  uVicAhbif/HRDATA1_reg_2	->
+  uVicAhbif/HRDATA1_reg_1	->
+  uVicAhbif/HRDATA1_reg_0	->
+  uVicAhbif/HRDATA2_reg_31 (*)	->
+  uVicAhbif/HRDATA2_reg_30 (*)	->
+  uVicAhbif/HRDATA2_reg_29	->
+  uVicAhbif/HRDATA2_reg_28	->
+  uVicAhbif/HRDATA2_reg_27	->
+  uVicAhbif/HRDATA2_reg_26	->
+  uVicAhbif/HRDATA2_reg_25	->
+  uVicAhbif/HRDATA2_reg_24	->
+  uVicAhbif/HRDATA2_reg_23 (*)	->
+  uVicAhbif/HRDATA2_reg_22	->
+  uVicAhbif/HRDATA2_reg_21	->
+  uVicAhbif/HRDATA2_reg_20	->
+  uVicAhbif/HRDATA2_reg_19	->
+  uVicAhbif/HRDATA2_reg_18 (*)	->
+  uVicAhbif/HRDATA2_reg_17	->
+  uVicAhbif/HRDATA2_reg_16	->
+  uVicAhbif/HRDATA2_reg_15 (*)	->
+  uVicAhbif/HRDATA2_reg_14 (*)	->
+  uVicAhbif/HRDATA2_reg_13 (*)	->
+  uVicAhbif/HRDATA2_reg_12 (*)	->
+  uVicAhbif/HRDATA2_reg_11 (*)	->
+  uVicAhbif/HRDATA2_reg_10 (*)	->
+  uVicAhbif/HRDATA2_reg_9 (*)	->
+  uVicAhbif/HRDATA2_reg_8 (*)	->
+  uVicAhbif/HRDATA2_reg_7	->
+  uVicAhbif/HRDATA2_reg_6	->
+  uVicAhbif/HRDATA2_reg_5	->
+  uVicAhbif/HRDATA2_reg_4	->
+  uVicAhbif/HRDATA2_reg_3	->
+  uVicAhbif/HRDATA2_reg_2	->
+  uVicAhbif/HRDATA2_reg_1	->
+  uVicAhbif/HRDATA2_reg_0	->
+  uVicAhbif/IDReadMux_reg_7	->
+  uVicAhbif/IDReadMux_reg_6	->
+  uVicAhbif/IDReadMux_reg_5	->
+  uVicAhbif/IDReadMux_reg_4	->
+  uVicAhbif/IDReadMux_reg_3 (*)	->
+  uVicAhbif/IDReadMux_reg_2 (*)	->
+  uVicAhbif/IDReadMux_reg_1	->
+  uVicAhbif/IDReadMux_reg_0	->
+  uVicAhbif/nIRQINTestValQ1_reg	->
+  uVicAhbif/VICFIQINREGQ_reg	->
+  uVicAhbif/HPROT1Q_reg (*)	->
+  uVicAhbif/IRQTestValQ1_reg	->
+  uVicAhbif/IRQACKTestValQ2_reg	->
+  uVicAhbif/ProtEnQ_reg	->
+  uVicAhbif/HWRITEQ_reg (*)	->
+  uVicAhbif/OneWaitSt1Q_reg	->
+  uVicAhbif/nFIQINTestValQ1_reg	->
+  uVicAhbif/FIQTestValQ1_reg	->
+  uVicAhbif/ReadEnable_reg (*)	->
+  uVicAhbif/ACKOUTTestValQ2_reg	->
+  uVicAhbif/TransferValidQ_reg	->
+  uVicAhbif/nIRQINTestValQ2_reg	->
+  uVicAhbif/IRQTestValQ2_reg	->
+  uVicAhbif/IRQACKTestValQ1_reg	->
+  uVicAhbif/VICIRQINREGQ_reg	->
+  uVicAhbif/OneWaitSt2Q_reg	->
+  uVicAhbif/FIQTestValQ2_reg	->
+  uVicAhbif/nFIQINTestValQ2_reg	->
+  uVicAhbif/ACKOUTTestValQ1_reg	->
+  uVicAhbif/VectPrio20Q_reg_3	->
+  uVicAhbif/VectPrio17Q_reg_3	->
+  uVicAhbif/WriteEnable_reg (*)	->
+  uVicAhbif/VectPrio19Q_reg_2	->
+  uVicAhbif/VectPrio26Q_reg_0	->
+  uVicAhbif/VectPrio26Q_reg_3	->
+  uVicAhbif/VectPrio13Q_reg_3	->
+  uVicCpuif/PriorityStack_reg_1	->
+  uVicCpuif/PriorityStack_reg_2	->
+  uVicCpuif/IRQRequestQ_reg (*)	->
+  uVicCpuif/IRQPortBit5Q_reg	->
+  uVicCpuif/IRQRLevelQ_reg_3	->
+  uVicCpuif/IRQRLevelQ_reg_2	->
+  uVicCpuif/IRQRLevelQ_reg_1	->
+  uVicCpuif/IRQRLevelQ_reg_0 (*)	->
+  uVicCpuif/NewLevelEncoded_reg_15	->
+  uVicCpuif/NewLevelEncoded_reg_14	->
+  uVicCpuif/NewLevelEncoded_reg_13	->
+  uVicCpuif/NewLevelEncoded_reg_12	->
+  uVicCpuif/NewLevelEncoded_reg_11	->
+  uVicCpuif/NewLevelEncoded_reg_10	->
+  uVicCpuif/NewLevelEncoded_reg_9	->
+  uVicCpuif/NewLevelEncoded_reg_8	->
+  uVicCpuif/NewLevelEncoded_reg_7	->
+  uVicCpuif/NewLevelEncoded_reg_6	->
+  uVicCpuif/NewLevelEncoded_reg_5	->
+  uVicCpuif/NewLevelEncoded_reg_4	->
+  uVicCpuif/NewLevelEncoded_reg_3	->
+  uVicCpuif/NewLevelEncoded_reg_2	->
+  uVicCpuif/NewLevelEncoded_reg_1	->
+  uVicCpuif/NewLevelEncoded_reg_0	->
+  uVicCpuif/VICVECTADDRINQ_reg_31	->
+  uVicCpuif/VICVECTADDRINQ_reg_30	->
+  uVicCpuif/VICVECTADDRINQ_reg_29	->
+  uVicCpuif/VICVECTADDRINQ_reg_28	->
+  uVicCpuif/VICVECTADDRINQ_reg_27	->
+  uVicCpuif/VICVECTADDRINQ_reg_26	->
+  uVicCpuif/VICVECTADDRINQ_reg_25	->
+  uVicCpuif/VICVECTADDRINQ_reg_24	->
+  uVicCpuif/VICVECTADDRINQ_reg_23	->
+  uVicCpuif/VICVECTADDRINQ_reg_22	->
+  uVicCpuif/VICVECTADDRINQ_reg_21	->
+  uVicCpuif/VICVECTADDRINQ_reg_20	->
+  uVicCpuif/VICVECTADDRINQ_reg_19	->
+  uVicCpuif/VICVECTADDRINQ_reg_18	->
+  uVicCpuif/VICVECTADDRINQ_reg_17	->
+  uVicCpuif/VICVECTADDRINQ_reg_16	->
+  uVicCpuif/VICVECTADDRINQ_reg_15	->
+  uVicCpuif/VICVECTADDRINQ_reg_14	->
+  uVicCpuif/VICVECTADDRINQ_reg_13	->
+  uVicCpuif/VICVECTADDRINQ_reg_12	->
+  uVicCpuif/VICVECTADDRINQ_reg_11	->
+  uVicCpuif/VICVECTADDRINQ_reg_10	->
+  uVicCpuif/VICVECTADDRINQ_reg_9	->
+  uVicCpuif/VICVECTADDRINQ_reg_8	->
+  uVicCpuif/VICVECTADDRINQ_reg_7	->
+  uVicCpuif/VICVECTADDRINQ_reg_6	->
+  uVicCpuif/VICVECTADDRINQ_reg_5	->
+  uVicCpuif/VICVECTADDRINQ_reg_4	->
+  uVicCpuif/VICVECTADDRINQ_reg_3	->
+  uVicCpuif/VICVECTADDRINQ_reg_2	->
+  uVicCpuif/VICVECTADDRINQ_reg_1	->
+  uVicCpuif/VICVECTADDRINQ_reg_0	->
+  uVicCpuif/VADDRtmuxQ_reg_31	->
+  uVicCpuif/VADDRtmuxQ_reg_30	->
+  uVicCpuif/VADDRtmuxQ_reg_29	->
+  uVicCpuif/VADDRtmuxQ_reg_28	->
+  uVicCpuif/VADDRtmuxQ_reg_27	->
+  uVicCpuif/VADDRtmuxQ_reg_26	->
+  uVicCpuif/VADDRtmuxQ_reg_25	->
+  uVicCpuif/VADDRtmuxQ_reg_24	->
+  uVicCpuif/VADDRtmuxQ_reg_23	->
+  uVicCpuif/VADDRtmuxQ_reg_22	->
+  uVicCpuif/VADDRtmuxQ_reg_21	->
+  uVicCpuif/VADDRtmuxQ_reg_20	->
+  uVicCpuif/VADDRtmuxQ_reg_19	->
+  uVicCpuif/VADDRtmuxQ_reg_18	->
+  uVicCpuif/VADDRtmuxQ_reg_17	->
+  uVicCpuif/VADDRtmuxQ_reg_16	->
+  uVicCpuif/VADDRtmuxQ_reg_15	->
+  uVicCpuif/VADDRtmuxQ_reg_14	->
+  uVicCpuif/VADDRtmuxQ_reg_13	->
+  uVicCpuif/VADDRtmuxQ_reg_12	->
+  uVicCpuif/VADDRtmuxQ_reg_11	->
+  uVicCpuif/VADDRtmuxQ_reg_10	->
+  uVicCpuif/VADDRtmuxQ_reg_9	->
+  uVicCpuif/VADDRtmuxQ_reg_8	->
+  uVicCpuif/VADDRtmuxQ_reg_7	->
+  uVicCpuif/VADDRtmuxQ_reg_6	->
+  uVicCpuif/VADDRtmuxQ_reg_5	->
+  uVicCpuif/VADDRtmuxQ_reg_4	->
+  uVicCpuif/VADDRtmuxQ_reg_3	->
+  uVicCpuif/VADDRtmuxQ_reg_2	->
+  uVicCpuif/VADDRtmuxQ_reg_1	->
+  uVicCpuif/VADDRtmuxQ_reg_0	->
+  uVicCpuif/PriorityStack_reg_15	->
+  uVicCpuif/PriorityStack_reg_14	->
+  uVicCpuif/PriorityStack_reg_13	->
+  uVicCpuif/PriorityStack_reg_12	->
+  uVicCpuif/PriorityStack_reg_11	->
+  uVicCpuif/PriorityStack_reg_10	->
+  uVicCpuif/PriorityStack_reg_9	->
+  uVicCpuif/PriorityStack_reg_8	->
+  uVicCpuif/PriorityStack_reg_7	->
+  uVicCpuif/PriorityStack_reg_6	->
+  uVicCpuif/PriorityStack_reg_5	->
+  uVicCpuif/PriorityStack_reg_4	->
+  uVicCpuif/PriorityStack_reg_3	->
+  uVicCpuif/PriorityStack_reg_0	->
+  uVicCpuif/ElyVecAddrMux_reg_31	->
+  uVicCpuif/ElyVecAddrMux_reg_30	->
+  uVicCpuif/ElyVecAddrMux_reg_29	->
+  uVicCpuif/ElyVecAddrMux_reg_28	->
+  uVicCpuif/ElyVecAddrMux_reg_27	->
+  uVicCpuif/ElyVecAddrMux_reg_26	->
+  uVicCpuif/ElyVecAddrMux_reg_25	->
+  uVicCpuif/ElyVecAddrMux_reg_24	->
+  uVicCpuif/ElyVecAddrMux_reg_23	->
+  uVicCpuif/ElyVecAddrMux_reg_22	->
+  uVicCpuif/ElyVecAddrMux_reg_21	->
+  uVicCpuif/ElyVecAddrMux_reg_20	->
+  uVicCpuif/ElyVecAddrMux_reg_19	->
+  uVicCpuif/ElyVecAddrMux_reg_18	->
+  uVicCpuif/ElyVecAddrMux_reg_17	->
+  uVicCpuif/ElyVecAddrMux_reg_16	->
+  uVicCpuif/ElyVecAddrMux_reg_15	->
+  uVicCpuif/ElyVecAddrMux_reg_14	->
+  uVicCpuif/ElyVecAddrMux_reg_13	->
+  uVicCpuif/ElyVecAddrMux_reg_12	->
+  uVicCpuif/ElyVecAddrMux_reg_11	->
+  uVicCpuif/ElyVecAddrMux_reg_10	->
+  uVicCpuif/ElyVecAddrMux_reg_9	->
+  uVicCpuif/ElyVecAddrMux_reg_8	->
+  uVicCpuif/ElyVecAddrMux_reg_7	->
+  uVicCpuif/ElyVecAddrMux_reg_6	->
+  uVicCpuif/ElyVecAddrMux_reg_5	->
+  uVicCpuif/ElyVecAddrMux_reg_4	->
+  uVicCpuif/ElyVecAddrMux_reg_3	->
+  uVicCpuif/ElyVecAddrMux_reg_2	->
+  uVicCpuif/ElyVecAddrMux_reg_1	->
+  uVicCpuif/ElyVecAddrMux_reg_0	->
+  uVicCpuif/LastVectAddr_reg_31	->
+  uVicCpuif/LastVectAddr_reg_30 (*)	->
+  uVicCpuif/LastVectAddr_reg_29	->
+  uVicCpuif/LastVectAddr_reg_28	->
+  uVicCpuif/LastVectAddr_reg_27	->
+  uVicCpuif/LastVectAddr_reg_26 (*)	->
+  uVicCpuif/LastVectAddr_reg_25 (*)	->
+  uVicCpuif/LastVectAddr_reg_24 (*)	->
+  uVicCpuif/LastVectAddr_reg_23 (*)	->
+  uVicCpuif/LastVectAddr_reg_22 (*)	->
+  uVicCpuif/LastVectAddr_reg_21 (*)	->
+  uVicCpuif/LastVectAddr_reg_20	->
+  uVicCpuif/LastVectAddr_reg_19 (*)	->
+  uVicCpuif/LastVectAddr_reg_18 (*)	->
+  uVicCpuif/LastVectAddr_reg_17 (*)	->
+  uVicCpuif/LastVectAddr_reg_16 (*)	->
+  uVicCpuif/LastVectAddr_reg_15 (*)	->
+  uVicCpuif/LastVectAddr_reg_14 (*)	->
+  uVicCpuif/LastVectAddr_reg_13 (*)	->
+  uVicCpuif/LastVectAddr_reg_12 (*)	->
+  uVicCpuif/LastVectAddr_reg_11 (*)	->
+  uVicCpuif/LastVectAddr_reg_10 (*)	->
+  uVicCpuif/LastVectAddr_reg_9 (*)	->
+  uVicCpuif/LastVectAddr_reg_8 (*)	->
+  uVicCpuif/LastVectAddr_reg_7 (*)	->
+  uVicCpuif/LastVectAddr_reg_6 (*)	->
+  uVicCpuif/LastVectAddr_reg_5 (*)	->
+  uVicCpuif/LastVectAddr_reg_4	->
+  uVicCpuif/LastVectAddr_reg_3	->
+  uVicCpuif/LastVectAddr_reg_2	->
+  uVicCpuif/LastVectAddr_reg_1	->
+  uVicCpuif/LastVectAddr_reg_0	->
+  uVicCpuif/IRQSWAckQ_reg	->
+  uVicCpuif/LastIrqAckQ_reg	->
+  uVicCpuif/Sync1IRQACK_reg	->
+  uVicCpuif/LastIrqAck_reg	->
+  uVicCpuif/Sync2IRQACK_reg	->
+  uVicCpuif/Sync3IRQACK_reg (*)	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_31	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_30	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_29	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_28	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_27	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_26	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_25	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_24	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_23	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_22	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_21	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_20	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_19	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_18	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_17	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_16	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_15	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_14	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_13	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_12	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_11	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_10	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_9	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_8	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_7	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_6	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_5	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_4	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_3	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_2	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_1	->
+  uVicInterrupt/uVicIntResolver/Sync1IrqStatus_reg_0	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_31	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_30	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_29	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_28	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_27	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_26	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_25	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_24	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_23	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_22	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_21	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_20	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_19	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_18	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_17	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_16	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_15	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_14	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_13	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_12	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_11	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_10	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_9	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_8	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_7	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_6	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_5	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_4	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_3	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_2	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_1	->
+  uVicInterrupt/uVicIntResolver/Sync2IrqStatus_reg_0	->
+  uVicInterrupt/uVicIntResolver/Sync1DaisyIn_reg	->
+  uVicInterrupt/uVicIntResolver/Sync2DaisyIn_reg	->
+  uVicInterrupt/uVicIntResolver/nVICFIQINQ_reg (*)	->
+  uVicInterrupt/uVicIntResolver/nVICIRQINQ_reg	->
+  SCANOUTHCLK
+

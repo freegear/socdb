@@ -1,0 +1,25 @@
+
+analyze -f verilog   MmciParams.v 
+analyze -f verilog   MmciApbifReg.v 
+analyze -f verilog   MmciSynctoMCLK.v 
+analyze -f verilog   MmciSynctoPCLK.v 
+analyze -f verilog   MmciRegUpd.v 
+analyze -f verilog   MmciPwrClkCtr.v 
+analyze -f verilog   MmciCPSM.v 
+analyze -f verilog   MmciDPSM.v 
+analyze -f verilog   MmciFIFOReg.v 
+analyze -f verilog   MmciFifoDmaCtr.v 
+analyze -f verilog   MmciIntGen.v 
+analyze -f verilog   MmciOPReSync.v 
+analyze -f verilog   MmciRevAnd.v 
+analyze -f verilog   MmciClockAnd.v 
+analyze -f verilog   MmciClockMux.v 
+analyze -f verilog   Mmci.v
+
+
+
+elaborate Mmci
+current_design Mmci
+link
+
+write -f db -hier -out Mmci.gtech.db

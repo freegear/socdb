@@ -1,0 +1,212 @@
+/*----------------------------------------------------------------------
+--
+-- Copyright (c) 2003 CAST, inc.
+--
+-- Please review the terms of the license agreement before using this
+-- file.  If you are not an authorized user, please destroy this source
+-- code file and notify CAST immediately that you inadvertently received
+-- an unauthorized copy.
+------------------------------------------------------------------------
+--
+--  Project       : PCI-M64AHB
+--
+--  Description   : PCI Target 64-bit/66 MHz with AMBA Interface
+--
+--  File          : synopsys.scr 
+--
+--  Purpose       : Sample Synopsys synthesis script
+--
+--  Designer      : NS
+--
+--  QA Engineer   :  
+--
+--  Creation Date : 20-Nov-2003
+--
+--  Last Update   : 20-Nov-2003
+--
+--  Version       : 1.0
+------------------------------------------------------------------------*/
+
+   company  = "CAST, Inc"
+
+   module = "pcim64ahbw"
+
+/* ================================================= */
+/* Source files needed                               */
+/* ================================================= */
+
+   source_files     = { ../src/m64core/pci_gclkbuf.v  \
+                        ../src/m64core/pci_ibuf.v     \
+                        ../src/m64core/pci_iobuf.v    \
+                        ../src/m64core/pci_obuf.v     \
+                        ../src/m64core/pci_obufoc.v   \
+                        ../src/m64core/pci_obuft.v    \
+                        ../src/m64core/pci_chkpar64.v \
+                        ../src/m64core/pci_genpar64.v \
+                        ../src/m64core/pci_cead.v     \
+                        ../src/m64core/pci_barreg.v   \
+                        ../src/m64core/pci_cfgebar.v  \
+                        ../src/m64core/pci_cfgspace.v \
+                        ../src/m64core/pci_genframe.v \
+                        ../src/m64core/pci_genreq64.v \
+                        ../src/m64core/pci_genirdy.v  \
+                        ../src/m64core/pci_gendevsel.v\
+                        ../src/m64core/pci_genack64.v \
+                        ../src/m64core/pci_genotad.v  \
+                        ../src/m64core/pci_genotcbe.v \
+                        ../src/m64core/pci_gentrdy.v  \
+                        ../src/m64core/pci_genstop.v  \
+                        ../src/m64core/pci_mtfsm64.v  \
+                        ../src/m64core/pci_m64core.v  \
+                        ../src/ahb/psync.v            \
+                        ../src/ahb/dma64_fiforam.v    \
+                        ../src/ahb/dma64wrfifo.v      \
+                        ../src/ahb/dma64rdfifo.v      \
+                        ../src/ahb/dma64txctrl.v      \
+                        ../src/ahb/dma64regs.v        \
+                        ../src/ahb/fifosram.v         \
+                        ../src/ahb/fifo_async.v       \
+                        ../src/ahb/t64ahb.v           \
+                        ../src/ahb/intctrl.v          \
+                        ../src/ahb/mailbox.v          \
+                        ../src/ahb/mailboxblk.v       \
+                        ../src/ahb/ahbslave.v         \
+                        ../src/ahb/ahbmaster.v        \
+                        ../src/ahb/dma64ahb.v         \
+                        ../src/ahb/mt64ahb.v          \
+                        ../src/ahb/pcim64ahb.v        \
+                        ../src/ahb/pcim64ahbw.v}
+
+/* ================================================= */
+/* List of pre compiled modules                      */
+/* ================================================= */
+
+   precomp_modules  = { }
+
+/* ================================================= */
+/* Directories location                              */
+/* ================================================= */
+
+   db_dir           = "./db/"
+   net_dir          = "./nets/"
+   report_dir       = "./reports/"
+
+/* ================================================= */
+/* Create Directories                                */
+/* ================================================= */
+
+   sh mkdir db_dir
+   sh mkdir net_dir
+   sh mkdir report_dir
+   sh mkdir work
+
+/* ================================================= */
+/* Clock Timing Specifications                       */
+/* ================================================= */
+   clock_nets           = {clk_p}
+   main_clock           = clk_p
+
+   def_clock_period     = 30 
+   def_clock_wave       = {0 15}
+
+   /*cond                 =   */
+   /*net_max_fanout       =   */
+   /*def_input_drive      =   */
+   /*def_input_time_min   =   */
+   /*def_input_time_max   =   */
+   /*def_input_max_fanout =   */
+   /*def_output_load      =   */
+   /*def_output_time_min  =   */
+   /*def_output_time_max  =   */
+
+/* ================================================= */
+/* Analyze and Elaborate the design file and specify */
+/* the design file format.			     */
+/* ================================================= */
+
+   foreach (file, source_files) {
+       analyze -format verilog file
+   }
+
+   elaborate module
+
+/* ================================================= */
+/* Read all pre compiled modules and apply           */
+/* dont_touch attributes                             */
+/* ================================================= */
+
+   foreach (module, precomp_modules) {
+      remove_design module -hierarchy
+      read -format db db_dir + module + "_compiled.db"
+      if (dc_shell_status == 0) {
+         echo "Error: Error in loading precompiled db files"
+         exit
+      }
+      dont_touch module
+   }
+
+/* ================================================= */
+/* Set the current design to the top level.          */
+/* ================================================= */
+
+   current_design module
+   uniquify
+
+/* ================================================= */
+/* Set the synthesis design constraints.             */  
+/* ================================================= */
+
+   /*set_operating_conditions cond
+   set_max_fanout net_max_fanout find(design)
+   set_drive def_input_drive all_inputs()
+   set_max_fanout def_input_max_fanout all_inputs()
+   set_load def_output_load all_outputs()*/
+
+   foreach (clock, clock_nets) {
+     create_clock clock -period def_clock_period -waveform def_clock_wave
+     if (dc_shell_status == 0) {
+       echo "Error: Can't set clock" + clock
+       exit
+     }
+     set_drive 0 clock                   /* prevents buffering on clock net */
+     set_dont_touch_network clock
+
+     /*set_input_delay -clock clock -max def_input_time_max find (port all_inputs() - clock_nets)
+     set_input_delay -clock clock -min def_input_time_min find (port all_inputs() - clock_nets)
+     set_output_delay -clock clock -max def_output_time_max find (port all_outputs())
+     set_output_delay -clock clock -min def_output_time_min find (port all_outputs())*/
+
+   }
+
+   set_max_area 0
+
+   compile -map_effort medium
+
+/* ================================================= */
+/* Write the design report files.                    */
+/* ================================================= */
+
+   check_design > report_dir + module + ".chk_des"
+
+   report_area > report_dir + module  + ".rep"
+   report_cell >> report_dir + module  + ".rep"
+   report_clock >> report_dir + module + ".rep"
+   report_timing -max 40 >> report_dir + module + ".rep"
+
+   report_constraints -all_violators -verbose > report_dir + module + ".violate"
+
+/* ================================================= */
+/* Write out the design                              */
+/* ================================================= */
+
+   write -format db -hierarchy -output db_dir + module + ".db"
+   write -format vhdl -hierarchy -output net_dir + module + "_gate.vhd"
+   write -format verilog -hierarchy -output net_dir + module + "_gate.v"
+   /*write -format edif -hierarchy -output db_dir + module + ".edf"*/
+
+/* ================================================= */
+/* Exit the Compiler                                 */
+/* ================================================= */
+
+   exit
+

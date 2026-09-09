@@ -1,0 +1,1422 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Ssp
+Version: 2001.08-1
+Date   : Wed Feb  6 14:10:27 2002
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Ssp' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0SspRevAnd               0      0     1     0      0     0     0      6   0.00%
+u1SspRevAnd               0      0     1     0      0     0     0      6   0.00%
+u2SspRevAnd               1      0     0     0      0     0     0      6  16.67%
+u3SspRevAnd               0      0     0     0      1     0     0      6   0.00%
+uSspApbif               198      0     1     0      1     0     0   1846  10.73%
+uSspDMA                  15      0     0     0      0     0     0    128  11.72%
+uSspDataStp              36      0     0     0      1     0     0    364   9.89%
+uSspIntGen                3      0     0     0      0     0     0     32   9.38%
+uSspMTxRxCntl           808      1     0     0      6     0     0   7370  10.96%
+uSspRegCore             113      0     0     0      0     0     0   1060  10.66%
+uSspRxFIFO/uSspRxFCntl
+                         68      0     0     0      0     0     0    626  10.86%
+uSspRxFIFO/uSspRxRegFile
+                        498      0     0     0      0     0     0   4540  10.97%
+uSspRxFIFO              566      0     0     0      0     0     0   5166  10.96%
+uSspSTxRxCntl           500      0     0     0      0     0     0   4498  11.12%
+uSspScaleCntr            93      0     0     0      0     0     0    896  10.38%
+uSspSynctoPCLK           20      0     0     0      2     0     0    180  11.11%
+uSspSynctoSSPCLK         36      0     0     0      1     0     0    304  11.84%
+uSspTest                 73      0     0     0      0     0     0    652  11.20%
+uSspTxFIFO/uSspTxFCntl
+                         62      0     0     0      0     0     0    568  10.92%
+uSspTxFIFO/uSspTxLJustify
+                        141      0     0     0      0     0     0   1274  11.07%
+uSspTxFIFO/uSspTxRegFile
+                        450      0     0     0      0     0     0   4088  11.01%
+uSspTxFIFO              654      0     0     0      0     0     0   5950  10.99%
+Ssp                    3134      1     3     0     12     0     0  28628  10.95%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Ssp
+Version: 2001.08-1
+Date   : Wed Feb  6 14:10:29 2002
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Insert Lockups at the end of scan chains : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Ssp
+Version: 2001.08-1
+Date   : Wed Feb  6 14:10:29 2002
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain #1 (SCANINPCLK --> SCANOUTPCLK) contains 388 cells:
+
+  SCANINPCLK	->
+  uSspDMA/RXDMABREQ_reg (*)	->
+  uSspDMA/TXDMASREQ_reg (*)	->
+  uSspDMA/TXDMABREQ_reg (*)	->
+  uSspDMA/RXDMASREQ_reg (*)	->
+  uSspRegCore/SSPDMACR_reg[1] (*)	->
+  uSspRegCore/SSPDMACR_reg[0] (*)	->
+  uSspRegCore/SSPCR0_reg[15] (*)	->
+  uSspRegCore/SSPCR0_reg[14] (*)	->
+  uSspRegCore/SSPCR0_reg[13] (*)	->
+  uSspRegCore/SSPCR0_reg[12] (*)	->
+  uSspRegCore/SSPCR0_reg[11] (*)	->
+  uSspRegCore/SSPCR0_reg[10] (*)	->
+  uSspRegCore/SSPCR0_reg[9] (*)	->
+  uSspRegCore/SSPCR0_reg[8] (*)	->
+  uSspRegCore/SSPCR0_reg[7] (*)	->
+  uSspRegCore/SSPCR0_reg[6] (*)	->
+  uSspRegCore/SSPCR0_reg[5] (*)	->
+  uSspRegCore/SSPCR0_reg[4] (*)	->
+  uSspRegCore/SSPCR0_reg[3] (*)	->
+  uSspRegCore/SSPCR0_reg[2] (*)	->
+  uSspRegCore/SSPCR0_reg[1] (*)	->
+  uSspRegCore/SSPCR0_reg[0] (*)	->
+  uSspRegCore/SSPCR1_reg[6] (*)	->
+  uSspRegCore/SSPCR1_reg[5] (*)	->
+  uSspRegCore/SSPCR1_reg[4] (*)	->
+  uSspRegCore/SSPCR1_reg[3] (*)	->
+  uSspRegCore/SSPCR1_reg[2] (*)	->
+  uSspRegCore/SSPCR1_reg[1] (*)	->
+  uSspRegCore/SSPCPSR_reg[7] (*)	->
+  uSspRegCore/SSPCPSR_reg[6] (*)	->
+  uSspRegCore/SSPCPSR_reg[5] (*)	->
+  uSspRegCore/SSPCPSR_reg[4] (*)	->
+  uSspRegCore/SSPCPSR_reg[3] (*)	->
+  uSspRegCore/SSPCPSR_reg[2] (*)	->
+  uSspRegCore/SSPCPSR_reg[1] (*)	->
+  uSspRegCore/SSPIMSC_reg[3] (*)	->
+  uSspRegCore/SSPIMSC_reg[2] (*)	->
+  uSspRegCore/SSPIMSC_reg[1] (*)	->
+  uSspRegCore/SSPIMSC_reg[0] (*)	->
+  uSspRegCore/CR0Update_reg (*)	->
+  uSspRegCore/CPSRUpdate_reg (*)	->
+  uSspRegCore/RORIC_reg (*)	->
+  uSspRegCore/RTIC_reg (*)	->
+  uSspRegCore/SSPCR1_reg[0] (*)	->
+  uSspTest/SSPITIP_reg[4] (*)	->
+  uSspTest/SSPITIP_reg[3] (*)	->
+  uSspTest/iSSPITOP_reg[13] (*)	->
+  uSspTest/iSSPITOP_reg[12] (*)	->
+  uSspTest/iSSPITOP_reg[11] (*)	->
+  uSspTest/iSSPITOP_reg[10] (*)	->
+  uSspTest/iSSPITOP_reg[9] (*)	->
+  uSspTest/iSSPITOP_reg[8] (*)	->
+  uSspTest/iSSPITOP_reg[7] (*)	->
+  uSspTest/iSSPITOP_reg[6] (*)	->
+  uSspTest/iSSPITOP_reg[5] (*)	->
+  uSspTest/iSSPITOP_reg[4] (*)	->
+  uSspTest/iSSPITOP_reg[3] (*)	->
+  uSspTest/iSSPITOP_reg[2] (*)	->
+  uSspTest/iSSPITOP_reg[1] (*)	->
+  uSspTest/iSSPITOP_reg[0] (*)	->
+  uSspTest/SSPTCR_reg[1] (*)	->
+  uSspTest/delSSPTDRRd_reg (*)	->
+  uSspTest/SSPTCR_reg[0] (*)	->
+  uSspSynctoPCLK/RTRISSync1_reg	->
+  uSspSynctoPCLK/RTRISSync_reg	->
+  uSspSynctoPCLK/RTMISSync1_reg	->
+  uSspSynctoPCLK/RTMISSync_reg	->
+  uSspSynctoPCLK/IntTXDMACLRSync1_reg	->
+  uSspSynctoPCLK/IntTXDMACLRSync_reg	->
+  uSspSynctoPCLK/IntRXDMACLRSync1_reg	->
+  uSspSynctoPCLK/IntRXDMACLRSync_reg	->
+  uSspSynctoPCLK/TxFRdPtrIncSync1_reg	->
+  uSspSynctoPCLK/TxFRdPtrIncSync_reg	->
+  uSspSynctoPCLK/RxFWrSync1_reg	->
+  uSspSynctoPCLK/RxFWrSync_reg	->
+  uSspSynctoPCLK/TxRxBSYSync1_reg	->
+  uSspSynctoPCLK/TxRxBSYSync_reg	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[7][0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[6][0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[5][0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[4][0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[3][0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[2][0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[1][0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxRegFile_reg[0][0] (*)	->
+  uSspRxFIFO/uSspRxFCntl/DelRxFWrSync_reg	->
+  uSspRxFIFO/uSspRxFCntl/WrPtr_reg[2] (*)	->
+  uSspRxFIFO/uSspRxFCntl/WrPtr_reg[1]	->
+  uSspRxFIFO/uSspRxFCntl/WrPtr_reg[0]	->
+  uSspRxFIFO/uSspRxFCntl/Wrap_reg	->
+  uSspRxFIFO/uSspRxFCntl/RNE_reg (*)	->
+  uSspRxFIFO/uSspRxFCntl/RFF_reg (*)	->
+  uSspRxFIFO/uSspRxFCntl/RXRIS_reg	->
+  uSspRxFIFO/uSspRxFCntl/RORRIS_reg (*)	->
+  uSspRxFIFO/uSspRxFCntl/RdPtr_reg[1]	->
+  uSspRxFIFO/uSspRxFCntl/RdPtr_reg[2] (*)	->
+  uSspRxFIFO/uSspRxFCntl/RdPtr_reg[0] (*)	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[14]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[13]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[12]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[11]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[10]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[9]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[8]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[7]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[6]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[5]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[4]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[3]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[2]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[1]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[0]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[15]	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[7][0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[6][0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[5][0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[4][0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[3][0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[2][0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[1][0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxRegFile_reg[0][0] (*)	->
+  uSspTxFIFO/uSspTxFCntl/DelRdPtrInc_reg	->
+  uSspTxFIFO/uSspTxFCntl/WrPtr_reg[1] (*)	->
+  uSspTxFIFO/uSspTxFCntl/WrPtr_reg[0] (*)	->
+  uSspTxFIFO/uSspTxFCntl/Wrap_reg	->
+  uSspTxFIFO/uSspTxFCntl/TNF_reg	->
+  uSspTxFIFO/uSspTxFCntl/TXRIS_reg (*)	->
+  uSspTxFIFO/uSspTxFCntl/TxDataAvlbl_reg (*)	->
+  uSspTxFIFO/uSspTxFCntl/RdPtr_reg[0] (*)	->
+  uSspTxFIFO/uSspTxFCntl/RdPtr_reg[2]	->
+  uSspTxFIFO/uSspTxFCntl/RdPtr_reg[1]	->
+  uSspTxFIFO/uSspTxFCntl/WrPtr_reg[2]	->
+  uSspApbif/PRDATA_reg[15]	->
+  uSspApbif/PRDATA_reg[14]	->
+  uSspApbif/PRDATA_reg[13]	->
+  uSspApbif/PRDATA_reg[12]	->
+  uSspApbif/PRDATA_reg[11]	->
+  uSspApbif/PRDATA_reg[10]	->
+  uSspApbif/PRDATA_reg[9]	->
+  uSspApbif/PRDATA_reg[8]	->
+  uSspApbif/PRDATA_reg[7]	->
+  uSspApbif/PRDATA_reg[6]	->
+  uSspApbif/PRDATA_reg[5]	->
+  uSspApbif/PRDATA_reg[4]	->
+  uSspApbif/PRDATA_reg[3]	->
+  uSspApbif/PRDATA_reg[2]	->
+  uSspApbif/PRDATA_reg[1]	->
+  uSspApbif/PRDATA_reg[0]	->
+  SCANOUTPCLK
+
+Complete scan chain #2 (SCANINSSPCLK --> SCANOUTSSPCLK) contains 203 cells:
+
+  SCANINSSPCLK	->
+  uSspDataStp/DataStp_reg (*)	->
+  uSspDataStp/delRTICSync_reg	->
+  uSspDataStp/SspDataStpState_reg (*)	->
+  uSspDataStp/WDCount_reg[5]	->
+  uSspDataStp/WDCount_reg[4]	->
+  uSspDataStp/WDCount_reg[3]	->
+  uSspDataStp/WDCount_reg[2]	->
+  uSspDataStp/WDCount_reg[1]	->
+  uSspDataStp/WDCount_reg[0] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[15] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[14] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[13] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[12] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[11] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[10] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[9] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[8] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[7] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[6] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[5] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[4] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[3] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[2] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[1] (*)	->
+  uSspSTxRxCntl/IntSOD_reg (*)	->
+  uSspSTxRxCntl/SspSTxRxState_reg[4]	->
+  uSspSTxRxCntl/SspSTxRxState_reg[0]	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[7] (*)	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[6] (*)	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[5] (*)	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[4] (*)	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[3]	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[2]	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[1] (*)	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[0] (*)	->
+  uSspSTxRxCntl/BitCnt_reg[3]	->
+  uSspSTxRxCntl/BitCnt_reg[2]	->
+  uSspSTxRxCntl/BitCnt_reg[1]	->
+  uSspSTxRxCntl/BitCnt_reg[0] (*)	->
+  uSspSTxRxCntl/TxShft_reg[14] (*)	->
+  uSspSTxRxCntl/TxShft_reg[13] (*)	->
+  uSspSTxRxCntl/TxShft_reg[12] (*)	->
+  uSspSTxRxCntl/TxShft_reg[11] (*)	->
+  uSspSTxRxCntl/TxShft_reg[10] (*)	->
+  uSspSTxRxCntl/TxShft_reg[9] (*)	->
+  uSspSTxRxCntl/TxShft_reg[8] (*)	->
+  uSspSTxRxCntl/TxShft_reg[7] (*)	->
+  uSspSTxRxCntl/TxShft_reg[6] (*)	->
+  uSspSTxRxCntl/TxShft_reg[5] (*)	->
+  uSspSTxRxCntl/TxShft_reg[4] (*)	->
+  uSspSTxRxCntl/TxShft_reg[3] (*)	->
+  uSspSTxRxCntl/TxShft_reg[2] (*)	->
+  uSspSTxRxCntl/TxShft_reg[1] (*)	->
+  uSspSTxRxCntl/TxShft_reg[0] (*)	->
+  uSspSTxRxCntl/RxShft_reg[14] (*)	->
+  uSspSTxRxCntl/RxShft_reg[13] (*)	->
+  uSspSTxRxCntl/RxShft_reg[12] (*)	->
+  uSspSTxRxCntl/RxShft_reg[11] (*)	->
+  uSspSTxRxCntl/RxShft_reg[10] (*)	->
+  uSspSTxRxCntl/RxShft_reg[9] (*)	->
+  uSspSTxRxCntl/RxShft_reg[8] (*)	->
+  uSspSTxRxCntl/RxShft_reg[7] (*)	->
+  uSspSTxRxCntl/RxShft_reg[6] (*)	->
+  uSspSTxRxCntl/RxShft_reg[5] (*)	->
+  uSspSTxRxCntl/RxShft_reg[4] (*)	->
+  uSspSTxRxCntl/RxShft_reg[3] (*)	->
+  uSspSTxRxCntl/RxShft_reg[2] (*)	->
+  uSspSTxRxCntl/RxShft_reg[1] (*)	->
+  uSspSTxRxCntl/DelCLKINSync_reg (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[0]	->
+  uSspSTxRxCntl/RxShft_reg[0]	->
+  uSspSTxRxCntl/SspSTxRxState_reg[1] (*)	->
+  uSspSTxRxCntl/SspSTxRxState_reg[3]	->
+  uSspSTxRxCntl/SspSTxRxState_reg[2] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[15] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[14] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[13] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[12] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[11] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[10] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[9] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[8] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[7] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[6] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[5] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[4] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[3] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[2] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[1] (*)	->
+  uSspMTxRxCntl/IncRxTimeOut_reg	->
+  uSspMTxRxCntl/TxRxBSY_reg (*)	->
+  uSspMTxRxCntl/nOE_reg (*)	->
+  uSspMTxRxCntl/TXD_reg (*)	->
+  uSspMTxRxCntl/CLKOUT_reg (*)	->
+  uSspMTxRxCntl/FSSOUT_reg (*)	->
+  uSspMTxRxCntl/RxFWr_reg (*)	->
+  uSspMTxRxCntl/nCTLOE_reg	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[7] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[6] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[5] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[4] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[3] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[2] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[1] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[0] (*)	->
+  uSspMTxRxCntl/BitCnt_reg[3]	->
+  uSspMTxRxCntl/BitCnt_reg[2]	->
+  uSspMTxRxCntl/BitCnt_reg[1]	->
+  uSspMTxRxCntl/BitCnt_reg[0]	->
+  uSspMTxRxCntl/TxShft_reg[15]	->
+  uSspMTxRxCntl/TxShft_reg[14] (*)	->
+  uSspMTxRxCntl/TxShft_reg[13] (*)	->
+  uSspMTxRxCntl/TxShft_reg[12] (*)	->
+  uSspMTxRxCntl/TxShft_reg[11] (*)	->
+  uSspMTxRxCntl/TxShft_reg[10] (*)	->
+  uSspMTxRxCntl/TxShft_reg[9] (*)	->
+  uSspMTxRxCntl/TxShft_reg[8] (*)	->
+  uSspMTxRxCntl/TxShft_reg[7] (*)	->
+  uSspMTxRxCntl/TxShft_reg[6] (*)	->
+  uSspMTxRxCntl/TxShft_reg[5] (*)	->
+  uSspMTxRxCntl/TxShft_reg[4] (*)	->
+  uSspMTxRxCntl/TxShft_reg[3] (*)	->
+  uSspMTxRxCntl/TxShft_reg[2] (*)	->
+  uSspMTxRxCntl/TxShft_reg[1] (*)	->
+  uSspMTxRxCntl/TxShft_reg[0] (*)	->
+  uSspMTxRxCntl/RxShft_reg[14] (*)	->
+  uSspMTxRxCntl/RxShft_reg[13] (*)	->
+  uSspMTxRxCntl/RxShft_reg[12] (*)	->
+  uSspMTxRxCntl/RxShft_reg[11] (*)	->
+  uSspMTxRxCntl/RxShft_reg[10] (*)	->
+  uSspMTxRxCntl/RxShft_reg[9] (*)	->
+  uSspMTxRxCntl/RxShft_reg[8] (*)	->
+  uSspMTxRxCntl/RxShft_reg[7] (*)	->
+  uSspMTxRxCntl/RxShft_reg[6] (*)	->
+  uSspMTxRxCntl/RxShft_reg[5] (*)	->
+  uSspMTxRxCntl/RxShft_reg[4] (*)	->
+  uSspMTxRxCntl/RxShft_reg[3] (*)	->
+  uSspMTxRxCntl/RxShft_reg[2] (*)	->
+  uSspMTxRxCntl/RxShft_reg[1] (*)	->
+  uSspMTxRxCntl/DelCLKOUT_reg	->
+  uSspMTxRxCntl/SspMTxRxState_reg[1]	->
+  uSspMTxRxCntl/SspMTxRxState_reg[4]	->
+  uSspMTxRxCntl/MRxFWrData_reg[0]	->
+  uSspMTxRxCntl/RxShft_reg[0]	->
+  uSspMTxRxCntl/SspMTxRxState_reg[0]	->
+  uSspMTxRxCntl/SspMTxRxState_reg[3]	->
+  uSspMTxRxCntl/SspMTxRxState_reg[2]	->
+  uSspMTxRxCntl/SspMTxRxState_reg[5]	->
+  uSspMTxRxCntl/TxFRdPtrInc_reg (*)	->
+  uSspScaleCntr/SSPCPSC_reg[6]	->
+  uSspScaleCntr/SSPCPSC_reg[5]	->
+  uSspScaleCntr/SSPCPSC_reg[4]	->
+  uSspScaleCntr/SSPCPSC_reg[3]	->
+  uSspScaleCntr/SSPCPSC_reg[2]	->
+  uSspScaleCntr/SSPCPSC_reg[1]	->
+  uSspScaleCntr/SSPCPSC_reg[0] (*)	->
+  uSspScaleCntr/CPSR_reg[7] (*)	->
+  uSspScaleCntr/CPSR_reg[6] (*)	->
+  uSspScaleCntr/CPSR_reg[5] (*)	->
+  uSspScaleCntr/CPSR_reg[4] (*)	->
+  uSspScaleCntr/CPSR_reg[3] (*)	->
+  uSspScaleCntr/CPSR_reg[2] (*)	->
+  uSspScaleCntr/CPSR_reg[1] (*)	->
+  uSspScaleCntr/CR0_reg[15] (*)	->
+  uSspScaleCntr/CR0_reg[14] (*)	->
+  uSspScaleCntr/CR0_reg[13] (*)	->
+  uSspScaleCntr/CR0_reg[12] (*)	->
+  uSspScaleCntr/CR0_reg[11] (*)	->
+  uSspScaleCntr/CR0_reg[10] (*)	->
+  uSspScaleCntr/CR0_reg[9] (*)	->
+  uSspScaleCntr/CR0_reg[8] (*)	->
+  uSspScaleCntr/CR0_reg[7] (*)	->
+  uSspScaleCntr/CR0_reg[6] (*)	->
+  uSspScaleCntr/CR0_reg[5] (*)	->
+  uSspScaleCntr/CR0_reg[4] (*)	->
+  uSspScaleCntr/CR0_reg[3] (*)	->
+  uSspScaleCntr/CR0_reg[2] (*)	->
+  uSspScaleCntr/CR0_reg[1] (*)	->
+  uSspScaleCntr/CR0_reg[0] (*)	->
+  uSspScaleCntr/DelCPSRUpdate_reg	->
+  uSspScaleCntr/DelCR0Update_reg	->
+  uSspSynctoSSPCLK/FSSINSync1_reg (*)	->
+  uSspSynctoSSPCLK/FSSINSync_reg (*)	->
+  uSspSynctoSSPCLK/MSSync1_reg	->
+  uSspSynctoSSPCLK/SODSync_reg	->
+  uSspSynctoSSPCLK/SODSync1_reg	->
+  uSspSynctoSSPCLK/RTICSync_reg	->
+  uSspSynctoSSPCLK/RTICSync1_reg	->
+  uSspSynctoSSPCLK/RNESync_reg	->
+  uSspSynctoSSPCLK/RNESync1_reg	->
+  uSspSynctoSSPCLK/RTIMSync_reg	->
+  uSspSynctoSSPCLK/MSSync_reg	->
+  uSspSynctoSSPCLK/RTIMSync1_reg	->
+  uSspSynctoSSPCLK/CR0UpdateSync1_reg	->
+  uSspSynctoSSPCLK/CR0UpdateSync_reg	->
+  uSspSynctoSSPCLK/TxDataAvlblSync1_reg	->
+  uSspSynctoSSPCLK/TxDataAvlblSync_reg	->
+  uSspSynctoSSPCLK/SSESync1_reg	->
+  uSspSynctoSSPCLK/SSESync_reg	->
+  uSspSynctoSSPCLK/CPSRUpdateSync1_reg	->
+  uSspSynctoSSPCLK/CPSRUpdateSync_reg	->
+  uSspSynctoSSPCLK/CLKINSync1_reg	->
+  uSspSynctoSSPCLK/CLKINSync_reg	->
+  SCANOUTSSPCLK
+
+ 
+****************************************
+Report : test
+          -coverage
+Design : Ssp
+Version: 2001.08-1
+Date   : Fri Feb  8 12:19:20 2002
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Ssp' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0SspRevAnd               0      0     2     0      0     0     0      6   0.00%
+u1SspRevAnd               0      0     0     0      0     0     0      6   0.00%
+u2SspRevAnd               1      0     0     0      1     0     0      6  16.67%
+u3SspRevAnd               0      0     0     0      0     0     0      6   0.00%
+uSspApbif               232      0     1     0      1     0     0   2124  10.93%
+uSspDMA                  16      0     0     0      0     0     0    128  12.50%
+uSspDataStp              37      0     0     0      1     0     0    364  10.16%
+uSspIntGen                4      0     0     0      0     0     0     32  12.50%
+uSspMTxRxCntl           813      0     0     0      1     0     0   7370  11.03%
+uSspRegCore             119      0     0     0      0     0     0   1060  11.23%
+uSspRxFIFO/uSspRxFCntl
+                         66      0     0     0      0     0     0    592  11.15%
+uSspRxFIFO/uSspRxRegFile
+                        519      0     0     0      0     0     0   4756  10.91%
+uSspRxFIFO              585      0     0     0      0     0     0   5348  10.94%
+uSspSTxRxCntl           493      0     0     0      2     0     0   4498  10.96%
+uSspScaleCntr           103      0     0     0      0     0     0    896  11.50%
+uSspSynctoPCLK           17      0     0     0      2     0     0    180   9.44%
+uSspSynctoSSPCLK         30      0     0     0      1     0     0    304   9.87%
+uSspTest                 75      0     0     0      0     0     0    692  10.84%
+uSspTxFIFO/uSspTxFCntl
+                         59      0     0     0      0     0     0    548  10.77%
+uSspTxFIFO/uSspTxLJustify
+                        144      0     0     0      0     0     0   1274  11.30%
+uSspTxFIFO/uSspTxRegFile
+                        472      0     0     0      0     0     0   4304  10.97%
+uSspTxFIFO              676      0     0     0      0     0     0   6150  10.99%
+Ssp                    3214      0     3     0      9     0     0  29320  10.96%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Ssp
+Version: 2001.08-1
+Date   : Fri Feb  8 12:19:22 2002
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Insert Lockups at the end of scan chains : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Ssp
+Version: 2001.08-1
+Date   : Fri Feb  8 12:19:22 2002
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain #1 (SCANINPCLK --> SCANOUTPCLK) contains 388 cells:
+
+  SCANINPCLK	->
+  uSspDMA/RXDMABREQ_reg (*)	->
+  uSspDMA/TXDMASREQ_reg (*)	->
+  uSspDMA/TXDMABREQ_reg (*)	->
+  uSspDMA/RXDMASREQ_reg (*)	->
+  uSspRegCore/SSPDMACR_reg[1] (*)	->
+  uSspRegCore/SSPCR0_reg[15] (*)	->
+  uSspRegCore/SSPCR0_reg[14] (*)	->
+  uSspRegCore/SSPCR0_reg[13] (*)	->
+  uSspRegCore/SSPCR0_reg[12] (*)	->
+  uSspRegCore/SSPCR0_reg[11] (*)	->
+  uSspRegCore/SSPCR0_reg[10] (*)	->
+  uSspRegCore/SSPCR0_reg[9] (*)	->
+  uSspRegCore/SSPCR0_reg[8] (*)	->
+  uSspRegCore/SSPCR0_reg[7] (*)	->
+  uSspRegCore/SSPCR0_reg[6] (*)	->
+  uSspRegCore/SSPCR0_reg[5] (*)	->
+  uSspRegCore/SSPCR0_reg[4] (*)	->
+  uSspRegCore/SSPCR0_reg[3] (*)	->
+  uSspRegCore/SSPCR0_reg[2] (*)	->
+  uSspRegCore/SSPCR0_reg[1] (*)	->
+  uSspRegCore/SSPCR0_reg[0] (*)	->
+  uSspRegCore/SSPCR1_reg[6] (*)	->
+  uSspRegCore/SSPCR1_reg[5] (*)	->
+  uSspRegCore/SSPCR1_reg[4] (*)	->
+  uSspRegCore/SSPCR1_reg[3] (*)	->
+  uSspRegCore/SSPCR1_reg[2] (*)	->
+  uSspRegCore/SSPCR1_reg[1] (*)	->
+  uSspRegCore/SSPCR1_reg[0] (*)	->
+  uSspRegCore/SSPCPSR_reg[7] (*)	->
+  uSspRegCore/SSPCPSR_reg[6] (*)	->
+  uSspRegCore/SSPCPSR_reg[5] (*)	->
+  uSspRegCore/SSPCPSR_reg[4] (*)	->
+  uSspRegCore/SSPCPSR_reg[3] (*)	->
+  uSspRegCore/SSPCPSR_reg[2] (*)	->
+  uSspRegCore/SSPCPSR_reg[1] (*)	->
+  uSspRegCore/SSPIMSC_reg[3] (*)	->
+  uSspRegCore/SSPIMSC_reg[2] (*)	->
+  uSspRegCore/SSPIMSC_reg[1] (*)	->
+  uSspRegCore/SSPIMSC_reg[0] (*)	->
+  uSspRegCore/CR0Update_reg (*)	->
+  uSspRegCore/CPSRUpdate_reg (*)	->
+  uSspRegCore/RTIC_reg (*)	->
+  uSspRegCore/RORIC_reg (*)	->
+  uSspRegCore/SSPDMACR_reg[0] (*)	->
+  uSspTest/SSPITIP_reg[4] (*)	->
+  uSspTest/SSPITIP_reg[3] (*)	->
+  uSspTest/iSSPITOP_reg[13] (*)	->
+  uSspTest/iSSPITOP_reg[12] (*)	->
+  uSspTest/iSSPITOP_reg[11] (*)	->
+  uSspTest/iSSPITOP_reg[10] (*)	->
+  uSspTest/iSSPITOP_reg[9] (*)	->
+  uSspTest/iSSPITOP_reg[8] (*)	->
+  uSspTest/iSSPITOP_reg[7] (*)	->
+  uSspTest/iSSPITOP_reg[6] (*)	->
+  uSspTest/iSSPITOP_reg[5] (*)	->
+  uSspTest/iSSPITOP_reg[4] (*)	->
+  uSspTest/iSSPITOP_reg[3] (*)	->
+  uSspTest/iSSPITOP_reg[2] (*)	->
+  uSspTest/iSSPITOP_reg[1] (*)	->
+  uSspTest/iSSPITOP_reg[0] (*)	->
+  uSspTest/SSPTCR_reg[1] (*)	->
+  uSspTest/delSSPTDRRd_reg (*)	->
+  uSspTest/SSPTCR_reg[0]	->
+  uSspSynctoPCLK/RTRISSync1_reg	->
+  uSspSynctoPCLK/RTRISSync_reg	->
+  uSspSynctoPCLK/RTMISSync1_reg	->
+  uSspSynctoPCLK/RTMISSync_reg	->
+  uSspSynctoPCLK/IntTXDMACLRSync1_reg	->
+  uSspSynctoPCLK/IntTXDMACLRSync_reg	->
+  uSspSynctoPCLK/IntRXDMACLRSync1_reg	->
+  uSspSynctoPCLK/IntRXDMACLRSync_reg	->
+  uSspSynctoPCLK/TxFRdPtrIncSync1_reg	->
+  uSspSynctoPCLK/TxFRdPtrIncSync_reg	->
+  uSspSynctoPCLK/RxFWrSync1_reg	->
+  uSspSynctoPCLK/RxFWrSync_reg	->
+  uSspSynctoPCLK/TxRxBSYSync1_reg	->
+  uSspSynctoPCLK/TxRxBSYSync_reg	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg7_reg[0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg0_reg[0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg1_reg[0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg2_reg[0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg3_reg[0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg4_reg[0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg5_reg[0] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[15] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[14] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[13] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[12] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[11] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[10] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[9] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[8] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[7] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[6] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[5] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[4] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[3] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[2] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[1] (*)	->
+  uSspRxFIFO/uSspRxRegFile/RxReg6_reg[0] (*)	->
+  uSspRxFIFO/uSspRxFCntl/DelRxFWrSync_reg	->
+  uSspRxFIFO/uSspRxFCntl/WrPtr_reg[1] (*)	->
+  uSspRxFIFO/uSspRxFCntl/WrPtr_reg[0] (*)	->
+  uSspRxFIFO/uSspRxFCntl/RdPtr_reg[2] (*)	->
+  uSspRxFIFO/uSspRxFCntl/RdPtr_reg[1] (*)	->
+  uSspRxFIFO/uSspRxFCntl/RdPtr_reg[0]	->
+  uSspRxFIFO/uSspRxFCntl/Wrap_reg	->
+  uSspRxFIFO/uSspRxFCntl/RNE_reg	->
+  uSspRxFIFO/uSspRxFCntl/RFF_reg	->
+  uSspRxFIFO/uSspRxFCntl/RXRIS_reg	->
+  uSspRxFIFO/uSspRxFCntl/RORRIS_reg (*)	->
+  uSspRxFIFO/uSspRxFCntl/WrPtr_reg[2] (*)	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[14]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[13]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[12]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[11]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[10]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[9]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[8]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[7]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[6]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[5]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[4]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[3]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[2]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[1]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[0]	->
+  uSspTxFIFO/uSspTxLJustify/TxFRdDataIn_reg[15]	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg7_reg[0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg0_reg[0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg1_reg[0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg2_reg[0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg3_reg[0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg4_reg[0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg5_reg[0] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[15] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[14] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[13] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[12] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[11] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[10] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[9] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[8] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[7] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[6] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[5] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[4] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[3] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[2] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[1] (*)	->
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg[0] (*)	->
+  uSspTxFIFO/uSspTxFCntl/DelRdPtrInc_reg	->
+  uSspTxFIFO/uSspTxFCntl/WrPtr_reg[1] (*)	->
+  uSspTxFIFO/uSspTxFCntl/WrPtr_reg[0] (*)	->
+  uSspTxFIFO/uSspTxFCntl/Wrap_reg	->
+  uSspTxFIFO/uSspTxFCntl/TNF_reg	->
+  uSspTxFIFO/uSspTxFCntl/TXRIS_reg (*)	->
+  uSspTxFIFO/uSspTxFCntl/TxDataAvlbl_reg (*)	->
+  uSspTxFIFO/uSspTxFCntl/WrPtr_reg[2]	->
+  uSspTxFIFO/uSspTxFCntl/RdPtr_reg[2] (*)	->
+  uSspTxFIFO/uSspTxFCntl/RdPtr_reg[0] (*)	->
+  uSspTxFIFO/uSspTxFCntl/RdPtr_reg[1] (*)	->
+  uSspApbif/PRDATA_reg[15]	->
+  uSspApbif/PRDATA_reg[14]	->
+  uSspApbif/PRDATA_reg[13]	->
+  uSspApbif/PRDATA_reg[12]	->
+  uSspApbif/PRDATA_reg[11]	->
+  uSspApbif/PRDATA_reg[10]	->
+  uSspApbif/PRDATA_reg[9]	->
+  uSspApbif/PRDATA_reg[8]	->
+  uSspApbif/PRDATA_reg[7]	->
+  uSspApbif/PRDATA_reg[6]	->
+  uSspApbif/PRDATA_reg[5]	->
+  uSspApbif/PRDATA_reg[4]	->
+  uSspApbif/PRDATA_reg[3]	->
+  uSspApbif/PRDATA_reg[2]	->
+  uSspApbif/PRDATA_reg[1]	->
+  uSspApbif/PRDATA_reg[0]	->
+  SCANOUTPCLK
+
+Complete scan chain #2 (SCANINSSPCLK --> SCANOUTSSPCLK) contains 203 cells:
+
+  SCANINSSPCLK	->
+  uSspDataStp/DataStp_reg (*)	->
+  uSspDataStp/delRTICSync_reg	->
+  uSspDataStp/SspDataStpState_reg (*)	->
+  uSspDataStp/WDCount_reg[5]	->
+  uSspDataStp/WDCount_reg[4]	->
+  uSspDataStp/WDCount_reg[3]	->
+  uSspDataStp/WDCount_reg[2]	->
+  uSspDataStp/WDCount_reg[1]	->
+  uSspDataStp/WDCount_reg[0] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[15] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[14] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[13] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[12] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[11] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[10] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[9] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[8] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[7] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[6] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[5] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[4] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[3] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[2] (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[1] (*)	->
+  uSspSTxRxCntl/IntSOD_reg (*)	->
+  uSspSTxRxCntl/SspSTxRxState_reg[4]	->
+  uSspSTxRxCntl/SspSTxRxState_reg[0]	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[7] (*)	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[6] (*)	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[5] (*)	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[4] (*)	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[3]	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[2]	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[1] (*)	->
+  uSspSTxRxCntl/BitPeriodCnt_reg[0] (*)	->
+  uSspSTxRxCntl/BitCnt_reg[3]	->
+  uSspSTxRxCntl/BitCnt_reg[2]	->
+  uSspSTxRxCntl/BitCnt_reg[1]	->
+  uSspSTxRxCntl/BitCnt_reg[0] (*)	->
+  uSspSTxRxCntl/TxShft_reg[14] (*)	->
+  uSspSTxRxCntl/TxShft_reg[13] (*)	->
+  uSspSTxRxCntl/TxShft_reg[12] (*)	->
+  uSspSTxRxCntl/TxShft_reg[11] (*)	->
+  uSspSTxRxCntl/TxShft_reg[10] (*)	->
+  uSspSTxRxCntl/TxShft_reg[9] (*)	->
+  uSspSTxRxCntl/TxShft_reg[8] (*)	->
+  uSspSTxRxCntl/TxShft_reg[7] (*)	->
+  uSspSTxRxCntl/TxShft_reg[6] (*)	->
+  uSspSTxRxCntl/TxShft_reg[5] (*)	->
+  uSspSTxRxCntl/TxShft_reg[4] (*)	->
+  uSspSTxRxCntl/TxShft_reg[3] (*)	->
+  uSspSTxRxCntl/TxShft_reg[2] (*)	->
+  uSspSTxRxCntl/TxShft_reg[1] (*)	->
+  uSspSTxRxCntl/TxShft_reg[0] (*)	->
+  uSspSTxRxCntl/RxShft_reg[14] (*)	->
+  uSspSTxRxCntl/RxShft_reg[13] (*)	->
+  uSspSTxRxCntl/RxShft_reg[12] (*)	->
+  uSspSTxRxCntl/RxShft_reg[11] (*)	->
+  uSspSTxRxCntl/RxShft_reg[10] (*)	->
+  uSspSTxRxCntl/RxShft_reg[9] (*)	->
+  uSspSTxRxCntl/RxShft_reg[8] (*)	->
+  uSspSTxRxCntl/RxShft_reg[7] (*)	->
+  uSspSTxRxCntl/RxShft_reg[6] (*)	->
+  uSspSTxRxCntl/RxShft_reg[5] (*)	->
+  uSspSTxRxCntl/RxShft_reg[4] (*)	->
+  uSspSTxRxCntl/RxShft_reg[3] (*)	->
+  uSspSTxRxCntl/RxShft_reg[2] (*)	->
+  uSspSTxRxCntl/RxShft_reg[1] (*)	->
+  uSspSTxRxCntl/DelCLKINSync_reg (*)	->
+  uSspSTxRxCntl/SRxFWrData_reg[0]	->
+  uSspSTxRxCntl/RxShft_reg[0]	->
+  uSspSTxRxCntl/SspSTxRxState_reg[1] (*)	->
+  uSspSTxRxCntl/SspSTxRxState_reg[3]	->
+  uSspSTxRxCntl/SspSTxRxState_reg[2] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[15] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[14] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[13] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[12] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[11] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[10] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[9] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[8] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[7] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[6] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[5] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[4] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[3] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[2] (*)	->
+  uSspMTxRxCntl/MRxFWrData_reg[1] (*)	->
+  uSspMTxRxCntl/IncRxTimeOut_reg	->
+  uSspMTxRxCntl/TxRxBSY_reg (*)	->
+  uSspMTxRxCntl/nOE_reg (*)	->
+  uSspMTxRxCntl/TXD_reg (*)	->
+  uSspMTxRxCntl/CLKOUT_reg (*)	->
+  uSspMTxRxCntl/FSSOUT_reg (*)	->
+  uSspMTxRxCntl/RxFWr_reg (*)	->
+  uSspMTxRxCntl/nCTLOE_reg	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[7] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[6] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[5] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[4] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[3] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[2] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[1] (*)	->
+  uSspMTxRxCntl/BitPeriodCnt_reg[0] (*)	->
+  uSspMTxRxCntl/BitCnt_reg[3]	->
+  uSspMTxRxCntl/BitCnt_reg[2]	->
+  uSspMTxRxCntl/BitCnt_reg[1]	->
+  uSspMTxRxCntl/BitCnt_reg[0]	->
+  uSspMTxRxCntl/TxShft_reg[15]	->
+  uSspMTxRxCntl/TxShft_reg[14] (*)	->
+  uSspMTxRxCntl/TxShft_reg[13] (*)	->
+  uSspMTxRxCntl/TxShft_reg[12] (*)	->
+  uSspMTxRxCntl/TxShft_reg[11] (*)	->
+  uSspMTxRxCntl/TxShft_reg[10] (*)	->
+  uSspMTxRxCntl/TxShft_reg[9] (*)	->
+  uSspMTxRxCntl/TxShft_reg[8] (*)	->
+  uSspMTxRxCntl/TxShft_reg[7] (*)	->
+  uSspMTxRxCntl/TxShft_reg[6] (*)	->
+  uSspMTxRxCntl/TxShft_reg[5] (*)	->
+  uSspMTxRxCntl/TxShft_reg[4] (*)	->
+  uSspMTxRxCntl/TxShft_reg[3] (*)	->
+  uSspMTxRxCntl/TxShft_reg[2] (*)	->
+  uSspMTxRxCntl/TxShft_reg[1] (*)	->
+  uSspMTxRxCntl/TxShft_reg[0] (*)	->
+  uSspMTxRxCntl/RxShft_reg[14] (*)	->
+  uSspMTxRxCntl/RxShft_reg[13] (*)	->
+  uSspMTxRxCntl/RxShft_reg[12] (*)	->
+  uSspMTxRxCntl/RxShft_reg[11] (*)	->
+  uSspMTxRxCntl/RxShft_reg[10] (*)	->
+  uSspMTxRxCntl/RxShft_reg[9] (*)	->
+  uSspMTxRxCntl/RxShft_reg[8] (*)	->
+  uSspMTxRxCntl/RxShft_reg[7] (*)	->
+  uSspMTxRxCntl/RxShft_reg[6] (*)	->
+  uSspMTxRxCntl/RxShft_reg[5] (*)	->
+  uSspMTxRxCntl/RxShft_reg[4] (*)	->
+  uSspMTxRxCntl/RxShft_reg[3] (*)	->
+  uSspMTxRxCntl/RxShft_reg[2] (*)	->
+  uSspMTxRxCntl/RxShft_reg[1] (*)	->
+  uSspMTxRxCntl/DelCLKOUT_reg	->
+  uSspMTxRxCntl/SspMTxRxState_reg[1]	->
+  uSspMTxRxCntl/SspMTxRxState_reg[4]	->
+  uSspMTxRxCntl/MRxFWrData_reg[0]	->
+  uSspMTxRxCntl/RxShft_reg[0]	->
+  uSspMTxRxCntl/SspMTxRxState_reg[0]	->
+  uSspMTxRxCntl/SspMTxRxState_reg[3]	->
+  uSspMTxRxCntl/SspMTxRxState_reg[2]	->
+  uSspMTxRxCntl/SspMTxRxState_reg[5]	->
+  uSspMTxRxCntl/TxFRdPtrInc_reg (*)	->
+  uSspScaleCntr/SSPCPSC_reg[6]	->
+  uSspScaleCntr/SSPCPSC_reg[5]	->
+  uSspScaleCntr/SSPCPSC_reg[4]	->
+  uSspScaleCntr/SSPCPSC_reg[3]	->
+  uSspScaleCntr/SSPCPSC_reg[2]	->
+  uSspScaleCntr/SSPCPSC_reg[1]	->
+  uSspScaleCntr/SSPCPSC_reg[0] (*)	->
+  uSspScaleCntr/CPSR_reg[7] (*)	->
+  uSspScaleCntr/CPSR_reg[6] (*)	->
+  uSspScaleCntr/CPSR_reg[5] (*)	->
+  uSspScaleCntr/CPSR_reg[4] (*)	->
+  uSspScaleCntr/CPSR_reg[3] (*)	->
+  uSspScaleCntr/CPSR_reg[2] (*)	->
+  uSspScaleCntr/CPSR_reg[1] (*)	->
+  uSspScaleCntr/CR0_reg[15] (*)	->
+  uSspScaleCntr/CR0_reg[14] (*)	->
+  uSspScaleCntr/CR0_reg[13] (*)	->
+  uSspScaleCntr/CR0_reg[12] (*)	->
+  uSspScaleCntr/CR0_reg[11] (*)	->
+  uSspScaleCntr/CR0_reg[10] (*)	->
+  uSspScaleCntr/CR0_reg[9] (*)	->
+  uSspScaleCntr/CR0_reg[8] (*)	->
+  uSspScaleCntr/CR0_reg[7] (*)	->
+  uSspScaleCntr/CR0_reg[6] (*)	->
+  uSspScaleCntr/CR0_reg[5] (*)	->
+  uSspScaleCntr/CR0_reg[4] (*)	->
+  uSspScaleCntr/CR0_reg[3] (*)	->
+  uSspScaleCntr/CR0_reg[2] (*)	->
+  uSspScaleCntr/CR0_reg[1] (*)	->
+  uSspScaleCntr/CR0_reg[0] (*)	->
+  uSspScaleCntr/DelCPSRUpdate_reg	->
+  uSspScaleCntr/DelCR0Update_reg	->
+  uSspSynctoSSPCLK/FSSINSync1_reg (*)	->
+  uSspSynctoSSPCLK/FSSINSync_reg (*)	->
+  uSspSynctoSSPCLK/MSSync1_reg	->
+  uSspSynctoSSPCLK/SODSync_reg	->
+  uSspSynctoSSPCLK/SODSync1_reg	->
+  uSspSynctoSSPCLK/RTICSync_reg	->
+  uSspSynctoSSPCLK/RTICSync1_reg	->
+  uSspSynctoSSPCLK/RNESync_reg	->
+  uSspSynctoSSPCLK/RNESync1_reg	->
+  uSspSynctoSSPCLK/RTIMSync_reg	->
+  uSspSynctoSSPCLK/MSSync_reg	->
+  uSspSynctoSSPCLK/RTIMSync1_reg	->
+  uSspSynctoSSPCLK/CR0UpdateSync1_reg	->
+  uSspSynctoSSPCLK/CR0UpdateSync_reg	->
+  uSspSynctoSSPCLK/TxDataAvlblSync1_reg	->
+  uSspSynctoSSPCLK/TxDataAvlblSync_reg	->
+  uSspSynctoSSPCLK/SSESync1_reg	->
+  uSspSynctoSSPCLK/SSESync_reg	->
+  uSspSynctoSSPCLK/CPSRUpdateSync1_reg	->
+  uSspSynctoSSPCLK/CPSRUpdateSync_reg	->
+  uSspSynctoSSPCLK/CLKINSync1_reg	->
+  uSspSynctoSSPCLK/CLKINSync_reg	->
+  SCANOUTSSPCLK
+

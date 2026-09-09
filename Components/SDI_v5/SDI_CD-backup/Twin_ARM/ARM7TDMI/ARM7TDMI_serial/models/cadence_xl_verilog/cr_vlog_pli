@@ -1,0 +1,35 @@
+#!/bin/csh -f
+#
+#
+#
+# Script to create : Dynamic PLI library
+#
+        set a=`sh -c "type gcc"`
+        if ( "$a" == "cc is /usr/ucb/cc" ) then
+	echo "which cc" returned "/usr/ucb/cc"
+	echo This compiler will not yield a good executable.
+	echo Please adjust your PATH environment variable to pick up the Sun C Compiler.
+	exit 1
+	endif
+set verbose
+#
+# The following is the actual compile/link
+# statement:                              
+#                                         
+#
+# The following line(s) will pre-compile your
+# PLI/VPI C source files before the linking step.
+#
+gcc  -KPIC -c /Stools/LDV5.1/tools/verilog/src/veriuser.c  \
+   -I/Stools/LDV5.1/tools/verilog/include  
+               
+# Linking step 
+               
+ld -G    \
+ veriuser.o \
+ -L${MG_LIB}/cadence_xl_verilog \
+ -lmgmm \
+  -o libpli.so 
+
+#
+unset verbose

@@ -1,0 +1,29 @@
+// ******************************************************************* //
+//  Copyright (c) 2002  Evatronix SA                                   //
+// ******************************************************************* //
+//  Please review the terms of the license agreement before using      //
+//  this file. If you are not an authorized user, please destroy this  //
+//  source code file and notify Evatronix SA immediately that you      //
+//  inadvertently received an unauthorized copy.                       //
+// ******************************************************************* //
+// ------------------------------------------------------------------- //
+// Project name         : MAC
+// Project description  : Ethernet Media Access Controller
+//
+// File name            : 
+// File contents        : 
+// Purpose              : 
+// Design Engineer      : 
+// Quality Engineer     : 
+// Test version         : 1.00
+// Last modification    : 2002-08-01
+// ------------------------------------------------------------------- //
+
+0 50           // wait
+2 00 00001000  // write PBL=16
+2 20 00001000  // write transmit list base address
+2 18 00001100  // write receive list base address
+2 30 00202002  // write start transmit/receive command
+
+0 6700           // wait
+2 08 FFFFFFFF  // write transmit poll demand command

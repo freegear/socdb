@@ -1,0 +1,106 @@
+///////////////////////////////////////////////////////////////////////////
+// TASKS for USB model
+// 
+//  urx_dcompare: Compare USB RX data
+///////////////////////////////////////////////////////////////////////////
+
+task urx_dcompare;
+input[31:0] mem_ptr;
+input[10:0] data_length;
+output      flag_success;
+
+reg[31:0]   data_sptr;
+reg[31:0]   desc_length;
+reg[31:0]   next_mem_ptr;
+reg[31:0]   temp_addr;
+reg[31:0]   temp_data;
+reg[10:0]   desc_tlength;
+reg[7:0]    psrc_data;
+reg[5:0]    purx_did;
+reg         flag_success;
+reg         compare_done;
+integer     urx_i;
+integer     urx_ti;
+begin
+
+  // Get RX descriptor
+  read (mem_ptr,data_sptr,2'b10);
+  read (mem_ptr+4,desc_length,2'b10);
+  read (mem_ptr+8,next_mem_ptr,2'b10);
+
+  desc_tlength = 0;
+  compare_done = 0;
+  flag_success = 1'b1;
+
+  while (!compare_done) begin
+
+    for (urx_i = 0; urx_i < desc_length; urx_i = urx_i + 4) begin
+      temp_addr = data_sptr + urx_i;
+      read (temp_addr,temp_data,2'b10);
+
+      psrc_data = data_length + urx_i;
+      if (temp_data[7:0] !== psrc_data) begin
+        $display ("USB RX DATA ERROR!! %d: 0x%x, 0x%x",
+                  urx_i,psrc_data,temp_data[7:0]);
+        flag_success = 1'b0;
+        $stop;
+      end
+      psrc_data = psrc_data + 1;
+      if (desc_tlength + urx_i + 1 < data_length) begin
+        if (temp_data[15:8] !== psrc_data) begin
+          $display ("USB RX DATA ERROR!! %d: 0x%x, 0x%x",
+                    urx_i,psrc_data,temp_data[15:8]);
+          flag_success = 1'b0;
+          $stop;
+        end
+      end
+      psrc_data = psrc_data + 1;
+      if (desc_tlength + urx_i + 2 < data_length) begin
+        if (temp_data[23:16] !== psrc_data) begin
+          $display ("USB RX DATA ERROR!! %d: 0x%x, 0x%x",
+                    urx_i,psrc_data,temp_data[23:16]);
+          flag_success = 1'b0;
+          $stop;
+        end
+      end
+      psrc_data = psrc_data + 1;
+      if (desc_tlength + urx_i + 3 < data_length) begin
+        if (temp_data[31:24] !== psrc_data) begin
+          $display ("USB RX DATA ERROR!! %d: 0x%x, 0x%x",
+                    urx_i,psrc_data,temp_data[31:24]);
+          flag_success = 1'b0;
+          $stop;
+        end
+      end
+
+    end       // for-loop end
+
+    desc_tlength = desc_tlength + desc_length[10:0];
+    nop;
+
+    if (next_mem_ptr === 32'hffff_ffff) begin
+      // Get transmitted RX data length
+      if (desc_tlength !== data_length) begin
+        $display ("USB RX LENGTH ERROR!!!: %d, %d",
+                   desc_tlength,data_length);
+        $stop;
+      end
+      compare_done = 1;
+    end
+    else begin
+      // Get next RX descriptor
+      urx_ti = urx_ti + desc_length;
+      mem_ptr = next_mem_ptr;
+      nop;
+      read (mem_ptr,data_sptr,2'b10);
+      read (mem_ptr+4,desc_length,2'b10);
+      read (mem_ptr+8,next_mem_ptr,2'b10);
+    end
+
+  end            // while-loop end
+
+  if (flag_success)
+    $display ("USB RX SUCCESS: LENGTH: %d", data_length);
+
+end
+endtask

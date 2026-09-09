@@ -1,0 +1,12 @@
+
+analyze -f verilog ExtRAM.v
+analyze -f verilog ExtROM.v
+analyze -f verilog Memory_wrap.v
+
+
+elaborate Memory
+current_design Memory
+link
+
+write -f db -hier -out Memory.gtech.db
+

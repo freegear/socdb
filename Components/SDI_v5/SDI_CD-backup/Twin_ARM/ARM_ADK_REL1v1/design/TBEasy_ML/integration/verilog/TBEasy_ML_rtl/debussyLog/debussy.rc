@@ -1,0 +1,313 @@
+@debussy rc file Version 1.0
+[Library]
+work = ./work
+[*]
+IfShowModule = {TRUE, FALSE}
+[Annotation]
+3D_Active_Annotation = FALSE
+[Editor]
+editorName = Vi
+[Emacs]
+EmacsFont = "Clean 14"
+EmacsBG = gray
+EmacsFG = black
+[FSM]
+viewport = 65 336 387 479
+SmartTips = TRUE
+State-LineColor = black
+State-LineWidth = 1
+State-FillColor = blue3
+State-TextColor = white
+Init_State-LineColor = black
+Init_State-LineWidth = 2
+Init_State-FillColor = yellow3
+Init_State-TextColor = black
+Trap_State-LineColor = red3
+Trap_State-LineWidth = 2
+Trap_State-FillColor = cyan4
+Trap_State-TextColor = red3
+State_Action-LineColor = black
+State_Action-LineWidth = 1
+State_Action-FillColor = white
+State_Action-TextColor = black
+Junction-LineColor = black
+Junction-LineWidth = 1
+Junction-FillColor = green3
+Junction-TextColor = black
+Connection-LineColor = black
+Connection-LineWidth = 1
+Connection-FillColor = Gray5
+Connection-TextColor = black
+Transition-LineColor = black
+Transition-LineWidth = 1
+Transition-FillColor = white
+Transition-TextColor = black
+Trans_Condition-LineColor = black
+Trans_Condition-LineWidth = 1
+Trans_Condition-FillColor = white
+Trans_Condition-TextColor = orange2
+Trans_Action-LineColor = black
+Trans_Action-LineWidth = 1
+Trans_Action-FillColor = white
+Trans_Action-TextColor = green2
+SelectedSet-LineColor = red3
+SelectedSet-LineWidth = 1
+SelectedSet-FillColor = red3
+SelectedSet-TextColor = white
+HilightSet-LineColor = red4
+HilightSet-LineWidth = 1
+HilightSet-FillColor = red7
+HilightSet-TextColor = blue4
+WndBk-FillColor = Gray3
+Background-FillColor = gray5
+Selection-LineColor = blue3
+Selection-LineWidth = 1
+prefKey_Link-LineColor = orange2
+prefKey_Link-LineWidth = 1
+prefKey_Link-FillColor = yellow4
+prefKey_Link-TextColor = black
+prefKey_Port-LineColor = black
+prefKey_Port-LineWidth = 1
+prefKey_Port-FillColor = orange5
+prefKey_Port-TextColor = yellow2
+Trap = red3
+Hilight = blue4
+Window = Gray3
+Selected = white
+Trans. = green2
+State = black
+Init. = black
+StickSet-LineColor = orange4
+StickSet-LineWidth = 1
+StickSet-FillColor = purple6
+StickSet-TextColor = black
+[FSM_Dlg-Print]
+Orientation = Landscape        
+[HB]
+ViewSchematic = FALSE
+windowLayout = 0 0 804 500 182 214 804 198
+import_filter = *.v; *.vc; *.f
+designTreeFont = -adobe-helvetica-medium-r-normal--14-*-75-75-*-*-iso8859-*
+import_filter_vhdl = *.vhd; *.vhdl; *.f
+import_default_language = Verilog
+import_filter_verilog = *.v; *.vc; *.f
+simulation_file_type = *.fsdb;*.ff;*.dump
+[OtherEditor]
+cmd1 = "xterm -font 9x15 -fg black -bg gray -e"
+name = "vi"
+options = "+${CurLine} ${CurFileName}"
+[Print]
+PrinterName = lp
+FileName = test.ps
+PaperSize = A4 - 210x297 (mm)
+ColorPrint = FALSE
+[Session Cache]
+1 = string (session file name)
+2 = string (session file name)
+3 = string (session file name)
+4 = string (session file name)
+5 = string (session file name)
+[Simulation]
+xlPath = verilog
+xlOption = 
+ncPath = ncsim
+ncOption = -f ncsim.args
+vcsPath = simv
+vcsOption = 
+mtiPath = vsim
+mtiOption = 
+lfPath = sv
+lfOption = 
+vhncPath = ncsim
+vhncOption = -log debussy.nc.log
+speedsimPath = 
+speedsimOption = 
+interactiveDebugging = {True, False}
+KeepBreakPoints = False
+simType = {xl, nc, vcs, mti, lf}
+thirdpartyIdx = -1
+iscCmdSep = FALSE
+[Text]
+hdlComment = Gray1
+hdlKeyword = blue4
+hdlEntity = black
+hdlEntityInst = black
+hdlSignal = red3
+hdlInSignal = red3
+hdlOutSignal = red3
+hdlInOutSignal = red3
+hdlOperator = black
+hdlMinus = black
+hdlSymbol = black
+hdlString = black
+hdlNumberBase = black
+hdlNumber = black
+hdlLiteral = black
+hdlIdentifier = black
+hdlSystemTask = black
+hdlParameter = black
+hdlIncFile = black
+hdlDataFile = black
+hdlCDSkipIf = Gray1
+hdlMacro = black
+textBackground = Gray5
+textHiliteBK = blue4
+textHiliteText = white
+textTracedMark = green2
+textLineNo = black
+textUserKeyword = green2
+textAnnotText = black
+textAnnotTextShadow = white
+text3DLight = white
+text3DShadow = black
+irOutline = red4
+irDriver = yellow4
+irLoad = black
+irBookMark = cyan4
+irIndicator = white
+irBreakpoint = green4
+irCurLine = blue4
+font = SMALL12
+hdlVhEntity = black
+hdlArchitecture = black
+hdlPackage = blue4
+hdlAlias = blue4
+hdlGeneric = blue4
+hdlTypeName = blue4
+hdlLibrary = blue4
+viewport = 396 392 445 487
+hdlPlainText = black
+textParaAnnotText = black
+[TextPrinter]
+Orientation = Landscape
+Indicator = FALSE
+LineNum = TRUE
+FontSize = 7
+Column = 2
+Annotation = TRUE
+[Texteditor]
+TexteditorFont = "Clean 14"
+TexteditorBG = gray
+TexteditorFG = black
+[ThirdParty]
+ThirdPartySimTool = axis surefire
+[TurboEditor]
+autoBackup = TRUE
+[UserButton.lf]
+Button1 = "Dump All Signals" "call fsdbDumpvars\n"
+Button2 = "Next 1000 Time" "run 1000 ps\n"
+Button3 = "Next ? Time" "run ${Arg:Next Time} ps\n"
+Button4 = "Show Variables" "value ${SelVars}\n"
+Button5 = "Force Variable" "set force ${SelVar}=${Arg:New Value} -freeze\n"
+Button6 = "Release Variable" "delete force ${SelVar}\n"
+[UserButton.mti]
+Button1 = "Dump All Signals" "fsdbDumpvars\n"
+Button2 = "Next 1000 Time" "run 1000\n"
+Button3 = "Next ? Time" "run ${Arg:Next Time}\n"
+Button4 = "Show Variables" "exa ${SelVars}\n"
+Button5 = "Force Variable" "force -freeze ${SelVar} ${Arg:New Value} 0\n"
+Button6 = "Release Variable" "noforce ${SelVar}\n"
+Button7 = "Deposit Variable" "force -deposit ${SelVar} ${Arg:New Value} 0\n"
+[UserButton.nc]
+Button1 = "Dump All Signals" "call fsdbDumpvars\n"
+Button2 = "Next 1000 Time" "run 1000 -relative\n"
+Button3 = "Next ? Time" "run ${Arg:Next Time} -relative\n"
+Button4 = "Run Next" "run -next\n"
+Button5 = "Run Step" "run -step\n"
+Button6 = "Run Return" "run -return\n"
+Button7 = "Show Variables" "value {${NCSelVars}}\n"
+[UserButton.xl]
+Button13 = "Dump Off" "$fsdbDumpoff;\n"
+Button12 = "Dump On" "$fsdbDumpon;\n"
+Button11 = "Delete Focus" "$db_deletefocus(${treeSelScope});\n"
+Button10 = "Set Focus" "$db_setfocus(${treeSelScope});\n"
+Button9 = "Deposit Variable" "$deposit(${SelVar},${Arg:New Value});\n"
+Button8 = "Release Variable" "release ${SelVar};\n"
+Button7 = "Force Variable" "force ${SelVar} = ${Arg:New Value};\n"
+Button6 = "Show Variables" "$showvars(${SelVars});\n"
+Button5 = "Next ? Event" "$db_step(${Arg:Next Event});\n"
+Button4 = "Next Event" "$db_step(1);\n"
+Button3 = "Next ? Time" "#${Arg:Next Time} $stop;.\n"
+Button2 = "Next 1000 Time" "#1000 $stop;.\n"
+Button1 = "Dump All Signals" "$fsdbDumpvars;\n"
+[Vi]
+ViFont = "Clean 14"
+ViBG = gray
+ViFG = black
+[axis]
+TPLanguage = Verilog
+TPName = Axis
+TPPath = vlg
+TPOption = 
+AddImportArgument = FALSE
+LineBreakWithScope = TRUE
+StopAfterCompileOption = -s
+[imp]
+options = NULL
+libPath = NULL
+libDir = NULL
+[schematics]
+viewport = 178 262 638 516
+schBackgroundColor = black lineSolid
+schBodyColor = orange6 lineSolid
+schAsmBodyColor = blue7 lineSolid
+schPortColor = orange6 lineSolid
+schCellNameColor = cyan4 lineSolid
+schCLKNetColor = red6 lineSolid
+schPWRNetColor = red4 lineSolid
+schGNDNetColor = cyan4 lineSolid
+schSIGNetColor = green8 lineSolid
+schHilightColor = white lineSolid
+schTraceColor = yellow4 lineSolid
+schBackAnnotateColor = white lineSolid
+schValue0 = yellow4 lineSolid
+schValue1 = green3 lineSolid
+schValueX = red4 lineSolid
+schValueZ = purple7 lineSolid
+dimColor = cyan2 lineSolid
+schPreSelColor = green4 lineDash
+schSIGBusNetColor = Gray4 lineSolid
+schGNDBusNetColor = cyan4 lineSolid
+schPWRBusNetColor = red4 lineSolid
+schCLKBusNetColor = red6 lineSolid
+schEdgeSensitiveColor = yellow4 lineSolid
+schAnnotColor = cyan4 lineSolid
+schInstNameColor = orange6 lineSolid
+schPortNameColor = cyan4 lineSolid
+schAsmLatchColor = cyan4 lineSolid
+schAsmRegColor = cyan4 lineSolid
+schAsmTriColor = cyan4 lineSolid
+pre_select = True
+[schematics_print]
+Signature = FALSE
+DesignName = PCU
+DesignerName = bai
+SignatureLocation = LowerRight
+MultiPage = TRUE
+AutoSliver = FALSE
+[surefire]
+TPLanguage = Verilog
+TPName = SureFire
+TPPath = verilog
+TPOption = 
+AddImportArgument = TRUE
+LineBreakWithScope = TRUE
+StopAfterCompileOption = -tcl
+[turboSchema_Printer_Options]
+Orientation = Landscape        
+[wave.0]
+viewPort = 50 214 960 332 100 65
+[wave.1]
+viewPort = 127 219 960 332 100 65
+[wave.2]
+viewPort = 38 314 686 205 100 65
+[wave.3]
+viewPort = 63 63 700 400 65 41
+[wave.4]
+viewPort = 84 84 700 400 65 41
+[wave.5]
+viewPort = 92 105 700 400 65 41
+[wave.6]
+viewPort = 0 0 700 400 65 41
+[wave.7]
+viewPort = 21 21 700 400 65 41

@@ -1,0 +1,205 @@
+// ******************************************************************* //
+//  Copyright (c) 2002  Evatronix SA                                   //
+// ******************************************************************* //
+//  Please review the terms of the license agreement before using      //
+//  this file. If you are not an authorized user, please destroy this  //
+//  source code file and notify Evatronix SA immediately that you      //
+//  inadvertently received an unauthorized copy.                       //
+// ******************************************************************* //
+// ------------------------------------------------------------------- //
+// Project name         : MAC
+// Project description  : Ethernet Media Access Controller
+//
+// File name            : 
+// File contents        : 
+// Purpose              : 
+// Design Engineer      : 
+// Quality Engineer     : 
+// Test version         : 1.00
+// Last modification    : 2002-08-01
+// ------------------------------------------------------------------- //
+
+
+0  200           // wait
+// ------------------------------------------------------------------- //
+//   Reading Counters Test when Reset Condition
+// ------------------------------------------------------------------- //
+2  A8  00008100  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+0  15            // wait for setting CSR21.SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+0  2000          // wait
+// ------------------------------------------------------------------- //
+//   Reading Counters Test
+// ------------------------------------------------------------------- //
+2  A8  00008100  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+2  A8  00000000  // write SC address, set IDLE opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000100  // write SC address, set READ opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000200  // write SC address, set CLEAR opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000300  // write SC address, set CLEAR_SC opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008000  // write SC address, set IDLE opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008100  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008200  // write SC address, set CLEAR opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008300  // write SC address, set CLEAR_SC opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+
+0  25            // wait for setting CSR21.SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000100  // write SC address, clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+0  2             // wait 
+
+2  A8  00008000  // write SC address, set IDLE opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008100  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008200  // write SC address, set CLEAR opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008300  // write SC address, set CLEAR_SC opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+2  A8  00000000  // write SC address, set IDLE opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000100  // write SC address, set READ opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000200  // write SC address, set CLEAR opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000300  // write SC address, set CLEAR_SC opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+0  8             // wait for clearing CSR21.SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+
+0  30            // wait 
+// ------------------------------------------------------------------- //
+//   Clear single SC Test
+// ------------------------------------------------------------------- //
+2  A8  00008200  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+2  A8  00000000  // write SC address, set IDLE opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000100  // write SC address, set READ opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000200  // write SC address, set CLEAR opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000300  // write SC address, set CLEAR_SC opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008000  // write SC address, set IDLE opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008100  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008200  // write SC address, set CLEAR opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008300  // write SC address, set CLEAR_SC opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+//--------------------------------------------------------------------------------
+0  25            // wait for setting CSR21.SCP bit
+1  A8  00000000  // read CSR21 register status 
+0  6             // wait 
+//--------------------------------------------------------------------------------
+
+2  A8  00000200  // write SC address, clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+0  2             // wait 
+
+2  A8  00008000  // write SC address, set IDLE opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008100  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008200  // write SC address, set CLEAR opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008300  // write SC address, set CLEAR_SC opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+2  A8  00000000  // write SC address, set IDLE opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000100  // write SC address, set READ opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000200  // write SC address, set CLEAR opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000300  // write SC address, set CLEAR_SC opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+0  25            // wait for clearing CSR21.SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+0  30            // wait 
+// ------------------------------------------------------------------- //
+//   Clear all SC Test
+// ------------------------------------------------------------------- //
+2  A8  00008300  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+2  A8  00000000  // write SC address, set IDLE opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000100  // write SC address, set READ opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000200  // write SC address, set CLEAR opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000300  // write SC address, set CLEAR_SC opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008000  // write SC address, set IDLE opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008100  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008200  // write SC address, set CLEAR opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008300  // write SC address, set CLEAR_SC opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+0  200           // wait 
+
+2  A8  00008000  // write SC address, set IDLE opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008100  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008200  // write SC address, set CLEAR opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008300  // write SC address, set CLEAR_SC opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+2  A8  00000000  // write SC address, set IDLE opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000100  // write SC address, set READ opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000200  // write SC address, set CLEAR opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000300  // write SC address, set CLEAR_SC opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+0  1150          // wait 
+
+2  A8  00008000  // write SC address, set IDLE opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008100  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008200  // write SC address, set CLEAR opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00008300  // write SC address, set CLEAR_SC opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+2  A8  00000000  // write SC address, set IDLE opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000100  // write SC address, set READ opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000200  // write SC address, set CLEAR opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+2  A8  00000300  // write SC address, set CLEAR_SC opeartion and clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+1  A8  00000000  // read CSR21 register status 
+

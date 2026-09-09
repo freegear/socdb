@@ -1,0 +1,143 @@
+--------------------------------------------------------------------------------
+--  This confidential and proprietary software may be used only as
+--  authorised by a licensing agreement from ARM Limited
+--    (C) COPYRIGHT 1999 ARM Limited
+--        ALL RIGHTS RESERVED
+--  The entire notice above must be reproduced on all authorised
+--  copies and copies may only be made to the extent permitted
+--  by a licensing agreement from ARM Limited.
+--------------------------------------------------------------------------------
+--  
+--  Version and Release Control Information:
+--  
+--  File Name              : README,v
+--  File Revision          : 1.1
+--  
+--  Release Information    : PL050-REL1v1
+--  
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+--  Purpose  : README file for Synopsys synthesis 
+--
+--------------------------------------------------------------------------------
+
+Synopsys Synthesis
+==================
+
+This directory contains the following sub-directories:
+
+1. work       - contains the intermediate files produced by the Synopsys
+                'analyze' command.
+2. db         - contains the synthesised blocks in Synopsys .db format.
+3. cell_lib   - this needs to contain a link or copy of the cell library.db
+4. log        - contains log files of the commands run during synthesis
+                for each block.
+5. netlist    - contains the synthesised netlist for the design.
+6. scr_common - contains Synopsys scripts which are common to several designs.
+7. scr_kmi    - contains Synopsys scripts which are specific to the KMI design.
+8. scr_scan   - contains Synopsys scripts for scan insertion of the KMI,
+                reading in the pre-compiled .db file in db/ directory.
+9. report     - contains reports written out from synopsys. 
+
+Before synthesising the block, scripts will need to be modified to select
+the required cell library and define directory paths:
+
+1. The setup script, setup.scr in the sub-directory ./scr_common, defines
+   the following key parameters
+     - the cell library to target for synthesis
+     - library cells not to be used for synthesis
+     - location of the Synopsys read and write cache
+
+   The above will need modifying for the choice of cell library
+   and specific application details.
+   Refer to comments in the setup.scr script file for other
+   parameters that might also need modifying.
+
+2. The global script, global.scr in ./scr_common 
+   uses parameters from the cell library settings file, cb25v2.1settings.scr
+   These parameters need modifying to target a different cell library, to define:
+     - worst and best case conditions of the cell library
+     - default cell drive and load strength
+
+3. The script files cb25dontuse.scr in scr_common defines cells that should
+   not be used for synthesis.
+   The script cb25scanuse.scr in scr_scan, define cells that should be used
+   for scan replacement of sequential cells.
+
+4. The directory cell_lib should contain links (or the files) for the
+   target technology cell library, in Synopsys format.
+   For example:
+   ln -s /eda/design_kits/avanti/cb25/v2.1/synopsys/cb25os163/1997.01/models/cb25os163_max.db
+   ln -s /eda/design_kits/avanti/cb25/v2.1/synopsys/cb25os163/1997.01/models/cb25os163_typ.db
+   ln -s /eda/design_kits/avanti/cb25/v2.1/synopsys/cb25os163/1997.01/models/cb25os163_min.db
+   ln -s /eda/design_kits/avanti/cb25/v2.1/synopsys/cb25os163/1997.01/icons/cb25os163.sdb
+
+5. The master compile script, kmi.cmd is located in the ./scr_kmi directory.
+   This script controls the synthesis process.
+   No scan insertion is performed by this script.
+
+   The scripts require some environment variables to be declared before
+   starting synthesis, and these are described below.
+
+   The script variables hdl and hdl_out are assigned to UNIX environment
+   variables $HDL_IN and $HDL_OUT, and these must be declared before
+   beginning synthesis.
+   For example
+     setenv HDL_IN  vhdl      and   setenv HDL_OUT vhdl
+   or
+     setenv HDL_IN  verilog   and   setenv HDL_OUT verilog
+
+   The variable 'hdl' selects the hdl source being compiled.
+   The variable 'hdl_out' controls the output format of the netlist.
+
+   Alternatively, the script can be amended to define hdl and hdl_out
+   without use of environment variables. If so desired, it is allowable
+   to use VHDL source and output in Verilog format, or vice-versa.
+
+   The variable design_root specifies the root directory path of the design
+   using the environment variable $PERIPH.
+   If environment variables are not required then enter a fixed path
+   for design_root.
+
+6. The timing parameters for the AMBA APB interface are defined by
+   apb_params.scr and the constraints set in apb_slave.scr in ./scr_common.
+
+   Depending on the design style of the APB bridge (whether logic occurs
+   before or after registers) the parameters may need changing.
+   For example, where the APB bridge has registered outputs the maximum
+   input delay can be reduced resulting in a smaller area requirement.
+
+7. An additional compile script kmi_scan.cmd in scr_scan/ allows
+   scan insertion of the design as a post-synthesis process.
+   The compile script kmi.cmd must be run first to obtain a .db file
+   (in the db/ directory/) which has mapped and optimised the design
+   to the chosen cell library.
+   The kmi_scan.cmd compile script may then be used to replace 
+   sequential cells by their scan equivalents from the cell library.
+
+8. To synthesise the block, change to the synopsys_ref/ directory
+   (for example: cd $PERIPH/synopsys_ref)
+   and type:
+
+   dc_shell -checkout "VHDL-Compiler" < scr_kmi/kmi.cmd > log/kmi_vhdl.log
+
+   or
+
+   dc_shell -checkout "HDL-Compiler" < scr_kmi/kmi.cmd > log/kmi_verilog.log
+
+   Note: For use with design_analyser, some commands may require
+     the '\' line continuation character to be removed.
+
+9. To scan insert the design, change to the synopsys_ref/ directory and type:
+
+  dc_shell -checkout "VHDL-Compiler Test-Compiler" < scr_scan/kmi_scan.cmd > log/kmi_scan_vhdl.log
+
+  or
+
+  dc_shell -checkout "HDL-Compiler Test-Compiler" < scr_scan/kmi_scan.cmd > log/kmi_scan_verilog.log
+
+  NOTE: The previous step above must be run first
+        to create the appropriate .db file in the db/ directory.
+
+/**************************** End of README *********************************/

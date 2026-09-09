@@ -1,0 +1,401 @@
+ ===================================================================
+
+ This confidential and proprietary software may be used only as
+ authorised by a licensing agreement from ARM Limited
+   (c) COPYRIGHT 1999-2002 ARM Limited
+       ALL RIGHTS RESERVED
+ The entire notice above must be reproduced on all authorised
+ copies and copies may only be made to the extent permitted
+ by a licensing agreement from ARM Limited.
+
+===================================================================
+
+
+
+
+
+===================================================================
+  ARM946E_88  Design Signoff Model 
+===================================================================
+
+
+
+Date            : Wed Jul 24 2002
+Model           : ARM946E_88 Verilog Wrapped DSM
+Part No         : LF000-MS-27602-1.01rel0
+Si Revision     : 1
+Platform        : SunOS5
+Verified with   : Modelsim Verilog Simulator 
+Version         : 5.6b
+Modelgen Tools  : ModelGen 4.3.2
+VMC Version     : 5.1.4
+
+
+
+
+
+===================================================================
+     Contents Of This Release Note
+===================================================================
+
+This Release Note is organized into the following sections:
+
+  * Introduction
+  * Contents of the Release Directory
+  * Setup The Model
+  * Test The Model Setup - CrfTester
+  * Model Usage
+  * Documentation
+  * About simulator wrappers
+  * Important Points
+  * Common Warnings and Errors
+
+
+
+
+===================================================================
+              Introduction
+===================================================================
+
+This directory contains ARM's ARM946E_88 Design Sign Off Model.
+It is a protected IP model of the ARM946E_88. 
+The accuracy of the DSM is the same as the original Verilog code.
+
+The DSM includes a ModelGen ModelManager, targeted for one simulator,
+and a SWIFT model. 
+
+The user will find herein the information : 
+     - to setup the DSM environment
+     - to test the DSM correct setup using the crftester
+     - to use the DSM
+
+
+
+
+
+===================================================================
+    Contents Of The Release Directory
+===================================================================
+
+Directory structure:
+
+ARM946E_88  		- contains all required model files
+                  See paragraph "About simulator wrappers" for details.
+
+ARM946E_88CRFTESTER	- contains crftester model files, one crf vector file 
+                  and its associated ctrm file
+
+ModelManager	- contains ModelGen Model Manager
+
+DOCS		- contains all documentation : device related, ModelGen 
+                  ModelManager application note and CRF readme file
+
+ARM946E_88.sunos5 	- contains all files required to install the SWIFT model
+(ARM946E_88.hpux10 or ARM946E_88.linux)
+
+SDF_TOOLS       - contains backannotation tools sdfgen and sdfremap
+
+
+
+
+===================================================================
+             Setup The Model
+===================================================================
+
+1) Set the environment variable ARM946E_88_HOME to point to the release directory.
+
+   The release directory is the directory where the current README file is, 
+   and where the directory structure mentioned in the previous paragraph 
+   is available.
+
+   Go into the release directory : 
+                cd <release directory>
+
+   Set the environment variable : 
+
+         C   shell :     setenv ARM946E_88_HOME `pwd`
+      Bourne shell :     ARM946E_88_HOME=`pwd` 
+                         export ARM946E_88_HOME 
+
+
+
+2) Setup the environment, by sourcing the setup script
+
+         C   shell :     source $ARM946E_88_HOME/setup.cshrc
+      Bourne shell :        .   $ARM946E_88_HOME/setup.shrc
+ 
+   Edit the modelsim.ini file to include the lines : 
+            [vsim]                                              
+            Veriuser = $MG_LIB/mti_modelsim_verilog/libmgmm.so
+ 
+
+   Note that the environment variable DIR_ARM946E_88 is created and points at 
+   "release directory"/ARM946E_88, the directory where all the model files are 
+   included.
+
+
+   Note that the environment variable LMC_HOME is created and points to 
+	$ARM946E_88_HOME/ARM946E_88.sunos5 or 
+	$ARM946E_88_HOME/ARM946E_88.hpux10 or 
+	$ARM946E_88_HOME/ARM946E_88.linux
+
+   and this is where your model will be installed to by default.
+
+
+3) Install the SWIFT model libraries.
+
+   This step is performed just once.
+   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        
+   i) To install the SWIFT model in the default area, the area is pointed to by 
+      the LMC_HOME environment variable, run the install script :
+       
+	- on SunOS5 :   $ARM946E_88_HOME/ARM946E_88.sunos5/install_swift.csh  
+	- on HPUX   :   $ARM946E_88_HOME/ARM946E_88.hpux10/install_swift.csh  
+	- on Linux  :   $ARM946E_88_HOME/ARM946E_88.linux/install_swift.csh  
+
+   ii) If you plan to run two or more different SWIFT models in the 
+       simulation then they all need to be installed into the same LMC_HOME. 
+       Ensure that you set LMC_HOME to be the same location before installing 
+       each SWIFT model, then run the above "install_swift.csh" script.
+ 
+ Model should be installed and the script finished  with "Install Complete".     
+
+===================================================================
+    Test The Model Setup - CrfTester
+===================================================================
+
+The supplied crftester can be used to test the model.
+
+0) Setup the model. See previous paragraph.
+
+1) Setup the simulator environment.
+
+
+2) Run the crftester script 
+
+      - SDF timing : 
+             $ARM946E_88_HOME/ARM946E_88CRFTESTER/crftest.csh
+      - built in timing : 
+             $ARM946E_88_HOME/ARM946E_88CRFTESTER/crftest_extra.csh
+	
+3) The crftester simulation should run the vector set with
+   '0 vectors failed', and the following completion message should be 
+   displayed : 
+        
+          "The ARM946E_88 DSM is correctly setup"
+
+  An example of crftester simulation log trace is supplied :
+      - SDF timing : 
+          $ARM946E_88_HOME/ARM946E_88CRFTESTER/reference_crftest.log	
+      - built in timing : 
+          $ARM946E_88_HOME/ARM946E_88CRFTESTER/reference_crftest_extra.log	
+
+
+
+
+
+===================================================================
+            Model Usage
+===================================================================
+
+1) Setup the simulator environment.
+
+2) Compile the HDL file.
+   Two separate timing wrappers are supplied. Select the appropriate 
+   one when compiling/elaborating your design. 
+
+      - SDF based timing wrapper:
+          ARM946E_88/ARM946E_88.v    
+      - built in timing wrapper:   
+          ARM946E_88/extra/ARM946E_88.v  
+
+   Note that the relevant timing file templates are available in the 
+   directory "ARM946E_88" or "ARM946E_88/extra". They only contain example 
+   timing values and are not representative of any given process 
+   or characterization.
+
+
+3) The crftester simulation run when testing the setup of the DSM shows 
+   an example of how to compile/elaborate and run the DSM :
+      - SDF timing : 
+            $ARM946E_88_HOME/ARM946E_88CRFTESTER/crftest.csh
+      - built in timing : 
+            $ARM946E_88_HOME/ARM946E_88CRFTESTER/crftest_extra.csh
+
+
+
+
+
+===================================================================
+         Documentation
+====================================================================
+
+The following documentation is supplied with the Model in  
+the directory $ARM946E_88_HOME/DOCS : 
+       - device related documentation in the 'README_2' file (if supplied)
+       - ModelManager documentation in 'MM_mti_modelsim_verilog.txt' 
+       - CRF vectors and the associated '.ctrm' file in 'crf_file.readme' 
+       - sdfgen and sdfremap as manpages
+ 
+Documentation about the SWIFT models can be found in 
+	$LMC_HOME/doc/smartmodel/manuals       
+
+Note that $ARM946E_88_HOME is the DSM installation directory and $LMC_HOME is
+set when the step 'Setup The Model' is completed.
+
+
+NOTE:
+Documentation about setting up the appropriate timing model and the paths used 
+to search for the tdef files can be found also in the ModelManager documentation 
+in 'MM_mti_modelsim_verilog.txt' 
+(section labelled : Selecting the appropriate timing model)
+
+===================================================================
+         About simulator wrappers
+===================================================================
+
+The simulator wrapper HDL files in this model are arranged differently
+to previous models. Previous models contained two wrapper files in a
+single directory "ARM946E_88", one for SDF annotation "ARM946E_88_sdf.v"
+and one for annotation with the built in timing shell (from a TDEF file), 
+or running the model without a timing shell "ARM946E_88.v".
+
+ARM is deemphasizing TDEF timing, as this timing method is not
+compatible with industry standard timing flows. The directory 
+"ARM946E_88" now only contains a single wrapper file, named 
+"ARM946E_88.v". This wrapper file contains the SDF
+annotation place-holders and is the primary wrapper intended for use
+with this model.
+
+As of this release, TDEF annotation is still available through the use
+of the alternative simulator wrapper file, located in the 
+"ARM946E_88/extra" directory. This file can also be used without a 
+TDEF file to run the model with no timing annotated, although the 
+DSM is designed to be used in a timing-accurate simulation.
+
+ARM is presently considering the withdrawal of the TDEF timing
+capability for use with future DSMs.
+
+===================================================================
+               Important Points
+===================================================================
+
+1)  This DSM does not support restart or checkpointing.
+    
+2)  DSMs are only intended to be used for functional and timing simulation,
+    they are not designed for fault simulation or static timing analysis.
+    
+3)  It is imperative that you don't mix parts of the DSM with earlier 
+    versions, this will lead to the DSM not working correctly!!  Only use
+    the HDL wrapper file ARM946E_88.v  that was supplied 
+    with the current version of the DSM, with supplied version of 
+    library (for example ARM946E_88.so) and the supplied version
+    of the Model Manager.
+    
+4)  If you have more than one DSM in a simulation and one of the DSMs is 
+    older than the other, always make sure that you are using the Model
+    Manager from the most recent version, otherwise the Model Manager
+    will not load the most recent shared object library.
+    
+5)  When using LD_LIBRARY_PATH (or SHLIB_PATH) environment variable and 
+    this variable is already set up, it is important to make sure that
+    the path of the Model Manager appears as the first item in the path.
+    
+6)  For Modelsim VHDL DSM, if you want to run with the 64-bit version 
+    of the simulator, make sure that you have the 64-bit version of the 
+    DSM.  This will be indicated in the version information at the top
+    of the README file, eg, 
+    
+    	 Platform :  SunOS5-64
+    
+    If this just says SunOS5, then this model is only intended to be used
+    with the 32-bit version of the simulator.  The 32-bit version of the 
+    DSM will not run under the 64-bit version of vsim.
+    
+7)  For Modelsim VHDL DSM, when compiling with VHDL/SDF wrapper, make
+    sure you use
+    	vcom -novitalcheck
+    otherwise the wrapper won't compile correctly.
+    
+8)  The DSM ARM produced should run on Solaris 2.5.1, 2.6, 7 or 8 in 32-bit
+    mode.  We don't support 64-bit mode except for Modelsim VHDL on 
+    Solaris 8.  It's also worth noting that not all simulators support all 
+    of these Solaris versions.  For example. newer Synopsys simulators
+    don't support 2.5.1 or 2.6,  and newer Cadence simulators don't support
+    2.5.1.
+    
+9)  Do not modify the HDL wrapper (eg ARM946E_88.v) at all.  Doing so might
+    result in the model failing in subtle way.  We cannot support the DSM 
+    when the wrappers have been modified. Please ref to 
+       $ARM946E_88_HOME/DOCS/README_2 
+    regarding how to modify the model's generics/defparam.
+    
+10) Do not try and enable the Built-In Timing shell when using the HDL/SDF
+    wrapper.  In other words, do not set the MG_ENABLE_BUILTIN_TIMING = 1
+    within the HDL/SDF wrapper file, otherwise the DSM will not work 
+    correctly.  Always make sure this parameter/generics is set to 0 when
+    using this type of wrapper.
+
+
+===================================================================
+          Common Warnings and Errors
+===================================================================
+
+1)  When Installing the Models
+    
+    > ERROR: ARM7TDMI_sdf.vhd(1053): VITAL timing generic size does not match
+    > product of associated port sizes ( 32 /= 32 * 32 ) 
+    > (1076.4 section 4.3.2.1.2)
+    > ERROR: ARM7TDMI_sdf.vhd(1248): VHDL Compiler exiting 
+    
+    This error is produced when compiling with vcom using the Modelsim HDL/SDF
+    wrapper file with the -novitalcheck switch. To correct this:
+    
+     vcom -novitalcheck ARM946E_88.vhd
+
+2)  When Simulating the Models 
+
+    When simulating Swift/VhMC/VMC based DSMs there will be lots of warning 
+    messages at time 0 when the model starts up. In general all warning 
+    messages at time 0 until the model has been properly reset can be ignored. 
+
+    For example :
+    
+    > Warning! 0 fs - ARM7TDMICRFTESTERTOP.theARM7TDMI.thetiming.theinout:
+    > 
+    > Assertion WARNING at 0 PS in design unit XXXX from process XXXX: 
+    > [MG_Model-MGWARNING] "/arm/chips/dsm/gwang/work/ARM7TDMIr3_vhmc/
+    > 	ModelGen/collated/r3/ve...
+    
+    These type of warning messages arise from the Swift/VhMC/VMC component 
+    within the DSM which hasn't initialized properly.
+
+    
+    > " To_Integer --- 'X' encountered in the input vector. Returning zero result."
+    > " To_Integer --- 'X' encountered in the input vector. Returning zero result."
+
+    At time 0 those can also be safely ignored. These type of warning messages 
+    arise from the Swift/VhMC/VMC component within the DSM when the model is 
+    initializing at time 0.
+
+    > # Output violation on nEXEC
+    > # ModelGen Warning, Time 74376852 ps, Instance
+
+    Output violation messages are only associated with the Built-In timing 
+    shell, they won't be produced when using the HDL/SDF timing shell.
+    These messages occur when the timing shell for the model fails
+    to match an output transition with an input causal event and therefore
+    can't assign an appropriate time to the output. This could arise 
+    due to the two possible reasons, these are:
+
+      i) The model hasn't been reset properly. Or
+      ii) A timing path is missing in the timing shell for the model.
+    
+      In this situation the  Built-In timing shell can't find a delay 
+      value to annotate, then the default value is used for the output. In 
+      practice this means the output has zero delay.
+
+    For ARM7TDMI DSM, it is important to properly reset the core at the 
+    start of the simulation.  This is done by pulsing nTRST signal low 
+    and then high as well as the nRESET signal. 

@@ -1,0 +1,10 @@
+#vlog ../Rtl/AD_Conv10.v
+#vlog ../Sim/TB_AD_Conv.v
+#vlog ../Rtl/APB_ADC_Ctrl.v
+#vlog ../Rtl/APB_Timers.v
+#vlog ../Rtl/APBif_DTS.v
+#vlog ../Rtl/MuxP2B_DTS.v
+#vlog ../Rtl/APB_WDT.v
+vlog ../Rtl/APB_Gpio.v 
+vlog ../Rtl/IO_PAD.v
+#vlog ../Rtl/tpz973g.v

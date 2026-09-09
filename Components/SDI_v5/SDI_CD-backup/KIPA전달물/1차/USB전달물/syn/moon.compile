@@ -1,0 +1,15 @@
+##
+## Pre-synthesis after budget ##
+##
+
+## sub-topmodule definition ##
+set sub_top_modules [list usb_top mdma]
+foreach sub_module $sub_top_modules {
+  set argument [format "%s%s%s" {Constraint/} $sub_module {.scr}]	
+  set argument1 [format "%s%s%s" {Log/} $sub_module {.log}]
+  source $argument > $argument1
+}
+
+source Constraint/moon_top.scr > Log/moon_top.log
+
+exit

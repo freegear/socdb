@@ -1,0 +1,441 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 14:34:10 2001
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Rtc' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0RtcRevAnd               0      0     0     0      0     0     0      6   0.00%
+u1RtcRevAnd               0      0     1     0      0     0     0      6   0.00%
+u2RtcRevAnd               0      0     0     0      1     0     0      6   0.00%
+u3RtcRevAnd               1      0     0     0      0     0     0      6  16.67%
+uRtcApbif               732      0     1     0      2     0     0   6616  11.07%
+uRtcControl               6      0     0     0      0     0     0     48  12.50%
+uRtcCounter             125      0     0     0      0     0     0   1116  11.20%
+uRtcInterrupt            36      0     0     0      0     0     0    360  10.00%
+uRtcSynctoPCLK          110      0     0     0      0     0     0    984  11.18%
+uRtcUpdate              532      0     0     0      0     0     0   4886  10.89%
+Rtc                    1563      0     2     0      3     0     0  14254  10.97%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 14:34:11 2001
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 14:34:11 2001
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain #1 (SCANINPCLK --> SCANOUTPCLK) contains 307 cells:
+
+  SCANINPCLK	->
+  uRtcSynctoPCLK/MaskIntSync2_reg	->
+  uRtcSynctoPCLK/Count0Sync1_reg	->
+  uRtcSynctoPCLK/Count0Sync3_reg	->
+  uRtcSynctoPCLK/MaskIntSync1_reg	->
+  uRtcSynctoPCLK/Count0Sync2_reg	->
+  uRtcSynctoPCLK/RawIntSync1_reg	->
+  uRtcSynctoPCLK/iRawIntSync_reg	->
+  uRtcSynctoPCLK/RawIntSync3_reg	->
+  uRtcSynctoPCLK/iCountSync_reg_0 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_1 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_2 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_3 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_4 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_5 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_6 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_7 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_8 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_9 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_10 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_11 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_12 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_13 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_14 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_15 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_16 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_17 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_18 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_19 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_20 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_21 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_22 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_23 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_24 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_25 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_26 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_27 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_28 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_29 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_30 (*)	->
+  uRtcSynctoPCLK/iCountSync_reg_31 (*)	->
+  uRtcUpdate/iOffset_reg_1	->
+  uRtcUpdate/iOffset_reg_2	->
+  uRtcUpdate/iOffset_reg_3	->
+  uRtcUpdate/iOffset_reg_4	->
+  uRtcUpdate/iOffset_reg_5	->
+  uRtcUpdate/iOffset_reg_6	->
+  uRtcUpdate/iOffset_reg_7	->
+  uRtcUpdate/iOffset_reg_8	->
+  uRtcUpdate/iOffset_reg_9	->
+  uRtcUpdate/iOffset_reg_10	->
+  uRtcUpdate/iOffset_reg_11	->
+  uRtcUpdate/iOffset_reg_12	->
+  uRtcUpdate/iOffset_reg_13	->
+  uRtcUpdate/iOffset_reg_14	->
+  uRtcUpdate/iOffset_reg_15	->
+  uRtcUpdate/iOffset_reg_16	->
+  uRtcUpdate/iOffset_reg_17	->
+  uRtcUpdate/iOffset_reg_18	->
+  uRtcUpdate/iOffset_reg_19	->
+  uRtcUpdate/iOffset_reg_20	->
+  uRtcUpdate/iOffset_reg_21	->
+  uRtcUpdate/iOffset_reg_22	->
+  uRtcUpdate/iOffset_reg_23	->
+  uRtcUpdate/iOffset_reg_24	->
+  uRtcUpdate/iOffset_reg_25	->
+  uRtcUpdate/iOffset_reg_26	->
+  uRtcUpdate/iOffset_reg_27	->
+  uRtcUpdate/iOffset_reg_28	->
+  uRtcUpdate/iOffset_reg_29	->
+  uRtcUpdate/iOffset_reg_30	->
+  uRtcUpdate/iOffset_reg_31	->
+  uRtcUpdate/iMatchData_reg_0 (*)	->
+  uRtcUpdate/iMatchData_reg_1 (*)	->
+  uRtcUpdate/iMatchData_reg_2 (*)	->
+  uRtcUpdate/iMatchData_reg_3 (*)	->
+  uRtcUpdate/iMatchData_reg_4 (*)	->
+  uRtcUpdate/iMatchData_reg_5 (*)	->
+  uRtcUpdate/iMatchData_reg_6 (*)	->
+  uRtcUpdate/iMatchData_reg_7 (*)	->
+  uRtcUpdate/iMatchData_reg_8 (*)	->
+  uRtcUpdate/iMatchData_reg_9 (*)	->
+  uRtcUpdate/iMatchData_reg_10 (*)	->
+  uRtcUpdate/iMatchData_reg_11 (*)	->
+  uRtcUpdate/iMatchData_reg_12 (*)	->
+  uRtcUpdate/iMatchData_reg_13 (*)	->
+  uRtcUpdate/iMatchData_reg_14 (*)	->
+  uRtcUpdate/iMatchData_reg_15 (*)	->
+  uRtcUpdate/iMatchData_reg_16 (*)	->
+  uRtcUpdate/iMatchData_reg_17 (*)	->
+  uRtcUpdate/iMatchData_reg_18 (*)	->
+  uRtcUpdate/iMatchData_reg_19 (*)	->
+  uRtcUpdate/iMatchData_reg_20 (*)	->
+  uRtcUpdate/iMatchData_reg_21 (*)	->
+  uRtcUpdate/iMatchData_reg_22 (*)	->
+  uRtcUpdate/iMatchData_reg_23 (*)	->
+  uRtcUpdate/iMatchData_reg_24 (*)	->
+  uRtcUpdate/iMatchData_reg_25 (*)	->
+  uRtcUpdate/iMatchData_reg_26 (*)	->
+  uRtcUpdate/iMatchData_reg_27 (*)	->
+  uRtcUpdate/iMatchData_reg_28 (*)	->
+  uRtcUpdate/iMatchData_reg_29 (*)	->
+  uRtcUpdate/iMatchData_reg_30 (*)	->
+  uRtcUpdate/iMatchData_reg_31 (*)	->
+  uRtcUpdate/iRtcValue_reg_0	->
+  uRtcUpdate/iRtcValue_reg_1	->
+  uRtcUpdate/iRtcValue_reg_2	->
+  uRtcUpdate/iRtcValue_reg_3	->
+  uRtcUpdate/iRtcValue_reg_4	->
+  uRtcUpdate/iRtcValue_reg_5	->
+  uRtcUpdate/iRtcValue_reg_6	->
+  uRtcUpdate/iRtcValue_reg_7	->
+  uRtcUpdate/iRtcValue_reg_8	->
+  uRtcUpdate/iRtcValue_reg_9	->
+  uRtcUpdate/iRtcValue_reg_10	->
+  uRtcUpdate/iRtcValue_reg_11	->
+  uRtcUpdate/iRtcValue_reg_12	->
+  uRtcUpdate/iRtcValue_reg_13	->
+  uRtcUpdate/iRtcValue_reg_14	->
+  uRtcUpdate/iRtcValue_reg_15	->
+  uRtcUpdate/iRtcValue_reg_16	->
+  uRtcUpdate/iRtcValue_reg_17	->
+  uRtcUpdate/iRtcValue_reg_18	->
+  uRtcUpdate/iRtcValue_reg_19	->
+  uRtcUpdate/iRtcValue_reg_20	->
+  uRtcUpdate/iRtcValue_reg_21	->
+  uRtcUpdate/iRtcValue_reg_22	->
+  uRtcUpdate/iRtcValue_reg_23	->
+  uRtcUpdate/iRtcValue_reg_24	->
+  uRtcUpdate/iRtcValue_reg_25	->
+  uRtcUpdate/iRtcValue_reg_26	->
+  uRtcUpdate/iRtcValue_reg_27	->
+  uRtcUpdate/iRtcValue_reg_28	->
+  uRtcUpdate/iRtcValue_reg_29	->
+  uRtcUpdate/iRtcValue_reg_30	->
+  uRtcUpdate/iRtcValue_reg_31	->
+  uRtcUpdate/UpdateState_reg_0	->
+  uRtcUpdate/UpdateState_reg_1	->
+  uRtcUpdate/iOffset_reg_0	->
+  uRtcInterrupt/iRawIntStatus_reg	->
+  uRtcApbif/RTCCR_reg	->
+  uRtcApbif/RTCITOP_reg	->
+  uRtcApbif/PRDATA_reg_0	->
+  uRtcApbif/PRDATA_reg_1	->
+  uRtcApbif/PRDATA_reg_2	->
+  uRtcApbif/PRDATA_reg_3	->
+  uRtcApbif/PRDATA_reg_4	->
+  uRtcApbif/PRDATA_reg_5	->
+  uRtcApbif/PRDATA_reg_6	->
+  uRtcApbif/PRDATA_reg_7	->
+  uRtcApbif/PRDATA_reg_8	->
+  uRtcApbif/PRDATA_reg_9	->
+  uRtcApbif/PRDATA_reg_10	->
+  uRtcApbif/PRDATA_reg_11	->
+  uRtcApbif/PRDATA_reg_12	->
+  uRtcApbif/PRDATA_reg_13	->
+  uRtcApbif/PRDATA_reg_14	->
+  uRtcApbif/PRDATA_reg_15	->
+  uRtcApbif/PRDATA_reg_16	->
+  uRtcApbif/PRDATA_reg_17	->
+  uRtcApbif/PRDATA_reg_18	->
+  uRtcApbif/PRDATA_reg_19	->
+  uRtcApbif/PRDATA_reg_20	->
+  uRtcApbif/PRDATA_reg_21	->
+  uRtcApbif/PRDATA_reg_22	->
+  uRtcApbif/PRDATA_reg_23	->
+  uRtcApbif/PRDATA_reg_24	->
+  uRtcApbif/PRDATA_reg_25	->
+  uRtcApbif/PRDATA_reg_26	->
+  uRtcApbif/PRDATA_reg_27	->
+  uRtcApbif/PRDATA_reg_28	->
+  uRtcApbif/PRDATA_reg_29	->
+  uRtcApbif/PRDATA_reg_30	->
+  uRtcApbif/PRDATA_reg_31	->
+  uRtcApbif/iRTCTCOUNT_reg_0	->
+  uRtcApbif/iRTCTCOUNT_reg_1	->
+  uRtcApbif/iRTCTCOUNT_reg_2	->
+  uRtcApbif/iRTCTCOUNT_reg_3	->
+  uRtcApbif/iRTCTCOUNT_reg_4	->
+  uRtcApbif/iRTCTCOUNT_reg_5	->
+  uRtcApbif/iRTCTCOUNT_reg_6	->
+  uRtcApbif/iRTCTCOUNT_reg_7	->
+  uRtcApbif/iRTCTCOUNT_reg_8	->
+  uRtcApbif/iRTCTCOUNT_reg_9	->
+  uRtcApbif/iRTCTCOUNT_reg_10	->
+  uRtcApbif/iRTCTCOUNT_reg_11	->
+  uRtcApbif/iRTCTCOUNT_reg_12	->
+  uRtcApbif/iRTCTCOUNT_reg_13	->
+  uRtcApbif/iRTCTCOUNT_reg_14	->
+  uRtcApbif/iRTCTCOUNT_reg_15	->
+  uRtcApbif/iRTCTCOUNT_reg_16	->
+  uRtcApbif/iRTCTCOUNT_reg_17	->
+  uRtcApbif/iRTCTCOUNT_reg_18	->
+  uRtcApbif/iRTCTCOUNT_reg_19	->
+  uRtcApbif/iRTCTCOUNT_reg_20	->
+  uRtcApbif/iRTCTCOUNT_reg_21	->
+  uRtcApbif/iRTCTCOUNT_reg_22	->
+  uRtcApbif/iRTCTCOUNT_reg_23	->
+  uRtcApbif/iRTCTCOUNT_reg_24	->
+  uRtcApbif/iRTCTCOUNT_reg_25	->
+  uRtcApbif/iRTCTCOUNT_reg_26	->
+  uRtcApbif/iRTCTCOUNT_reg_27	->
+  uRtcApbif/iRTCTCOUNT_reg_28	->
+  uRtcApbif/iRTCTCOUNT_reg_29	->
+  uRtcApbif/iRTCTCOUNT_reg_30	->
+  uRtcApbif/iRTCTCOUNT_reg_31	->
+  uRtcApbif/iRTCTOFFSET_reg_0	->
+  uRtcApbif/iRTCTOFFSET_reg_1	->
+  uRtcApbif/iRTCTOFFSET_reg_2	->
+  uRtcApbif/iRTCTOFFSET_reg_3	->
+  uRtcApbif/iRTCTOFFSET_reg_4	->
+  uRtcApbif/iRTCTOFFSET_reg_5	->
+  uRtcApbif/iRTCTOFFSET_reg_6	->
+  uRtcApbif/iRTCTOFFSET_reg_7	->
+  uRtcApbif/iRTCTOFFSET_reg_8	->
+  uRtcApbif/iRTCTOFFSET_reg_9	->
+  uRtcApbif/iRTCTOFFSET_reg_10	->
+  uRtcApbif/iRTCTOFFSET_reg_11	->
+  uRtcApbif/iRTCTOFFSET_reg_12	->
+  uRtcApbif/iRTCTOFFSET_reg_13	->
+  uRtcApbif/iRTCTOFFSET_reg_14	->
+  uRtcApbif/iRTCTOFFSET_reg_15	->
+  uRtcApbif/iRTCTOFFSET_reg_16	->
+  uRtcApbif/iRTCTOFFSET_reg_17	->
+  uRtcApbif/iRTCTOFFSET_reg_18	->
+  uRtcApbif/iRTCTOFFSET_reg_19	->
+  uRtcApbif/iRTCTOFFSET_reg_20	->
+  uRtcApbif/iRTCTOFFSET_reg_21	->
+  uRtcApbif/iRTCTOFFSET_reg_22	->
+  uRtcApbif/iRTCTOFFSET_reg_23	->
+  uRtcApbif/iRTCTOFFSET_reg_24	->
+  uRtcApbif/iRTCTOFFSET_reg_25	->
+  uRtcApbif/iRTCTOFFSET_reg_26	->
+  uRtcApbif/iRTCTOFFSET_reg_27	->
+  uRtcApbif/iRTCTOFFSET_reg_28	->
+  uRtcApbif/iRTCTOFFSET_reg_29	->
+  uRtcApbif/iRTCTOFFSET_reg_30	->
+  uRtcApbif/iRTCTOFFSET_reg_31	->
+  uRtcApbif/RTCITCR_reg_1	->
+  uRtcApbif/RTCITCR_reg_2	->
+  uRtcApbif/iRTCLR_reg_0	->
+  uRtcApbif/iRTCLR_reg_1 (*)	->
+  uRtcApbif/iRTCLR_reg_2 (*)	->
+  uRtcApbif/iRTCLR_reg_3	->
+  uRtcApbif/iRTCLR_reg_4	->
+  uRtcApbif/iRTCLR_reg_5	->
+  uRtcApbif/iRTCLR_reg_6 (*)	->
+  uRtcApbif/iRTCLR_reg_7	->
+  uRtcApbif/iRTCLR_reg_8 (*)	->
+  uRtcApbif/iRTCLR_reg_9 (*)	->
+  uRtcApbif/iRTCLR_reg_10 (*)	->
+  uRtcApbif/iRTCLR_reg_11 (*)	->
+  uRtcApbif/iRTCLR_reg_12 (*)	->
+  uRtcApbif/iRTCLR_reg_13 (*)	->
+  uRtcApbif/iRTCLR_reg_14 (*)	->
+  uRtcApbif/iRTCLR_reg_15 (*)	->
+  uRtcApbif/iRTCLR_reg_16 (*)	->
+  uRtcApbif/iRTCLR_reg_17 (*)	->
+  uRtcApbif/iRTCLR_reg_18 (*)	->
+  uRtcApbif/iRTCLR_reg_19 (*)	->
+  uRtcApbif/iRTCLR_reg_20 (*)	->
+  uRtcApbif/iRTCLR_reg_21 (*)	->
+  uRtcApbif/iRTCLR_reg_22 (*)	->
+  uRtcApbif/iRTCLR_reg_23 (*)	->
+  uRtcApbif/iRTCLR_reg_24 (*)	->
+  uRtcApbif/iRTCLR_reg_25 (*)	->
+  uRtcApbif/iRTCLR_reg_26 (*)	->
+  uRtcApbif/iRTCLR_reg_27 (*)	->
+  uRtcApbif/iRTCLR_reg_28 (*)	->
+  uRtcApbif/iRTCLR_reg_29 (*)	->
+  uRtcApbif/iRTCLR_reg_30 (*)	->
+  uRtcApbif/iRTCLR_reg_31 (*)	->
+  uRtcApbif/iRTCMR_reg_0	->
+  uRtcApbif/iRTCMR_reg_1 (*)	->
+  uRtcApbif/iRTCMR_reg_2 (*)	->
+  uRtcApbif/iRTCMR_reg_3	->
+  uRtcApbif/iRTCMR_reg_4	->
+  uRtcApbif/iRTCMR_reg_5	->
+  uRtcApbif/iRTCMR_reg_6 (*)	->
+  uRtcApbif/iRTCMR_reg_7	->
+  uRtcApbif/iRTCMR_reg_8 (*)	->
+  uRtcApbif/iRTCMR_reg_9 (*)	->
+  uRtcApbif/iRTCMR_reg_10 (*)	->
+  uRtcApbif/iRTCMR_reg_11 (*)	->
+  uRtcApbif/iRTCMR_reg_12 (*)	->
+  uRtcApbif/iRTCMR_reg_13 (*)	->
+  uRtcApbif/iRTCMR_reg_14 (*)	->
+  uRtcApbif/iRTCMR_reg_15 (*)	->
+  uRtcApbif/iRTCMR_reg_16 (*)	->
+  uRtcApbif/iRTCMR_reg_17 (*)	->
+  uRtcApbif/iRTCMR_reg_18 (*)	->
+  uRtcApbif/iRTCMR_reg_19 (*)	->
+  uRtcApbif/iRTCMR_reg_20 (*)	->
+  uRtcApbif/iRTCMR_reg_21 (*)	->
+  uRtcApbif/iRTCMR_reg_22 (*)	->
+  uRtcApbif/iRTCMR_reg_23 (*)	->
+  uRtcApbif/iRTCMR_reg_24 (*)	->
+  uRtcApbif/iRTCMR_reg_25 (*)	->
+  uRtcApbif/iRTCMR_reg_26 (*)	->
+  uRtcApbif/iRTCMR_reg_27 (*)	->
+  uRtcApbif/iRTCMR_reg_28 (*)	->
+  uRtcApbif/iRTCMR_reg_29 (*)	->
+  uRtcApbif/iRTCMR_reg_30 (*)	->
+  uRtcApbif/iRTCMR_reg_31 (*)	->
+  uRtcApbif/iRTCIMSC_reg (*)	->
+  uRtcApbif/iRTCIntClr_reg (*)	->
+  uRtcApbif/RTCITCR_reg_0 (*)	->
+  uRtcControl/iIntClear_reg	->
+  SCANOUTPCLK
+
+Complete scan chain #2 (SCANINCLK1HZ --> SCANOUTCLK1HZ) contains 32 cells:
+
+  SCANINCLK1HZ	->
+  uRtcCounter/iCount_reg_4	->
+  uRtcCounter/iCount_reg_21	->
+  uRtcCounter/iCount_reg_26	->
+  uRtcCounter/iCount_reg_3	->
+  uRtcCounter/iCount_reg_28	->
+  uRtcCounter/iCount_reg_14	->
+  uRtcCounter/iCount_reg_15	->
+  uRtcCounter/iCount_reg_20	->
+  uRtcCounter/iCount_reg_2	->
+  uRtcCounter/iCount_reg_29	->
+  uRtcCounter/iCount_reg_5	->
+  uRtcCounter/iCount_reg_12	->
+  uRtcCounter/iCount_reg_27	->
+  uRtcCounter/iCount_reg_10	->
+  uRtcCounter/iCount_reg_7	->
+  uRtcCounter/iCount_reg_19	->
+  uRtcCounter/iCount_reg_9	->
+  uRtcCounter/iCount_reg_22	->
+  uRtcCounter/iCount_reg_25	->
+  uRtcCounter/iCount_reg_17	->
+  uRtcCounter/iCount_reg_8	->
+  uRtcCounter/iCount_reg_30	->
+  uRtcCounter/iCount_reg_16	->
+  uRtcCounter/iCount_reg_23	->
+  uRtcCounter/iCount_reg_31	->
+  uRtcCounter/iCount_reg_1	->
+  uRtcCounter/iCount_reg_6	->
+  uRtcCounter/iCount_reg_11	->
+  uRtcCounter/iCount_reg_18	->
+  uRtcCounter/iCount_reg_24	->
+  uRtcCounter/iCount_reg_0 (*)	->
+  uRtcCounter/iCount_reg_13	->
+  SCANOUTCLK1HZ
+

@@ -1,0 +1,41 @@
+library verilog;
+use verilog.vl_types.all;
+entity APBif is
+    port(
+        HCLK            : in     vl_logic;
+        HRESETn         : in     vl_logic;
+        HADDR           : in     vl_logic_vector(11 downto 0);
+        HTRANS          : in     vl_logic_vector(1 downto 0);
+        HWRITE          : in     vl_logic;
+        HWDATA          : in     vl_logic_vector(31 downto 0);
+        HSEL            : in     vl_logic;
+        HREADY          : in     vl_logic;
+        HRDATA          : out    vl_logic_vector(31 downto 0);
+        HREADYOUT       : out    vl_logic;
+        HRESP           : out    vl_logic_vector(1 downto 0);
+        PRDATA          : in     vl_logic_vector(31 downto 0);
+        PWDATA          : out    vl_logic_vector(31 downto 0);
+        PENABLE         : out    vl_logic;
+        PSELS0          : out    vl_logic;
+        PSELS1          : out    vl_logic;
+        PSELS2          : out    vl_logic;
+        PSELS3          : out    vl_logic;
+        PSELS4          : out    vl_logic;
+        PSELS5          : out    vl_logic;
+        PSELS6          : out    vl_logic;
+        PSELS7          : out    vl_logic;
+        PSELS8          : out    vl_logic;
+        PSELS9          : out    vl_logic;
+        PSELS10         : out    vl_logic;
+        PSELS11         : out    vl_logic;
+        PSELS12         : out    vl_logic;
+        PSELS13         : out    vl_logic;
+        PSELS14         : out    vl_logic;
+        PSELS15         : out    vl_logic;
+        PADDR           : out    vl_logic_vector(7 downto 0);
+        PWRITE          : out    vl_logic;
+        SCANENABLE      : in     vl_logic;
+        SCANINHCLK      : in     vl_logic;
+        SCANOUTHCLK     : out    vl_logic
+    );
+end APBif;

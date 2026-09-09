@@ -1,0 +1,50 @@
+;-------------------------------------------------------------------------------
+; This confidential and proprietary software may be used only as
+; authorised by a licensing agreement from ARM Limited
+;   (C) COPYRIGHT 1999 ARM Limited
+;       ALL RIGHTS RESERVED
+; The entire notice above must be reproduced on all authorised
+; copies and copies may only be made to the extent permitted
+; by a licensing agreement from ARM Limited.
+;-------------------------------------------------------------------------------
+;
+; Version and Release Control Information:
+;
+; File Name              : libmap,v
+; File Revision          : 1.2
+;
+; Release Information    : PL160-REL1v1
+;
+;-------------------------------------------------------------------------------
+
+;-------------------------------------------------------------------------------
+; Purpose : Logical to Physical library mappings for
+;           Model Technology Inc, ModelSim simulator
+;-------------------------------------------------------------------------------
+
+[library]
+
+; BusTalk bus compliance testbench
+common     = $PERIPH/BusTalk/vlog/common/work
+reader     = $PERIPH/BusTalk/vlog/reader/work
+bid        = $PERIPH/BusTalk/vlog/bid/work
+buswatcher = $PERIPH/BusTalk/vlog/buswatcher/work
+tbench     = $PERIPH/BusTalk/vlog/tbench/work
+;vr         = $PERIPH/BusTalk/vlog/vr/work
+trickbox   = $PERIPH/BusTalk/vlog/trickbox/work
+
+; Select RTL (uut) or netlist (uutNetlist) block (uut = Unit Under Test)
+; by commenting out all but one of the lines below
+uut = $PERIPH/verilog/uut/work
+;uut = $PERIPH/verilog/uutNetlist/work
+;uut = $PERIPH/verilog/uutNetlist_scan/work
+
+; Cell library simulation timing views
+;libvhdl     = $LIB_VITAL/work
+libverilog  = $LIB_VERILOG/work
+UDP         = $LIB_UDP/work
+
+; initialisation file for ModelSim
+others     = $MODELTECH_ROOT/modelsim.ini
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; End ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

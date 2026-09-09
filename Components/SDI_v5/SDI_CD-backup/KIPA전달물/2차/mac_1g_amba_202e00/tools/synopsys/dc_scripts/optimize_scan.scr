@@ -1,0 +1,171 @@
+/* ************************************************************************ */
+/* Copyright (c) 1999-2004  Evatronix SA                                    */
+/* ************************************************************************ */
+/* Please review the terms of the license agreement before using this file. */
+/* If you are not an authorised user, please destroy this script file and   */
+/* notify Evatronix S.A. immediately that you inadvertently received an     */
+/* unauthorised copy.                                                       */
+/* ************************************************************************ */
+/* ------------------------------------------------------------------------ */
+/* Project name         : MAC_1G_AMBA                                       */
+/* Project description  :                                                   */
+/* File name            : optimize_scan.scr	                            */
+/* File contents        : "MAC_1G_AMBA" synthesis 	                    */
+/* Purpose              : Master synthesis script                           */
+/*                        Sample Script for Synopsys                        */
+/* Design Engineer      : P.M.	 					    */	
+/* Version              : 1.0                                               */
+/* Last modification    : 2004-08-12					    */
+/* ------------------------------------------------------------------------ */
+
+
+/* to achieve the best results please make sure to enable                   */
+/* DesignWare Foundation if you are licensed to use  it                     */
+
+/* specifying  variables */
+mac1g_dir = "./src/core/mac_1g/"
+mac2amba_dir = "./src/core/mac2amba/"
+mac1g_work_dir   = "./tools/synopsys/work1g/"
+mac2amba_work_dir = "./tools/synopsys/workmac2a/"
+mactop_dir = "./src/core/"
+report_dir = "./tools/synopsys/reports/"
+result_dir = "./tools/synopsys/results/"
+db_dir = "./tools/synopsys/dbdir/"
+
+/* removing existing design from memory */
+remove_design -all
+
+/* creating necessary directories */ 
+sh mkdir mac1g_work_dir
+sh mkdir mac2amba_work_dir
+sh mkdir report_dir
+sh mkdir result_dir
+sh mkdir db_dir
+
+/* setting a few more variables */
+define_design_lib MAC_1G_LIB -path mac1g_work_dir
+define_design_lib MAC2AMBA_LIB -path mac2amba_work_dir
+hdlin_vhdl93_concat = "false"
+hdlin_enable_rtldrc_info = "true"
+set_default_scan_style = multiplexed_flip_flop
+top="MAC_1G_AMBA"
+
+/*  analyzing mac1g source files */
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "utility_mac_1g.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "bd.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "bp.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "csr.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "dma.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "domack.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "domreq.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "dom.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "fcr.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "fcstat.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "fct.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "miism.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "rc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "rfifo.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "rlsm.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "rstc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "sc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "tc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "tfifo.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "tlsm.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "mac_1g.vhd"}
+
+/* analyzing mac2amba source files                                 */
+analyze -format vhdl -lib MAC2AMBA_LIB {mac2amba_dir + "mac2amba_package.vhd"}
+analyze -format vhdl -lib MAC2AMBA_LIB {mac2amba_dir + "maccsr2apb.vhd"}
+analyze -format vhdl -lib MAC2AMBA_LIB {mac2amba_dir + "macdata2ahb.vhd"}
+analyze -format vhdl -lib MAC2AMBA_LIB {mac2amba_dir + "mac2amba.vhd"}
+
+/* analyzing top level source file */
+analyze -format vhdl -lib MAC_1G_LIB {mactop_dir + "mac_1g_amba.vhd"}
+
+/* elaborating the design */
+elaborate top -lib MAC_1G_LIB  
+
+/* timing for scan, the settings suggested in Synopsys documentation*/
+clocks = {clkr clkt pclk hclk}
+test_default_delay = 0
+test_default_bidir_delay = 0
+test_default_strobe = 40
+test_default_period = 100
+create_test_clock clocks  -p 100 -w {45 55}
+rtldrc
+
+current_design top
+uniquify
+check_design > report_dir + dc_ + top + rtl.rep
+link
+rtldrc > report_dir + dc_ + top + rtldrc.rep
+
+/* library-dependent settings - please include your own library data here */
+set_wire_load_model  -name "suggested_20K" 
+set_operating_conditions "TYPICAL" 
+
+set_fix_multiple_port_nets -all -buffer_constants
+
+/* specifying clocks */
+create_clock -name "clkr" -period 10 {"clkr"}
+create_clock -name "clkt" -period 10 {"clkt"}
+create_clock -name "pclk" -period 10 {"pclk"}
+create_clock -name "hclk" -period 10 {"hclk"}
+
+set_drive 0 clocks
+set_dont_touch_network clocks
+report_clock > report_dir + dc_ + top + report_clock.rep
+report_port > report_dir + dc_ + top + report_port.rep
+
+group_path -default -critical_range 2
+set_auto_disable_drc_nets -constant false
+
+/* to use ultra mode DC-Ultra license is needed */
+set_ultra_optimization true
+report_ultra_optimization
+
+/* setting max_area to 0 can significantly reduce the area of design */
+/* but please note that it can sometimes negatively affect the performance */
+set_max_area 0  
+
+write -format db -hierarchy -output db_dir + dc_ + top + ".db"
+
+/* compilation */
+sh date
+compile -area_effort high -scan
+sh date
+
+/* the loop needed to ungroup DesignWare components */
+foreach (module_name, find("design","*")) {
+    current_design = module_name
+    lista = filter(find(cell,"*"), "@is_nmodule == true")    
+    if (lista != {}) {
+       echo "Found a DesignWare cells"
+       ungroup -flatten lista
+    }
+}
+
+current_design top
+
+/* inserting scan chain */
+include scan.scr
+
+/* writing out reports */
+current_design top
+report_area > report_dir + dc_ + top + "area_min.rep"
+report_timing -max_paths 5 > report_dir + dc_ + top + "timing.rep"
+report_cell > report_dir + dc_ + top + "cell.rep"
+report_net_fanout -threshold 33 > report_dir + dc_ + top + "fanout.rep"
+
+/* writing out the design in numerous formats */
+change_names -rules verilog -hierarchy
+write_sdf -version 2.1 result_dir + dc_ + top + ".sdf"
+write -format verilog -hierarchy -output result_dir + dc_ + top + ".v"
+write -format vhdl -hierarchy -output result_dir + dc_ + top + ".vhd"
+write -format db -hierarchy -output db_dir + dc_ + top + ".db"
+write_script -output  result_dir + dc_ + top + ".constr"
+write_parasitics -output result_dir + dc_ + top + ".reduced"
+
+/* the purpose of the following command is to find any unmapped logic
+   if the result is {} then the design is fully mapped 		   */
+filter(find( cell, "*" -hier)"@is_unmapped==true")

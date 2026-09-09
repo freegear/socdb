@@ -1,0 +1,50 @@
++Debug
++access+rwc
+
+// -------------------------------
+// Memory Core
+// -------------------------------
+-v /Slibs/artisan/TSMC_0.18-micron-FB/G/aci/sc/verilog/tsmc18.v 
+-v /Slibs/artisan/TSMC_0.18-micron-FB/G/fb_TSMCHOME_tpz973g_240c/digital/Front_End/verilog/tpz973g_240b/tpz973g.v
+//-v /user/bhchoi/rc8051/design/rtl_source/inc_vcode.v
+
+-v /user/bhchoi/rc8051/design/MEM_DB_LIB/SPSRAM256X8.v
+-v /user/bhchoi/rc8051/design/rtl_source/BLKMEMSP_V5_0.v
+-v /user/bhchoi/rc8051/design/rtl_source/rom_16kx8.v
+-v /user/bhchoi/rc8051/design/rtl_source/spsram_1_5kx8.v
+// ------postnetlsit-------------
+rc8051RtlTop.vv
+
+// -------------------------------
+// Test Bench
+// -------------------------------
+TB_rc8051RtlTop.v
+
+
++pulse_r/0 +pulse_e/100 +no_pulse_msg
++maxdelays
+//+mindelays
+//+typdelays
+
++nolibcell
++logpsterr +logpllerr
++libext+.vmd+.v
+
+// options for TSMC only
++libname:tsmc18
++libcomp:tpz973g
++access+rwc
+//+bus_conflict_off
++ncnontcglitch
+//+nospecify
+//+notimingchecks
+
+
+
+
++global_power_on
++nowarnTFNPC
++nowarnSDFA
++nowarnSDFNDP
++nowarnPSDNGL2
+

@@ -1,0 +1,61 @@
+// *******************************************************************
+// USB REGISTER or FIFO read/write by MCU
+// *******************************************************************
+// Wait for the reset to be deactivated.
+for (gint_i = 0; gint_i < 50; gint_i = gint_i + 1) nop;
+
+$display ("USB FIFO READ/WRITE TEST");
+write ({`U_BLOCK_AREA_,24'h00_1000},32'h5555_5555,2'b10);
+read ({`U_BLOCK_AREA_,24'h00_1000},DATA_RD,2'b10);
+if (DATA_RD !== 32'h5555_5555) begin
+  $display ($time,,"USB FIFO READ WRITE FAIL!!");
+  $display ("WRITE VALUE: 32'h5555_5555, READ VALUE: 32'h%h", DATA_RD);
+  $stop;
+end
+else $display ($time,,"USB FIFO READ WRITE SUCCESS!!");
+
+$display ("USB STATUS FIFO READ/WRITE TEST");
+write ({`U_BLOCK_AREA_,24'h00_2000},32'haaaa_aaaa,2'b10);
+read ({`U_BLOCK_AREA_,24'h00_2000},DATA_RD,2'b10);
+if (DATA_RD !== 32'haaaa_aaaa) begin
+  $display ($time,,"USB STATUS FIFO READ WRITE FAIL!!");
+  $display ("WRITE VALUE: 32'haaaa_aaaa, READ VALUE: 32'h%h", DATA_RD);
+  $stop;
+end
+else $display ($time,,"USB STATUS FIFO READ WRITE SUCCESS!!");
+
+$display ("USB EMPTY AREA READ/WRITE TEST");
+write ({`U_BLOCK_AREA_,20'h0_00fc},32'h5555_5555,2'b10);
+read ({`U_BLOCK_AREA_,20'h0_00fc},DATA_RD,2'b10);
+
+write ({`U_BLOCK_AREA_,20'h0_0800},32'haaaa_aaaa,2'b10);
+read ({`U_BLOCK_AREA_,20'h0_0800},DATA_RD,2'b10);
+
+//Interrupt enable, mask setting
+write (`u_intr_en_reg,`U_INTR_ENABLE_,2'b10);
+write (`u_intr_mask_reg,`U_INTR_MASK_,2'b10);
+
+///////////////////////////////////////////////////////////////////////////
+// USB block register setting
+///////////////////////////////////////////////////////////////////////////
+$display ("USB DEVICE DESCRIPTOR TABLE WRITE");
+write ({`U_BLOCK_AREA_,24'h00_2200},32'h0200_0112,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_2204},32'h4000_0000,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_2208},32'h0100_0b2a,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_220c},32'h0000_0100,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_2210},32'h0000_0100,2'b10);
+$display ("USB DEVICE DESCRIPTOR TABLE WRITE END");
+
+$display ("USB CONFIG DESCRIPTOR TABLE WRITE");
+write ({`U_BLOCK_AREA_,24'h00_2280},32'h0027_0209,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_2284},32'he000_0101,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_2288},32'h0004_09ff,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_228c},32'h0000_0300,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_2290},32'h0507_0000,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_2294},32'h0040_0381,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_2298},32'h8205_0701,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_229c},32'h0100_4002,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_22a0},32'h0203_0507,2'b10);
+write ({`U_BLOCK_AREA_,24'h00_22a4},32'h0001_0040,2'b10);
+
+$display ("USB CONFIG DESCRIPTOR TABLE WRITE END");

@@ -1,0 +1,221 @@
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap10.htm">Previous Chapter</a>
+ * <a href="chap12.htm">Next Chapter</a>
+<p>
+<a name="14869: apphead: Appendix A"></a><a name="_IX_149"></a><title>FLEXlm End User Manual: Appendix E  
+The Debug Log File</title>
+<h1>Appendix E  
+The Debug Log File</h1>
+<p>
+The 
+<a name="_IX_150"></a>daemons all generate debug log files in the following format.<p>
+<pre>hh:mm (DAEMON NAME) message</pre>
+</ol></ul><p>
+<p>
+<dl><dt>hh:mm<dd>Time that the message was logged.<dt>DAEMON NAME<dd>Either 
+<TT>lmgrd</TT> or the vendor DAEMON name. In the case 
+where a single copy of the daemon cannot handle all of the 
+requested licenses, an optional `_' followed by a number 
+indicates that this message comes from a forked daemon.<dt>message<dd>The text of the message.</dl><p>
+The debug log files can be used to:<p>
+<ul><li>Diagnose configuration problems.<li>Diagnose daemon software errors.</ul><p>
+The debug log file should not be used for usage reporting.<p>
+<a name="E.1"></a><h2>E.1  Informational Messages</h2>
+<p>
+Connected to node<p>
+<p>
+This daemon is connected to its peer on node `node.'<p>
+<p>
+CONNECTED, master is name<p>
+<p>
+The license daemons log this message when a quorum is up and everyone has 
+selected a master.<p>
+<p>
+DENIED: N feature to user<p>
+<p>
+`user' was denied access to `N' licenses of `feature'.   
+<p>
+<p>
+EXITING DUE TO SIGNAL nnn<p>
+<p>
+EXITING with code nnn<p>
+<p>
+All daemons list the reason that the daemon has exited.<p>
+<p>
+EXPIRED: feature<p>
+<p>
+`feature' has passed its expiration date.<p>
+<p>
+IN: feature by user (N licenses)<p>
+<p>
+`user' has checked back in `N' licenses of `feature'.<p>
+<p>
+License Manager server started<p>
+<p>
+The license daemon was started.<p>
+<p>
+Lost connection to host<p>
+<p>
+A daemon can no longer communicate with its peer on node `host', which can 
+cause the clients to have to reconnect, or cause the number of daemons to go 
+below the minimum number, in which case clients may start exiting. If the license 
+daemons lose the connection to the master, they will kill all the vendor daemons; 
+vendor daemons will shut themselves down.<p>
+<p>
+Lost quorum<p>
+<p>
+The daemon lost quorum, so will process only connection requests from other 
+deamons.<p>
+<p>
+MULTIPLE xxx servers running.<p>
+<p>
+Please kill, and restart license daemon<p>
+<p>
+The license daemon has detected that multiple licenses for vendor daemon `xxx' 
+are running. The user should kill all `xxx' daemon processes and re-start the 
+license daemon.<p>
+<p>
+OUT: feature by user (N licenses)<p>
+<p>
+`user' has checked out `N' licenses of `feature'.<p>
+<p>
+RESERVE feature for HOST name<p>
+<p>
+RESERVE feature for USER name<p>
+<p>
+A license of `feature' is reserved for either user `name' or host `name'.<p>
+<p>
+REStarted xxx (internet port nnn)<p>
+<p>
+Vendor daemon `xxx' was restarted at internet port `nnn'.<p>
+<p>
+Retrying socket bind (address in use)<p>
+<p>
+The license servers try to bind their sockets for approximately 6 minutes if they 
+detect `address in use' errors.<p>
+<p>
+Selected (EXISTING) master node.<p>
+<p>
+This license daemon has selected an existing master (node) as the master.<p>
+<p>
+SERVER shutdown requested.<p>
+<p>
+A daemon was requested to shut down via a user-generated kill command.<p>
+<p>
+[NEW] Server started for: feature-list<p>
+<p>
+A new server was started for the features listed.<p>
+<p>
+Shutting down xxx<p>
+<p>
+The license daemon is shutting down the vendor daemon xxx.<p>
+<p>
+SIGCHLD received. Killing child servers.<p>
+<p>
+A vendor daemon logs this message when a shutdown was requested by the 
+license daemon.<p>
+<p>
+Started name	<p>
+<p>
+The license daemon logs this message whenever it starts a new vendor daemon.<p>
+<p>
+Trying connection to node	<p>
+<p>
+The daemon is attempting a connection to `node'.<p>
+<a name="E.2"></a><h2>E.2  Configuration Problem Messages</h2>
+<p>
+<I>hostname</I>: Not a valid server host, exiting<p>
+<p>
+This daemon was run on an invalid hostname.<p>
+<p>
+<I>hostname</I>: Wrong hostid, exiting<p>
+<p>
+The hostid is wrong for `hostname.'<p>
+<p>
+BAD CODE for 
+<I>feature-name</I><p>
+<p>
+The specified feature name has a bad license key. It was probably typed in wrong, 
+or modified by the end-user.<p>
+<p>
+CANNOT OPEN options file 
+<I>`file'</I><p>
+<p>
+The options file specified in the license file could not be opened.<p>
+<p>
+license daemon: lost all connections<p>
+<p>
+This message is logged when all the connections to a server are lost, which often 
+indicates a network problem.<p>
+<p>
+lost lock, exiting<p>
+<p>
+Error closing lock file<p>
+<p>
+Unable to re-open lock file<p>
+<p>
+The vendor daemon has a problem with its lock file, usually because of an attempt 
+to run more than one copy of the daemon on a single node. Locate the other 
+daemon that is running via a 
+<TT>ps</TT> command, and kill it with 
+<TT>kill -9</TT>.<p>
+<p>
+NO DAEMON line for 
+<I>daemon</I><p>
+<p>
+The license file does not contain a `DAEMON' line for `<I>daemon</I>.'<p>
+<p>
+No `license' service found<p>
+<p>
+The TCP `license' service did not exist in 
+<TT>/etc/services</TT>.<p>
+<p>
+No features to serve!<p>
+<p>
+A vendor daemon found no features to serve. This could be caused by a corrupted 
+or incorrectly entered license file.<p>
+<p>
+UNSUPPORTED FEATURE request: feature by user<p>
+<p>
+The `user' has requested a feature that this vendor daemon does not support. This 
+can happen for a number of reasons: the license file is bad, the feature has 
+expired, or the daemon is accessing the wrong license file.<p>
+<p>
+Unknown host: hostname<p>
+<p>
+The hostname specified on a `SERVER' line in the license file does not exist in 
+the network database.<p>
+<p>
+NO DAEMON lines, exiting<p>
+<p>
+The license daemon logs this message if there are no DAEMON lines in the 
+license file. Since there are no vendor daemons to start, there is nothing to do.<p>
+<p>
+NO DAEMON line for name<p>
+<p>
+A vendor daemon logs this error if it cannot find its own DAEMON name in the 
+license file.<p>
+<a name="E.3"></a><h2>E.3  Daemon Software Error Messages</h2>
+<p>
+No internet port number specified<p>
+<p>
+A vendor daemon was started without an internet port.<p>
+<p>
+read: error message<p>
+<p>
+An error in a `read' system call was detected.<p>
+<p>
+select: message<p>
+<p>
+An error in a select system call was detected. This is usually a sign of a system 
+networking failure.<p>
+<p>
+Server exiting<p>
+<p>
+The server is exiting. This is normally due to an error.<p>
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap10.htm">Previous Chapter</a>
+ * <a href="chap12.htm">Next Chapter</a>
+<p>

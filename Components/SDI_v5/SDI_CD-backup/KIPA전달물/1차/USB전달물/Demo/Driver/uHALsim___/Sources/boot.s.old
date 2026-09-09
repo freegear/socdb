@@ -1,0 +1,1024 @@
+;/* ************************************************************************
+; Copyright © Intel Corporation, March 18th 1998.  All rights reserved.
+; Copyright ARM Limited 1998 - 2000.  All rights reserved.
+;***************************************************************************
+;
+;  uHAL Startup code
+;  Everything needed to get to 'C' main.
+;
+;	$Id: boot.s,v 1.17.2.3 2000/02/18 14:31:07 mquinn Exp $
+;
+;***************************************************************************/
+
+
+	INCLUDE bits.s
+	INCLUDE sizes.s
+	INCLUDE platform.s
+	INCLUDE except_h.s
+	GET	target.s			; Target specific macros
+ROMBase EQU	0x24000000
+	
+	IMPORT  print_sys_buf
+	IMPORT	uHALr_putchar
+	IMPORT 	fil_sys_buf
+	IMPORT	__entry, WEAK
+	IMPORT  _terminateio, WEAK
+	IMPORT  uHALir_CLibInit		; in support.s
+
+ IF USE_C_LIBRARY = 0
+	EXPORT	|_main_arg|			; Program arguments
+	EXPORT	|__rt_exit|			; ARM Linker needs these..
+	EXPORT	__rt_stkovf_split_small
+	EXPORT	__rt_stkovf_split_big		; ..but they do nothing.
+   EXPORT	|__main|			; Program Entry Point
+	EXPORT	|_main|				; Program Entry Point
+ ELSE
+ IF :DEF: ADS_BUILD
+ IF ADS_BUILD = 1
+   EXPORT	|__main|			; Program Entry Point
+	EXPORT	|_main|				; Program Entry Point
+ ENDIF
+ ENDIF
+ ENDIF
+
+	IMPORT	main				; Start of user program
+	EXPORT  _sys_exit
+	
+	IMPORT	uHALir_DebugUndefinedInst		; in irq.c
+	IMPORT	uHALir_DisableInt			; in irqlib.s
+	IMPORT	uHALir_PlatformInit		; in platform.c
+	IMPORT	uHALir_InitTargetMem		; in driver.s
+
+	IMPORT	uHALr_memcpy			; Required by _memcpy
+	EXPORT	_memcpy				; Required by 2.50 SDT ARMCC 
+
+	EXPORT  uHALiv_FileCount		; Count of opened files.
+	EXPORT	uHALr_TrapSWI			; SWI exception handler
+	EXPORT	uHALir_InitBSSMemory		; Init 'C' variable space
+	EXPORT	uHALiv_TopOfHeap		; Variables holding above values
+	EXPORT	uHALiv_TopOfMemory
+	EXPORT	uHALiv_MemorySize		; Memory Size
+	EXPORT  uHALiv_BaseOfMemory
+	EXPORT	uHALv_BootSwitcherStatus	; Boot Switcher Status
+
+	AREA	SelfBoot, CODE, READONLY	
+	
+	; Start of executable code - label must follow ENTRY for scripts
+	; to automatically convert between different assemblers.
+ IF USE_C_LIBRARY = 0
+	ENTRY
+ ELSE
+ IF :DEF: ADS_BUILD
+ IF ADS_BUILD = 1
+	ENTRY
+ ENDIF
+ ENDIF
+ ENDIF 
+
+|__main| 
+|_main| 
+
+; Vectors are copied to RAM at zero. If memory at 0 is ROM, this code will
+; have no effect (provided the hardware handles writes to ROM gracefully)!
+; uHALip_LastVector should be after _FIQVector _and_ the FIQ interrupt code
+; which may follow to avoid an unnecessary branch. If RAM at 0, init. after
+; switching FlashROM shadow away.
+
+; First 8 addresses are interrupt vectors.
+;
+;	Addr.   Exception Type		Mode    Priority
+;	0x00    Reset			svc	1	(1 = High)
+;	0x04    Undefined instruction   undef   6	(6 = Low)
+;	0x08    Software Interrupt SWI  svc	6
+;	0x0C    Prefetch Abort		abort   5
+;	0x10    Data Abort		abort   2
+;	0x14    Reserved		NA	N/A
+;	0x18    Interrupt IRQ		irq	4
+;	0x1C    Fast Interrupt FIQ	fiq	3
+;
+
+	; NOTE: Can't use simple branches which are relative and would
+	;	be wrong when moved!
+	; If the uHAL application is executing from a different address
+	; to the address it was built for (such as a system where 
+	; memory management hasn't been turned on yet), the first
+	; instruction may _have_ to be different. So use a macro.
+
+ IF :DEF: STANDALONE	; (CSLEE)
+	B	 uHALir_ResetGo			; Ignore Vector Table
+								; Just Use The Data In Vector Table (Copy)
+ ENDIF
+uHALip_FirstVector		; Just Label For Copying Vector Table (CSLEE) 
+__VectorStart			; Label Added For Vector Copying (CSLEE)
+	STEP_ONE	; You find a girl to love...
+ 
+	LDR	PC, uHALip_UndefVector
+	LDR	PC, uHALip_SWIVector
+	LDR	PC, uHALip_PreAbtVector
+	LDR	PC, uHALip_DataAbtVector
+	LDR	PC, uHALip_ReservdVector
+	LDR	PC, uHALip_IRQVector
+	LDR	PC, uHALip_FIQVector	; Routine for FIQs - normally code is
+
+					; placed here for max. speed, but
+					; a branch would work just as well.
+
+; Put after FIQ code if inline (Then FIQ code will be in fast ram too).
+
+	; If this were a real embedded application, all these vectors
+	; would have to be properly defined.
+
+uHALip_ResetStart	DCD	uHALir_ResetGo	; Branch on Reset & go
+uHALip_UndefVector	DCD	uHALir_UndefProcess ; Reset on unknown instruction
+uHALip_SWIVector	DCD	uHALr_TrapSWI	; Routine to handle SWI
+uHALip_PreAbtVector	DCD	uHALir_ResetStop	; Not handled in this example..
+uHALip_DataAbtVector	DCD	uHALir_ResetStop
+uHALip_ReservdVector	DCD	uHALir_ResetStop
+uHALip_IRQVector	DCD	uHALir_IRQProcess	; Routine for IRQs
+uHALip_FIQVector	DCD	uHALir_ResetStop 	; Routine for FIQs
+__VectorEnd
+
+uHALip_LastVector		; EVERYTHING before this point is copied to RAM
+
+	; Skip over vector table & FIQ code (if any) to HERE
+uHALir_ResetStop
+
+	; If DEBUG is not defined, ResetStop and ResetGo are the same.
+
+ IF :DEF: DEBUG
+
+	; Post Mortem assumes memory system (uses stacks) is working and
+	; OS_COMPORT has been initialised (see below).
+	B	PostMortem
+	NOP
+	NOP
+	NOP
+
+ ENDIF
+
+uHALir_ResetGo			; IF :DEF: STANDALONE, come to here after reset
+
+	; This routine is added for code copying from Flash to RAM (BEGIN) (CSLEE)
+ IF :DEF: STANDALONE
+    MOV		r1, #0x24
+    MOV		r1, r1, LSL #24		; 0x24000048
+    ORR		PC, r1, #0x50		; 0x2400004c
+ 	IMPORT	|Image$$RO$$Base|	; Start of ROM Code
+	IMPORT	|Image$$RO$$Limit|	; End Of ROM
+	IMPORT	|Image$$RW$$Base|	; Destination Address of Initializaed RW
+	IMPORT	|Image$$ZI$$Base|	; Start Of Zero Initialized (BSS) Data
+	IMPORT	|Image$$RW$$Limit|	; used to size initialized R/W section
+	
+	LDR	r0, = |Image$$RO$$Base|	; get linked location of code
+	
+	;MOVS	r1, r4
+	;LDREQ	r1, =ROMBase		; ROMBase = 0x24000000
+	LDR		r1, =ROMBase		; ROMBase = 0x24000000
+	SUB		r8, r1, r0
+	
+	GOTO_ROM	r3,r4			; REMAP (CSLEE)
+	
+	LDR		r3, =|Image$$RO$$Limit|
+	TEQ		r8, #0
+	BEQ		NoMCodeCopy
+	
+01	LDR		r1, [r0, r8]
+	STR		r1, [r0], #+4
+	CMP		r0, r3
+	BLO		%B01
+	
+NoMCodeCopy
+	ADD		r1, r3, r8				; Source Address = RO$$Limit + Offset
+	LDR		r2,=|Image$$RW$$Base|	; Destination Address
+	LDR		r3,=|Image$$ZI$$Base|	; Limit
+	
+	; Initializing the RW initialized
+01	LDR	r0,[r1],#4					; Get From ROM
+	STR	r0,[r2],#4					; Store To RAM
+	CMP	r2,r3						; Check For End Condition
+	BLO	%BT01						; if (r2<r3), More Transfer
+
+	; Initializing BSS area
+	LDR		r3,=|Image$$RW$$Limit|	; 
+	MOV		r0,#0
+
+02	STR	r0,[r2],#4
+	CMP	r2,r3
+	BLO	%BT02
+	
+	; r1 points to the top of image, save this value to r7 for now
+	MOV	r7,r1
+	
+	; Now we have set everything up, we can jump to re-located code and
+	; continue running from there
+	
+	LDR	pc,=gotoRelocated
+gotoRelocated
+ ENDIF
+	; This routine is added for code copying from Flash to RAM (END) (CSLEE)
+
+ IF :DEF: SEMIHOSTED
+	MOV	r12, #0		; No Boot Switcher, therefore it can not fail.
+ ELSE
+	; Run the boot switcher if it exists at link time.
+	;
+	; THIS ROUTINE WILL DESTROY ALL REGISTERS
+	;
+	; r0 will contain a return status (zero is success)
+	;
+	; NOTE: boot_switcher uses uHALir_SwitchBack to return back here
+	;	on some systems - specifically when the application is
+	;	linked to run from RAM.
+
+	IMPORT	boot_switcher, WEAK
+	EXPORT	uHALir_SwitchBack		; SelfRelocate label
+
+	MOV	r0, #0		; Assume success.
+	LDR	r4, =boot_switcher
+	CMP	r4, #0
+	BLNE	boot_switcher
+uHALir_SwitchBack
+	MOV	r12, r0		; Save status for later.
+ ENDIF
+
+	; uHAL is not currently multiprocessor aware. If the platform
+	; supports multiple CPUs, platform-specific initialisation
+	; will be required.
+	CHECK_PRIMARY_CPU
+
+ IF :DEF: SEMIHOSTED
+	; Switch to high memory (and handle any other instant start needs)
+	GOTO_ROM	r0, r1
+ ENDIF
+
+	; When cold-booting, processor interrupts are disabled, but this is
+	; not guaranteed when running under a debugger.
+
+	; External interrupt controller mode is undefined on reset. By
+	; clearing all the flags, we make sure the system is under control.
+	; NOTE: Hardware/Debugger implementation dependant!
+
+ IF :DEF: SEMIHOSTED
+
+	; SEMIHOSTED - get into SVC mode
+	; As this change is not balanced, only switch if USR mode
+	MRS	r4, CPSR
+	AND	r4, r4, #ModeMask
+	CMP	r4, #User32Mode
+
+	MOV	r0, #angel_SWIreason_EnterSVC
+	SWINE	SWI_Angel		; Returns EnterUSR routine in r0
+
+ ENDIF
+
+	; Put interrupts into a known state - off (if possible)
+	INIT_INTS	r0, r1, r8
+
+	; If doing some sort of memory initialisation, it is obvious there
+	; is no stack!
+
+	; And the default top of memory is...
+	LDR	r0, =uHAL_MEMORY_SIZE 
+
+	; NOTE: RAM may need to be kick-started, so this 'routine' should
+	; always be called!
+
+	BL	uHALir_InitTargetMem	; Memory size returns in r0
+
+	LDR	r4, =uHALiv_MemorySize
+	STR	r0, [r4]		; Save memory size
+
+	;
+	; Now that memory has been initialised we can save the boot
+	; switcher status.
+	;
+	; Unfortunately uHALir_InitTargetMem is not guaranteed to preserve
+	; registers on all platforms.  Because of this currently the status
+	; is zeroed before it is saved on all platforms except Integrator.
+	; 
+
+	LDR	r4, =uHALv_BootSwitcherStatus
+	STR	r12, [r4]		; Save boot switcher status
+
+	; >> Non-linear Memory management needs to happen here
+	;    - before stacks are set up. Else, do it after stack/vector init.
+
+
+	; Under a debugger, IRQ vector is only changed when IRQ is installed.
+	; But standalone, all vectors are installed now.
+ IF :LNOT: :DEF: SEMIHOSTED
+
+	; Copy vectors (and any in-line FIQ code) to RAM at zero.
+	; NOTE: Can't do this before memory is initialised (AND it will break
+	;	debuggers).
+	MOV	r4, #0
+	LDR	r5, =uHALip_FirstVector	; Copy from here..
+	LDR	r6, =uHALip_LastVector	; ..to here
+3
+	LDR	r7, [r5], #4		; get word and store to RAM	 
+	STR	r7, [r4], #4
+	CMP	r5, r6			; Repeat until all done
+	BLO	%3
+
+ ENDIF
+
+	; target.s knows how debugging is done on each board
+	MOV	r4, #5
+	DO_DEBUG	r4, r5, r6
+
+ IF :DEF: SEMIHOSTED
+
+	; Get the heap info from Semihosted. NOTE: requires a ptr to a ptr to
+	; 4 bytes of RAM
+	LDR	r0, =angel_SWI_SYS_HEAPINFO
+
+	; Ptr to ptr, not used as heap until after InitStacks
+	LDR	r1, =uHALiv_TopOfHeap
+	LDR	r2, =uHALiv_BaseOfMemory; Heap info actually stored here
+	STR	r2, [r1]		; Semihosted promises to preserve r2
+	SWI	SWI_Angel
+	LDR	r0, [r2, #4]		; Read top of Semihosted heap
+
+ ENDIF
+
+	; Now set up the stack pointers for all the different modes. 
+	BL	uHALir_InitStacks
+
+	STMFD	sp!, {r0-r1}		; Protect TopOfMemory & TopOfHeap
+
+ IF :LNOT: :DEF: SEMIHOSTED
+
+ IF uHAL_PCI <> 0
+	; Configure PCI memory space (even if not connected to PCI)
+	LDR	r7, =PCI_DRAMSIZE
+	SETUP_PCI	r4, r5, r6, r7
+ ENDIF
+
+ ENDIF
+
+	;
+	; Save contents of uHALv_BootSwitcherStatus & uHALiv_MemorySize
+	;
+	LDR	r4, =uHALv_BootSwitcherStatus
+	LDR	r0, [r4]
+	LDR	r4, =uHALiv_MemorySize
+	LDR	r1, [r4]
+	STMFD	sp!, {r0-r1}
+	
+	;
+	; Initialise memory required by 'C'.
+	;
+	BL	uHALir_InitBSSMemory
+	
+	;
+	; Restore contents of uHALv_BootSwitcherStatus & uHALiv_MemorySize
+	;
+	LDMFD	sp!, {r0-r1}
+	LDR	r4, =uHALv_BootSwitcherStatus
+	STR	r0, [r4]
+	LDR	r4, =uHALiv_MemorySize
+	STR	r1, [r4]
+
+	; Now all memory is cleared, save TopOfMemory
+	LDMFD	sp!, {r0-r1}
+	SUB	r0, r0, #4		; Last accessable word
+	BIC	r0, r0, #3		; Make it word-aligned
+	LDR	r4, =uHALiv_TopOfMemory	; Top of installed memory
+	STR	r0, [r4]
+	LDR	r4, =uHALiv_TopOfHeap
+	SUB	r1, r1, #4		; Last accessable word
+	BIC	r1, r1, #3		; Make it word-aligned
+	STR	r1, [r4]		; Here's the top of free RAM
+
+ IF :LNOT: :DEF: SEMIHOSTED
+	; These variables are used if the application wants to
+	; define a stack of its own. They overlap with the heap,
+	; but should start at opposite ends.
+
+	LDR	r4, =uHALiv_TopOfStack
+	STR	r1, [r4]		; Put at top of heap space
+	LDR	r4, =uHALiv_BaseOfStack
+	SUB	r1, r1, #SZ_64K
+	STR	r1, [r4]
+ ENDIF
+
+	; Do the C based platform specific platform initialization
+	BL	uHALir_PlatformInit	; Everything required to init HW
+	
+	; If your main function is in Thumb state code you must ensure 
+	; that it is compiled as -apcs/interworking to allow the linker
+	; to create the correct veneer for the state change.
+									
+	BL	uHALir_CLibInit
+
+	; __entry is only used in the SDT semihosted USE_C_LIBRARY=1 case.
+	; Therefore dont use unless its there.
+	LDR	r4, =__entry
+	CMP	r4, #0
+	BLNE	__entry
+
+ ; ARM Procedure Call Standard nomenclature
+ 	MOV	r0, #0			; set argc to 0
+ 	MOV	r1, #0			; and argv to NUL
+ 	BL	main			; Call main, falling through to
+						; exit on return.
+
+
+ IF USE_C_LIBRARY = 0
+|__rt_exit|				; exit
+ ENDIF
+_sys_exit
+;
+; void __rt_exit(int code);
+; Terminate execution, optionally setting return code (ignored here).
+; MUST NOT RETURN IN STAND-ALONE SYSTEM.
+
+	LDR		r4, =_terminateio
+	CMP		r4, #0
+	BLNE 	_terminateio
+; Stop interrupts.
+	BL		uHALir_DisableInt	
+
+   IF :DEF: SEMIHOSTED
+
+	LDR	r0, =angel_SWIreason_ReportException
+	LDR	r1, =ADP_Stopped_ApplicationExit
+	SWI	SWI_Angel
+
+   ENDIF
+0
+	; Might be nice to inform world of termination by putting some
+	; unique status operation (such as a flashing LED inside this loop).
+	B	%0			; Loop forever
+
+
+;===========================================================================
+;	uHALir_InitStacks
+;
+; 'Routine' called from boot-up to set all stacks.
+; Although we have no stack yet, r14 contains return address. r0 contains
+; top of memory (don't corrupt!) and all stacks are relative to this value.
+;
+; FIQ stack isn't set in this example.
+;
+uHALir_InitStacks
+	MOV	r6, r14			; !!! Protect the return address !!!
+
+	; Any modes which are only used to cause a reset can all work in
+	; the same stack space, since only one can occur at any one time.
+	MRS	r4, cpsr
+	ORR	r4, r4, #NoIRQ		; No IRQs & blank mode
+	ORR	r4, r4, #NoFIQ		; Or FIQs
+	BIC	r4, r4, #ModeMask
+
+	; Undefined & Abort modes share same space.
+	ORR	r5, r4, #Undef32Mode
+	MOV	r2, #User32Mode
+	MSR	cpsr_c, r5
+	MSR	spsr_c, r2
+	BIC	r7, r0, #3		; Must be word-aligned
+	MOV	sp, r7			; Initial Undefined stack pointer...
+	ORR	r5, r4, #Abort32Mode
+	MSR	cpsr_c, r5
+	MSR	spsr_c, r2
+
+	; If you want seperate stacks for abort & Undefined, uncomment these:
+;	SUB	r7, r7, #AbortStackSize
+;	BIC	r7, r7, #3		; Must be word-aligned
+
+	MOV	sp, r7			; Initial Abort stack pointer...
+	SUB	r7, r7, #UndefStackSize
+	BIC	r7, r7, #3		; Must be word-aligned
+
+	; Setup FIQ stacks.
+	; NOTE: This example doesn't alter anything to do with FIQs. If you
+	; want to use FIQs, uncomment this code. FIQs are left disabled.
+;	ORR	r5, r4, #(NoFIQ | FIQ32Mode)
+;	MSR	cpsr_c, r5
+;	MSR	spsr_c, r2
+;	MOV	sp, r7			; Initial FIQ stack pointer...
+;	SUB	r7, r7, #FIQStackSize
+;	BIC	r7, r7, #3		; Must be word-aligned
+
+	; Setup IRQ stacks.
+	ORR	r5, r4, #IRQ32Mode
+	MSR	cpsr_c, r5
+	MSR	spsr_c, r2
+	MOV	sp, r7			; Initial IRQ stack pointer...
+	SUB	r7, r7, #IRQStackSize
+	BIC	r7, r7, #3		; Must be word-aligned
+
+	; Setup Supervisor stacks.
+	ORR	r5, r4, #SVC32Mode
+	MSR	cpsr_c, r5
+	MSR	spsr_c, r2
+	MOV	sp, r7			; Initial SVC stack pointer...
+	SUB	r7, r7, #SVCStackSize
+	BIC	r7, r7, #3		; Must be word-aligned
+	MOV	r10, r7			; Bottom of SVC stack
+
+	; Need to protect stack pointer from the SWI. When switching
+	; modes Semihosted also switches stack so we end up with the user
+	; stack. Semihosted SWIs promise to protect r1, r2 and r3, so copy
+	; TopOfMemory to r2 and sp to r3.
+	MOV	r2, r0			; Protect TopOfMemory
+	MOV	r3, sp			; Protect SVC stack
+
+	; Setup User/System mode stacks.
+	ORR	r5, r4, #User32Mode
+	MSR	cpsr_c, r5
+	MOV	sp, r7			; Initial User stack pointer...
+	SUB	r7, r7, #UserStackSize
+	BIC	r7, r7, #3		; Must be word-aligned
+	MOV	r10, r7			; Bottom of stacks
+
+	; Save the top of free RAM = TopOfMemory - all stacks
+	MOV	r1, r7			; Return top of free RAM in r1
+
+	; Switch back to supervisor & recover stack & TopOfMemory.
+	MOV	r0, #angel_SWIreason_EnterSVC
+	SWI	SWI_Angel		; Returns EnterUSR routine in r0
+	MOV	sp, r3			; Restore SVC stack
+	MOV	r0, r2			; Restore TopOfMemory
+
+	MOV	r11, #0			; No previous frame, so fp=0
+ IF :DEF: THUMB_AWARE   ; if interworking is required
+   BX    r6              ; just return
+ ELSE                    ; some processors are not Thumb aware
+	MOV	pc, r6			; just return back to boot up code
+ ENDIF
+
+
+	INCLUDE linkdata.s		; Any compiler dependencies are in here
+
+;	uHALir_InitBSSMemory
+;
+; Routine called from boot-up to initialise all memory used by 'C' and any
+; predefined assembler data areas. Use of indirect links to real linker
+; variables allows any memory map to be used & hides linker specifics.
+; This is a real subroutine, called after stack initialisation.
+
+uHALir_InitBSSMemory
+	STMFD	sp!, {r4-r8, r14}
+	LDR	r4, uHAL_TopOfROM	; Copy predefined variables from here..
+	LDR	r5, uHAL_StartOfBSS	; ..to here
+	LDR	r6, uHAL_ZeroBSS	; 'C' BSS starts here
+	CMP	r4, r5			; Make sure there are some..
+	BEQ	%8
+7
+	CMP	r5, r6			; Check if done..
+	LDRCC	r7, [r4], #4		; if not, get word and store to RAM
+	STRCC	r7, [r5], #4
+	BCC	%7
+8
+	LDR	r4, uHAL_EndOfBSS		; Top of zero init memory
+
+; FIXME! vvvv! How do I reserve sequential data areas which are not zero-init?
+	LDR	r7, uHAL_NonZeroBSS	; Start of MMU tables
+	LDR	r8, uHAL_EndOfNonZ	; End of MMU tables
+; FIXME! ^^^^!
+
+	MOV	r5, #0
+9
+; FIXME! vvvv! See above comment.
+	; Don't zero NonZero area!
+	CMP	r6, r7			; > uHAL_NonZeroBSS
+	CMPCS	r8, r6			; & < uHAL_EndOfNonZ ?
+	MOVCS	r6, r8			; Yes, just skip completely
+; FIXME! ^^^^!
+
+	CMP	r6, r4			; Check if done..
+	STRCC	r5, [r6], #4		; if not, clear another word
+	BCC	%9
+
+	; Save the Base of Free RAM.
+	; This our best guess so far the end of the vectors and fiq code.
+	LDR	r5, =uHALiv_BaseOfMemory
+	MOV	r4, #0x400	; Beyond vectors and FIQ code.
+	STR	r4, [r5]
+
+ IF :DEF: THUMB_AWARE   ; if interworking is required
+	LDMFD	sp!, {r4-r8, lr}	; restore registers and return
+   BX    lr              ; just return
+ ELSE                    ; some processors are not Thumb aware
+	LDMFD	sp!, {r4-r8, pc}	; restore registers and return
+ ENDIF
+
+; STacK OVerFlow handling routine - minimum required by ARM Linker without
+; defining no stack checking.
+; void __rt_stkovf_split_big(void);
+|__rt_stkovf_split_big|
+ IF :DEF: THUMB_AWARE   ; if interworking is required
+   BX    r14            ; just return
+ ELSE                    ; some processors are not Thumb aware
+	MOV	pc, r14			; just return
+ ENDIF
+
+; STacK OVerFlow handling routine - minimum required by ARM Linker without
+; defining no stack checking.
+; void __rt_stkovf_split_small(void);
+|__rt_stkovf_split_small|
+ IF :DEF: THUMB_AWARE   ; if interworking is required
+   BX    r14            ; just return
+ ELSE                    ; some processors are not Thumb aware
+	MOV	pc, r14			; just return
+ ENDIF
+
+|_main_arg|
+ IF :DEF: THUMB_AWARE   ; if interworking is required
+   BX    r14            ; just return
+ ELSE                    ; some processors are not Thumb aware
+	MOV	pc, r14			; just return
+ ENDIF
+	
+; SWI handler - currently only handles switch to SVC mode.
+uHALr_TrapSWI
+	; SWI switches to SVC mode, with no IRQs (ARM Architecture Reference)
+	STMFD	sp!, {r0-r1}
+
+ IF :DEF: THUMB_AWARE   ; if interworking is required
+   MRS     r0, spsr            ; Get spsr
+   TST     r0, #PSR_T_bit      ; Occurred in Thumb state?
+   LDRNEH  r0, [lr,#-2]        ; Yes: Load halfword and...
+   BICNE   r0, r0, #0xFF00     ; ...extract comment field
+   LDREQ   r0, [lr,#-4]        ; No: Load word and...
+   BICEQ   r0, r0, #0xFF000000 ; ...extract comment field
+   
+        ; r0 now contains SWI number
+        
+	LDR	r1, =SWI_Angel     ; Is it an ARM State Angel SWI?
+	CMP	r0, r1
+	BEQ   swi_correct
+
+	LDR	r1, =SWI_Angel_Thumb
+	CMP	r0, r1
+	BEQ   swi_correct
+
+	; If we get here we can't service the SWI so return unknown
+	
+	LDMFD	sp!, {r0-r1}		; restore register
+	B     uHALil_ExitSWI		; Unknown SWI
+
+swi_correct
+	LDMFD	sp!, {r0-r1}		; restore register
+
+
+ ELSE                    ; some processors are not Thumb aware
+	LDR	r0, [r14, #-4]		; Read SWI instruction
+	BIC	r0, r0, #0xff000000	; extract the SWI number
+
+	LDR	r1, =SWI_Angel
+	CMP	r0, r1
+	LDMFD	sp!, {r0-r1}		; restore register
+	BNE	uHALil_ExitSWI		; Unknown SWI
+ ENDIF
+
+	CMP	r0, #angel_SWIreason_EnterSVC
+	BEQ	uHALir_SWIEnterOS	; return in SVC mode
+
+	CMP r0, #SYS_FILE_OPEN
+	BEQ uHAL_Sys_FileOpenSWI
+
+	CMP r0, #SYS_READ_SWI
+	BEQ uHAL_Sys_ReadSWI
+
+	CMP r0, #SYS_WRITE_SWI
+	BEQ uHAL_Sys_WriteSWI
+
+	CMP r0, #angel_SWI_SYS_WRITEC
+	BEQ uHAL_ttywrch_SWI
+
+	CMP	r0, #angel_SWI_SYS_HEAPINFO
+	BNE	uHALil_ExitSWI		; Unknown SWI
+
+	; Load area pointed to by r1 with heap and stack info
+	STMFD	sp!, {r0-r4}
+	LDR	r0, [r1]		; Pointer to variables
+	LDR	r4, =uHALiv_TopOfHeap
+	LDR	r3, [r4], #4		; top of free RAM
+	LDR	r2, [r4], #8		; base of free RAM
+	STR	r2, [r0], #4
+	STR	r3, [r0], #4
+	LDR	r2, [r4], #4		; base of stack
+	LDR	r3, [r4]
+	STR	r2, [r0], #4
+	STR	r3, [r0]
+	LDMFD	sp!, {r0-r4}		; restore register
+
+uHALil_ExitSWI
+	MOV	r0, #0			; Pretend it was all okay
+	MOVS	pc, r14			; just ignore SWI
+      ; MOVS pc.. will return the Thumb state if called
+      ;           from that state
+      
+uHALir_SWIEnterOS
+	STMFD	sp!, {r0}
+   MRS     r0, SPSR            ; Get spsr
+   TST     r0, #PSR_T_bit      ; Occurred in Thumb state?
+	ORRNE	r0, r0, #0x13		; Put into SVC mode
+	MSRNE	SPSR_cxsf, r0		; Save SPSR
+	LDMFD	sp!, {r0}			; restore register
+	MOVNES	pc, lr
+	MOV		pc, lr
+
+uHAL_Sys_FileOpenSWI
+	STMFD	sp!, {r4,lr}
+	LDR		r0,=uHALiv_FileCount
+	LDR		r4,[r0]		; Test the number of opened files
+	ADD 	r4,r4,#0x01
+	STR		r4,[r0]
+	CMP		r4,#0x03 ; If < 3 must be stdin, stdout, stderr
+	MOVGT	r0,#0xffffffff 
+	MOVLT	r0,#0x00000000
+	LDMFD	sp!, {r4,lr}		; restore registers and return
+	MOVS	pc, lr
+
+uHAL_ttywrch_SWI
+	STMFD	sp!, {r0,lr}
+   LDR		r0,[r1]
+   BL		uHALr_putchar	; Print single character from message.
+	LDMFD	sp!, {r0,lr}		; restore registers and return
+	MOVS	pc, lr
+
+uHAL_Sys_WriteSWI
+	STMFD	sp!, {r1-r3,lr}
+	MOV		r0,r2
+	LDR 	r1,[r1,#4]
+	BL 		print_sys_buf	; Print the stream buffer.
+	LDMFD	sp!, {r1-r3,lr}	; restore registers and return
+	MOVS	pc,lr			; return without restoring mode!
+
+uHAL_Sys_ReadSWI
+	STMFD	sp!, {lr}
+	MOV		r0,r2
+	LDR 	r1,[r1,#4]
+	BL 		fil_sys_buf	; Fill the stream buffer.
+	LDMFD	sp!, {lr}	; restore registers and return
+	MOVS	pc, lr			; return without restoring mode!
+
+; Dummy IRQ handler - gets overwritten
+uHALir_IRQProcess
+	STMFD	sp!, {r4}
+	MRS	r4, cpsr		; Re-enable interrupt
+	BIC	r4, r4, #NoIRQ
+	MSR	cpsr_c, r4
+	LDMFD	sp!, {r4}
+	SUBS	pc, r14, #4		; return from IRQ
+
+
+; Try and capture some sensible data after undefined instruction.
+uHALir_UndefProcess
+	MOV	r0, sp
+	; Hacked from vector copy. Should be done properly to a system
+	; defined address.
+	MOV	r0, #0
+	LDR	r1, =uHALip_FirstVector	; Copy from here..
+	LDR	r2, =uHALip_LastVector	; ..to here
+	MOV	r6, #0x00010000		; Debug - make a copy of originals
+	MOV	r5, r14			; Old return address (if any)
+	STR	r5, [r6], #4
+	MRS	r5, cpsr		; CPSR
+	STR	r5, [r6], #4
+	MRC	p15, 0, r5, c5, c0, 0	; Coproc 5 - 1 byte of status
+	STR	r5, [r6], #4
+	MRC	p15, 0, r5, c6, c0, 0	; Coproc 6 - Fault address
+	STR	r5, [r6],#4
+	MOV	r5, sp
+	STR	r4, [r6],#4		; Old Stack
+	STR	r5, [r6],#4		; New Stack
+_undefLoop
+	LDR	r4, [r5], #-4		; Look at stack
+	STR	r4, [r6], #4
+	CMP	r1,r2			; Repeat until all done
+	BLO	_undefLoop
+
+	; Okay, we've done enough, add further specific initialisation here
+	BL	uHALir_DebugUndefinedInst
+_Undef4ever
+	B	_Undef4ever		; Try and restart..
+
+;
+; The 2.50 C compiler makes references to _memcpy,
+; we don't have this routine, therefore will map this
+; to uHALr_memcpy.
+;
+_memcpy
+	B	uHALr_memcpy
+
+
+
+ IF :DEF: DEBUG
+
+	IMPORT	sputchar
+	EXPORT	PostMortem
+	EXPORT	spitword
+
+;===========================================================================
+; Ths routine will put a word value via sputchar
+;===========================================================================
+PutWord
+	MOV	r4, r14
+	MOV	r5, r0
+	MOV	r0, #0x20		; ' '
+	BL	sputchar
+PutWord2
+	MOV	r3, #28
+01	MOV	r0, r5, LSR r3
+	ANDS	r0, r0, #0xf
+	BNE	%f02			; the first non-zero
+;	SUBS	r3, r3, #4
+;	BNE	%b01			; all but the last digit
+;	MOV	r0, r5			; Get the only digit
+02	CMP	r0, #10
+	ADDLO	r0, r0, #0x30		; 0 - 9
+	ADDHS	r0, r0, #0x61 - 10	; a - f
+	BL	sputchar
+	SUBS	r3, r3, #4
+	MOV	r0, r5, LSR r3
+	AND	r0, r0, #0xf
+	BPL	%b02
+ IF :DEF: THUMB_AWARE  ; if interworking is required
+   BX    r4             ; just return 
+ ELSE                   ; some processors are not Thumb aware
+	MOV	pc, r4	      ; return 
+ ENDIF
+
+; 'C' callable version of PutWord
+spitword
+	STMFD	sp!, {r3-r5, r14}
+	BL	PutWord
+ IF :DEF: THUMB_AWARE  ; if interworking is required
+	LDMFD	sp!, {r3-r5, lr}
+   BX    lr
+ ELSE                   ; some processors are not Thumb aware
+	LDMFD	sp!, {r3-r5, pc}
+ ENDIF
+
+spitstr
+	MOV	r4, r14
+	MOV	r5, r0
+3
+	LDRB	r0, [r5], #1
+	CMP	r0, #0
+ IF :DEF: THUMB_AWARE  ; if interworking is required
+   BXEQ  r4             ; just return 
+ ELSE                   ; some processors are not Thumb aware
+	MOVEQ	pc, r4	      ; return 
+ ENDIF
+
+	BL	sputchar
+	B	%B03
+
+
+;===========================================================================
+; It's dead Jim, dead. Who, what where, when, how?
+;
+; 'Routine' to print out r0-r12, r14, spsr, fsr & far, ttb, tlb & contents
+; Called only when debug system crashes (doesn't return). Uses stack so
+; memory must be working and sputchar() - serial-only version of putchar().
+; Make sure 'DEBUG' is defined for 'C' too.
+;===========================================================================
+PostMortem
+	STMFD	sp!, {r9-r12, r14}	; X marks the spot
+	MOV	r9, r0
+	MOV	r10, r3
+	MOV	r11, r4
+	MOV	r12, r5
+
+	LDR	r0, =Mort0		; Tell user what kind of error
+	BL	spitstr
+	MRS	r0, cpsr
+	BL	PutWord
+
+	LDR	r0, =Mort1
+	BL	spitstr
+	MOV	r0, r9
+	BL	PutWord			; r0
+	MOV	r0, r1
+	BL	PutWord			; r1
+	MOV	r0, r2
+	BL	PutWord			; r2
+	MOV	r0, r10
+	BL	PutWord			; r3
+	MOV	r0, r11
+	BL	PutWord			; r4
+	MOV	r0, r12
+	BL	PutWord			; r5
+	MOV	r0, r6
+	BL	PutWord			; r6
+	LDR	r0, =Mort2
+	BL	spitstr
+	MOV	r0, r7
+	BL	PutWord			; r7
+	MOV	r0, r8
+	BL	PutWord			; r8
+	LDMFD	sp!, {r9-r12, r14}	; X marks the spot
+	MOV	r8, r14
+	MOV	r0, r9
+	BL	PutWord			; r9
+	MOV	r0, r10
+	BL	PutWord			; r10
+	MOV	r0, r11
+	BL	PutWord			; r11
+	MOV	r0, r12
+	BL	PutWord			; r12
+	MOV	r0, r13
+	STMFD	r0!, {r13, r14}^	; Assembler warns about this!
+	LDMFD	r0!, {r6, r7}
+	MOV	r0, r6
+	BL	PutWord			; r13
+	LDR	r0, =Mort3
+	BL	spitstr
+	MOV	r0, r7
+	BL	PutWord			; r14
+	MOV	r0, r8
+	BL	PutWord			; pc
+
+	; Mode before exception
+	LDR	r0, =Mort4
+	BL	spitstr
+	MRS	r0, spsr
+	BL	PutWord
+
+	; Read Fault Status register and Fault Address register
+	LDR	r0, =Mort5
+	BL	spitstr
+	RDMMU_FaultStatus	r0
+	BL	PutWord
+	LDR	r0, =Mort6
+	BL	spitstr
+	RDMMU_FaultAddress	r0
+	MOV	r8, r0, LSR #20		; Strip irrelevent bits
+	BL	PutWord
+	; Read Translation Table Base reg.
+	LDR	r0, =Mort7
+	BL	spitstr
+	RDMMU_TTBase 	 r0
+	MOV	r9, r0, LSR #14		; Strip irrelevent bits
+	BL	PutWord
+
+	; Now rebuild address of page table entry
+	MOV	r9, r9, LSL #14
+	ORR	r9, r9, r8, LSL #2
+	LDR	r0, =Mort8
+	BL	spitstr
+	MOV	r0, r9
+	BL	PutWord
+	LDR	r0, =':'
+	BL	sputchar
+	LDR	r0, [r9]
+	BL	PutWord
+	LDR	r0, ='\n'
+	BL	sputchar		; Newline
+	LDR	r0, ='\n'
+	BL	sputchar		; Newline
+
+	; Try again?
+	B	uHALir_ResetGo
+
+Mort0	DCB	"\ncpsr\t", 0
+Mort1	DCB	"\nr0-r6\t", 0
+Mort2	DCB	"\nr7-r13\t", 0
+Mort3	DCB	"\nr14, pc\t", 0
+Mort4	DCB	"\nspsr\t", 0
+Mort5	DCB	"\nfsr", 0
+Mort6	DCB	"\tfar", 0
+Mort7	DCB	"\nttb\t", 0
+Mort8	DCB	"\ttlb", 0
+
+ ENDIF
+ IF USE_C_LIBRARY = 1
+   IF :DEF: uHAL_HEAP
+	LTORG
+	AREA CONSTANTS, DATA, READONLY
+	
+	EXPORT __heap_base
+	EXPORT __heap_limit
+	EXPORT __stack_base
+	EXPORT __stack_limit
+
+__heap_base	DCD	(uHAL_HEAP_BASE)
+__heap_limit	DCD	(uHAL_HEAP_BASE + uHAL_HEAP_SIZE)
+__stack_base	DCD	(uHAL_STACK_BASE)
+__stack_limit	DCD	(uHAL_STACK_BASE - uHAL_STACK_SIZE)
+		
+   ENDIF	
+ ENDIF	
+	LTORG
+
+	AREA uHAL_BootRam, DATA
+
+
+uHALiv_TopOfHeap	% 4		; Top of free RAM (below stacks)
+uHALiv_BaseOfMemory	% 4		; Semihosted Base of Heap
+uHALiv_TopOfMemory	% 4		; Top of installed RAM + 1
+uHALiv_BaseOfStack	% 4		; Semihosted Base of Stack
+uHALiv_TopOfStack	% 4		; Semihosted Top of Stack
+uHALiv_MemorySize	% 4		; Memory size in bytes
+uHALiv_FileCount	% 4		; Count of the number of open files
+uHALv_BootSwitcherStatus % 4		; Boot Switcher Status
+
+exit
+
+	END
+

@@ -1,0 +1,952 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Uart
+Version: 2000.11-SP1
+Date   : Sat Dec  8 23:35:59 2001
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Uart' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0UartRevAnd              0      0     1     0      0     0     0      6   0.00%
+u1UartRevAnd              0      0     0     0      0     0     0      6   0.00%
+u2UartRevAnd              0      0     0     0      0     0     0      6   0.00%
+u3UartRevAnd              0      0     0     0      0     0     0      6   0.00%
+uUartApbif              346      0     3     0      0     0     0   3200  10.82%
+uUartBaudCntr           305      0     0     0      1     0     0   2792  10.92%
+uUartDMA                 12      0     0     0      0     0     0    142   8.45%
+uUartInterrupt            8      0     0     0      0     0     0     68  11.76%
+uUartIrDA               112      0     0     0      0     0     0   1030  10.87%
+uUartModem               40      0     0     0      0     0     0    378  10.58%
+uUartRXFIFO/uUartRXFCntl
+                        121      0     0     0      0     0     0   1092  11.08%
+uUartRXFIFO/uUartRXRegFile
+                        688      0     0     0      0     0     0   6258  10.99%
+uUartRXFIFO             821      0     0     0      0     0     0   7446  11.03%
+uUartReceive/uUartDataStp
+                         55      0     0     0      0     0     0    516  10.66%
+uUartReceive/uUartRXCntl
+                        177      0     0     0      3     0     0   1616  10.95%
+uUartReceive/uUartRXParShft
+                         58      0     0     0      0     0     0    518  11.20%
+uUartReceive            290      0     0     0      3     0     0   2658  10.91%
+uUartRegBlock           223      0     0     0      0     0     0   2076  10.74%
+uUartSynctoPCLK          68      0     0     0      1     0     0    640  10.62%
+uUartSynctoUCLK         106      0     0     0      0     0     0    916  11.57%
+uUartTXCntl             219      0     0     0      0     0     0   1940  11.29%
+uUartTXFIFO/uUartTXFCntl
+                        184      0     0     0      0     0     0   1634  11.26%
+uUartTXFIFO/uUartTXRegFile
+                        465      0     0     0      0     0     0   4272  10.88%
+uUartTXFIFO             649      0     0     0      0     0     0   5906  10.99%
+uUartTest                75      0     0     0      0     0     0    670  11.19%
+Uart                   3299      0     4     0      5     0     0  30066  10.97%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Uart
+Version: 2000.11-SP1
+Date   : Sat Dec  8 23:36:01 2001
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Uart
+Version: 2000.11-SP1
+Date   : Sat Dec  8 23:36:01 2001
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain #1 (SCANINPCLK --> SCANOUTPCLK) contains 564 cells:
+
+  SCANINPCLK	->
+  uUartApbif/UARTREINTR_reg	->
+  uUartApbif/PRDATA_reg[0]	->
+  uUartApbif/PRDATA_reg[1]	->
+  uUartApbif/PRDATA_reg[2]	->
+  uUartApbif/PRDATA_reg[3] (*)	->
+  uUartApbif/PRDATA_reg[4]	->
+  uUartApbif/PRDATA_reg[5]	->
+  uUartApbif/PRDATA_reg[6]	->
+  uUartApbif/PRDATA_reg[7]	->
+  uUartApbif/PRDATA_reg[8]	->
+  uUartApbif/PRDATA_reg[9]	->
+  uUartApbif/PRDATA_reg[10]	->
+  uUartApbif/PRDATA_reg[11]	->
+  uUartApbif/PRDATA_reg[13] (*)	->
+  uUartApbif/PRDATA_reg[14] (*)	->
+  uUartApbif/PRDATA_reg[15] (*)	->
+  uUartApbif/PRDATA_reg[12] (*)	->
+  uUartTest/delUARTTDRrd_reg (*)	->
+  uUartTest/iUARTITOP_reg[0]	->
+  uUartTest/iUARTITOP_reg[1]	->
+  uUartTest/iUARTITOP_reg[2]	->
+  uUartTest/iUARTITOP_reg[3]	->
+  uUartTest/iUARTITOP_reg[4]	->
+  uUartTest/iUARTITOP_reg[5]	->
+  uUartTest/iUARTITOP_reg[6]	->
+  uUartTest/iUARTITOP_reg[7]	->
+  uUartTest/iUARTITOP_reg[8]	->
+  uUartTest/iUARTITOP_reg[9]	->
+  uUartTest/iUARTITOP_reg[10]	->
+  uUartTest/iUARTITOP_reg[11]	->
+  uUartTest/iUARTITOP_reg[12]	->
+  uUartTest/iUARTITOP_reg[13]	->
+  uUartTest/iUARTITOP_reg[14]	->
+  uUartTest/iUARTITOP_reg[15]	->
+  uUartTest/iUARTITIP_reg[6]	->
+  uUartTest/iUARTITIP_reg[7]	->
+  uUartTest/iUARTTCR_reg[0]	->
+  uUartTest/iUARTTCR_reg[1]	->
+  uUartTest/iUARTTCR_reg[2]	->
+  uUartDMA/iRXDMASREQ_reg	->
+  uUartDMA/iTXDMASREQ_reg	->
+  uUartDMA/iTXDMABREQ_reg	->
+  uUartDMA/iRXDMABREQ_reg	->
+  uUartRXFIFO/uUartRXFCntl/OverrunDet_reg (*)	->
+  uUartRXFIFO/uUartRXFCntl/FIFOFull_reg	->
+  uUartRXFIFO/uUartRXFCntl/DelUARTRXIC_reg	->
+  uUartRXFIFO/uUartRXFCntl/DelRXFWrSync_reg	->
+  uUartRXFIFO/uUartRXFCntl/FIFOOverrunDet_reg	->
+  uUartRXFIFO/uUartRXFCntl/DelRXIntLevel_reg	->
+  uUartRXFIFO/uUartRXFCntl/Wrap_reg (*)	->
+  uUartRXFIFO/uUartRXFCntl/DelOverrunDet_reg	->
+  uUartRXFIFO/uUartRXFCntl/RXIntLevel_reg	->
+  uUartRXFIFO/uUartRXFCntl/DelUARTOEIC_reg	->
+  uUartRXFIFO/uUartRXFCntl/UARTRXRIS_reg	->
+  uUartRXFIFO/uUartRXFCntl/UARTOERIS_reg	->
+  uUartRXFIFO/uUartRXFCntl/DelHldBufValid_reg	->
+  uUartRXFIFO/uUartRXFCntl/FIFOEmpty_reg (*)	->
+  uUartRXFIFO/uUartRXFCntl/HldBufValid_reg	->
+  uUartRXFIFO/uUartRXFCntl/RdPtr_reg[0] (*)	->
+  uUartRXFIFO/uUartRXFCntl/RdPtr_reg[1] (*)	->
+  uUartRXFIFO/uUartRXFCntl/RdPtr_reg[2] (*)	->
+  uUartRXFIFO/uUartRXFCntl/RdPtr_reg[3] (*)	->
+  uUartRXFIFO/uUartRXFCntl/WrPtr_reg[0] (*)	->
+  uUartRXFIFO/uUartRXFCntl/WrPtr_reg[1] (*)	->
+  uUartRXFIFO/uUartRXFCntl/WrPtr_reg[2] (*)	->
+  uUartRXFIFO/uUartRXFCntl/WrPtr_reg[3] (*)	->
+  uUartRXFIFO/uUartRXFCntl/nUARTRTSint_reg (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[0] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[1] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[2] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[3] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[4] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[5] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[6] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[7] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[8] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[9] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[10] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile15_reg[11] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[0]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[1]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[2]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[3]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[4]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[5]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[6]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[7]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[8]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[9]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[10]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile14_reg[11]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[0] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[1] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[2] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[3] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[4] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[5] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[6] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[7] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[8] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[9] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[10] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile13_reg[11] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[0] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[1] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[2] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[3] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[4] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[5] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[6] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[7] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[8] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[9] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[10] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile12_reg[11] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[0]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[1]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[2]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[3]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[4]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[5]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[6]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[7]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[8]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[9]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[10]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile11_reg[11]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[0] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[1] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[2] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[3] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[4] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[5] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[6] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[7] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[8] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[9] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[10] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile10_reg[11] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[0]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[1]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[2]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[3]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[4]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[5]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[6]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[7]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[8]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[9]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[10]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile9_reg[11]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[0]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[1]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[2]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[3]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[4]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[5]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[6]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[7]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[8]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[9]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[10]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile8_reg[11]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[0] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[1] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[2] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[3] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[4] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[5] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[6] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[7] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[8] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[9] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[10] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile7_reg[11] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[0]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[1]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[2]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[3]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[4]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[5]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[6]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[7]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[8]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[9]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[10]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile6_reg[11]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[0] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[1] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[2] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[3] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[4] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[5] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[6] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[7] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[8] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[9] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[10] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile5_reg[11] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[0]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[1]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[2]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[3]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[4]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[5]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[6]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[7]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[8]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[9]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[10]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile4_reg[11]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[0]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[1]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[2]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[3]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[4]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[5]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[6]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[7]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[8]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[9]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[10]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile3_reg[11]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[0]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[1]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[2]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[3]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[4]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[5]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[6]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[7]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[8]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[9]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[10]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile2_reg[11]	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[0] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[1] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[2] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[3] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[4] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[5] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[6] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[7] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[8] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[9] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[10] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile1_reg[11] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[0] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[1] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[2] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[3] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[4] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[5] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[6] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[7] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[8] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[9] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[10] (*)	->
+  uUartRXFIFO/uUartRXRegFile/RXRegFile0_reg[11] (*)	->
+  uUartSynctoPCLK/nDCDSyncPCLK_reg	->
+  uUartSynctoPCLK/nRISy1_reg	->
+  uUartSynctoPCLK/UARTRXDMACLRSy1_reg	->
+  uUartSynctoPCLK/UARTTXDMACLRSy1_reg	->
+  uUartSynctoPCLK/RXFWrSy1_reg	->
+  uUartSynctoPCLK/nDCDSy1_reg	->
+  uUartSynctoPCLK/nCTSSy1_reg	->
+  uUartSynctoPCLK/nDSRSyncPCLK_reg	->
+  uUartSynctoPCLK/TXFRdPtrIncSync_reg	->
+  uUartSynctoPCLK/AbortSync_reg	->
+  uUartSynctoPCLK/CharTxCompSy1_reg	->
+  uUartSynctoPCLK/nRISyncPCLK_reg	->
+  uUartSynctoPCLK/UARTRXDMACLRSync_reg	->
+  uUartSynctoPCLK/nCTSSyncPCLK_reg	->
+  uUartSynctoPCLK/CharTxCompSync_reg	->
+  uUartSynctoPCLK/AbortSy1_reg	->
+  uUartSynctoPCLK/TXBUSYSy1_reg	->
+  uUartSynctoPCLK/TXBUSYSync_reg	->
+  uUartSynctoPCLK/DataStpSy1_reg	->
+  uUartSynctoPCLK/UARTRTRIS_reg	->
+  uUartSynctoPCLK/nDSRSy1_reg	->
+  uUartSynctoPCLK/UARTTXDMACLRSync_reg	->
+  uUartSynctoPCLK/TXFRPtrIncSy1_reg	->
+  uUartSynctoPCLK/RXFWrSync_reg	->
+  uUartSynctoPCLK/UARTMISerrSy1_reg[0]	->
+  uUartSynctoPCLK/UARTMISerrSy1_reg[1]	->
+  uUartSynctoPCLK/UARTMISerrSy1_reg[2]	->
+  uUartSynctoPCLK/UARTMISerrSync_reg[0]	->
+  uUartSynctoPCLK/UARTMISerrSync_reg[1]	->
+  uUartSynctoPCLK/UARTMISerrSync_reg[2]	->
+  uUartSynctoPCLK/UARTRISerrSy1_reg[0]	->
+  uUartSynctoPCLK/UARTRISerrSy1_reg[1]	->
+  uUartSynctoPCLK/UARTRISerrSy1_reg[2]	->
+  uUartSynctoPCLK/UARTRISerrSync_reg[0]	->
+  uUartSynctoPCLK/UARTRISerrSync_reg[1]	->
+  uUartSynctoPCLK/UARTRISerrSync_reg[2]	->
+  uUartSynctoPCLK/UARTMISmodSy1_reg[0]	->
+  uUartSynctoPCLK/UARTMISmodSy1_reg[1]	->
+  uUartSynctoPCLK/UARTMISmodSy1_reg[2]	->
+  uUartSynctoPCLK/UARTMISmodSy1_reg[3]	->
+  uUartSynctoPCLK/UARTMISmodSync_reg[0]	->
+  uUartSynctoPCLK/UARTMISmodSync_reg[1]	->
+  uUartSynctoPCLK/UARTMISmodSync_reg[2]	->
+  uUartSynctoPCLK/UARTMISmodSync_reg[3]	->
+  uUartSynctoPCLK/UARTRISmodSy1_reg[0]	->
+  uUartSynctoPCLK/UARTRISmodSy1_reg[1]	->
+  uUartSynctoPCLK/UARTRISmodSy1_reg[2]	->
+  uUartSynctoPCLK/UARTRISmodSy1_reg[3]	->
+  uUartSynctoPCLK/UARTRISmodSync_reg[0]	->
+  uUartSynctoPCLK/UARTRISmodSync_reg[1]	->
+  uUartSynctoPCLK/UARTRISmodSync_reg[2]	->
+  uUartSynctoPCLK/UARTRISmodSync_reg[3]	->
+  uUartTXFIFO/uUartTXFCntl/FIFOFull_reg	->
+  uUartTXFIFO/uUartTXFCntl/DelTXIntLevel_reg	->
+  uUartTXFIFO/uUartTXFCntl/UARTTXRIS_reg (*)	->
+  uUartTXFIFO/uUartTXFCntl/DelRdPtrInc_reg	->
+  uUartTXFIFO/uUartTXFCntl/TXIntLevel_reg	->
+  uUartTXFIFO/uUartTXFCntl/DelUARTTXIC_reg	->
+  uUartTXFIFO/uUartTXFCntl/ShiftDataAvlbl_reg (*)	->
+  uUartTXFIFO/uUartTXFCntl/TXShiftRegEDel_reg (*)	->
+  uUartTXFIFO/uUartTXFCntl/DelFEN_reg	->
+  uUartTXFIFO/uUartTXFCntl/DelAbort_reg (*)	->
+  uUartTXFIFO/uUartTXFCntl/DelHldBufValid_reg	->
+  uUartTXFIFO/uUartTXFCntl/TXShiftRegE1_reg	->
+  uUartTXFIFO/uUartTXFCntl/HldBufValid_reg (*)	->
+  uUartTXFIFO/uUartTXFCntl/DelTXE_reg (*)	->
+  uUartTXFIFO/uUartTXFCntl/DelUARTEN_reg	->
+  uUartTXFIFO/uUartTXFCntl/FIFONotE_reg (*)	->
+  uUartTXFIFO/uUartTXFCntl/CharTxCompDel_reg	->
+  uUartTXFIFO/uUartTXFCntl/TXShiftData_reg[0]	->
+  uUartTXFIFO/uUartTXFCntl/TXShiftData_reg[1]	->
+  uUartTXFIFO/uUartTXFCntl/TXShiftData_reg[2]	->
+  uUartTXFIFO/uUartTXFCntl/TXShiftData_reg[3]	->
+  uUartTXFIFO/uUartTXFCntl/TXShiftData_reg[4]	->
+  uUartTXFIFO/uUartTXFCntl/TXShiftData_reg[5]	->
+  uUartTXFIFO/uUartTXFCntl/TXShiftData_reg[6]	->
+  uUartTXFIFO/uUartTXFCntl/TXShiftData_reg[7]	->
+  uUartTXFIFO/uUartTXFCntl/RdPtr_reg[0]	->
+  uUartTXFIFO/uUartTXFCntl/RdPtr_reg[1]	->
+  uUartTXFIFO/uUartTXFCntl/RdPtr_reg[2] (*)	->
+  uUartTXFIFO/uUartTXFCntl/RdPtr_reg[3] (*)	->
+  uUartTXFIFO/uUartTXFCntl/WrPtr_reg[0] (*)	->
+  uUartTXFIFO/uUartTXFCntl/WrPtr_reg[1]	->
+  uUartTXFIFO/uUartTXFCntl/WrPtr_reg[2] (*)	->
+  uUartTXFIFO/uUartTXFCntl/WrPtr_reg[3]	->
+  uUartTXFIFO/uUartTXFCntl/Wrap_reg (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile15_reg[0] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile15_reg[1] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile15_reg[2] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile15_reg[3] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile15_reg[4] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile15_reg[5] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile15_reg[6] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile15_reg[7] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile14_reg[1]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile14_reg[2]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile14_reg[3]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile14_reg[4]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile14_reg[5]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile14_reg[6]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile14_reg[7]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile13_reg[0] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile13_reg[1] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile13_reg[2] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile13_reg[3] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile13_reg[4] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile13_reg[5] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile13_reg[6] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile13_reg[7] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile12_reg[0] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile12_reg[1] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile12_reg[2] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile12_reg[3] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile12_reg[4] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile12_reg[5] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile12_reg[6] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile12_reg[7] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile11_reg[0]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile11_reg[1]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile11_reg[2]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile11_reg[3]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile11_reg[4]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile11_reg[5]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile11_reg[6]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile11_reg[7]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile10_reg[0] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile10_reg[1] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile10_reg[2] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile10_reg[3] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile10_reg[4] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile10_reg[5] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile10_reg[6] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile10_reg[7] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile9_reg[0]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile9_reg[1]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile9_reg[2]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile9_reg[3]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile9_reg[4]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile9_reg[5]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile9_reg[6]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile9_reg[7]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile8_reg[0]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile8_reg[1]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile8_reg[2]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile8_reg[3]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile8_reg[4]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile8_reg[5]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile8_reg[6]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile8_reg[7]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile7_reg[0] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile7_reg[1] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile7_reg[2] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile7_reg[3] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile7_reg[4] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile7_reg[5] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile7_reg[6] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile7_reg[7] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile6_reg[0]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile6_reg[1]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile6_reg[2]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile6_reg[3]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile6_reg[4]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile6_reg[5]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile6_reg[6]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile6_reg[7]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile5_reg[0] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile5_reg[1] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile5_reg[2] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile5_reg[3] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile5_reg[4] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile5_reg[5] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile5_reg[6] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile5_reg[7] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile4_reg[0]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile4_reg[1]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile4_reg[2]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile4_reg[3]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile4_reg[4]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile4_reg[5]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile4_reg[6]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile4_reg[7]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile3_reg[0]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile3_reg[1]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile3_reg[2]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile3_reg[3]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile3_reg[4]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile3_reg[5]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile3_reg[6]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile3_reg[7]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile2_reg[0]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile2_reg[1]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile2_reg[2]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile2_reg[3]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile2_reg[4]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile2_reg[5]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile2_reg[6]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile2_reg[7]	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile1_reg[0] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile1_reg[1] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile1_reg[2] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile1_reg[3] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile1_reg[4] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile1_reg[5] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile1_reg[6] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile1_reg[7] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile0_reg[0] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile0_reg[1] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile0_reg[2] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile0_reg[3] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile0_reg[4] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile0_reg[5] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile0_reg[6] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile0_reg[7] (*)	->
+  uUartTXFIFO/uUartTXRegFile/TXRegFile14_reg[0]	->
+  uUartRegBlock/iUARTCR_reg[4]	->
+  uUartRegBlock/iUARTCR_reg[10]	->
+  uUartRegBlock/iUARTCR_reg[0]	->
+  uUartRegBlock/iUARTIFLS_reg[2]	->
+  uUartRegBlock/iUARTCR_reg[9] (*)	->
+  uUartRegBlock/iUARTCR_reg[14]	->
+  uUartRegBlock/iUARTTXIC_reg (*)	->
+  uUartRegBlock/iFBRDUpdate_reg	->
+  uUartRegBlock/iUARTIFLS_reg[0]	->
+  uUartRegBlock/iUARTCR_reg[2]	->
+  uUartRegBlock/iUARTCR_reg[12]	->
+  uUartRegBlock/iUARTIFLS_reg[4] (*)	->
+  uUartRegBlock/iUARTCR_reg[6]	->
+  uUartRegBlock/iUARTBEIC_reg (*)	->
+  uUartRegBlock/iUARTFEIC_reg (*)	->
+  uUartRegBlock/iILPRUpdate_reg	->
+  uUartRegBlock/iUARTRXIC_reg (*)	->
+  uUartRegBlock/iUARTDCDIC_reg (*)	->
+  uUartRegBlock/iUARTDSRIC_reg (*)	->
+  uUartRegBlock/iUARTCR_reg[13]	->
+  uUartRegBlock/iUARTIFLS_reg[5]	->
+  uUartRegBlock/iUARTCR_reg[7]	->
+  uUartRegBlock/iUARTRTIC_reg (*)	->
+  uUartRegBlock/iUARTIFLS_reg[1] (*)	->
+  uUartRegBlock/iUARTCR_reg[3]	->
+  uUartRegBlock/iUARTCR_reg[1]	->
+  uUartRegBlock/iUARTIFLS_reg[3]	->
+  uUartRegBlock/iUARTCR_reg[8] (*)	->
+  uUartRegBlock/iUARTRIIC_reg (*)	->
+  uUartRegBlock/iLCRUpdate_reg	->
+  uUartRegBlock/iUARTCR_reg[15]	->
+  uUartRegBlock/iUARTCR_reg[5]	->
+  uUartRegBlock/iUARTCR_reg[11]	->
+  uUartRegBlock/iUARTCTSIC_reg (*)	->
+  uUartRegBlock/UARTIMSC_reg[2] (*)	->
+  uUartRegBlock/UARTIMSC_reg[4] (*)	->
+  uUartRegBlock/UARTIMSC_reg[5] (*)	->
+  uUartRegBlock/UARTIMSC_reg[6] (*)	->
+  uUartRegBlock/UARTIMSC_reg[7] (*)	->
+  uUartRegBlock/UARTIMSC_reg[8] (*)	->
+  uUartRegBlock/UARTIMSC_reg[9] (*)	->
+  uUartRegBlock/UARTIMSC_reg[10] (*)	->
+  uUartRegBlock/iUARTDMACR_reg[0]	->
+  uUartRegBlock/iUARTDMACR_reg[1]	->
+  uUartRegBlock/iUARTDMACR_reg[2]	->
+  uUartRegBlock/iUARTILPR_reg[0]	->
+  uUartRegBlock/iUARTILPR_reg[1]	->
+  uUartRegBlock/iUARTILPR_reg[2]	->
+  uUartRegBlock/iUARTILPR_reg[3]	->
+  uUartRegBlock/iUARTILPR_reg[4]	->
+  uUartRegBlock/iUARTILPR_reg[5]	->
+  uUartRegBlock/iUARTILPR_reg[6]	->
+  uUartRegBlock/iUARTILPR_reg[7]	->
+  uUartRegBlock/iUARTFBRD_reg[0]	->
+  uUartRegBlock/iUARTFBRD_reg[1]	->
+  uUartRegBlock/iUARTFBRD_reg[2]	->
+  uUartRegBlock/iUARTFBRD_reg[3]	->
+  uUartRegBlock/iUARTFBRD_reg[4]	->
+  uUartRegBlock/iUARTFBRD_reg[5]	->
+  uUartRegBlock/iUARTLCRL_reg[0]	->
+  uUartRegBlock/iUARTLCRL_reg[1]	->
+  uUartRegBlock/iUARTLCRL_reg[2]	->
+  uUartRegBlock/iUARTLCRL_reg[3]	->
+  uUartRegBlock/iUARTLCRL_reg[4]	->
+  uUartRegBlock/iUARTLCRL_reg[5]	->
+  uUartRegBlock/iUARTLCRL_reg[6]	->
+  uUartRegBlock/iUARTLCRL_reg[7]	->
+  uUartRegBlock/iUARTLCRM_reg[0]	->
+  uUartRegBlock/iUARTLCRM_reg[1]	->
+  uUartRegBlock/iUARTLCRM_reg[2]	->
+  uUartRegBlock/iUARTLCRM_reg[3]	->
+  uUartRegBlock/iUARTLCRM_reg[4]	->
+  uUartRegBlock/iUARTLCRM_reg[5]	->
+  uUartRegBlock/iUARTLCRM_reg[6]	->
+  uUartRegBlock/iUARTLCRM_reg[7]	->
+  uUartRegBlock/iUARTLCRH_reg[0]	->
+  uUartRegBlock/iUARTLCRH_reg[1]	->
+  uUartRegBlock/iUARTLCRH_reg[2]	->
+  uUartRegBlock/iUARTLCRH_reg[3]	->
+  uUartRegBlock/iUARTLCRH_reg[4]	->
+  uUartRegBlock/iUARTLCRH_reg[5]	->
+  uUartRegBlock/iUARTLCRH_reg[6]	->
+  uUartRegBlock/iUARTLCRH_reg[7]	->
+  uUartRegBlock/iRXSTATUS_reg[0]	->
+  uUartRegBlock/iRXSTATUS_reg[1]	->
+  uUartRegBlock/iRXSTATUS_reg[2]	->
+  uUartRegBlock/UARTIMSC_reg[0] (*)	->
+  uUartRegBlock/iUARTPEIC_reg (*)	->
+  uUartRegBlock/iUARTOEIC_reg (*)	->
+  uUartRegBlock/UARTIMSC_reg[3] (*)	->
+  uUartRegBlock/UARTIMSC_reg[1]	->
+  SCANOUTPCLK
+
+Complete scan chain #2 (SCANINUCLK --> SCANOUTUCLK) contains 264 cells:
+
+  SCANINUCLK	->
+  uUartTXCntl/StopBaudCnt_reg (*)	->
+  uUartTXCntl/CharTxComp_reg (*)	->
+  uUartTXCntl/TXFRdPtrInc_reg	->
+  uUartTXCntl/TXBUSY_reg	->
+  uUartTXCntl/TXDReg_reg (*)	->
+  uUartTXCntl/TXShiftReg_reg[0] (*)	->
+  uUartTXCntl/TXShiftReg_reg[1]	->
+  uUartTXCntl/TXShiftReg_reg[2]	->
+  uUartTXCntl/TXShiftReg_reg[3]	->
+  uUartTXCntl/TXShiftReg_reg[4]	->
+  uUartTXCntl/TXShiftReg_reg[5]	->
+  uUartTXCntl/TXShiftReg_reg[6]	->
+  uUartTXCntl/BitPeriodCnt_reg[0] (*)	->
+  uUartTXCntl/BitPeriodCnt_reg[1] (*)	->
+  uUartTXCntl/BitPeriodCnt_reg[2] (*)	->
+  uUartTXCntl/BitPeriodCnt_reg[3] (*)	->
+  uUartTXCntl/BitCount_reg[0] (*)	->
+  uUartTXCntl/BitCount_reg[1] (*)	->
+  uUartTXCntl/BitCount_reg[2] (*)	->
+  uUartTXCntl/UartTXCntlState_reg[0] (*)	->
+  uUartTXCntl/UartTXCntlState_reg[1]	->
+  uUartTXCntl/UartTXCntlState_reg[2]	->
+  uUartTXCntl/UartTXCntlState_reg[3]	->
+  uUartIrDA/Flag_reg	->
+  uUartIrDA/SIRINStag1_reg (*)	->
+  uUartIrDA/PdSirout_reg	->
+  uUartIrDA/TCStart_reg (*)	->
+  uUartIrDA/Rload_reg	->
+  uUartIrDA/SIRINStag2a_reg (*)	->
+  uUartIrDA/PdTCload_reg	->
+  uUartIrDA/RXD_reg (*)	->
+  uUartIrDA/NmSirout_reg (*)	->
+  uUartIrDA/SIRINStag2_reg (*)	->
+  uUartIrDA/SIRINStag1a_reg (*)	->
+  uUartIrDA/nSIROUTint_reg (*)	->
+  uUartIrDA/Rcount_reg[0] (*)	->
+  uUartIrDA/Rcount_reg[1] (*)	->
+  uUartIrDA/Rcount_reg[2]	->
+  uUartIrDA/Rcount_reg[3]	->
+  uUartIrDA/PdTcount_reg[0] (*)	->
+  uUartIrDA/PdTcount_reg[1]	->
+  uUartIrDA/Tcount_reg[0] (*)	->
+  uUartIrDA/Tcount_reg[1]	->
+  uUartIrDA/Tcount_reg[2]	->
+  uUartIrDA/Tcount_reg[3] (*)	->
+  uUartIrDA/UARTTXDint_reg (*)	->
+  uUartIrDA/SIRENSyncEoc_reg (*)	->
+  uUartReceive/uUartRXCntl/ShiftEn_reg	->
+  uUartReceive/uUartRXCntl/iUARTFERIS_reg	->
+  uUartReceive/uUartRXCntl/RXD3_reg	->
+  uUartReceive/uUartRXCntl/iFramingError_reg	->
+  uUartReceive/uUartRXCntl/DelUARTBEICSync_reg	->
+  uUartReceive/uUartRXCntl/RXD1_reg	->
+  uUartReceive/uUartRXCntl/DelUARTFEICSync_reg	->
+  uUartReceive/uUartRXCntl/RXFWr_reg	->
+  uUartReceive/uUartRXCntl/iBreak_reg (*)	->
+  uUartReceive/uUartRXCntl/RXBUSY_reg	->
+  uUartReceive/uUartRXCntl/DelBreakError_reg	->
+  uUartReceive/uUartRXCntl/UARTBERIS_reg	->
+  uUartReceive/uUartRXCntl/iCharRxComp_reg (*)	->
+  uUartReceive/uUartRXCntl/DelFramingError_reg	->
+  uUartReceive/uUartRXCntl/ClearShiftReg_reg (*)	->
+  uUartReceive/uUartRXCntl/SampleParity_reg	->
+  uUartReceive/uUartRXCntl/RXD2_reg	->
+  uUartReceive/uUartRXCntl/BitCnt_reg[0]	->
+  uUartReceive/uUartRXCntl/BitCnt_reg[1] (*)	->
+  uUartReceive/uUartRXCntl/BitCnt_reg[2] (*)	->
+  uUartReceive/uUartRXCntl/BitPeriodCnt_reg[0] (*)	->
+  uUartReceive/uUartRXCntl/BitPeriodCnt_reg[1] (*)	->
+  uUartReceive/uUartRXCntl/BitPeriodCnt_reg[2] (*)	->
+  uUartReceive/uUartRXCntl/BitPeriodCnt_reg[3]	->
+  uUartReceive/uUartRXCntl/iUartRXCntlState_reg[0] (*)	->
+  uUartReceive/uUartRXCntl/iUartRXCntlState_reg[1]	->
+  uUartReceive/uUartRXCntl/iUartRXCntlState_reg[2]	->
+  uUartReceive/uUartRXCntl/ReloadWD_reg (*)	->
+  uUartReceive/uUartRXParShft/DtPrZero_reg (*)	->
+  uUartReceive/uUartRXParShft/UARTPERIS_reg	->
+  uUartReceive/uUartRXParShft/DelParityError_reg	->
+  uUartReceive/uUartRXParShft/DelUARTPEICSync_reg	->
+  uUartReceive/uUartRXParShft/ParityError_reg (*)	->
+  uUartReceive/uUartRXParShft/RXShiftReg_reg[0]	->
+  uUartReceive/uUartRXParShft/RXShiftReg_reg[1] (*)	->
+  uUartReceive/uUartRXParShft/RXShiftReg_reg[2] (*)	->
+  uUartReceive/uUartRXParShft/RXShiftReg_reg[3] (*)	->
+  uUartReceive/uUartRXParShft/RXShiftReg_reg[4] (*)	->
+  uUartReceive/uUartRXParShft/RXShiftReg_reg[5] (*)	->
+  uUartReceive/uUartRXParShft/RXShiftReg_reg[6]	->
+  uUartReceive/uUartRXParShft/RXShiftReg_reg[7]	->
+  uUartReceive/uUartDataStp/UartDataStpState_reg (*)	->
+  uUartReceive/uUartDataStp/delUARTRTICSync_reg	->
+  uUartReceive/uUartDataStp/DataStp_reg	->
+  uUartReceive/uUartDataStp/WDCount_reg[0] (*)	->
+  uUartReceive/uUartDataStp/WDCount_reg[1] (*)	->
+  uUartReceive/uUartDataStp/WDCount_reg[2] (*)	->
+  uUartReceive/uUartDataStp/WDCount_reg[3] (*)	->
+  uUartReceive/uUartDataStp/WDCount_reg[4] (*)	->
+  uUartReceive/uUartDataStp/WDCount_reg[5] (*)	->
+  uUartReceive/uUartDataStp/WDCount_reg[6] (*)	->
+  uUartReceive/uUartDataStp/WDCount_reg[7] (*)	->
+  uUartReceive/uUartDataStp/WDCount_reg[8] (*)	->
+  uUartModem/nCTSd1_reg	->
+  uUartModem/nRId1_reg	->
+  uUartModem/DSREdged1_reg	->
+  uUartModem/DelUARTRIICSync_reg	->
+  uUartModem/DCDEdged1_reg	->
+  uUartModem/iUARTRIRIS_reg (*)	->
+  uUartModem/DelUARTCTSICSync_reg	->
+  uUartModem/iUARTDSRRIS_reg (*)	->
+  uUartModem/nDSRd1_reg	->
+  uUartModem/nDCDd1_reg	->
+  uUartModem/DelUARTDCDICSync_reg	->
+  uUartModem/DelUARTDSRICSync_reg	->
+  uUartModem/iUARTDCDRIS_reg (*)	->
+  uUartModem/iUARTCTSRIS_reg (*)	->
+  uUartModem/RIEdged1_reg	->
+  uUartModem/CTSEdged1_reg	->
+  uUartBaudCntr/UARTFBRDadd_reg[3] (*)	->
+  uUartBaudCntr/DelLCRStg2WrEn_reg	->
+  uUartBaudCntr/DelFBRDUpdate_reg (*)	->
+  uUartBaudCntr/LstCntBaud16Bit1_reg	->
+  uUartBaudCntr/DelLCRUpdate_reg (*)	->
+  uUartBaudCntr/LstSIRLPCBit0_reg	->
+  uUartBaudCntr/UARTFBRDadd_reg[2] (*)	->
+  uUartBaudCntr/DelILPRUpdate_reg (*)	->
+  uUartBaudCntr/DelILPRStg2WrEn_reg	->
+  uUartBaudCntr/UARTFBRDadd_reg[4] (*)	->
+  uUartBaudCntr/UARTFBRDCarry_reg (*)	->
+  uUartBaudCntr/UARTFBRDadd_reg[0] (*)	->
+  uUartBaudCntr/StopLPCntr_reg	->
+  uUartBaudCntr/iSIRLPC_reg[0] (*)	->
+  uUartBaudCntr/iSIRLPC_reg[1] (*)	->
+  uUartBaudCntr/iSIRLPC_reg[2]	->
+  uUartBaudCntr/iSIRLPC_reg[3]	->
+  uUartBaudCntr/iSIRLPC_reg[4]	->
+  uUartBaudCntr/iSIRLPC_reg[5]	->
+  uUartBaudCntr/iSIRLPC_reg[6]	->
+  uUartBaudCntr/iSIRLPC_reg[7]	->
+  uUartBaudCntr/CountBaud16_reg[0] (*)	->
+  uUartBaudCntr/CountBaud16_reg[1]	->
+  uUartBaudCntr/CountBaud16_reg[2]	->
+  uUartBaudCntr/CountBaud16_reg[3]	->
+  uUartBaudCntr/CountBaud16_reg[4]	->
+  uUartBaudCntr/CountBaud16_reg[5]	->
+  uUartBaudCntr/CountBaud16_reg[6]	->
+  uUartBaudCntr/CountBaud16_reg[7]	->
+  uUartBaudCntr/CountBaud16_reg[8]	->
+  uUartBaudCntr/CountBaud16_reg[9]	->
+  uUartBaudCntr/CountBaud16_reg[10]	->
+  uUartBaudCntr/CountBaud16_reg[11]	->
+  uUartBaudCntr/CountBaud16_reg[12]	->
+  uUartBaudCntr/CountBaud16_reg[13]	->
+  uUartBaudCntr/CountBaud16_reg[14]	->
+  uUartBaudCntr/CountBaud16_reg[15]	->
+  uUartBaudCntr/FBRD_reg[0]	->
+  uUartBaudCntr/FBRD_reg[1] (*)	->
+  uUartBaudCntr/FBRD_reg[2]	->
+  uUartBaudCntr/FBRD_reg[3] (*)	->
+  uUartBaudCntr/FBRD_reg[4] (*)	->
+  uUartBaudCntr/FBRD_reg[5]	->
+  uUartBaudCntr/ILPR_reg[0] (*)	->
+  uUartBaudCntr/ILPR_reg[1]	->
+  uUartBaudCntr/ILPR_reg[2]	->
+  uUartBaudCntr/ILPR_reg[3]	->
+  uUartBaudCntr/ILPR_reg[4]	->
+  uUartBaudCntr/ILPR_reg[5]	->
+  uUartBaudCntr/ILPR_reg[6]	->
+  uUartBaudCntr/ILPR_reg[7]	->
+  uUartBaudCntr/LCRL_reg[0] (*)	->
+  uUartBaudCntr/LCRL_reg[1] (*)	->
+  uUartBaudCntr/LCRL_reg[2] (*)	->
+  uUartBaudCntr/LCRL_reg[3] (*)	->
+  uUartBaudCntr/LCRL_reg[4] (*)	->
+  uUartBaudCntr/LCRL_reg[5] (*)	->
+  uUartBaudCntr/LCRL_reg[6] (*)	->
+  uUartBaudCntr/LCRL_reg[7]	->
+  uUartBaudCntr/LCRM_reg[0]	->
+  uUartBaudCntr/LCRM_reg[1] (*)	->
+  uUartBaudCntr/LCRM_reg[2] (*)	->
+  uUartBaudCntr/LCRM_reg[3] (*)	->
+  uUartBaudCntr/LCRM_reg[4]	->
+  uUartBaudCntr/LCRM_reg[5] (*)	->
+  uUartBaudCntr/LCRM_reg[6] (*)	->
+  uUartBaudCntr/LCRM_reg[7] (*)	->
+  uUartBaudCntr/iLCRH_reg[0] (*)	->
+  uUartBaudCntr/iLCRH_reg[1] (*)	->
+  uUartBaudCntr/iLCRH_reg[2] (*)	->
+  uUartBaudCntr/iLCRH_reg[3] (*)	->
+  uUartBaudCntr/iLCRH_reg[4] (*)	->
+  uUartBaudCntr/iLCRH_reg[5] (*)	->
+  uUartBaudCntr/iLCRH_reg[6] (*)	->
+  uUartBaudCntr/UARTFBRDadd_reg[5] (*)	->
+  uUartBaudCntr/UARTFBRDadd_reg[1] (*)	->
+  uUartSynctoUCLK/UARTBEICSync_reg	->
+  uUartSynctoUCLK/UARTENSync_reg	->
+  uUartSynctoUCLK/RXFESync1_reg	->
+  uUartSynctoUCLK/RTIMSync1_reg	->
+  uUartSynctoUCLK/SIRINSync_reg	->
+  uUartSynctoUCLK/UARTDSRICSync_reg	->
+  uUartSynctoUCLK/DSRIMSync_reg	->
+  uUartSynctoUCLK/DCDIMSync1_reg	->
+  uUartSynctoUCLK/UARTDSRICSync1_reg	->
+  uUartSynctoUCLK/UARTDCDICSync_reg	->
+  uUartSynctoUCLK/UARTRTICSync_reg	->
+  uUartSynctoUCLK/TXESync1_reg (*)	->
+  uUartSynctoUCLK/PEIMSync_reg	->
+  uUartSynctoUCLK/DCDIMSync_reg	->
+  uUartSynctoUCLK/nRISyncUARTCLK_reg	->
+  uUartSynctoUCLK/CTSIMSync1_reg	->
+  uUartSynctoUCLK/UARTBEICSync1_reg	->
+  uUartSynctoUCLK/TXDataAvlblSync1_reg	->
+  uUartSynctoUCLK/UARTFEICSync_reg	->
+  uUartSynctoUCLK/RXESync_reg (*)	->
+  uUartSynctoUCLK/TXESync_reg (*)	->
+  uUartSynctoUCLK/TXDataAvlblSync_reg	->
+  uUartSynctoUCLK/LCRUpdateSync_reg	->
+  uUartSynctoUCLK/SIRLPSync1_reg	->
+  uUartSynctoUCLK/CTSEnSyncUCLK_reg	->
+  uUartSynctoUCLK/UARTRXDSync1_reg	->
+  uUartSynctoUCLK/RIIMSync1_reg	->
+  uUartSynctoUCLK/CTSEnSync1_reg	->
+  uUartSynctoUCLK/RPtrInDnSync1_reg	->
+  uUartSynctoUCLK/nCTSSyncUARTCLK_reg	->
+  uUartSynctoUCLK/SIRENSync_reg	->
+  uUartSynctoUCLK/nDCDSyncUARTCLK_reg	->
+  uUartSynctoUCLK/UARTRIICSync_reg	->
+  uUartSynctoUCLK/PEIMSync1_reg	->
+  uUartSynctoUCLK/nRISync1_reg	->
+  uUartSynctoUCLK/nCTSSync1_reg	->
+  uUartSynctoUCLK/FEIMSync1_reg	->
+  uUartSynctoUCLK/UARTPEICSync_reg	->
+  uUartSynctoUCLK/FBRDUpdateSync_reg	->
+  uUartSynctoUCLK/UARTPEICSync1_reg	->
+  uUartSynctoUCLK/UARTFEICSync1_reg	->
+  uUartSynctoUCLK/UARTENSync1_reg	->
+  uUartSynctoUCLK/FBRDUpdateSync1_reg	->
+  uUartSynctoUCLK/RXESync1_reg (*)	->
+  uUartSynctoUCLK/FEIMSync_reg	->
+  uUartSynctoUCLK/RTIMSync_reg	->
+  uUartSynctoUCLK/BRKSync_reg	->
+  uUartSynctoUCLK/SIRENSync1_reg	->
+  uUartSynctoUCLK/SIRLPSync_reg	->
+  uUartSynctoUCLK/BEIMSync_reg	->
+  uUartSynctoUCLK/nDSRSyncUARTCLK_reg	->
+  uUartSynctoUCLK/RXFWrDoneSync_reg	->
+  uUartSynctoUCLK/nDCDSync1_reg	->
+  uUartSynctoUCLK/UARTRIICSync1_reg	->
+  uUartSynctoUCLK/BEIMSync1_reg	->
+  uUartSynctoUCLK/BRKSync1_reg	->
+  uUartSynctoUCLK/RdPtrIncDoneSync_reg	->
+  uUartSynctoUCLK/UARTDCDICSync1_reg	->
+  uUartSynctoUCLK/UARTCTSICSync1_reg	->
+  uUartSynctoUCLK/RIIMSync_reg	->
+  uUartSynctoUCLK/DSRIMSync1_reg	->
+  uUartSynctoUCLK/UARTRTICSync1_reg	->
+  uUartSynctoUCLK/ILPRUpdateSync_reg	->
+  uUartSynctoUCLK/ILPRUpdateSync1_reg	->
+  uUartSynctoUCLK/RXFESync_reg	->
+  uUartSynctoUCLK/nDSRSync1_reg	->
+  uUartSynctoUCLK/CTSIMSync_reg	->
+  uUartSynctoUCLK/LCRUpdateSync1_reg	->
+  uUartSynctoUCLK/UARTRXDSync_reg	->
+  uUartSynctoUCLK/UARTCTSICSync_reg	->
+  uUartSynctoUCLK/RXFWrDoneSync1_reg	->
+  uUartSynctoUCLK/SIRINSync1_reg	->
+  SCANOUTUCLK
+

@@ -1,0 +1,53 @@
+#!/bin/csh -f
+#
+#
+#
+# Script to create : Stand Alone Verilog-XL
+#
+        set a=`sh -c "type gcc"`
+        if ( "$a" == "cc is /usr/ucb/cc" ) then
+	echo "which cc" returned "/usr/ucb/cc"
+	echo This compiler will not yield a good executable.
+	echo Please adjust your PATH environment variable to pick up the Sun C Compiler.
+	exit 1
+	endif
+set verbose
+#
+#
+# The following line(s) will pre-compile your
+# PLI C source files before the linking step.
+#
+gcc -c $MG_LIB/cadence_xl_verilog/veriuser.c \
+   -I/Stools/LDV5.1/tools/verilog/include
+gcc -c /Stools/LDV5.1/tools/verilog/src/vpi_user.c \
+   -I/Stools/LDV5.1/tools/verilog/include
+# The following is the actual compile/link
+# statement:                              
+#                                         
+gcc -o verilogarm \
+   /Stools/LDV5.1/tools/verilog/lib/vlog.o \
+ /Stools/LDV5.1/tools/verilog/lib/libdlc.a \
+   -L/Stools/LDV5.1/tools/lib \
+   /Stools/LDV5.1/tools/verilog/lib/omnitasks.o \
+   /Stools/LDV5.1/tools/verilog/lib/env_czc.o \
+   /Stools/LDV5.1/tools/verilog/lib/gr_tasks.o \
+   /Stools/LDV5.1/tools/verilog/lib/shm_vlog.a \
+    -L/Stools/LDV5.1/tools/lib -ldwapi -ldcapi  \
+   veriuser.o \
+   vpi_user.o \
+   ./ARM7TDMIr3.so \
+   -L${MG_LIB}/cadence_xl_verilog \
+   -lmgmm \
+   -lsimvis_ext -ludm \
+   -lcla_sh \
+   -lcdsCommon_sh \
+   -I/Stools/LDV5.1/tools/verilog/include \
+   -L/Stools/LDV5.1/tools/verilog/lib \
+   -lnewsdfa \
+   -lsdfi \
+   -L/usr/dt/lib  \
+   -L/usr/openwin/lib  \
+   -lvoids \
+-lsocket -lnsl -lm -ldl -lw -lgen -lintl 
+#
+unset verbose

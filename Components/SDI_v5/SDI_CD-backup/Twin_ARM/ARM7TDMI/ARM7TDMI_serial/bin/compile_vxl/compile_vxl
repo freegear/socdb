@@ -1,0 +1,68 @@
+#!/bin/sh
+
+errorExit() {
+    echo ''
+    echo '############################################################'
+    echo ' Usage : compile_vxl testvector {max|min|typ} {ctime|sdf}   '
+    echo '                                                            '
+    echo ' ( testvector : arm7tdmi_ale_serr3_p0    )                  '
+    echo ' (              arm7tdmi_arm_serr3_p0    )                  '
+    echo ' (              arm7tdmi_debug_serr3_p0  )                  '
+    echo ' (              arm7tdmi_ice_serr3_p0    )                  '
+    echo ' (              arm7tdmi_mul_serr3_p0    )                  '
+    echo ' (              arm7tdmi_pipe_serr3_p0   )                  '
+    echo ' (              arm7tdmi_regnew_serr3_p0 )                  '
+    echo ' (              arm7tdmi_thumb_serr3_p0  )                  '
+    echo '############################################################'
+    echo ''
+    clrDir
+    exit 1
+}
+
+clrDir() {
+    echo ' Directory Cleanning .... '
+    [ -f test_serial.v     ] && /bin/rm -rf test_serial.v
+    [ -f ARM7TDMIr3.so     ] && /bin/rm -rf ARM7TDMIr3.so
+    [ -f ARM7TDMIr3.sl     ] && /bin/rm -rf ARM7TDMIr3.sl
+    [ -f ARM7TDMIr3.sdf    ] && /bin/rm -rf ARM7TDMIr3.sdf
+    [ -f ARM7TDMIr3.tdef   ] && /bin/rm -rf ARM7TDMIr3.tdef
+    [ -f ARM7TDMIr3.v      ] && /bin/rm -rf ARM7TDMIr3.v
+    [ -f ARM7TDMIr3.vhd    ] && /bin/rm -rf ARM7TDMIr3.vhd
+    [ -f VERILOG_025       ] && /bin/rm -rf VERILOG_025   
+    [ -f sdf.log           ] && /bin/rm -rf sdf.log
+}
+
+FileNotFound() {
+        echo "FILE svt/$1 not found !!!!"
+        exit 1
+}
+
+[ "$3" = "" ] && errorExit
+[ "$2" = "" ] && errorExit
+[ "$1" = "" ] && errorExit
+
+#### clear directory #####
+clrDir
+
+############### main program ############################################
+
+vecFile="$1.v"
+filechk=`find ../svt -name "$vecFile" -print`
+[ "$filechk" = "" ] && FileNotFound $vecFile
+ln -s ../svt/$1.v  ./test_serial.v
+
+ln -s  ../models/cadence_xl_verilog/ARM7TDMIr3.so      ARM7TDMIr3.so
+ln -s  ../models/cadence_xl_verilog/verilog            VERILOG_025
+
+if [ "$3" = "ctime" ]; then
+ ln -s  ../models/cadence_xl_verilog/ARM7TDMIr3.v      ARM7TDMIr3.v
+ ln -s  ../tdef_sdf/arm7tdmir3a_$2.tdef                ARM7TDMIr3.tdef
+ VERILOG_025 ./ARM7TDMIr3.v ./test_serial.v
+elif [ "$3" = "sdf" ]; then
+ ln -s  ../models/cadence_xl_verilog/ARM7TDMIr3_sdf.v  ARM7TDMIr3.v
+ ln -s  ../tdef_sdf/arm7tdmir3a_$2.sdf_vxl             ARM7TDMIr3.sdf
+ VERILOG_025 ./ARM7TDMIr3.v ./test_serial.v +typdelays +sdf +sdf_verbose +sdf_cputime +neg_tchk
+fi
+
+\mv verilog.log  ../log/vxl/verilog.log_$1_$2_$3
+

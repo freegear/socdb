@@ -1,0 +1,684 @@
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap1.htm">Previous Chapter</a>
+ * <a href="chap3.htm">Next Chapter</a>
+<p>
+<a name="31549: chap head: Chapter 1"></a><title>FLEXlm End User Manual: Chapter 2 
+The License File</title>
+<h1>Chapter 2 
+The License File</h1>
+<p>
+The license file contains all site-specific information required by 
+FLEXlm<I></I>. This 
+information includes:<p>
+<ul><li>server names and hostids<li>vendor names and paths to vendor daemon executables<li>feature information</ul><p>
+In general, the license file, or a copy of it, must be accessible to every machine that 
+runs a 
+FLEXlm<I></I>-licensed application, and each machine designated as a license server. 
+Before you can use the application you have to start the license manager daemon 
+(lmgrd<I></I>) using the following syntax:<p>
+<pre><TT><a name="_IX_10"></a>lmgrd</TT><I></I><TT></TT> [-c <I>license_file_path</I>] (Unix and OS/2)</pre>
+<pre><TT>lmgrd</TT><I></I><TT></TT> -app [-c <I>license_file_path</I>] (Windows/NT)</pre>
+</ol></ul><p>
+<p>
+<dl><dt>-c 
+<I>license_file_path</I> 
+<dd>full pathname to the license file. Otherwise, 
+LM_LICENSE_FILE is used, or the default location: 
+<TT>/usr/local/flexlm/licenses/license.dat</TT> 
+(Unix) or 
+<TT>C:\flexlm\license.dat</TT> (Windows).</dl><p>
+On VMS and Netware systems there is no 
+<a name="_IX_11"></a>lmgrd and the vendor daemon is run 
+directly.<p>
+<a name="32236: 1head: 2.1 Location of the License File"></a><a name="2.1"></a><h2>2.1  Specifying Location of the License File</h2>
+<p>
+If your software vendor recommends a specific location for your license file, or if the 
+default is not practical for you, use one of the following methods to put the license file 
+in another location:<p>
+<ul><li>set the path when you start 
+lmgrd<I></I> with `-c<I> path</I>'<li>set the path with the LM_LICENSE_FILE environment variable</ul><p>
+If you are running the application on multiple nodes, you have three options for 
+making your 
+<a name="_IX_12"></a>license file available on all the machines:<p>
+<ul><li>Place the license file in a partition which is available (via NFS on Unix systems) 
+to all nodes in the network that need the license file.<li>Copy the license file to all of the nodes where it is needed.<li>Set 
+LM_LICENSE_FILE<TT></TT> to `<I>port@host</I>', where 
+<I>host</I> and 
+<I>port</I> come from the 
+SERVER line in the license file. 
+<li>Starting with 
+FLEXlm<I></I> v6, you can use `@<I>host'</I>, if the license file SERVER line 
+uses a default port, or specifies a port in the default port range (27000-27009).</ul><p>
+Since the vendor daemon keeps track of license usage, and since the license file 
+contains encrypted data to protect it against modification, you may move and copy the 
+license file as much as necessary.<p>
+<p>
+No matter which option you choose, you must first install 
+lmgrd<I></I> (on Unix and 
+Windows/NT systems) and the vendor daemon.<p>
+<p>
+With a 
+FLEXlm<I></I> v6 (or later) vendor daemon and lmgrd, the license path can be a list 
+of files, separated by colons on Unix, or semi-colons on Windows. If there is a 
+directory in this list, all files named *.lic in that directory are used.<p>
+<p>
+You can only start 
+lmgrd<I></I> on the server node specified in the license file. 
+<p>
+<p>
+If you are running 
+<a name="_IX_13"></a><a name="_IX_14"></a>redundant servers, you should have separate copies of the 
+<a name="_IX_15"></a>license 
+file (as well as the binaries for 
+lmgrd<I></I> and the 
+<a name="_IX_16"></a>vendor daemons) on 
+<I>each</I> server node. If 
+you do not do this, you lose all the advantages of having redundant servers, since the 
+file server holding these files becomes a single point of failure.<p>
+<h3>2.1.1	 <a name="31889: 2Head: 2.1.1 Setting the Path at Start-Up"></a>Setting the Path to the License File at Start-Up (Unix)</h3>
+<p>
+To start the license manager daemon (lmgrd<I></I>) execute a command similar to the 
+following.<p>
+<ul><li>If you are running in the C shell:</ul><pre>% <I>lmgrd_path</I><TT> -c </TT><I>license_file_path</I><TT> </TT>&gt;&amp; <I>log_path</I> &amp;</pre>
+<ul><li>If you are using either the Korn or Bourne shell:</ul><pre>$ nohup <I>lmgrd_path</I> -c <I>license_file_path</I> &gt; <I>log_path</I> 2&gt;&amp;1 &amp;</pre>
+</ol></ul><p>
+On Unix, edit the appropriate boot script, which may be 
+<TT>/etc/rc.boot</TT>, 
+<TT>/etc/rc.local, /etc/rc2.d/Sxxx, /sbin/rc2.d/Sxxxx, etc.</TT> 
+Remember that these scripts are run in /bin/sh, so do not use the 
+<I>csh</I> `&gt;&amp;' redirection 
+syntax.<p>
+<p>
+Each Unix operating system can have some quirks in doing this, but the following 
+script has been successfully tested for HP700 systems. See the notes following for a 
+full explanation.<p>
+<pre>	/bin/su daniel -c 'echo starting lmgrd &gt; \
+		/home/flexlm/v5.12/hp700_u9/boot.log'
+	
+	/bin/nohup /bin/su daniel -c 'umask 022; \
+		/home/flexlm/v5.12/hp700_u9/lmgrd -c \
+		/home/flexlm/v5.12/hp700_u9/license.dat &gt;&gt; \
+		/home/flexlm/v5.12/hp700_u9/boot.log'
+
+	/bin/su daniel -c 'echo sleep 5 &gt;&gt; \
+		/home/flexlm/v5.12/hp700_u9/boot.log'
+	/bin/sleep 5</pre>
+<pre> </pre>
+<pre>	/bin/su daniel -c 'echo lmdiag &gt;&gt;\
+		/home/flexlm/v5.12/hp700_u9/boot.log'
+
+	/bin/su daniel -c '/home/flexlm/v5.12/hp700_u9/lmdiag -n -c\
+		/home/flexlm/v5.12/hp700_u9/license.dat &gt;&gt; \
+		/home/flexlm/v5.12/hp700_u9/boot.log'
+	/bin/su daniel -c 'echo exiting &gt;&gt;\
+		/home/flexlm/v5.12/hp700_u9/boot.log'</pre>
+</ol></ul><p>
+Please note the following about how this script was written:<p>
+<ul><li>All paths are specified in full, since no paths can be assumed at boot time.<li>Since no paths are assumed, the vendor daemon must be in the same directory as 
+lmgrd, or the 
+<a name="_IX_17"></a>VENDOR lines must be edited to include the full path to the vendor-daemon binary file.<li>The `su' command is used to run lmgrd as a non-root user, `daniel'. We 
+recommend that lmgrd not be run as root, since it can be a security risk to run any 
+program that does not require root permissions, and lmgrd does not require root 
+permissions.<li>Daniel has a csh login, so all commands executed as daniel must be in csh syntax. 
+All commands not executed as daniel must be in /bin/sh syntax, since that's 
+what's used by the boot scripts.<li>The use of `nohup' and `sleep' are required on some operating systems, notably 
+HPUX and Digital Unix, for obscure technical reasons. These are not needed on 
+Solaris and some other operating systems, but are safe to use on all.<li>lmdiag is used as a diagnostic tool to verify that the server is running and serving 
+licenses.</ul><p>
+On IBM RS6000 systems, /etc/rc cannot be used, because TCP/IP is not installed when 
+this script is run. Instead, /etc/inittab must be used. Add a line like this to /etc/inittab 
+after the lines which start networking:
+		 
+  <TT>     rclocal:2:wait:/etc/rc.local &gt; /dev/console 2&gt;&amp;1</TT><p>
+<p>
+This will not start the daemon until you reboot your license server machine.<p>
+<h3>2.1.2	 Setting the Path to the License File at Start-Up (Windows)</h3>
+<p>
+This is set with the 
+FLEXlm<I></I> Control Panel. See 
+<a href="chap6.htm#12312: 2Head: 6.12.2 The FLEXlm Control Panel">Section 6.13.2, `The FLEXlm Control 
+Panel,' on page 49</a>.<p>
+<h3>2.1.3	 <a name="15416: 2Head: 2.1.2 Setting the Path with an Environment Variable"></a>Setting the Path with an Environment Variable</h3>
+<p>
+Use the environment variable 
+<a name="_IX_18"></a>LM_LICENSE_FILE<TT></TT> to set the location of the license 
+file. For example in the C shell:<p>
+<pre>% setenv LM_LICENSE_FILE<TT></TT> <I>license_file_path</I></pre>
+</ol></ul><p>
+In the Korn and Bourne shells:<p>
+<pre># LM_LICENSE_FILE<TT></TT>=<I>license_file_path
+</I># export LM_LICENSE_FILE<TT></TT></pre>
+</ol></ul><p>
+On Windows 3.1 and 95, add the following line to C:\autoexec.bat:<p>
+<pre>SET LM_LICENSE_FILE=<I>license_file_path</I></pre>
+</ol></ul><p>
+On Windows NT, use the System Control Panel applet to change the global 
+environment, adding LM_LICENSE_FILE to 
+<I>license_file_path</I><p>
+<p>
+<p>
+<dl><dt><I>license_file_path</I> 
+<dd>full pathname to the license file. This can also be a 
+<I>port@host</I> setting, where 
+<I>port</I> and 
+<I>host 
+</I>are the port number 
+and hostnames from the SERVER line in the license file.</dl><p>
+In 
+FLEXlm<I></I> v6.0, applications will accept an environment variable (or Windows 
+Registry) named `<I>VENDOR</I>_LICENSE_FILE', where 
+<I>VENDOR</I> is the vendor-daemon name, e.g., GSI_LICENSE_FILE.<p>
+<p>
+The `-c' option overrides the setting of the 
+LM_LICENSE_FILE<TT></TT> environment 
+variable for 
+lmgrd<I></I> and other 
+FLEXlm<I></I> utilities like 
+<TT>lmstat</TT> and 
+<TT>lmdown</TT>. See 
+<a href="chap3.htm#15425: 2head: 3.1.2 Using Separate License Files on the Same Server Node">Section 3.1.3, `Using Separate License Files on the Same Server Node,' on page 23</a> 
+for more information about 
+LM_LICENSE_FILE<TT></TT>.<p>
+<p>
+Some applications do not recognize the 
+LM_LICENSE_FILE<TT></TT> environment variable. 
+<p>
+<a name="94139: 1head: 2.2 License File Format"></a><a name="2.2"></a><h2>2.2  License File Format</h2>
+<p>
+License files usually begin with a SERVER line (or three lines for redundant servers) 
+followed by one or more DAEMON lines, followed by one or more FEATURE or 
+INCREMENT lines. In some cases the license file requires no SERVER line and no 
+DAEMON line. See 
+<a href="chap4.htm#36598: 1Head: 5.4 Counted Vs. Uncounted Licenses">Section 4.4, `Counted vs. Uncounted Licenses,' on page 29</a>, for 
+more information. Since 
+FLEXlm<I></I> v6.0, the DAEMON line can be called VENDOR. 
+Wherever DAEMON appears, VENDOR can be used, if the lmgrd and vendor-daemon 
+are both &gt;= 
+FLEXlm<I></I> v6.0.<p>
+<p>
+You can modify these data items in the license file:<p>
+<ul><li>node names on the SERVER line(s)<li>port numbers on SERVER line(s)<li>pathnames on the DAEMON line(s)<li>options file pathnames on DAEMON line(s)<li>Optional port numbers on DAEMON line(s) (for firewall support only)<li>USE_SERVER line (FLEXlm<I></I> v5 and later only)<li>values in `<I>name</I>=<I>value</I>' pairs on FEATURE lines, if 
+<I>name</I> is all lowercase</ul><p>
+Everything else is used to compute the license key, and should be entered exactly as 
+supplied by your software vendor. All data in the license file is case sensitive, unless 
+otherwise indicated.<p>
+<p>
+In the following sections, options modifiable by the license administrator are 
+<I>italicized</I>.<p>
+<h3>2.2.1	 SERVER Lines</h3>
+<p>
+The SERVER line specifies the node name and hostid of the license server, and the port 
+number of the license manager daemon (lmgrd<I></I>). Normally a license file has one 
+SERVER line. Three SERVER lines mean that you are using 
+<a name="_IX_19"></a>redundant servers. The 
+absence of a SERVER line means every FEATURE or INCREMENT line in the 
+license file is uncounted. For more information about uncounted features, see 
+<a href="chap2.htm#24398: 2Head: 2.2.3 FEATURE or INCREMENT Lines">Section 2.2.4, `FEATURE or INCREMENT Lines,' on page 13</a>. License 
+administrators do not have the option of deleting SERVER lines from a license file 
+because the hostids from the SERVER lines are computed into the license keys on 
+every FEATURE and INCREMENT line. For more information about redundant 
+servers, see 
+<a href="chap4.htm#15827: chap head: Chapter 4">Chapter 4, `Selecting Server Nodes' on page 25</a>. 
+<p>
+<p>
+The format of the 
+<a name="_IX_20"></a>SERVER line is:<p>
+<pre>SERVER <I>nodename</I> id <I>port-number</I></pre>
+</ol></ul><p>
+<p>
+<dl><dt><I>nodename (or IP-address)</I><dd>The system hostname. String returned by the 
+<I>Unix</I> 
+<I>hostname</I> or 
+<I>uname -n</I> command. On NT, 
+<I>ipconfig /all</I>; on 
+Win95, 
+<I>winipcfg /all 
+</I>return the hostname. If the application 
+uses 
+FLEXlm<I></I> v5 or higher, this can be an IP-address (in 
+<I>nnn.nnn.nnn.nnn</I> format).<dt><I>id</I> 
+<dd>Usually the string returned by the 
+<TT>lmhostid</TT> command. 
+This can only be changed by your software supplier.<dt><I>port-number</I> 
+<dd>TCP port number to use. A valid number is any unused port 
+number between 0 and 64000. On Unix choose a port 
+&gt;1024, since &lt;1024 are privileged port numbers.</dl><p>
+Example:<p>
+<pre>SERVER enterprise 0122345 21987</pre>
+<h3>2.2.2	 <a name="_IX_21"></a>DAEMON (or VENDOR) Lines</h3>
+<p>
+The DAEMON line specifies the daemon name and path. 
+<I>lmgrd</I> uses this line to start 
+the vendor daemons, and the vendor daemon reads it to find the 
+<a name="_IX_22"></a>options file. The format 
+of the DAEMON line is shown below.<p>
+<p>
+Since 
+FLEXlm<I></I> v6.0, the DAEMON line can be called VENDOR. VENDOR can be 
+used if the lmgrd and vendor-daemon are both at least 
+FLEXlm<I></I> v6.0.<p>
+<pre>{DAEMON|VENDOR} <I>daemon_name</I> [<I>daemon_path]</I> [[options=]<I>options_path</I>]\
+	[[port=]<I>portnum</I>]</pre>
+</ol></ul><p>
+<p>
+<dl><dt><I>daemon_name</I> 
+<dd>name of the vendor daemon used to serve some feature(s) 
+in the file. This name cannot be changed by the 
+administrator. 
+<dt><I>daemon_path</I><dd>pathname to the executable for this daemon. Generally the 
+license administrator is free to install the daemon in any 
+directory. (It is recommended however, that it be installed 
+in a local directory on the license server node.)
+If the lmgrd and vendor-daemon are &gt;= 
+FLEXlm<I></I> v6.0, this 
+path is optional. If left out, lmgrd will look for the vendor-daemon binary in the current directory, the $PATH list, or 
+in the directory where lmgrd is located. If the path is blank, 
+then the options= and port= strings are required if options 
+or port number are specified.<dt><I>options_path</I><dd>full pathname of the end-user specified options file for this 
+daemon. (See 
+<a href="chap5.htm#19683: chap head: End-User License Administration">Chapter 5, `The Options File' on page 31</a>.) 
+FLEXlm<I></I> does not require an options file. The keyword 
+`options=' requires a v5+ vendor daemon.
+If the vendor daemon is 
+FLEXlm<I></I> v6 or later, the options file 
+need not be specified on this line. If it is called 
+<I>vendor</I>.opt 
+(where 
+<I>vendor</I> is the vendor-daemon name) and located in 
+the same directory as the license file, the vendor daemon 
+will automatically find and use it.<dt><I>portnum</I><dd>Vendor daemon port number. NOTE: This is for firewall 
+support only, and is otherwise not recommended. This 
+requires a v5+ lmgrd.</dl><p>
+Examples:<p>
+<p>
+v6.0:<p>
+<pre>VENDOR sampled</pre>
+</ol></ul><p>
+pre-v6.0:<p>
+<pre>DAEMON sampled /usr/local/sampled /usr/local/flexlm/licenses/sampled.opt </pre>
+</ol></ul><p>
+Versions of 
+FLEXlm<I></I> prior to v3.0 did not support the line continuation character (`\'). 
+Previous versions required that each line in the license file fit on a single line.<p>
+<h3>2.2.3	 <a name="_IX_23"></a>USE_SERVER line (v5+ only)</h3>
+<p>
+USE_SERVER takes no arguments, and has no impact on the server. When the 
+application sees USE_SERVER, it ignores everything in the license file except 
+preceding SERVER lines, and the checkout validation occurs at the vendor daemon. 
+USE_SERVER is recommended since it improves performance when a license server 
+is used. For uncounted features, USE_SERVER can be used to force logging of usage 
+by the daemons.<p>
+<h3>2.2.4	 <a name="24398: 2Head: 2.2.3 FEATURE or INCREMENT Lines"></a><a name="_IX_24"></a>FEATURE or 
+<a name="_IX_25"></a>INCREMENT Lines</h3>
+<p>
+A FEATURE line describes the license to use a product. An INCREMENT line can be 
+used in place of a FEATURE line, as well as to `incrementally' add licenses to a prior 
+FEATURE or INCREMENT line in the license file.<p>
+<p>
+Only the first FEATURE line for a given feature will be processed by the vendor 
+daemon. If you want to have additional copies of the same feature (for example, to 
+have multiple node locked counted features), then you must use multiple 
+INCREMENT lines. INCREMENT lines form license groups based on the feature 
+name, version, and node lock hostid. If the feature name, version, and node lock hostid 
+(and optionally, the vendor string, if the vendor specified this) match a prior 
+INCREMENT or FEATURE line, the new number of licenses is added to the old 
+number. If any of the three do not match, a new group of licenses is created in the 
+vendor daemon, and this group is counted independently from others with the same 
+feature name (called a `license pool'). INCREMENT is not available for pre-v2.61 
+FLEXlm<I></I> clients or servers. A FEATURE line does not give an additional number of 
+licenses, whereas an INCREMENT line ALWAYS gives an additional number of 
+licenses.<p>
+<p>
+There is a rarely used option in 
+FLEXlm<I></I> which causes FEATURE lines to function as 
+INCREMENT lines. This option is called 
+<TT>ls_use_all_feature_lines</TT>. You 
+will have to ask your vendor if they use this option. If they do, then all FEATURE lines 
+behave exactly as INCREMENT lines.<p>
+<p>
+A FEATURE line placed after another FEATURE or INCREMENT line will be 
+ignored (unless 
+<TT>ls_use_all_feature_lines</TT> is set).<p>
+<p>
+The format for the FEATURE line changed in 
+FLEXlm<I></I> v3.0 and 
+FLEXlm<I></I> v6.0. The 
+older formats are understood by new clients and servers, but the new formats are more 
+flexible.<p>
+<p>
+v2 format:<p>
+<pre><TT>FEATURE|INCREMENT </TT><I>name vendor ver expdate #lic key `vendor_str' [hostid]</I></pre>
+</ol></ul><p>
+v3+ format:<p>
+<pre><TT>FEATURE|INCREMENT </TT><I>name vendor version exp_date #lic key </I>\</pre>
+<pre><TT>[HOSTID=</TT><I>hostid</I><TT>][VENDOR_STRING='</TT><I>vendor</I><TT>-</TT><I>string</I><TT>'] \ </TT></pre>
+<pre><TT>[vendor_info='...'] [dist_info='...'] [user_info='...'] \</TT></pre>
+<pre><TT>[asset_info='...'] [ISSUER='...'] [NOTICE='...'] [ck=</TT><I>nnn</I><TT>] \</TT></pre>
+<pre>[OVERDRAFT=<I>nnn</I>] [DUP_GROUP=NONE|SITE|[UHDV]]</pre>
+</ol></ul><p>
+Nothing in a FEATURE/INCREMENT line is editable, except for values in the 
+`<I>name</I>=<I>value</I>' pairs where 
+<I>name</I> is all lowercase.<p>
+<p>
+<p>
+<dl><dt><I>name</I> 
+<dd>name given to the feature by the vendor.<dt><I>vendor</I><dd>name of the vendor daemon; also found in the DAEMON 
+line. The specified daemon serves this feature.<dt><I>version</I><dd>version of this feature that is supported by this license. 
+<dt><I>exp_date</I><dd>expiration date, for example, 7-may-1996. Note: If the year 
+is 0 (or 00, 000, 0000) then the license never expires. Dates 
+before 2000 can be 2- or 4-digit years. After 2000 they 
+must be 4-digit years. The expiration date is fully year-2000 compliant.
+FLEXlm<I></I> v6 (or later) applications only: the keyword 
+`<I>permanent</I>' can be used instead of the date `1-jan-0'.<dt><I>#lic</I><TT> 
+</TT><dd>number of concurrent licenses for this feature. If the 
+number of users is set to 0, the licenses for this feature are 
+uncounted and no 
+lmgrd<I></I> is required but a hostid on the 
+FEATURE line is required. See 
+<a href="chap4.htm#36598: 1Head: 5.4 Counted Vs. Uncounted Licenses">Section 4.4, `Counted vs. 
+Uncounted Licenses,' on page 29</a>.
+FLEXlm<I></I> v6 (or later) applications only: the keyword 
+`<I>uncounted</I>' can be used instead of a count of 0.<dt><I>key</I><dd>license key for this FEATURE line. Two identical looking 
+FEATURE or INCREMENT lines may have different 
+license keys if the start dates are different.</dl><p>
+The following fields are all optional (except for 
+<I>vendor-string</I> in the old format). For 
+optional fields of the `name=value' syntax, if the name is lowercase, it can be modified 
+and the license will remain valid.<p>
+<dl><dt><I>`vendor_string'</I><TT> 
+</TT><dd>vendor-defined string, enclosed in double quotes. This 
+string can contain any characters except a quote.<dt><I>hostid</I> 
+<dd>string returned by 
+<TT><a name="_IX_26"></a>lmhostid</TT>. Used only if the feature is 
+to be bound to a particular host, whether its use is counted 
+or not. (Numeric hostids are case insensitive). See 
+<a href="#88781: AppTitle1: Appendix\x11 A Hostids for FLEXlm-Supported Machines">Appendix A, `Hostids for FLEXlm-Supported Machines'</a> 
+for more information.<a name="_IX_27"></a><dt>DUP_GROUP=...<TT><dd></TT>Duplicate Grouping parameter can be specified in the 
+license in 
+FLEXlm<I></I> v4.0 and later. The syntax is:</dl><pre>              			DUP_GROUP=NONE|SITE|[UHDV]</pre>
+<pre>        				U = DUP_USER</pre>
+<pre>        				H = DUP_HOST</pre>
+<pre>        				D = DUP_DISPLAY</pre>
+<pre>        				V = DUP_VENDOR_DEF</pre>
+<dl><dt><dd>Any combination of UHDV is allowed, and the 
+DUP_MASK is the OR of the combination. For example 
+`DUP_GROUP=UHD' 
+means the duplicate grouping is 
+(DUP_USER|DUP_HOST|DUP_DISPLAY), so for a user on 
+the same host and display, additional uses of a feature do 
+not consume additional licenses.<a name="_IX_28"></a><dt>HOSTID=<I>hostid<dd></I>Same as hostid above, but in the name=value pair syntax 
+(FLEXlm<I></I> v3.0 and later).<a name="_IX_29"></a><dt>HOST_BASED[=<I>n</I>]<dd>Hostnames must be specified in INCLUDE statements in 
+the end-user 
+<a name="_IX_30"></a>options file, and the number of hosts is limited 
+to 
+<I>#lic</I>, or the number specified in `=<I>n</I>'.<a name="_IX_31"></a><dt>ISSUED=<I>dd-mmm-yyyy</I><TT><dd></TT>Date issued.<a name="_IX_32"></a><dt>ISSUER='...'<TT><dd></TT>Issuer of the license.<a name="_IX_33"></a><dt>NOTICE='...'<TT><dd></TT>A field for intellectual property notices.<a name="_IX_34"></a><dt>OVERDRAFT=<I>nnn</I><TT><dd>FLEXlm</TT><I></I><TT></TT> v4.0 and later. The 
+<TT>OVERDRAFT</TT> policy allows 
+your vendor to specify a number of additional licenses 
+which users will be allowed to use, in addition to the 
+licenses they have purchased. This allows your users to not 
+be denied service when in a `temporary overdraft' state. 
+Usage above the licensed limit will be reported by the 
+FLEXadmin<I></I> reporting tool.<dt>PLATFORMS='...'<dd>Usage is limited to the listed platforms. (v5.11+ only).<a name="_IX_35"></a><dt>SN=<I>serial_num<dd></I>Serial number, used to identify INCREMENT lines.<a name="_IX_36"></a><dt>START=dd-mmm-yyyy<dd>Start-date (FLEXlm<I></I> v6 or later only)<a name="_IX_37"></a><dt>SUPERSEDE[='<I>f1 f2</I> ...'<TT> 
+</TT><dd>If this appears, all licenses issued before the date specified 
+in ISSUED= are 
+<I>superseded</I> by this line, and become 
+ineffective.<a name="_IX_38"></a><dt>USER_BASED[=<I>n</I>]<dd>Users must be specified in INCLUDE statements in the 
+end-user options file, and the number of users are limited to 
+<I>#lic</I>, or the number specified in `=<I>n</I>'.<a name="_IX_39"></a><dt>VENDOR_STRING=<I>'...'<dd></I>Same as `vendor_string' above, but in 
+<I>name</I>=<I>value</I> pair 
+syntax.</dl><p>
+The following attributes can be changed or deleted by end-users. This is indicated by 
+a lowercase 
+<I>name</I>.<p>
+<dl><a name="_IX_40"></a><dt>asset_info='...'<TT><dd></TT>Additional information provided by the license 
+administrator for asset management.<a name="_IX_41"></a><dt>ck=<I>nnn</I><TT><dd></TT>A checksum, useful with the lmcksum utility, which will 
+verify that the license has been entered correctly by the 
+end-user.<a name="_IX_42"></a><dt>dist_info='...'<TT><dd></TT>Additional information provided by the software 
+distributor.<a name="_IX_43"></a><dt>user_info='...'<TT><dd></TT>Additional information provided by the license 
+administrator.<a name="_IX_44"></a><dt>vendor_info='...'<TT><dd></TT>Additional information provided by the software vendor.<dt>Examples:</dl><pre>	FEATURE xyz_app xyzd 2.300 31-dec-1997 20 1234567890 `xyz'</pre>
+<pre>	INCREMENT f1 xyzd 1.000 1-jan-0 5 12345678901234567890 		\</pre>
+<pre>		HOSTID=INTERNET=195.186.*.* NOTICE='Licensed to XYZ corp'</pre>
+<h3>2.2.5	 FEATURESET Lines</h3>
+<p>
+The FEATURESET line is a rarely used line to prevent FEATURE lines from being 
+added to or removed from the license file. The format of the FEATURESET line is 
+shown below.<p>
+<pre>	FEATURESET daemon_name key</pre>
+</ol></ul><p>
+Nothing in a FEATURESET line can be edited. Use the FEATURESET line exactly as 
+it comes from your vendor. 
+<p>
+<p>
+<p>
+<dl><dt><I>daemon_name</I> 
+<dd>name of the vendor daemon.<dt><I>key</I><dd>license key for this FEATURESET line. This key encrypts 
+the keys of all features this daemon supports, so no 
+FEATURE/INCREMENT lines can be removed, added, or 
+rearranged in this license file.</dl><p>
+Example:<p>
+<pre>	FEATURESET sampled <I>12345678</I></pre>
+</ol></ul><p>
+<p>
+<dl><dt>sampled<dd>name of the vendor daemon<dt>12345678<dd>key generated by the vendor</dl><h3>2.2.6	 <a name="_IX_45"></a>PACKAGE Lines</h3>
+<p>
+The purpose of the PACKAGE line is to support two different licensing needs:<p>
+<ul><li>to license a product SUITE, or<li>to provide a more efficient way of distributing a license file that has a large 
+number of features, which largely share the same FEATURE line arguments.</ul><p>
+A PACKAGE line, by itself, does not license anything - it requires a matching 
+FEATURE/INCREMENT line to license the whole PACKAGE. A PACKAGE line 
+can be shipped by your software vendor with a product, independent of any licenses. 
+Later, when you purchase a license for that package, one or more corresponding 
+FEATURE/INCREMENT licenses will enable the PACKAGE.<p>
+<p>
+Example:<p>
+<pre>	PACKAGE <I>pkg_name vendor pkg_version pkg_key</I> COMPONENTS=<I>pkg_list</I> \</pre>
+<pre>			[ OPTIONS=<I>pkg_options</I> ]</pre>
+</ol></ul><p>
+<p>
+<dl><dt><I>pkg_name</I><dd>name of the 
+PACKAGE. The corresponding 
+FEATURE/INCREMENT line must have the same name.<dt><I>vendor</I><dd>name of the vendor daemon that supports this 
+PACKAGE.<dt><I>pkg_version</I><dd>version of the 
+<TT>PACKAGE</TT>. The enabling 
+<TT>FEATURE/INCREMENT</TT> line must have the same version.<dt><I>pkg_key</I><dd>20-character license key.<dt><I>pkg_list</I><dd>list of components. The format is:</dl><pre>			feature[:version[:num_lic]]</pre>
+<dl><dt><dd><TT>PACKAGEs</TT> must consist of at least one 
+<TT>COMPONENT</TT>. 
+Version and count are optional, and if left out, their values 
+come from the corresponding 
+<TT>FEATURE/INCREMENT</TT> 
+line. 
+<I>num_lic</I> is only legal if 
+<TT>OPTIONS=SUITE</TT> is not 
+set - in this case the resulting number of licenses will be 
+<I>num_lic</I> on the 
+<TT>COMPONENTS</TT> line multiplied by the 
+number of licenses in the 
+<TT>FEATURE/INCREMENT</TT> line. 
+Examples:</dl><pre>			COMPONENTS='comp1 comp2 comp3 comp4'</pre>
+<pre>			COMPONENTS='comp1:1.5 comp2 comp3:2.0:4'	</pre>
+<dl><dt><TT><a name="_IX_46"></a>OPTIONS=<a name="_IX_47"></a>SUITE</TT> 
+<dd>This is what distinguishes a suite 
+<TT>PACKAGE</TT> from a 
+<TT>PACKAGE 
+</TT>used to ease distribution.<dt><dd>With 
+<TT>OPTIONS=SUITE</TT>, the corresponding 
+<TT>FEATURE</TT> of 
+the same name as the package name is checked out in 
+addition to the component feature being checked out.<dt><dd>If 
+<TT>OPTIONS=SUITE</TT> is not set, then the corresponding 
+<TT>FEATURE</TT> of the same name as the package is removed 
+once the 
+<TT>PACKAGE</TT> is enabled; and it is not checked out 
+when a component feature is checked out.</dl><p>
+Examples<p>
+<pre>	PACKAGE suite xyzd 1.0 3B24B2F508CB697641CC\</pre>
+<pre>                        COMPONENTS='comp1 comp2' OPTIONS=SUITE</pre>
+<pre>	FEATURE suite xyzd 1.0 1-jan-0 5 4193E6ABCCCB1A3970B3</pre>
+</ol></ul><p>
+This is a typical SUITE example. There are 2 features: comp1 and comp2, which are 
+each version 1.0, with 5, non-expiring licenses available. When comp1 or comp2 are 
+checked out, `suite' will also be checked out. 
+<p>
+<pre>	PACKAGE suite xyzd 1.0 2CBF44FCB9C1E825DC5C COMPONENTS='c1:1.5:2\
+		c2:3.0:4'</pre>
+<pre>	FEATURE suite xyzd 1.0 1-jan-1999 3 321E78A17EC19AE81A43 SN=123</pre>
+</ol></ul><p>
+In this example, the component versions override the FEATURE versions, and the 
+number of licenses available for any component is the product of the 3 licenses for 
+suite and the number of licenses for that component. The result is equivalent to:<p>
+<pre>	FEATURE c1 xyzd 1.5 1-jan-1999 6 0D3AD5F26BC868D476EC SN=123</pre>
+<pre>	FEATURE c2 xyzd 3.0 1-jan-1999 12 EB16C5AE4A4E0F2961F0 SN=123</pre>
+</ol></ul><p>
+With 
+FLEXlm<I></I> v6 (or later) applications only the PACKAGE lines can be stored in a 
+separate file which need never be edited.<p>
+<h3>2.2.7	 <a name="57505: 2head: 9.1.4 UPGRADE Line"></a><a name="_IX_48"></a>UPGRADE Lines</h3>
+<pre>	UPGRADE <I>name daemon fromversion version</I> <I>exp_date</I> <I>#lic key \</I></pre>
+<pre>			`<I>string</I>' [<I>hostid</I>] ck=<I>nnn</I></pre>
+</ol></ul><p>
+All the data is the same as for a FEATURE or INCREMENT line, with the addition of 
+the 
+<I>fromversion</I> field. An UPGRADE line removes up to the number of licenses 
+specified from any old version (&gt;= fromversion) and creates a new version with that 
+same number of licenses.<p>
+<p>
+For example, the two lines:<p>
+<pre>	INCREMENT f1 xyzd 1.000 1-jan-1999 5 9BFAC03164EDB7BC0462 ``</pre>
+<pre>	UPGRADE f1 xyzd 1.000 2.000 1-jan-1999 2 1B9A30316207EC8CC0F7 ``</pre>
+</ol></ul><p>
+would result in 3 licenses of v1.0 of f1 and 2 licenses of v2.0 of f1.<p>
+<p>
+UPGRADE will operate on the most recent FEATURE or INCREMENT line (i.e., 
+closest preceding FEATURE or INCREMENT line) with a version number that is &gt;= 
+<I>fromversion</I>, and &lt; 
+<I>version</I>.<p>
+<p>
+Note that UPGRADE does not work for node locked, uncounted licenses before 
+version 6.<p>
+<a name="2.3"></a><h2>2.3  Sample License File</h2>
+<p>
+This is an example of a license file for a single vendor with two features.<p>
+<pre>	SERVER excellent_server		 17007ea8 	1700</pre>
+<pre>	DAEMON xyzd /etc/xyzd</pre>
+<pre>	FEATURE xyz_app1 xyzd 1.000 01-jan-1999 10 1EF890030EABF324""</pre>
+<pre>	FEATURE xyz_app2 xyzd 1.000 01-jan-1999 10 0784561FE98BA073""</pre>
+</ol></ul><p>
+The license file above would allow the license server 
+<TT>excellent_server</TT> with the 
+hostid 
+<TT>17007ea8</TT> to serve 10 floating licenses for 
+<TT>xyz_app1</TT> and 
+<TT>xyz_app2</TT> to any 
+user on the network.<p>
+<a name="18841: 1Head: 2.4 Types of License Files"></a><a name="2.4"></a><h2>2.4  Types of License Files </h2>
+<p>
+License files are created by the software vendor. License files can specify floating 
+(concurrent) usage, node locked (both `counted' and `uncounted'), and any 
+combination of floating, counted and uncounted.<p>
+<h3>2.4.1	 <a name="14841: 2head: 2.4.1 Concurrent (Floating) Usage"></a>Floating (Concurrent) Licenses</h3>
+<p>
+A 
+<I>floating license 
+</I>means anyone on the network can use the licensed software, up to 
+the limit specified in the license file. (Also referred to as 
+<I>concurrent</I> 
+<I>usage</I> or 
+<I>network 
+licensing</I>.) Floating licenses have no hostids on the individual FEATURE lines. 
+Floating licenses requires an 
+lmgrd<I></I> and a vendor daemon to be running to count the 
+concurrent usage of the licenses.<p>
+<p>
+An example of a license file that provides floating licenses is:<p>
+<pre>	SERVER lulu 17001234 1700</pre>
+<pre>	DAEMON xyzd /etc/xyzd</pre>
+<pre>	FEATURE f1 xyzd 1.00 1-jan-99 2 <I>key1</I>"" </pre>
+<pre>	FEATURE f2 xyzd 1.00 1-jan-99 6 <I>key2</I>""</pre>
+<pre>	FEATURE f3 xyzd 1.00 1-jan-99 1 <I>key3</I>"" </pre>
+</ol></ul><p>
+This license file specifies that two licenses for feature `f1', six licenses for feature 
+`f2', and one license for feature `f3' are available anywhere on the network that can 
+access the license server `lulu'.<p>
+<h3>2.4.2	 <a name="_IX_49"></a><a name="31616: 2head: 2.4.2 Node Locking"></a>Node Locked Licenses</h3>
+<p>
+Node locking means the licensed software can only be used on one node. A node 
+<a name="_IX_50"></a>locked license has a hostid on any FEATURE line that is node locked to a particular 
+host. There are two types of node locked licenses; 
+<I>uncounted</I> and 
+<I>counted</I>.<p>
+<p>
+If the number of licenses is set to 0, then the license is 
+<I>uncounted</I> and 
+<I>unlimited</I> use is 
+permitted on the specified node. This configuration does not require an 
+lmgrd<I></I> or a 
+vendor daemon because it is not going to count the concurrent usage of the features.<p>
+<p>
+The following license file allows unlimited usage of feature `f1' on the nodes with 
+hostids of 12001234 and 1700ab12:<p>
+<pre>	FEATURE f1 xyzd 1.000 1-jan-99 0 <I>key1</I>"" 12001234</pre>
+<pre>	FEATURE f1 xyzd 1.000 1-jan-99 0 <I>key2</I>"" 1700ab12</pre>
+</ol></ul><p>
+Alternately, in 
+FLEXlm<I></I> v5.0 or later, these 2 FEATURE lines could have been issued 
+by your software vendor with a 
+<I>hostid list</I>:<p>
+<pre>	FEATURE f1 xyzd 1.000 1-jan-99 0 <I>key</I> HOSTID='12001234 1700ab12'</pre>
+</ol></ul><p>
+If these were the only FEATURE lines in this license file, no 
+lmgrd<I></I> daemon would be 
+necessary and you should not start one. 
+<p>
+<p>
+The following license file allows three licenses for feature `f1' to be run, but only on 
+the node with hostid 1300ab43. (In this case, the daemons should be run on the same 
+node that runs the software, since there is no reason to run the daemons on another 
+node.)<p>
+<pre>	SERVER lulu 1300ab43 1700</pre>
+<pre>	DAEMON xyzd /etc/xyzy</pre>
+<pre>	FEATURE f1 zyzd 1.00 1-jan-99 3 <I>key</I>"" 1300ab43</pre>
+<h3>2.4.3	 Mixed Node Locked and Floating Licenses</h3>
+<p>
+Uncounted node locked and concurrent usage licenses can be mixed in the same 
+license file. 
+<p>
+<p>
+The following license file allows unlimited use of feature `f1' on nodes 17001111 and 
+17002222, while allowing two other licenses for feature `f1' to be used anywhere else 
+on the network:<p>
+<pre>	SERVER lulu 17001234 1700</pre>
+<pre>	DAEMON xyzd C:\flexlm\xyzd.exe</pre>
+<pre>	FEATURE f1 xyzd 1.00 1-jan-1999 0 <I>key1</I>"" 17001111</pre>
+<pre>	FEATURE f1 xyzd 1.00 1-jan-1999 0 <I>key2</I>"" 17002222</pre>
+<pre>	FEATURE f1 xyzd 1.00 1-jan-1999 2 <I>key3</I>""<a name="23230: 1head: 1.2 Combining License Files"></a><a name="18092: 1head: 1.3 Overriding Extended Hostid Checking"></a></pre>
+</ol></ul><p>
+This configuration requires an 
+lmgrd<I></I> and a vendor daemon because the concurrent 
+usage of the two licenses on the third FEATURE line are counted.<p>
+<a name="2.5"></a><h2>2.5  Decimal Format</h2>
+<p>
+The decimal format was introduced in v6. Users with older products can still use the 
+decimal format, but they will require a copy of the v6 lminstall command (which is part 
+of 
+<I>lmutil</I>). The lminstall utility allows the user to type in a decimal line, which is then 
+converted to the readable format, and saved in the specified location. The mixed node-locked floating example above looks as follows in decimal format:<p>
+<pre>xyzd-f1-01761-55296-37046-04544-00017-06551-18072-57346-18754-136</pre>
+<pre>xyzd-f1-01761-55296-37046-08896-00034-235</pre>
+<pre>xyzd-f1-00481-55296-17590-2</pre>
+</ol></ul><p>
+A simple demo license in readable format<p>
+<pre>	FEATURE f1 xyzd 1.00 1-jan-1999 0 key1 HOSTID=DEMO</pre>
+</ol></ul><p>
+converted to decimal:<p>
+<pre>	xyzd-f1-00737-55296-1825</pre>
+</ol></ul><p>
+Note that by default lminstall converts to v6 format. It can convert to a format 
+compatible with older versions by using lminstall -overfmt 2 (or 3, 4, 5 depending on 
+the 
+FLEXlm<I></I> version).<p>
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap1.htm">Previous Chapter</a>
+ * <a href="chap3.htm">Next Chapter</a>
+<p>

@@ -1,0 +1,16 @@
+#!/bin/sh
+date > run2.list
+OLD=tmp
+NEW=TMP
+SRC_DIR=./
+
+
+	for FILE in `find $SRC_DIR -name "*.v" -print`
+	do
+		sed -e "s!$OLD!$NEW!g" $FILE > $FILE.new
+		echo $FILE >> run2.list
+		mv $FILE $FILE.old
+		mv $FILE.new $FILE
+	done
+
+

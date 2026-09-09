@@ -1,0 +1,57 @@
+;-----------------------------------------------------------------------
+; This confidential and proprietary software may be used only as
+; authorised by a licensing agreement from ARM Limited
+;   (C) COPYRIGHT 2000 ARM Limited
+;       ALL RIGHTS RESERVED
+; The entire notice above must be reproduced on all authorised
+; copies and copies may only be made to the extent permitted
+; by a licensing agreement from ARM Limited.
+;-----------------------------------------------------------------------
+;
+; Version and Release Control Information:
+;
+; File Name              : libmap,v
+; File Revision          : 1.8
+;
+; Release Information    : PrimeCell(TM)-PL170-REL2v2
+;
+;-----------------------------------------------------------------------
+
+;-----------------------------------------------------------------------
+; Purpose : Logical to Physical library mappings for
+;           Model Technology Inc, ModelSim simulator
+;-----------------------------------------------------------------------
+
+[library]
+
+;; BusTalk functional verification testbench
+common      = $PERIPH/BusTalk/vhdl/common/work
+reader      = $PERIPH/BusTalk/vhdl/reader/work
+bid         = $PERIPH/BusTalk/vhdl/bid/work
+buswatcher  = $PERIPH/BusTalk/vhdl/buswatcher/work
+tbench      = $PERIPH/BusTalk/vhdl/tbench/work
+trickbox    = $PERIPH/BusTalk/vhdl/trickbox/work
+vr          = $PERIPH/BusTalk/vhdl/vr/work
+
+;; Select RTL (uut) or netlist (uutNetlist or uutNetlist_scan) block
+;; (uut = Unit Under Test)
+;; by commenting out all but one of the lines below:
+uut         = $PERIPH/vhdl/uut/work
+;uut         = $PERIPH/vhdl/uutNetlist/work
+;uut         = $PERIPH/vhdl/uutNetlist_scan/work
+
+;; Denali memory models
+M16M_x8     = $MODELS/denali/sdram/Mt16Mx8/vhdl_mti/Mt16Mx8Source
+M16M_x16    = $MODELS/denali/sdram/Mt16Mx16/vhdl_mti/Mt16Mx16Source
+N64M_x8     = $MODELS/denali/sdram/Nec64Mx8/vhdl_mti/Nec64Mx8Source
+N64M_x16    = $MODELS/denali/sdram/Nec64Mx16/vhdl_mti/Nec64Mx16Source
+N256M_x8    = $MODELS/denali/sdram/Nec256Mx8/vhdl_mti/Nec256Mx8Source
+N256M_x16   = $MODELS/denali/sdram/Nec256Mx16/vhdl_mti/Nec256Mx16Source
+
+;; Cell library simulation timing views
+libvhdl     = $CB25VITAL/zero/work
+
+;; Initialisation file for ModelSim
+others = $MODELTECH_ROOT/modelsim.ini
+
+;--------------------------------- End ---------------------------------

@@ -1,0 +1,238 @@
+STIL 1.0 {
+   Design P2000.9;
+}
+Header {
+   Title "DFT Compiler V-2004.06-SP2 STIL output";
+   Date "Fri Jul  1 13:43:42 2005";
+   History {
+   }
+}
+Signals {
+   "BistMode" In; "all_rxd_i" In; "all_t0_i" In; "all_t1_i" In; 
+   "clk" In; "in_xdat_a[0]" In; "in_xdat_a[1]" In; "in_xdat_a[2]" In; 
+   "in_xdat_a[3]" In; "in_xdat_a[4]" In; "in_xdat_a[5]" In; 
+   "in_xdat_a[6]" In; "in_xdat_a[7]" In; "int0_i" In; "int1_i" In; 
+   "rom_data_i[0]" In; "rom_data_i[1]" In; "rom_data_i[2]" In; 
+   "rom_data_i[3]" In; "rom_data_i[4]" In; "rom_data_i[5]" In; 
+   "rom_data_i[6]" In; "rom_data_i[7]" In; "rst_p" In; "scan_en" In; 
+   "test_mode" In;
+   "p1_io[0]" InOut; "p1_io[1]" InOut; "p1_io[2]" InOut; 
+   "p1_io[3]" InOut; "p1_io[4]" InOut; "p1_io[5]" InOut; 
+   "p1_io[6]" InOut; "p1_io[7]" InOut;
+   "BistFail" Out; "ErrMap" Out; "Finish" Out; "addr_xdat[0]" Out; 
+   "addr_xdat[1]" Out; "addr_xdat[2]" Out; "addr_xdat[3]" Out; 
+   "addr_xdat[4]" Out; "addr_xdat[5]" Out; "addr_xdat[6]" Out; 
+   "addr_xdat[7]" Out; "addr_xdat[8]" Out; "addr_xdat[9]" Out; 
+   "addr_xdat[10]" Out; "addr_xdat[11]" Out; "addr_xdat[12]" Out; 
+   "addr_xdat[13]" Out; "addr_xdat[14]" Out; "addr_xdat[15]" Out; 
+   "all_txd_o" Out; "clkb" Out; "en_xdat" Out; "out_xdat[0]" Out; 
+   "out_xdat[1]" Out; "out_xdat[2]" Out; "out_xdat[3]" Out; 
+   "out_xdat[4]" Out; "out_xdat[5]" Out; "out_xdat[6]" Out; 
+   "out_xdat[7]" Out; "rd_xdat" Out; "rom_adr_o[0]" Out; 
+   "rom_adr_o[1]" Out; "rom_adr_o[2]" Out; "rom_adr_o[3]" Out; 
+   "rom_adr_o[4]" Out; "rom_adr_o[5]" Out; "rom_adr_o[6]" Out; 
+   "rom_adr_o[7]" Out; "rom_adr_o[8]" Out; "rom_adr_o[9]" Out; 
+   "rom_adr_o[10]" Out; "rom_adr_o[11]" Out; "rom_adr_o[12]" Out; 
+   "rom_adr_o[13]" Out; "rom_adr_o[14]" Out; "rom_adr_o[15]" Out; 
+   "wr_xdat_d1" Out;
+} 
+SignalGroups {
+   "all_bidirectionals" =  '"p1_io[0]" + "p1_io[1]" + "p1_io[2]" + 
+   "p1_io[3]" + "p1_io[4]" + "p1_io[5]" + "p1_io[6]" + "p1_io[7]"';
+    // #signals=8
+   "all_inputs" =  '"BistMode" + "all_rxd_i" + "all_t0_i" + "all_t1_i" + 
+   "clk" + "in_xdat_a[0]" + "in_xdat_a[1]" + "in_xdat_a[2]" + 
+   "in_xdat_a[3]" + "in_xdat_a[4]" + "in_xdat_a[5]" + "in_xdat_a[6]" + 
+   "in_xdat_a[7]" + "int0_i" + "int1_i" + "rom_data_i[0]" + 
+   "rom_data_i[1]" + "rom_data_i[2]" + "rom_data_i[3]" + 
+   "rom_data_i[4]" + "rom_data_i[5]" + "rom_data_i[6]" + 
+   "rom_data_i[7]" + "rst_p" + "scan_en" + "test_mode"'; // #signals=26
+   "all_outputs" =  '"BistFail" + "ErrMap" + "Finish" + "addr_xdat[0]" + 
+   "addr_xdat[1]" + "addr_xdat[2]" + "addr_xdat[3]" + "addr_xdat[4]" + 
+   "addr_xdat[5]" + "addr_xdat[6]" + "addr_xdat[7]" + "addr_xdat[8]" + 
+   "addr_xdat[9]" + "addr_xdat[10]" + "addr_xdat[11]" + 
+   "addr_xdat[12]" + "addr_xdat[13]" + "addr_xdat[14]" + 
+   "addr_xdat[15]" + "all_txd_o" + "clkb" + "en_xdat" + "out_xdat[0]" + 
+   "out_xdat[1]" + "out_xdat[2]" + "out_xdat[3]" + "out_xdat[4]" + 
+   "out_xdat[5]" + "out_xdat[6]" + "out_xdat[7]" + "rd_xdat" + 
+   "rom_adr_o[0]" + "rom_adr_o[1]" + "rom_adr_o[2]" + "rom_adr_o[3]" + 
+   "rom_adr_o[4]" + "rom_adr_o[5]" + "rom_adr_o[6]" + "rom_adr_o[7]" + 
+   "rom_adr_o[8]" + "rom_adr_o[9]" + "rom_adr_o[10]" + 
+   "rom_adr_o[11]" + "rom_adr_o[12]" + "rom_adr_o[13]" + 
+   "rom_adr_o[14]" + "rom_adr_o[15]" + "wr_xdat_d1"'; // #signals=48
+   "all_ports" =  '"all_inputs" + "all_outputs" + "all_bidirectionals" '; // #signals=82
+   "_pi" =  '"all_inputs" + "all_bidirectionals"'; // #signals=34
+   "_io" =  '"p1_io[0]" + "p1_io[1]" + "p1_io[2]" + "p1_io[3]" + 
+   "p1_io[4]" + "p1_io[5]" + "p1_io[6]" + "p1_io[7]"'; // #signals=8
+   "_po" =  '"all_outputs" + "all_bidirectionals" '; // #signals=56
+   "_si" =  '"rom_data_i[0]" + "rom_data_i[1]" + "rom_data_i[2]" + 
+   "rom_data_i[3]" + "rom_data_i[4]" + "rom_data_i[5]" + 
+   "rom_data_i[6]" + "rom_data_i[7]" + "in_xdat_a[0]" + 
+   "in_xdat_a[1]" + "in_xdat_a[2]" + "in_xdat_a[3]" + "in_xdat_a[4]" + 
+   "in_xdat_a[5]" + "in_xdat_a[6]" + "in_xdat_a[7]"'; // #signals=16
+   "_so" =  '"rom_adr_o[0]" + "rom_adr_o[1]" + "rom_adr_o[2]" + 
+   "rom_adr_o[3]" + "rom_adr_o[4]" + "rom_adr_o[5]" + "rom_adr_o[6]" + 
+   "rom_adr_o[7]" + "rom_adr_o[8]" + "rom_adr_o[9]" + "rom_adr_o[10]" + 
+   "rom_adr_o[11]" + "rom_adr_o[12]" + "rom_adr_o[13]" + 
+   "rom_adr_o[14]" + "rom_adr_o[15]"'; // #signals=16
+} 
+ScanStructures {
+   ScanChain "c0" {
+      ScanLength 37;
+      ScanIn "rom_data_i[0]";
+      ScanOut "rom_adr_o[0]";
+   } 
+   ScanChain "c1" {
+      ScanLength 2;
+      ScanIn "rom_data_i[1]";
+      ScanOut "rom_adr_o[1]";
+   } 
+   ScanChain "c2" {
+      ScanLength 37;
+      ScanIn "rom_data_i[2]";
+      ScanOut "rom_adr_o[2]";
+   } 
+   ScanChain "c3" {
+      ScanLength 37;
+      ScanIn "rom_data_i[3]";
+      ScanOut "rom_adr_o[3]";
+   } 
+   ScanChain "c4" {
+      ScanLength 37;
+      ScanIn "rom_data_i[4]";
+      ScanOut "rom_adr_o[4]";
+   } 
+   ScanChain "c5" {
+      ScanLength 36;
+      ScanIn "rom_data_i[5]";
+      ScanOut "rom_adr_o[5]";
+   } 
+   ScanChain "c6" {
+      ScanLength 36;
+      ScanIn "rom_data_i[6]";
+      ScanOut "rom_adr_o[6]";
+   } 
+   ScanChain "c7" {
+      ScanLength 36;
+      ScanIn "rom_data_i[7]";
+      ScanOut "rom_adr_o[7]";
+   } 
+   ScanChain "c8" {
+      ScanLength 36;
+      ScanIn "in_xdat_a[0]";
+      ScanOut "rom_adr_o[8]";
+   } 
+   ScanChain "c9" {
+      ScanLength 36;
+      ScanIn "in_xdat_a[1]";
+      ScanOut "rom_adr_o[9]";
+   } 
+   ScanChain "c10" {
+      ScanLength 36;
+      ScanIn "in_xdat_a[2]";
+      ScanOut "rom_adr_o[10]";
+   } 
+   ScanChain "c11" {
+      ScanLength 36;
+      ScanIn "in_xdat_a[3]";
+      ScanOut "rom_adr_o[11]";
+   } 
+   ScanChain "c12" {
+      ScanLength 36;
+      ScanIn "in_xdat_a[4]";
+      ScanOut "rom_adr_o[12]";
+   } 
+   ScanChain "c13" {
+      ScanLength 36;
+      ScanIn "in_xdat_a[5]";
+      ScanOut "rom_adr_o[13]";
+   } 
+   ScanChain "c14" {
+      ScanLength 36;
+      ScanIn "in_xdat_a[6]";
+      ScanOut "rom_adr_o[14]";
+   } 
+   ScanChain "c15" {
+      ScanLength 36;
+      ScanIn "in_xdat_a[7]";
+      ScanOut "rom_adr_o[15]";
+   } 
+} 
+Timing {
+   WaveformTable "_default_WFT_" {
+      Period '100ns';
+      Waveforms {
+         "all_inputs" { 0 { '0ns' D; } }
+         "all_inputs" { 1 { '0ns' U; } }
+         "all_inputs" { Z { '0ns' Z; } }
+         "all_inputs" { N { '0ns' N; } }
+         "all_bidirectionals" { 0 { '0ns' D; } }
+         "all_bidirectionals" { 1 { '0ns' U; } }
+         "all_bidirectionals" { N { '0ns' N; } }
+         "all_bidirectionals" { Z { '0ns' Z; } }
+         "all_bidirectionals" { T { '0ns' Z; '80ns' T; } }
+         "all_bidirectionals" { X { '0ns' Z; '80ns' X; } }
+         "all_bidirectionals" { H { '0ns' Z; '80ns' H; } }
+         "all_bidirectionals" { L { '0ns' Z; '80ns' L; } }
+         "all_outputs" { X { '0ns' X; } }
+         "all_outputs" { H { '0ns' X; '80ns' H; } }
+         "all_outputs" { T { '0ns' X; '80ns' T; } }
+         "all_outputs" { L { '0ns' X; '80ns' L; } }
+         "clk" { P { '0ns' D; '45ns' U; '55ns' D; } }
+         "rst_p" { P { '0ns' U; '45ns' D; '55ns' U; } }
+      }
+   }
+} 
+PatternBurst "__burst__" {
+   PatList {
+      "__pattern__" {
+      }
+   }
+} 
+PatternExec {
+   PatternBurst "__burst__";
+} 
+Procedures {
+   "load_unload" {
+      W "_default_WFT_";
+      V {  "BistMode"=0; "clk"=0; "rst_p"=1; "scan_en"=1; "test_mode"=1;
+       "p1_io[0]"=Z; "p1_io[1]"=Z; "p1_io[2]"=Z; "p1_io[3]"=Z;
+       "p1_io[4]"=Z; "p1_io[5]"=Z; "p1_io[6]"=Z; "p1_io[7]"=Z;
+       "_so"=################; } 
+      Shift { 
+         W "_default_WFT_";
+         V {  "BistMode"=0; "clk"=P; "rst_p"=1; "scan_en"=1;
+       "test_mode"=1; "_so"=################; "_si"=################; } 
+   }
+}
+   "capture" {
+      W "_default_WFT_";
+      F {  "test_mode"=1; "BistMode"=0; } 
+      V { "_pi"=\r34 #; "_po"=\r56 #; }
+   }
+   "capture_clk" {
+      W "_default_WFT_";
+      F {  "test_mode"=1; "BistMode"=0; } 
+      "forcePI": V { "_pi"=\r34 #; }
+      "measurePO": V { "_po"=\r56 #; }
+      "pulse": V { "clk"=P; }
+   }
+   "capture_rst_p" {
+      W "_default_WFT_";
+      F {  "test_mode"=1; "BistMode"=0; } 
+      "forcePI": V { "_pi"=\r34 #; }
+      "measurePO": V { "_po"=\r56 #; }
+      "pulse": V { "rst_p"=P; }
+   }
+} 
+MacroDefs {
+   "test_setup" {
+      W "_default_WFT_";
+      V {  "BistMode"=0; "clk"=0; "rst_p"=1; "test_mode"=1;
+       "p1_io[0]"=Z; "p1_io[1]"=Z; "p1_io[2]"=Z; "p1_io[3]"=Z;
+       "p1_io[4]"=Z; "p1_io[5]"=Z; "p1_io[6]"=Z; "p1_io[7]"=Z; } 
+      V {  "BistMode"=0; "clk"=0; "rst_p"=1; "test_mode"=1;
+       "p1_io[0]"=Z; "p1_io[1]"=Z; "p1_io[2]"=Z; "p1_io[3]"=Z;
+       "p1_io[4]"=Z; "p1_io[5]"=Z; "p1_io[6]"=Z; "p1_io[7]"=Z; } 
+   }
+} 

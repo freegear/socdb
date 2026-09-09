@@ -1,0 +1,1396 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Sci
+Version: 2000.11-SP1
+Date   : Thu Nov 29 13:48:44 2001
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Sci' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0SciRevAnd               0      0     1     0      0     0     0      6   0.00%
+u1SciRevAnd               0      0     0     0      0     0     0      6   0.00%
+u2SciRevAnd               0      0     0     0      0     0     0      6   0.00%
+u3SciRevAnd               0      0     1     0      0     0     0      6   0.00%
+uSciApbif               804      0     4     0      0     0     0   7306  11.01%
+uSciCntl                226      0     0     0      0     0     0   2044  11.06%
+uSciDMA                   8      0     0     0      0     0     0     96   8.33%
+uSciIntGen               24      0     0     0      0     0     0    216  11.11%
+uSciRegBlk              699      0     0     0      0     0     0   6490  10.77%
+uSciRegBlkUpdate        746      0     0     0      0     0     0   6682  11.16%
+uSciRxFIFO/uSciRxFCntl
+                         86      0     0     0      1     0     0    778  11.05%
+uSciRxFIFO/uSciRxRegFile
+                        266      0     0     0      0     0     0   2442  10.89%
+uSciRxFIFO              352      0     0     0      1     0     0   3220  10.93%
+uSciSynctoPCLK          118      0     0     0      1     0     0   1072  11.01%
+uSciSynctoSCICLK        194      0     0     0      0     0     0   1788  10.85%
+uSciTest                102      0     0     0      0     0     0    966  10.56%
+uSciTxFIFO/uSciTxFCntl
+                         81      0     0     0      0     0     0    718  11.28%
+uSciTxFIFO/uSciTxRegFile
+                        234      0     0     0      0     0     0   2132  10.98%
+uSciTxFIFO              315      0     0     0      0     0     0   2850  11.05%
+uSciTxRx               1298      0     0     0      1     0     0  11722  11.07%
+Sci                    4905      0     6     0      3     0     0  44666  10.98%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Sci
+Version: 2000.11-SP1
+Date   : Thu Nov 29 13:48:48 2001
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Sci
+Version: 2000.11-SP1
+Date   : Thu Nov 29 13:48:48 2001
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain #1 (SCANINPCLK --> SCANOUTPCLK) contains 635 cells:
+
+  SCANINPCLK	->
+  uSciTest/DelSCITDRrd_reg (*)	->
+  uSciTest/SCIITOP2_reg[0]	->
+  uSciTest/SCIITOP2_reg[1]	->
+  uSciTest/SCIITOP2_reg[2]	->
+  uSciTest/SCIITOP2_reg[3]	->
+  uSciTest/SCIITOP2_reg[4]	->
+  uSciTest/SCIITOP2_reg[5]	->
+  uSciTest/SCIITOP2_reg[6]	->
+  uSciTest/SCIITOP2_reg[7]	->
+  uSciTest/SCIITOP2_reg[8]	->
+  uSciTest/SCIITOP2_reg[9]	->
+  uSciTest/SCIITOP2_reg[10]	->
+  uSciTest/SCIITOP2_reg[11]	->
+  uSciTest/SCIITOP2_reg[12]	->
+  uSciTest/SCIITOP1_reg[0]	->
+  uSciTest/SCIITOP1_reg[1]	->
+  uSciTest/SCIITOP1_reg[2]	->
+  uSciTest/SCIITOP1_reg[3]	->
+  uSciTest/SCIITOP1_reg[4]	->
+  uSciTest/SCIITOP1_reg[5]	->
+  uSciTest/SCIITOP1_reg[6]	->
+  uSciTest/SCIITOP1_reg[7]	->
+  uSciTest/SCIITOP1_reg[8]	->
+  uSciTest/SCIITOP1_reg[9]	->
+  uSciTest/SCIITOP1_reg[10]	->
+  uSciTest/SCIITOP1_reg[11]	->
+  uSciTest/SCIITOP1_reg[12]	->
+  uSciTest/SCIITOP1_reg[13]	->
+  uSciTest/SCIITOP1_reg[14]	->
+  uSciTest/SCIITOP1_reg[15]	->
+  uSciTest/SCIITIP_reg[4]	->
+  uSciTest/SCIITIP_reg[5]	->
+  uSciTest/SCITCR_reg[0]	->
+  uSciTest/SCITCR_reg[1] (*)	->
+  uSciDMA/TXDMABREQ_reg (*)	->
+  uSciDMA/RXDMABREQ_reg	->
+  uSciDMA/RXDMASREQ_reg	->
+  uSciDMA/TXDMASREQ_reg (*)	->
+  uSciSynctoPCLK/ATRSTOUTRISSync1_reg	->
+  uSciSynctoPCLK/RDATASync1_reg	->
+  uSciSynctoPCLK/VCCENSync_reg	->
+  uSciSynctoPCLK/RTOUTMISSync1_reg	->
+  uSciSynctoPCLK/CARDUPMISSync1_reg	->
+  uSciSynctoPCLK/RXDMACLRSync_reg	->
+  uSciSynctoPCLK/CARDOUTRISSync1_reg	->
+  uSciSynctoPCLK/CARDDNRISSync_reg	->
+  uSciSynctoPCLK/CHTOUTMISSync_reg	->
+  uSciSynctoPCLK/CLKSTPMISSync_reg	->
+  uSciSynctoPCLK/ATRDTOUTRISSync1_reg	->
+  uSciSynctoPCLK/RCLKSync_reg	->
+  uSciSynctoPCLK/CLKACTMISSync1_reg	->
+  uSciSynctoPCLK/CLKACTRISSync_reg	->
+  uSciSynctoPCLK/TXDMACLRSync1_reg	->
+  uSciSynctoPCLK/CARDINMISSync_reg	->
+  uSciSynctoPCLK/nDATAOUTENSync_reg	->
+  uSciSynctoPCLK/nCLKOUTENSync1_reg	->
+  uSciSynctoPCLK/TXERRMISSync_reg	->
+  uSciSynctoPCLK/TXERRRISSync1_reg	->
+  uSciSynctoPCLK/RTLdDoneSync1_reg	->
+  uSciSynctoPCLK/BLKTOUTRISSync_reg	->
+  uSciSynctoPCLK/BLKTOUTRISSync1_reg	->
+  uSciSynctoPCLK/CHTOUTRISSync1_reg	->
+  uSciSynctoPCLK/CARDOUTMISSync_reg	->
+  uSciSynctoPCLK/RORMISSync_reg	->
+  uSciSynctoPCLK/nDATAOUTENSync1_reg	->
+  uSciSynctoPCLK/nCLKENSync_reg	->
+  uSciSynctoPCLK/TXFRdPtrIncSync_reg	->
+  uSciSynctoPCLK/CARDINMISSync1_reg	->
+  uSciSynctoPCLK/nCARDRSTSync1_reg	->
+  uSciSynctoPCLK/CARDDNMISSync1_reg	->
+  uSciSynctoPCLK/ATRDTOUTRISSync_reg	->
+  uSciSynctoPCLK/CLKSTPRISSync1_reg	->
+  uSciSynctoPCLK/RTOUTRISSync_reg	->
+  uSciSynctoPCLK/TXDMACLRSync_reg	->
+  uSciSynctoPCLK/RORMISSync1_reg	->
+  uSciSynctoPCLK/CARDUPMISSync_reg	->
+  uSciSynctoPCLK/CARDPRESENTSync1_reg	->
+  uSciSynctoPCLK/ATRSTOUTRISSync_reg	->
+  uSciSynctoPCLK/RTOUTMISSync_reg	->
+  uSciSynctoPCLK/CARDDNRISSync1_reg	->
+  uSciSynctoPCLK/DataoutEnSync_reg	->
+  uSciSynctoPCLK/nCLKOUTENSync_reg	->
+  uSciSynctoPCLK/FCBSync1_reg	->
+  uSciSynctoPCLK/RxFWrSync1_reg	->
+  uSciSynctoPCLK/CARDINRISSync1_reg	->
+  uSciSynctoPCLK/RTLdDoneSync_reg	->
+  uSciSynctoPCLK/ATRSTOUTMISSync_reg	->
+  uSciSynctoPCLK/BLKTOUTMISSync1_reg	->
+  uSciSynctoPCLK/TXERRMISSync1_reg	->
+  uSciSynctoPCLK/CHTOUTMISSync1_reg	->
+  uSciSynctoPCLK/CARDUPRISSync_reg	->
+  uSciSynctoPCLK/CARDINRISSync_reg	->
+  uSciSynctoPCLK/RCLKSync1_reg	->
+  uSciSynctoPCLK/TXERRRISSync_reg	->
+  uSciSynctoPCLK/BLKTOUTMISSync_reg	->
+  uSciSynctoPCLK/RORRISSync_reg	->
+  uSciSynctoPCLK/RDATASync_reg	->
+  uSciSynctoPCLK/CARDOUTRISSync_reg	->
+  uSciSynctoPCLK/RORRISSync1_reg	->
+  uSciSynctoPCLK/ATRDTOUTMISSync_reg	->
+  uSciSynctoPCLK/CLKSTPMISSync1_reg	->
+  uSciSynctoPCLK/ATRDTOUTMISSync1_reg	->
+  uSciSynctoPCLK/CHTOUTRISSync_reg	->
+  uSciSynctoPCLK/nCLKENSync1_reg	->
+  uSciSynctoPCLK/CARDOUTMISSync1_reg	->
+  uSciSynctoPCLK/CARDUPRISSync1_reg	->
+  uSciSynctoPCLK/RTOUTRISSync1_reg	->
+  uSciSynctoPCLK/nDATAENSync1_reg	->
+  uSciSynctoPCLK/RxFWrSync_reg	->
+  uSciSynctoPCLK/nDATAENSync_reg	->
+  uSciSynctoPCLK/ATRSTOUTMISSync1_reg	->
+  uSciSynctoPCLK/CLKACTMISSync_reg	->
+  uSciSynctoPCLK/CLKACTRISSync1_reg	->
+  uSciSynctoPCLK/CARDPRESENTSync_reg	->
+  uSciSynctoPCLK/nCARDRSTSync_reg	->
+  uSciSynctoPCLK/FCBSync_reg	->
+  uSciSynctoPCLK/RXDMACLRSync1_reg	->
+  uSciSynctoPCLK/CLKOUTSync1_reg	->
+  uSciSynctoPCLK/VCCENSync1_reg	->
+  uSciSynctoPCLK/CARDDNMISSync_reg	->
+  uSciSynctoPCLK/CLKOUTSync_reg	->
+  uSciSynctoPCLK/DataoutEnSync1_reg	->
+  uSciSynctoPCLK/TXFRdPtrIncSync1_reg	->
+  uSciSynctoPCLK/CLKSTPRISSync_reg	->
+  uSciSynctoPCLK/ClkoutEnSync1_reg	->
+  uSciSynctoPCLK/ClkoutEnSync_reg	->
+  uSciRxFIFO/uSciRxRegFile/RxReg7_reg[0]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg7_reg[1]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg7_reg[2]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg7_reg[3]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg7_reg[4]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg7_reg[5]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg7_reg[6]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg7_reg[7]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg7_reg[8]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg6_reg[0]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg6_reg[1]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg6_reg[2]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg6_reg[3]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg6_reg[4]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg6_reg[5]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg6_reg[6]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg6_reg[7]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg6_reg[8]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg5_reg[0] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg5_reg[1] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg5_reg[2] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg5_reg[3] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg5_reg[4]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg5_reg[5] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg5_reg[6] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg5_reg[7] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg5_reg[8] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg4_reg[0] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg4_reg[1] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg4_reg[2] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg4_reg[3] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg4_reg[4] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg4_reg[5] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg4_reg[6] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg4_reg[7] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg4_reg[8] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg3_reg[0] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg3_reg[1] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg3_reg[2] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg3_reg[3] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg3_reg[4]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg3_reg[5] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg3_reg[6] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg3_reg[7] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg3_reg[8] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg2_reg[0] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg2_reg[1] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg2_reg[2] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg2_reg[3] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg2_reg[4] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg2_reg[5] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg2_reg[6] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg2_reg[7] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg2_reg[8] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg1_reg[0]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg1_reg[1]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg1_reg[2]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg1_reg[3]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg1_reg[4] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg1_reg[5]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg1_reg[6]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg1_reg[7]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg1_reg[8]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg0_reg[0] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg0_reg[1] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg0_reg[2] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg0_reg[3] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg0_reg[4]	->
+  uSciRxFIFO/uSciRxRegFile/RxReg0_reg[5] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg0_reg[6] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg0_reg[7] (*)	->
+  uSciRxFIFO/uSciRxRegFile/RxReg0_reg[8] (*)	->
+  uSciRxFIFO/uSciRxFCntl/RXFE_reg	->
+  uSciRxFIFO/uSciRxFCntl/DelRxFWrSync_reg	->
+  uSciRxFIFO/uSciRxFCntl/RXFRd_reg	->
+  uSciRxFIFO/uSciRxFCntl/RXRIS_reg	->
+  uSciRxFIFO/uSciRxFCntl/Wrap_reg (*)	->
+  uSciRxFIFO/uSciRxFCntl/RXFF_reg	->
+  uSciRxFIFO/uSciRxFCntl/DelRTLdDoneSync_reg	->
+  uSciRxFIFO/uSciRxFCntl/RxRd_reg	->
+  uSciRxFIFO/uSciRxFCntl/RORRIS_reg	->
+  uSciRxFIFO/uSciRxFCntl/RdPtr_reg[0] (*)	->
+  uSciRxFIFO/uSciRxFCntl/RdPtr_reg[1] (*)	->
+  uSciRxFIFO/uSciRxFCntl/RdPtr_reg[2] (*)	->
+  uSciRxFIFO/uSciRxFCntl/WrPtr_reg[0] (*)	->
+  uSciRxFIFO/uSciRxFCntl/WrPtr_reg[1] (*)	->
+  uSciRxFIFO/uSciRxFCntl/WrPtr_reg[2] (*)	->
+  uSciRxFIFO/uSciRxFCntl/RTLd_reg	->
+  uSciTxFIFO/uSciTxRegFile/TxReg7_reg[0]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg7_reg[1]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg7_reg[2]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg7_reg[3]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg7_reg[4]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg7_reg[5]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg7_reg[6]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg7_reg[7]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg6_reg[0]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg6_reg[1]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg6_reg[2]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg6_reg[3]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg6_reg[4]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg6_reg[5]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg6_reg[6]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg6_reg[7]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg5_reg[0] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg5_reg[1] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg5_reg[2] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg5_reg[3] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg5_reg[4] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg5_reg[5] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg5_reg[6] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg5_reg[7] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg4_reg[0] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg4_reg[1] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg4_reg[2] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg4_reg[3] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg4_reg[4] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg4_reg[5] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg4_reg[6] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg4_reg[7] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg3_reg[0] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg3_reg[1] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg3_reg[2] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg3_reg[3] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg3_reg[4] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg3_reg[5] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg3_reg[6] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg3_reg[7] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg2_reg[0] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg2_reg[1] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg2_reg[2] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg2_reg[3] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg2_reg[4] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg2_reg[5] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg2_reg[6] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg2_reg[7] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg1_reg[0]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg1_reg[1]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg1_reg[2]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg1_reg[3]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg1_reg[4]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg1_reg[5]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg1_reg[6]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg1_reg[7]	->
+  uSciTxFIFO/uSciTxRegFile/TxReg0_reg[0] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg0_reg[1] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg0_reg[2] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg0_reg[3] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg0_reg[4] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg0_reg[5] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg0_reg[6] (*)	->
+  uSciTxFIFO/uSciTxRegFile/TxReg0_reg[7] (*)	->
+  uSciTxFIFO/uSciTxFCntl/TXFRPIncDone_reg	->
+  uSciTxFIFO/uSciTxFCntl/TXRIS_reg (*)	->
+  uSciTxFIFO/uSciTxFCntl/IntTXFRPIncDone_reg	->
+  uSciTxFIFO/uSciTxFCntl/DelRdPtrInc_reg	->
+  uSciTxFIFO/uSciTxFCntl/Wrap_reg (*)	->
+  uSciTxFIFO/uSciTxFCntl/TXFF_reg	->
+  uSciTxFIFO/uSciTxFCntl/RdPtr_reg[0] (*)	->
+  uSciTxFIFO/uSciTxFCntl/RdPtr_reg[2] (*)	->
+  uSciTxFIFO/uSciTxFCntl/WrPtr_reg[0]	->
+  uSciTxFIFO/uSciTxFCntl/WrPtr_reg[1]	->
+  uSciTxFIFO/uSciTxFCntl/WrPtr_reg[2]	->
+  uSciTxFIFO/uSciTxFCntl/TxDataAvlbl_reg	->
+  uSciTxFIFO/uSciTxFCntl/RdPtr_reg[1] (*)	->
+  uSciRegBlk/CARDINIC_reg (*)	->
+  uSciRegBlk/FINISHWr_reg	->
+  uSciRegBlk/WRESETWr_reg	->
+  uSciRegBlk/VALUEUpdate_reg	->
+  uSciRegBlk/TXERRIC_reg (*)	->
+  uSciRegBlk/STOPTIMEUpdate_reg	->
+  uSciRegBlk/SYNCACTUpd_reg	->
+  uSciRegBlk/CARDOUTIC_reg (*)	->
+  uSciRegBlk/STARTTIMEUpd_reg	->
+  uSciRegBlk/CLKSTPIC_reg (*)	->
+  uSciRegBlk/ATIMEUpdate_reg	->
+  uSciRegBlk/CLKICCUpdate_reg	->
+  uSciRegBlk/CHTIMEUpdate_reg	->
+  uSciRegBlk/RTOUTIC_reg (*)	->
+  uSciRegBlk/CHTOUTIC_reg (*)	->
+  uSciRegBlk/ATRDTIMEUpdate_reg	->
+  uSciRegBlk/CARDDNIC_reg (*)	->
+  uSciRegBlk/BLKTOUTIC_reg (*)	->
+  uSciRegBlk/RORIC_reg (*)	->
+  uSciRegBlk/ATRSTIMEUpdate_reg	->
+  uSciRegBlk/BLKGUARDUpdate_reg	->
+  uSciRegBlk/RETRYUpdate_reg	->
+  uSciRegBlk/ATRDTOUTIC_reg (*)	->
+  uSciRegBlk/BAUDUpdate_reg	->
+  uSciRegBlk/CLKACTIC_reg (*)	->
+  uSciRegBlk/ATRSTOUTIC_reg (*)	->
+  uSciRegBlk/DTIMEUpdate_reg	->
+  uSciRegBlk/RXTIMEUpdate_reg	->
+  uSciRegBlk/BLKTIMEUpdate_reg	->
+  uSciRegBlk/STARTUPWr_reg	->
+  uSciRegBlk/CHGUARDUpdate_reg	->
+  uSciRegBlk/STABLEUpdate_reg	->
+  uSciRegBlk/SCISYNCTX_reg[0]	->
+  uSciRegBlk/SCISYNCTX_reg[1]	->
+  uSciRegBlk/SCISYNCTX_reg[2]	->
+  uSciRegBlk/SCISYNCTX_reg[3]	->
+  uSciRegBlk/SCISYNCTX_reg[4]	->
+  uSciRegBlk/SCISYNCTX_reg[5]	->
+  uSciRegBlk/SCIBLKGUARD_reg[0]	->
+  uSciRegBlk/SCIBLKGUARD_reg[1]	->
+  uSciRegBlk/SCIBLKGUARD_reg[2]	->
+  uSciRegBlk/SCIBLKGUARD_reg[3]	->
+  uSciRegBlk/SCIBLKGUARD_reg[4]	->
+  uSciRegBlk/SCIBLKGUARD_reg[5]	->
+  uSciRegBlk/SCIBLKGUARD_reg[6]	->
+  uSciRegBlk/SCIBLKGUARD_reg[7]	->
+  uSciRegBlk/SCICHGUARD_reg[0]	->
+  uSciRegBlk/SCICHGUARD_reg[1]	->
+  uSciRegBlk/SCICHGUARD_reg[2]	->
+  uSciRegBlk/SCICHGUARD_reg[3]	->
+  uSciRegBlk/SCICHGUARD_reg[4]	->
+  uSciRegBlk/SCICHGUARD_reg[5]	->
+  uSciRegBlk/SCICHGUARD_reg[6]	->
+  uSciRegBlk/SCICHGUARD_reg[7]	->
+  uSciRegBlk/SCIVALUE_reg[0]	->
+  uSciRegBlk/SCIVALUE_reg[1]	->
+  uSciRegBlk/SCIVALUE_reg[2]	->
+  uSciRegBlk/SCIVALUE_reg[3]	->
+  uSciRegBlk/SCIVALUE_reg[4]	->
+  uSciRegBlk/SCIVALUE_reg[5]	->
+  uSciRegBlk/SCIVALUE_reg[6]	->
+  uSciRegBlk/SCIVALUE_reg[7]	->
+  uSciRegBlk/SCIBAUD_reg[0]	->
+  uSciRegBlk/SCIBAUD_reg[1]	->
+  uSciRegBlk/SCIBAUD_reg[2]	->
+  uSciRegBlk/SCIBAUD_reg[3]	->
+  uSciRegBlk/SCIBAUD_reg[4]	->
+  uSciRegBlk/SCIBAUD_reg[5]	->
+  uSciRegBlk/SCIBAUD_reg[6]	->
+  uSciRegBlk/SCIBAUD_reg[7]	->
+  uSciRegBlk/SCIBAUD_reg[8]	->
+  uSciRegBlk/SCIBAUD_reg[9]	->
+  uSciRegBlk/SCIBAUD_reg[10]	->
+  uSciRegBlk/SCIBAUD_reg[11]	->
+  uSciRegBlk/SCIBAUD_reg[12]	->
+  uSciRegBlk/SCIBAUD_reg[13]	->
+  uSciRegBlk/SCIBAUD_reg[14]	->
+  uSciRegBlk/SCIBAUD_reg[15]	->
+  uSciRegBlk/SCICLKICC_reg[0]	->
+  uSciRegBlk/SCICLKICC_reg[1]	->
+  uSciRegBlk/SCICLKICC_reg[2]	->
+  uSciRegBlk/SCICLKICC_reg[3]	->
+  uSciRegBlk/SCICLKICC_reg[4]	->
+  uSciRegBlk/SCICLKICC_reg[5]	->
+  uSciRegBlk/SCICLKICC_reg[6]	->
+  uSciRegBlk/SCICLKICC_reg[7]	->
+  uSciRegBlk/SCICHTIMEMS_reg[0]	->
+  uSciRegBlk/SCICHTIMEMS_reg[1]	->
+  uSciRegBlk/SCICHTIMEMS_reg[2]	->
+  uSciRegBlk/SCICHTIMEMS_reg[3]	->
+  uSciRegBlk/SCICHTIMEMS_reg[4]	->
+  uSciRegBlk/SCICHTIMEMS_reg[5]	->
+  uSciRegBlk/SCICHTIMEMS_reg[6]	->
+  uSciRegBlk/SCICHTIMEMS_reg[7]	->
+  uSciRegBlk/SCICHTIMEMS_reg[8]	->
+  uSciRegBlk/SCICHTIMEMS_reg[9]	->
+  uSciRegBlk/SCICHTIMEMS_reg[10]	->
+  uSciRegBlk/SCICHTIMEMS_reg[11]	->
+  uSciRegBlk/SCICHTIMEMS_reg[12]	->
+  uSciRegBlk/SCICHTIMEMS_reg[13]	->
+  uSciRegBlk/SCICHTIMEMS_reg[14]	->
+  uSciRegBlk/SCICHTIMEMS_reg[15]	->
+  uSciRegBlk/SCICHTIMELS_reg[0]	->
+  uSciRegBlk/SCICHTIMELS_reg[1]	->
+  uSciRegBlk/SCICHTIMELS_reg[2]	->
+  uSciRegBlk/SCICHTIMELS_reg[3]	->
+  uSciRegBlk/SCICHTIMELS_reg[4]	->
+  uSciRegBlk/SCICHTIMELS_reg[5]	->
+  uSciRegBlk/SCICHTIMELS_reg[6]	->
+  uSciRegBlk/SCICHTIMELS_reg[7]	->
+  uSciRegBlk/SCICHTIMELS_reg[8]	->
+  uSciRegBlk/SCICHTIMELS_reg[9]	->
+  uSciRegBlk/SCICHTIMELS_reg[10]	->
+  uSciRegBlk/SCICHTIMELS_reg[11]	->
+  uSciRegBlk/SCICHTIMELS_reg[12]	->
+  uSciRegBlk/SCICHTIMELS_reg[13]	->
+  uSciRegBlk/SCICHTIMELS_reg[14]	->
+  uSciRegBlk/SCICHTIMELS_reg[15]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[0]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[1]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[2]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[3]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[4]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[5]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[6]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[7]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[8]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[9]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[10]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[11]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[12]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[13]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[14]	->
+  uSciRegBlk/SCIBLKTIMEMS_reg[15]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[0]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[1]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[2]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[3]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[4]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[5]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[6]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[7]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[8]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[9]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[10]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[11]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[12]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[13]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[14]	->
+  uSciRegBlk/SCIBLKTIMELS_reg[15]	->
+  uSciRegBlk/SCISTARTTIME_reg[0]	->
+  uSciRegBlk/SCISTARTTIME_reg[1]	->
+  uSciRegBlk/SCISTARTTIME_reg[2]	->
+  uSciRegBlk/SCISTARTTIME_reg[3]	->
+  uSciRegBlk/SCISTARTTIME_reg[4]	->
+  uSciRegBlk/SCISTARTTIME_reg[5]	->
+  uSciRegBlk/SCISTARTTIME_reg[6]	->
+  uSciRegBlk/SCISTARTTIME_reg[7]	->
+  uSciRegBlk/SCISTARTTIME_reg[8]	->
+  uSciRegBlk/SCISTARTTIME_reg[9]	->
+  uSciRegBlk/SCISTARTTIME_reg[10]	->
+  uSciRegBlk/SCISTARTTIME_reg[11]	->
+  uSciRegBlk/SCISTOPTIME_reg[0]	->
+  uSciRegBlk/SCISTOPTIME_reg[1]	->
+  uSciRegBlk/SCISTOPTIME_reg[2]	->
+  uSciRegBlk/SCISTOPTIME_reg[3]	->
+  uSciRegBlk/SCISTOPTIME_reg[4]	->
+  uSciRegBlk/SCISTOPTIME_reg[5]	->
+  uSciRegBlk/SCISTOPTIME_reg[6]	->
+  uSciRegBlk/SCISTOPTIME_reg[7]	->
+  uSciRegBlk/SCISTOPTIME_reg[8]	->
+  uSciRegBlk/SCISTOPTIME_reg[9]	->
+  uSciRegBlk/SCISTOPTIME_reg[10]	->
+  uSciRegBlk/SCISTOPTIME_reg[11]	->
+  uSciRegBlk/SCIATRDTIME_reg[0]	->
+  uSciRegBlk/SCIATRDTIME_reg[1]	->
+  uSciRegBlk/SCIATRDTIME_reg[2]	->
+  uSciRegBlk/SCIATRDTIME_reg[3]	->
+  uSciRegBlk/SCIATRDTIME_reg[4]	->
+  uSciRegBlk/SCIATRDTIME_reg[5]	->
+  uSciRegBlk/SCIATRDTIME_reg[6]	->
+  uSciRegBlk/SCIATRDTIME_reg[7]	->
+  uSciRegBlk/SCIATRDTIME_reg[8]	->
+  uSciRegBlk/SCIATRDTIME_reg[9]	->
+  uSciRegBlk/SCIATRDTIME_reg[10]	->
+  uSciRegBlk/SCIATRDTIME_reg[11]	->
+  uSciRegBlk/SCIATRDTIME_reg[12]	->
+  uSciRegBlk/SCIATRDTIME_reg[13]	->
+  uSciRegBlk/SCIATRDTIME_reg[14]	->
+  uSciRegBlk/SCIATRDTIME_reg[15]	->
+  uSciRegBlk/SCIATRSTIME_reg[0]	->
+  uSciRegBlk/SCIATRSTIME_reg[1]	->
+  uSciRegBlk/SCIATRSTIME_reg[2]	->
+  uSciRegBlk/SCIATRSTIME_reg[3]	->
+  uSciRegBlk/SCIATRSTIME_reg[4]	->
+  uSciRegBlk/SCIATRSTIME_reg[5]	->
+  uSciRegBlk/SCIATRSTIME_reg[6]	->
+  uSciRegBlk/SCIATRSTIME_reg[7]	->
+  uSciRegBlk/SCIATRSTIME_reg[8]	->
+  uSciRegBlk/SCIATRSTIME_reg[9]	->
+  uSciRegBlk/SCIATRSTIME_reg[10]	->
+  uSciRegBlk/SCIATRSTIME_reg[11]	->
+  uSciRegBlk/SCIATRSTIME_reg[12]	->
+  uSciRegBlk/SCIATRSTIME_reg[13]	->
+  uSciRegBlk/SCIATRSTIME_reg[14]	->
+  uSciRegBlk/SCIATRSTIME_reg[15]	->
+  uSciRegBlk/SCIDTIME_reg[0]	->
+  uSciRegBlk/SCIDTIME_reg[1]	->
+  uSciRegBlk/SCIDTIME_reg[2]	->
+  uSciRegBlk/SCIDTIME_reg[3]	->
+  uSciRegBlk/SCIDTIME_reg[4]	->
+  uSciRegBlk/SCIDTIME_reg[5]	->
+  uSciRegBlk/SCIDTIME_reg[6]	->
+  uSciRegBlk/SCIDTIME_reg[7]	->
+  uSciRegBlk/SCIDTIME_reg[8]	->
+  uSciRegBlk/SCIDTIME_reg[9]	->
+  uSciRegBlk/SCIDTIME_reg[10]	->
+  uSciRegBlk/SCIDTIME_reg[11]	->
+  uSciRegBlk/SCIDTIME_reg[12]	->
+  uSciRegBlk/SCIDTIME_reg[13]	->
+  uSciRegBlk/SCIDTIME_reg[14]	->
+  uSciRegBlk/SCIDTIME_reg[15]	->
+  uSciRegBlk/SCIATIME_reg[0]	->
+  uSciRegBlk/SCIATIME_reg[1]	->
+  uSciRegBlk/SCIATIME_reg[2]	->
+  uSciRegBlk/SCIATIME_reg[3]	->
+  uSciRegBlk/SCIATIME_reg[4]	->
+  uSciRegBlk/SCIATIME_reg[5]	->
+  uSciRegBlk/SCIATIME_reg[6]	->
+  uSciRegBlk/SCIATIME_reg[7]	->
+  uSciRegBlk/SCIATIME_reg[8]	->
+  uSciRegBlk/SCIATIME_reg[9]	->
+  uSciRegBlk/SCIATIME_reg[10]	->
+  uSciRegBlk/SCIATIME_reg[11]	->
+  uSciRegBlk/SCIATIME_reg[12]	->
+  uSciRegBlk/SCIATIME_reg[13]	->
+  uSciRegBlk/SCIATIME_reg[14]	->
+  uSciRegBlk/SCIATIME_reg[15]	->
+  uSciRegBlk/SCISYNCACT_reg[0]	->
+  uSciRegBlk/SCISYNCACT_reg[1]	->
+  uSciRegBlk/SCISYNCACT_reg[2]	->
+  uSciRegBlk/SCISYNCACT_reg[3]	->
+  uSciRegBlk/SCISYNCACT_reg[4]	->
+  uSciRegBlk/SCISTABLE_reg[0]	->
+  uSciRegBlk/SCISTABLE_reg[1]	->
+  uSciRegBlk/SCISTABLE_reg[2]	->
+  uSciRegBlk/SCISTABLE_reg[3]	->
+  uSciRegBlk/SCISTABLE_reg[4]	->
+  uSciRegBlk/SCISTABLE_reg[5]	->
+  uSciRegBlk/SCISTABLE_reg[6]	->
+  uSciRegBlk/SCISTABLE_reg[7]	->
+  uSciRegBlk/SCISTABLE_reg[8]	->
+  uSciRegBlk/SCISTABLE_reg[9]	->
+  uSciRegBlk/SCIRXTIME_reg[0]	->
+  uSciRegBlk/SCIRXTIME_reg[1]	->
+  uSciRegBlk/SCIRXTIME_reg[2]	->
+  uSciRegBlk/SCIRXTIME_reg[3]	->
+  uSciRegBlk/SCIRXTIME_reg[4]	->
+  uSciRegBlk/SCIRXTIME_reg[5]	->
+  uSciRegBlk/SCIRXTIME_reg[6]	->
+  uSciRegBlk/SCIRXTIME_reg[7]	->
+  uSciRegBlk/SCIRXTIME_reg[8]	->
+  uSciRegBlk/SCIRXTIME_reg[9]	->
+  uSciRegBlk/SCIRXTIME_reg[10]	->
+  uSciRegBlk/SCIRXTIME_reg[11]	->
+  uSciRegBlk/SCIRXTIME_reg[12]	->
+  uSciRegBlk/SCIRXTIME_reg[13]	->
+  uSciRegBlk/SCIRXTIME_reg[14]	->
+  uSciRegBlk/SCIRXTIME_reg[15]	->
+  uSciRegBlk/SCIDMACR_reg[0]	->
+  uSciRegBlk/SCIDMACR_reg[1]	->
+  uSciRegBlk/SCITIDE_reg[0]	->
+  uSciRegBlk/SCITIDE_reg[1]	->
+  uSciRegBlk/SCITIDE_reg[2]	->
+  uSciRegBlk/SCITIDE_reg[3]	->
+  uSciRegBlk/SCITIDE_reg[4]	->
+  uSciRegBlk/SCITIDE_reg[5]	->
+  uSciRegBlk/SCITIDE_reg[6]	->
+  uSciRegBlk/SCITIDE_reg[7]	->
+  uSciRegBlk/SCIRETRY_reg[0]	->
+  uSciRegBlk/SCIRETRY_reg[1]	->
+  uSciRegBlk/SCIRETRY_reg[2]	->
+  uSciRegBlk/SCIRETRY_reg[3]	->
+  uSciRegBlk/SCIRETRY_reg[4]	->
+  uSciRegBlk/SCIRETRY_reg[5]	->
+  uSciRegBlk/SCIIMSC_reg[0]	->
+  uSciRegBlk/SCIIMSC_reg[1]	->
+  uSciRegBlk/SCIIMSC_reg[2]	->
+  uSciRegBlk/SCIIMSC_reg[3]	->
+  uSciRegBlk/SCIIMSC_reg[4]	->
+  uSciRegBlk/SCIIMSC_reg[5]	->
+  uSciRegBlk/SCIIMSC_reg[6]	->
+  uSciRegBlk/SCIIMSC_reg[7]	->
+  uSciRegBlk/SCIIMSC_reg[8]	->
+  uSciRegBlk/SCIIMSC_reg[9]	->
+  uSciRegBlk/SCIIMSC_reg[10]	->
+  uSciRegBlk/SCIIMSC_reg[11]	->
+  uSciRegBlk/SCIIMSC_reg[12]	->
+  uSciRegBlk/SCIIMSC_reg[13]	->
+  uSciRegBlk/SCIIMSC_reg[14]	->
+  uSciRegBlk/SCICR1_reg[0]	->
+  uSciRegBlk/SCICR1_reg[1]	->
+  uSciRegBlk/SCICR1_reg[2]	->
+  uSciRegBlk/SCICR1_reg[3]	->
+  uSciRegBlk/SCICR1_reg[4]	->
+  uSciRegBlk/SCICR1_reg[5]	->
+  uSciRegBlk/SCICR1_reg[6]	->
+  uSciRegBlk/SCICR0_reg[0]	->
+  uSciRegBlk/SCICR0_reg[1]	->
+  uSciRegBlk/SCICR0_reg[2]	->
+  uSciRegBlk/SCICR0_reg[3]	->
+  uSciRegBlk/SCICR0_reg[4]	->
+  uSciRegBlk/SCICR0_reg[5]	->
+  uSciRegBlk/SCICR0_reg[6]	->
+  uSciRegBlk/SCICR0_reg[7]	->
+  uSciRegBlk/CARDUPIC_reg (*)	->
+  uSciApbif/Wr_reg	->
+  uSciApbif/PRDATA_reg[0]	->
+  uSciApbif/PRDATA_reg[1]	->
+  uSciApbif/PRDATA_reg[2]	->
+  uSciApbif/PRDATA_reg[3]	->
+  uSciApbif/PRDATA_reg[4] (*)	->
+  uSciApbif/PRDATA_reg[5]	->
+  uSciApbif/PRDATA_reg[6]	->
+  uSciApbif/PRDATA_reg[7]	->
+  uSciApbif/PRDATA_reg[8]	->
+  uSciApbif/PRDATA_reg[9]	->
+  uSciApbif/PRDATA_reg[10]	->
+  uSciApbif/PRDATA_reg[11]	->
+  uSciApbif/PRDATA_reg[12]	->
+  uSciApbif/PRDATA_reg[13]	->
+  uSciApbif/PRDATA_reg[14]	->
+  uSciApbif/PRDATA_reg[15]	->
+  uSciApbif/LatchedPADDR_reg[3]	->
+  uSciApbif/LatchedPADDR_reg[4]	->
+  uSciApbif/LatchedPADDR_reg[5] (*)	->
+  uSciApbif/LatchedPADDR_reg[6] (*)	->
+  uSciApbif/LatchedPADDR_reg[8] (*)	->
+  uSciApbif/LatchedPADDR_reg[9] (*)	->
+  uSciApbif/LatchedPADDR_reg[10] (*)	->
+  uSciApbif/LatchedPADDR_reg[11] (*)	->
+  uSciApbif/LatchedPADDR_reg[2]	->
+  uSciApbif/LatchedPADDR_reg[7]	->
+  uSciApbif/IntPENABLE_reg	->
+  SCANOUTPCLK
+
+Complete scan chain #2 (SCANINSCICLK --> SCANOUTSCICLK) contains 645 cells:
+
+  SCANINSCICLK	->
+  uSciCntl/DBLDEN_reg	->
+  uSciCntl/DEACTEN_reg	->
+  uSciCntl/CLKSTOPLDEN_reg	->
+  uSciCntl/BLKTIMEEN_reg (*)	->
+  uSciCntl/NOCARDEN_reg (*)	->
+  uSciCntl/CLKSTARTLDEN_reg	->
+  uSciCntl/CHTIMEEN_reg	->
+  uSciCntl/BGCNTEN_reg	->
+  uSciCntl/ATRSLDEN_reg	->
+  uSciCntl/TXDATAEN_reg	->
+  uSciCntl/CLKSTARTEN_reg	->
+  uSciCntl/CARDPRESENT_reg (*)	->
+  uSciCntl/WATRSEN_reg	->
+  uSciCntl/DBEN_reg	->
+  uSciCntl/ACTSEQEN_reg	->
+  uSciCntl/RXDATALDEN_reg (*)	->
+  uSciCntl/CLKSTOPEN_reg	->
+  uSciCntl/WRESETEN_reg	->
+  uSciCntl/ATRDCNTEN_reg	->
+  uSciCntl/ACTSEQLDEN_reg	->
+  uSciCntl/WATRLDEN_reg	->
+  uSciCntl/RXDATAEN_reg	->
+  uSciCntl/DEACTLDEN_reg	->
+  uSciCntl/SciCntlState_reg[0] (*)	->
+  uSciCntl/SciCntlState_reg[1] (*)	->
+  uSciCntl/SciCntlState_reg[2] (*)	->
+  uSciCntl/SciCntlState_reg[3] (*)	->
+  uSciSynctoSCICLK/TXERRIMSCSync1_reg	->
+  uSciSynctoSCICLK/CARDDNIMSCSync_reg	->
+  uSciSynctoSCICLK/ATRDENSync_reg	->
+  uSciSynctoSCICLK/BLKGUUpdateSync1_reg	->
+  uSciSynctoSCICLK/SYNCACTUpdSync_reg	->
+  uSciSynctoSCICLK/RETRYUpdateSync_reg	->
+  uSciSynctoSCICLK/BLKENSync1_reg	->
+  uSciSynctoSCICLK/DTIMEUpdateSync1_reg	->
+  uSciSynctoSCICLK/ATRDTOUTICSync1_reg	->
+  uSciSynctoSCICLK/WDATAENSync1_reg	->
+  uSciSynctoSCICLK/STBLEUpdateSync1_reg	->
+  uSciSynctoSCICLK/SCIDETECTSync1_reg	->
+  uSciSynctoSCICLK/CARDINIMSCSync_reg	->
+  uSciSynctoSCICLK/CARDUPICSync_reg	->
+  uSciSynctoSCICLK/RXFESync1_reg	->
+  uSciSynctoSCICLK/FINISHWrSync1_reg	->
+  uSciSynctoSCICLK/BLKTOUTICSync1_reg	->
+  uSciSynctoSCICLK/CARDINICSync_reg	->
+  uSciSynctoSCICLK/BAUDUpdateSync1_reg	->
+  uSciSynctoSCICLK/SCIDEACREQSync_reg	->
+  uSciSynctoSCICLK/CLKICUpdateSync1_reg	->
+  uSciSynctoSCICLK/CARDUPIMSCSync1_reg	->
+  uSciSynctoSCICLK/ATRSTOUTICSync1_reg	->
+  uSciSynctoSCICLK/BGTENSync1_reg	->
+  uSciSynctoSCICLK/CLKVALSync_reg	->
+  uSciSynctoSCICLK/WRESETWrSync_reg	->
+  uSciSynctoSCICLK/RTOUTICSync1_reg	->
+  uSciSynctoSCICLK/WRSTSync1_reg	->
+  uSciSynctoSCICLK/RXPARITYSync_reg	->
+  uSciSynctoSCICLK/CARDDNICSync1_reg	->
+  uSciSynctoSCICLK/BLKTOUTICSync_reg	->
+  uSciSynctoSCICLK/TXERRICSync_reg	->
+  uSciSynctoSCICLK/MODESync_reg	->
+  uSciSynctoSCICLK/TXPARITYSync_reg	->
+  uSciSynctoSCICLK/SYNCACTUpdSync1_reg	->
+  uSciSynctoSCICLK/CLKVALSync1_reg	->
+  uSciSynctoSCICLK/RXFRdSync1_reg	->
+  uSciSynctoSCICLK/WFCBSync1_reg	->
+  uSciSynctoSCICLK/CLKDISSync_reg	->
+  uSciSynctoSCICLK/RTOUTIMSCSync_reg	->
+  uSciSynctoSCICLK/CARDINIMSCSync1_reg	->
+  uSciSynctoSCICLK/TXNAKSync1_reg	->
+  uSciSynctoSCICLK/TXPARITYSync1_reg	->
+  uSciSynctoSCICLK/RXTIMEUpdateSync_reg	->
+  uSciSynctoSCICLK/SCIDATAINSync1_reg	->
+  uSciSynctoSCICLK/CARDUPIMSCSync_reg	->
+  uSciSynctoSCICLK/STARTTUpdSync_reg	->
+  uSciSynctoSCICLK/SCIDATAINSync_reg	->
+  uSciSynctoSCICLK/SCIDETECTSync_reg	->
+  uSciSynctoSCICLK/RETRYUpdateSync1_reg	->
+  uSciSynctoSCICLK/CLKACTIMSCSync_reg	->
+  uSciSynctoSCICLK/CLKACTIMSCSync1_reg	->
+  uSciSynctoSCICLK/TXFRPIncDoneSyn_reg	->
+  uSciSynctoSCICLK/RTOUTIMSCSync1_reg	->
+  uSciSynctoSCICLK/WCLKENSync_reg	->
+  uSciSynctoSCICLK/DTIMEUpdateSync_reg	->
+  uSciSynctoSCICLK/ATRDTOUTIMSCSyn1_reg	->
+  uSciSynctoSCICLK/CLKACTICSync1_reg	->
+  uSciSynctoSCICLK/ATRSTOUTIMSCSyn1_reg	->
+  uSciSynctoSCICLK/CHTUpdateSync_reg	->
+  uSciSynctoSCICLK/CARDDNICSync_reg	->
+  uSciSynctoSCICLK/ATIMEUpdateSync1_reg	->
+  uSciSynctoSCICLK/RXNAKSync1_reg	->
+  uSciSynctoSCICLK/ORDERSync1_reg	->
+  uSciSynctoSCICLK/CHTOUTIMSCSync1_reg	->
+  uSciSynctoSCICLK/WCLKSync1_reg	->
+  uSciSynctoSCICLK/CLKSTPIMSCSync1_reg	->
+  uSciSynctoSCICLK/CARDOUTIMSCSync1_reg	->
+  uSciSynctoSCICLK/WFCBSync_reg	->
+  uSciSynctoSCICLK/LASTTXBYTESync1_reg	->
+  uSciSynctoSCICLK/SCIDEACREQSync1_reg	->
+  uSciSynctoSCICLK/WDATASync1_reg	->
+  uSciSynctoSCICLK/ATRDENSync1_reg	->
+  uSciSynctoSCICLK/RTOUTICSync_reg	->
+  uSciSynctoSCICLK/CARDOUTICSync_reg	->
+  uSciSynctoSCICLK/WCLKSync_reg	->
+  uSciSynctoSCICLK/WDATASync_reg	->
+  uSciSynctoSCICLK/TxDataAvlblSync1_reg	->
+  uSciSynctoSCICLK/CLKICCUpdateSync_reg	->
+  uSciSynctoSCICLK/WRSTSync_reg	->
+  uSciSynctoSCICLK/CARDOUTIMSCSync_reg	->
+  uSciSynctoSCICLK/SYNCCARDSync1_reg	->
+  uSciSynctoSCICLK/CHTOUTICSync1_reg	->
+  uSciSynctoSCICLK/BLKGURUpdateSync_reg	->
+  uSciSynctoSCICLK/MODESync1_reg	->
+  uSciSynctoSCICLK/CHGURUpdateSync1_reg	->
+  uSciSynctoSCICLK/ATRSTUpdateSync1_reg	->
+  uSciSynctoSCICLK/STOPTUpdateSync1_reg	->
+  uSciSynctoSCICLK/STABLEUpdateSync_reg	->
+  uSciSynctoSCICLK/WRESETWrSync1_reg	->
+  uSciSynctoSCICLK/CLKZ1Sync_reg	->
+  uSciSynctoSCICLK/TXNAKSync_reg	->
+  uSciSynctoSCICLK/BAUDUpdateSync_reg	->
+  uSciSynctoSCICLK/CLKSTPICSync1_reg	->
+  uSciSynctoSCICLK/SENSESync1_reg	->
+  uSciSynctoSCICLK/EXDBNCESync_reg	->
+  uSciSynctoSCICLK/WDATAENSync_reg	->
+  uSciSynctoSCICLK/TxDataAvlblSync_reg	->
+  uSciSynctoSCICLK/CLKZ1Sync1_reg	->
+  uSciSynctoSCICLK/CHTOUTIMSCSync_reg	->
+  uSciSynctoSCICLK/CARDUPICSync1_reg	->
+  uSciSynctoSCICLK/ATRDTUpdateSync1_reg	->
+  uSciSynctoSCICLK/ATRSTOUTICSync_reg	->
+  uSciSynctoSCICLK/TXERRIMSCSync_reg	->
+  uSciSynctoSCICLK/ATRSTUpdateSync_reg	->
+  uSciSynctoSCICLK/CLKACTICSync_reg	->
+  uSciSynctoSCICLK/ORDERSync_reg	->
+  uSciSynctoSCICLK/LASTTXBYTESync_reg	->
+  uSciSynctoSCICLK/VALUEUpdateSync_reg	->
+  uSciSynctoSCICLK/ATIMEUpdateSync_reg	->
+  uSciSynctoSCICLK/BLKTOUTIMSCSync_reg	->
+  uSciSynctoSCICLK/VALUEUpdateSync1_reg	->
+  uSciSynctoSCICLK/ATRSTOUTIMSCSyn_reg	->
+  uSciSynctoSCICLK/FINISHWrSync_reg	->
+  uSciSynctoSCICLK/WCLKENSync1_reg	->
+  uSciSynctoSCICLK/CLKDISSync1_reg	->
+  uSciSynctoSCICLK/STOPTUpdateSync_reg	->
+  uSciSynctoSCICLK/CHTUpdateSync1_reg	->
+  uSciSynctoSCICLK/CARDOUTICSync1_reg	->
+  uSciSynctoSCICLK/BLKTOUTIMSCSync1_reg	->
+  uSciSynctoSCICLK/CLKSTPIMSCSync_reg	->
+  uSciSynctoSCICLK/RXPARITYSync1_reg	->
+  uSciSynctoSCICLK/TXFRPIncDoneSyn1_reg	->
+  uSciSynctoSCICLK/RXFRdSync_reg	->
+  uSciSynctoSCICLK/STARTTUpdSync1_reg	->
+  uSciSynctoSCICLK/ATRDTUpdateSync_reg	->
+  uSciSynctoSCICLK/RXTIMUpdateSync1_reg	->
+  uSciSynctoSCICLK/EXDBNCESync1_reg	->
+  uSciSynctoSCICLK/RXFESync_reg	->
+  uSciSynctoSCICLK/RXNAKSync_reg	->
+  uSciSynctoSCICLK/BLKENSync_reg	->
+  uSciSynctoSCICLK/SENSESync_reg	->
+  uSciSynctoSCICLK/BLKTUpdateSync1_reg	->
+  uSciSynctoSCICLK/STARTUPWrSync_reg	->
+  uSciSynctoSCICLK/SYNCCARDSync_reg	->
+  uSciSynctoSCICLK/BGTENSync_reg	->
+  uSciSynctoSCICLK/ATRDTOUTIMSCSyn_reg	->
+  uSciSynctoSCICLK/CARDDNIMSCSync1_reg	->
+  uSciSynctoSCICLK/ATRDTOUTICSync_reg	->
+  uSciSynctoSCICLK/CLKSTPICSync_reg	->
+  uSciSynctoSCICLK/TXERRICSync1_reg	->
+  uSciSynctoSCICLK/CARDINICSync1_reg	->
+  uSciSynctoSCICLK/BLKTUpdateSync_reg	->
+  uSciSynctoSCICLK/CHTOUTICSync_reg	->
+  uSciSynctoSCICLK/CHGURUpdateSync_reg	->
+  uSciSynctoSCICLK/STARTUPWrSync1_reg	->
+  uSciTxRx/DelCARDPRESENT_reg	->
+  uSciTxRx/ATRSEN_reg (*)	->
+  uSciTxRx/VALUECNTEN_reg	->
+  uSciTxRx/DelATRDCNTEN_reg	->
+  uSciTxRx/SCLK_reg (*)	->
+  uSciTxRx/TxRxStop_reg (*)	->
+  uSciTxRx/CLKSTPEXP_reg (*)	->
+  uSciTxRx/DelDataoutEn_reg	->
+  uSciTxRx/nDATAOUTEN_reg (*)	->
+  uSciTxRx/CARDOUTRIS_reg (*)	->
+  uSciTxRx/CARDDOWN_reg	->
+  uSciTxRx/WRESETOVER_reg	->
+  uSciTxRx/DelRXFRdSync_reg	->
+  uSciTxRx/nCLKEN_reg	->
+  uSciTxRx/WRESET_reg	->
+  uSciTxRx/CLKSTOPPED_reg (*)	->
+  uSciTxRx/FCB_reg	->
+  uSciTxRx/DBTIMEOUT_reg	->
+  uSciTxRx/RTIMEOUT_reg	->
+  uSciTxRx/TXERRRIS_reg	->
+  uSciTxRx/BLKTOUTRIS_reg	->
+  uSciTxRx/TXERR_reg (*)	->
+  uSciTxRx/RxParityErr_reg (*)	->
+  uSciTxRx/nDATAEN_reg	->
+  uSciTxRx/ParityEn_reg (*)	->
+  uSciTxRx/TXFIFOCLR_reg (*)	->
+  uSciTxRx/DelSTARTUPWrSync_reg	->
+  uSciTxRx/nCLKOUTEN_reg	->
+  uSciTxRx/RXOVER_reg	->
+  uSciTxRx/CARDUPRIS_reg	->
+  uSciTxRx/RTOUTRIS_reg (*)	->
+  uSciTxRx/RETX_reg (*)	->
+  uSciTxRx/RTLdDone_reg	->
+  uSciTxRx/BLKTIMEOUT_reg	->
+  uSciTxRx/LLTXBYTE_reg	->
+  uSciTxRx/CHGUARDOVER_reg (*)	->
+  uSciTxRx/RXFWr_reg	->
+  uSciTxRx/ETU_reg	->
+  uSciTxRx/DelWRESETWrSync_reg	->
+  uSciTxRx/BLKGUARDOVER_reg	->
+  uSciTxRx/VCCEN_reg (*)	->
+  uSciTxRx/TXOVER_reg	->
+  uSciTxRx/DelCLKACTIC_reg	->
+  uSciTxRx/STARTUP_reg	->
+  uSciTxRx/DelCHTOUTIC_reg	->
+  uSciTxRx/DelCARDDNIC_reg	->
+  uSciTxRx/WATRSTIMEOUT_reg (*)	->
+  uSciTxRx/RXFIFOWr_reg	->
+  uSciTxRx/TXFRdPtrInc_reg (*)	->
+  uSciTxRx/DelFINISHWrSync_reg	->
+  uSciTxRx/nCARDRST_reg	->
+  uSciTxRx/DEACTOVER_reg	->
+  uSciTxRx/DelRTOUTIC_reg	->
+  uSciTxRx/CARDINRIS_reg (*)	->
+  uSciTxRx/CARDDNRIS_reg (*)	->
+  uSciTxRx/CLKACTIVE_reg (*)	->
+  uSciTxRx/CLKSTPRIS_reg	->
+  uSciTxRx/DelTxDataAvSync_reg	->
+  uSciTxRx/ACTSEQOVER_reg	->
+  uSciTxRx/DEACACK_reg (*)	->
+  uSciTxRx/DelBLKTOUTIC_reg	->
+  uSciTxRx/DelCARDOUTIC_reg	->
+  uSciTxRx/ATRDTOUTRIS_reg	->
+  uSciTxRx/CHTOUTRIS_reg	->
+  uSciTxRx/DelBLKTIMEEN_reg	->
+  uSciTxRx/CHMINEN_reg (*)	->
+  uSciTxRx/DelTXERRIC_reg	->
+  uSciTxRx/CHGUARDEN_reg	->
+  uSciTxRx/CLKICCEN_reg (*)	->
+  uSciTxRx/DelCARDUPIC_reg	->
+  uSciTxRx/DelCARDINIC_reg	->
+  uSciTxRx/ATRSTIMEOUT_reg	->
+  uSciTxRx/DelATRDTOUTIC_reg	->
+  uSciTxRx/DelATRSTOUTIC_reg	->
+  uSciTxRx/ATRDTIMEOUT_reg	->
+  uSciTxRx/CHTIMEOUT_reg	->
+  uSciTxRx/CLKACTRIS_reg	->
+  uSciTxRx/DataoutEn_reg (*)	->
+  uSciTxRx/ClkoutEn_reg	->
+  uSciTxRx/DelCLKSTPIC_reg	->
+  uSciTxRx/ATRSTOUTRIS_reg	->
+  uSciTxRx/STBCNTEN_reg	->
+  uSciTxRx/RxFWrData_reg[0]	->
+  uSciTxRx/RxFWrData_reg[1]	->
+  uSciTxRx/RxFWrData_reg[2]	->
+  uSciTxRx/RxFWrData_reg[3]	->
+  uSciTxRx/RxFWrData_reg[4]	->
+  uSciTxRx/RxFWrData_reg[5]	->
+  uSciTxRx/RxFWrData_reg[6]	->
+  uSciTxRx/RxFWrData_reg[7]	->
+  uSciTxRx/RxFWrData_reg[8] (*)	->
+  uSciTxRx/RETRYCNT_reg[0] (*)	->
+  uSciTxRx/RETRYCNT_reg[1] (*)	->
+  uSciTxRx/RETRYCNT_reg[2] (*)	->
+  uSciTxRx/ShiftReg_reg[0] (*)	->
+  uSciTxRx/ShiftReg_reg[2] (*)	->
+  uSciTxRx/ShiftReg_reg[3]	->
+  uSciTxRx/ShiftReg_reg[4] (*)	->
+  uSciTxRx/ShiftReg_reg[5]	->
+  uSciTxRx/ShiftReg_reg[6] (*)	->
+  uSciTxRx/ShiftReg_reg[7]	->
+  uSciTxRx/DataActCnt_reg[0] (*)	->
+  uSciTxRx/DataActCnt_reg[1] (*)	->
+  uSciTxRx/DataActCnt_reg[2] (*)	->
+  uSciTxRx/SCIDATATIME_reg[0] (*)	->
+  uSciTxRx/SCIDATATIME_reg[1] (*)	->
+  uSciTxRx/SCIDATATIME_reg[2]	->
+  uSciTxRx/SCIDATATIME_reg[3] (*)	->
+  uSciTxRx/SCIDATATIME_reg[4] (*)	->
+  uSciTxRx/SCIDATATIME_reg[5] (*)	->
+  uSciTxRx/SCIDATATIME_reg[6] (*)	->
+  uSciTxRx/SCIDATATIME_reg[7] (*)	->
+  uSciTxRx/SCIDATATIME_reg[8] (*)	->
+  uSciTxRx/SCIDATATIME_reg[9] (*)	->
+  uSciTxRx/SCIDATATIME_reg[10] (*)	->
+  uSciTxRx/SCIDATATIME_reg[11] (*)	->
+  uSciTxRx/SCIDATATIME_reg[12] (*)	->
+  uSciTxRx/SCIDATATIME_reg[13] (*)	->
+  uSciTxRx/SCIDATATIME_reg[14] (*)	->
+  uSciTxRx/SCIDATATIME_reg[15] (*)	->
+  uSciTxRx/SCIDATATIME_reg[16] (*)	->
+  uSciTxRx/SCIDATATIME_reg[17] (*)	->
+  uSciTxRx/SCIDATATIME_reg[18] (*)	->
+  uSciTxRx/SCIDATATIME_reg[19] (*)	->
+  uSciTxRx/SCIDATATIME_reg[20] (*)	->
+  uSciTxRx/SCIDATATIME_reg[21] (*)	->
+  uSciTxRx/SCIDATATIME_reg[22] (*)	->
+  uSciTxRx/SCIDATATIME_reg[23] (*)	->
+  uSciTxRx/SCIDATATIME_reg[24] (*)	->
+  uSciTxRx/SCIDATATIME_reg[25] (*)	->
+  uSciTxRx/SCIDATATIME_reg[26] (*)	->
+  uSciTxRx/SCIDATATIME_reg[27] (*)	->
+  uSciTxRx/SCIDATATIME_reg[28] (*)	->
+  uSciTxRx/SCIDATATIME_reg[29] (*)	->
+  uSciTxRx/SCIDATATIME_reg[30]	->
+  uSciTxRx/SCIDATATIME_reg[31]	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[0] (*)	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[1] (*)	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[2] (*)	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[3] (*)	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[4] (*)	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[5] (*)	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[6]	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[7]	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[8] (*)	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[9]	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[10]	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[11]	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[12]	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[13]	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[14]	->
+  uSciTxRx/SCIRTSTBPRECNT_reg[15]	->
+  uSciTxRx/SCIVALUECNT_reg[0] (*)	->
+  uSciTxRx/SCIVALUECNT_reg[1]	->
+  uSciTxRx/SCIVALUECNT_reg[2]	->
+  uSciTxRx/SCIVALUECNT_reg[3]	->
+  uSciTxRx/SCIVALUECNT_reg[4]	->
+  uSciTxRx/SCIVALUECNT_reg[5]	->
+  uSciTxRx/SCIVALUECNT_reg[6]	->
+  uSciTxRx/SCIVALUECNT_reg[7]	->
+  uSciTxRx/SCIBAUDCNT_reg[1] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[2] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[3] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[4] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[5] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[6] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[7] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[8] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[9] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[10] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[11] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[12] (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[13]	->
+  uSciTxRx/SCIBAUDCNT_reg[14]	->
+  uSciTxRx/SCIBAUDCNT_reg[15]	->
+  uSciTxRx/SCICLKICCCNT_reg[0] (*)	->
+  uSciTxRx/SCICLKICCCNT_reg[1]	->
+  uSciTxRx/SCICLKICCCNT_reg[2]	->
+  uSciTxRx/SCICLKICCCNT_reg[3]	->
+  uSciTxRx/SCICLKICCCNT_reg[4]	->
+  uSciTxRx/SCICLKICCCNT_reg[5]	->
+  uSciTxRx/SCICLKICCCNT_reg[6]	->
+  uSciTxRx/SCICLKICCCNT_reg[7]	->
+  uSciTxRx/ActCnt_reg[0] (*)	->
+  uSciTxRx/ActCnt_reg[1]	->
+  uSciTxRx/SCIACTTIME_reg[0] (*)	->
+  uSciTxRx/SCIACTTIME_reg[1] (*)	->
+  uSciTxRx/SCIACTTIME_reg[2] (*)	->
+  uSciTxRx/SCIACTTIME_reg[3] (*)	->
+  uSciTxRx/SCIACTTIME_reg[4] (*)	->
+  uSciTxRx/SCIACTTIME_reg[5] (*)	->
+  uSciTxRx/SCIACTTIME_reg[6] (*)	->
+  uSciTxRx/SCIACTTIME_reg[7] (*)	->
+  uSciTxRx/SCIACTTIME_reg[8] (*)	->
+  uSciTxRx/SCIACTTIME_reg[9] (*)	->
+  uSciTxRx/SCIACTTIME_reg[10] (*)	->
+  uSciTxRx/SCIACTTIME_reg[11] (*)	->
+  uSciTxRx/SCIACTTIME_reg[12] (*)	->
+  uSciTxRx/SCIACTTIME_reg[13] (*)	->
+  uSciTxRx/SCIACTTIME_reg[14] (*)	->
+  uSciTxRx/SCIACTTIME_reg[15] (*)	->
+  uSciTxRx/CLKOUT_reg (*)	->
+  uSciTxRx/ShiftReg_reg[1] (*)	->
+  uSciTxRx/RTLdDoneTrig_reg (*)	->
+  uSciTxRx/SCIBAUDCNT_reg[0] (*)	->
+  uSciRegBlkUpdate/DelVALUEWr_reg	->
+  uSciRegBlkUpdate/DelBLKTUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelBLKTIMEWr_reg	->
+  uSciRegBlkUpdate/DelCHTUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelCHTIMEWr_reg	->
+  uSciRegBlkUpdate/DelATIMEUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelCLKICCUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelVALUEUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelRXTIMEUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelATRSTUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelATRSTIMEWr_reg	->
+  uSciRegBlkUpdate/DelSYNCACTUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelATRDTIMEWr_reg	->
+  uSciRegBlkUpdate/DelRXTIMEWr_reg	->
+  uSciRegBlkUpdate/DelBAUDUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelRETRYUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelSTOPTUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelSTARTTIMEWr_reg	->
+  uSciRegBlkUpdate/DelBLKGUARDWr_reg	->
+  uSciRegBlkUpdate/DelCHGURUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelATRDTUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelCLKICCWr_reg	->
+  uSciRegBlkUpdate/DelDTIMEUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelCHGUARDWr_reg	->
+  uSciRegBlkUpdate/DelBAUDWr_reg	->
+  uSciRegBlkUpdate/DelSTARTTUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelSTOPTIMEWr_reg	->
+  uSciRegBlkUpdate/DelSTABLEUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelBLKGURUpdtSyn_reg	->
+  uSciRegBlkUpdate/DelSYNCACTWr_reg	->
+  uSciRegBlkUpdate/BLKGUARD_reg[1] (*)	->
+  uSciRegBlkUpdate/BLKGUARD_reg[2] (*)	->
+  uSciRegBlkUpdate/BLKGUARD_reg[3] (*)	->
+  uSciRegBlkUpdate/BLKGUARD_reg[4] (*)	->
+  uSciRegBlkUpdate/BLKGUARD_reg[5] (*)	->
+  uSciRegBlkUpdate/BLKGUARD_reg[6] (*)	->
+  uSciRegBlkUpdate/BLKGUARD_reg[7] (*)	->
+  uSciRegBlkUpdate/CHGUARD_reg[0] (*)	->
+  uSciRegBlkUpdate/CHGUARD_reg[1] (*)	->
+  uSciRegBlkUpdate/CHGUARD_reg[2] (*)	->
+  uSciRegBlkUpdate/CHGUARD_reg[3] (*)	->
+  uSciRegBlkUpdate/CHGUARD_reg[4] (*)	->
+  uSciRegBlkUpdate/CHGUARD_reg[5] (*)	->
+  uSciRegBlkUpdate/CHGUARD_reg[6] (*)	->
+  uSciRegBlkUpdate/CHGUARD_reg[7] (*)	->
+  uSciRegBlkUpdate/VALUE_reg[0] (*)	->
+  uSciRegBlkUpdate/VALUE_reg[1] (*)	->
+  uSciRegBlkUpdate/VALUE_reg[2] (*)	->
+  uSciRegBlkUpdate/VALUE_reg[3] (*)	->
+  uSciRegBlkUpdate/VALUE_reg[4] (*)	->
+  uSciRegBlkUpdate/VALUE_reg[5] (*)	->
+  uSciRegBlkUpdate/VALUE_reg[6] (*)	->
+  uSciRegBlkUpdate/VALUE_reg[7] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[0] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[1] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[2] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[3] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[4] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[5] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[6] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[7] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[8] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[9] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[10] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[11] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[12] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[13] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[14] (*)	->
+  uSciRegBlkUpdate/BAUD_reg[15] (*)	->
+  uSciRegBlkUpdate/CLKICC_reg[0] (*)	->
+  uSciRegBlkUpdate/CLKICC_reg[1] (*)	->
+  uSciRegBlkUpdate/CLKICC_reg[2] (*)	->
+  uSciRegBlkUpdate/CLKICC_reg[3] (*)	->
+  uSciRegBlkUpdate/CLKICC_reg[4] (*)	->
+  uSciRegBlkUpdate/CLKICC_reg[5] (*)	->
+  uSciRegBlkUpdate/CLKICC_reg[6] (*)	->
+  uSciRegBlkUpdate/CLKICC_reg[7] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[0] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[1] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[2] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[3] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[4] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[5] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[6] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[7] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[8] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[9] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[10] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[11] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[12] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[13] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[14] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[15] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[16] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[17] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[18] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[19] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[20] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[21] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[22] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[23] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[24] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[25] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[26] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[27] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[28] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[29] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[30] (*)	->
+  uSciRegBlkUpdate/CHTIME_reg[31] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[0] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[1] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[2] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[3] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[4] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[5] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[6] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[7] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[8] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[9] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[10] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[11] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[12] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[13] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[14] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[15] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[16] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[17] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[18] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[19] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[20] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[21] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[22] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[23] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[24] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[25] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[26] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[27] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[28] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[29] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[30] (*)	->
+  uSciRegBlkUpdate/BLKTIME_reg[31] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[0] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[1] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[2] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[3] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[4] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[5] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[6] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[7] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[8] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[9] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[10] (*)	->
+  uSciRegBlkUpdate/STARTTIME_reg[11] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[0] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[1] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[2] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[3] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[4] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[5] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[6] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[7] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[8] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[9] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[10] (*)	->
+  uSciRegBlkUpdate/STOPTIME_reg[11] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[0] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[1] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[2] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[3] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[4] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[5] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[6] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[7] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[8] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[9] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[10] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[11] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[12] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[13] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[14] (*)	->
+  uSciRegBlkUpdate/ATRDTIME_reg[15] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[0] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[1] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[2] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[3] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[4] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[5] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[6] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[7] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[8] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[9] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[10] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[11] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[12] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[13] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[14] (*)	->
+  uSciRegBlkUpdate/ATRSTIME_reg[15] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[0] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[1] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[2] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[3] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[4] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[5] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[6] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[7] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[8] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[9] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[10] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[11] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[12] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[13] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[14] (*)	->
+  uSciRegBlkUpdate/DTIME_reg[15] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[0] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[1] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[2] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[3] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[4] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[5] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[6] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[7] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[8] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[9] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[10] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[11] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[12] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[13] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[14] (*)	->
+  uSciRegBlkUpdate/ATIME_reg[15] (*)	->
+  uSciRegBlkUpdate/SYNCACT_reg[0] (*)	->
+  uSciRegBlkUpdate/SYNCACT_reg[1] (*)	->
+  uSciRegBlkUpdate/SYNCACT_reg[2] (*)	->
+  uSciRegBlkUpdate/SYNCACT_reg[3] (*)	->
+  uSciRegBlkUpdate/SYNCACT_reg[4] (*)	->
+  uSciRegBlkUpdate/STABLE_reg[0] (*)	->
+  uSciRegBlkUpdate/STABLE_reg[1] (*)	->
+  uSciRegBlkUpdate/STABLE_reg[2] (*)	->
+  uSciRegBlkUpdate/STABLE_reg[3] (*)	->
+  uSciRegBlkUpdate/STABLE_reg[4] (*)	->
+  uSciRegBlkUpdate/STABLE_reg[5] (*)	->
+  uSciRegBlkUpdate/STABLE_reg[6] (*)	->
+  uSciRegBlkUpdate/STABLE_reg[7] (*)	->
+  uSciRegBlkUpdate/STABLE_reg[8] (*)	->
+  uSciRegBlkUpdate/STABLE_reg[9] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[0] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[1] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[2] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[3] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[4] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[5] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[6] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[7] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[8] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[9] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[10] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[11] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[12] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[13] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[14] (*)	->
+  uSciRegBlkUpdate/RXTIME_reg[15] (*)	->
+  uSciRegBlkUpdate/RXRETRY_reg[0] (*)	->
+  uSciRegBlkUpdate/RXRETRY_reg[1] (*)	->
+  uSciRegBlkUpdate/RXRETRY_reg[2] (*)	->
+  uSciRegBlkUpdate/TXRETRY_reg[0] (*)	->
+  uSciRegBlkUpdate/TXRETRY_reg[1] (*)	->
+  uSciRegBlkUpdate/TXRETRY_reg[2] (*)	->
+  uSciRegBlkUpdate/BLKGUARD_reg[0]	->
+  SCANOUTSCICLK
+

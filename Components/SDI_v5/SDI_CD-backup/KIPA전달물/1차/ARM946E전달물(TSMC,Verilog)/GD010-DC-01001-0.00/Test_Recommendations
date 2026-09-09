@@ -1,0 +1,816 @@
+			Test Programs
+		  Test Flows and Reliability 
+		   General Recommendations
+			Rev : 3 (20-09-94)
+	
+
+Purpose 
+=======
+
+This document provides general recommendations for the generation of characterisation, probe, final and QA test programs used to evaluate ARM based
+devices.
+There is also a section summarising the concepts of reliability, the exercise
+strategy with guidelines to board design and device loading considerations.
+
+Characterisation & Test Program Contents
+========================================
+
+			
+	Active Signal Open Circuit	(Charn, Probe, FT & QA)
+	Continuity Tests
+
+	Active Signal Short Circuit	(Charn, Probe, FT & QA)
+	Continuity Tests
+
+	Supply Continuity Tests		(Charn, Probe, FT & QA)
+
+	Gross Functional Tests		(Charn, Probe, FT & QA)
+
+	I/O Leakage Tests		(Charn, Probe, FT & QA)
+
+	DC I/O Threshold Tests		(Charn, Probe, FT & QA)
+
+	Static VOL/VOH Tests		(Charn, Probe, FT & QA)
+
+	Static IOSH/IOSL Tests		(Charn, Probe, FT & QA)
+
+	Idd Quiescent Tests		(Charn, Probe, FT & QA)
+
+	AC Parameter Tests		(Charn, FT & QA)
+
+	Idd Dynamic Tests		(Charn, FT & QA)
+
+	Additional Device		(Charn, Probe, FT & QA)
+	Specific Tests
+
+Characterisation Programs
+-------------------------
+
+The aim of a characterisation exercise is to ensure that all measurable
+parameter results can be provided to the design team who can then confirm that
+the devices predicted datasheet performance can be met over the specified 
+voltage and temperature range when process tolerances have been taken into
+account.
+
+In order to mimic the process spreads that can occur during long term production
+runs of a mature product, batches of silicon with differing properties are
+fabricated.
+
+Usually three lots of silicon are processed, slow-slow, typical-typical and 
+fast-fast which relate to the p/n type transistor gains respectively.
+The most common parameters varied are the effective channel lengths (Leff's) or
+thresholds (Vt's) of the transistors.
+
+Confirmation that the transistors have been fabricated to the desired 
+requirements is provided by the measurements performed on test structures 
+located at designated sites on each wafer. These also allow the wafers to
+classed as pass or fail in production runs at this parametric probe stage.
+
+Characterisation is performed on these split lots using a dedicated 
+characterisation program which incorporates the required routines.
+
+It is advisable to obtain characterisation results at a pin level
+for initial characterisation. This will immediately highlight the slowest
+signals within a bus in the case of ac parameters or problems with
+input switching and output levels for that of dc parameters.
+The level of characterisation could be controlled by surrounding the
+respective code in the characterisation program by software switches, which
+will then allow a high (bus) or low (signals within a bus) to be measured.
+
+The characterisation program is not a test program, its function is to perform
+measurements and return values for observation. However, expected limits of the 
+measured parameters can be tested for, thus highlighting parameters of concern.
+Thus in the description of the characterisation routines, the measured value
+should be recorded for subsequent analysis and may also be compared against
+predicted limits.
+
+Probe Test Program
+------------------
+The probe program usually excludes ac parametric tests and dynamic idd tests.
+These tests require a setup capable of supporting high frequency signals and
+this is difficult to achieve when probe load board impedances are realised.
+
+Final Test Program
+------------------
+The final test program will test all the parameters as detailed in the 
+devices respective datasheet.
+
+QA Test Program
+---------------
+
+The QA test program should contain all the tests as per the Final Test program.
+It is common to use the QA test location as a means of ensuring that all the
+tests have been performed correctly in the final test flow and the parameter
+test limits are usually set to the actual datasheet values with reduced or even
+no guardbanding applied.
+
+Guardbanding
+------------
+
+It is common practice to apply guardbanding on both ac and dc parameters to
+account for the possible tolerances and inaccuracies of the test system.
+Where stated in this document, 'datasheet' values should include the guardband
+offsets where deemed necessary.
+
+Characterisation and Test Program Routines
+==========================================
+
+Active Signal Open Circuit Continuity Test.
+...........................................
+
+This test is performed to check that an open circuit does not exist in the paths
+between each tester channel source and its respective die pad termination.
+
+A common method of performing this test on CMOS devices is to check for the
+existence of the protection diodes of input stages and the inherent protection
+diodes of input/output combination stages.
+
+It is advisable to check that both diodes (where applicable) to Vdd and Vss are 
+present as this also ensures that the protection structures are at least 
+present.
+
+The procedure for performing active signal open circuit continuity is :
+
+   - Program Vdd and Vss to OV.
+
+   - Initially program all active pins to 0V.
+
+   - Configure the programmable measuring unit to force current and measure
+     voltage, with the voltage clamped to +/-1V limiting its range should an
+     open circuit exist.
+
+   - To check continuity via the diode to Vdd, force +100uA into the pad under
+     test and check the diode turn on voltage to be less than an expected upper
+     limit of 0.9V, for example.
+     A voltage greater than this signifies an open circuit and will usually
+     be realised by the returned voltage being equal to the programmed clamp
+     voltage i.e 1V in this case.
+ 
+   - To check continuity via the diode to Vss, force -100uA into the pad under
+     test and check the diode turn on voltage to be less than an expected
+     lower limit of -0.9V, for example.
+     A voltage less than this signifies an open circuit and will usually
+     be realised by the returned voltage being equal to the programmed clamp
+     voltage i.e 1V in this case.
+
+Note that 100uA is used as an example current and any suitable low current that
+will not cause damage to the protection diodes can be used.
+
+Active Signal Short Circuit Continuity Test.
+............................................
+
+This test is performed to check that a short circuit does not exist in the paths
+between each tester channel source and its respective die pad termination to
+any other active signals or supply lines.
+
+A common method of performing this test on CMOS devices is to check for the
+existence of the protection diodes of input stages and the inherent protection
+diodes of input/output combination stages.
+
+The procedure for performing active signal short circuit continuity is :
+
+   - Program Vdd and Vss to OV.
+
+   - Initially program all active pins to 0V.
+
+   - Configure the programmable measuring unit to force current and measure
+     voltage, with the voltage clamped to +/-1V limiting its range should an
+     open circuit exist. The current is obviously limited to 100uA by its
+     programmed constant current force value.
+
+   - To check continuity via the diode to Vdd, force +100uA into the pad under
+     test and check the diode turn on voltage to be greater than an expected
+     lower limit of 0.2V, for example.
+     A voltage less than this signifies that a short circuit exists.
+
+   - It is not necessary to repeat for this test for diodes to Vss as all short
+     circuits will be have been detected in this test.
+
+Note that 100uA is used as an example current and any suitable low current that
+will not cause damage to the protection diodes or shorted circuitry can be used.
+
+Supply Continuity Tests
+.......................
+
+This is a coarse test to establish that power is being supplied to the device by
+monitoring the Idd supply current which must lie within an expected range.
+Too high a current measurement signifies possible short circuits whilst too low
+a current points to possible open circuits.
+
+It is recommended that the die be tested under the following operating conditions :
+
+   - Nominal Vdd.
+   - Relaxed Clock Frequency.
+   - Relaxed timings.
+   - Relaxed input levels.
+   - Relaxed output levels.
+   - No output loading.
+   - Use the specified Idd dynamic test pattern module.
+
+Gross Functional Test
+.....................
+
+This test is performed to check that the fabricated device is logically correct.
+
+It is recommended that the die be tested under the following operating conditions :
+
+   - Nominal Vdd.
+   - Relaxed Clock Frequency.
+   - Relaxed timings.
+   - Relaxed input levels.
+   - Relaxed output levels.
+   - No output loading.
+   - Check the functionality of all test pattern modules.
+
+The test patterns will generally be supplied as independent modules which will
+improve failure analysis at this stage by highlighting common logic fail areas
+of the device.
+
+Leakage Tests
+.............
+
+These tests are performed to check the input and tri-state pad impedances.
+
+In general, leakage paths exist between the pad and the substrate via the thin
+oxide and protection diode structures. 
+In a CMOS process, the P- wells are at ground whilst the N- wells are at Vdd,
+hence to check for leakage through n-channel transistor oxide, it is necessary  
+to force the n-channel gate to a logic '1' level, whilst the reverse is true for a p-channel transistor.
+
+The following should be noted when performing leakage tests :
+
+   - Erroneous values can be obtained if leakage tests are performed when
+     the current being drawn through the internal Vss and Vdd lines causes a
+     significant change in their potential across the respective conductor
+     length.
+
+     In the case of an input pad being forced to logic '0', if its internal 
+     Vss rail potential increases to the protection diode turn-on voltage,
+     then forward diode current will flow and summate to the true leakage
+     current.
+     The same is true for an input pad being forced to logic '1' and its
+     internal
+     Vdd rail decreases by a protection diode turn on voltage.
+  
+     This effect can sometimes exist if the device contains logic which
+     requires initialisation and refreshing to maintain its internal logic
+     levels.
+     If the internal nodes are not initialised to good levels, then high
+     transient current can flow, causing the reduction in Vdd and increase in
+     Vss internal rail levels.
+     It may be necessary to keep the clock running at the refresh rate.  
+
+   - If the input stages contain high current drivers, then a potential gradient
+     may exist if for example all n-channel transistors are turned on in a bus
+     with insufficient Vss connections.
+
+The procedures for measuring input leakage will differ for each device, but
+in general the following strategy is recommended.
+
+Input Pad Leakage :
+
+   - where specified, configure the device into a known state by running the
+     relevant test pattern.
+
+   - to perform input leakage low (IIL) measurements, set the pin under test
+     to Vss and all other remaining input pins, if possible, to VddMax and
+     measure the current being drawn.
+
+   - to perform input leakage high (IIH) measurements, set the pin under test
+     to VddMax and all other remaining input pins, if possible,  to Vss and
+     measure the current being drawn.
+
+   - if the effects as described above are apparent, it is permissible after
+     justification to adjust the forcing values such that true leakage 
+     measurements are obtained i.e increase the VIL or decrease VIH.
+
+   - if pullup or pulldown resistors are inherent in the pad, then an adjustment
+     to the leakage test limits must be made, taking into account the additional
+     current drawn.
+
+Tri-State Pad Leakage :
+
+   - where specified, configure the device into a known state by running the
+     relevant test pattern. Here the pattern must either terminate or stop
+     at a point where the tristate pads are known to be high impedance.
+
+   - the same processes are then repeated as in the Input Pad Leakage test.
+  
+DC Threshold Tests
+..................
+
+It is recommended that the dc threshold tests be implemented in the probe
+program if the signal integrity is such that the programmed levels truly exist
+at the die pads. 
+If this is not the case, then the test should not be included as this will
+possibly result in false yield loss.
+
+It is recommended that the die be tested under the following operating
+conditions :
+
+   - Minimum, Nominal and Maximum Vdd.
+   - Relaxed Frequency.
+   - Relaxed timings.
+   - Datasheet input  voltage levels.
+   - Datasheet output detector levels 
+   - Datasheet output current loads.
+   - Use all functional test pattern modules.
+
+DC Voltage Input Threshold Characterisation
+...........................................
+
+For the device to operate correctly, it is necessary to supply input stimulus
+that meet the datasheet specification.
+This means that input low levels must be less than or equal to the specified 
+VIL value and the input high levels must greater than or equal to the specified 
+VIH value.
+
+Provided these conditions are met and the device is logically correct, then the
+device will function correctly. 
+The internal switching level is designed such that it provides a noise
+guardband.
+
+It is possible to measure the value of this internal switching point by
+varying the VIL (Voltage Input Low) and VIH (Voltage Input High) levels 
+independently until the device fails, at which point the input structures
+have failed to translate the level at the input to a correct internal level.
+
+It is recommended that the device be characterised under the following operating
+conditions :
+
+   - Minimum, Nominal and Maximum Vdd.
+   - Relaxed Frequency.
+   - Relaxed timings.
+   - VIH relaxed, VIL varied.
+   - VIL relaxed, VIH varied.
+   - Relaxed output detector levels.
+   - Relaxed output current loads.
+   - Use all characterisation test pattern modules.
+
+The characterisation strategy is to measure each dc parameter in isolation,
+tightening only the conditions of the dc parameter under investigation, with all
+other dc parameters relaxed, thereby focusing on this parameter as the most
+probable failure mechanism.
+
+This approach allows independent modular characterisation routines to be
+developed, debugged and run. It should yield a consistent set of parameter
+values, as in general, each device to be characterised is exercised by exactly
+the same set of stimuli.
+
+The moving of levels may be performed in a manner which is most suited to the
+target testers capabilities and should aim to reduce the time taken to achieve
+a final value e.g in general a binary search routine is faster in returning a
+result that a linear search routine.
+
+It is envisaged that the inputs of the device will be partitioned into signals 
+and buses, which can be programmed to independent voltage levels.
+
+The input swings of these signals and buses will also be programmable by 
+setting of the VIL level, the minimum low level that the signal will reach, and
+VIH, the maximum high level that the signal will reach.
+
+With this flexibility it is possible to maintain the same characterisation
+strategy as is applied in the determination of ac timing parameters i.e 
+only the signal/bus dc parameter under determination is tightened whilst all
+other dc and ac signals are kept relaxed.
+
+Maximum VIL Determination
+.........................
+
+The maximum VIL value is determined by relaxing the VIH level to Vdd for
+all signals, including that currently being characterised, then increasing the
+VIL level from Vss for the signal currently being characterised.
+
+At every VIL increment, the characterisation test patterns are run and provide
+a pass/fail result, the last passing value gives the maximum VIL level that can
+be used for the device under test.
+
+Minimum VIH Determination
+.........................
+
+The minimum VIH value is determined by relaxing the VIL level to Vss for
+all signals, including that currently being characterised, then decreasing the
+VIH level from Vdd for the signal currently being characterised.
+
+At every VIH decrement, the characterisation test patterns are run and provide
+a pass/fail result, the last passing value gives the minimum VIH level that can
+be used for the device under test.
+
+Static VOL/VOH
+..............
+
+This test is optional and can be used to provide additional information with
+regards to the output drive capabilities.
+
+If dedicated VOL and VOH patterns are available, then these simplify the process
+of static VOH/VOH testing. Here the pattern has been written to set all or a
+large proportion of the outputs to either highs or lows at the end of the
+pattern.
+ 
+The procedure for measuring VOL is :
+
+   - configure the programmable measuring unit to force current and measure
+     voltage.
+   - set the force current to the IOL datasheet value and set the clamp to 2V.
+   - run the appropriate test pattern to the stop vector.
+   - connect the programmable measuring unit to each pin under test and compare
+     the measured values with datasheet VOL value.
+     Fail if greater than VOL value.
+
+The procedure for measuring VOH is :
+
+   - configure the programmable measuring unit to force current and measure
+     voltage.
+   - set the force current to the IOH datasheet value and set the clamp to 3V.
+   - run the appropriate test pattern to the stop vector.
+   - connect the programmable measuring unit to each pin under test and compare
+     the measured values with datasheet VOH value.
+     Fail if less than VOH value.
+
+It is recommended that the die be tested under the following operating
+conditions :
+
+   - Minimum, Nominal and Maximum Vdd.
+   - Relaxed Clock Frequency, clock static during the measurement.
+   - Relaxed timings.
+   - Relaxed input voltage levels.
+   - Datasheet output detector levels.
+   - Datasheet output current loadings.
+   - Use VOL and VOH test pattern modules (if available), else a suitable
+     module e.g JTAG which sets all outputs high and low.
+
+Static IOSL/IOSH Tests
+......................
+
+These tests are very similar to the VOH and VOL tests and are not always
+specified. IOSL and IOSH are the sink and source currents of an output stage
+when its drivers are shorted to Vdd or Vss respectively. 
+
+The procedure for measuring IOSL is :
+
+   - configure the programmable measuring unit to force voltage and measure
+     current.
+   - set the force voltage to appropriate Vdd value and set the clamp to around
+     twice the datasheet current.
+   - run the appropriate test pattern to the stop vector.
+   - connect the programmable measuring unit to each pin under test and compare
+     the measured current values with datasheet IOSL value.
+     Fail if less than the IOSL value.
+
+The procedure for measuring IOSH is :
+
+   - configure the programmable measuring unit to force current and measure
+     voltage.
+   - set the force voltage to Vss and set the clamp to around twice the
+     datasheet current.
+   - run the appropriate test pattern to the stop vector.
+   - connect the programmable measuring unit to each pin under test and compare
+     the measured values with datasheet IOSH value.
+     Fail if less than the IOSH value.
+
+It is recommended that the die be tested under the following operating
+conditions :
+
+   - Minimum, Nominal and Maximum Vdd.
+   - Relaxed Clock Frequency, clock static during the measurement.
+   - Relaxed timings.
+   - Relaxed input voltage levels.
+   - Relaxed output detector levels.
+   - Datasheet output short circuit loadings to each pin in turn.
+   - Use VOL and VOH test pattern modules (if available), else a suitable
+     module e.g JTAG which sets all outputs high and low.
+
+Idd quiescent
+.............
+
+It is difficult to theoretically ascertain the exact device state that produces
+the maximum Idd quiescent current and hence it is recommended that some analysis
+of the current drawn at specific vectors be performed to establish a set of
+points at which the highest Idd quiescent currents are being drawn. 
+These then form a set of measurement points for the Idd quiescent determination.
+
+The procedure for measuring Idd quiescent is :
+
+   - configure the programmable measuring unit to force voltage and measure
+     Idd current.
+   - run the pattern to each defined 'stop' point in the vectors and measure
+     the quiescent Idd current each time.
+   - fail if any measured value greater than the datasheet Idd quiescent value.
+
+It is recommended that the die be tested under the following operating
+conditions :
+
+   - Maximum Vdd.
+   - Relaxed Frequency, clock static during the measurement.
+   - Relaxed timings.
+   - Relaxed input levels, VIL = VSS, VIH = VDD.
+   - Relaxed output detector levels.
+   - No output loadings.
+   - Use defined points within each functional pattern module.
+
+AC Parameter Tests
+..................
+
+It may be necessary to split up the testing of the ac parameters into 
+groups. This may be because of the inability to test every parameter in a 
+particular timeset or for convenience due to the quantity of parameters being
+tested.
+
+It is arguable as to what input levels and output current loadings should apply
+during the ac tests so the worse case conditions have been stated.
+There may be a necessity to relax some of the levels and loadings due to the
+tester environment as is generally the case.
+ 
+It is recommended that the die be tested under the following operating
+conditions :
+
+   - Minimum, Nominal and Maximum Vdd.
+   - Maximum Datasheet Clock Frequency.
+   - Datasheet timings.
+   - Datasheet input voltage levels.
+   - Datasheet output detector levels.
+   - Datasheet output current loadings.
+   - Use all functional test pattern modules.
+
+AC Parameter Characterisation
+.............................
+
+One of the major exercises to be performed on a device is the ac parameter
+characterisation.
+
+To ease this exercise a separate device specific document has been written
+for all ARM devices that require ac parametric characterisation.
+
+The reader should refer to the respective document which describes in detail 
+the procedures for the parameters determination.
+
+Characterisation test patterns will be supplied in pairs of independent modules
+aimed at characterising sets of parameters. 
+
+The pair of modules characterise parameters which are referenced to the falling
+and rising edges of the primary clock.
+
+The most significant feature which requires two patterns to be supplied is the
+necessity to measure the an outputs propagation delay time in one pattern and
+its hold time in the other.
+
+It should be noted that timeset switching is not provided within the patterns
+and it is realised that output propagation delays and hold times could be
+measured within the same pattern if this facility were available.
+
+Idd dynamic.
+............
+
+This test measures the dynamic Idd current of the device whilst it is running
+a pattern which is typical of its normal mode of operation.
+The chosen pattern is looped while one or more Idd measurements are recorded and
+averaged.
+
+It is recommended that the die be tested under the following operating
+conditions :
+
+   - Maximum Vdd.
+   - Maximum Datasheet Clock Frequency.
+   - Relaxed timings.
+   - Relaxed input voltage levels.
+   - Relaxed output detector levels.
+   - No output current loadings.
+   - Use the specified dynamic Idd test pattern module.
+
+Additional device specific tests
+................................
+
+Device specific test procedures will be detailed in the appropriate document.
+
+Binning
+-------
+
+Each test program must be capable of supplying high level failure analysis as
+per the <example> below. 
+
+Bin       Category
+---       --------
+1         Pass 
+2          --
+3          --
+4          --
+5          --
+6          --
+7         Engineering Data
+8         FAIL : Idd Static
+9         FAIL : DC Threshold Test.
+10        FAIL : Gross Functional
+11        FAIL : AC Parametric.
+12        FAIL : Idd Dynamic
+13        FAIL : Leakage.
+14        FAIL : Continuity - Open.
+15        FAIL : Continuity - Short.
+
+Software Bins
+-------------
+
+A lower level of <soft> binning should be adopted to provide a breakdown of the
+the high level bin category e.g in the case ac parametric fails, a set of
+<soft> bins will be assigned to monitor setup, hold, clockwidths, propagation
+delay fails etc. 
+The devices may be physically binned as a consequence of the ac fail and each
+software bin is accordingly updated if it has failed.
+This mechanism provides vital post 'production' yield analysis information,
+thereby releasing the tester and allowing offline failure analysis to be
+targeted to the failing pins/areas.
+
+Parameter Sampling
+------------------
+
+A <coarse> monitor of the fabrication process can also be performed at the
+final test stages. By selecting a subset of device parameters, ac and dc,
+then for each parameter a search routine is activated and the determined value
+recorded. The search routines are only activated every 1 in 'n' devices
+(e.g 1 in 50), so as not to adversely effect the overall test time.
+The sampled values are averaged on a continuous basis.
+
+Test Flows
+==========
+
+Test Flow Recommendations
+-------------------------
+
+The recommended Test/Burnin/QA flow is :
+
+   - Pre Burnin Hot Test
+
+   - Burnin
+
+   - Post Burnin Hot Test
+
+   - Post Burnin Cold Test
+
+   - QA Hot  Test
+
+   - QA Cold Test
+
+
+Justification should be provided for not performing hot and/or cold testing,
+each of which can act as an efficient screen for leakage and threshold fails
+respectively, besides the more dominant ac/dc failure mechanisms.
+
+
+Reliability
+===========
+
+Accelerated Testing
+-------------------
+
+Accelerated testing is performed to screen out early life fails, more generally
+referred to as 'infant mortality', so that a very low steady state failure rate
+occurs throughout the normal life expectancy and operation of the surviving
+devices.
+
+There are five common stresses used to accelerate device failure mechanisms :
+temperature, voltage, current, humidity, and temperature cycling.
+
+Temperature Acceleration
+------------------------
+
+Many of the mechanisms that cause failure are chemical or physical processes
+that can be accelerated by temperature. 
+Some failure mechanisms are accelerated by increased temperature whilst others
+require reduced temperatures. 
+It is imperative that the device failure rate be studied at 'all' extremes of
+temperature.
+
+Voltage Acceleration
+--------------------
+
+Voltage or electric fields accelerate failure mechanisms caused by dielectric
+breakdown, interface charge accumulation, charge injection and corrosion.
+
+Current Acceleration
+--------------------
+
+Increased current levels are used primarily as a method of accelerating 
+failures caused by electromigration in the metallic conductors, and this type
+of acceleration is usually performed on current-controlled test structures.
+
+Humidity-Temperature Acceleration
+---------------------------------
+
+Water vapour quickly permeates plastic packaging materials, transporting
+contaminants from the its outer surface, leaching impurities from the 
+the plastic package itself and finally presenting these to the chip surface.
+Diffusion of this contaminated water vapour through the passivation layer
+is comparatively slower, but is quickened by any defects or cracks in it and
+around the exposed cutout bond pad areas.
+Once the water vapour reaches the metalisation level of the chip,
+electrochemical corrosion quickly takes place, resulting in a metallisation
+failure.
+Increasing the partial pressure of the water vapour and its ambient temperature
+increases rate-limiting diffusion of the water vapour through the passivation 
+layer.
+
+Temperature Cycling
+-------------------
+
+Temperature cycling is used to accelerate mechanical failure of the chip.
+Here the devices are subjected to extreme negative and positive temperatures on
+a cyclic basis. 
+The types of failure that can occur are be bondwire shears from the bond pad,
+package cracks, lid seal fails, passivation cracks etc. The device is not usually under electrical bias in these tests.
+
+General Exercise Strategy
+-------------------------
+
+The devices under test should be tested prior to the exercise entry and at well
+defined read points e.g 0Hrs, 168Hrs, 500Hrs and 1000Hrs by removal from their
+boards and subsequently tested/characterised using a standard production line
+tester. 
+
+The devices should be tested in accordance within the inhouse specified 'window'
+time. This aims to reduce the effect of devices 'recovering' if parameters have
+shifted as a consequence of the applied stress.
+
+The devices should be tested using the standard production line test program,
+usually the QA version, to provide a go-nogo test report and providing high level failure analysis at each readpoint. 
+
+It is also advised that the devices be fully characterised, by use of the
+characterisation program, at each read point to monitor fabrication process
+parametric shifts, should they occur during the exercise. 
+The characterisation program should be capable of providing a minimum set of ac
+and dc parametric data.
+
+A record of the yield, failure analysis and significant parametric shifts should
+be made at each read point.
+
+General Board Design and Output Loading Considerations
+------------------------------------------------------
+
+Signal Integrity
+................ 
+
+Care must be taken in the design of the active signal generators to ensure that
+they are capable of meeting the minimum rise/fall times and attaining the
+specified input switching levels at each device as defined in the respective
+Data Sheet when the boards are fully loaded.
+Termination resistors may be required to reduce reflections and hence improve
+overall signal integrity on the distributed clock lines.
+
+Current Limiting Resistors
+..........................
+
+Current limiting resistors should always be used where signals are connected to
+a fixed logic level i.e between the pin and Vdd/Vss supply line.
+In the event of input circuitry breaking down in some manner and causing a short
+internal to the device, providing a path to one of the supply rails, the current
+drawn is now limited by the inclusion of these resistors and hence the
+exercising will continue i.e the power supply will not current limit.
+
+Outputs Unloaded
+................
+
+If the device outputs are unloaded, the peripheral output drivers will only be
+stressed by very short transition currents that occur as the 'p' and 'n'
+transistors switch state.
+In the steady state between transitions, there will be only leakage current
+flowing through the drain-source regions of both the 'p' and 'n' transistors.
+
+Its advantage is that there is less space taken up by passive components on the 
+board and less current drawn from the power supply.
+
+Resistive Loading
+.................
+
+If the device outputs are resistively loaded, the resistor should be connected to a midrail voltage and its value chosen such the rated IOL/IOH flows.
+
+This is usually not realistic as it requires another supply to be provided
+capable of sinking/sourcing the currents and piping this around the board or
+doubling the amount of resistors by providing a potential divider for each
+output.
+ 
+A compromise is to split the output pin resistor connections between the Vdd and
+Vss lines. This results in those pins connected to ground via the resistors
+having their 'p' channels stressed more than their corresponding 'n' channels
+and vice versa.
+
+Resistive loads result in transition currents in both 'p' and 'n' transistors
+and steady state currents to flow in either or both of the 'p' and 'n'
+transistors dependent on their configuration.
+
+The disadvantage is that the passive components require board space and must be
+capable of withstanding the high temperatures for very long durations. There is also the additional power requirements to consider. 
+
+Capacitive Loading
+..................
+
+If the device outputs are capacitively loaded, then both the 'p' and 'n'
+transistors in the peripheral output drivers are exercised by internal and
+external transition currents in a more even manner.
+
+The initial capacitor current will be limited only by the on resistance of the
+respective source/sink transistor and hence would be higher than that
+experienced in a resistive setup. The current will however decay as the
+capacitor charges/discharges.
+
+The disadvantages are the cost of capacitors that can withstand the high
+temperatures and the board space used.
+
+                     <Advanced RISC Machines>

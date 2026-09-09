@@ -1,0 +1,84 @@
+  ************************************************************
+  **** ARM7TDMI (0.25um, 2.5V) Design Environment         ****
+  ****                                                    ****
+  ****          Test Vector : JTAG(serial)                ****
+  ****          Simulator   : Verilog-XL (verilog)        ****
+  ****                      : NC-SIM     (verilog)        ****
+  ****                      : Modelsim   (verilog,vhdl)   ****
+  ****                      : VCS        (verilog)        ****
+  ****          O/S         : Solaris / HPUX              ****
+  ****          Rev.number  : 2.0                         ****
+  ****          Date        : 2000/08/29                  ****
+  ************************************************************
+
+  |-/ARM7TDMI_serial/       ; ARM7TDMI model simulation environment using JTAG
+  |   |
+  |   |-/bin/
+  |   |      compile_vxl                   ; test run script using verilog-xl
+  |   |    ( compile_modelsim_vhd   )      ; test run script using modelsim(vhdl)
+  |   |    ( compile_modelsim       )      ; test run script using modelsim(verilog)
+  |   |    ( compile_ncsim          )      ; test run script using ncsim(verilog)
+  |   |    ( compile_vcs            )      ; test run script using vcs(verilog)
+  |   |      t_vxl                         ; all sim batch file using verilog-xl
+  |   |    ( t_modelsim_vhd         )      ; all sim batch file using modelsim(vhdl)
+  |   |    ( t_modelsim             )      ; all sim batch file using modelsim(verilog)
+  |   |    ( t_ncsim                )      ; all sim batch file using ncsim(verilog)
+  |   |    ( t_vcs                  )      ; all sim batch file using vcs(verilog)
+  |   |                                      ex) >> compile_vxl arm7tdmi_ale_aler3_p0 max ctime
+  |   |                                      ex) >> t_vxl typ sdf
+  |   |
+  |   |-/svt/               ; ARM7TDMI serial test vectors
+  |   |      arm7tdmi_ale_serr3_p0.v
+  |   |      arm7tdmi_arm_serr3_p0.v
+  |   |      arm7tdmi_debug_serr3_p0.v
+  |   |      arm7tdmi_ice_serr3_p0.v
+  |   |      arm7tdmi_mul_serr3_p0.v
+  |   |      arm7tdmi_pipe_serr3_p0.v
+  |   |      arm7tdmi_regnew_serr3_p0.v
+  |   |      arm7tdmi_thumb_serr3_p0.v
+  |   |
+  |   |-/models/
+  |   |-/models/                           ; linked "ModelGen/SunOS(or HPUX)/4.1.1/
+  |   |    |-/cadence_xl_verilog/          ; Verilog-XL model
+  |   |    |     ARM7TDMIr3.so[sl]         ;   ARM7TDMI object code
+  |   |    |     ARM7TDMIr3.v              ;   ARM7TDMI verilog file for function call
+  |   |    |     ARM7TDMIr3_sdf.v          ;   ARM7TDMI verilog file for function call
+  |   |   (|-/cadence_nc_verilog/   )
+  |   |   (|-/cadence_nc_vhdl/      )
+  |   |   (|-/mti_modelsim_verilog/ )
+  |   |   (|-/mti_modelsim_vhdl/    )
+  |   |   (|-/synopsys_vcs_verilog/ )
+  |   |
+  |   |-/tdef_sdf/
+  |   |      arm7tdmir3a_max.sdf_modelvhd  ; ARM7TDMI sdf(worst)   file for sdf backannotation
+  |   |      arm7tdmir3a_max.sdf_vxl       ; ARM7TDMI sdf(worst)   file for sdf backannotation
+  |   |      arm7tdmir3a_max.tdef          ; ARM7TDMI tdef(worst)  file for ctime
+  |   |      arm7tdmir3a_typ.sdf_modelvhd  ;
+  |   |      arm7tdmir3a_typ.sdf_vxl       ;
+  |   |      arm7tdmir3a_typ.tdef          ;
+  |   |      arm7tdmir3a_min.sdf_modelvhd  ;
+  |   |      arm7tdmir3a_min.sdf_vxl       ;
+  |   |      arm7tdmir3a_min.tdef          ;
+  |   |
+  |   |-/log/                              ;  simulation log directory
+  |   |
+  |
+  |             _________test_serial.v@_______
+  |            |                              |
+  |            |   ___ARM7TDMIr3.v_ctime__    |
+  |            |   | or ARM7DTMIr3.v_sdf |    |
+  |            |   |                     |    |
+  |            |   |                <====|====|===  ARM7TDMIr3.tdef@
+  |            |   |                     |    |  or ARM7TDMIr3.sdf@
+  |            |    ---------------------     |
+  |            |           vectors            |
+  |             ------------------------------
+  |
+  |    : Test Method
+  |      1. Select in mind the vector for test in /ARM7TDMI_serial/svt/
+  |      2. At /ARM7TDTMI_serial/bin/ directory
+  |
+  |         ex)  when test with arm7tdmi_ale_serr3_p0.v
+  |
+  |              ./compile_vxl arm7tdmi_ale_serr3_p0 min ctime
+  |

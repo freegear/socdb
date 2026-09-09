@@ -1,0 +1,260 @@
+ 
+****************************************
+Report : design
+Design : Clcd
+Version: 2002.05-SP2
+Date   : Tue Apr  1 16:00:12 2003
+****************************************
+
+Design allows ideal nets on clock nets.
+
+Library(s) Used:
+
+    cb18_generic_memory_max (File: /home/mpopoola/work/PrimeCell_peripherals/clcd_pl110/synopsys/db/cb18_generic_memory_max.db)
+    cb18os120_generic_max (File: /home/mpopoola/work/PrimeCell_peripherals/avanti/2000.3/cb18/v1.0/synopsys/cb18os120/1999.05/models/generic/cb18os120_generic_max.db)
+
+Local Link Library:
+
+    {cb18os120_generic_max.db}
+
+Flip-Flop Types:
+
+    No flip-flop types specified.
+
+Latch Types:
+
+    No latch types specified.
+
+Operating Conditions:
+
+ Name          Library   Calc_mode Process
+                                          Temp   Volt   Interconnect Model
+    ----------------------------------------------------------------------------
+ cb18os120_generic_max
+               cb18os120_generic_max
+                                     1.20 125.00   1.62 worst_case_tree
+
+Min Operating Conditions:
+
+ Name          Library   Calc_mode Process
+                                          Temp   Volt   Interconnect Model
+    ----------------------------------------------------------------------------
+ cb18os120_generic_min
+               cb18os120_generic_min
+                                     0.80 -40.00   1.98 best_case_tree
+
+Wire Loading Model:
+
+    Selected manually by the user.
+
+Name           :   16000
+Location       :   cb18os120_generic_max
+Resistance     :   0.000321
+Capacitance    :   0.00024
+Area           :   0.01
+Slope          :   101.25
+Fanout   Length   Points Average Cap Std Deviation
+--------------------------------------------------------------
+     1    15.45
+     2    30.75
+     3    49.05
+     4    87.75
+     5   108.19
+     6   133.57
+     7   144.38
+     8   231.00
+     9   237.75
+    10   296.25
+    11   377.25
+    12   423.00
+    13   429.00
+    14   447.75
+    15   472.50
+    16   492.00
+    17   531.00
+    18   609.75
+    19   695.25
+    20   796.50
+
+
+Wire Loading Model for Minimum Delay Analysis:
+
+    Selected manually by the user.
+
+Name           :   ForQA
+Location       :   cb18os120_generic_max
+Resistance     :   0.000321
+Capacitance    :   0.00024
+Area           :   0.01
+Slope          :   135
+Fanout   Length   Points Average Cap Std Deviation
+--------------------------------------------------------------
+     1    20.60
+     2    41.00
+     3    65.40
+     4   117.00
+     5   144.25
+     6   178.10
+     7   192.50
+     8   308.00
+     9   317.00
+    10   395.00
+    11   503.00
+    12   564.00
+    13   572.00
+    14   597.00
+    15   630.00
+    16   656.00
+    17   708.00
+    18   813.00
+    19   927.00
+    20  1062.00
+
+
+
+Wire Loading Model Mode: enclosed.
+
+Timing Ranges:
+
+    No timing ranges specified.
+
+Pin Input Delays:
+
+    None specified.
+
+Pin Output Delays:
+
+    None specified.
+
+Disabled Timing Arcs:
+
+    No arcs disabled.
+
+Required Licenses:
+
+    None Required
+
+Design Parameters:
+
+    None specified.
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : constraint
+Design : Clcd
+Version: 2002.05-SP2
+Date   : Tue Apr  1 16:02:04 2003
+****************************************
+
+
+                                                   Weighted
+    Group (max_delay/setup)      Cost     Weight     Cost
+    -----------------------------------------------------
+    CLCDCLK                      0.00      1.00      0.00
+    HCLK                         0.00      1.00      0.00
+    nCLCDCLK                     0.00      1.00      0.00
+    default                      0.00      1.00      0.00
+    -----------------------------------------------------
+    max_delay/setup                                  0.00
+
+                              Total Neg  Critical
+    Group (critical_range)      Slack    Endpoints   Cost
+    -----------------------------------------------------
+    CLCDCLK                      0.00         0      0.00
+    HCLK                         0.00         0      0.00
+    nCLCDCLK                     0.00         0      0.00
+    default                      0.00         0      0.00
+    -----------------------------------------------------
+    critical_range                                   0.00
+
+                                                   Weighted
+    Group (min_delay/hold)       Cost     Weight     Cost
+    -----------------------------------------------------
+    CLCDCLK                      0.00      1.00      0.00
+    HCLK                         0.00      1.00      0.00
+    nCLCDCLK                     0.00      1.00      0.00
+    default                      0.00      1.00      0.00
+    -----------------------------------------------------
+    min_delay/hold                                   0.00
+
+
+    Constraint                                       Cost
+    -----------------------------------------------------
+    multiport_net                                    0.00 (MET)
+    max_transition                                   0.00 (MET)
+    max_fanout                                       0.00 (MET)
+    max_capacitance                                  0.00 (MET)
+    max_delay/setup                                  0.00 (MET)
+    critical_range                                   0.00 (MET)
+    min_delay/hold                                   0.00 (MET)
+    max_area                                     43291.11 (VIOLATED)
+
+
+ 
+****************************************
+Report : clocks
+Design : Clcd
+Version: 2002.05-SP2
+Date   : Tue Apr  1 16:02:06 2003
+****************************************
+
+Attributes:
+    d - dont_touch_network
+    f - fix_hold
+    p - propagated_clock
+    G - generated_clock
+
+Clock          Period   Waveform            Attrs     Sources
+--------------------------------------------------------------------------------
+CLCDCLK         11.68   {0 5.84}            d f       {CLCDCLK}
+HCLK             5.85   {0 2.925}           d f       {HCLK}
+nCLCDCLK        11.68   {5.84 11.68}        d f       {nCLCDCLK}
+--------------------------------------------------------------------------------
+ 
+****************************************
+Report : Attribute
+Design : Clcd
+Version: 2002.05-SP2
+Date   : Tue Apr  1 16:02:06 2003
+****************************************
+
+Design          Object             Type      Attribute Name            Value
+--------------------------------------------------------------------------------
+Clcd            Clcd               design    hdl_canonical_params      
+Clcd            Clcd               design    hdl_canonical_params_etc_attr
+Clcd            Clcd               design    hdl_parameters            
+Clcd            Clcd               design    hdl_template              Clcd
+Clcd            Clcd               design    link_design_libraries     IEEE
+Clcd            Clcd               design    wire_load_model_mode      enclosed
+Clcd            Clcd               design    wire_load_selection_type  1
+Clcd            Clcd               design    min_wire_load_selection_type
+                                                                       1
+Clcd            Clcd               design    max_transition            2.000000
+Clcd            Clcd               design    max_area                  0.000000
+Clcd            Clcd               design    minimum_multibit_width    2
+Clcd            Clcd               design    fix_multiple_port_nets    feedthroughs constants outputs buffer_constants
+Clcd            Clcd               design    critical_range            1.000000
+Clcd            Clcd               design    ungroup_all               false
+Clcd            Clcd               design    ba_attaches_on_pins       false
+Clcd            Clcd               design    map                       true
+Clcd            Clcd               design    compile_cpu_hostname      n800079c4
+Clcd            Clcd               design    compile_abo_cpu_time      741.959961
+Clcd            Clcd               design    compile_rbo_cpu_time      2509.729980
+Clcd            Clcd               design    compile_tot_cpu_time      3466.819824
+Clcd            Clcd               design    compile_lib_cpu_time      9.380005
+Clcd            Clcd               design    compile_tdrs_cpu_time     234.659912
+Clcd            Clcd               design    exact_sequential_map      false
+Clcd            Clcd               design    redundancy_removal        true
+Clcd            Clcd               design    pads_thru_hier            false
+Clcd            Clcd               design    pads_respect_hier         false
+Clcd            Clcd               design    bs_mux_cost               200.000000
+Clcd            Clcd               design    net_area                  9088.761719
+Clcd            Clcd               design    test_scan_style           full_scan
+Clcd            Clcd               design    instance_name_suffix      
+Clcd            Clcd               design    bidir_mode                1
+Clcd            Clcd               design    annotated_net_capacitances
+                                                                       false
+Clcd            Clcd               design    annotated_net_resistances true
+Clcd            Clcd               design    annotated_connect_delays  false
+Clcd            Clcd               design    annotated_cell_delays     false
+

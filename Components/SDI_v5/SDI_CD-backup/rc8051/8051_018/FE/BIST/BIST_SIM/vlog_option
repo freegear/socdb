@@ -1,0 +1,94 @@
+//T_BIST.v
+//./epsc_top_bist.v
+// -------------------------------
+// Memory Core
+// -------------------------------
+//-v /Slibs/artisan/TSMC_0.18-micron-FB/G/aci/sc/verilog/tsmc18.v 
+//-v /Slibs/artisan/TSMC_0.18-micron-FB/G/fb_TSMCHOME_tpz973g_240c/digital/Front_End/verilog/tpz973g_240b/tpz973g.v
+
+-v /user/cklee/PRJ/8051_013/FE/BIST/BIST_LOGIC/SPSRAM256X8.v
+-v /user/cklee/PRJ/8051_013/FE/BIST/BIST_LOGIC/SPSRAM256X8_rb.v
+-v /user/cklee/PRJ/8051_013/FE/BIST/BIST_LOGIC/SPSRAM256X8_wrapper.v
+-v /user/cklee/PRJ/8051_013/FE/BIST/BIST_LOGIC/SPSRAM256X8_top.v
+
+/user/cklee/PRJ/8051_013/FE/SRC/T_BIST.v
+/user/cklee/PRJ/8051_013/FE/SRC/UDIV8x8.v
+/user/cklee/PRJ/8051_013/FE/SRC/acc.v
+/user/cklee/PRJ/8051_013/FE/SRC/adc.v
+/user/cklee/PRJ/8051_013/FE/SRC/alu_flag_d_m.v
+/user/cklee/PRJ/8051_013/FE/SRC/b.v
+/user/cklee/PRJ/8051_013/FE/SRC/da.v
+/user/cklee/PRJ/8051_013/FE/SRC/dimod.v
+/user/cklee/PRJ/8051_013/FE/SRC/div.v
+/user/cklee/PRJ/8051_013/FE/SRC/dptr.v
+/user/cklee/PRJ/8051_013/FE/SRC/ex_int_smpl.v
+/user/cklee/PRJ/8051_013/FE/SRC/gpio0.v
+/user/cklee/PRJ/8051_013/FE/SRC/gpio1.v
+/user/cklee/PRJ/8051_013/FE/SRC/gpio2.v
+/user/cklee/PRJ/8051_013/FE/SRC/gpio3.v
+/user/cklee/PRJ/8051_013/FE/SRC/ie.v
+/user/cklee/PRJ/8051_013/FE/SRC/ip.v
+/user/cklee/PRJ/8051_013/FE/SRC/mul.v
+/user/cklee/PRJ/8051_013/FE/SRC/mux16t1_8.v
+/user/cklee/PRJ/8051_013/FE/SRC/mux2t1_1.v
+/user/cklee/PRJ/8051_013/FE/SRC/one_shot.v
+/user/cklee/PRJ/8051_013/FE/SRC/page_addr.v
+/user/cklee/PRJ/8051_013/FE/SRC/parity_gen.v
+/user/cklee/PRJ/8051_013/FE/SRC/pc.v
+/user/cklee/PRJ/8051_013/FE/SRC/priority.v
+/user/cklee/PRJ/8051_013/FE/SRC/psw.v
+/user/cklee/PRJ/8051_013/FE/SRC/rc8051RtlTop.v
+/user/cklee/PRJ/8051_013/FE/SRC/rl.v
+/user/cklee/PRJ/8051_013/FE/SRC/rlc.v
+/user/cklee/PRJ/8051_013/FE/SRC/rr.v
+/user/cklee/PRJ/8051_013/FE/SRC/rrc.v
+/user/cklee/PRJ/8051_013/FE/SRC/sel_al.v
+/user/cklee/PRJ/8051_013/FE/SRC/sel_arth.v
+/user/cklee/PRJ/8051_013/FE/SRC/sign.v
+/user/cklee/PRJ/8051_013/FE/SRC/sp.v
+/user/cklee/PRJ/8051_013/FE/SRC/swap.v
+/user/cklee/PRJ/8051_013/FE/SRC/tcon.v
+/user/cklee/PRJ/8051_013/FE/SRC/tmod.v
+/user/cklee/PRJ/8051_013/FE/SRC/u_alu.v
+/user/cklee/PRJ/8051_013/FE/SRC/u_con.v
+/user/cklee/PRJ/8051_013/FE/SRC/u_cpu.v
+/user/cklee/PRJ/8051_013/FE/SRC/u_datapath.v
+/user/cklee/PRJ/8051_013/FE/SRC/u_int.v
+/user/cklee/PRJ/8051_013/FE/SRC/u_sfr.v
+/user/cklee/PRJ/8051_013/FE/SRC/u_tc.v
+/user/cklee/PRJ/8051_013/FE/SRC/u_uart.v
+/user/cklee/PRJ/8051_013/FE/SRC/xchd.v
+
+// -------------------------------
+// Test Bench
+// -------------------------------
+
+
+
++pulse_r/0 +pulse_e/100 +no_pulse_msg
+//+maxdelays
+//+mindelays
+//+typdelays
+
++nolibcell
++logpsterr +logpllerr
++libext+.vmd+.v
+
+// options for TSMC only
++libname:tsmc18
++libcomp:tpz973g
++access+rwc
+//+bus_conflict_off
+//+ncnontcglitch
+//+nospecify
+//+notimingchecks
+
+
+
+
++global_power_on
++nowarnTFNPC
++nowarnSDFA
++nowarnSDFNDP
++nowarnPSDNGL2
+

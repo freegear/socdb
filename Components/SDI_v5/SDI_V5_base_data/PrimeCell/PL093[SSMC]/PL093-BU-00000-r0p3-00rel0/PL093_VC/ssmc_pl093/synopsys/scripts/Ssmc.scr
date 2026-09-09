@@ -1,0 +1,361 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2003 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+-- -----------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : Ssmc.scr.rca
+-- File Revision          : 1.7
+-- 
+-- Release Information    : PrimeCell(TM)-PL093-r0p3-00rel0
+-- 
+-- -----------------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the 
+--           SSMC block.             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the input and output delay     
+--           constraints for the non-AMBA I/O in the SSMC block. 
+--
+-- --=========================================================================*/
+/******************************************************************************/
+/* SSMC BLOCK-SPECIFIC TIMING PARAMETERS                                      */
+/******************************************************************************/
+
+/******************************************************************************/
+/* Input Delays. Constraints used are the same as AHB Input signals.          */
+/******************************************************************************/
+
+/***************************/
+/* Peripheral Inputs       */
+/***************************/
+
+/* Maximum allowable input delay on the non amba inputs (30% input setup time)*/
+tidssmcnonambaipmax  = 0.7 * tclk
+
+/* Minimum input delay on the non amba inputs */
+tidssmcnonambaipmin  = 0.0
+
+/* Calculating maximum time available for SMDATAIN with respect to feedback   */
+/* clock */
+tidssmcdatainmax = tidssmcnonambaipmax - feedback
+
+/* Minimum time available for SMDATAIN with respect to feedback clock         */
+tidssmcdatainmin = 0.0
+
+/* Maximum input delay on Tied inputs */
+tidtiedinputsmax  = 0.0
+
+/* Calculating the maximum allowable input delay on nSMBURSTWAIT inputs */
+tidsyncburstwaitmax  = 3.0
+
+/* Maximum allowable input delay on the non amba inputs (40% input setup time)
+   for TIC port inputs */
+tidssmcnonambaticipmax  = 0.6 * tclk
+
+/***************/
+/* Scan Inputs */
+/***************/
+/* The input delay on the Scan related input signals has been set to  */
+/* zero value to prevent addition of extra gates in these paths.      */
+tidscanmax = 0.0  
+tidscanmin = 0.0 
+
+/******************************************************************************/
+/* Output valid and hold times. Constraints used are same as AHB output       */
+/* signals                                                                    */
+/******************************************************************************/
+
+/**********************/
+/* Peripheral Outputs */
+/**********************/
+
+/* Maximum allowable output delay on non amba outputs (40% output valid time)*/
+tovssmcnonambaopmax    = 0.6 * tclk
+
+/* Minimum output delay on the inputs */
+tovssmcnonambaopmin    = 0
+
+/* Maximum allowable output delay on tic outputs that are routed directly from
+ * the inputs. (80% output valid time) */
+tovssmcticlogicopmax  = 0.2 * tclk
+
+/* Minimum output delay on the outputs */
+tovssmcticopmin    = 0
+
+tovssmcnonambaopclkd  = 0.2 * tclk
+tohssmcnonambaopclkd  = 0
+
+tovssmcmemclkdopmax = tclk - tovssmcnonambaopclkd
+tovssmcmemclkdopmin = tohssmcnonambaopclkd
+
+/* 22% o/p valid time */
+tod78 = 0.78 * tclk
+
+/* 20% o/p valid time */
+tod80 = 0.8 * tclk
+
+/* 18% o/p valid time */
+tod82 = 0.82 * tclk
+
+/****************/
+/* Scan Outputs */
+/*****************/
+
+/* The output delay on the Scan related output signals has been set   */
+/* to a zero value to prevent addition of extra gates in these paths. */
+todscanmax = 0.0
+todscanmin = 0.0
+
+create_clock -p tclk -w {feedbackdelay tclkfdelayh} -name v_SMMEMCLKDELAY
+
+/******************************************************************************/
+/* INPUT CONSTRAINTS FOR NON-AMBA PORTS. Constraints used are same as input   */
+/* delays of AHB signals.                                                     */
+/******************************************************************************/
+
+/*********************/
+/* Peripheral Inputs */
+/*********************/
+
+set_input_delay -clock HCLK          -min tidssmcnonambaipmin SMBUSGNTEBI
+set_input_delay -clock HCLK          -max tidssmcnonambaipmax SMBUSGNTEBI
+
+set_input_delay -clock HCLK          -min tidssmcnonambaipmin SMBUSBACKOFFEBI
+set_input_delay -clock HCLK          -max tidssmcnonambaipmax SMBUSBACKOFFEBI
+
+set_input_delay -clock HCLK          -min tidssmcnonambaipmin SMTICBUSGNTEBI
+set_input_delay -clock HCLK          -max tidssmcnonambaipmax SMTICBUSGNTEBI
+
+set_input_delay -clock HCLK          -min tidssmcnonambaipmin SMBIGENDIAN
+set_input_delay -clock HCLK          -max tidtiedinputsmax    SMBIGENDIAN
+
+set_input_delay -clock HCLK          -min tidssmcnonambaipmin SMEXTBUSMUX
+set_input_delay -clock HCLK          -max tidtiedinputsmax    SMEXTBUSMUX
+
+set_input_delay -clock HCLK          -min tidssmcnonambaipmin SMMWCS7
+set_input_delay -clock HCLK          -max tidtiedinputsmax    SMMWCS7
+
+set_input_delay -clock HCLK          -min tidssmcnonambaipmin SMBLS7POL
+set_input_delay -clock HCLK          -max tidtiedinputsmax    SMBLS7POL
+
+set_input_delay -clock HCLK          -min tidssmcnonambaipmin SMMEMCLKRATIO
+set_input_delay -clock HCLK          -max tidtiedinputsmax    SMMEMCLKRATIO
+
+set_input_delay -clock SMMEMCLK      -min tidssmcnonambaipmin SMWAIT
+set_input_delay -clock SMMEMCLK      -max tidssmcnonambaipmax SMWAIT
+
+set_input_delay -clock SMMEMCLK      -min tidssmcnonambaipmin SMCANCELWAIT
+set_input_delay -clock SMMEMCLK      -max tidssmcnonambaipmax SMCANCELWAIT
+
+/* nSMBURSTWAIT is constrained with respect FBCLK */
+set_input_delay -clock SMFBCLK0      -min tidssmcnonambaipmin nSMBURSTWAIT
+set_input_delay -clock SMFBCLK0      -max tidsyncburstwaitmax nSMBURSTWAIT
+
+/* Read Data is constrained with respect FBCLK instead of HCLK, To get
+ * correct constraining with respect to both SMMEMCLK and FBCLK. 
+*/
+set_input_delay -clock SMFBCLK0      -min tidssmcdatainmin    SMDATAIN
+set_input_delay -clock SMFBCLK0      -max tidssmcdatainmax    SMDATAIN
+
+set_input_delay -clock HCLK          -min tidssmcnonambaipmin    SMTESTREQA
+set_input_delay -clock HCLK          -max tidssmcnonambaticipmax SMTESTREQA
+
+set_input_delay -clock HCLK          -min tidssmcnonambaipmin    SMTESTREQB
+set_input_delay -clock HCLK          -max tidssmcnonambaticipmax SMTESTREQB
+
+/***************/
+/* Scan Inputs */
+/***************/
+set_input_delay -clock HCLK          -min tidscanmin          SCANINHCLK
+set_input_delay -clock HCLK          -max tidscanmax          SCANINHCLK
+
+set_input_delay -clock SMMEMCLK      -min tidscanmin          SCANINSMMEMCLK
+set_input_delay -clock SMMEMCLK      -max tidscanmax          SCANINSMMEMCLK
+
+set_input_delay -clock nSMMEMCLK     -min tidscanmin          SCANINnSMMEMCLK
+set_input_delay -clock nSMMEMCLK     -max tidscanmax          SCANINnSMMEMCLK
+
+set_input_delay -clock SMMEMCLKDELAY -min tidscanmin          SCANINCLKDELAY
+set_input_delay -clock SMMEMCLKDELAY -max tidscanmax          SCANINCLKDELAY
+
+set_input_delay -clock SMFBCLK0      -min tidscanmin          SCANINFBCLK0
+set_input_delay -clock SMFBCLK0      -max tidscanmax          SCANINFBCLK0
+
+set_input_delay -clock SMFBCLK1      -min tidscanmin          SCANINFBCLK1
+set_input_delay -clock SMFBCLK1      -max tidscanmax          SCANINFBCLK1
+
+set_input_delay -clock SMFBCLK2      -min tidscanmin          SCANINFBCLK2
+set_input_delay -clock SMFBCLK2      -max tidscanmax          SCANINFBCLK2
+
+set_input_delay -clock SMFBCLK3      -min tidscanmin          SCANINFBCLK3
+set_input_delay -clock SMFBCLK3      -max tidscanmax          SCANINFBCLK3
+
+set_input_delay -clock HCLK          -min tidscanmin          SCANENABLE
+set_input_delay -clock HCLK          -max tidscanmax          SCANENABLE
+
+set_drive 0 SCANENABLE
+/* Infinite drive strength Scan Enable signal */
+
+remove_driving_cell find(port, SCANENABLE)
+/* Set no driving cell on Scan Enable signal */
+
+set_load 0 SCANENABLE
+/* Zero load Scan Enable signal */
+
+set_dont_touch_network find(port, SCANENABLE)
+/* Preserve the Scan Enable net during optimisation */
+
+/******************************************************************************/
+/* OUTPUT CONSTRAINTS FOR NON-AMBA PORTS. Constraints used are same as AHB    */
+/* output signals.                                                            */
+/******************************************************************************/
+
+/*****************************/
+/* Peripheral signal Outputs */
+/*****************************/
+set_output_delay -clock SMMEMCLK        -min tovssmcnonambaopmin SMBUSREQEBI
+set_output_delay -clock SMMEMCLK        -max tovssmcnonambaopmax SMBUSREQEBI
+
+set_output_delay -clock HCLK            -min tovssmcnonambaopmin SMTICBUSREQEBI
+set_output_delay -clock HCLK            -max tovssmcnonambaopmax SMTICBUSREQEBI
+
+set_output_delay -clock SMMEMCLK        -max -add_delay tovssmcnonambaopmax \
+                                                   find(port, "SMDATAOUT*")
+set_output_delay -clock HCLK            -max -add_delay tovssmcnonambaopmax \
+                                                   find(port, "SMDATAOUT*")
+set_output_delay -clock v_SMMEMCLKDELAY -max -add_delay tovssmcmemclkdopmax \
+                                                   find(port, "SMDATAOUT*")
+
+set_output_delay -clock SMMEMCLK        -min -add_delay tovssmcnonambaopmin \
+                                                   find(port, "SMDATAOUT*")
+set_output_delay -clock HCLK            -min -add_delay tovssmcnonambaopmin \
+                                                   find(port, "SMDATAOUT*")
+set_output_delay -clock v_SMMEMCLKDELAY -min -add_delay tovssmcmemclkdopmin \
+                                                   find(port, "SMDATAOUT*")
+
+set_output_delay -clock SMMEMCLK        -max -add_delay tovssmcnonambaopmax \
+                                                    find(port, "nSMDATAEN*")
+set_output_delay -clock HCLK            -max -add_delay tovssmcnonambaopmax \
+                                                    find(port, "nSMDATAEN*")
+set_output_delay -clock v_SMMEMCLKDELAY -max -add_delay tovssmcmemclkdopmax \
+                                                    find(port, "nSMDATAEN*")
+
+set_output_delay -clock SMMEMCLK        -min -add_delay tovssmcnonambaopmin \
+                                                    find(port, "nSMDATAEN*")
+set_output_delay -clock HCLK            -min -add_delay tovssmcnonambaopmin \
+                                                    find(port, "nSMDATAEN*")
+set_output_delay -clock v_SMMEMCLKDELAY -min -add_delay tovssmcmemclkdopmin \
+                                                    find(port, "nSMDATAEN*")
+
+set_output_delay -clock SMMEMCLK        -max -add_delay tod80 \
+                                                            find(port, "SMBAA")
+set_output_delay -clock v_SMMEMCLKDELAY -max -add_delay tod80 \
+                                                            find(port, "SMBAA")
+
+set_output_delay -clock SMMEMCLK        -min -add_delay tovssmcnonambaopmin \
+                                                            find(port, "SMBAA")
+set_output_delay -clock v_SMMEMCLKDELAY -min -add_delay tovssmcmemclkdopmin \
+                                                            find(port, "SMBAA")
+
+set_output_delay -clock SMMEMCLK        -max -add_delay tod78 \
+                                                      find(port, "SMADDRVALID")
+set_output_delay -clock v_SMMEMCLKDELAY -max -add_delay tod80 \
+                                                      find(port, "SMADDRVALID")
+
+set_output_delay -clock SMMEMCLK        -max -add_delay tod78 \
+                                                          find(port, "SMADDR*")
+set_output_delay -clock v_SMMEMCLKDELAY -max -add_delay tod78 \
+                                                          find(port, "SMADDR*")
+
+set_output_delay -clock SMMEMCLK        -min -add_delay tovssmcnonambaopmin \
+                                                          find(port, "SMADDR*")
+set_output_delay -clock v_SMMEMCLKDELAY -min -add_delay tovssmcmemclkdopmin \
+                                                          find(port, "SMADDR*")
+
+set_output_delay -clock SMMEMCLK        -max -add_delay tod80 \
+                                                            find(port, "SMCS*")
+set_output_delay -clock v_SMMEMCLKDELAY -max -add_delay tod82 \
+                                                            find(port, "SMCS*")
+
+set_output_delay -clock SMMEMCLK        -min -add_delay tovssmcnonambaopmin \
+                                                            find(port, "SMCS*")
+set_output_delay -clock v_SMMEMCLKDELAY -min -add_delay tovssmcmemclkdopmin \
+                                                            find(port, "SMCS*")
+
+set_output_delay -clock SMMEMCLK        -max -add_delay tod80 \
+                                                           find(port, "nSMCS*")
+set_output_delay -clock v_SMMEMCLKDELAY -max -add_delay tod82 \
+                                                           find(port, "nSMCS*")
+
+set_output_delay -clock SMMEMCLK        -min -add_delay tovssmcnonambaopmin \
+                                                           find(port, "nSMCS*")
+set_output_delay -clock v_SMMEMCLKDELAY -min -add_delay tovssmcmemclkdopmin \
+                                                           find(port, "nSMCS*")
+
+set_output_delay -clock v_SMMEMCLKDELAY -max tod80 \
+                                                           find(port, "nSMWEN")
+
+set_output_delay -clock v_SMMEMCLKDELAY -min tod82 \
+                                                           find(port, "nSMWEN")
+
+set_output_delay -clock SMMEMCLK        -max -add_delay tod78 \
+                                                          find(port, "nSMBLS*")
+set_output_delay -clock v_SMMEMCLKDELAY -max -add_delay tod78 \
+                                                          find(port, "nSMBLS*")
+
+set_output_delay -clock SMMEMCLK        -min -add_delay tovssmcnonambaopmin \
+                                                          find(port, "nSMBLS*")
+set_output_delay -clock v_SMMEMCLKDELAY -min -add_delay tovssmcmemclkdopmin \
+                                                          find(port, "nSMBLS*")
+
+set_output_delay -clock SMMEMCLK        -max -add_delay tod78 \
+                                                           find(port, "nSMOEN")
+set_output_delay -clock v_SMMEMCLKDELAY -max -add_delay tod78 \
+                                                           find(port, "nSMOEN")
+
+set_output_delay -clock SMMEMCLK        -min -add_delay tovssmcnonambaopmin \
+                                                           find(port, "nSMOEN")
+set_output_delay -clock v_SMMEMCLKDELAY -min -add_delay tovssmcmemclkdopmin \
+                                                           find(port, "nSMOEN")
+
+/* Outputs with 80% output valid time */
+set_output_delay -clock HCLK            -min tovssmcticopmin      SMTESTACK
+set_output_delay -clock HCLK            -max tovssmcticlogicopmax SMTESTACK
+
+/****************/
+/* Scan Outputs */
+/****************/
+set_output_delay -clock HCLK            -min todscanmin SCANOUTHCLK
+set_output_delay -clock HCLK            -max todscanmax SCANOUTHCLK
+
+set_output_delay -clock SMMEMCLK        -min todscanmin SCANOUTSMMEMCLK
+set_output_delay -clock SMMEMCLK        -max todscanmax SCANOUTSMMEMCLK
+
+set_output_delay -clock nSMMEMCLK       -min todscanmin SCANOUTnSMMEMCLK
+set_output_delay -clock nSMMEMCLK       -max todscanmax SCANOUTnSMMEMCLK
+
+set_output_delay -clock SMMEMCLKDELAY   -min todscanmin SCANOUTCLKDELAY
+set_output_delay -clock SMMEMCLKDELAY   -max todscanmax SCANOUTCLKDELAY
+
+set_output_delay -clock SMFBCLK0        -min todscanmin SCANOUTFBCLK0
+set_output_delay -clock SMFBCLK0        -max todscanmax SCANOUTFBCLK0
+
+set_output_delay -clock SMFBCLK1        -min todscanmin SCANOUTFBCLK1
+set_output_delay -clock SMFBCLK1        -max todscanmax SCANOUTFBCLK1
+
+set_output_delay -clock SMFBCLK2        -min todscanmin SCANOUTFBCLK2
+set_output_delay -clock SMFBCLK2        -max todscanmax SCANOUTFBCLK2
+
+set_output_delay -clock SMFBCLK3        -min todscanmin SCANOUTFBCLK3
+set_output_delay -clock SMFBCLK3        -max todscanmax SCANOUTFBCLK3
+
+/************************* End of Ssmc.scr ************************************/

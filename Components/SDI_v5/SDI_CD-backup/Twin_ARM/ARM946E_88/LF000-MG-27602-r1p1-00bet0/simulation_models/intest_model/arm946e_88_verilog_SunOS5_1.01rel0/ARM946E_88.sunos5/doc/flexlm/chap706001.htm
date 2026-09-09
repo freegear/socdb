@@ -1,0 +1,83 @@
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap6.htm">Previous Chapter</a>
+ * <a href="chap8.htm">Next Chapter</a>
+<p>
+<a name="88781: AppTitle1: Appendix A Hostids for FLEXlm-Supported Machines"></a><title>FLEXlm End User Manual: Appendix A  
+Hostids for FLEXlm<I></I>-Supported Machines</title>
+<h1>Appendix A  
+Hostids for FLEXlm<I></I>-Supported Machines</h1>
+<p>
+FLEXlm<I></I> uses different machine identifications for different machine architectures. For 
+example, all Sun Microsystems, Inc. machines have a unique 
+<a name="_IX_119"></a>hostid, whereas all DEC 
+machines do not. For this reason, the ethernet address is used on some machine 
+architectures as the `hostid'. An ethernet address is a 6-byte quantity, with each byte 
+specified as two hexadecimal digits. Specify all 12 hex digits when using an ethernet 
+address as a hostid. For example, if the ethernet address is 8:0:20:0:5:ac, you would 
+specify `0800200005ac' as the hostid.<p>
+<p>
+The program 
+<TT>lmhostid</TT> will print the exact hostid that 
+FLEXlm<I></I> expects to use on any 
+given machine. The following table lists alternate methods to obtain the required 
+hostid for each machine architecture<p>
+<p>
+Numeric, 32-bit hostids are normally used in hexadecimal format. On some systems, 
+including HP and SGI, the system command returns the number in decimal format. 
+Since v3.0 of 
+FLEXlm<I></I>, a '#' before the hostid, indicates to 
+FLEXlm<I></I> that this is a 
+decimal number. For example, if the HP uname -i command returns `2005771344', 
+FLEXlm<I></I> will accept `#2005771344'. Or it can be converted to hexadecimal. On Unix 
+system, you can convert to hex with the following script:<p>
+<pre>% echo 2005771344 16o p | dc</pre>
+<pre>778DA450</pre>
+<a name="A.1"></a><h2>A.1  Hostid Table</h2>
+
+<table border>
+
+<tr><td align=left>AIX (RS/6000, 
+PPC)<td align=left>32-bit hostid<td align=left><TT>uname -m</TT> (returns 
+000276513100), then 
+remove last 2 digits, and use 
+remaining last 8 digits<td align=left>02765131
+<tr><td align=left>DEC Alpha<td align=left>ethernet 
+address<td align=left><TT>netstat -i</TT><td align=left> 080020005532
+<tr><td align=left>HP<td align=left>32-bit hostid<td align=left><TT>uname -i 
+</TT>and convert to 
+hex, or prepend with #<td align=left>778DA450 or 
+#2005771344
+<tr><td align=left><td align=left>ethernet 
+address 
+<td align=left><TT>lanscan 
+</TT>(station address 
+without leading `0x')<td align=left>0000F0050185
+<tr><td align=left>Linux<td align=left>ethernet 
+address<td align=left><TT>/sbin/ifconfig eth0 
+</TT>and remove colons from 
+HWaddr 00:40:05:16:E5:25<td align=left>00400516E525
+<tr><td align=left>SCO<td align=left>Hostid String<td align=left><TT>uname -x 
+</TT>(returns 
+SCO00354), then prefix 
+with `ID_STRING='<td align=left>ID_STRING=SCO00354
+<tr><td align=left>SGI<td align=left>32-bit hostid<td align=left><TT>/etc/sysinfo -s</TT>, 
+convert to hex, or prefix '#'<td align=left>69064C3C or 
+#1762020412
+<tr><td align=left>SUN<td align=left>32-bit hostid<td align=left><TT>hostid</TT><td align=left>170a3472
+<tr><td align=left>VAX/VMSAlpha/OpenVMS<td align=left>ethernet 
+address<td align=left><TT>ncp</TT><td align=left>0800200055327
+<tr><td align=left>Windows<td align=left>ethernet<td align=left>lmutil lmhostid<td align=left>0800200055327
+<tr><td align=left><td align=left>Disk serial 
+number<td align=left>DIR C: (look for `Volume 
+Serial Number is', and 
+remove `-')<td align=left>DISK_SERIAL_NUM=
+1CA25283
+<tr><td align=left><td align=left>Dongle - parallel port 
+hardware key<td align=left>lmhostid -flexid<td align=left>FLEXID=72850003
+</table>
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap6.htm">Previous Chapter</a>
+ * <a href="chap8.htm">Next Chapter</a>
+<p>

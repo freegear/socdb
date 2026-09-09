@@ -1,0 +1,86 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+-------------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : TIC.scr.rca
+-- File Revision          : 1.10
+-- 
+-- Release Information    : PrimeCell(TM)-PL092-REL1v1
+-- 
+-------------------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the 
+--           TIC block.             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the input and output delay     
+--           constraints for the non-AMBA I/O in the TIC block. 
+--
+-- --=========================================================================*/
+
+/******************************************************************************/
+/* TIC BLOCK-SPECIFIC TIMING PARAMETERS                                       */
+/******************************************************************************/
+
+/******************************************************************************/
+/* Input Delays                                                               */
+/******************************************************************************/
+
+/* Constraining the TIC inputs for 30% setup time which is 30ns at 10MHz */
+tidmaxticbusgnt = tclk * 0.3        /* TICBUSGNT input */
+tidmaxtbusin    = tclk * 0.7        /* TBUSIN input data bus */
+
+
+/******************************************************************************/
+/* Output Delays                                                              */
+/******************************************************************************/
+
+/* Constraining the output valid time at 10MHz  */
+todmaxtbusout   = tclk * 0.2        /* TBUSOUT output data bus. This has a  */
+                                    /* combinational delay path from HRDATA */
+                                    /* plus the internal logic              */
+
+todmaxticbusreq = tclk * 0.6        /* TICBUSREQ output signal */
+
+
+/******************************************************************************/
+/* INPUT CONSTRAINTS FOR NON-AMBA TIC PORTS                                   */
+/******************************************************************************/
+set_input_delay -clock HCLK -min tholdmax      TESTREQA
+set_input_delay -clock HCLK -max tidmaxtestreq TESTREQA
+
+set_input_delay -clock HCLK -min tholdmax      TESTREQB
+set_input_delay -clock HCLK -max tidmaxtestreq TESTREQB
+
+set_input_delay -clock HCLK -min tholdmax        TICBUSGNT
+set_input_delay -clock HCLK -max tidmaxticbusgnt TICBUSGNT
+
+set_input_delay -clock HCLK -min tholdmax      TBUSIN
+set_input_delay -clock HCLK -max tidmaxtbusin  TBUSIN
+
+
+/******************************************************************************/
+/* OUTPUT CONSTRAINTS FOR NON-AMBA TIC PORTS                                  */
+/******************************************************************************/
+set_output_delay -clock HCLK -min tholdmin      TESTACK
+set_output_delay -clock HCLK -max todmaxtestack TESTACK
+
+set_output_delay -clock HCLK -min tholdmin      TBUSOUT
+set_output_delay -clock HCLK -max todmaxtbusout TBUSOUT
+
+set_output_delay -clock HCLK -min tholdmin      TICREAD
+set_output_delay -clock HCLK -max todmaxticread TICREAD
+
+set_output_delay -clock HCLK -min tholdmin        TICBUSREQ
+set_output_delay -clock HCLK -max todmaxticbusreq TICBUSREQ
+
+/***************************** End of TIC.scr *********************************/

@@ -1,0 +1,2575 @@
+
+
+
+********************************************************************************
+*                                                                              *
+*                          TSMC VERILOG DESIGN SUMMARY                         *
+*                           (PRE PLACE AND ROUTE)                              *
+*                                                                              *
+*   DESIGN NAME:          rc8051RtlTop                                         *
+*   USER   NAME:                 cklee    SOURCE:                    VERILOG   *
+*   DATE:                 Jul  1, 2005    TIME:                     14:37:29   *
+*                                                                              *
+************************************SUMMARY*************************************
+*                                                                              *
+*   MACRO INPUTS TO VDD            338    MACRO INPUTS TO VSS             30   *
+*                                                                              *
+*   TOTAL OFF CHIP LOAD(PF)    4100.00    TOTAL METAL CAP LOAD(PF)    215.25   *
+*                                                                              *
+********************************************************************************
+*                                                                              *
+*                DELAY IMPLEMENTATION FOR TIMING VERIFICATION:                 *
+*                        TYPICAL = DATA BOOK INDUSTRIA                         *
+*                                                                              *
+********************************************************************************
+
+
+
+
+TABLE 1                             PORTS OF DESIGN
+================================================================================
+DESIGN NAME:	rc8051RtlTop
+   INPUTS :
+	in_xdat_a[7]
+	rom_data_i[7]
+	scan_en
+	in_xdat_a[6]
+	rom_data_i[6]
+	test_mode
+	clk
+	in_xdat_a[5]
+	rom_data_i[5]
+	in_xdat_a[4]
+	rom_data_i[4]
+	rst_p
+	in_xdat_a[3]
+	int0_i
+	rom_data_i[3]
+	in_xdat_a[2]
+	int1_i
+	rom_data_i[2]
+	all_t0_i
+	in_xdat_a[1]
+	rom_data_i[1]
+	all_t1_i
+	in_xdat_a[0]
+	rom_data_i[0]
+	all_rxd_i
+	BistMode
+
+   OUTPUTS :
+	addr_xdat[15]
+	out_xdat[7]
+	rom_adr_o[15]
+	addr_xdat[14]
+	out_xdat[6]
+	rom_adr_o[14]
+	addr_xdat[13]
+	out_xdat[5]
+	rom_adr_o[13]
+	addr_xdat[12]
+	out_xdat[4]
+	rom_adr_o[12]
+	addr_xdat[11]
+	out_xdat[3]
+	rom_adr_o[11]
+	addr_xdat[10]
+	out_xdat[2]
+	rom_adr_o[10]
+	addr_xdat[9]
+	out_xdat[1]
+	rom_adr_o[9]
+	addr_xdat[8]
+	out_xdat[0]
+	rom_adr_o[8]
+	addr_xdat[7]
+	rom_adr_o[7]
+	addr_xdat[6]
+	all_txd_o
+	rom_adr_o[6]
+	addr_xdat[5]
+	clkb
+	rom_adr_o[5]
+	addr_xdat[4]
+	rom_adr_o[4]
+	addr_xdat[3]
+	rom_adr_o[3]
+	addr_xdat[2]
+	rom_adr_o[2]
+	addr_xdat[1]
+	rom_adr_o[1]
+	addr_xdat[0]
+	rom_adr_o[0]
+	en_xdat
+	wr_xdat_d1
+	rd_xdat
+	BistFail
+	Finish
+	ErrMap
+
+   BIDIRS :
+	p1_io[7]
+	p1_io[6]
+	p1_io[5]
+	p1_io[4]
+	p1_io[3]
+	p1_io[2]
+	p1_io[1]
+	p1_io[0]
+
+
+================================================================================
+
+
+
+TABLE 2                      MACRO INPUTS CONNECTED TO VDD
+================================================================================
+      MACRO     PORT      INSTANCE
+--------------------------------------------------
+    1 SDFFSRX2  SN        xaddr_low_reg_7_
+    2 SDFFSRX2  SN        xaddr_low_reg_0_
+    3 SDFFSRX2  SN        xaddr_low_reg_1_
+    4 SDFFSRX2  SN        xaddr_low_reg_2_
+    5 SDFFSRX2  SN        xaddr_low_reg_3_
+    6 SDFFSRX2  SN        xaddr_low_reg_4_
+    7 SDFFSRX2  SN        xaddr_low_reg_5_
+    8 SDFFSRX2  SN        xaddr_low_reg_6_
+    9 INVX1     A         uBisted_SPSRAM256X8.BistCtrl_i0.U1
+   10 SDFFNSX2  SN        uBisted_SPSRAM256X8.BistCtrl_i0.S49.Finish_reg
+   11 SDFFNSX2  SN        uBisted_SPSRAM256X8.BistCtrl_i0.S49.State_reg_1_
+   12 SDFFNSX2  SN        uBisted_SPSRAM256X8.BistCtrl_i0.S49.State_reg_2_
+   13 SDFFNSX2  SN        uBisted_SPSRAM256X8.BistCtrl_i0.S49.State_reg_3_
+   14 SDFFNSX2  SN        uBisted_SPSRAM256X8.BistCtrl_i0.S49.State_reg_0_
+   15 INVX1     A         uBisted_SPSRAM256X8.BistCtrl_i0.S49.U92
+   16 SDFFNSX2  SN        uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.S16_reg
+   17 INVX1     A         U3_cpu.U9
+   18 SDFFSRX2  SN        U3_cpu.U1_datapath.code_reg_7_
+   19 SDFFSX1   SN        U3_cpu.U1_datapath.alu_r_reg_3_
+   20 SDFFSRX2  SN        U3_cpu.U1_datapath.in_idat1_r_reg_0_
+   21 SDFFSRX2  SN        U3_cpu.U1_datapath.code_reg_3_
+   22 SDFFSRX2  SN        U3_cpu.U1_datapath.code_reg_4_
+   23 SDFFSRX2  SN        U3_cpu.U1_datapath.code_reg_5_
+   24 SDFFSRX2  SN        U3_cpu.U1_datapath.code_reg_6_
+   25 SDFFSX1   SN        U3_cpu.U1_datapath.int_vec3_reg_2_
+   26 SDFFSX1   SN        U3_cpu.U1_datapath.alu_r_reg_1_
+   27 SDFFSX1   SN        U3_cpu.U1_datapath.alu_r_reg_2_
+   28 SDFFSX1   SN        U3_cpu.U1_datapath.alu_r_reg_4_
+   29 SDFFSX1   SN        U3_cpu.U1_datapath.alu_r_reg_5_
+   30 SDFFSX1   SN        U3_cpu.U1_datapath.alu_r_reg_6_
+   31 SDFFSX1   SN        U3_cpu.U1_datapath.alu_r_reg_7_
+   32 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_1_
+   33 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_2_
+   34 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_4_
+   35 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_5_
+   36 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_6_
+   37 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_7_
+   38 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_9_
+   39 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_12_
+   40 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_13_
+   41 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_14_
+   42 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_15_
+   43 SDFFSX1   SN        U3_cpu.U1_datapath.alu_r_reg_0_
+   44 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_8_
+   45 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_acc_reg_0_
+   46 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_acc_reg_1_
+   47 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_3_
+   48 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_10_
+   49 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_pc_reg_11_
+   50 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_acc_reg_2_
+   51 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_acc_reg_3_
+   52 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_acc_reg_4_
+   53 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_acc_reg_5_
+   54 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_acc_reg_6_
+   55 SDFFSRX2  SN        U3_cpu.U1_datapath.latch_acc_reg_7_
+   56 SDFFSRX2  SN        U3_cpu.U1_datapath.out_sfr_r_reg_7_
+   57 SDFFSRX2  SN        U3_cpu.U1_datapath.out_sfr_r_reg_1_
+   58 SDFFSRX2  SN        U3_cpu.U1_datapath.out_sfr_r_reg_2_
+   59 SDFFSRX2  SN        U3_cpu.U1_datapath.out_sfr_r_reg_3_
+   60 SDFFSRX2  SN        U3_cpu.U1_datapath.out_sfr_r_reg_4_
+   61 SDFFSRX2  SN        U3_cpu.U1_datapath.out_sfr_r_reg_5_
+   62 SDFFSRX2  SN        U3_cpu.U1_datapath.out_sfr_r_reg_6_
+   63 SDFFSRX2  SN        U3_cpu.U1_datapath.out_sfr_r_reg_0_
+   64 SDFFSRX2  SN        U3_cpu.U1_datapath.addr2_r_reg_5_
+   65 SDFFSRX2  SN        U3_cpu.U1_datapath.addr2_r_reg_6_
+   66 SDFFSRX2  SN        U3_cpu.U1_datapath.in_idat_r_reg_1_
+   67 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom_r_reg_0_
+   68 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom_r_reg_1_
+   69 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom_r_reg_2_
+   70 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom_r_reg_3_
+   71 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom_r_reg_4_
+   72 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom_r_reg_5_
+   73 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom_r_reg_6_
+   74 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom_r_reg_7_
+   75 SDFFSRX2  SN        U3_cpu.U1_datapath.code_reg_0_
+   76 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom1_r_reg_1_
+   77 SDFFSRX2  SN        U3_cpu.U1_datapath.in_idat_r_reg_4_
+   78 SDFFSRX2  SN        U3_cpu.U1_datapath.in_idat_r_reg_5_
+   79 SDFFSRX2  SN        U3_cpu.U1_datapath.in_idat_r_reg_6_
+   80 SDFFSRX2  SN        U3_cpu.U1_datapath.in_idat_r_reg_3_
+   81 SDFFSRX2  SN        U3_cpu.U1_datapath.in_idat_r_reg_2_
+   82 SDFFSRX2  SN        U3_cpu.U1_datapath.in_idat_r_reg_7_
+   83 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom1_r_reg_7_
+   84 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom1_r_reg_0_
+   85 SDFFSRX2  SN        U3_cpu.U1_datapath.in_idat_r_reg_0_
+   86 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom1_r_reg_2_
+   87 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom1_r_reg_6_
+   88 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom1_r_reg_4_
+   89 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom1_r_reg_5_
+   90 SDFFSRX2  SN        U3_cpu.U1_datapath.in_xrom1_r_reg_3_
+   91 SDFFSRX2  SN        U3_cpu.U1_datapath.addr2_r_reg_7_
+   92 SDFFSRX2  SN        U3_cpu.U1_datapath.code_reg_1_
+   93 SDFFSRX2  SN        U3_cpu.U1_datapath.code_reg_2_
+   94 INVX1     A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U387
+   95 INVX1     A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U397
+   96 NAND2X1   A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U402
+   97 NAND2X1   A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U407
+   98 NAND2X1   A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U412
+   99 NAND2X1   A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U419
+  100 INVX1     A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U430
+  101 INVX1     A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U440
+  102 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegB_reg_7_
+  103 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.CurrentState_reg_1_
+  104 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.CurrentState_reg_2_
+  105 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.CurrentCount_reg_5_
+  106 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.CurrentState_reg_0_
+  107 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.CurrentCount_reg_1_
+  108 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.CurrentCount_reg_2_
+  109 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.CurrentCount_reg_3_
+  110 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegB_reg_4_
+  111 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegB_reg_5_
+  112 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegB_reg_6_
+  113 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_12_
+  114 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_13_
+  115 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_14_
+  116 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegB_reg_0_
+  117 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegB_reg_1_
+  118 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegB_reg_2_
+  119 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegB_reg_3_
+  120 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_8_
+  121 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_10_
+  122 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_11_
+  123 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_9_
+  124 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_0_
+  125 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_1_
+  126 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_2_
+  127 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_4_
+  128 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_5_
+  129 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_6_
+  130 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_3_
+  131 SDFFSRX2  SN        U3_cpu.U1_datapath.U3_alu.U8_div.RegA_reg_7_
+  132 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.isrc_reg4
+  133 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.isrc_reg3
+  134 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.isrc_reg2
+  135 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.isrc_reg1
+  136 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.isrc_reg0
+  137 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.isrc_reg
+  138 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.int_dept_reg_1_
+  139 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.int_lev_reg0
+  140 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.int_lev_reg
+  141 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.int_proc_reg
+  142 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.int_dept_reg_0_
+  143 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.smpl1.tmp1_reg
+  144 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.smpl1.tmp_reg
+  145 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.smpl0.tmp1_reg
+  146 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U27_int.smpl0.tmp_reg
+  147 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U3_psw.out_psw_reg_5_
+  148 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U3_psw.out_psw_reg_1_
+  149 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U3_psw.out_psw_reg_4_
+  150 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U3_psw.out_psw_reg_3_
+  151 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U3_psw.out_psw_reg_7_
+  152 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ip.out_ip_reg_5_
+  153 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ip.out_ip_reg_6_
+  154 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ip.out_ip_reg_7_
+  155 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ip.out_ip_reg_4_
+  156 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ip.out_ip_reg_3_
+  157 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ip.out_ip_reg_0_
+  158 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ip.out_ip_reg_2_
+  159 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ip.out_ip_reg_1_
+  160 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port3.U56
+  161 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port3.U55
+  162 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port3.U54
+  163 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port3.U53
+  164 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port3.U52
+  165 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port3.U51
+  166 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port3.U50
+  167 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port3.U33
+  168 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ie.out_ie_reg_5_
+  169 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ie.out_ie_reg_6_
+  170 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ie.out_ie_reg_4_
+  171 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ie.out_ie_reg_7_
+  172 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ie.out_ie_reg_1_
+  173 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ie.out_ie_reg_3_
+  174 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ie.out_ie_reg_0_
+  175 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_ie.out_ie_reg_2_
+  176 SDFFSX1   SN        U3_cpu.U1_datapath.U1_sfr.U_uart.shift12_1_reg
+  177 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.rx_same_reg_1_
+  178 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.rx_same_reg_0_
+  179 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.smod_clk_rec_reg
+  180 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.smod_clk_trans_reg
+  181 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_txd_reg_0_
+  182 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.tx_done_reg
+  183 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.cnt1_8_reg_3_
+  184 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.cnt0_4_reg_0_
+  185 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.cnt0_4_reg_3_
+  186 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.cnt0_4_reg_1_
+  187 SDFFSX1   SN        U3_cpu.U1_datapath.U1_sfr.U_uart.trans3_reg
+  188 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.shift_trans_reg
+  189 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.shift_rec_reg
+  190 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_txd_reg_1_
+  191 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.trans_reg
+  192 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.txd_reg
+  193 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.div12_reg
+  194 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_txd_reg_2_
+  195 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_txd_reg_3_
+  196 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_txd_reg_4_
+  197 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_txd_reg_5_
+  198 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_txd_reg_6_
+  199 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_txd_reg_7_
+  200 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.rec_cnt_reg_2_
+  201 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.trans_cnt_reg_0_
+  202 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.trans_cnt_reg_3_
+  203 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.trans_cnt_reg_1_
+  204 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.rec_cnt_reg_3_
+  205 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.rec_cnt_reg_0_
+  206 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.rec_cnt_reg_1_
+  207 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_8_
+  208 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_9_
+  209 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_10_
+  210 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_txd_reg_10_
+  211 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_1_
+  212 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_3_
+  213 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_6_
+  214 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_2_
+  215 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_5_
+  216 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_0_
+  217 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_4_
+  218 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_7_
+  219 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_tmp_reg_11_
+  220 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.receive_reg
+  221 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_txd_reg_9_
+  222 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_txd_reg_8_
+  223 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.pcon_reg_3_
+  224 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.pcon_reg_4_
+  225 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.pcon_reg_5_
+  226 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.pcon_reg_6_
+  227 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_reg_4_
+  228 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_reg_5_
+  229 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_reg_6_
+  230 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_reg_7_
+  231 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.scon_reg_5_
+  232 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.pcon_reg_7_
+  233 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.scon_reg_6_
+  234 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.scon_reg_4_
+  235 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.scon_reg_7_
+  236 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_reg_0_
+  237 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.pcon_reg_1_
+  238 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.pcon_reg_2_
+  239 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_reg_1_
+  240 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_reg_2_
+  241 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.sbuf_rxd_reg_3_
+  242 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.pcon_reg_0_
+  243 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.scon_reg_2_
+  244 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.scon_reg_3_
+  245 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.scon_reg_1_
+  246 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.scon_reg_0_
+  247 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.trans_cnt_reg_2_
+  248 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_uart.cnt0_4_reg_2_
+  249 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.div12_reg_3_
+  250 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tf1_1_reg
+  251 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tf1_0_reg
+  252 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.div12_reg_2_
+  253 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.div12_reg_0_
+  254 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.t1_pin_r_reg
+  255 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.shift12_reg
+  256 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th1_reg_7_
+  257 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th1_reg_5_
+  258 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th1_reg_6_
+  259 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th0_reg_5_
+  260 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th0_reg_6_
+  261 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th0_reg_7_
+  262 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th0_reg_0_
+  263 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th0_reg_1_
+  264 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th0_reg_3_
+  265 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th0_reg_4_
+  266 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th0_reg_2_
+  267 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th1_reg_1_
+  268 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th1_reg_2_
+  269 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th1_reg_3_
+  270 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th1_reg_4_
+  271 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.th1_reg_0_
+  272 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl0_reg_5_
+  273 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl0_reg_1_
+  274 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl1_reg_5_
+  275 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl1_reg_1_
+  276 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl0_reg_7_
+  277 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl0_reg_3_
+  278 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl1_reg_7_
+  279 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl1_reg_3_
+  280 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl0_reg_6_
+  281 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl0_reg_0_
+  282 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl1_reg_4_
+  283 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl1_reg_0_
+  284 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl0_reg_4_
+  285 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl0_reg_2_
+  286 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl1_reg_6_
+  287 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U12_u_tc.tl1_reg_2_
+  288 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tmod.out_tmod_reg_7_
+  289 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tmod.out_tmod_reg_6_
+  290 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tmod.out_tmod_reg_5_
+  291 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tmod.out_tmod_reg_4_
+  292 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tmod.out_tmod_reg_3_
+  293 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tmod.out_tmod_reg_0_
+  294 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tmod.out_tmod_reg_2_
+  295 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tmod.out_tmod_reg_1_
+  296 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tcon.tcon_reg_2_
+  297 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tcon.tcon_tf1_reg
+  298 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tcon.tcon_tf0_reg
+  299 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tcon.tcon_reg_3_
+  300 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tcon.tcon_ie0_reg
+  301 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tcon.tcon_ie1_reg
+  302 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tcon.tcon_reg_0_
+  303 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U_tcon.tcon_reg_1_
+  304 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dimod.out_dimod_reg_3_
+  305 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dimod.out_dimod_reg_4_
+  306 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dimod.out_dimod_reg_5_
+  307 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dimod.out_dimod_reg_6_
+  308 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dimod.out_dimod_reg_7_
+  309 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dimod.out_dimod_reg_0_
+  310 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dimod.out_dimod_reg_2_
+  311 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dimod.out_dimod_reg_1_
+  312 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_15_
+  313 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_0_
+  314 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_1_
+  315 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_2_
+  316 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_3_
+  317 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_4_
+  318 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_5_
+  319 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_6_
+  320 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_7_
+  321 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_8_
+  322 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_9_
+  323 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_10_
+  324 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_11_
+  325 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_12_
+  326 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_13_
+  327 SDFFSRX2  SN        U3_cpu.U1_datapath.U1_sfr.U1_dptr.out_dptr_reg_14_
+  328 SDFFSRX2  SN        U3_cpu.U0_con.t_2_reg_0_
+  329 SDFFSRX2  SN        U3_cpu.U0_con.t_2_reg_3_
+  330 SDFFSRX2  SN        U3_cpu.U0_con.t_2_reg_1_
+  331 SDFFSRX2  SN        U3_cpu.U0_con.extend_wr_reg
+  332 SDFFSRX2  SN        U3_cpu.U0_con.t_2_reg_2_
+  333 SDFFSRX2  SN        U3_cpu.U0_con.itcnt_reg_0_
+  334 SDFFSRX2  SN        U3_cpu.U0_con.itcnt_reg_2_
+  335 SDFFSRX2  SN        U3_cpu.U0_con.timing_cnt_reg_1_
+  336 SDFFSRX2  SN        U3_cpu.U0_con.timing_cnt_reg_0_
+  337 SDFFSRX2  SN        U3_cpu.U0_con.timing_cnt_reg_2_
+  338 INVX1     A         U3_cpu.U0_con.U623
+
+
+
+
+TABLE 3                      MACRO INPUTS CONNECTED TO VSS
+================================================================================
+      MACRO     PORT      INSTANCE
+--------------------------------------------------
+    1 SPSRAM256X8OEN       uBisted_SPSRAM256X8.WRAPPED_RAM_i0.SRAM_i0 
+    2 NAND2X1   A         uBisted_SPSRAM256X8.WRAPPED_RAM_i0.U88 
+    3 AOI22X1   A0        U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U219 
+    4 AOI22X2   A0        U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U393 
+    5 INVX1     A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U400 
+    6 INVX1     A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U414 
+    7 INVX1     A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U416 
+    8 NAND2X1   A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U423 
+    9 NAND2X1   A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U426 
+   10 INVX1     A         U3_cpu.U1_datapath.U3_alu.U18_sel_alu.U432 
+   11 SDFFRX1   SE        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.int_lev_reg2 
+   12 SDFFRX1   SE        U3_cpu.U1_datapath.U1_sfr.U27_int.prio.int_lev_reg1 
+   13 NAND2X1   A         U3_cpu.U1_datapath.U1_sfr.U27_int.ux1.U10 
+   14 NAND2X1   A         U3_cpu.U1_datapath.U1_sfr.U27_int.ux0.U10 
+   15 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port2.U55 
+   16 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port2.U54 
+   17 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port2.U53 
+   18 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port2.U52 
+   19 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port2.U51 
+   20 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port2.U50 
+   21 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port2.U49 
+   22 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port2.U48 
+   23 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port0.U55 
+   24 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port0.U54 
+   25 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port0.U53 
+   26 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port0.U52 
+   27 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port0.U51 
+   28 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port0.U50 
+   29 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port0.U49 
+   30 OAI2BB2X1 A0N       U3_cpu.U1_datapath.U1_sfr.U_port0.U48 
+
+
+
+
+TABLE 4            OUTPUT PAD TIMING VERIFICATION WITH TYPICAL DELAY
+================================================================================
+TYPE  = TYPE OF THE MACRO DRIVING THE SIGNAL
+ULCAP = OFF CHIP LOAD CAPACITANCE [IN UNIT LOAD]
+PFCAP = OFF CHIP LOAD CAPACITANCE [IN PICOFARAD]
+RISE  = BASE RISE DELAY + RISE LOAD FACTOR * LOAD [IN NANOSECOND]
+FALL  = BASE FALL DELAY + FALL LOAD FACTOR * LOAD [IN NANOSECOND]
+--------------------------------------------------------------------------------
+TOP SIGNAL NAME TYPE    ULCAP PFCAP RISE FALL
+--------------- ------- ----- ----- ---- ----
+wr_xdat_d1      PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[9]    PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[8]    PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[7]    PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[6]    PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[5]    PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[4]    PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[3]    PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[2]    PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[1]    PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[15]   PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[14]   PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[13]   PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[12]   PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[11]   PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[10]   PDO04CDG *****  50.0  3.5  5.1 
+rom_adr_o[0]    PDO04CDG *****  50.0  3.5  5.1 
+rd_xdat         PDO04CDG *****  50.0  3.5  5.1 
+p1_io[7]        PDB04SDGZ *****  50.0  5.2  7.1 
+p1_io[6]        PDB04SDGZ *****  50.0  5.2  7.1 
+p1_io[5]        PDB04SDGZ *****  50.0  5.2  7.1 
+p1_io[4]        PDB04SDGZ *****  50.0  5.2  7.1 
+p1_io[3]        PDB04SDGZ *****  50.0  5.2  7.1 
+p1_io[2]        PDB04SDGZ *****  50.0  5.2  7.1 
+p1_io[1]        PDB04SDGZ *****  50.0  5.2  7.1 
+p1_io[0]        PDB04SDGZ *****  50.0  5.2  7.1 
+out_xdat[7]     PDO04CDG *****  50.0  3.5  5.1 
+out_xdat[6]     PDO04CDG *****  50.0  3.5  5.1 
+out_xdat[5]     PDO04CDG *****  50.0  3.5  5.1 
+out_xdat[4]     PDO04CDG *****  50.0  3.5  5.1 
+out_xdat[3]     PDO04CDG *****  50.0  3.5  5.1 
+out_xdat[2]     PDO04CDG *****  50.0  3.5  5.1 
+out_xdat[1]     PDO04CDG *****  50.0  3.5  5.1 
+out_xdat[0]     PDO04CDG *****  50.0  3.5  5.1 
+en_xdat         PDO04CDG *****  50.0  3.5  5.1 
+clkb            PDO02CDG *****  50.0  0.0  0.0 
+all_txd_o       PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[9]    PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[8]    PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[7]    PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[6]    PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[5]    PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[4]    PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[3]    PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[2]    PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[1]    PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[15]   PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[14]   PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[13]   PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[12]   PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[11]   PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[10]   PDO04CDG *****  50.0  3.5  5.1 
+addr_xdat[0]    PDO04CDG *****  50.0  3.5  5.1 
+Finish          PDO04CDG *****  50.0  3.5  5.1 
+ErrMap          PDO04CDG *****  50.0  3.5  5.1 
+BistFail        PDO04CDG *****  50.0  3.5  5.1 
+
+
+
+
+TABLE 5           INTERNAL NODE TIMING VERIFICATION WITH MAXIMUM DELAY
+                   (sort by number of fan-outs in ascending order)
+================================================================================
+TYPE = TYPE OF THE MACRO DRIVING THE SIGNAL
+FI   = NUMBER OF DRIVING PORTS
+FO   = NUMBER OF DRIVEN PORTS
+GCAP = GATE  CAPACITANCE THE SIGNAL DRIVES [IN PICOFARAD]
+MCAP = METAL CAPACITANCE THE SIGNAL DRIVES [IN PICOFARAD]
+RISE = BASE RISE DELAY + RISE LOAD FACTOR * (GCAP + MCAP) [IN NANOSECOND]
+FALL = BASE FALL DELAY + FALL LOAD FACTOR * (GCAP + MCAP) [IN NANOSECOND]
+--------------------------------------------------------------------------------
+                                            PREDICTIVE
+                                          ---------------
+TOP SIGNAL NAME TYPE    FI   FO     GCAP  MCAP  RISE FALL
+--------------- ------- ---- ------ ----- ----- ---- ---- 
+n73             INVX1      1      1   0.0   0.0  0.0  0.0 
+n3              PDIDGZ     1      1   0.0   0.0  0.4  0.4 
+idat_en         AND2X2     1      1   0.0   0.0  0.0  0.0 
+rd_idat         INVX1      1      1   0.0   0.0  0.0  0.0 
+n245            AND2X2     1      1   0.0   0.0  0.0  0.0 
+n253            OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+n244            SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+n252            OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+n243            SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+n251            OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+n242            SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+n250            OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+n241            SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+n249            OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+n240            SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+n248            OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+n239            SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+n247            OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+n238            SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+n246            OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+n237            SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+n406            OAI222X4    1      1   0.1   0.0  0.0  0.0 
+n4              MX2X1      1      1   0.1   0.0  0.0  0.0 
+n6              MX2X1      1      1   0.1   0.0  0.0  0.0 
+n9              MX2X1      1      1   0.1   0.0  0.0  0.0 
+n11             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n13             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n15             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n17             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n19             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n21             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n23             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n25             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n27             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n29             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n31             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n33             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n35             MX2X1      1      1   0.1   0.0  0.0  0.0 
+n43             NOR2BX1    1      1   0.1   0.0  0.0  0.0 
+n147            PDB04SDGZ    1      1   0.0   0.0  0.3  0.4 
+n42             NOR2BX1    1      1   0.1   0.0  0.0  0.0 
+n148            PDB04SDGZ    1      1   0.0   0.0  0.3  0.4 
+n41             NOR2BX1    1      1   0.1   0.0  0.0  0.0 
+n149            PDB04SDGZ    1      1   0.0   0.0  0.3  0.4 
+n40             NOR2BX1    1      1   0.1   0.0  0.0  0.0 
+n150            PDB04SDGZ    1      1   0.0   0.0  0.3  0.4 
+n39             NOR2BX1    1      1   0.1   0.0  0.0  0.0 
+n151            PDB04SDGZ    1      1   0.0   0.0  0.3  0.4 
+n38             NOR2BX1    1      1   0.1   0.0  0.0  0.0 
+n152            PDB04SDGZ    1      1   0.0   0.0  0.3  0.4 
+n37             NOR2BX1    1      1   0.1   0.0  0.0  0.0 
+n153            PDB04SDGZ    1      1   0.0   0.0  0.3  0.4 
+n36             NOR2BX1    1      1   0.1   0.0  0.0  0.0 
+n154            PDB04SDGZ    1      1   0.0   0.0  0.3  0.4 
+n1              INVX1      1      1   0.0   0.0  0.0  0.0 
+N7              INVX1      1      1   0.0   0.0  0.0  0.0 
+N6              INVX1      1      1   0.0   0.0  0.0  0.0 
+N5              INVX1      1      1   0.0   0.0  0.0  0.0 
+N4              INVX1      1      1   0.0   0.0  0.0  0.0 
+N3              INVX1      1      1   0.0   0.0  0.0  0.0 
+N2              INVX1      1      1   0.0   0.0  0.0  0.0 
+N1              INVX1      1      1   0.0   0.0  0.0  0.0 
+N0              INVX1      1      1   0.0   0.0  0.0  0.0 
+n407            OAI222X4    1      1   0.0   0.0  0.0  0.0 
+n408            OAI222X4    1      1   0.0   0.0  0.0  0.0 
+n409            OAI222X4    1      1   0.0   0.0  0.0  0.0 
+n8              BUFX4      1      1   0.0   0.0  0.0  0.0 
+n410            OAI222X4    1      1   0.0   0.0  0.0  0.0 
+n10             BUFX4      1      1   0.0   0.0  0.0  0.0 
+n411            OAI222X4    1      1   0.0   0.0  0.0  0.0 
+n12             BUFX4      1      1   0.0   0.0  0.0  0.0 
+n412            OAI222X4    1      1   0.0   0.0  0.0  0.0 
+n14             BUFX4      1      1   0.0   0.0  0.0  0.0 
+n413            OAI222X4    1      1   0.0   0.0  0.0  0.0 
+n16             BUFX4      1      1   0.0   0.0  0.0  0.0 
+n414            OAI222X4    1      1   0.0   0.0  0.0  0.0 
+n18             SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+n415            NAND3X1    1      1   0.0   0.0  0.0  0.0 
+n20             BUFX4      1      1   0.0   0.0  0.0  0.0 
+n416            NAND3BX1    1      1   0.0   0.0  0.0  0.0 
+n22             BUFX4      1      1   0.0   0.0  0.0  0.0 
+n417            NAND3X1    1      1   0.0   0.0  0.0  0.0 
+n24             BUFX4      1      1   0.0   0.0  0.0  0.0 
+n418            NAND3BX1    1      1   0.0   0.0  0.0  0.0 
+n26             BUFX4      1      1   0.0   0.0  0.0  0.0 
+n419            NAND3X1    1      1   0.0   0.0  0.0  0.0 
+n28             BUFX4      1      1   0.0   0.0  0.0  0.0 
+n420            NAND3BX1    1      1   0.0   0.0  0.0  0.0 
+n30             BUFX4      1      1   0.0   0.0  0.0  0.0 
+n421            NAND3X1    1      1   0.0   0.0  0.0  0.0 
+n32             BUFX4      1      1   0.0   0.0  0.0  0.0 
+n422            NAND3X1    1      1   0.0   0.0  0.0  0.0 
+n34             BUFX4      1      1   0.0   0.0  0.0  0.0 
+xaddr_high[7]   AND2X2     1      1   0.0   0.0  0.0  0.0 
+n5              BUFX4      1      1   0.0   0.0  0.0  0.0 
+n7              SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+xaddr_high[0]   AND2X2     1      1   0.0   0.0  0.0  0.0 
+xaddr_high[1]   AND2X2     1      1   0.0   0.0  0.0  0.0 
+xaddr_high[2]   AND2X2     1      1   0.0   0.0  0.0  0.0 
+xaddr_high[3]   AND2X2     1      1   0.0   0.0  0.0  0.0 
+xaddr_high[4]   AND2X2     1      1   0.0   0.0  0.0  0.0 
+xaddr_high[5]   AND2X2     1      1   0.0   0.0  0.0  0.0 
+xaddr_high[6]   AND2X2     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.CEN_n
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.WEN_n
+                OR2X2      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.A_n[7]
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.A_n[6]
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.A_n[5]
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.A_n[4]
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.A_n[3]
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.A_n[2]
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.A_n[1]
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.A_n[0]
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.D_n[7]
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.D_n[6]
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.D_n[5]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.D_n[4]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.D_n[3]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.D_n[2]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.D_n[1]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.D_n[0]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n73
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n74
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n69
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n72
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n71
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n2
+                AND2X2     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n3
+                AND2X2     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.\mem_ctrl_n[0] 
+                AND4X2     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.bist_ctrl_n[16]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n70
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n39
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n40
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n41
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n42
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n43
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n44
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n45
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n46
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n47
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n48
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n49
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n50
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n51
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n52
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n53
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n54
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n55
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.WRAPPED_RAM_i0.n56
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.n3
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.n4
+                BUFX4      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n93
+                NOR2BX1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.n5
+                BUFX4      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.N22
+                AOI31X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.N23
+                AOI31X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.N24
+                OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.N21
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n69
+                OAI33X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.N19
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n12
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n48
+                AOI211X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n49
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n41
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n40
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n58
+                AND3X2     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n57
+                OAI221X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n65
+                AND2X2     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n63
+                OAI211X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n56
+                AOI211X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n8
+                AND3X2     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S44
+                OAI221X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n34
+                OAI211X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n33
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S47
+                OR3X2      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n37
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n30
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n29
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n28
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n240
+                OR4X2      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S49.n18
+                AND3X2     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S43
+                OR4X2      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n140
+                SDFFNSX2    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.N18
+                AND3X2     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n15
+                SDFFX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n16
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.N14
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n10
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n11
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n12
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n13
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n9
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n8
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n7
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n6
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n5
+                OR4X2      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n4
+                OR4X2      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.ST_MAL_i0.n3
+                OR2X2      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n46
+                SDFFX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n37
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n45
+                SDFFX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n31
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n43
+                SDFFX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n35
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n42
+                SDFFX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n32
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n41
+                SDFFX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n36
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n40
+                SDFFX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n33
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n39
+                SDFFX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n34
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n38
+                SDFFX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n30
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N50
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.add_40.carry_2_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N52
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.add_40.carry_4_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.add_40.carry_3_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N51
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N54
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.add_40.carry_6_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.add_40.carry_5_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N53
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N55
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.add_40.carry_7_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N56
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N49
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.sub_43.carry_7_
+                OR2X2      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N64
+                XNOR2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N63
+                XNOR2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N62
+                XNOR2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N61
+                XNOR2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N60
+                XNOR2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N59
+                XNOR2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N58
+                XNOR2X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.N57
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n120
+                AOI222X4    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n11
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n10
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n9
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n8
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n7
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n6
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n2
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n18
+                AND4X2     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n19
+                AND4X2     1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n500
+                NAND4X1    1      1   0.0   0.0  0.0  0.0 
+uBisted_SPSRAM256X8.BistCtrl_i0.S48.n490
+                NAND4X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.xdat_en  SDFFRHQX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.ale_neg  NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n36      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n38      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n40      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n42      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n44      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n46      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n48      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n50      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n66      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n64      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n62      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n60      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n58      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n56      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n54      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n52      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n34      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n32      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n30      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n28      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n26      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n24      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n22      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n20      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n18      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n16      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n14      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n12      INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n1000    INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n8       INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n6       INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.n4       INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.rd_xdat_p
+                AND2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.wr_xdat_p
+                AND2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.rd_idat_p
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.wr_idat_p
+                NAND3X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n543
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n617
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n674
+                SDFFX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n33
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n817
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n56
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n36
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n544
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n539
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n613
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n540
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n614
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n541
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n615
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n542
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n616
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n47
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n64
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n51
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n815
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n94
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n816
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n58
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n818
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n60
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n819
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n62
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n820
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n821
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n66
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n810
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n595
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n68
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n809
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n596
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n70
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n807
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n598
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n102
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n73
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n806
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n599
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n75
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n805
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n600
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n77
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n804
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n601
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n80
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n802
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n603
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n97
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n84
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n799
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n606
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n106
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n86
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n798
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n607
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n89
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n797
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n608
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n91
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n796
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n609
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n814
+                SDFFSX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n803
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n602
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n594
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n675
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n552
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n682
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n553
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n808
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n597
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n104
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n801
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n604
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n800
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n605
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n681
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n554
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n680
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n555
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n679
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n556
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n678
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n557
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n677
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n558
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n676
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n559
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n569
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n141
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n120
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n563
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n126
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n564
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n130
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n565
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n137
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n566
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n139
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n567
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n568
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n562
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n144
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n813
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n560
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n146
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n812
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n561
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.addr2_a_3_
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.addr2_a_4_
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n4
+                BUFX4      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n571
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n586
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n587
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n588
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n589
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n590
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n591
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n592
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n593
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n536
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n610
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n579
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n574
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n575
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n576
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n573
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n572
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n577
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n585
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n578
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n570
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n580
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n584
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n582
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n583
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n581
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n811
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n537
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n611
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n538
+                SDFFSRX2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n612
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N109
+                MX2X1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.C1170.n1
+                MX4X1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.C1170.n2
+                MX4X1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N110
+                MX2X1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.C1170.n3
+                MX4X1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.C1170.n4
+                MX4X1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[1]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_2_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[1]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_1_
+                AND2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[2]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_3_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[2]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[3]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_4_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[3]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[4]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_5_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[4]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[5]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_6_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[5]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[6]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_7_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[6]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[7]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_8_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[7]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[8]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_9_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[8]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[9]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_10_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[9]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[10]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_11_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[10]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[11]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_12_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[11]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[12]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_13_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[12]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[13]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_14_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[13]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[14]
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_387.carry_15_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[14]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[15]
+                XOR3X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_rel_adder[15]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.rel_addr_a[0]
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N311
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_3_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_2_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N313
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_5_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_4_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N315
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_7_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_6_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N320
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_12_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_11_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N321
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_13_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N322
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_14_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N317
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_9_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_8_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N318
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_10_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N319
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N310
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N312
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N314
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N316
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N323
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_433.carry_15_
+                ADDHX1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N324
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N309
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1458
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1456
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1450
+                OAI21X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1451
+                INVX4      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1452
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1453
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1448
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1449
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1442
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1443
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1438
+                OAI21X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1439
+                INVX4      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1440
+                NOR2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1441
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1434
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1382
+                XNOR2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1371
+                NAND2BX4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1370
+                NAND4X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1372
+                NAND2X2    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1373
+                NOR2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1374
+                NOR3X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n407
+                AOI2BB1X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1282
+                INVX2      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1283
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1281
+                NAND2X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n408
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n135
+                NAND4X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1278
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1279
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1280
+                NAND2BX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n406
+                INVX4      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1256
+                NOR2X4     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1266
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1267
+                NOR2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n388
+                AOI2BB1X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1260
+                INVX2      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1261
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1257
+                NAND3X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1258
+                NOR3X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1259
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n387
+                INVX4      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1237
+                NOR2X4     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1246
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1247
+                NOR2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n379
+                AOI2BB1X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1240
+                INVX2      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1241
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n378
+                INVX4      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1219
+                NOR2X4     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1229
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1230
+                NOR2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n369
+                INVX2      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1209
+                NOR3X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1210
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1211
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n101
+                NAND2BX4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1205
+                NOR2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1139
+                NOR2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n3200
+                INVX2      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1078
+                NAND2BX4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1075
+                NAND3X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1076
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1077
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1062
+                NAND2BX4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1059
+                NAND3X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1060
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1061
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1049
+                NAND2BX4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1047
+                NAND2X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1048
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1038
+                NOR2X4     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n134
+                NOR2X4     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1037
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1034
+                OAI21X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1035
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n190
+                AOI2BB1X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1025
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1022
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1019
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.op1[1]
+                NAND4X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n971
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n972
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n973
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n974
+                NAND2X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n964
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n965
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n966
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n967
+                NAND2X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n960
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n722
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n961
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n962
+                NAND2X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n954
+                NAND2BX4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n952
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n953
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n951
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.op1[6]
+                NAND4X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n946
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n947
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n948
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n949
+                NAND2X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n939
+                AOI21X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n942
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n941
+                NAND2X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.op1[7]
+                NAND4X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n938
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n940
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n931
+                INVX4      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n932
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n920
+                NOR2X4     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n919
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n908
+                NOR2X4     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n907
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n899
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n900
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n901
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n896
+                NOR2X4     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n897
+                NOR2X4     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n891
+                NAND2X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n888
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n889
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n890
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n885
+                NAND2X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n879
+                NAND2X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n876
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n877
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n878
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n864
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n865
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n866
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n867
+                NAND2BX4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n133
+                AOI2BB1X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n859
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n854
+                AOI2BB1X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n129
+                INVX4      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n124
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n851
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n123
+                INVX4      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n116
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n849
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n115
+                INVX4      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N329
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N330
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N331
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N332
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N333
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N334
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N335
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N336
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N337
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N338
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N339
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N340
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N341
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_434_carry_15_
+                AND2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.N342
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.a_plus_pc_0_
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_465_carry_1_
+                AND2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_465_carry_15_
+                AND2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n302
+                AND3X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n240
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n242
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n244
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n251
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n243
+                AOI222X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n241
+                AOI222X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n239
+                AOI222X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n453
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n458
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n401
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1301
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n238
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n237
+                AOI222X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n234
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n250
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1096
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1095
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[8]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1094
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1092
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1091
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[9]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1090
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1236
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1235
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[11]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1234
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1218
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1217
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[12]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1216
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1204
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1203
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[13]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1202
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1187
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1186
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[14]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1185
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1168
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1254
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n245
+                AOI222X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n249
+                AOI222X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n248
+                AOI222X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n247
+                AOI222X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n246
+                AOI222X4    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1328
+                NAND2BX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n778
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1332
+                NAND2BX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1320
+                NAND2BX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n464
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1323
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n52
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n49
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n43
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n37
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n30
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n46
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n40
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n34
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n444
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n479
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n449
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n775
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.a_plus_pc_6_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_465_carry_7_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_465_carry_6_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.a_plus_pc_5_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_465_carry_5_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.a_plus_pc_4_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_465_carry_4_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.a_plus_pc_3_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_465_carry_3_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.a_plus_pc_2_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.add_465_carry_2_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.a_plus_pc_1_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.a_plus_pc_7_
+                ADDFX2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1435
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n469
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n471
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n473
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n475
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n477
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1436
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1437
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1300
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n436
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n437
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1298
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1297
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1299
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_cy_bit
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n933
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1133
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1134
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1135
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[1]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1122
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1127
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[3]
+                NAND4X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1123
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1124
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1125
+                NAND2BX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1106
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1112
+                NOR3X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[5]
+                NAND4X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1107
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1108
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1109
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1098
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[7]
+                NAND3X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1097
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1099
+                NAND2BX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1093
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n283
+                OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[8]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1089
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n278
+                OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[9]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1253
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[10]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[10]
+                NAND4X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n756
+                AOI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1255
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[0]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1273
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1233
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n374
+                OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[11]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n307
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1215
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n365
+                OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[12]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1201
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n356
+                OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[13]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1184
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n347
+                OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[14]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1004
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[15]
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1165
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1130
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1114
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n303
+                AND3X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[4]
+                NAND4X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1115
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1116
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1117
+                NAND2BX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1103
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.in_pc[6]
+                NAND3X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1102
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1104
+                NAND2BX1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1044
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1043
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1040
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1039
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1005
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1006
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n991
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n992
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1409
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1418
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n409
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1288
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1286
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1291
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1292
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1364
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1363
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1362
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1350
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1348
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1347
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1361
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1360
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1430
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1429
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n766
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1365
+                XNOR2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1405
+                XNOR2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1354
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1395
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1415
+                XOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1147
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1145
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1284
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1242
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1262
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1225
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1224
+                OAI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1413
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1412
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1422
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1421
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1391
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1390
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1402
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1401
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1157
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1171
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1190
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1161
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1159
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1160
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1175
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1173
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1174
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1194
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1192
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1193
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1272
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1270
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1271
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1339
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1337
+                NAND4X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1357
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1355
+                NAND4X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1343
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1295
+                OAI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1398
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1396
+                NAND4X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1386
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1447
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n915
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n914
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n913
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n927
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n925
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n904
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n903
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n902
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1455
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n950
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n765
+                OAI2BB1X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n635
+                OR2X2      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n874
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n881
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n895
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n882
+                AOI21X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n887
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n760
+                AND2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n846
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1057
+                NAND3X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1058
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1065
+                NAND3X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1066
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n297
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1312
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1318
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1315
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1119
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1128
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1313
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1311
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1319
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1317
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1324
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1325
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1327
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1326
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1331
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1330
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1316
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1314
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1321
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1322
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1307
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1308
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1306
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1167
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[15]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n3380
+                OAI2BB2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1166
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1015
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1014
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1013
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1012
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.xrom[1]
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.xrom[2]
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1129
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[2]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.xrom[6]
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[6]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.xrom[7]
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[7]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1138
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[1]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n3150
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.xrom[3]
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[3]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.xrom[5]
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.page_addr_a[5]
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1137
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1303
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n433
+                INVX1      1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1302
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n395
+                AOI22X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1274
+                NAND3X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1275
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1276
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n662
+                AND2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.xrom[0]
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.xrom[4]
+                MXI2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1120
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1118
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n661
+                AND2X2     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1073
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1085
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1338
+                NAND2X1    1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1150
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1265
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1228
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1182
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1199
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1213
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1183
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1200
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1149
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1264
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1227
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1148
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1263
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1181
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1226
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+U3_cpu.U1_datapath.n1198
+                NOR2X1     1      1   0.0   0.0  0.0  0.0 
+
+
+
+
+TABLE 6         WORST RISING SLEW
+=======================================================================
+                       RECOMMENDED  SLEW LIMIT
+TOP SIGNAL NAME  SLEW  SLEW LIMIT    VIOLATED
+---------------- ----  -----------  ----------
+n73               0.4          1.5         
+clk0              0.4          1.5         
+n3                0.4          1.5         
+n52               0.4          1.5         
+rst_p0            0.4          1.5         
+idat_en           0.4          1.5         
+wr_idat           0.4          1.5         
+rd_idat           0.4          1.5         
+n245              0.4          1.5         
+wr_xdat           0.4          1.5         
+n449              0.4          1.5         
+n253              0.4          1.5         
+n439              0.4          1.5         
+n301              0.4          1.5         
+n244              0.4          1.5         
+n252              0.4          1.5         
+n440              0.4          1.5         
+n243              0.4          1.5         
+n251              0.4          1.5         
+n441              0.4          1.5         
+n242              0.4          1.5         
+n250              0.4          1.5         
+n442              0.4          1.5         
+n241              0.4          1.5         
+n249              0.4          1.5         
+n443              0.4          1.5         
+n240              0.4          1.5         
+n248              0.4          1.5         
+n444              0.4          1.5         
+n239              0.4          1.5         
+n247              0.4          1.5         
+n445              0.4          1.5         
+n238              0.4          1.5         
+n246              0.4          1.5         
+n446              0.4          1.5         
+n237              0.4          1.5         
+ale_d1            0.4          1.5         
+clkb0             0.4          1.5         
+n236              0.4          1.5         
+n54               0.4          1.5         
+n82               0.4          1.5         
+n83               0.4          1.5         
+n84               0.4          1.5         
+n85               0.4          1.5         
+n86               0.4          1.5         
+n406              0.4          1.5         
+n4                0.4          1.5         
+n6                0.4          1.5         
+n9                0.4          1.5         
+n11               0.4          1.5         
+
+
+
+
+TABLE 7         WORST FALLING SLEW
+=======================================================================
+                       RECOMMENDED  SLEW LIMIT
+TOP SIGNAL NAME  SLEW  SLEW LIMIT    VIOLATED
+---------------  ----  -----------  ----------
+n73               0.4          1.5         
+clk0              0.4          1.5         
+n3                0.4          1.5         
+n52               0.4          1.5         
+rst_p0            0.4          1.5         
+idat_en           0.4          1.5         
+wr_idat           0.4          1.5         
+rd_idat           0.4          1.5         
+n245              0.4          1.5         
+wr_xdat           0.4          1.5         
+n449              0.4          1.5         
+n253              0.4          1.5         
+n439              0.4          1.5         
+n301              0.4          1.5         
+n244              0.4          1.5         
+n252              0.4          1.5         
+n440              0.4          1.5         
+n243              0.4          1.5         
+n251              0.4          1.5         
+n441              0.4          1.5         
+n242              0.4          1.5         
+n250              0.4          1.5         
+n442              0.4          1.5         
+n241              0.4          1.5         
+n249              0.4          1.5         
+n443              0.4          1.5         
+n240              0.4          1.5         
+n248              0.4          1.5         
+n444              0.4          1.5         
+n239              0.4          1.5         
+n247              0.4          1.5         
+n445              0.4          1.5         
+n238              0.4          1.5         
+n246              0.4          1.5         
+n446              0.4          1.5         
+n237              0.4          1.5         
+ale_d1            0.4          1.5         
+clkb0             0.4          1.5         
+n236              0.4          1.5         
+n54               0.4          1.5         
+n82               0.4          1.5         
+n83               0.4          1.5         
+n84               0.4          1.5         
+n85               0.4          1.5         
+n86               0.4          1.5         
+n406              0.4          1.5         
+n4                0.4          1.5         
+n6                0.4          1.5         
+n9                0.4          1.5         
+n11               0.4          1.5         
+

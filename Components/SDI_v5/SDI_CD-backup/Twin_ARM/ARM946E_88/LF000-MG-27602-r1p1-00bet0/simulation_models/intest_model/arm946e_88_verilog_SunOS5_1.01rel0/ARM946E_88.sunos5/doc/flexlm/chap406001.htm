@@ -1,0 +1,260 @@
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap3.htm">Previous Chapter</a>
+ * <a href="chap5.htm">Next Chapter</a>
+<p>
+<a name="15827: chap head: Chapter 4"></a><title>FLEXlm End User Manual: Chapter 4 
+Selecting Server Nodes</title>
+<h1>Chapter 4 
+Selecting Server Nodes</h1>
+<p>
+This chapter helps you decide which nodes to use as 
+<a name="_IX_60"></a>license server nodes. 
+<p>
+<a name="31675: 1Head: 5.1 Resources Used by the Server"></a><a name="4.1"></a><h2>4.1  Resources Used by the Server</h2>
+<p>
+This section discusses the resources used by the license server. When you select a 
+server node, you may need to take into account the system limits on these resources. 
+For small numbers of licenses (under about 100), most of these items should not be a 
+problem on any workstation.<p>
+<h3>4.1.1	 Sockets</h3>
+<p>
+When using TCP, a single vendor daemon can support as many users as the per-process 
+system limit for file descriptors, which ranges from 256 on SunOS 4.x to 4000 on DEC 
+Alpha. When no more file descriptors are available to a daemon, additional vendor 
+daemons are spawned to allow for extra file descriptors, though this is not 
+recommended. When using UDP, there is no limit to the number of end-users per 
+vendor daemon process, since they can share a single socket in the vendor daemon 
+(UDP has other drawbacks, and TCP is normally preferred). If there are more than 250 
+concurrent clients from a SunOS vendor daemon, it may be a good idea to move the 
+server to a different OS, since all other OSs support more file descriptors. If there are 
+more than 1000 concurrent clients being supported by a single vendor daemon, then 
+it's probably good to split the license file into more than one file, from different servers, 
+to lighten the networking traffic (which will require the ISV to agree to issue new 
+licenses). Clients can checkout licenses from multiple servers using a license-file list 
+via LM_LICENSE_FILE.<p>
+<p>
+Each client connected to a license server uses one socket. The total number of 
+<a name="_IX_61"></a>sockets 
+used by the license server programs is slightly larger than the total number of 
+simultaneous clients.<p>
+<p>
+On SCO systems, the default number of 
+<a name="_IX_62"></a>sockets may be set fairly low; if you choose 
+to run a server on such a machine, you may need to reconfigure your kernel to have 
+more sockets.<p>
+<h3>4.1.2	 <a name="21683: 2head: 4.1.3 Cpu Time"></a>CPU Time</h3>
+<p>
+For small numbers of clients, the license servers use very little CPU time. The servers 
+might have only a few seconds of CPU time after many days.<p>
+<p>
+For a large number of clients (who are each exchanging heartbeat messages with the 
+server), or for high checkout/checkin activity levels (hundreds per second), the amount 
+of CPU time consumed by the server may start to become significant although, even 
+here, CPU usage is normally not high. In this case, you may need to ensure that the 
+server machine you select will have enough CPU cycles to spare.<p>
+<p>
+GLOBEtrotter Software<I></I> has rarely encountered a situation where CPU cycles were an 
+issue, except where the vendor daemon ran out of sockets, and spawned another 
+process.<p>
+<h3>4.1.3	 Disk Space</h3>
+<p>
+The only output files created by the license 
+<a name="_IX_63"></a>servers are the debug and 
+<a name="_IX_64"></a>report 
+<a name="_IX_65"></a>log files. 
+The report log files are used to generate accurate usage reports by 
+FLEXadmin<I></I>. These 
+log files contain one line for each checkout and one line for each checkin. If you have 
+a lot of license activity, these log files will grow very large. You will need to consider 
+where to put these files and how often to delete or prune them. The license 
+administrator can opt not to log messages to the debug log file if disk space is at a 
+premium. See 
+<a href="chap5.htm#17761: 2Head: 6.2.15 NOLOG">Section 5.2.10, `NOLOG,' on page 35</a> and 
+<a href="chap5.htm#37654: 2Head: 6.2.17 REPORTLOG">Section 5.2.11, 
+`REPORTLOG,' on page 35</a>.<p>
+<p>
+Note that the log files should be local files on the server machine(s) to avoid 
+networking dependencies.<p>
+<h4>Switching output of the 
+<a name="_IX_66"></a>debug log file on UNIX systems</h4>
+<p>
+On Unix, the debug log file output can be switched after the daemons are running. The 
+technique to do this involves piping the 
+<I>stdout</I> of 
+lmgrd<I></I> to a shell script that appends 
+to the file for each line. 
+<p>
+<p>
+This is done as follows:<p>
+<p>
+Instead of the"normal" startup:<p>
+<pre>	% <a name="_IX_67"></a>lmgrd&gt; LOG</pre>
+</ol></ul><p>
+Start 
+lmgrd<I></I> this way:<p>
+<pre>	% <TT>lmgrd </TT>| sh -c 'while read line; do echo"$line" &gt;&gt; LOG ; done'</pre>
+</ol></ul><p>
+With this startup method, the output file `LOG' can be renamed and a new log file will 
+be created. You could even make `LOG' a symbolic link and change the value of the 
+link to switch the log file.<p>
+<p>
+This technique applies to Unix systems only.<p>
+<h3>4.1.4	 <a name="12289: 2head: 4.1.4 Disk Space"></a>Memory</h3>
+<p>
+The 
+FLEXlm<I></I> daemons use little memory. On SunOS, 
+lmgrd<I></I> uses 
+approximately160 kB and the vendor daemons use approximately 180 kB each.<p>
+<h3>4.1.5	 Network Bandwidth</h3>
+<p>
+FLEXlm<I></I> sends relatively small amounts of data across the 
+<a name="_IX_68"></a>network. Each transaction, 
+such as a checkout or checkin, is typically satisfied with less than 1Kbyte of data 
+transferred. This means that 
+FLEXlm<I></I> licensing can be effectively run over slow 
+networks (such as dial-up SLIP lines) for small numbers of clients.<p>
+<p>
+For a large number of clients (hundreds), each of which will be exchanging heartbeat 
+messages with the vendor daemon, the network bandwidth used may start to become 
+significant. In this case you should run client and server on the same local area 
+network, which may require splitting licenses between 2 files for 2 servers. Users can 
+use a license file list in LM_LICENSE_FILE to have effective access to both servers.<p>
+<p>
+In high-traffic networks, with 
+FLEXlm<I></I> clients older than v5, you may also want to 
+avoid setting 
+LM_LICENSE_FILE<TT></TT> to a 
+<TT>port@host</TT> address. Instead, the license 
+administrator should place a copy of the license file in a filesystem local to the 
+application. See 
+<a href="chap2.htm#32236: 1head: 2.1 Location of the License File">Section 2.1, `Specifying Location of the License File,' on page 7</a>. 
+<p>
+<a name="4.2"></a><h2>4.2  Remote Mounted Disks</h2>
+<p>
+GLOBEtrotter Software<I></I> recommends that you do not use 
+<a name="_IX_69"></a>remote mounted disks when 
+you run the license server. In other words, we recommend that 
+lmgrd<I></I>, the vendor 
+daemons, the license file, and the debug and report log files are all on locally mounted 
+disks. If any of these files is on a remote mounted disk, you double the points of failure 
+which could lead to a temporary loss of all of your licenses. When all files are mounted 
+locally, the licenses will be available as long as the server machine is up; but when the 
+files are on a different machine, then the loss of either the license server machine or the 
+file server machine will cause the licenses to be unavailable.<p>
+<a name="41289: 1Head: 5.3 Redundant Servers"></a><a name="_IX_70"></a><a name="4.3"></a><h2>4.3  Redundant Servers</h2>
+<p>
+FLEXlm<I></I> supports two methods of redundancy: A set of three redundant license 
+servers, and redundancy via a license file list in the $LM_LICENSE_FILE setting.<p>
+<p>
+With three-server redundancy, if any two of the three license servers are up and 
+running, the system is functional and hands out its total complement of licenses (Two 
+out of three license servers is referred to as a `quorum').<p>
+<p>
+With $LM_LICENSE_FILE list redundancy, each one of a group of license servers 
+serves a subset of the total licenses. The end-user sets LM_LICENSE_FILE to a list of 
+license files, where each license file refers to one of the license servers. The application 
+then tries each server in the list, in order, until it succeeds or gets to the end of the list.<p>
+<h3>4.3.1	 Three-Server redundancy</h3>
+<h4>Selecting Server Nodes</h4>
+<a name="_IX_71"></a><a name="_IX_72"></a><p>
+If all the end-user data is on a single file server, then there is no need for 
+<a name="_IX_73"></a>redundant 
+servers, and 
+GLOBEtrotter Software<I></I> recommends the use of a single server node for 
+the 
+FLEXlm<I></I> daemons. If the end-user's data is split among two or more server nodes 
+and work is still possible when one of these nodes goes down or off the network, then 
+multiple server nodes can be employed. In all cases, an effort should be made to select 
+stable systems as server nodes; in other words, do not pick systems that are frequently 
+rebooted or shut down for one reason or another. The three server nodes can be any 
+supported server nodes 
+ -  it is not required that they be the same architecture or 
+operating system.<p>
+<p>
+Three-server redundancy does not provide load-balancing. Use 
+$LM_LICENSE_FILE list instead for this type of redundancy. This is because with 
+three-server redundancy, only one of the three servers is `master', capable of issuing 
+licenses. Since all clients must contact the `master', all clients must have reliable 
+networking to a single node.<p>
+<p>
+These three-server redundant servers should have excellent communications, and 
+should be on the same subnet. Often this means that the three-servers should be located 
+physically close to each other. This form of redundancy requires that the servers 
+exchange heartbeats periodically, and poor communications can cause poor 
+performance. You should never configure redundant servers with slow 
+communications or dialup links.<p>
+<h3>4.3.2	 Redundancy via License File List in $<a name="_IX_74"></a>LM_LICENSE_FILE</h3>
+<p>
+This is best explained by example. If 10 licenses are desired for both f1 and f2, the ISV 
+would issue 2 sets of licenses with a count of 5 for each of f1 and f2. The server nodes 
+(unlike three-server redundancy) can be physically distant. The license files would 
+look like:<p>
+<ul><li>License 1 for chicago</ul><pre>	SERVER chicago 17007ea8 1700</pre>
+<pre>	DAEMON xyzd /etc/mydaemon</pre>
+<pre>	FEATURE f1 xyzd 1.000 01-jan-99 5 26C7DD9CD665B8270186""</pre>
+<pre>	FEATURE f2 xyzd 1.000 01-jan-99 5 0739D2F78CE46C57041D""</pre>
+<ul><li>License 2 for tokyo</ul><pre>	SERVER tokyo 17007ea8 1700</pre>
+<pre>	DAEMON xyzd /etc/mydaemon</pre>
+<pre>	FEATURE f1 xyzd 1.000 01-jan-99 5 16BE40E1DAEEEDA8798D""</pre>
+<pre>	FEATURE f2 xyzd 1.000 01-jan-99 5 6DB6F3E40E61885712DF""</pre>
+</ol></ul><p>
+The user in Chicago could set $LM_LICENSE_FILE to 
+<p>
+<pre>1700@chicago:1700@tokyo </pre>
+</ol></ul><p>
+the user in Tokyo could set $LM_LICENSE_FILE to 
+<p>
+<pre>1700@tokyo:1700@chicago</pre>
+</ol></ul><p>
+The application attempts the first server in the list, and if that fails for any reason, the 
+second server is tried.<p>
+<h3>4.3.3	 Comparing Three-Server to License File List</h3>
+<h4>Are there any drawbacks to using the license file list for redundancy?</h4>
+<p>
+Yes. By default, once a 
+<I>license job</I> has successfully checked out a license from one 
+host, all subsequent checkouts must be satisfied from the same host. If the application 
+requires more than one FEATURE, this could result in a license denial when the 
+license is available on another server. An application can bypass this restriction if it is 
+coded with the use of multiple 
+FLEXlm<I></I> 
+<I>license jobs</I>. Only your application vendor can 
+tell you if their application is programmed in this manner.<p>
+<p>
+If the application supports license queueing, all licenses are only queued from the first 
+host on the list.<p>
+<p>
+Finally, if one server becomes unavailable, some licenses will be unavailable.<p>
+<h4>When is it recommended to use a license file list for redundancy rather 
+than true redundant servers? 
+</h4>
+<ul><li>When there's less system administration available to monitor license servers. 
+<li>When load-balancing is needed: when clients are located far apart, e.g., London 
+and Tokyo. You can make servers available locally, with remote servers available 
+as backup.<li>License-file list is more forgiving if you lose quorum<li>It's not limited to 3 servers (any number will work); and for wide-area networks, 
+you can make servers available locally, with remote servers available as backup.<li>Clients do not require reliable networking to a single node with license-file list, 
+so this is recommended where networking itself requires redundancy.</ul><a name="36598: 1Head: 5.4 Counted Vs. Uncounted Licenses"></a><a name="4.4"></a><h2>4.4  Counted vs. Uncounted Licenses</h2>
+<p>
+The license file determines whether a license server is needed. If all the FEATURE (or 
+INCREMENT) lines have a license-count of 0 (unlimited) or `uncounted' 
+(FLEXlm<I></I> v6 or later only), then no server is needed. This type of license is called 
+<I>uncounted</I>. Alternatively, if any FEATURE lines have a non-zero license-count, then 
+a server is required to count those licenses. If a vendor wants to use 
+FLEXlm<I></I> without 
+a server, they must issue 
+<I>uncounted</I> licenses.<p>
+<p>
+With 
+FLEXlm<I></I> v5 or later, the license server can serve uncounted licenses as well. This 
+is done so that the REPORTLOG file will include transactions for all license requests, 
+which can then be reported on by 
+FLEXadmin<I></I>. To do this, include a SERVER line in 
+the license file, and put the USE_SERVER line immediately after the SERVER line. 
+The vendor daemon will service the uncounted licenses, and the USE_SERVER line 
+indicates to applications that they will be authorized by the server.<p>
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap3.htm">Previous Chapter</a>
+ * <a href="chap5.htm">Next Chapter</a>
+<p>

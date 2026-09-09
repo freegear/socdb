@@ -1,0 +1,114 @@
+#!/bin/csh -f
+
+#-------------------------------------------------------------------------------
+#-  This confidential and proprietary software may be used only as
+#-  authorised by a licensing agreement from ARM Limited
+#-    (C) COPYRIGHT 1999 ARM Limited
+#-        ALL RIGHTS RESERVED
+#-  The entire notice above must be reproduced on all authorised
+#-  copies and copies may only be made to the extent permitted
+#-  by a licensing agreement from ARM Limited.
+#-------------------------------------------------------------------------------
+#-  
+#-  Version and Release Control Information:
+#-  
+#-  File Name              : syn_sdram,v
+#-  File Revision          : 1.9
+#-  
+#-  Release Information    : PrimeCell(TM)-PL170-REL2v2
+#-  
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+#- Purpose  :  Shell script to compile the Sdram Controller via the Load 
+#-             Balancer or via direct invocation
+#-
+#-------------------------------------------------------------------------------
+
+#---------------------------------------------------------------------------
+# set VIAQUEUE=1 if DC is to be invoked via the Load Balancer Queuing System
+# set VIAQUEUE=0 if DC is to be invoked directly
+#---------------------------------------------------------------------------
+set VIAQUEUE=0
+
+#---------------------------------------------------------------------------
+# set the names of the hosts on which the compilation needs to be run. 
+# Note that separate hosts are being used for running DC and TC jobs. This
+# is strictly not necessary. SHOST and HOST may be the same depending on
+# licensing / installation.
+#---------------------------------------------------------------------------
+set HOST=`hostname`
+# Design-Compiler Host
+
+set SHOST=`hostname`
+# Test-Compiler Host
+
+#---------------------------------------------------------------------------
+# Load Balancer priority - 114 is low priority ; 115 is high priority 
+#---------------------------------------------------------------------------
+set LPRI=114
+set HPRI=115
+
+#---------------------------------------------------------------------------
+# change HOST name to match machine names in your environment
+# change dc_command to reflect the Synopsys DC invocation command
+# in your specific environment
+#---------------------------------------------------------------------------
+
+ set dc_command=dc_shell
+
+#---------------------------------------------------------------------------
+# list of modules to be compiled.
+# Note: "scan" is to be included for scan insertion.
+#---------------------------------------------------------------------------
+set SDFILES="Sdram scan"
+
+#---------------------------------------------------------------------------
+# environment variable to select input RTL language (source for compilation) 
+# options <verilog> or <vhdl>
+#---------------------------------------------------------------------------
+setenv HDL_IN verilog 
+
+#---------------------------------------------------------------------------
+# environment variable to select output RTL language (netlist output)
+# options <verilog> or <vhdl>
+#---------------------------------------------------------------------------
+setenv HDL_OUT verilog 
+
+#---------------------------------------------------------------------------
+# environment variable to enable clean up of the work directory before the  
+# start of synthesis
+# options <TRUE> or <FALSE>
+#---------------------------------------------------------------------------
+setenv CLEANUP FALSE 
+
+if ("$VIAQUEUE" == "1") then
+  foreach sdfile ($SDFILES)
+    setenv MODULENAME $sdfile
+    setenv LBPASSENV PERIPH:V2SYNTH:MODULENAME:HDL_IN:HDL_OUT:CLEANUP
+    \rm -f ../log/$MODULENAME"_"$HDL_IN.log
+    if ("$MODULENAME" == "scan") then
+      echo Queuing \($MODULENAME\) .. on host \($SHOST\) ... \(Pri $LPRI\)
+      lbrun -q $LPRI -b -h $SHOST -F ../scr_scan/sdram_scan.cmd -O \
+        ../log/$MODULENAME"_"$HDL_IN.log $dc_command 
+    else 
+      echo Queuing \($MODULENAME\) .. on host \($HOST\) ... \(Pri $LPRI\)
+      lbrun -q $LPRI -b -h $HOST -F sdram.cmd -O \
+        ../log/$MODULENAME"_"$HDL_IN.log $dc_command 
+    endif
+  end
+else
+  foreach sdfile ($SDFILES)
+    setenv MODULENAME $sdfile
+    \rm -f ../log/$MODULENAME"_"$HDL_IN.log
+    if ("$MODULENAME" == "scan") then
+      echo Compiling \($MODULENAME\) .. on host \($SHOST\)
+      $dc_command < ../scr_scan/sdram_scan.cmd > ../log/$MODULENAME"_"$HDL_IN.log
+    else
+      echo Compiling \($MODULENAME\) .. on host \($HOST\)
+      $dc_command < sdram.cmd > ../log/$MODULENAME"_"$HDL_IN.log
+    endif
+  end
+endif
+
+#----------------------------- End of syn_sdram -------------------------------

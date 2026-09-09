@@ -1,0 +1,50 @@
+#!/bin/sh
+
+#- --=================================================================--
+#- This confidential and proprietary software may be used only as
+#- authorised by a licensing agreement from ARM Limited
+#-   (C) COPYRIGHT 2000 ARM Limited
+#-       ALL RIGHTS RESERVED
+#- The entire notice above must be reproduced on all authorised
+#- copies and copies may only be made to the extent permitted
+#- by a licensing agreement from ARM Limited.
+#-----------------------------------------------------------------------
+#- 
+#- Version and Release Control Information:
+#- 
+#- File Name              : vhdl_sdf_patch.rca
+#- File Revision          : 1.4
+#- 
+#- Release Information    : PrimeCell(TM)-GLOBAL-REL1v1
+#- 
+#-----------------------------------------------------------------------
+#- Purpose : 
+#-           This shell script tailors the SDF file written out by 
+#-           Synopsys to make it compatible with the netlist / 
+#-           cell models. 
+#-
+#- --=================================================================--
+
+###########################################################
+# clock to o/p delays are written out by Synopsys using
+# Verilog syntax. 
+# eg:
+#   IOPATH (posedge CP) Q
+# The above syntax is not acceptable for VITAL annotation.
+# It is replaced with  
+#   IOPATH CP Q as per VITAL requirements.
+###########################################################
+
+# Change Synopsys SDF to VITAL compliant format for VHDL netlist 
+# simulations
+sed 's/IOPATH (posedge CP)/IOPATH CP/g' $1 > 1.tmp
+sed 's/IOPATH (negedge CP)/IOPATH CP/g' 1.tmp > 2.tmp
+sed 's/IOPATH (posedge SDN)/IOPATH SDN/g' 2.tmp > 1.tmp
+sed 's/IOPATH (negedge SDN)/IOPATH SDN/g' 1.tmp > 2.tmp
+sed 's/IOPATH (posedge CDN)/IOPATH CDN/g' 2.tmp > 1.tmp
+sed 's/IOPATH (negedge CDN)/IOPATH CDN/g' 1.tmp > 2.tmp
+sed 's/reg_\//reg\//g' 2.tmp > 1.tmp
+sed 's/reg_)/reg)/g' 1.tmp > $1
+rm 1.tmp 2.tmp
+
+################################ End ###################################

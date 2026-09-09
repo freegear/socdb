@@ -1,0 +1,50 @@
+#!/bin/sh
+# Check the core cell library
+# 2003.12.17
+# Assign Remover
+# FILE=ttt
+DATE=`date +"%Y.%m.%d"`
+
+usage () {
+	echo
+	echo "   ----------------------------------------"
+	echo "   Usage: $0 [file_name] "
+	echo "   ----------------------------------------"
+	echo
+}
+
+signature () {
+	FILE=$1
+	sed -e "1i\\
+// Replaced by $0 on $DATE " $FILE > $FILE.tmp
+	mv $FILE.tmp $FILE
+}
+
+#
+assign_remover () {
+	FILE=$1
+	# eliminate intermidiate ";"
+	sed -e '/assign /s/;//' $FILE > $FILE.tmp
+	awk '{
+	if ($1 == "assign")
+		print "BUFX4", "U_BUFX_" NR, "( .A(", $4, "), .Y(", $2, ") );"
+	else
+		print $0;
+	}' $FILE.tmp > $FILE.out
+}
+# MAIN
+if [ "x" = "x"$1 ]
+then
+	usage
+elif [ -f $1 ]
+then
+	# bak $1
+	assign_remover $1
+	# signature $1
+else
+	echo "    File not fount!     : $1"
+fi
+
+rm $FILE.tmp
+#
+

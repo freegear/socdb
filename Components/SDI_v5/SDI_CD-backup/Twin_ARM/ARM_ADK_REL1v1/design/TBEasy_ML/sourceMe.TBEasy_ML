@@ -1,0 +1,84 @@
+#- --===============================================================--
+#- This confidential and proprietary software may be used only as
+#- authorised by a licensing agreement from ARM Limited
+#-   (C) COPYRIGHT 2001 ARM Limited
+#-       ALL RIGHTS RESERVED
+#- The entire notice above must be reproduced on all authorised
+#- copies and copies may only be made to the extent permitted
+#- by a licensing agreement from ARM Limited.
+#-
+#- -------------------------------------------------------------------
+#- Version and Release Control Information:
+#-
+#- File Name              : sourceMe.TBEasy_ML,v
+#- File Revision          : 1.5
+#-
+#- Release Information    : ADK_REL1v1
+#-
+#- -------------------------------------------------------------------
+#- Purpose : 
+#-           EASY_ML testbench sourceMe
+#-
+#-           This file sets a number of environment variables which
+#-           are required by the ADK scripts.  Please read the
+#-           comments included below for further explanations.
+#- --===============================================================--
+
+
+######################################################################
+# ADK System Variables
+######################################################################
+
+# Primary AHB Master.  This indicates to the makefiles how to process
+# the test source files
+setenv TEST_ENV   ML
+
+# The name of the testbench used to simulate the chosen EASY system
+setenv TEST_BENCH TBEasy_ML
+
+# Type of EASY system
+# Currently supported values are shown below - uncomment the relevant
+# one for the system which is to be used
+setenv EASY       EASY_ML
+
+# The PERIPH environment variable is used throughout the makefile
+# system, and is over-ridden in the local makefiles.  A dummy value is
+# set here to aid de-bugging when adding new peripherals.
+setenv PERIPH     TBEasy_ML
+
+######################################################################
+# TEST specific setup
+#
+# TEST_NAME     - Name of the test to be run on the system
+#                 Set to blank if not required
+#
+# TEST_NAME_ROM - Name of the software test to be run on the ARM core
+#                 Set to blank if not required
+#
+# Currently supported values are shown below - uncomment the relevant
+# one for the test which is to be run
+#
+#                     ********************************
+#               If TEST_NAME or TEST_NAME_ROM are changed
+#           do 'make clean' from $ADK/design/<TBEasy_xxx>/integration
+#                 prior to 'make rtl' for the new test
+#                    ********************************
+#           
+#
+# $(TEST_NAME)_$(TEST_NAME_ROM)_ is used as the root for the 
+# simulation transcript file
+#
+######################################################################
+
+# FRBM Integration Test
+#setenv TEST_NAME_ROM blank
+#setenv TEST_NAME IntegrationTest
+
+# ARM Core Integration Test
+setenv TEST_NAME_ROM easy_92_it
+setenv TEST_NAME EgMasterTest
+
+# ARM Core Hello World Demo
+#setenv TEST_NAME_ROM easy_92_hw
+#setenv TEST_NAME  blank
+

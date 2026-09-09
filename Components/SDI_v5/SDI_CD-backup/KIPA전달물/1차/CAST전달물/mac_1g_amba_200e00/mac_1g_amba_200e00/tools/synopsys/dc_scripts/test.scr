@@ -1,0 +1,23 @@
+
+
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "utility_mac_1g.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "bd.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "csr.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "dma.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "rc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "tc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "rfifo.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "rlsm.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "tfifo.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "tlsm.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "rstc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "miism.vhd"}
+
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "mac_1g.v"}
+
+
+elaborate mac_1g
+current_design mac_1g
+link
+
+write -f db -hier -out mac_1g.gtech.db

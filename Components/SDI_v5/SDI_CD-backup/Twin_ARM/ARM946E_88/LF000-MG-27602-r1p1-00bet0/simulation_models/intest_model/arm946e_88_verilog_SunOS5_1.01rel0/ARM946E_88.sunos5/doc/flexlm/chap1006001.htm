@@ -1,0 +1,88 @@
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap9.htm">Previous Chapter</a>
+ * <a href="chap11.htm">Next Chapter</a>
+<p>
+<a name="_IX_147"></a><title>FLEXlm End User Manual: Appendix D  
+FLEX<I>lm</I> Error Codes</title>
+<h1>Appendix D  
+FLEX<I>lm</I> Error Codes</h1>
+<a name="D.1"></a><h2>D.1  Error Message Format</h2>
+<p>
+FLEXlm<I></I> error messages presented by applications have the following components<p>
+<ul><li>FLEXlm Error Number - a negative number starting with -1<li>FLEXlm Error Text - short sentence (&lt; 80 characters) summarizing problem.<li>FLEXlm Error Explanation (optional) - short paragraph (3-5 lines) explaining 
+problem and possible solutions or workarounds.<li>FLEXlm Minor Error Number, a positive number starting with 1. These numbers 
+are unique error identifiers, and are used by FLEXlm-license ISVs for more 
+advanced support assistance. Their meaning is not documented.<li>System error code (optional) - This is a Unix or Windows OS error code last set 
+by the operating system.<li>System error code explanation (optional) - A short sentence (&lt; 80 characters) 
+explaining the system error code.<li>Other supporting information (optional)</ul><p>
+Error messages were improved in v6. FLEXlm error explanation, and supporting 
+information are only available in v6.<p>
+<p>
+These error messages may occur in two formats available with FLEXlm, or may 
+appear in a format customized by the application:<p>
+<h3>D.1.1	 Format 1 (short):</h3>
+<pre> FLEXlm error text (-lm_errno, minor_num[:sys_errno]) [sys error text]</pre>
+</ol></ul><p>
+The system error information may be missing.<p>
+<p>
+Example:<p>
+<pre>Can't connect to license server (-15,12:61) Connection refused</pre>
+<h3>D.1.2	 Format 2 (long - new in v6):</h3>
+<pre>FLEXlm error text
+ FLEXlm error explanation
+[Optional Supporting information]
+FLEXlm error: -lm_errno, minor_num[, sys_errno] [`system error text']</pre>
+</ol></ul><p>
+Example:<p>
+<pre>Cannot connect to license server
+ The server (lmgrd) has not been started yet, or
+ the wrong port@host or license file is being used, or the
+ port or hostname in the license file has been changed.
+Feature:       f1
+Server name:   localhost
+License path: @localhost:license.dat:./*.lic
+FLEXlm error:  -15,12.  System Error: 61 `Connection refused'</pre>
+<a name="_IX_148"></a><a name="D.2"></a><h2>D.2  Error Code Descriptions</h2>
+<p>
+Errors marked with an '*' indicates errors which should not appear in shipping 
+software. These are errors intended to help the programmer incorporate FLEXlm in 
+their product, and should be fixed before shipping.<p>
+<p>
+Errors marked with '+' indicate errors due to an operating system failure.<p>
+<dl><dt>Error<dd>Description<dt>-1<dd>Cannot find license file<dt>-2<dd>Invalid license file syntax<dt>-3<dd>No server for this feature<dt>-4<dd>Licensed number of users already reached<dt>-5<dd>No such feature exists<dt>-6<dd>No port number in license file and FLEXlm service does not exist [pre-v6 
+only]<dt>-7<dd>No socket connection to license manager server<dt>-8<dd>Invalid (inconsistent) license key.
+ The license-key and data for the feature do no match.
+ This usually happens when a license file has been altered<dt>-9<dd>Invalid host.
+ The hostid of this system does not match the hostid
+ specified in the license file<dt>-10<dd>Feature has expired<dt>-11<dd>Invalid date format in license file<dt>-12<dd>Invalid returned data from license server<dt>-13<dd>No SERVER lines in license file<dt>-14<dd>Cannot find SERVER hostname in network database.
+ The lookup for the hostname on the SERVER line in the
+ license file failed. This often happens when NIS or DNS
+ or the hosts file is incorrect. Workaround: Use IP-Address
+ (e.g., 123.456.789.123) instead of hostname<dt>-15<dd>Cannot connect to license server.
+ The server (lmgrd) has not been started yet, or
+ the wrong port@host or license file is being used, or the
+ port or hostname in the license file has been changed.<dt>-16<dd>Cannot read data from license server<dt>-17<dd>Cannot write data to license server<dt>-18<dd>License server does not support this feature<dt>-19<dd>Error in select system call<dt>-20<dd>[Obsolete]<dt>-21<dd>License file does not support this version<dt>-22<dd>Feature checkin failure detected at license server<dt>-23<dd>License server temporarily busy (new server connecting)<dt>-24<dd>Users are queued for this feature<dt>-25<dd>License server does not support this version of this feature<dt>-26<dd>Request for more licenses than this feature supports<dt>-27<dd>[Obsolete]<dt>-28<dd>[Obsolete]<dt>-29<dd>Cannot find ethernet device<dt>-30<dd>Cannot read license file<dt>-31<dd>Feature start date is in the future<dt>-32<dd>No such attribute<dt>-33<dd>Bad encryption handshake with daemon<dt>-34<dd>Clock difference too large between client and server<dt>-35<dd>In the queue for this feature<dt>-36<dd>Feature database corrupted in daemon<dt>-37<dd>Duplicate selection mismatch for this feature<dt>-38<dd>User/host on EXCLUDE list for feature<dt>-39<dd>User/host not on INCLUDE list for feature<dt>-40<dd>Cannot allocate dynamic memory<dt>-41<dd>Feature was never checked out<dt>-42<dd>Invalid parameter<dt>-43<dd>*No FLEXlm key data supplied in initializing call<dt>-44<dd>*Invalid FLEXlm key data supplied<dt>-45<dd>*FLEXlm function not available in this version<dt>-46<dd>[Obsolete]<dt>-47<dd>Clock setting check not available in daemon<dt>-48<dd>*FLEXlm platform not enabled<dt>-49<dd>*Date invalid for binary format<dt>-50<dd>*FLEXlm key data has expired<dt>-51<dd>*FLEXlm not initialized<dt>-52<dd>FLEXlm vendor daemon did not respond within timeout interval<dt>-53<dd>Checkout request rejected by vendor-defined checkout filter<dt>-54<dd>No FEATURESET line in license file<dt>-55<dd>Incorrect FEATURESET line in license file<dt>-56<dd>Cannot compute FEATURESET data from license file<dt>-57<dd>+socket() call failed<dt>-58<dd>[Obsolete]<dt>-59<dd>Message checksum failure<dt>-60<dd>Server message checksum failure<dt>-61<dd>Cannot read license file data from server<dt>-62<dd>Network software (tcp/ip) not available<dt>-63<dd>You are not a license administrator<dt>-64<dd>lmremove request before the minimum lmremove interval<dt>-65<dd>*Unknown VENDORCODE struct type passed to lm_init()<dt>-66<dd>*FLEXlm include file/library version mismatch<dt>-67<dd>[Obsolete]<dt>-68<dd>[Obsolete]<dt>-69<dd>[Obsolete]<dt>-70<dd>[Obsolete]<dt>-71<dd>Invalid TZ environment variable<dt>-72<dd>*Old VENDORCODE (3-word) struct type passed to lm_init()<dt>-73<dd>Local checkout filter rejected request<dt>-74<dd>Attempt to read beyond end of license file path<dt>-75<dd>+SYS$SETIMR call failed (VMS)<dt>-76<dd>Internal FLEXlm Error - Please report to Globetrotter Software<dt>-77<dd>Bad version number - must be floating point number, with no letters<dt>-78<dd>*FLEXadmin API functions not available<dt>-79<dd>FLEXlm internal error -79<dt>-80<dd>FLEXlm internal error -80<dt>-81<dd>FLEXlm internal error -81<dt>-82<dd>Invalid PACKAGE line in license file<dt>-83<dd>FLEXlm version of client newer than server<dt>-84<dd>USER_BASED license has no specified users -- see server log<dt>-85<dd>License server doesn't support this request<dt>-86<dd>License object already in use (Java only)<dt>-87<dd>Checkout exceeds MAX specified in options file<dt>-88<dd>System clock has been set back<dt>-89<dd>This platform not authorized by license<dt>-90<dd>Future license file format or misspelling in license file.
+ The file was issued for a later version of FLEXlm than this
+ program understands.<dt>-91<dd>ENCRYPTION_SEEDs are non-unique<dt>-92<dd>feature removed during lmreread, or wrong SERVER line hostid<dt>-93<dd>This feature is available in a different license pool.
+ This is a warning condition. The server has pooled one or more
+ INCREMENT lines into a single pool, and the request was made on
+ an INCREMENT line that has been pooled.<dt>-94<dd>Attempt to generate license with incompatible attributes<dt>-95<dd>Network connect to THIS_HOST failed.
+ The license file indicates THIS_HOST, and the server is 
+
+ not running on this host. If it's running on a different host,
+ THIS_HOST should be changed to the correct host.<dt>-96<dd>Server node is down or not responding. 
+
+ See the system administrator about starting the server, or make 
+
+ sure the you're referring to the right host (see LM_LICENSE_FILE).<dt>-97<dd>The desired vendor daemon is down.
+ 1) Check the lmgrd log file, or 2) Try lmreread.<dt>-98<dd>This FEATURE line can't be converted to decimal format<dt>-99<dd>The decimal format license is typed incorrectly<dt>-100<dd>Cannot remove a linger license<dt>-101<dd>All licenses are reserved for others.
+ The system administrator has reserved all the licenses for others.
+ Reservations are made in the options file. The server must be restarted 
+
+ for options file changes to take effect.</dl>
+<p><a href="TOC.htm">Table of Contents</a>
+ * <a href="IX.htm">Index</a>
+ * <a href="chap9.htm">Previous Chapter</a>
+ * <a href="chap11.htm">Next Chapter</a>
+<p>

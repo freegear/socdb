@@ -1,0 +1,39 @@
+TARGETNAME=IRUSB
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+
+
+TARGETLIBS=$(DDK_LIB_PATH)\ndis.lib \
+	   $(DDK_LIB_PATH)\ntoskrnl.lib \
+	   $(DDK_LIB_PATH)\usbd.lib
+
+
+
+
+C_DEFINES=$(C_DEFINES) -DNDIS_MINIPORT_DRIVER=1 -DNDIS50_MINIPORT=1 -DIRDA -DDRIVER -DBINARY_COMPATIBLE=1 -DNDIS_WDM=1  -DUSE_KLOCKS=1
+
+BROWSER_INFO=1
+
+INCLUDES=                       \
+    $(BASEDIR)\inc;             \
+    $(BASEDIR)\inc\ddk;         \
+    ..\..\..\inc;               \
+    ..\..\inc
+
+LINKER_FLAGS=-map
+
+DRIVER_ALIGNMENT=0x200
+
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=\
+        rwusb.c     \
+        usb.c    \
+        request.c  \
+        receive.c  \
+        send.c     \
+	debug.c \
+        usb.rc		\
+ 		e100b.mof

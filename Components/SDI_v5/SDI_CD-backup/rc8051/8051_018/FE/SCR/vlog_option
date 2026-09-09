@@ -1,0 +1,52 @@
+//T_BIST.v
+//./epsc_top_bist.v
+// -------------------------------
+// Memory Core
+// -------------------------------
+//---------------------------------------------
+// Standard Cell
+//---------------------------------------------
+-v /Slibs/artisan/TSMC_0.18-micron-FB/G/aci/sc/verilog/tsmc18.v
+
+//---------------------------------------------
+// PAD
+//---------------------------------------------
+-v /Slibs/artisan/TSMC_0.18-micron-FB/G/fb_TSMCHOME_tpz973g_240c/digital/Front_End/verilog/tpz973g_240b/tpz973g.v
+
+-v /user/cklee/PRJ/8051_018/MEM_DB_LIB/SPSRAM256X8.v
+
+// /user/cklee/PRJ/8051_018/FE/SCAN/SCAN_DB/rc8051RtlTop_scan.v.out
+
+// -------------------------------
+// Test Bench
+// -------------------------------
+
+
+
++pulse_r/0 +pulse_e/100 +no_pulse_msg
+//+maxdelays
+//+mindelays
+//+typdelays
+
++nolibcell
++logpsterr +logpllerr
++libext+.vmd+.v
+
+// options for TSMC only
++libname:tsmc18
++libcomp:tpz973g
++access+rwc
+//+bus_conflict_off
+//+ncnontcglitch
++nospecify
+//+notimingchecks
+
+
+
+
++global_power_on
++nowarnTFNPC
++nowarnSDFA
++nowarnSDFNDP
++nowarnPSDNGL2
+

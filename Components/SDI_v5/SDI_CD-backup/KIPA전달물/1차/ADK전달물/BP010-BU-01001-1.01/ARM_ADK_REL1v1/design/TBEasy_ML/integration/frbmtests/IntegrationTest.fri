@@ -1,0 +1,304 @@
+#=====================================================================#
+#  This confidential and proprietary software may be used only as
+#  authorised by a licensing agreement from ARM Limited
+#    (C) COPYRIGHT 2001 ARM Limited
+#        ALL RIGHTS RESERVED
+#  The entire notice above must be reproduced on all authorised
+#  copies and copies may only be made to the extent permitted
+#  by a licensing agreement from ARM Limited.
+#  
+#
+#---------------------------------------------------------------------#
+#  Version and Release Control Information:
+#  
+#  File Name           : IntegrationTest.fri,v
+#  File Revision       : 1.6
+#  
+#  Release Information : ADK_REL1v1
+#  
+#---------------------------------------------------------------------#
+#  Purpose             : Integration tests for EASY_ML
+#=====================================================================#
+
+################################################################################
+# Check Peripheral IDs
+################################################################################
+
+   R  C2000FE0 00000004 000000FF byte single # Timers ID bits 7:0
+   R  C2000FE4 00000008 0000000F byte single # Timers ID bits 11:8
+
+   R  C1000FE0 00000005 000000FF byte single # Watchdog ID bits 7:0
+   R  C1000FE4 00000008 0000000F byte single # Watchdog ID bits 11:8
+
+   R  C8000FE0 00000009 000000FF byte single # Remap/Pause Controller ID bits 7:0
+   R  C8000FE4 00000008 0000000F byte single # Remap/Pause Controller ID bits 11:8
+
+   R  C4000FE0 00000061 000000FF byte single # GPIO block ID bits 7:0
+   R  C4000FE4 00000000 0000000F byte single # GPIO block ID bits 11:8
+
+   R  CF000FE0 00000006 000000FF byte single # EgAPBSlave block ID bits 7:0
+   R  CF000FE4 00000008 0000000F byte single # EgAPBSlave ID bits 11:8
+
+   R  F0000FE0 00000008 000000FF word single # Interrupt Controller ID bits 7:0
+   R  F0000FE4 00000008 0000000F word single # Interrupt Controller ID bits 11:8
+
+# Write test pass message to the Tube
+   W  38000000 00000054 byte single # T
+   W  38000000 00000065 byte single # e
+   W  38000000 00000073 byte single # s
+   W  38000000 00000074 byte single # t
+   W  38000000 00000020 byte single #
+   W  38000000 00000049 byte single # I
+   W  38000000 00000044 byte single # D
+   W  38000000 00000073 byte single # s
+   W  38000000 00000020 byte single #
+   W  38000000 0000002d byte single # -
+   W  38000000 00000020 byte single #
+   W  38000000 00000044 byte single # D
+   W  38000000 0000006f byte single # o
+   W  38000000 0000006e byte single # n
+   W  38000000 00000065 byte single # e
+   W  38000000 0000000D byte single # carriage return
+
+   I 
+   L 3
+
+################################################################################
+# Test Power-on-Reset flag in Remap/Pause Controller
+################################################################################
+
+   R  C8000008 00000001 00000001 word single # check PoR bit in ResetStatus
+   W  C800000C 00000001 word single          # clear PoR bit
+   R  C8000008 00000000 00000001 word single # check PoR bit in ResetStatus
+
+# Write test pass message to the Tube
+   W  38000000 00000054 byte single # T
+   W  38000000 00000065 byte single # e
+   W  38000000 00000073 byte single # s
+   W  38000000 00000074 byte single # t
+   W  38000000 00000020 byte single #
+   W  38000000 00000050 byte single # P
+   W  38000000 0000004F byte single # O
+   W  38000000 00000052 byte single # R
+   W  38000000 00000020 byte single #
+   W  38000000 0000002d byte single # -
+   W  38000000 00000020 byte single #
+   W  38000000 00000044 byte single # D
+   W  38000000 0000006f byte single # o
+   W  38000000 0000006e byte single # n
+   W  38000000 00000065 byte single # e
+   W  38000000 0000000D byte single # carriage return
+
+   I
+   L 3
+
+################################################################################
+# Timer / Pause Test
+# Set the timer for a one-shot interrupt, put the bus in PAUSE mode (dummy 
+# master 0 is granted the bus. Wait for the Timer interrupt to un-PAUSE the bus.
+################################################################################
+
+   W  F0000010 00000010 word single          # enable Timer1 interrupt
+   W  C2000000 0000000F byte single          # load Timer1 with 16
+
+   W  C2000008 000000A1 byte single          # enable one-shot timer
+   W  C8000000 00000001 byte single          # set PAUSE mode in RemapPause
+
+   P  F0000000 00000010 FFFFFFFF word single # wait for timer1 IRQ
+   W  C200000C 00000000 byte single          # clear Timer1 interrupt
+
+   W  F0000010 00000020 word single          # enable Timer2 interrupt
+   W  F000000C 00000020 word single          # set Timer2 interrupt to FIQ
+   W  C2000020 0000000F byte single          # load Timer2 with 16
+
+   W  C2000028 000000A1 byte single          # enable one-shot timer
+   W  C8000000 00000001 byte single          # set PAUSE mode in RemapPause
+
+   P  F0000004 00000020 FFFFFFFF word single # wait for timer2 FIQ
+   W  C200002C 00000000 byte single          # clear Timer2 interrupt
+
+# Test Passed if the FileReader can send these transfers
+   W  38000000 00000050 byte single # P
+   W  38000000 00000061 byte single # a
+   W  38000000 00000075 byte single # u
+   W  38000000 00000073 byte single # s
+   W  38000000 00000065 byte single # e
+   W  38000000 00000020 byte single #
+   W  38000000 00000054 byte single # T
+   W  38000000 00000065 byte single # e
+   W  38000000 00000073 byte single # s
+   W  38000000 00000074 byte single # t
+   W  38000000 00000020 byte single #
+   W  38000000 0000002d byte single # -
+   W  38000000 00000020 byte single #
+   W  38000000 00000044 byte single # D
+   W  38000000 0000006f byte single # o
+   W  38000000 0000006e byte single # n
+   W  38000000 00000065 byte single # e
+   W  38000000 0000000D byte single # carriage return
+
+   I
+   L 3
+
+################################################################################
+# External Memory Tests
+################################################################################
+# Note FRBM can'rt acess Internal Memory
+
+
+# Write burst to external memory at default address
+   W  30000000 AAAAAAAA word  incr4         # write to memory
+   S  BBBBBBBB
+   S  CCCCCCCC
+   S  DDDDDDDD 
+
+# Idle states inserted because of bus turn-around time
+   I
+   L 2
+
+   # read back data 
+   R  30000000 AAAAAAAA FFFFFFFF word incr4 # read back data
+   S  BBBBBBBB
+   S  CCCCCCCC
+   S  DDDDDDDD
+
+   W  38000000 0000004d byte single # M
+   W  38000000 00000065 byte single # e
+   W  38000000 0000006d byte single # m
+   W  38000000 0000006f byte single # o
+   W  38000000 00000072 byte single # r
+   W  38000000 00000079 byte single # y
+   W  38000000 00000020 byte single #
+   W  38000000 00000054 byte single # T
+   W  38000000 00000065 byte single # e
+   W  38000000 00000073 byte single # s
+   W  38000000 00000074 byte single # t
+   W  38000000 00000020 byte single #
+   W  38000000 0000002d byte single # -
+   W  38000000 00000020 byte single #
+   W  38000000 00000044 byte single # D
+   W  38000000 0000006f byte single # o
+   W  38000000 0000006e byte single # n
+   W  38000000 00000065 byte single # e
+   W  38000000 0000000D byte single # carriage return
+
+   I
+   L 3
+
+################################################################################
+# Interrupt Tests
+################################################################################
+
+
+# Test the software interrupt (bit 1)
+   W  F000000C 00000000 word single          # set all interrupts to be IRQ
+   W  F0000010 FFFFFFFF word single          # enable interrupts
+   W  F0000018 00000002 word single          # cause soft interrupt
+   P  F0000000 00000002 FFFFFFFF word single # read IRQ status - bit 1 should be set
+   W  F000001C 00000002 word single          # clear soft interrupt
+   W  F0000014 FFFFFFFF word single          # disable interrupts
+
+
+   I                                         # idle separating the tests
+
+
+## Test the GPIO interrupt (bit 2)
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  C4000600 00000001 word single          # put GPIO in test mode
+   W  C400060C 000000FF word single          # set GPIO interrupts
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  F0000010 FFFFFFFD word single          # enable interrupts except bit 1
+   P  F0000000 FF000100 FFFFFFFF word single # read IRQ status - bits 31:24 and 8 set
+   W  F0000014 FFFFFFFF word single          # disable interrupts
+   W  C4000600 00000000 word single          # take GPIO out of test mode
+
+   I                                         # idle separating the tests
+
+
+# Test the Timer interrupts (bits 4, 5, 6)
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  F0000010 FFFFFFFD word single          # enable interrupts except bit 1
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  C2000F00 00000001 word single          # put Timer in test mode
+   W  C2000F04 00000001 word single          # set Timer interrupt 1
+   P  F0000000 00000050 FFFFFFFF word single # read IRQ status - 4 and 6 should be set
+   W  C2000F04 00000002 word single          # set Timer interrupt 2
+   P  F0000000 00000060 FFFFFFFF word single # read IRQ status - 5 and 6 should be set
+   W  F0000014 FFFFFFFF word single          # disable interrupts
+   W  C2000F00 00000000 word single          # take Timer out of test mode
+
+   I                                         # idle separating the tests
+
+# Test the Watchdog interrupts (bit 7)
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  F0000010 FFFFFFFD word single          # enable interrupts except bit 1
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  C1000F00 00000001 word single          # put Watchdog in test mode
+   W  C1000F04 00000002 word single          # set Watchdog interrupt
+   P  F0000000 00000080 FFFFFFFF word single # read IRQ status - bit 7 should be set
+   W  F0000014 FFFFFFFF word single          # disable interrupts
+   W  C1000F00 00000000 word single          # take Watchdog out of test mode
+
+   I                                         # idle separating the tests
+
+# Write test complete message to Tube
+   W  38000000 00000049 byte single # I
+   W  38000000 0000006e byte single # n
+   W  38000000 00000074 byte single # t
+   W  38000000 00000065 byte single # e
+   W  38000000 00000072 byte single # r
+   W  38000000 00000072 byte single # r
+   W  38000000 00000075 byte single # u
+   W  38000000 00000070 byte single # p
+   W  38000000 00000074 byte single # t
+   W  38000000 00000020 byte single #
+   W  38000000 00000054 byte single # T
+   W  38000000 00000065 byte single # e
+   W  38000000 00000073 byte single # s
+   W  38000000 00000074 byte single # t
+   W  38000000 00000020 byte single #
+   W  38000000 0000002d byte single # -
+   W  38000000 00000020 byte single #
+   W  38000000 00000044 byte single # D
+   W  38000000 0000006f byte single # o
+   W  38000000 0000006e byte single # n
+   W  38000000 00000065 byte single # e
+   W  38000000 0000000D byte single # carriage return
+
+################################################################################
+# Reset Test
+################################################################################
+# Use the watchdog to reset the system (doesn't reset the FileReader). 
+
+   W  C1000F00 00000001 byte single          # Put Watchdog in test mode
+   W  C1000F04 00000001 byte single          # Set WDOGRES high - system should reset
+
+   P  C8000008 00000001 00000001 word single # check PoR bit in RemapPause ResetStatus
+   W  C800000C 00000001 word single          # clear PoR bit
+   P  C8000008 00000000 00000001 word single # check PoR bit in ResetStatus
+
+   P  C8000004 00000000 00000001 word single # check Remap bit is clear
+
+
+   W  38000000 00000052 byte single # R
+   W  38000000 00000065 byte single # e
+   W  38000000 00000073 byte single # s
+   W  38000000 00000065 byte single # e
+   W  38000000 00000074 byte single # t
+   W  38000000 00000020 byte single #
+   W  38000000 00000054 byte single # T
+   W  38000000 00000065 byte single # e
+   W  38000000 00000073 byte single # s
+   W  38000000 00000074 byte single # t
+   W  38000000 00000020 byte single #
+   W  38000000 0000002d byte single # -
+   W  38000000 00000020 byte single #
+   W  38000000 00000044 byte single # D
+   W  38000000 0000006f byte single # o
+   W  38000000 0000006e byte single # n
+   W  38000000 00000065 byte single # e
+   W  38000000 0000000D byte single # carriage return
+
+   W  38000000 00000004 byte single # End of File: Tube exit
+
+

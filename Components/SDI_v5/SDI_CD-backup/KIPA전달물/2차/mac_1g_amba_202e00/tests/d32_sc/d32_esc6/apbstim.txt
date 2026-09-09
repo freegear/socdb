@@ -1,0 +1,74 @@
+// ******************************************************************* //
+//  Copyright (c) 2002  Evatronix SA                                   //
+// ******************************************************************* //
+//  Please review the terms of the license agreement before using      //
+//  this file. If you are not an authorized user, please destroy this  //
+//  source code file and notify Evatronix SA immediately that you      //
+//  inadvertently received an unauthorized copy.                       //
+// ******************************************************************* //
+// ------------------------------------------------------------------- //
+// Project name         : MAC
+// Project description  : Ethernet Media Access Controller
+//
+// File name            : 
+// File contents        : 
+// Purpose              : 
+// Design Engineer      : 
+// Quality Engineer     : 
+// Test version         : 1.00
+// Last modification    : 2002-08-01
+// ------------------------------------------------------------------- //
+
+0  50            // wait
+2  00  00000000  // write PBL=0
+2  18  00003000  // write receive list base address
+//2 20 F 00003000  // write transmit list base address
+2  30  400062C2  // write start transmit command, full duplex,
+                 // TR=01, TTM=0, receive all
+0  700           // wait
+
+// ------------------------------------------------------------------- //
+//   Reading Counters Test
+// ------------------------------------------------------------------- //
+2  A8  00008100  // write SC address, set READ opeartion and set SCP bit
+1  A8  00000000  // read CSR21 register status 
+0  5             // wait for setting CSR21.SCP bit
+1  A8  00000000  // read CSR21 register status 
+
+1  B0  00000000  // read RxFrmOK
+2  A8  00008101  // write SC address and set READ opeartion 
+1  B0  00000000  // read RxOctOK
+2  A8  00008102  // write SC address and set READ opeartion 
+1  B0  00000000  // read RxUniOK
+2  A8  00008103  // write SC address and set READ opeartion 
+1  B0  00000000  // read RxMultiOK
+2  A8  00008104  // write SC address and set READ opeartion 
+1  B0  00000000  // read RxBroadOK
+2  A8  00008105  // write SC address and set READ opeartion 
+1  B0  00000000  // read RxTooLong
+2  A8  00008106  // write SC address and set READ opeartion 
+1  B0  00000000  // read Rx1024to1518
+2  A8  00008107  // write SC address and set READ opeartion 
+1  B0  00000000  // read Rx512to1023
+2  A8  00008108  // write SC address and set READ opeartion 
+1  B0  00000000  // read Rx256to511
+2  A8  00008109  // write SC address and set READ opeartion 
+1  B0  00000000  // read Rx128to255 
+2  A8  0000810A  // write SC address and set READ opeartion 
+1  B0  00000000  // read Rx65to127 
+2  A8  0000810B  // write SC address and set READ opeartion 
+1  B0  00000000  // read Rx64
+2  A8  0000810C  // write SC address and set READ opeartion 
+1  B0  00000000  // read Rx63orLess
+2  A8  0000810D  // write SC address and set READ opeartion 
+1  B0  00000000  // read RxPause 
+2  A8  0000810E  // write SC address and set READ opeartion 
+1  B0  00000000  // read RxAlignErr
+2  A8  0000810F  // write SC address and set READ opeartion 
+1  B0  00000000  // read RxFCSErr 
+
+2  A8  00000100  // write SC address, clear SCP bit
+1  A8  00000000  // read CSR21 register status 
+0  5             // wait for clearing CSR21.SCP bit
+1  A8  00000000  // read CSR21 register status 
+

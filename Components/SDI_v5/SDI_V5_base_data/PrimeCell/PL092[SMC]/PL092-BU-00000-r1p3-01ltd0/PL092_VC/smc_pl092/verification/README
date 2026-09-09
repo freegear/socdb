@@ -1,0 +1,56 @@
+-- --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2003 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- -----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : README.rca
+-- File Revision          : 1.3
+--
+-- Release Information    : PrimeCell(TM)-PL092-r1p3-01ltd0
+--
+-- -----------------------------------------------------------------------------
+-- Purpose :
+--           README file for Trick Memory violations reported in the logs
+--
+-- --=========================================================================--
+The following trick memory violations can be ignored : 
+
+1. SMCTM32: Access time violation for Read
+This violation can be ignored since it is flagged when a SMC prefetch read is
+aborted at end of burst
+
+2. SMCTM30: Access time violation for Read
+This violation can be ignored since it is flagged when a SMC prefetch read is
+aborted at end of burst
+
+3. SMCTM27: Maximum time limit for the burst read access has exceeded
+This violation can be ignored since a prefetch read is aborted and then
+followed by a fresh read to the same address giving the impression that it is
+a single read. Since this read takes the burst read access time + the prefetch
+abort time of 2 clocks, the trickmemory indicates that the access time has been
+exceeded.
+
+4. SMCTM31: Maximum time limit for the burst read access has exceeded
+This violation can be ignored. This is due to the the nSMOEN being deasserted
+after one read from memory for HSIZE > MSIZE and being asserted after the
+AHB has finished reading from the internal buffer.
+
+5. SMCTM33: Maximum time limit for the burst read access has exceeded
+This violation can be ignored. Here a prefetch read with zero access time is
+followed by a new burst read starting at the next address. Therefore the RTL
+does a normal mode read while the trick memory expects a burst mode read.
+
+6. SmcTM25, TM35: Maximum time limit for the Burst mode read access has exceeded
+This violation can be ignored since it is flagged when a SMC prefetch read is
+aborted at end of burst
+
+7. SmcTM35 : Maximum time limit for the Burst mode read access has exceeded
+This violation can be ignored since it is flagged when a SMC prefetch read is
+aborted at end of burst

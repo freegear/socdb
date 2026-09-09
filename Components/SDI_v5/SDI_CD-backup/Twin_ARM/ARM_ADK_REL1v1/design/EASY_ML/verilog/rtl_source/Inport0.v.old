@@ -1,0 +1,566 @@
+//  --========================================================================--
+//  This confidential and proprietary software may be used only as
+//  authorised by a licensing agreement from ARM Limited
+//    (C) COPYRIGHT 2001 ARM Limited
+//        ALL RIGHTS RESERVED
+//  The entire notice above must be reproduced on all authorised
+//  copies and copies may only be made to the extent permitted
+//  by a licensing agreement from ARM Limited.
+//  
+//  ----------------------------------------------------------------------------
+//  Version and Release Control Information:
+//  
+//  File Name          : Inport0.v,v
+//  File Revision      : 1.15
+//  
+//  Release Information : ADK_REL1v1
+//  
+//  ----------------------------------------------------------------------------
+//  Purpose             : Structural sub-block architecture of Example Amba
+//                        SYstem Multi-layer (EASY-ML), connected to BusMatrix
+//                        Inport 0. The module contains the following AHB
+//                        devices:
+//                       
+//                          - ARM922T with Test Interface (Local master 1)
+//                          - 1Kbyte Internal Memory SRAM (Local slave)
+//                          - Local Slave-to-Master multiplexor
+//                          - Local Address Decoder
+//                       
+//                        The ARM922T Test Interface is an AHB slave. The Test
+//                        Interface is connected directly to the TIC, which is
+//                        contained within Outport0 module.
+//  --========================================================================--
+
+`timescale 1ns/1ps
+
+module Inport0 (HCLK, HRESETn, HRDATAmtrx, HREADYmtrx, HRESPmtrx, HADDR, HBURST,
+                HMASTLOCK, HPROT, HSIZE, HTRANS, HWDATA, HWRITE, HSELmtrx,
+                HREADYOUT, HADDRtst, HSELtst, HTRANStst, HWRITEtst, HWDATAtst,
+                HRDATAtst, HREADYOUTtst, HRESPtst, nFIQ, nIRQ, COMMRX, COMMTX,
+                FCLK, nTRST, TCK, TDI, TMS, nTDOEN, TDO, Remap, Pause, 
+                SCANENABLE, SCANINHCLK, SCANOUTHCLK);
+
+  // Width of the address bus of the Internal Memory block
+  parameter IntMemAddrWidth = 10;
+  // Internal Memory initialisation file
+  parameter IntMemInitFile = "intram.dat";
+ 
+  // Common AHB signals
+  input         HCLK;
+  input         HRESETn;
+
+  // Matrix AHB connections
+  output [31:0] HADDR;
+  output [2:0]  HBURST;
+  output        HMASTLOCK;
+  output [3:0]  HPROT;
+  output [2:0]  HSIZE;
+  output [1:0]  HTRANS;
+  output [31:0] HWDATA;
+  output        HWRITE;
+  output        HSELmtrx;
+  output        HREADYOUT;
+
+  input [31:0]  HRDATAmtrx;
+  input         HREADYmtrx;
+  input [1:0]   HRESPmtrx;
+
+  // ARM922T Test Slave connections
+  input [11:2]  HADDRtst;
+  input         HSELtst;
+  input [1:0]   HTRANStst;
+  input         HWRITEtst;
+  input [31:0]  HWDATAtst;
+
+  output [31:0] HRDATAtst;
+  output        HREADYOUTtst;
+  output [1:0]  HRESPtst;
+
+  // ARM922T interrupts
+  input         nFIQ;
+  input         nIRQ;
+
+  // ARM922T comms channel debug lines
+  output        COMMRX;
+  output        COMMTX;
+
+  // ARM922T Fast Cache clock
+  input         FCLK;
+
+  // JTAG connections
+  input         nTRST;
+  input         TCK;
+  input         TDI;
+  input         TMS;
+  output        nTDOEN;
+  output        TDO;
+
+  // Remap/Pause control signals
+  input         Remap;
+  input         Pause;
+
+  // Scan test dummy signals; not connected until scan insertion
+  input         SCANENABLE;  // Scan Test Mode Enbl
+  input         SCANINHCLK;  // Scan Chain Input
+  output        SCANOUTHCLK; // Scan Chain Output
+
+  // Port wires
+  wire          HCLK;
+  wire          HRESETn;
+
+  wire [31:0]   HADDR;
+  wire [2:0]    HBURST;
+  wire          HMASTLOCK;
+  wire [3:0]    HPROT;
+  wire [2:0]    HSIZE;
+  wire [1:0]    HTRANS;
+  wire [31:0]   HWDATA;
+  wire          HWRITE;
+  wire          HSELmtrx;
+  wire          HREADYOUT;
+
+  wire [31:0]   HRDATAmtrx;
+  wire          HREADYmtrx;
+  wire [1:0]    HRESPmtrx;
+
+  wire [11:2]   HADDRtst;
+  wire          HSELtst;
+  wire [1:0]    HTRANStst;
+  wire          HWRITEtst;
+  wire [31:0]   HWDATAtst;
+  wire [31:0]   HRDATAtst;
+  wire          HREADYOUTtst;
+  wire [1:0]    HRESPtst;
+
+  wire          nFIQ;
+  wire          nIRQ;
+
+  wire          COMMRX;
+  wire          COMMTX;
+
+  wire          FCLK;
+
+  wire          nTRST;
+  wire          TCK;
+  wire          TDI;
+  wire          TMS;
+  wire          nTDOEN;
+  wire          TDO;
+
+  wire          Remap;
+  wire          Pause;
+
+  wire          SCANENABLE;
+  wire          SCANINHCLK;
+  wire          SCANOUTHCLK;
+
+//------------------------------------------------------------------------------
+// Signal declarations: AHB
+//------------------------------------------------------------------------------
+
+// Local AHB backbone
+  wire [31:0]   iHADDR;
+  wire [1:0]    iHTRANS;
+  wire          iHWRITE;
+  wire [2:0]    iHSIZE;
+  wire [2:0]    iHBURST;
+  wire [3:0]    iHPROT;
+  wire [31:0]   iHWDATA;
+  wire          iHLOCK;
+
+// Multiplexed Local slave output signals
+  wire          iHREADY;
+  wire [1:0]    iHRESP;
+  wire [31:0]   iHRDATA;
+
+// Local Slave specific output signals
+  wire          HSELS0B;
+  wire          HSELS0R;
+
+  wire          HSELS0;
+  wire [31:0]   HRDATAS0;
+  wire          HREADYS0;
+  wire [1:0]    HRESPS0;
+
+  wire          HSELS1;
+  wire [31:0]   HRDATAS1;
+  wire          HREADYS1;
+  wire [1:0]    HRESPS1;
+
+  wire          HSELS2;
+  wire [31:0]   HRDATAS2;
+  wire          HREADYS2;
+  wire [1:0]    HRESPS2;
+
+  wire          HSELS3;
+  wire [31:0]   HRDATAS3;
+  wire          HREADYS3;
+  wire [1:0]    HRESPS3;
+
+  wire          HSELS4;
+  wire [31:0]   HRDATAS4;
+  wire          HREADYS4;
+  wire [1:0]    HRESPS4;
+
+  wire          HSELS5;
+  wire [31:0]   HRDATAS5;
+  wire          HREADYS5;
+  wire [1:0]    HRESPS5;
+
+  wire          HSELS6;
+  wire [31:0]   HRDATAS6;
+  wire          HREADYS6;
+  wire [1:0]    HRESPS6;
+
+  wire          HSELS7;
+  wire [31:0]   HRDATAS7;
+  wire          HREADYS7;
+  wire [1:0]    HRESPS7;
+
+  wire          HSELS8;
+  wire          HSELS9;
+  wire          HSELS10;
+  wire          HSELS11;
+  wire          HSELS12;
+  wire          HSELS13;
+  wire          HSELS14;
+  wire          HSELS15;
+
+  wire          HSELDefault;
+  wire          HREADYDefault;
+  wire [1:0]    HRESPDefault;
+
+// Miscellaneous signals
+
+  wire          HSELSmi;
+  wire          HSELIntMem;
+
+  wire          iHBUSREQ;       // Not used
+  wire          iHGRANTM;       // Grants the core when not paused
+
+  wire          iHREADYOUTtst;  // HREADY for TIC port 
+
+//------------------------------------------------------------------------------
+// Signal declarations: Scan chain
+//------------------------------------------------------------------------------
+
+  wire          SCANINmuxs2m;
+  wire          SCANOUTmuxs2m;
+
+  wire          SCANINa922t;
+  wire          SCANOUTa922t;
+
+//------------------------------------------------------------------------------
+// Signal declarations: Tie-offs
+//------------------------------------------------------------------------------
+
+  wire          TieOffLo1;
+  wire          TieOffHi1;
+  wire [1:0]    TieOffLo2;
+  wire [31:0]   TieOffLo32;
+
+
+//------------------------------------------------------------------------------
+// Beginning of main code
+//------------------------------------------------------------------------------
+
+// The TieOff signals must be assigned explicitly within the body of the HDL.
+// Using initial values (in the signal declaration, above) will not work in
+//  Synopsys. Signals are used rather than constants as constants can not be 
+//  connected directly to sub-component instantiations
+  assign TieOffHi1  = 1'b1;
+  assign TieOffLo1  = 1'b0;
+  assign TieOffLo2  = {2{1'b0}};
+  assign TieOffLo32 = {32{1'b0}};
+
+// ARM922T core wrapper, instantiated as Local AHB master 1 (lowest priority).
+// The Test interface is connected to the TIC via a seperate AHB test bus
+  A922T uARM922T 
+    (
+     // Signals used during normal operation and test mode
+     .HCLK       (HCLK),
+     .HRESETn    (HRESETn),
+
+     // Signals from AMBA bus used during normal operation
+     .HRDATAM    (iHRDATA),
+     .HREADYM    (iHREADY),
+     .HRESPM     (iHRESP),
+     .HGRANTM    (iHGRANTM),
+
+     // Signals to Local AMBA bus used during normal operation
+     .HADDRM     (iHADDR),
+     .HTRANSM    (iHTRANS),
+     .HWRITEM    (iHWRITE),
+     .HSIZEM     (iHSIZE),
+     .HBURSTM    (iHBURST),
+     .HPROTM     (iHPROT),
+     .HWDATAM    (iHWDATA),
+     .HBUSREQM   (iHBUSREQ),  // Not used (no other master)
+     .HLOCKM     (iHLOCK),
+
+     // Signals from AMBA bus used during test mode
+     .HADDRS     (HADDRtst),
+     .HTRANS1S   (HTRANStst[1]),
+     .HWRITES    (HWRITEtst),
+     .HWDATAS    (HWDATAtst),
+     .HSELS      (HSELtst),
+     .HREADYS    (iHREADYOUTtst),  // HREADYOUT (test) is fed-back
+
+     // Signals to AMBA bus used during test mode
+     .HRDATAS    (HRDATAtst),
+     .HREADYOUTS (iHREADYOUTtst),
+     .HRESPS     (HRESPtst),
+
+     // Fast Cache clock
+     .FCLK       (FCLK),
+
+     // ARM interrupts
+     .ARMNFIQ    (nFIQ),
+     .ARMNIRQ    (nIRQ),
+
+     // Comms channel signals
+     .COMMRX     (COMMRX),
+     .COMMTX     (COMMTX),
+
+     // JTAG connections
+     .nTRST      (nTRST),
+     .TCK        (TCK),
+     .TDI        (TDI),
+     .TMS        (TMS),
+     .nTDOEN     (nTDOEN),
+     .TDO        (TDO),
+
+     // Scan test dummy signals; not connected until scan insertion 
+     .SCANENABLE    (SCANENABLE),   // Scan Test Mode Enbl
+     .SCANINHCLK    (SCANINa922t),  // Scan Chain Input
+     .SCANOUTHCLK   (SCANOUTa922t)  // Scan Chain Output
+    );
+
+  // Connect internal signal to port
+  assign HREADYOUTtst = iHREADYOUTtst;
+
+  // ARM922T is the only bus master, so provide grant when not paused
+  assign iHGRANTM = (~Pause);
+
+// Internal Memory instantiated as Local AHB slave 0
+  IntMem 
+  // synopsys translate_off
+    // Parameters (mapped from the top level):
+    //   Memory size in address bits: MemBits = IntMemAddrWidth
+    //   Memory initialisation file name: FileName = IntMemInitFile
+    #(IntMemAddrWidth, IntMemInitFile)
+  // synopsys translate_on
+  uIntMem 
+    (
+     .HCLK       (HCLK),
+     .HRESETn    (HRESETn),
+
+     .HSELIntMem (HSELIntMem),
+
+     .HADDR      (iHADDR),
+     .HTRANS     (iHTRANS),
+     .HWRITE     (iHWRITE),
+     .HSIZE      (iHSIZE),
+     .HWDATA     (iHWDATA),
+     .HREADY     (iHREADY),
+
+     .HRDATA     (HRDATAS0),
+     .HREADYOUT  (HREADYS0),
+     .HRESP      (HRESPS0)
+    );
+
+// Local Address Decoder
+  Decoder uDecoder 
+    (
+     .HADDR   (iHADDR[31:20]),
+
+     .Remap   (Remap),
+
+     .HSELS0B (HSELS0B),
+     .HSELS0R (HSELS0R),
+     .HSELS0  (HSELS0),
+     .HSELS1  (HSELS1),
+     .HSELS2  (HSELS2),
+     .HSELS3  (HSELS3),
+     .HSELS4  (HSELS4),
+     .HSELS5  (HSELS5),
+     .HSELS6  (HSELS6),
+     .HSELS7  (HSELS7),
+     .HSELS8  (HSELS8),
+     .HSELS9  (HSELS9),
+     .HSELS10 (HSELS10),
+     .HSELS11 (HSELS11),
+     .HSELS12 (HSELS12),
+     .HSELS13 (HSELS13),
+     .HSELS14 (HSELS14),
+     .HSELS15 (HSELS15)
+    );
+
+  // SMI occupies Slot 3 or Slot 0 (at boot)
+  assign HSELSmi = (HSELS0B | HSELS3);
+  
+  // Internal Memory occupies Slot 7 and Slot 0 (after re-map)
+  assign HSELIntMem = (HSELS7 | HSELS0R);
+
+  // Drive the BusMatrix select signal accordingly when the Default Slave,
+  //  SMI, APB Peripherals, Retry Slave or Interrupt Controller is accessed 
+  assign HSELmtrx = (HSELDefault | HSELSmi | HSELS12 | HSELS13 | HSELS15 ); 
+
+  // Default Slave (the BusMatrix) selected by all unused HSEL lines
+  assign HSELDefault = 
+    // HSELS0B |
+    // HSELS0R |                        // IntMem alias
+    HSELS0 |
+    HSELS1 |
+    HSELS2 |
+    // HSELS3 |                         // SMI
+    HSELS4 |
+    HSELS5 |                          
+    HSELS6 |
+    // HSELS7 |                         // IntMem
+    HSELS8 |
+    HSELS9 |
+    HSELS10 |
+    HSELS11 |
+    // HSELS12 |                        // APB Peripherals
+    // HSELS13 |                        // Retry Slave
+    HSELS14
+    // | HSELS15                        // Interrupt Controller
+    ;
+
+// Local multiplexor - slaves to masters
+//  This 8-input multiplexor is used in place of the 16-input version 
+//  because it is faster to synthesise. However, in this application,
+//  the input channel names do not always match the names of the signals
+//  they are assigned to, though the multiplexor operation is unaffected.
+  MuxS2M uMuxS2M 
+    (
+     .HCLK          (HCLK),
+     .HRESETn       (HRESETn),
+
+     .HSELS0        (HSELIntMem),   // Decoder slots 0 (re-map) and 7
+     .HSELS1        (HSELS12),      // Decoder slot 12
+     .HSELS2        (HSELS13),      // Decoder slot 13
+     .HSELS3        (HSELS15),      // Decoder slot 15
+     .HSELS4        (HSELSmi),      // Decoder slots 0 (boot) and 3
+     .HSELS5        (TieOffLo1),
+     .HSELS6        (TieOffLo1),
+     .HSELS7        (TieOffLo1),
+     .HSELDefault   (HSELDefault),
+     
+     .HRDATAS0      (HRDATAS0),     // Internal Memory (Local slave)
+     .HREADYS0      (HREADYS0),
+     .HRESPS0       (HRESPS0),
+
+     .HRDATAS1      (HRDATAS1),     // AHB to APB Bridge
+     .HREADYS1      (HREADYS1),     //  (via matrix Outport 2)
+     .HRESPS1       (HRESPS1),
+
+     .HRDATAS2      (HRDATAS2),     // Retry Slave
+     .HREADYS2      (HREADYS2),     //  (via matrix Outport 0)
+     .HRESPS2       (HRESPS2),
+
+     .HRDATAS3      (HRDATAS3),     // Interrupt Controller
+     .HREADYS3      (HREADYS3),     //  (via matrix Outport 1)
+     .HRESPS3       (HRESPS3),
+
+     .HRDATAS4      (HRDATAS4),     // SMI
+     .HREADYS4      (HREADYS4),     //  (via matrix Outport 0)
+     .HRESPS4       (HRESPS4),
+
+     .HRDATAS5      (HRDATAS5),
+     .HREADYS5      (HREADYS5),
+     .HRESPS5       (HRESPS5),
+
+     .HRDATAS6      (HRDATAS6),
+     .HREADYS6      (HREADYS6),
+     .HRESPS6       (HRESPS6),
+
+     .HRDATAS7      (HRDATAS7),
+     .HREADYS7      (HREADYS7),
+     .HRESPS7       (HRESPS7),
+
+     .HREADYDefault (HREADYDefault),
+     .HRESPDefault  (HRESPDefault),
+
+     .HRDATA        (iHRDATA),      // Connected to the ARM922T core
+     .HREADY        (iHREADY),
+     .HRESP         (iHRESP),
+
+     // Scan test dummy signals; not connected until scan insertion 
+     .SCANENABLE    (SCANENABLE),   // Scan Test Mode Enbl
+     .SCANINHCLK    (SCANINmuxs2m), // Scan Chain Input
+     .SCANOUTHCLK   (SCANOUTmuxs2m) // Scan Chain Output
+    );
+  
+// The following slaves are external to this module and must be connected
+//  to the BusMatrix
+
+  assign HRDATAS1 = HRDATAmtrx;               // APB Peripherals
+  assign HREADYS1 = HREADYmtrx;               //  (via matrix Outport 2)
+  assign HRESPS1  = HRESPmtrx;
+
+  assign HRDATAS2 = HRDATAmtrx;               // Response slave 
+  assign HREADYS2 = HREADYmtrx;               //  (via matrix Outport 0)
+  assign HRESPS2  = HRESPmtrx;
+
+  assign HRDATAS3 = HRDATAmtrx;               // Interrupt controller
+  assign HREADYS3 = HREADYmtrx;               //  (via matrix Outport 1)
+  assign HRESPS3  = HRESPmtrx;
+
+  assign HRDATAS4 = HRDATAmtrx;               // SMI
+  assign HREADYS4 = HREADYmtrx;               //  (via matrix Outport 0)
+  assign HRESPS4  = HRESPmtrx;
+
+// The BusMatrix is also the Default Slave
+  assign HREADYDefault = HREADYmtrx;
+  assign HRESPDefault  = HRESPmtrx;
+
+// Tie-off the unused channels of MuxS2M
+
+  // Tie off HRDATA for unused slave ports
+  // assign HRDATAS0 = TieOffLo32;           // IntMem
+  // assign HRDATAS1 = TieOffLo32;           // APB Peripherals
+  // assign HRDATAS2 = TieOffLo32;           // Retry Slave
+  // assign HRDATAS3 = TieOffLo32;           // Interrupt Controller
+  // assign HRDATAS4 = TieOffLo32;           // SMI
+  assign HRDATAS5 = TieOffLo32;
+  assign HRDATAS6 = TieOffLo32;
+  assign HRDATAS7 = TieOffLo32;
+
+  // Tie off HREADY for unused slave ports
+  // assign HREADYS0 = TieOffHi1;            // IntMem
+  // assign HREADYS1 = TieOffHi1;            // APB Peripherals
+  // assign HREADYS2 = TieOffHi1;            // Retry Slave
+  // assign HREADYS3 = TieOffHi1;            // Interrupt Controller
+  // assign HREADYS4 = TieOffHi1;            // SMI
+  assign HREADYS5 = TieOffHi1;
+  assign HREADYS6 = TieOffHi1;
+  assign HREADYS7 = TieOffHi1;
+
+  // Tie off HRESP for unused slave ports
+  // assign HRESPS0 = TieOffLo2;             // IntMem
+  // assign HRESPS1 = TieOffLo2;             // APB Peripherals
+  // assign HRESPS2 = TieOffLo2;             // Retry Slave
+  // assign HRESPS3 = TieOffLo2;             // Interrupt Controller
+  // assign HRESPS4 = TieOffLo2;             // SMI
+  assign HRESPS5 = TieOffLo2;
+  assign HRESPS6 = TieOffLo2;
+  assign HRESPS7 = TieOffLo2;
+
+// Connect the Local AHB backbone to the module interface
+  assign HADDR     = iHADDR;
+  assign HTRANS    = iHTRANS;
+  assign HWRITE    = iHWRITE;
+  assign HSIZE     = iHSIZE;
+  assign HBURST    = iHBURST;
+  assign HPROT     = iHPROT;
+  assign HWDATA    = iHWDATA;
+  assign HMASTLOCK = iHLOCK;
+  assign HREADYOUT = iHREADY;
+
+
+endmodule
+
+// --================================= End ===================================--
+

@@ -1,0 +1,82 @@
+/* --=================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : Gpio_exceptions.scr.rca
+-- File Revision          : 1.1
+-- 
+-- Release Information    : PrimeCell(TM)-PL061-REL1v0
+-- 
+------------------------------------------------------------------------
+-- Purpose : Synopsys synthesis timing constraint script for the 
+--           GPIO block             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the point-to-point exceptions 
+--           set for the GPIO block synthesis. 
+--
+-- --=================================================================*/
+
+/**********************************************************************/
+/* Disabling timing-based synthesis for asynchronous paths            */
+/**********************************************************************/
+
+/* GPIOINTR and GPIOMIS offer the possibility of asynchronous 
+   operation from signals present in the pads(GPIN). This allows
+   the GPIO to trigger interrupts when there is not PCLK present      */
+
+   set_false_path -from GPIN -to GPIOINTR
+   set_false_path -from GPIN -to GPIOMIS
+
+
+/**********************************************************************/
+
+/* When Hardware Control is set to drive the pads the path between
+   Hardware control lines GPAFIN, GPOUT and nGPEN is totally 
+   combinatorial                                                      */
+
+   set_false_path -from GPIN -to GPAFIN
+   set_false_path -from GPAFOUT -to GPOUT
+   set_false_path -from nGPAFEN -to nGPEN
+
+/**********************************************************************/
+
+/* Disabling timing-based synthesis for false paths                   */
+/**********************************************************************/
+
+/* nGPIODIR and GPIOAFSEL are used to detect when the data to be fed  
+   into the edge detection logic comes from the GPIODATA register.    
+   However,  the path from these registers to GPIOINTR and GPIOMIS 
+   is a false one because no interrupt should be allowed to trigger
+   in GPIOINTR and GPIOMIS during the configuration of the Gpio.      */
+
+set_false_path -from uGpioApbif/iGPIODIR_reg*   -to GPIOINTR
+set_false_path -from uGpioApbif/iGPIODIR_reg*   -to GPIOMIS
+
+set_false_path -from uGpioApbif/iGPIOAFSEL_reg* -to GPIOINTR
+set_false_path -from uGpioApbif/iGPIOAFSEL_reg* -to GPIOMIS
+
+/* GPIOITCR is the Integration Test Control Register, there is not    
+   a data path from GPIOITCR and GPOUT, nGPEN and GPAFIN.             */
+/**********************************************************************/
+                 
+set_false_path -from uGpioApbif/iGPIOITCR_reg*  -to GPOUT
+set_false_path -from uGpioApbif/iGPIOITCR_reg*  -to nGPEN
+set_false_path -from uGpioApbif/iGPIOITCR_reg*  -to GPAFIN
+
+/* GPIOAFSEL is the Hardware Control Select register, there is not
+   a data path from GPIOAFSEL and GPAFIN.                             */
+/**********************************************************************/
+set_false_path -from uGpioApbif/iGPIOAFSEL_reg* -to GPAFIN 
+
+
+/********************* End of Gpio_exceptions.scr **********************/

@@ -1,0 +1,439 @@
+#=====================================================================#
+#  This confidential and proprietary software may be used only as
+#  authorised by a licensing agreement from ARM Limited
+#    (C) COPYRIGHT 2001 ARM Limited
+#        ALL RIGHTS RESERVED
+#  The entire notice above must be reproduced on all authorised
+#  copies and copies may only be made to the extent permitted
+#  by a licensing agreement from ARM Limited.
+#  
+#
+#---------------------------------------------------------------------#
+#  Version and Release Control Information:
+#  
+#  File Name           : IntegrationTest.fri,v
+#  File Revision       : 1.7
+#  
+#  Release Information : ADK_REL1v1
+#  
+#---------------------------------------------------------------------#
+#  Purpose             : Integration tests for EASY_FRBM
+#=====================================================================#
+
+#------------------------------------------------------------------------------
+# DTSDI002[ARM7] Address Map
+#------------------------------------------------------------------------------
+# Full Decoding of the Address Map is performed continuously as a function of
+#  HADDR. All unused slots are connected to a Default Slave.
+
+#(Boot mode LOW)
+# 0x0000_0000 - 0x0010_0000  Internal FLASH               (HSELS0B    )(SMC alias/Internal Flash) 
+# 0x0000_0000 - 0x0010_0000  External SRAM0               (HSELS0R    )
+
+#(Boot mode High )
+# 0x0010_0000 - 0x0020_0000  External SRAM0               (HSELS0EM   )
+# 0x0010_0000 - 0x0020_0000  Internal Flash               (HSELS0IF   )          
+
+# 0x0020_0000 - 0x0010_0000  External SRAM1               (HSELS0     )
+# 0x0030_0000 - 0x0020_0000  External SRAM2               (HSELS1     )
+# 0x0040_0000 - 0x0050_0000  External SRAM3               (HSELS2     ) 
+# 0x01F0_0000 - 0x01F4_0000  Internal FLASH mirror        (HSELS3     ) 
+# 0x01FF_0000 - 0x01FF_8000  Internal 24KB SRAM           (HSELS4     ) 
+# 0x01FF_8000 - 0x01FF_8100  Internal FLASH Control       (HSELS5     ) 
+# 0x01FF_8100 - 0x01FF_8200  External SRAM Bank Control   (HSELS6     ) 
+# 0x01FF_8200 - 0x01FF_8E00  APB                          (HSELS7     ) 
+# 0x0050_0000 - 0x1F00_0000  Reserve1                     (HSELS_Resv1) 
+# 0x01F4_0000 - 0x01FF_0000  Reserve2                     (HSELS_Resv2) 
+# 0x01FF_8E00 - 0x0200_0000  Reserve3                     (HSELS_Resv3) 
+# 0x0200_0000 - 0xFFFF_FFFF  Abort                        (HSEL_Abort ) 
+
+# APB address map is:
+#
+# 0x01FF_8200 - 0x01FF_8300 UART                          (PSELS0)  
+# 0x01FF_8300 - 0x01FF_8400 I2C0~1                        (PSELS1)
+# 0x01FF_8400 - 0x01FF_8500 Timer 0  ~ 7                  (PSELS2)
+# 0x01FF_8500 - 0x01FF_8600 PWM   0  ~ 7                  (PSELS3)  
+# 0x01FF_8600 - 0x01FF_8700 PWM   8  ~ 15                 (PSELS4)
+# 0x01FF_8700 - 0x01FF_8800 PWM   16 ~ 23                 (PSELS5)  
+# 0x01FF_8800 - 0x01FF_8900 PWM   24 ~ 31                 (PSELS6) 
+# 0x01FF_8900 - 0x01FF_8A00 WDT                           (PSELS7)
+# 0x01FF_8A00 - 0x01FF_8B00 GPIO                          (PSELS8)
+# 0x01FF_8B00 - 0x01FF_8C00 VIV                           (PSELS9)
+# 0x01FF_8C00 - 0x01FF_8D00 ADC IF                        (PSELS10)
+# 0x01FF_8D00 - 0x01FF_8E00 Power manager                 (PSELS11)
+#------------------------------------------------------------------------------             
+################################################################################
+# Check Peripheral IDs
+################################################################################
+
+
+   R  01FF8400 00000004 000000FF word single # Timers ID bits 7:0    : Timers 0 data register
+   R  01FF8410 00000008 0000000F word single # Timers ID bits 11:8   : Timers PWM end register
+
+   R  01FF8900 00000005 000000FF word single # Watchdog load register[0xFFFFFFFF] : WDT Control [0x0030]
+   R  01FF8910 00000008 0000000F word single # Watchdog raw interrupt status[0x0] : WDT interrupt status[0x0000]
+
+   R  01FF8D00 00000009 000000FF word single # Power Manager:Syscon[0x1070]
+   R  01FF8D04 00000008 0000000F word single # Power Manager:PWMCON[0x0]
+
+   R  01FF8A00 00000061 000000FF word single # GPIO :Port Data   [0x00]
+   R  01FF8A10 00000000 0000000F word single # GPIO :Port Control[0x00] 
+
+   R  01FF840C 00000006 000000FF word single # PWM :TCNT0/CV[Current Timer value][0x0000]
+   R  01FF88F0 00000008 0000000F word single # PWM3-7:  PWM's end count value[0xFFFF]
+
+   R  01FF8B28 00000008 000000FF word single # VIC : I_CSLV0(current nIRQ priority of slave register0[0xFAC688]
+   R  01FF8B34 00000008 0000000F word single # VIC : I_CSLV3(current nIRQ priority of slave register3[0xFAC688]
+
+# System Decoder Test
+# Write test pass message to the Tube
+   W  02000000 000000FF word single # set GPIO data direction to output
+   W  01FF8E00 00000054 word single
+   W  01F40000 0000ffd4 word single # T
+   W  00200000 00000065 word single
+   W  00300000 0000ffe5 word single # e
+   W  00400000 00000073 word single
+   W  01F00000 0000fff3 word single # s
+   W  01FF0000 00000074 word single
+   W  01FF8000 0000fff4 word single # t
+   W  01FF8100 00000020 word single
+   W  01FF8200 0000ffa0 word single #
+   W  00500000 00000049 word single
+   
+   W  02000004 0000ffc9 word single # I
+   W  01FF8E04 00000044 word single
+   W  01F40004 0000ffc4 word single # D
+   W  00200004 00000073 word single
+   W  00300004 0000fff3 word single # s
+   W  00400004 00000020 word single
+   W  01F00004 0000ffa0 word single #
+   W  01FF0004 0000002d word single
+   W  01FF8004 0000ffad word single # -
+   W  01FF8104 00000020 word single
+   W  01FF8204 0000ffa0 word single #
+   W  00500004 00000044 word single
+
+#(Boot mode)
+   W  00000000 0000ffc4 word single # D
+   W  00000004 0000006f word single
+   W  00000008 0000ffef word single # o
+   W  0000000C 0000006e word single
+   W  00000010 0000ffee word single # n
+   W  00000014 00000065 word single
+   W  00000018 0000ffe5 word single # e
+   W  0000001C 0000000D word single
+   W  00000020 0000008D word single #
+   
+   W  00100000 0000ffc4 word single
+   W  00100004 0000006f word single
+   W  00100008 0000ffef word single
+   W  0010000C 0000006e word single
+   W  00100010 0000ffee word single
+   W  00100014 00000065 word single
+   W  00100018 0000ffe5 word single
+   W  0010001C 0000000D word single
+   W  00100020 0000008D word single
+   
+
+#(Power Manager)
+  R  01FF8D00 00000009 000000FF word single # Power Manager:Syscon[0x1070]       
+  R  01FF8D04 00000008 0000000F word single # Power Manager:PWMCON[0x0]          
+  W  01FF8D00 00001070 word single 
+  W  01FF8D04 00000000 word single
+  
+  I  
+  L 3
+  W  01FF8D00 00001072 word single          # Power Manager:Syscon[3:1][SCLKIV:001(OSC_CLK/2)]       
+ 
+       
+################################################################################
+#  Remap/Pause(Power Manager)
+################################################################################
+
+   R  C8000008 00000001 00000001 word single # check PoR bit in ResetStatus
+   W  C800000C 00000001 word single          # clear PoR bit
+   R  C8000008 00000000 00000001 word single # check PoR bit in ResetStatus
+
+   I
+   L 3
+   #(Power Manager)
+   W  01FF8D00 00000170 word single          # Power Manager:Syscon[15:8][ACLKIV:(HCLK/2/2)]
+################################################################################
+# Timer / Pause Test
+# Set the timer for a one-shot interrupt, put the bus in PAUSE mode (dummy 
+# master 0 is granted the bus. Wait for the Timer interrupt to un-PAUSE the bus.
+################################################################################
+
+   W  F0000010 00000010 word single          # enable Timer1 interrupt
+   W  C2000000 0000000F byte single          # load Timer1 with 16
+
+   W  C2000008 000000A1 byte single          # enable one-shot timer
+   W  C8000000 00000001 byte single          # set PAUSE mode in RemapPause
+
+   P  F0000000 00000010 FFFFFFFF word single # wait for timer1 IRQ
+   W  C200000C 00000000 byte single          # clear Timer1 interrupt
+
+   W  F0000010 00000020 word single          # enable Timer2 interrupt
+   W  F000000C 00000020 word single          # set Timer2 interrupt to FIQ
+   W  C2000020 0000000F byte single          # load Timer2 with 16
+
+   W  C2000028 000000A1 byte single          # enable one-shot timer
+   W  C8000000 00000001 byte single          # set PAUSE mode in RemapPause
+
+   P  F0000004 00000020 FFFFFFFF word single # wait for timer2 FIQ
+   W  C200002C 00000000 byte single          # clear Timer2 interrupt
+
+# Test Passed if the FileReader can send these transfers
+   W  C40003FC 00000050 byte single # take XWEN low (Tube samples data on rising edge)
+   W  C40003FC 0000ffd0 byte single # P (D0 is ASCII P with top bit set)
+   W  C40003FC 00000061 byte single
+   W  C40003FC 0000ffe1 byte single # a
+   W  C40003FC 00000075 byte single
+   W  C40003FC 0000fff5 byte single # u
+   W  C40003FC 00000073 byte single
+   W  C40003FC 0000fff3 byte single # s
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 00000054 byte single
+   W  C40003FC 0000ffd4 byte single # T
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 00000073 byte single
+   W  C40003FC 0000fff3 byte single # s
+   W  C40003FC 00000074 byte single
+   W  C40003FC 0000fff4 byte single # t
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 0000002d byte single
+   W  C40003FC 0000ffad byte single # -
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 00000044 byte single
+   W  C40003FC 0000ffc4 byte single # D
+   W  C40003FC 0000006f byte single
+   W  C40003FC 0000ffef byte single # o
+   W  C40003FC 0000006e byte single
+   W  C40003FC 0000ffee byte single # n
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 0000000D byte single
+   W  C40003FC 0000008D byte single # carriage return
+
+   I
+   L 3
+
+################################################################################
+# Internal Memory Tests
+################################################################################
+
+# Write burst to internal memory at default address
+   W  70000000 AAAAAAAA word  incr4         # write to memory
+   S  BBBBBBBB
+   S  CCCCCCCC
+   S  DDDDDDDD
+
+   W  C8000004 00000000 word single # clear Remap to alias internal memory
+                                    # at 0x00000000 - 0x000FFFFF
+
+   P  C8000004 00000001 00000001 word single # check Remap bit set
+
+   # read back data from aliased address
+   R  00000000 AAAAAAAA FFFFFFFF word incr4 # read back data
+   S  BBBBBBBB
+   S  CCCCCCCC
+   S  DDDDDDDD
+
+   W  C40003FC 0000004d byte single
+   W  C40003FC 0000ffcd byte single # M
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 0000006d byte single
+   W  C40003FC 0000ffed byte single # m
+   W  C40003FC 0000006f byte single
+   W  C40003FC 0000ffef byte single # o
+   W  C40003FC 00000072 byte single
+   W  C40003FC 0000fff2 byte single # r
+   W  C40003FC 00000079 byte single
+   W  C40003FC 0000fff9 byte single # y
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 00000054 byte single
+   W  C40003FC 0000ffd4 byte single # T
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 00000073 byte single
+   W  C40003FC 0000fff3 byte single # s
+   W  C40003FC 00000074 byte single
+   W  C40003FC 0000fff4 byte single # t
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 0000002d byte single
+   W  C40003FC 0000ffad byte single # -
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 00000044 byte single
+   W  C40003FC 0000ffc4 byte single # D
+   W  C40003FC 0000006f byte single
+   W  C40003FC 0000ffef byte single # o
+   W  C40003FC 0000006e byte single
+   W  C40003FC 0000ffee byte single # n
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 0000000D byte single
+   W  C40003FC 0000008D byte single # carriage return
+
+   I
+   L 3
+
+################################################################################
+# Interrupt Tests
+################################################################################
+
+# Test the software interrupt (bit 1)
+   W  F000000C 00000000 word single          # set all interrupts to be IRQ
+   W  F0000010 FFFFFFFF word single          # enable interrupts
+   W  F0000018 00000002 word single          # generate soft interrupt
+   P  F0000000 00000002 FFFFFFFF word single # read IRQ status - bit 1 should be set
+   W  F000001C 00000002 word single          # clear soft interrupt
+   W  F0000014 FFFFFFFF word single          # disable interrupts
+
+   I                                         # idle separating the tests
+
+# Test the GPIO interrupt (bit 2)
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  C4000600 00000001 word single          # put GPIO in test mode
+   W  C400060C 000000FF word single          # set GPIO interrupts
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  F0000010 FFFFFFFF word single          # enable interrupts
+   P  F0000000 FF000100 FFFFFFFF word single # read IRQ status - bits 31:24 and 8 set
+   W  F0000014 FFFFFFFF word single          # disable interrupts
+   W  C4000600 00000000 word single          # take GPIO out of test mode
+
+   I                                         # idle separating the tests
+
+# Test the Timer interrupts (bits 4, 5, 6)
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  F0000010 FFFFFFFF word single          # enable interrupts
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  C2000F00 00000001 word single          # put Timer in test mode
+   W  C2000F04 00000001 word single          # set Timer interrupt 1
+   P  F0000000 00000050 FFFFFFFF word single # read IRQ status - 4 and 6 should be set
+   W  C2000F04 00000002 word single          # set Timer interrupt 2
+   P  F0000000 00000060 FFFFFFFF word single # read IRQ status - 5 and 6 should be set
+   W  F0000014 FFFFFFFF word single          # disable interrupts
+   W  C2000F00 00000000 word single          # take Timer out of test mode
+
+   I                                         # idle separating the tests
+
+# Test the Watchdog interrupts (bit 7)
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  F0000010 FFFFFFFF word single          # enable interrupts
+   P  F0000000 00000000 FFFFFFFF word single # read IRQ status - none should be set
+   W  C1000F00 00000001 word single          # put Watchdog in test mode
+   W  C1000F04 00000002 word single          # set Watchdog interrupt
+   P  F0000000 00000080 FFFFFFFF word single # read IRQ status - bit 7 should be set
+   W  F0000014 FFFFFFFF word single          # disable interrupts
+   W  C1000F00 00000000 word single          # take Watchdog out of test mode
+
+   I                                         # idle separating the tests
+
+# Write test complete message to Tube
+   W  C40003FC 00000049 byte single
+   W  C40003FC 0000ffc9 byte single # I
+   W  C40003FC 0000006e byte single
+   W  C40003FC 0000ffee byte single # n
+   W  C40003FC 00000074 byte single
+   W  C40003FC 0000fff4 byte single # t
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 00000072 byte single
+   W  C40003FC 0000fff2 byte single # r
+   W  C40003FC 00000072 byte single
+   W  C40003FC 0000fff2 byte single # r
+   W  C40003FC 00000075 byte single
+   W  C40003FC 0000fff5 byte single # u
+   W  C40003FC 00000070 byte single
+   W  C40003FC 0000fff0 byte single # p
+   W  C40003FC 00000074 byte single
+   W  C40003FC 0000fff4 byte single # t
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 00000054 byte single
+   W  C40003FC 0000ffd4 byte single # T
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 00000073 byte single
+   W  C40003FC 0000fff3 byte single # s
+   W  C40003FC 00000074 byte single
+   W  C40003FC 0000fff4 byte single # t
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 0000002d byte single
+   W  C40003FC 0000ffad byte single # -
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 00000044 byte single
+   W  C40003FC 0000ffc4 byte single # D
+   W  C40003FC 0000006f byte single
+   W  C40003FC 0000ffef byte single # o
+   W  C40003FC 0000006e byte single
+   W  C40003FC 0000ffee byte single # n
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 0000000D byte single
+   W  C40003FC 0000008D byte single # carriage return
+
+################################################################################
+# Reset Test
+################################################################################
+# Use the watchdog to reset the system (doesn't reset the FileReader). 
+
+   W  C1000F00 00000001 byte single          # Put Watchdog in test mode
+   W  C1000F04 00000001 byte single          # Set WDOGRES high - system should reset
+
+   P  C8000008 00000001 00000001 word single # check PoR bit in RemapPause ResetStatus
+   W  C800000C 00000001 word single          # clear PoR bit
+   P  C8000008 00000000 00000001 word single # check PoR bit in ResetStatus
+
+   P  C8000004 00000000 00000001 word single # check Remap bit is clear
+
+   W  C4000400 000000FF byte single # set GPIO data direction to output
+
+   W  C40003FC 00000052 byte single
+   W  C40003FC 0000ffd2 byte single # R
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 00000073 byte single
+   W  C40003FC 0000fff3 byte single # s
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 00000074 byte single
+   W  C40003FC 0000fff4 byte single # t
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 00000054 byte single
+   W  C40003FC 0000ffd4 byte single # T
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 00000073 byte single
+   W  C40003FC 0000fff3 byte single # s
+   W  C40003FC 00000074 byte single
+   W  C40003FC 0000fff4 byte single # t
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 0000002d byte single
+   W  C40003FC 0000ffad byte single # -
+   W  C40003FC 00000020 byte single
+   W  C40003FC 0000ffa0 byte single #
+   W  C40003FC 00000044 byte single
+   W  C40003FC 0000ffc4 byte single # D
+   W  C40003FC 0000006f byte single
+   W  C40003FC 0000ffef byte single # o
+   W  C40003FC 0000006e byte single
+   W  C40003FC 0000ffee byte single # n
+   W  C40003FC 00000065 byte single
+   W  C40003FC 0000ffe5 byte single # e
+   W  C40003FC 00000004 byte single
+   W  C40003FC 00000084 byte single # terminate the simulation

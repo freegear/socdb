@@ -1,0 +1,248 @@
+/* --=================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- ---------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : Ahb2Ahb.scr,v
+-- File Revision          : 1.4
+--
+-- Release Information    : ADK_REL1v1
+--
+-- ---------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the
+--           Ahb2Ahb component.
+--
+--           Located in the synopsys/scripts directory.
+--
+--           This file sets the module input and output delay constraints.
+-- --=================================================================*/
+
+/**********************************************************************/
+/* AHB-AHB BRIDGE BLOCK-SPECIFIC TIMING PARAMETERS                    */
+/**********************************************************************/
+
+/**********************************************************************/
+/* HCLK DEFINTION                                                     */
+/**********************************************************************/
+
+create_clock -p tclk -w {0 tclkh} find(port, "HCLK")
+/* period tclk, rise at 0, fall after tclkh High phase */
+
+set_clock_uncertainty -hold tpskew find(clock, HCLK)
+/* set clock skew for hold checks */
+
+set_clock_uncertainty -setup tmskew find(clock, HCLK)
+/* set clock skew for setup checks */
+
+set_clock_transition 0 HCLK
+/* ignore all transition times as it is an ideal clock */
+
+set_drive 0 HCLK
+/* Infinite drive strength clock signal */
+
+set_load 0 HCLK
+/* Zero load clock signal */
+
+remove_driving_cell find(port, HCLK)
+/* Set no driving cell on clock */
+
+set_resistance 0 find(net, HCLK)
+/* Zero resistance for zero net delay(interconnect delay) on ideal clock net */
+
+set_dont_touch_network find(clock, HCLK)
+/* Preserve the clock net during optimisation */
+
+/**********************************************************************/
+/* RESET SIGNAL CONSTRAINTS                                           */
+/**********************************************************************/
+ 
+/* set_input_delay -clock HCLK -max tidmaxresetn HRESETn */
+/* set_input_delay -clock HCLK -min tidminresetn HRESETn */
+
+set_disable_timing find(port, HRESETn)
+/* Do not check reset timing during synthesis */
+
+set_load 0 HRESETn
+/* Zero load reset signal */
+
+set_resistance 0 find(net, HRESETn)
+/* Zero resistance for zero net delay(interconnect delay) on ideal reset net */
+
+set_drive 0 HRESETn
+/* Infinite drive strength reset signal */
+
+remove_driving_cell find(port, HRESETn)
+/* Set no driving cell on reset */
+
+set_ideal_net find(net, HRESETn)
+/* Define an ideal net for the reset net */
+
+/* 1999.10 onwards USE NEW METHOD ABOVE TO REPLACE OLD ONE BELOW */
+/* USE set_ideal_net WITHOUT set_dont_touch_network */
+/* OTHERWISE ideal non-clock nets become buffered. */
+
+/* set_dont_touch_network find(port, HRESETn) */
+/* Preserve the reset net during optimisation */
+
+
+/**********************************************************************/
+/* Input Delays                                                       */
+/**********************************************************************/
+
+/* The following input signals are present on the Bridge Slave Interface */
+
+set_input_delay -clock HCLK -min tholdmax        HSELS
+set_input_delay -clock HCLK -max tidmaxhsel      HSELS
+
+set_input_delay -clock HCLK -min tholdmax        HADDRS
+set_input_delay -clock HCLK -max tidmaxhaddr     HADDRS
+
+set_input_delay -clock HCLK -min tholdmax        HTRANSS
+set_input_delay -clock HCLK -max tidmaxhtrans    HTRANSS
+
+set_input_delay -clock HCLK -min tholdmax        HWRITES
+set_input_delay -clock HCLK -max tidmaxhwrite    HWRITES
+
+set_input_delay -clock HCLK -min tholdmax        HSIZES
+set_input_delay -clock HCLK -max tidmaxhsize     HSIZES
+
+set_input_delay -clock HCLK -min tholdmax        HBURSTS
+set_input_delay -clock HCLK -max tidmaxhburst    HBURSTS
+
+set_input_delay -clock HCLK -min tholdmax        HPROTS
+set_input_delay -clock HCLK -max tidmaxhprot     HPROTS
+
+set_input_delay -clock HCLK -min tholdmax        HWDATAS
+set_input_delay -clock HCLK -max tidmaxhwdata    HWDATAS
+
+set_input_delay -clock HCLK -min tholdmax        HREADYS
+set_input_delay -clock HCLK -max tidmaxhready    HREADYS
+
+set_input_delay -clock HCLK -min tholdmax        HMASTLOCKS
+set_input_delay -clock HCLK -min tidmaxhmastlock HMASTLOCKS
+
+/* The following input signals are present on the Bridge Master Interface */
+
+set_input_delay -clock HCLK -min tholdmax        HGRANTM
+set_input_delay -clock HCLK -max tidmaxhgrant    HGRANTM
+
+set_input_delay -clock HCLK -min tholdmax        HRDATAM
+set_input_delay -clock HCLK -max tidmaxhrdata    HRDATAM
+
+set_input_delay -clock HCLK -min tholdmax        HRESPM
+set_input_delay -clock HCLK -max tidmaxhresp     HRESPM
+
+set_input_delay -clock HCLK -min tholdmax        HREADYM
+set_input_delay -clock HCLK -max tidmaxhready    HREADYM
+
+/***************/
+/* Scan Inputs */
+/***************/
+
+/* The input delay on the Scan related input signals has been set to  */
+/* zero value to prevent addition of extra gates in these paths.      */
+tidscanmax = 0.0
+tidscanmin = 0.0
+
+set_input_delay -clock HCLK -min tidscanmin SCANINHCLK
+set_input_delay -clock HCLK -max tidscanmax SCANINHCLK
+
+set_input_delay -clock HCLK -min tidscanmin SCANENABLE
+set_input_delay -clock HCLK -max tidscanmax SCANENABLE
+
+
+/**********************************************************************/
+/* Output Delays                                                      */
+/**********************************************************************/
+
+/* The following output signals are present on the Bridge Slave Interface */
+
+set_output_delay -clock HCLK -min tholdmin       HRDATAS
+set_output_delay -clock HCLK -max todmaxhrdata   HRDATAS
+
+set_output_delay -clock HCLK -min tholdmin       HRESPS
+set_output_delay -clock HCLK -max todmaxhresp    HRESPS
+
+set_output_delay -clock HCLK -min tholdmin       HREADYOUTS
+set_output_delay -clock HCLK -max todmaxhready   HREADYOUTS
+
+/* The following output signals are present on the Bridge Master Interface */
+
+set_output_delay -clock HCLK -min tholdmin       HBUSREQM
+set_output_delay -clock HCLK -max todmaxhbusreq  HBUSREQM
+
+set_output_delay -clock HCLK -min tholdmin       HLOCKM
+set_output_delay -clock HCLK -max todmaxhlock    HLOCKM
+
+set_output_delay -clock HCLK -min tholdmin       HADDRM
+set_output_delay -clock HCLK -max todmaxhaddr    HADDRM
+
+set_output_delay -clock HCLK -min tholdmin       HTRANSM
+set_output_delay -clock HCLK -max todmaxhtrans   HTRANSM
+
+set_output_delay -clock HCLK -min tholdmin       HWRITEM
+set_output_delay -clock HCLK -max todmaxhwrite   HWRITEM
+
+set_output_delay -clock HCLK -min tholdmin       HSIZEM
+set_output_delay -clock HCLK -max todmaxhsize    HSIZEM
+
+set_output_delay -clock HCLK -min tholdmin       HBURSTM
+set_output_delay -clock HCLK -max todmaxhburst   HBURSTM
+
+set_output_delay -clock HCLK -min tholdmin       HPROTM
+set_output_delay -clock HCLK -max todmaxhprot    HPROTM
+
+set_output_delay -clock HCLK -min tholdmin       HWDATAM
+set_output_delay -clock HCLK -max todmaxhwdata   HWDATAM
+
+/****************/
+/* Scan Outputs */
+/****************/
+
+/* The output delay on the Scan related output signals has been set   */
+/* to a zero value to prevent addition of extra gates in these paths. */
+todscanmax = 0.0
+todscanmin = 0.0
+
+set_output_delay -clock HCLK -min todscanmin SCANOUTHCLK
+set_output_delay -clock HCLK -max todscanmax SCANOUTHCLK
+
+
+/**********************************************************************/
+/* SCAN SIGNAL PARAMETERS                                             */
+/**********************************************************************/
+
+set_drive 0 SCANENABLE
+/* Infinite drive strength Scan Enable signal */
+
+set_load 0 SCANENABLE
+/* Zero load Scan Enable signal */
+
+remove_driving_cell find(port, SCANENABLE)
+/* Set no driving cell on Scan Enable */
+
+set_dont_touch_network find(port, SCANENABLE)
+/* Preserve the Scan Enable net during optimisation */
+
+set_drive 0 SCANINHCLK
+/* Infinite drive strength Scan input signal */
+
+set_load 0 SCANINHCLK
+/* Zero load Scan input signal */
+
+remove_driving_cell find(port, SCANINHCLK)
+/* Set no driving cell on Scan input */
+
+set_dont_touch_network find(port, SCANINHCLK)
+/* Preserve the Scan input net during optimisation */
+
+
+/************************* End of Ahb2Ahb.scr *************************/

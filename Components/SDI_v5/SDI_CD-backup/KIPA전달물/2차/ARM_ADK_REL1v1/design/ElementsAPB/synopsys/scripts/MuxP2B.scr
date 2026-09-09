@@ -1,0 +1,56 @@
+/*--------------------------------------------------------------------
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+----------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name           : MuxP2B.scr,v
+-- File Revision       : 1.2
+-- 
+-- Release Information : ADK_REL1v1
+-- 
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+-- Purpose : Synopsys synthesis timing constraint script for the
+--           Peripheral to Bridge Multiplexer module.
+--
+--           Located in the synopsys/scripts directory.
+--           Called by master compile script.
+--
+--           This file sets the module input and output delay
+--           constraints.
+--------------------------------------------------------------------*/
+
+/********************************************************************/
+/* CONSTRAINTS FOR BLOCK CONTAINING COMBINATORIAL PATH              */
+/********************************************************************/
+
+/* Paths through combinatorial logic only */
+set_max_delay -from all_inputs() -to all_outputs() tcm
+
+/********************************************************************/
+/* EXTRA INPUT CONSTRAINTS                                          */
+/********************************************************************/
+
+/* PSEL will always be valid for at least one cycle before being      */
+/* required in the APB data phase, and so is set as a multicycle path */
+/* to prevent synthesis assuming that it is a false critical path     */
+/* NOTE: although these constraints will be ignored during the initial */
+/* synthesis of MuxP2B as no clock has been defined, they are         */
+/* propagated up during the synthesis of the surrounding EASY, and are */
+/* required there.  For the block-level synthesis, the max delay value */
+/* is simply overridden for PSEL                                      */
+
+set_multicycle_path 2 -setup -from PSEL*
+set_multicycle_path 1 -hold  -from PSEL*
+
+set_max_delay -from PSEL* -to all_outputs() (tcm + tclk)
+
+/***************************** End **********************************/

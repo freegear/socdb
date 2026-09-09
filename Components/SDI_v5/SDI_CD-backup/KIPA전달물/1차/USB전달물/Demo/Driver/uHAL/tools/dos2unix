@@ -1,0 +1,47 @@
+#! /bin/sh 
+#
+# dos2unix - crude use of zip/unzip to convert LF to CR/LF
+#
+
+usage () {
+echo "  Usage: dos2unix <filename> .. <filename>";
+echo "  Converts a number of files from DOS (CR/LF) to Unix (LF)"
+exit 1 
+}
+
+convert () {
+        echo "converting $FILE from DOS to Unix"
+	zip -ll /tmp/$$.zip $FILE > /dev/null
+	unzip -o /tmp/$$.zip > /dev/null
+	rm -f /tmp/$$.zip
+}
+
+# check argc
+if [ $# = 0 ]
+then
+	usage
+fi
+
+# do they need help?
+case "$1" in
+	"-h" | "--help" | "-help") usage
+	exit 1
+esac
+
+
+# check to see if there is a source file
+FILE=$1
+if [ ! -f $FILE ] 
+then
+	echo "dos2unix: can't find $FILE" >&2
+	exit 1
+fi
+
+# convert the files
+for i in $*
+do
+    FILE=$i
+    convert
+done
+
+exit 0

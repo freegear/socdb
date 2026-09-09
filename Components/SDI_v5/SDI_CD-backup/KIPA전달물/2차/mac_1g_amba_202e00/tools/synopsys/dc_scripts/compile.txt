@@ -1,0 +1,76 @@
+/* ************************************************************************ */
+/* Copyright (c) 1999-2004  Evatronix SA                                    */
+/* ************************************************************************ */
+/* Please review the terms of the license agreement before using this file. */
+/* If you are not an authorised user, please destroy this script file and   */
+/* notify Evatronix S.A. immediately that you inadvertently received an     */
+/* unauthorised copy.                                                       */
+/* ************************************************************************ */
+/* ------------------------------------------------------------------------ */
+/* Project name         : MAC_1G_AMBA                                       */
+/* Project description  :                                                   */
+/* File name            : compile.scr			                    */
+/* File contents        : "MAC_1G_AMBA" synthesis                           */
+/* Purpose              : Master synthesis script                           */
+/*                        Sample Script for Synopsys                        */
+/* Design Engineer      : P.M.	 					    */	
+/* Version              : 1.0                                               */
+/* Last modification    : 2004-08-12					    */
+/* ------------------------------------------------------------------------ */
+
+/* specifying variables */
+mac1g_dir = "./src/core/mac_1g/"
+mac2amba_dir = "./src/core/mac2amba/"
+mac1g_work_dir   = "./tools/synopsys/work1g/"
+mac2amba_work_dir = "./tools/synopsys/workmac2a/"
+mactop_dir = "./src/core/"
+
+/* creating necessary directories */ 
+sh mkdir mac1g_work_dir
+sh mkdir mac2amba_work_dir
+
+
+/* setting additional variables */
+define_design_lib MAC_1G_LIB -path mac1g_work_dir
+define_design_lib MAC2AMBA_LIB -path mac2amba_work_dir
+
+/*  analyzing mac1g source files */ 
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "utility_mac_1g.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "bd.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "bp.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "csr.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "dma.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "domack.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "domreq.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "dom.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "fcr.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "fcstat.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "fct.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "miism.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "rc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "rfifo.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "rlsm.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "rstc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "sc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "tc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "tfifo.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "tlsm.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {mac1g_dir + "mac_1g.vhd"}
+
+/* analyzing mac2amba source files                                 */
+analyze -format vhdl -lib MAC2AMBA_LIB {mac2amba_dir + "mac2amba_package.vhd"}
+analyze -format vhdl -lib MAC2AMBA_LIB {mac2amba_dir + "maccsr2apb.vhd"}
+analyze -format vhdl -lib MAC2AMBA_LIB {mac2amba_dir + "macdata2ahb.vhd"}
+analyze -format vhdl -lib MAC2AMBA_LIB {mac2amba_dir + "mac2amba.vhd"}
+
+/* analyzing top level source file */
+analyze -format vhdl -lib MAC_1G_LIB {mactop_dir + "mac_1g_amba.vhd"}
+
+
+/* ************************************************************************ */
+elaborate mac_1g_amba
+current_design mac_1g_amba
+link
+
+write -f db -hier -out mac_1g_amba.gtech.db
+

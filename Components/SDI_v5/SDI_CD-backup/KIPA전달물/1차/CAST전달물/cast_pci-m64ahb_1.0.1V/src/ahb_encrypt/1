@@ -1,0 +1,29 @@
+
+#	\ahb\   - AHB Interface source files
+analyze -f verilog	dma64_fiforam.v		
+analyze -f verilog	dma64rdfifo.v		
+analyze -f verilog	dma64wrfifo.v	
+analyze -f verilog	dma64regs.v		
+analyze -f verilog	dma64txctrl.v		
+analyze -f verilog	ahbmaster.v		
+analyze -f verilog	ahbslave.v	
+analyze -f verilog	fifo_async.v		
+analyze -f verilog	fifosram.v		
+analyze -f verilog	intctrl.v		
+analyze -f verilog	mailbox.v		
+analyze -f verilog	mailboxblk.v	
+analyze -f verilog	mt64ahb.v		
+analyze -f verilog	pci_m64_params.v	
+analyze -f verilog	pcim64ahb.v		
+analyze -f verilog	pcim64ahbw.v		
+analyze -f verilog	psync.v			
+analyze -f verilog	t64ahb.v		
+analyze -f verilog	dma64ahb.v	
+
+elaborate Uart
+current_design Uart
+link
+
+write -f db -hier -out Uart.gtech.db
+
+ 
