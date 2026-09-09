@@ -1,0 +1,187 @@
+/*************************************************************************
+   Header of the Graphic Accelerator
+
+   file name : ga.h
+   created by gtlee
+   data : 2006.6.22
+
+   note :
+
+   history :
+       Color Type의 값 변경.
+************************************************************************/
+
+#define   SUCC     1
+#define   FAIL     0
+
+#define   TRUE     1
+#define   FALSE    0
+
+// Color type 
+#define  MONO      0
+#define  C8BPP     4
+#define  C16BPP    8  // 565
+#define  CA16BPP   9  //1555
+#define  C24BPP    12
+#define  C32BPP    16
+#define  CA32BPP   17
+
+// Picture kind
+#define  SRC_PIC    0   // source picture
+#define  SRC_PAT    1   // source masking pattern
+#define  DRW_PAT    2   // draw pattern. brush
+#define  PALLETE    3   // source picture palette
+#define  DST_PIC    4   // destination picture
+#define  DST_PAT    5   // destination masking pattern
+#define  CMD_STR    6
+
+#define  NUM_PIC    5
+#define  NUM_KIND   7
+
+
+//#define  NO_CACHE_TYPE    4  // caching 하지 않는 kind 경계. no use
+                             // 이 값 이상일 경우에는 cache에 caching하지 않음.
+
+
+// Palette type
+#define USE_PALETTE      1
+#define NO_PALETTE       0
+
+
+// Virtual memory map
+#define  DEF_VMM_SIZE    (20*1024*1024) // 10Mbyte
+
+
+#define  MAP_CMDLIST    (1024*1024)
+#define  MAP_PICS       (1024*1024*2)
+#define  MAP_PALETTE    (1024*1024*8)
+
+
+typedef unsigned int  uint;
+typedef unsigned char uchar;
+
+
+// Picture structure
+typedef struct str_pic {
+	int    maxx;
+	int    maxy;
+	int    type;  // color type bpp
+	uint   addr;  // Picture start address
+	uint   palette; // palete address. 늦게 추가.
+} s_pic;
+
+
+// position structure
+typedef struct str_pos {
+	int  h;
+	int  v;
+} pos;
+
+
+typedef struct f_str_pos {
+	float  h;
+	float  v;
+} fpos;
+
+
+
+// Pixel color value structure
+// signed value
+typedef struct str_pixel {
+	int  r;
+	int  g;
+	int  b;
+} pixel;
+
+
+// Overlay Option
+#define KIND_NOOVER        0
+#define KIND_RASTER        1
+#define KIND_ALPHA_FL      2
+#define KIND_ALPHA_ALL     3
+
+#define AC_CODE            0
+#define AC_PIC             1
+
+typedef struct str_overlay {
+	int      kind;  // alpha or raster
+	uint     code;  // alpha value or raster opcode
+	int      ac;    // alpha blending opetion flag : choose alpha value
+	uint     brcode; // background color rater opcode. 2006.10.30  
+} overlay;
+
+
+// Fill style
+#define FILL_PAINT         0
+#define FILL_PATTERN       1
+#define FILL_GRAD          2
+
+
+
+
+typedef struct bline_str {
+	int      en;     // enable/disable
+	int      update; // parameter updated
+	pos      st_pos;   // start position
+	int      dh;
+	int      dv;
+	//int      lnum;   // estimation중인 line number
+	pos      sp_pos; // stop position. for line pattern.
+                     // if no pattern, st_pos == epos
+	pos      ed_pos;   // end position
+//	int      evorh;  // end horizontal or virtical
+} bline_info;
+
+
+typedef struct circle_str {
+	int      en;
+	int      update;    // parameter updated
+	pos      st_pos;
+	int      r;         // 반지름.
+
+	int      ccase;     // circle type case
+	//int      lnum;    // estimation중인 line number
+	int      sp_vpos;   // stopped vertical position. 새로 시작할 위치를 기억한다.
+	pos      ed_pos;    // end position
+} circle_info;
+
+// Line Number
+// 0 --> 1 : 0
+// 1 --> 2 : 1
+// 2 --> 3 : 2
+// 3 --> 0 : 3
+
+
+
+//------------------------------------------------------
+#ifdef __GA__
+// local
+
+
+
+
+
+#else 
+//------------------------------------------------------
+// external
+
+
+//--------------------------------------------
+// bus signal emulation
+// GA의 global parameter.
+// command structure를 해석해서 값을 setting
+// command에 따라 변경.
+//  GA의 내부 변수.
+//  어디에????
+extern s_pic   pic_info[NUM_PIC];
+
+extern s_pic   *src_pic; // pic_info[0]
+extern s_pic   *dst_pic; // pic_info[1]
+extern s_pic   *src_pat; // pic_info[2]
+extern s_pic   *dst_pat; // pic_info[3]
+extern s_pic   *drw_pat; // pic_info[4]
+
+//extern uint     pal_base_addr; // pallete base address
+
+
+#endif

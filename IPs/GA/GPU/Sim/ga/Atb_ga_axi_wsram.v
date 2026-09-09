@@ -1,0 +1,462 @@
+/****************************************************
+ 
+    Test bench for a AXI interface 
+ 
+    file name : Ath_ga_axi.v
+    created by gtlee
+    data : 2006.7.14
+ 
+    note :
+ 
+    history : 
+ 
+******************************************************/
+
+`timescale 1ns/10ps
+
+`define   CLK_FREQ      10
+`define   DLY            2
+
+
+module Atb_ga_axi;
+   reg            clk;
+   reg 			  rstb;
+
+   integer        logfile;
+   
+
+   initial begin
+	  logfile = $fopen("AXI_SIM.log");
+	  
+	  clk = 0;
+	  rstb = 0;
+	  #(`CLK_FREQ*20) rstb = 1;
+   end // initial
+
+   always #(`CLK_FREQ/2)  clk <= ~clk;
+
+
+   //================================================
+   // AXI bus signals
+   parameter             ID_WID  =    4;
+   parameter 			 ID_WIDTH = ID_WID;
+   parameter             WID_WIDTH = 4;	// AWID/WID/BID width
+   parameter 			 RID_WIDTH = 4;	// ARID/RID width
+   parameter 			 MASTER_WID = 4;
+   parameter 			 SID_WIDTH = ID_WID+MASTER_WID;
+   
+   parameter 			 DATA_WIDTH = 64;
+   parameter 			 NUM_BYTE = DATA_WIDTH/8;
+
+   
+   wire [WID_WIDTH-1:0]  AWID;
+   wire [31:0] 			 AWADDR;
+   wire [3:0] 			 AWLEN;
+   wire [2:0] 			 AWSIZE;
+   wire [1:0] 			 AWBURST; // fixed
+   wire [1:0] 			 AWLOCK;  // fixed
+   wire [3:0] 			 AWCACHE; // fixed
+   wire [2:0] 			 AWPROT;  // fixed
+   wire 				 AWVALID;
+   wire 				 AWREADY;
+   
+   wire [WID_WIDTH-1:0]  WID;
+   wire [DATA_WIDTH-1:0] WDATA;
+   wire [NUM_BYTE-1:0] 	 WSTRB;
+   wire 				 WLAST;
+   wire 				 WVALID;
+   wire 				 WREADY;
+   
+   
+   wire [WID_WIDTH-1:0]  BID;
+   wire [1:0] 			 BRESP;
+   wire 				 BVALID;
+   wire 				 BREADY;
+   
+   //-------------------------------
+   wire [RID_WIDTH-1:0]  ARID;
+   wire [31:0] 			 ARADDR;
+   wire [3:0] 			 ARLEN;
+   wire [2:0] 			 ARSIZE;
+   wire [1:0] 			 ARBURST;
+   wire [1:0] 			 ARLOCK;
+   wire [3:0] 			 ARCACHE;
+   wire [2:0] 			 ARPROT;
+   wire 				 ARVALID;
+   wire 				 ARREADY;
+   
+   wire [RID_WIDTH-1:0]  RID;
+   wire [DATA_WIDTH-1:0] RDATA;
+   wire [1:0] 			 RRESP;
+   wire 				 RLAST;
+   wire 				 RVALID;
+   wire 				 RREADY;
+
+   //-------------------------------------------
+   // Graphic bus
+   reg 					 grd;
+   reg [31:0] 			 graddr;
+   reg [4:0] 			 grsize;
+   wire [NUM_BYTE-1:0] 	 grbe;
+   wire [DATA_WIDTH-1:0] grdata;
+   wire 				 grvalid;
+   wire 				 grbusy;
+   
+   reg 					 gwr;
+   reg [31:0] 			 gwaddr;
+   reg [4:0] 			 gwsize;
+   reg [NUM_BYTE-1:0] 	 gwbe;
+   wire [DATA_WIDTH-1:0] gwdata;
+   wire 				 gwready;
+   wire 				 gwbusy;
+
+   // Slave 0 : Internal SRAM
+   wire [28:0] 			 MEMADDR;
+   wire [DATA_WIDTH-1:0] MEMRDATA;
+   wire [DATA_WIDTH-1:0] MEMWDATA;
+   wire 				 MEMCEn;
+   wire [NUM_BYTE-1:0] 	 MEMWEn;
+   
+   
+	  
+   ga_axim    ga_axim
+	 (
+	  .clk                 ( clk ),
+	  .rstb                ( rstb ),
+	  
+	  .AWID                ( AWID ),
+	  .AWADDR              ( AWADDR ),
+	  .AWLEN               ( AWLEN ),
+	  .AWSIZE              ( AWSIZE ),
+	  .AWBURST             ( AWBURST ),
+	  .AWLOCK              ( AWLOCK ),
+	  .AWCACHE             ( AWCACHE ),
+	  .AWPROT              ( AWPROT ),
+	  .AWVALID             ( AWVALID ),
+	  .AWREADY             ( AWREADY ),
+	  
+	  .WID                 ( WID ),
+	  .WDATA               ( WDATA ),
+	  .WSTRB               ( WSTRB ),
+	  .WLAST               ( WLAST ),
+	  .WVALID              ( WVALID ),
+	  .WREADY              ( WREADY ),
+	  
+	  .BID                 ( BID ),
+	  .BRESP               ( BRESP ),
+	  .BVALID              ( BVALID ),
+	  .BREADY              ( BREADY ),
+	  
+	  .ARID                ( ARID ),
+	  .ARADDR              ( ARADDR ),
+	  .ARLEN               ( ARLEN ),
+	  .ARSIZE              ( ARSIZE ),
+	  .ARBURST             ( ARBURST ),
+	  .ARLOCK              ( ARLOCK ),
+	  .ARCACHE             ( ARCACHE ),
+	  .ARPROT              ( ARPROT ),
+	  .ARVALID             ( ARVALID ),
+	  .ARREADY             ( ARREADY ),
+	  
+	  .RID                 ( RID ),
+	  .RDATA               ( RDATA ),
+	  .RRESP               ( RRESP ),
+	  .RLAST               ( RLAST ),
+	  .RVALID              ( RVALID ),
+	  .RREADY              ( RREADY ),
+	  
+	  .grd                 ( grd ),
+	  .graddr              ( graddr ),
+	  .grsize              ( grsize ),
+	  .grbe                ( grbe ),
+	  .grdata              ( grdata ),
+	  .grvalid             ( grvalid ),
+	  .grbusy              ( grbusy ),
+	  
+	  .gwr                 ( gwr ),
+	  .gwaddr              ( gwaddr ),
+	  .gwsize              ( gwsize ),
+	  .gwbe                ( gwbe ),
+	  .gwdata              ( gwdata ),
+	  .gwready             ( gwready ),
+	  .gwbusy              ( gwbusy )
+	  );
+
+   IntSRAMController #(.DATA_WIDTH(DATA_WIDTH),
+					   .RID_WIDTH(WID_WIDTH),
+					   .WID_WIDTH(WID_WIDTH)) 
+   IntSRAMController
+	 (
+	  .ACLK(clk),
+	  .ARESETn(rstb),
+	  
+	  .AWID(AWID),
+	  .AWADDR(AWADDR),
+	  .AWLEN(AWLEN),
+	  .AWSIZE(AWSIZE),
+	  .AWBURST(AWBURST),
+	  .AWVALID(AWVALID),
+	  .AWREADY(AWREADY),
+	  
+	  .WID(WID),
+	  .WDATA(WDATA),
+	  .WSTRB(WSTRB),
+	  .WLAST(WLAST),
+	  .WVALID(WVALID),
+	  .WREADY(WREADY),
+	  
+	  .BID(BID),
+	  .BRESP(BRESP),
+	  .BVALID(BVALID),
+	  .BREADY(BREADY),
+	  
+	  .ARID(ARID),
+	  .ARADDR(ARADDR),
+	  .ARLEN(ARLEN),
+	  .ARSIZE(ARSIZE),
+	  .ARBURST(ARBURST),
+	  .ARVALID(ARVALID),
+	  .ARREADY(ARREADY),
+	  
+	  // Read Data Channel
+	  .RID(RID),
+	  .RDATA(RDATA),
+	  .RRESP(RRESP),
+	  .RLAST(RLAST),
+	  .RVALID(RVALID),
+	  .RREADY(RREADY),
+	  
+	  .MEMADDR(MEMADDR[28:0]),
+	  .MEMCEn(MEMCEn),
+	  .MEMWEn(MEMWEn),
+	  .MEMRDATA(MEMRDATA),
+	  .MEMWDATA(MEMWDATA)
+	  );
+
+   SSRAM #(14,64) SRAM
+	 (
+	  .CLK(clk),
+	  .ADDR(MEMADDR[13:0]),
+	  .CEn(MEMCEn),
+	  .WEn(MEMWEn),
+	  .RDATA(MEMRDATA),
+	  .WDATA(MEMWDATA)
+	  );
+
+   //==============================================
+   initial begin
+	  graddr = 0;
+	  grsize = 0;
+	  grd = 0;
+	  gwr  = 0;
+	  gwaddr = 0;
+	  gwsize = 0;
+   end // initial
+
+   //==============================================
+   // AXI bus dummy
+   
+
+   
+   //------------------------------
+   // recieve write address
+   always@(posedge clk) begin
+	  if(rstb & AWVALID) begin
+		 $fdisplay(logfile,"AXI:Write. A:%h, L:%h, S:%h",AWADDR,AWLEN,AWSIZE);
+	  end
+   end // always
+
+   
+   // received write datas
+   always@(posedge clk) begin
+	  if(rstb & WVALID) 
+		 $fdisplay(logfile,"AXI:Write. D:%h",WDATA);
+   end
+
+   
+   //------------------------------
+   // receive read address
+   //reg    rd_en;
+   
+   always@(posedge clk) begin
+	  if(rstb & ARVALID) begin
+		 $fdisplay(logfile,"AXI:Read. A:%h, L:%h, S:%h",ARADDR,ARLEN,ARSIZE);
+	  end // if
+   end // always
+
+
+
+   //==================================
+   // graphic bus signals
+   always@(posedge clk) begin
+	  if(rstb & grvalid) begin
+		 $fdisplay(logfile,"GBUS:Read. RData:%h",grdata);
+		 if(grbusy)
+		   $fdisplay(logfile,"GBUS:Read. End Read.");
+	  end
+   end // always
+
+   reg [7:0]   wdata;
+   
+   always@(posedge clk or negedge rstb) begin
+	 if(~rstb) wdata <= {2'b01,{6{1'b0}}};
+	 else if(gwready) wdata <= wdata + 9;
+   end // always
+
+   assign gwdata = {wdata+8'h07,wdata+8'h06,wdata+8'h05,wdata+8'h04,
+					wdata+8'h03,wdata+8'h02,wdata+8'h01,wdata+8'h00};
+
+   reg [31:0] waddr;
+   reg [5:0]  wsize;
+   
+   // gnerate address
+   always@(posedge clk or negedge rstb) begin
+	  if(~rstb) waddr <= 0;
+	  else if(gwr)	 waddr <= gwaddr;
+	  else if(gwready) waddr <= {(waddr[31:3]+1),3'h0};
+   end // always
+
+   always@(posedge clk or negedge rstb) begin
+	  if(~rstb) wsize = 0;
+	  else if(gwr) wsize = gwsize;
+	  else if(gwready) begin
+		 if(waddr[2:0] == 0) begin
+			if(|wsize[5:3] == 1'b0)
+			  wsize = 0;
+			else wsize = wsize - 6'h08;
+		 end
+		 else begin
+			if(wsize <= {3'h0,~waddr[2:0]})
+			  wsize = 0;
+			else wsize = wsize - {3'h0,~waddr[2:0]} - 1;
+		 end
+	  end // if (gwready)
+   end  // always
+   
+   always@(wsize or waddr or gwbe) begin
+	  case(wsize)
+		5'h00 :
+		  gwbe = 8'b0000_0001;
+		5'h01 :
+		  gwbe = 8'b0000_0011;
+		5'h02 :
+		  gwbe = 8'b0000_0111;
+		5'h03 :
+		  gwbe = 8'b0000_1111;
+		5'h04 :
+		  gwbe = 8'b0001_1111;
+		5'h05 :
+		  gwbe = 8'b0011_1111;
+		5'h06 :
+		  gwbe = 8'b0111_1111;
+		default :
+		  gwbe = 8'b1111_1111;
+	  endcase // case(gwsize)
+	  
+
+	  case(waddr[2:0])
+		3'h0 :
+		  gwbe = gwbe[7:0];
+		3'h1 :
+		  gwbe = {gwbe[6:0],1'b0};
+		3'h2 :
+		  gwbe = {gwbe[5:0],2'h0};
+		3'h3 :
+		  gwbe = {gwbe[4:0],3'h0};
+		3'h4 :
+		  gwbe = {gwbe[3:0],4'h0};
+		3'h5 :
+		  gwbe = {gwbe[2:0],5'h00};
+		3'h6 :
+		  gwbe = {gwbe[1:0],6'h0};
+		default :
+		  gwbe = {gwbe[0],7'h0};
+	  endcase // case(waddr[2:0])
+	  
+   end // always@ (posedge clk)
+   
+      
+   // Read command Task
+   task read_cmd;
+	  input [31:0] addr;
+	  input [4:0]  size;
+	  begin
+		 grd = 0;
+		 @(posedge clk) #`DLY
+		 graddr = addr;
+		 grsize = size;
+
+		 grd = 1;
+		 @(posedge clk) #`DLY
+		   grd = 0;
+
+		 wait(grbusy);
+		 @(posedge clk);
+		 
+	  end
+   endtask // read_cmd
+   
+   
+   // write command
+   task write_cmd;
+	  input [31:0] addr;
+	  input [4:0] size;
+	  begin
+		 gwr = 0;
+		 
+		 @(posedge clk) #`DLY
+		 gwaddr = addr;
+		 gwsize = size;
+
+		 gwr = 1;
+		 @(posedge clk) #`DLY
+		   gwr = 0;
+		 wait(gwbusy);
+		 @(posedge clk);
+
+
+		 // send write response
+		 /*
+		 #(`CLK_FREQ*20)
+		 BVALID = 1;
+		 wait(BREADY);
+		 @(posedge clk);
+		 BVALID = 0;
+		 @(posedge clk);
+		  */
+	  end
+   endtask // write_cmd
+   
+
+   
+   // read/write commad
+   initial begin
+	  wait(rstb);
+	  #(`CLK_FREQ*20) 
+	  write_cmd(32'h00000300,5'd31); // 32 byte
+	  read_cmd (32'h00000300,5'd31); // 32byte
+	  
+	  write_cmd(32'h00000323,5'd31); // 31 byte
+	  read_cmd (32'h00000323,5'd31); // 32byte
+	  
+	  write_cmd(32'h00000320,5'd31); // 31 byte
+	  read_cmd (32'h00000320,5'd31); // 32byte
+
+	  write_cmd(32'h00000330,5'd7); // 8 byte
+	  read_cmd (32'h00000330,5'd7); // 32byte
+
+	  // 4k boundary
+	  write_cmd(32'h00000ff0,5'd20); // 21 byte
+	  read_cmd (32'h00000ff0,5'd20); // 21byte
+
+	  write_cmd(32'h00000ff8,5'd20); // 21 byte
+	  read_cmd (32'h00000ff8,5'd20); // 21byte
+	  
+   end // initial
+   
+   
+
+   
+endmodule // Atb_ga_axi
+
+
