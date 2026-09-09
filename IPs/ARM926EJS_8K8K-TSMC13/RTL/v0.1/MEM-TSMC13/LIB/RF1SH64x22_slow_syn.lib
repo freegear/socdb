@@ -1,0 +1,577 @@
+/*
+ *      CONFIDENTIAL AND PROPRIETARY SOFTWARE/DATA OF ARTISAN COMPONENTS, INC.
+ *      
+ *      Copyright (c) 2006 Artisan Components, Inc.  All Rights Reserved.
+ *      
+ *      Use of this Software/Data is subject to the terms and conditions of
+ *      the applicable license agreement between Artisan Components, Inc. and
+ *      Taiwan Semiconductor Manufacturing Company Ltd..  In addition, this Software/Data
+ *      is protected by copyright law and international treaties.
+ *      
+ *      The copyright notice(s) in this Software/Data does not indicate actual
+ *      or intended publication of this Software/Data.
+ *      name:			RF-SP-HS Register File Generator
+ *           			TSMC CL013G-FSG Process
+ *      version:		2003Q4V1
+ *      comment:		
+ *      configuration:	 -instname RF1SH64x22 -words 64 -bits 22 -frequency 100 -ring_width 2 -mux 2 -drive 4 -write_mask off -wp_size 8 -top_layer met6 -power_type rings -horiz met3 -vert met2 -cust_comment "" -left_bus_delim "[" -right_bus_delim "]" -pwr_gnd_rename "VDD:VDD,GND:VSS" -prefix "" -pin_space 0.0 -name_case upper -check_instname on -diodes on -inside_ring_type GND -libname USERLIB
+ *
+ *      Synopsys model for Synchronous Single-Port Register File
+ *
+ *      Library Name:   USERLIB
+ *      Instance Name:  RF1SH64x22
+ *      Words:          64
+ *      Word Width:     22
+ *      Mux:            2
+ *      Pipeline:       No
+ *      Process:        slow
+ *      Delays:		max
+ *
+ *      Creation Date:  2006-12-19 09:05:56Z
+ *      Version:        2003Q4V1
+ *
+ *      Verified With: Synopsys Design Compiler
+ *
+ *      Modeling Assumptions: This library contains a black box description
+ *          for a memory element.  At the library level, a
+ *          default_max_transition constraint is set to the maximum
+ *          characterized input slew.  Each output has a max_capacitance
+ *          constraint set to the highest characterized output load.  These two
+ *          constraints force Design Compiler to synthesize circuits that
+ *          operate within the characterization space.  The user can tighten
+ *          these constraints, if desired.  When writing SDF from Design
+ *          Compiler, use the version 2.1 option.  This ensures the SDF will
+ *          annotate to simulation models provided with this generator.
+ *
+ *      Modeling Limitations: 
+ *          Due to limitations of the .lib format, some data reduction was
+ *          necessary.  When reducing data, minimum values were chosen for the
+ *          fast case corner and maximum values were used for the typical and
+ *          best case corners.  It is recommended that critical timing and
+ *          setup and hold times be checked at all corners.
+ *
+ *      Known Bugs: None.
+ *
+ *      Known Work Arounds: N/A
+ *
+ */
+
+library(USERLIB) {
+	delay_model		: table_lookup;
+	revision		: 1.1;	
+	date			: "2006-12-19 09:05:56Z";
+	comment			: "Confidential Information of Artisan Components, Inc.  Use subject to Artisan Components license. Copyright (c) 2006 Artisan Components, Inc.";
+	time_unit		: "1ns";
+	voltage_unit		: "1V";
+	current_unit		: "1mA";
+	leakage_power_unit	: "1mW";
+	nom_process		: 1;
+	nom_temperature		: 125.000;
+	nom_voltage		: 1.080;
+	capacitive_load_unit	 (1,pf);
+
+	pulling_resistance_unit	        : "1kohm";
+
+	/* additional header data */
+	default_cell_leakage_power      : 0;
+	default_fanout_load		: 1;
+	default_inout_pin_cap		: 0.005;
+	default_input_pin_cap		: 0.005;
+	default_output_pin_cap		: 0.0;
+	default_max_transition		: 1.500;
+
+        /* default attributes */
+        default_leakage_power_density : 0.0;
+        slew_derate_from_library      : 1;
+        slew_lower_threshold_pct_fall : 10.0;
+        slew_upper_threshold_pct_fall : 90.0;
+        slew_lower_threshold_pct_rise : 10.0;
+        slew_upper_threshold_pct_rise : 90.0;
+        input_threshold_pct_fall      : 50.0;
+        input_threshold_pct_rise      : 50.0;
+        output_threshold_pct_fall     : 50.0;
+        output_threshold_pct_rise     : 50.0;
+
+ 	/* k-factors */
+ 	k_process_cell_fall             : 1;
+ 	k_process_cell_leakage_power    : 0;
+ 	k_process_cell_rise             : 1;
+ 	k_process_fall_transition       : 1;
+ 	k_process_hold_fall             : 1;
+ 	k_process_hold_rise             : 1;
+ 	k_process_internal_power        : 0;
+ 	k_process_min_pulse_width_high  : 1;
+ 	k_process_min_pulse_width_low   : 1;
+ 	k_process_pin_cap               : 0;
+ 	k_process_recovery_fall         : 1;
+ 	k_process_recovery_rise         : 1;
+ 	k_process_rise_transition       : 1;
+ 	k_process_setup_fall            : 1;
+ 	k_process_setup_rise            : 1;
+ 	k_process_wire_cap              : 0;
+ 	k_process_wire_res              : 0;
+	k_temp_cell_fall		: 0.0;
+	k_temp_cell_rise		: 0.0;
+	k_temp_hold_fall                : 0.0;
+	k_temp_hold_rise                : 0.0;
+	k_temp_min_pulse_width_high     : 0.0;
+	k_temp_min_pulse_width_low      : 0.0;
+	k_temp_min_period               : 0.0;
+	k_temp_rise_propagation         : 0.0;
+	k_temp_fall_propagation         : 0.0;
+	k_temp_rise_transition          : 0.0;
+	k_temp_fall_transition          : 0.0;
+	k_temp_recovery_fall            : 0.0;
+	k_temp_recovery_rise            : 0.0;
+	k_temp_setup_fall               : 0.0;
+	k_temp_setup_rise               : 0.0;
+	k_volt_cell_fall                : 0.0;
+	k_volt_cell_rise                : 0.0;
+	k_volt_hold_fall                : 0.0;
+	k_volt_hold_rise                : 0.0;
+	k_volt_min_pulse_width_high     : 0.0;
+	k_volt_min_pulse_width_low      : 0.0;
+	k_volt_min_period               : 0.0;
+	k_volt_rise_propagation         : 0.0;
+	k_volt_fall_propagation         : 0.0;
+	k_volt_rise_transition	        : 0.0;
+	k_volt_fall_transition	        : 0.0;
+	k_volt_recovery_fall            : 0.0;
+	k_volt_recovery_rise            : 0.0;
+	k_volt_setup_fall               : 0.0;
+	k_volt_setup_rise               : 0.0;
+
+
+	operating_conditions(slow) {
+		process	 : 1;
+		temperature	 : 125.000;
+		voltage	 : 1.080;
+		tree_type	 : balanced_tree;
+	}
+        default_operating_conditions : slow;
+	wire_load("sample") {
+		resistance	 : 1.6e-05;
+		capacitance	 : 0.0002;
+		area	 : 1.7;
+  		slope	 : 500;
+		fanout_length	 (1,500);
+	}
+	output_voltage(GENERAL) {
+		vol	 : 0.4;
+		voh	 : VDD - 0.4;
+		vomin	 : -0.5;
+		vomax	 : VDD + 0.5;
+	}
+	input_voltage(CMOS) {
+		vil	 : 0.3 * VDD;
+		vih	 : 0.7 * VDD;
+		vimin	 : -0.5;
+		vimax	 : VDD + 0.5;
+	}
+	input_voltage(TTL) {
+		vil	 : 0.8;
+		vih	 : 2;
+		vimin	 : -0.5;
+		vimax	 : VDD + 0.5;
+	}
+        lu_table_template(RF1SH64x22_delay_template) {
+           variable_1 : input_net_transition;
+           variable_2 : total_output_net_capacitance;
+               index_1 ("1000, 1001, 1002, 1003, 1004, 1005, 1006");
+               index_2 ("1000, 1001, 1002, 1003, 1004, 1005, 1006");
+        }
+	lu_table_template(RF1SH64x22_constraint_template) {
+           variable_1 : related_pin_transition;
+           variable_2 : constrained_pin_transition;
+               index_1 ("1000, 1001, 1002, 1003, 1004, 1005, 1006");
+               index_2 ("1000, 1001, 1002, 1003, 1004, 1005, 1006");
+        }
+	lu_table_template(RF1SH64x22_load_template) {
+           variable_1 : total_output_net_capacitance;
+               index_1 ("1000, 1001, 1002, 1003, 1004, 1005, 1006");
+        }
+        power_lut_template(RF1SH64x22_passive_energy_template_1x2) {
+           variable_1 : input_transition_time;
+               index_1 ("1000, 1001");
+        }
+	library_features(report_delay_calculation);
+	type (RF1SH64x22_DATA) {
+		base_type : array ;
+		data_type : bit ;
+		bit_width : 22;
+		bit_from : 21;
+		bit_to : 0 ;
+		downto : true ;
+	}
+	type (RF1SH64x22_ADDRESS) {
+		base_type : array ;
+		data_type : bit ;
+		bit_width : 6;
+		bit_from : 5;
+		bit_to : 0 ;
+		downto : true ;
+	}
+cell(RF1SH64x22) {
+	area		 : 14746.524;
+	dont_use	 : TRUE;
+	dont_touch	 : TRUE;
+        interface_timing : TRUE;
+	memory() {
+		type : ram;
+		address_width : 6;
+		word_width : 22;
+	}
+	bus(Q)	 {
+		bus_type : RF1SH64x22_DATA;
+		direction : output;
+		max_capacitance : 0.400;
+                memory_read() {
+			address : A;
+		}
+		timing() {
+			related_pin :	"CLK" ;
+			timing_type : rising_edge;
+			timing_sense : non_unate;
+			cell_rise(RF1SH64x22_delay_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.000, 0.010, 0.030, 0.050, 0.130, 0.250, 0.400");
+			values ( \
+			  "1.547, 1.566, 1.604, 1.641, 1.792, 2.019, 2.301", \
+			  "1.567, 1.586, 1.624, 1.662, 1.812, 2.039, 2.321", \
+			  "1.593, 1.611, 1.649, 1.687, 1.838, 2.064, 2.347", \
+			  "1.643, 1.662, 1.700, 1.737, 1.888, 2.114, 2.397", \
+			  "1.794, 1.813, 1.851, 1.889, 2.039, 2.266, 2.548", \
+			  "2.046, 2.065, 2.103, 2.141, 2.291, 2.518, 2.800", \
+			  "2.298, 2.317, 2.355, 2.393, 2.544, 2.770, 3.053" \
+			)
+			}
+			rise_transition(RF1SH64x22_load_template) {
+			index_1 ("0.000, 0.010, 0.030, 0.050, 0.130, 0.250, 0.400");
+			values ("0.078, 0.118, 0.198, 0.278, 0.597, 1.076, 1.675")
+			}
+			cell_fall(RF1SH64x22_delay_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.000, 0.010, 0.030, 0.050, 0.130, 0.250, 0.400");
+			values ( \
+			  "1.607, 1.618, 1.639, 1.660, 1.743, 1.868, 2.025", \
+			  "1.628, 1.638, 1.659, 1.680, 1.763, 1.889, 2.045", \
+			  "1.653, 1.663, 1.684, 1.705, 1.788, 1.914, 2.070", \
+			  "1.703, 1.714, 1.734, 1.755, 1.839, 1.964, 2.121", \
+			  "1.854, 1.865, 1.886, 1.907, 1.990, 2.116, 2.272", \
+			  "2.107, 2.117, 2.138, 2.159, 2.242, 2.368, 2.524", \
+			  "2.359, 2.369, 2.390, 2.411, 2.494, 2.620, 2.776" \
+			)
+			}
+			fall_transition(RF1SH64x22_load_template) {
+			index_1 ("0.000, 0.010, 0.030, 0.050, 0.130, 0.250, 0.400");
+			values ("0.131, 0.150, 0.189, 0.227, 0.381, 0.612, 0.901")
+		}	}
+        }
+
+	pin(CLK) {
+		direction : input;
+		capacitance : 0.058
+		clock	: true;
+		min_pulse_width_low	: 0.370;
+		min_pulse_width_high	: 0.102;
+		min_period		: 2.139;
+		max_transition		: 1.500;
+		internal_power(){
+			when : "!CEN & WEN";
+        		rise_power(RF1SH64x22_passive_energy_template_1x2) {
+				index_1 ("0.0 1.0");
+            			values ("8.415, 8.415")
+        		}
+        		fall_power(RF1SH64x22_passive_energy_template_1x2) {
+				index_1 ("0.0 1.0");
+            			values ("0.0, 0.0")
+        		}
+		}
+		internal_power(){
+			when : "!CEN & !WEN";
+			rise_power(RF1SH64x22_passive_energy_template_1x2) {
+	    			index_1 ("0.0 1.0");
+	    			values ("8.788, 8.788")
+			}	
+			fall_power(RF1SH64x22_passive_energy_template_1x2) {
+	    			index_1 ("0.0 1.0");
+            			values ("0.0, 0.0")
+			}	
+		}
+         internal_power(){
+                 when : "CEN";
+                 power(RF1SH64x22_passive_energy_template_1x2) {
+                         index_1 ("0.0 1.0");
+                         values ("0.022, 0.022")
+                 }
+         }
+	}
+
+	pin(CEN) {
+		direction : input;
+		capacitance : 0.004;
+		timing() {
+			related_pin	: "CLK" ;
+			timing_type	: setup_rising ;
+			rise_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.355, 0.372, 0.394, 0.437, 0.567, 0.783, 1.000", \
+			  "0.335, 0.352, 0.374, 0.417, 0.547, 0.763, 0.979", \
+			  "0.309, 0.327, 0.348, 0.392, 0.522, 0.738, 0.954", \
+			  "0.259, 0.276, 0.298, 0.341, 0.471, 0.687, 0.904", \
+			  "0.108, 0.125, 0.147, 0.190, 0.320, 0.536, 0.753", \
+			  "-0.144, -0.127, -0.105, -0.062, 0.068, 0.284, 0.500", \
+			  "-0.396, -0.379, -0.357, -0.314, -0.184, 0.032, 0.248" \
+			)
+			}
+			fall_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.380, 0.407, 0.440, 0.506, 0.705, 1.038, 1.370", \
+			  "0.360, 0.387, 0.420, 0.486, 0.685, 1.017, 1.349", \
+			  "0.335, 0.361, 0.395, 0.461, 0.660, 0.992, 1.324", \
+			  "0.284, 0.311, 0.344, 0.410, 0.610, 0.942, 1.274", \
+			  "0.133, 0.160, 0.193, 0.259, 0.458, 0.790, 1.122", \
+			  "-0.119, -0.092, -0.059, 0.007, 0.206, 0.538, 0.870", \
+			  "-0.371, -0.345, -0.311, -0.245, -0.046, 0.286, 0.618" \
+			)
+		}	}
+		timing() {
+			related_pin	: "CLK" ;
+			timing_type	: hold_rising ;
+			rise_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.009, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.261, 0.244, 0.222, 0.179, 0.049, 0.000, 0.000", \
+			  "0.513, 0.496, 0.474, 0.431, 0.301, 0.085, 0.000" \
+			)
+				
+			}
+			fall_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.036, 0.009, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.288, 0.261, 0.228, 0.162, 0.000, 0.000, 0.000", \
+			  "0.540, 0.513, 0.480, 0.414, 0.214, 0.000, 0.000" \
+			)
+	}	}	}
+
+	pin(WEN) {
+		direction : input;
+		capacitance : 0.008;
+		timing() {
+			related_pin	: "CLK" ;
+			timing_type	: setup_rising ;
+			rise_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.451, 0.472, 0.499, 0.553, 0.716, 0.986, 1.257", \
+			  "0.430, 0.452, 0.479, 0.533, 0.696, 0.966, 1.237", \
+			  "0.405, 0.427, 0.454, 0.508, 0.670, 0.941, 1.212", \
+			  "0.355, 0.376, 0.403, 0.458, 0.620, 0.891, 1.161", \
+			  "0.203, 0.225, 0.252, 0.306, 0.469, 0.739, 1.010", \
+			  "-0.049, -0.027, 0.000, 0.054, 0.217, 0.487, 0.758", \
+			  "-0.301, -0.279, -0.252, -0.198, -0.036, 0.235, 0.506" \
+			)
+			}
+			fall_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.366, 0.389, 0.417, 0.473, 0.642, 0.923, 1.204", \
+			  "0.346, 0.369, 0.397, 0.453, 0.622, 0.903, 1.184", \
+			  "0.321, 0.344, 0.372, 0.428, 0.597, 0.878, 1.159", \
+			  "0.271, 0.293, 0.321, 0.377, 0.546, 0.827, 1.109", \
+			  "0.119, 0.142, 0.170, 0.226, 0.395, 0.676, 0.957", \
+			  "-0.133, -0.110, -0.082, -0.026, 0.143, 0.424, 0.705", \
+			  "-0.385, -0.362, -0.334, -0.278, -0.109, 0.172, 0.453" \
+			)
+		}	}
+		timing() {
+			related_pin	: "CLK" ;
+			timing_type	: hold_rising ;
+			rise_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.127, 0.106, 0.079, 0.024, 0.000, 0.000, 0.000", \
+			  "0.379, 0.358, 0.331, 0.277, 0.114, 0.000, 0.000", \
+			  "0.632, 0.610, 0.583, 0.529, 0.366, 0.096, 0.000" \
+			)
+			}
+			fall_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.079, 0.057, 0.029, 0.000, 0.000, 0.000, 0.000", \
+			  "0.332, 0.309, 0.281, 0.225, 0.056, 0.000, 0.000", \
+			  "0.584, 0.561, 0.533, 0.477, 0.308, 0.027, 0.000" \
+			)
+	}	}	}
+
+	bus(A)  {
+		bus_type : RF1SH64x22_ADDRESS;
+		direction : input;
+		capacitance : 0.008;
+		timing() {
+			related_pin	: "CLK"
+			timing_type	: setup_rising ;
+			rise_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.305, 0.330, 0.360, 0.421, 0.605, 0.911, 1.217", \
+			  "0.285, 0.309, 0.340, 0.401, 0.585, 0.891, 1.196", \
+			  "0.260, 0.284, 0.315, 0.376, 0.559, 0.865, 1.171", \
+			  "0.209, 0.234, 0.264, 0.325, 0.509, 0.815, 1.121", \
+			  "0.058, 0.082, 0.113, 0.174, 0.358, 0.664, 0.970", \
+			  "-0.194, -0.170, -0.139, -0.078, 0.106, 0.412, 0.717", \
+			  "-0.446, -0.422, -0.391, -0.330, -0.146, 0.159, 0.465" \
+			)
+			}
+			fall_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.139, 0.170, 0.209, 0.287, 0.521, 0.911, 1.301", \
+			  "0.119, 0.150, 0.189, 0.267, 0.501, 0.891, 1.281", \
+			  "0.094, 0.125, 0.164, 0.242, 0.476, 0.866, 1.256", \
+			  "0.043, 0.075, 0.114, 0.192, 0.426, 0.816, 1.206", \
+			  "-0.108, -0.077, -0.038, 0.040, 0.274, 0.664, 1.054", \
+			  "-0.360, -0.329, -0.290, -0.212, 0.022, 0.412, 0.802", \
+			  "-0.612, -0.581, -0.542, -0.464, -0.230, 0.160, 0.550" \
+			)
+		}	}
+		timing() {
+			related_pin	: "CLK"
+			timing_type	: hold_rising ;
+			rise_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.040, 0.015, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.191, 0.167, 0.136, 0.075, 0.000, 0.000, 0.000", \
+			  "0.443, 0.419, 0.388, 0.327, 0.143, 0.000, 0.000", \
+			  "0.695, 0.671, 0.640, 0.579, 0.395, 0.090, 0.000" \
+			)
+			}
+			fall_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.035, 0.004, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.056, 0.024, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.081, 0.050, 0.011, 0.000, 0.000, 0.000, 0.000", \
+			  "0.131, 0.100, 0.061, 0.000, 0.000, 0.000, 0.000", \
+			  "0.282, 0.251, 0.212, 0.134, 0.000, 0.000, 0.000", \
+			  "0.535, 0.503, 0.464, 0.386, 0.152, 0.000, 0.000", \
+			  "0.787, 0.755, 0.716, 0.638, 0.404, 0.015, 0.000" \
+			)
+	}	}	
+
+         internal_power(){
+                 when : "CEN";
+                 power(RF1SH64x22_passive_energy_template_1x2) {
+                         index_1 ("0.0 1.0");
+                         values ("0.070, 0.070")
+                 }
+         }
+
+}
+	bus(D)	 {
+		bus_type : RF1SH64x22_DATA;
+		direction : input;
+		capacitance : 0.002;
+		memory_write() {
+			address : A;
+			clocked_on : "CLK";
+		}
+		timing() {
+			related_pin	: "CLK"
+			timing_type	: setup_rising ;
+			rise_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.330, 0.347, 0.368, 0.411, 0.538, 0.750, 0.963", \
+			  "0.310, 0.327, 0.348, 0.390, 0.518, 0.730, 0.943", \
+			  "0.284, 0.301, 0.323, 0.365, 0.493, 0.705, 0.917", \
+			  "0.234, 0.251, 0.272, 0.315, 0.442, 0.655, 0.867", \
+			  "0.083, 0.100, 0.121, 0.164, 0.291, 0.503, 0.716", \
+			  "-0.169, -0.152, -0.131, -0.089, 0.039, 0.251, 0.464", \
+			  "-0.421, -0.404, -0.383, -0.341, -0.213, -0.001, 0.212" \
+			)
+			}
+			fall_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.213, 0.239, 0.272, 0.338, 0.536, 0.866, 1.196", \
+			  "0.193, 0.219, 0.252, 0.318, 0.516, 0.846, 1.176", \
+			  "0.168, 0.194, 0.227, 0.293, 0.491, 0.821, 1.150", \
+			  "0.117, 0.144, 0.177, 0.243, 0.440, 0.770, 1.100", \
+			  "-0.034, -0.008, 0.025, 0.091, 0.289, 0.619, 0.949", \
+			  "-0.286, -0.260, -0.227, -0.161, 0.037, 0.367, 0.697", \
+			  "-0.538, -0.512, -0.479, -0.413, -0.215, 0.115, 0.444" \
+			)
+		}	}
+		timing() {
+			related_pin	: "CLK"
+			timing_type	: hold_rising ;
+			rise_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.119, 0.102, 0.081, 0.038, 0.000, 0.000, 0.000", \
+			  "0.371, 0.354, 0.333, 0.290, 0.163, 0.000, 0.000", \
+			  "0.623, 0.606, 0.585, 0.542, 0.415, 0.203, 0.000" \
+			)
+			}
+			fall_constraint(RF1SH64x22_constraint_template) {
+			index_1 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			index_2 ("0.010, 0.050, 0.100, 0.200, 0.500, 1.000, 1.500");
+			values ( \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000", \
+			  "0.248, 0.222, 0.189, 0.123, 0.000, 0.000, 0.000", \
+			  "0.501, 0.474, 0.441, 0.375, 0.177, 0.000, 0.000" \
+			)
+		}	}
+	}
+
+	cell_leakage_power : 0.006;
+  }
+}

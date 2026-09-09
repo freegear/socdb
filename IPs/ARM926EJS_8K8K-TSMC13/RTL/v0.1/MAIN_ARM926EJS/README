@@ -1,0 +1,168 @@
+  -------------------------------------------------------------------------
+  This confidential and proprietary software may be used only as authorised
+  by a licensing agreement from ARM Limited
+                 (c) COPYRIGHT 2003 ARM Limited
+                 ALL RIGHTS RESERVED
+  The entire notice above must be reproduced on all authorised copies and
+  copies may only be made to the extent permitted by a licensing agreement
+  from ARM Limited.
+  -------------------------------------------------------------------------
+  Version and Release Control Information:
+ 
+  File Name           : README,v
+  File Revision       : 1.3
+ 
+  Release Information : ARM926EJS_r0p5-00rel0
+  -------------------------------------------------------------------------
+
+Using automem:
+--------------
+
+1) Update or create the ram definitions in the ram-config file.
+
+Edit the ram-config file to describe the ram devices to be used. In
+this example we shall add a data ram for the instruction cache. The
+ram to add is called Ram32byte_512. The header of its Verilog
+model is as follows:
+
+module Ram32byte_512 (Q, CLK, CEN, WEN, A, D, OEN);
+  output [31: 0] Q;   // 32 bit wide data.
+  input          CLK; // Clock.
+  input          CEN; // Chip select.
+  input  [ 3: 0] WEN; // Byte word-enables.
+  input  [ 8: 0] A;   // 512 address locations.
+  input  [31: 0] D;   // 32 bit wide data.
+  input          OEN; // Output enable, active low.
+
+The details of this ram must be defined in the ram-config file. Each
+definition starts with the keyword "ram_definition" followed by the
+ram name, a list of pin keyword and pin name pairs and finally the
+keyword "end_ram_definition". The definition for the above ram is as
+follows:
+
+ram_definition Ram32byte_512
+   clock = CLK
+   chip_select = CEN
+   address = A[8:0]
+   read_data = Q[31:0]
+   write_data = D[31:0]
+   write_enable = WEN[3:0]
+   not_output_enable = OEN
+end_ram_definition
+
+The width of each input or output is defined by the Verilog-style
+range after the pin name, no range implies that the pin is only a
+single bit. If a pin is active-low the pin keyword should be prefixed
+with "not_" as for the output enable pin above. The output_enable pin
+(OEN in this case) is the only one in the above example that is
+optional.
+
+2) Update the ram-config file to associate rams with their functions.
+
+Following up the example above for the ram Ram32byte_512, we need to
+associate this ram with its desired function. In this case it will be
+the data ram for the instruction cache. This is set using the "icdata"
+keyword followed by the ram name:
+
+icdata     Ram32byte_512
+
+The ram keywords and their meanings are:
+
+icdata        Instruction cache data ram.
+ictag         Instruction cache tag ram.
+icvalid       Instruction cache valid ram.
+dcdata        Data cache data ram.
+dctag         Data cache tag ram.
+dcvalid       Data cache valid ram.
+dcdirty       Data cache dirty ram.
+mmu112bit     MMU (112 bit ram option)
+mmu128bit     MMU (128 bit ram option)
+mmu30bit      MMU (30 and 26 bit ram option)
+mmu26bit      MMU (30 and 26 bit ram option)
+
+The MMU configuration is more complex than the others and is described
+below.
+
+3) Update the ram-config file to set various options:
+
+The option keywords, their meanings and possible values are as follows:
+
+replacement       Sets the replacement algorithm used by both caches.
+                  This can be either "random" or "round-robin". For the
+                  former the width of the valid ram needs to be 16 bits
+                  and for the latter it needs to be 24 bits.
+                  
+clockgating       This sets the block-level clock gating. Can be either
+                  "true" or "false".
+                  
+optimise          When instantiating multiple banks of ram to create a
+                  deeper memory, the extra circuitry to control
+                  the rams can be optimised either for low-power or
+                  high-speed. Use "power" and "speed" to switch
+                  optimisations.
+                  
+dcsize            These two options set the size of the data cache and
+icsize            the instruction cache respectively. Set to a value such
+                  as 8k or 32k etc.
+
+4) Run the automem script.
+
+The automem script takes three parameters. Firstly the source Verilog to
+which the rams will be added (and any existing rams removed). Secondly,
+an output Verilog file where the output will be placed. Finally, the
+ram-config file that you created in steps 1-3. You should run automem
+from the MAIN_ARM926EJS directory.
+
+./automem ../ARM926EJS/ARM926EJS.v ARM926EJS_8k_ICache_16k_DCache.v ram-config
+
+In this example the output will be placed into
+ARM926EJS_8k_ICache_16k_DCache.v and two other files will also be
+created: ARM926EJS_8k_ICache_16k_DCache.vh and
+ARM926EJS_8k_ICache_16k_DCache.vc. The latter of these can be edited
+to point to the location of Verilog files used to simulate the rams.
+
+5) Link the new files.
+
+So that the new files can be found they should be linked to
+ARM926EJS.v, ARM926EJS.vh and ARM926EJS.vc in the MAIN_ARM926EJS
+directory, for example:
+
+ln -s ARM926EJS_8k_ICache_16k_DCache.v  ARM926EJS.v
+ln -s ARM926EJS_8k_ICache_16k_DCache.vh ARM926EJS.vh
+ln -s ARM926EJS_8k_ICache_16k_DCache.vc ARM926EJS.vc
+
+Capabilities of automem:
+------------------------
+
+The automem script is capable of instantiating multiple banks of ram
+when either the ram given is too narrow or not deep enough. For
+instance when a 16k data cache is required but only a ram 512 deep
+(like the Ram32byte_512 example above) is avaliable. Any supporting
+circuitry required for this will be automatically generated. The
+script can also cope with some cases of the write-enable widths of the
+rams not matching those of the core interface. When ram signals are
+active-low they will automatically be inverted so long as the "not_"
+prefix was used in the ram definition.
+
+MMU rams:
+---------
+
+There are three options for MMU rams:
+
+(1) define a 112 bit wide ram with bit write enables, or
+(2) define a 128 bit wide ram with word write enables, or
+(3) define 30 bit and 26 bit rams.
+
+For option (1) define mmu112bit, for option (2) define mmu128bit and
+for option (3) define mmu30bit and mmu26bit. The others should either
+be omitted or set to "none".
+
+Adding rams to a modified design:
+---------------------------------
+
+If the ARM926EJS top-level is modified, for example to add BIST, the
+signal names to which the rams should be connected will change. In
+order that automem can use these new signal names the memory-config
+file should be edited. This file does not need to be modified if no
+extra circuitry is added or if the extra circuitry is added after
+automem has been used to add the rams to the ARM926EJS top-level.
