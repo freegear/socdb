@@ -1,0 +1,43 @@
+library verilog;
+use verilog.vl_types.all;
+entity mmc_dma is
+    port(
+        mresetn         : in     vl_logic;
+        hclk            : in     vl_logic;
+        hendian         : in     vl_logic;
+        hsel            : in     vl_logic;
+        haddr           : in     vl_logic_vector(31 downto 0);
+        htrans          : in     vl_logic_vector(1 downto 0);
+        hsize           : in     vl_logic_vector(2 downto 0);
+        hwrite          : in     vl_logic;
+        hready          : in     vl_logic;
+        hwdata          : in     vl_logic_vector(31 downto 0);
+        hrdata          : out    vl_logic_vector(31 downto 0);
+        hreadyout       : out    vl_logic;
+        hresp           : out    vl_logic_vector(1 downto 0);
+        hbusreqdma      : out    vl_logic;
+        hgrantdma       : in     vl_logic;
+        haddrdma        : out    vl_logic_vector(31 downto 0);
+        htransdma       : out    vl_logic_vector(1 downto 0);
+        hsizedma        : out    vl_logic_vector(2 downto 0);
+        hburstdma       : out    vl_logic_vector(2 downto 0);
+        hprotdma        : out    vl_logic_vector(3 downto 0);
+        hwritedma       : out    vl_logic;
+        hreadydma       : in     vl_logic;
+        hwdatadma       : out    vl_logic_vector(31 downto 0);
+        hrdatadma       : in     vl_logic_vector(31 downto 0);
+        hrstb           : out    vl_logic;
+        hwstb           : out    vl_logic;
+        hssize          : out    vl_logic_vector(2 downto 0);
+        hwd             : out    vl_logic_vector(31 downto 0);
+        hrd             : in     vl_logic_vector(31 downto 0);
+        hstore_write    : in     vl_logic_vector(5 downto 0);
+        hstore_read     : in     vl_logic_vector(5 downto 0);
+        hdma1locken     : in     vl_logic_vector(7 downto 0);
+        dma1_lock       : out    vl_logic;
+        mcmdindex       : in     vl_logic_vector(5 downto 0);
+        hstore_write_edge: out    vl_logic_vector(5 downto 0);
+        hstore_read_edge: out    vl_logic_vector(5 downto 0);
+        hirq            : out    vl_logic
+    );
+end mmc_dma;

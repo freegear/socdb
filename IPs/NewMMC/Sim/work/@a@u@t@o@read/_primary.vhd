@@ -1,0 +1,41 @@
+library verilog;
+use verilog.vl_types.all;
+entity autoread is
+    port(
+        nrst            : in     vl_logic;
+        sdreset         : in     vl_logic;
+        pclk            : in     vl_logic;
+        autoreaden      : in     vl_logic;
+        rcmdstart       : in     vl_logic;
+        rcmdstartclr    : out    vl_logic;
+        singlemultiread : in     vl_logic;
+        response0       : in     vl_logic_vector(31 downto 0);
+        nobusyset       : in     vl_logic;
+        busyfinset      : in     vl_logic;
+        rspcrcset       : in     vl_logic;
+        rspfinset       : in     vl_logic;
+        cmdtoutset      : in     vl_logic;
+        datcrcset       : in     vl_logic;
+        datfinset       : in     vl_logic;
+        cmdarg          : in     vl_logic_vector(31 downto 0);
+        cmdindex        : in     vl_logic_vector(6 downto 0);
+        cmst            : in     vl_logic;
+        cmstclr         : in     vl_logic;
+        nocrcrsp        : in     vl_logic;
+        longrsp         : in     vl_logic;
+        waitrsp         : in     vl_logic;
+        busyrsp         : in     vl_logic;
+        abortcmd        : in     vl_logic;
+        cmdstartmuxo    : out    vl_logic;
+        cmdargmuxo      : out    vl_logic_vector(31 downto 0);
+        cmdindexmuxo    : out    vl_logic_vector(6 downto 0);
+        nocrcrspmuxo    : out    vl_logic;
+        longrspmuxo     : out    vl_logic;
+        waitrspmuxo     : out    vl_logic;
+        busyrspmuxo     : out    vl_logic;
+        abortcmdmuxo    : out    vl_logic;
+        responsecmd18   : out    vl_logic_vector(31 downto 0);
+        autoreadcomplete: out    vl_logic;
+        errorstate      : out    vl_logic_vector(1 downto 0)
+    );
+end autoread;

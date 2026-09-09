@@ -1,0 +1,12 @@
+#!/bin/csh -fx
+
+dc_shell-t -f MMCTop.tcl | tee /dev/tty >&! ./Log/MMCTop.log
+
+#----========================================================================----
+#-- Proper Sdf Generaion Fitted to TSMC 
+#----========================================================================----
+./pt_postprocessor.pl -s ./Sdf/temp.sdf -o ./Sdf/MMCTop.noscan.sdf
+
+\rm -rf *.log ./Sdf/temp.sdf
+
+exit

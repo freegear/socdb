@@ -1,0 +1,756 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -nworst 10
+        -input_pins
+        -nets
+        -max_paths 10
+        -transition_time
+        -capacitance
+Design : MMCTop
+Version: V-2004.06
+Date   : Wed May  9 09:40:33 2007
+****************************************
+
+ * Some/all delay information is back-annotated.
+
+Operating Conditions: slow   Library: USERLIB
+Wire Load Model Mode: top
+
+  Startpoint: PADDR[5] (input port clocked by PCLK)
+  Endpoint: DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_1_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        7.00       7.00 f
+  PADDR[5] (in)                                                     1.00      0.00       7.00 f
+  PADDR[5] (net)                                9         0.02                0.00       7.00 f
+  mmc_APBRegisterIF/PADDR[5] (mmc_APBRegisterIF)                              0.00       7.00 f
+  mmc_APBRegisterIF/PADDR[5] (net)                        0.02                0.00       7.00 f
+  mmc_APBRegisterIF/U3218/AN (NAND3BX2)                             1.00      0.00       7.00 f
+  mmc_APBRegisterIF/U3218/Y (NAND3BX2)                              0.21      0.35       7.35 f
+  mmc_APBRegisterIF/n6314 (net)                 1         0.01                0.00       7.35 f
+  mmc_APBRegisterIF/U3183/A (INVX3)                                 0.21      0.00       7.35 f
+  mmc_APBRegisterIF/U3183/Y (INVX3)                                 0.08      0.08       7.43 r
+  mmc_APBRegisterIF/n6257 (net)                 3         0.01                0.00       7.43 r
+  mmc_APBRegisterIF/U3196/B (NAND2BX1)                              0.08      0.00       7.43 r
+  mmc_APBRegisterIF/U3196/Y (NAND2BX1)                              0.11      0.07       7.50 f
+  mmc_APBRegisterIF/n6313 (net)                 1         0.00                0.00       7.50 f
+  mmc_APBRegisterIF/U3187/A (INVX2)                                 0.11      0.00       7.50 f
+  mmc_APBRegisterIF/U3187/Y (INVX2)                                 0.12      0.10       7.60 r
+  mmc_APBRegisterIF/n6252 (net)                 4         0.02                0.00       7.60 r
+  mmc_APBRegisterIF/U3186/B (NAND2BX2)                              0.12      0.00       7.60 r
+  mmc_APBRegisterIF/U3186/Y (NAND2BX2)                              0.11      0.10       7.70 f
+  mmc_APBRegisterIF/n6256 (net)                 2         0.02                0.00       7.70 f
+  mmc_APBRegisterIF/U3204/A (INVX6)                                 0.11      0.00       7.70 f
+  mmc_APBRegisterIF/U3204/Y (INVX6)                                 0.13      0.11       7.80 r
+  mmc_APBRegisterIF/RxRdPtrInc (net)           33         0.05                0.00       7.80 r
+  mmc_APBRegisterIF/RxRdPtrInc (mmc_APBRegisterIF)                            0.00       7.80 r
+  RxRdPtrInc (net)                                        0.05                0.00       7.80 r
+  DataFifo_DMA/RxRdPtrInc (mmc_FifoDmaCtr)                                    0.00       7.80 r
+  DataFifo_DMA/RxRdPtrInc (net)                           0.05                0.00       7.80 r
+  DataFifo_DMA/U267/A0 (AO21X4)                                     0.13      0.00       7.80 r
+  DataFifo_DMA/U267/Y (AO21X4)                                      0.07      0.15       7.96 r
+  DataFifo_DMA/FIFORead (net)                   2         0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/FIFORead (mmc_Fifo_FIFO_AW5)                           0.00       7.96 r
+  DataFifo_DMA/mmcFifo/FIFORead (net)                     0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/ReadEni (mmc_FIFOCtl_AW5)               0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/ReadEni (net)       0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U400/B (NAND2BX2)             0.07      0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U400/Y (NAND2BX2)             0.07      0.06       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n821 (net)
+                                                1         0.01                0.00       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U397/A (BUFX8)                0.07      0.00       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U397/Y (BUFX8)                0.05      0.12       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n854 (net)
+                                                9         0.03                0.00       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U408/A (XNOR2X4)              0.05      0.00       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U408/Y (XNOR2X4)              0.24      0.11       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n822 (net)
+                                                2         0.02                0.00       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U395/B (NAND2BX4)             0.24      0.00       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U395/Y (NAND2BX4)             0.06      0.07       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n832 (net)
+                                                1         0.01                0.00       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U410/C (NAND3BX2)             0.06      0.00       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U410/Y (NAND3BX2)             0.08      0.07       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n810 (net)
+                                                1         0.00                0.00       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U412/A (INVX1)                0.08      0.00       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U412/Y (INVX1)                0.05      0.05       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n815 (net)
+                                                4         0.00                0.00       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U454/B1 (AO22X1)              0.05      0.00       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U454/Y (AO22X1)               0.09      0.31       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n813 (net)
+                                                1         0.00                0.00       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U453/B0 (AO21X1)              0.09      0.00       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U453/Y (AO21X1)               0.08      0.23       8.99 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n761 (net)
+                                                1         0.00                0.00       8.99 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_1_/D (DFFRX1)      0.08      0.00       8.99 f
+  data arrival time                                                                      8.99
+
+  clock PCLK (rise edge)                                                     10.00      10.00
+  clock network delay (ideal)                                                 0.00      10.00
+  clock uncertainty                                                          -0.80       9.20
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_1_/CK (DFFRX1)               0.00       9.20 r
+  library setup time                                                         -0.21       8.99
+  data required time                                                                     8.99
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     8.99
+  data arrival time                                                                     -8.99
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.00
+
+
+  Startpoint: PADDR[5] (input port clocked by PCLK)
+  Endpoint: DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_2_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        7.00       7.00 f
+  PADDR[5] (in)                                                     1.00      0.00       7.00 f
+  PADDR[5] (net)                                9         0.02                0.00       7.00 f
+  mmc_APBRegisterIF/PADDR[5] (mmc_APBRegisterIF)                              0.00       7.00 f
+  mmc_APBRegisterIF/PADDR[5] (net)                        0.02                0.00       7.00 f
+  mmc_APBRegisterIF/U3218/AN (NAND3BX2)                             1.00      0.00       7.00 f
+  mmc_APBRegisterIF/U3218/Y (NAND3BX2)                              0.21      0.35       7.35 f
+  mmc_APBRegisterIF/n6314 (net)                 1         0.01                0.00       7.35 f
+  mmc_APBRegisterIF/U3183/A (INVX3)                                 0.21      0.00       7.35 f
+  mmc_APBRegisterIF/U3183/Y (INVX3)                                 0.08      0.08       7.43 r
+  mmc_APBRegisterIF/n6257 (net)                 3         0.01                0.00       7.43 r
+  mmc_APBRegisterIF/U3196/B (NAND2BX1)                              0.08      0.00       7.43 r
+  mmc_APBRegisterIF/U3196/Y (NAND2BX1)                              0.11      0.07       7.50 f
+  mmc_APBRegisterIF/n6313 (net)                 1         0.00                0.00       7.50 f
+  mmc_APBRegisterIF/U3187/A (INVX2)                                 0.11      0.00       7.50 f
+  mmc_APBRegisterIF/U3187/Y (INVX2)                                 0.12      0.10       7.60 r
+  mmc_APBRegisterIF/n6252 (net)                 4         0.02                0.00       7.60 r
+  mmc_APBRegisterIF/U3186/B (NAND2BX2)                              0.12      0.00       7.60 r
+  mmc_APBRegisterIF/U3186/Y (NAND2BX2)                              0.11      0.10       7.70 f
+  mmc_APBRegisterIF/n6256 (net)                 2         0.02                0.00       7.70 f
+  mmc_APBRegisterIF/U3204/A (INVX6)                                 0.11      0.00       7.70 f
+  mmc_APBRegisterIF/U3204/Y (INVX6)                                 0.13      0.11       7.80 r
+  mmc_APBRegisterIF/RxRdPtrInc (net)           33         0.05                0.00       7.80 r
+  mmc_APBRegisterIF/RxRdPtrInc (mmc_APBRegisterIF)                            0.00       7.80 r
+  RxRdPtrInc (net)                                        0.05                0.00       7.80 r
+  DataFifo_DMA/RxRdPtrInc (mmc_FifoDmaCtr)                                    0.00       7.80 r
+  DataFifo_DMA/RxRdPtrInc (net)                           0.05                0.00       7.80 r
+  DataFifo_DMA/U267/A0 (AO21X4)                                     0.13      0.00       7.80 r
+  DataFifo_DMA/U267/Y (AO21X4)                                      0.07      0.15       7.96 r
+  DataFifo_DMA/FIFORead (net)                   2         0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/FIFORead (mmc_Fifo_FIFO_AW5)                           0.00       7.96 r
+  DataFifo_DMA/mmcFifo/FIFORead (net)                     0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/ReadEni (mmc_FIFOCtl_AW5)               0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/ReadEni (net)       0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U400/B (NAND2BX2)             0.07      0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U400/Y (NAND2BX2)             0.07      0.06       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n821 (net)
+                                                1         0.01                0.00       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U397/A (BUFX8)                0.07      0.00       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U397/Y (BUFX8)                0.05      0.12       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n854 (net)
+                                                9         0.03                0.00       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U408/A (XNOR2X4)              0.05      0.00       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U408/Y (XNOR2X4)              0.24      0.11       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n822 (net)
+                                                2         0.02                0.00       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U395/B (NAND2BX4)             0.24      0.00       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U395/Y (NAND2BX4)             0.06      0.07       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n832 (net)
+                                                1         0.01                0.00       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U410/C (NAND3BX2)             0.06      0.00       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U410/Y (NAND3BX2)             0.08      0.07       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n810 (net)
+                                                1         0.00                0.00       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U412/A (INVX1)                0.08      0.00       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U412/Y (INVX1)                0.05      0.05       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n815 (net)
+                                                4         0.00                0.00       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U452/B1 (AO22X1)              0.05      0.00       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U452/Y (AO22X1)               0.09      0.31       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n816 (net)
+                                                1         0.00                0.00       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U451/B0 (AO21X1)              0.09      0.00       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U451/Y (AO21X1)               0.08      0.23       8.99 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n760 (net)
+                                                1         0.00                0.00       8.99 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_2_/D (DFFRX1)      0.08      0.00       8.99 f
+  data arrival time                                                                      8.99
+
+  clock PCLK (rise edge)                                                     10.00      10.00
+  clock network delay (ideal)                                                 0.00      10.00
+  clock uncertainty                                                          -0.80       9.20
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_2_/CK (DFFRX1)               0.00       9.20 r
+  library setup time                                                         -0.21       8.99
+  data required time                                                                     8.99
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     8.99
+  data arrival time                                                                     -8.99
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.00
+
+
+  Startpoint: PADDR[5] (input port clocked by PCLK)
+  Endpoint: DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_3_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        7.00       7.00 f
+  PADDR[5] (in)                                                     1.00      0.00       7.00 f
+  PADDR[5] (net)                                9         0.02                0.00       7.00 f
+  mmc_APBRegisterIF/PADDR[5] (mmc_APBRegisterIF)                              0.00       7.00 f
+  mmc_APBRegisterIF/PADDR[5] (net)                        0.02                0.00       7.00 f
+  mmc_APBRegisterIF/U3218/AN (NAND3BX2)                             1.00      0.00       7.00 f
+  mmc_APBRegisterIF/U3218/Y (NAND3BX2)                              0.21      0.35       7.35 f
+  mmc_APBRegisterIF/n6314 (net)                 1         0.01                0.00       7.35 f
+  mmc_APBRegisterIF/U3183/A (INVX3)                                 0.21      0.00       7.35 f
+  mmc_APBRegisterIF/U3183/Y (INVX3)                                 0.08      0.08       7.43 r
+  mmc_APBRegisterIF/n6257 (net)                 3         0.01                0.00       7.43 r
+  mmc_APBRegisterIF/U3196/B (NAND2BX1)                              0.08      0.00       7.43 r
+  mmc_APBRegisterIF/U3196/Y (NAND2BX1)                              0.11      0.07       7.50 f
+  mmc_APBRegisterIF/n6313 (net)                 1         0.00                0.00       7.50 f
+  mmc_APBRegisterIF/U3187/A (INVX2)                                 0.11      0.00       7.50 f
+  mmc_APBRegisterIF/U3187/Y (INVX2)                                 0.12      0.10       7.60 r
+  mmc_APBRegisterIF/n6252 (net)                 4         0.02                0.00       7.60 r
+  mmc_APBRegisterIF/U3186/B (NAND2BX2)                              0.12      0.00       7.60 r
+  mmc_APBRegisterIF/U3186/Y (NAND2BX2)                              0.11      0.10       7.70 f
+  mmc_APBRegisterIF/n6256 (net)                 2         0.02                0.00       7.70 f
+  mmc_APBRegisterIF/U3204/A (INVX6)                                 0.11      0.00       7.70 f
+  mmc_APBRegisterIF/U3204/Y (INVX6)                                 0.13      0.11       7.80 r
+  mmc_APBRegisterIF/RxRdPtrInc (net)           33         0.05                0.00       7.80 r
+  mmc_APBRegisterIF/RxRdPtrInc (mmc_APBRegisterIF)                            0.00       7.80 r
+  RxRdPtrInc (net)                                        0.05                0.00       7.80 r
+  DataFifo_DMA/RxRdPtrInc (mmc_FifoDmaCtr)                                    0.00       7.80 r
+  DataFifo_DMA/RxRdPtrInc (net)                           0.05                0.00       7.80 r
+  DataFifo_DMA/U267/A0 (AO21X4)                                     0.13      0.00       7.80 r
+  DataFifo_DMA/U267/Y (AO21X4)                                      0.07      0.15       7.96 r
+  DataFifo_DMA/FIFORead (net)                   2         0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/FIFORead (mmc_Fifo_FIFO_AW5)                           0.00       7.96 r
+  DataFifo_DMA/mmcFifo/FIFORead (net)                     0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/ReadEni (mmc_FIFOCtl_AW5)               0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/ReadEni (net)       0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U400/B (NAND2BX2)             0.07      0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U400/Y (NAND2BX2)             0.07      0.06       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n821 (net)
+                                                1         0.01                0.00       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U397/A (BUFX8)                0.07      0.00       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U397/Y (BUFX8)                0.05      0.12       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n854 (net)
+                                                9         0.03                0.00       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U408/A (XNOR2X4)              0.05      0.00       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U408/Y (XNOR2X4)              0.24      0.11       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n822 (net)
+                                                2         0.02                0.00       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U395/B (NAND2BX4)             0.24      0.00       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U395/Y (NAND2BX4)             0.06      0.07       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n832 (net)
+                                                1         0.01                0.00       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U410/C (NAND3BX2)             0.06      0.00       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U410/Y (NAND3BX2)             0.08      0.07       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n810 (net)
+                                                1         0.00                0.00       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U412/A (INVX1)                0.08      0.00       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U412/Y (INVX1)                0.05      0.05       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n815 (net)
+                                                4         0.00                0.00       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U450/B1 (AO22X1)              0.05      0.00       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U450/Y (AO22X1)               0.09      0.31       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n817 (net)
+                                                1         0.00                0.00       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U449/B0 (AO21X1)              0.09      0.00       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U449/Y (AO21X1)               0.08      0.23       8.99 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n759 (net)
+                                                1         0.00                0.00       8.99 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_3_/D (DFFRX1)      0.08      0.00       8.99 f
+  data arrival time                                                                      8.99
+
+  clock PCLK (rise edge)                                                     10.00      10.00
+  clock network delay (ideal)                                                 0.00      10.00
+  clock uncertainty                                                          -0.80       9.20
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_3_/CK (DFFRX1)               0.00       9.20 r
+  library setup time                                                         -0.21       8.99
+  data required time                                                                     8.99
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     8.99
+  data arrival time                                                                     -8.99
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.00
+
+
+  Startpoint: PADDR[5] (input port clocked by PCLK)
+  Endpoint: DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_4_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        7.00       7.00 f
+  PADDR[5] (in)                                                     1.00      0.00       7.00 f
+  PADDR[5] (net)                                9         0.02                0.00       7.00 f
+  mmc_APBRegisterIF/PADDR[5] (mmc_APBRegisterIF)                              0.00       7.00 f
+  mmc_APBRegisterIF/PADDR[5] (net)                        0.02                0.00       7.00 f
+  mmc_APBRegisterIF/U3218/AN (NAND3BX2)                             1.00      0.00       7.00 f
+  mmc_APBRegisterIF/U3218/Y (NAND3BX2)                              0.21      0.35       7.35 f
+  mmc_APBRegisterIF/n6314 (net)                 1         0.01                0.00       7.35 f
+  mmc_APBRegisterIF/U3183/A (INVX3)                                 0.21      0.00       7.35 f
+  mmc_APBRegisterIF/U3183/Y (INVX3)                                 0.08      0.08       7.43 r
+  mmc_APBRegisterIF/n6257 (net)                 3         0.01                0.00       7.43 r
+  mmc_APBRegisterIF/U3196/B (NAND2BX1)                              0.08      0.00       7.43 r
+  mmc_APBRegisterIF/U3196/Y (NAND2BX1)                              0.11      0.07       7.50 f
+  mmc_APBRegisterIF/n6313 (net)                 1         0.00                0.00       7.50 f
+  mmc_APBRegisterIF/U3187/A (INVX2)                                 0.11      0.00       7.50 f
+  mmc_APBRegisterIF/U3187/Y (INVX2)                                 0.12      0.10       7.60 r
+  mmc_APBRegisterIF/n6252 (net)                 4         0.02                0.00       7.60 r
+  mmc_APBRegisterIF/U3186/B (NAND2BX2)                              0.12      0.00       7.60 r
+  mmc_APBRegisterIF/U3186/Y (NAND2BX2)                              0.11      0.10       7.70 f
+  mmc_APBRegisterIF/n6256 (net)                 2         0.02                0.00       7.70 f
+  mmc_APBRegisterIF/U3204/A (INVX6)                                 0.11      0.00       7.70 f
+  mmc_APBRegisterIF/U3204/Y (INVX6)                                 0.13      0.11       7.80 r
+  mmc_APBRegisterIF/RxRdPtrInc (net)           33         0.05                0.00       7.80 r
+  mmc_APBRegisterIF/RxRdPtrInc (mmc_APBRegisterIF)                            0.00       7.80 r
+  RxRdPtrInc (net)                                        0.05                0.00       7.80 r
+  DataFifo_DMA/RxRdPtrInc (mmc_FifoDmaCtr)                                    0.00       7.80 r
+  DataFifo_DMA/RxRdPtrInc (net)                           0.05                0.00       7.80 r
+  DataFifo_DMA/U267/A0 (AO21X4)                                     0.13      0.00       7.80 r
+  DataFifo_DMA/U267/Y (AO21X4)                                      0.07      0.15       7.96 r
+  DataFifo_DMA/FIFORead (net)                   2         0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/FIFORead (mmc_Fifo_FIFO_AW5)                           0.00       7.96 r
+  DataFifo_DMA/mmcFifo/FIFORead (net)                     0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/ReadEni (mmc_FIFOCtl_AW5)               0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/ReadEni (net)       0.01                0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U400/B (NAND2BX2)             0.07      0.00       7.96 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U400/Y (NAND2BX2)             0.07      0.06       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n821 (net)
+                                                1         0.01                0.00       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U397/A (BUFX8)                0.07      0.00       8.02 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U397/Y (BUFX8)                0.05      0.12       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n854 (net)
+                                                9         0.03                0.00       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U408/A (XNOR2X4)              0.05      0.00       8.14 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U408/Y (XNOR2X4)              0.24      0.11       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n822 (net)
+                                                2         0.02                0.00       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U395/B (NAND2BX4)             0.24      0.00       8.25 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U395/Y (NAND2BX4)             0.06      0.07       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n832 (net)
+                                                1         0.01                0.00       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U410/C (NAND3BX2)             0.06      0.00       8.32 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U410/Y (NAND3BX2)             0.08      0.07       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n810 (net)
+                                                1         0.00                0.00       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U412/A (INVX1)                0.08      0.00       8.39 r
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U412/Y (INVX1)                0.05      0.05       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n815 (net)
+                                                4         0.00                0.00       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U448/B1 (AO22X1)              0.05      0.00       8.45 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U448/Y (AO22X1)               0.09      0.31       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n818 (net)
+                                                1         0.00                0.00       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U447/B0 (AO21X1)              0.09      0.00       8.76 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/U447/Y (AO21X1)               0.08      0.23       8.99 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/n758 (net)
+                                                1         0.00                0.00       8.99 f
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_4_/D (DFFRX1)      0.08      0.00       8.99 f
+  data arrival time                                                                      8.99
+
+  clock PCLK (rise edge)                                                     10.00      10.00
+  clock network delay (ideal)                                                 0.00      10.00
+  clock uncertainty                                                          -0.80       9.20
+  DataFifo_DMA/mmcFifo/mmc_IntFIFOCtl/DatCnt_reg_4_/CK (DFFRX1)               0.00       9.20 r
+  library setup time                                                         -0.21       8.99
+  data required time                                                                     8.99
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     8.99
+  data arrival time                                                                     -8.99
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.00
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: mmc_APBRegisterIF/CmdArg_reg_16_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        7.00       7.00 f
+  PWRITE (in)                                                       1.00      0.00       7.00 f
+  PWRITE (net)                                  2         0.03                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (mmc_APBRegisterIF)                                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (net)                          0.03                0.00       7.00 f
+  mmc_APBRegisterIF/U3189/B (AND2X8)                                1.00      0.00       7.00 f
+  mmc_APBRegisterIF/U3189/Y (AND2X8)                                0.06      0.32       7.32 f
+  mmc_APBRegisterIF/n6398 (net)                 3         0.01                0.00       7.32 f
+  mmc_APBRegisterIF/U3200/C (NAND3BX1)                              0.06      0.00       7.32 f
+  mmc_APBRegisterIF/U3200/Y (NAND3BX1)                              0.20      0.14       7.46 r
+  mmc_APBRegisterIF/n6276 (net)                 2         0.01                0.00       7.46 r
+  mmc_APBRegisterIF/U3202/A (INVX1)                                 0.20      0.00       7.46 r
+  mmc_APBRegisterIF/U3202/Y (INVX1)                                 0.09      0.09       7.55 f
+  mmc_APBRegisterIF/n6309 (net)                 3         0.01                0.00       7.55 f
+  mmc_APBRegisterIF/U3337/B (NAND2BX1)                              0.09      0.00       7.55 f
+  mmc_APBRegisterIF/U3337/Y (NAND2BX1)                              0.14      0.11       7.66 r
+  mmc_APBRegisterIF/n5920 (net)                 2         0.01                0.00       7.66 r
+  mmc_APBRegisterIF/U3318/A (INVX1)                                 0.14      0.00       7.66 r
+  mmc_APBRegisterIF/U3318/Y (INVX1)                                 0.07      0.07       7.73 f
+  mmc_APBRegisterIF/n6306 (net)                 2         0.01                0.00       7.73 f
+  mmc_APBRegisterIF/U3245/B (NAND2BX1)                              0.07      0.00       7.73 f
+  mmc_APBRegisterIF/U3245/Y (NAND2BX1)                              0.10      0.07       7.80 r
+  mmc_APBRegisterIF/n6305 (net)                 1         0.00                0.00       7.80 r
+  mmc_APBRegisterIF/U3338/A (INVX1)                                 0.10      0.00       7.80 r
+  mmc_APBRegisterIF/U3338/Y (INVX1)                                 0.05      0.05       7.86 f
+  mmc_APBRegisterIF/n5917 (net)                 3         0.00                0.00       7.86 f
+  mmc_APBRegisterIF/U3230/A1 (AO21X1)                               0.05      0.00       7.86 f
+  mmc_APBRegisterIF/U3230/Y (AO21X1)                                0.24      0.40       8.26 f
+  mmc_APBRegisterIF/n6387 (net)                18         0.02                0.00       8.26 f
+  mmc_APBRegisterIF/U3267/A (INVX1)                                 0.24      0.00       8.26 f
+  mmc_APBRegisterIF/U3267/Y (INVX1)                                 0.73      0.48       8.73 r
+  mmc_APBRegisterIF/n6285 (net)                32         0.05                0.00       8.73 r
+  mmc_APBRegisterIF/U3411/A0 (AO22X1)                               0.73      0.00       8.73 r
+  mmc_APBRegisterIF/U3411/Y (AO22X1)                                0.09      0.22       8.96 r
+  mmc_APBRegisterIF/n5624 (net)                 1         0.00                0.00       8.96 r
+  mmc_APBRegisterIF/CmdArg_reg_16_/D (DFFRX1)                       0.09      0.00       8.96 r
+  data arrival time                                                                      8.96
+
+  clock PCLK (rise edge)                                                     10.00      10.00
+  clock network delay (ideal)                                                 0.00      10.00
+  clock uncertainty                                                          -0.80       9.20
+  mmc_APBRegisterIF/CmdArg_reg_16_/CK (DFFRX1)                                0.00       9.20 r
+  library setup time                                                         -0.23       8.97
+  data required time                                                                     8.97
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     8.97
+  data arrival time                                                                     -8.96
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.01
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: mmc_APBRegisterIF/CmdArg_reg_17_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        7.00       7.00 f
+  PWRITE (in)                                                       1.00      0.00       7.00 f
+  PWRITE (net)                                  2         0.03                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (mmc_APBRegisterIF)                                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (net)                          0.03                0.00       7.00 f
+  mmc_APBRegisterIF/U3189/B (AND2X8)                                1.00      0.00       7.00 f
+  mmc_APBRegisterIF/U3189/Y (AND2X8)                                0.06      0.32       7.32 f
+  mmc_APBRegisterIF/n6398 (net)                 3         0.01                0.00       7.32 f
+  mmc_APBRegisterIF/U3200/C (NAND3BX1)                              0.06      0.00       7.32 f
+  mmc_APBRegisterIF/U3200/Y (NAND3BX1)                              0.20      0.14       7.46 r
+  mmc_APBRegisterIF/n6276 (net)                 2         0.01                0.00       7.46 r
+  mmc_APBRegisterIF/U3202/A (INVX1)                                 0.20      0.00       7.46 r
+  mmc_APBRegisterIF/U3202/Y (INVX1)                                 0.09      0.09       7.55 f
+  mmc_APBRegisterIF/n6309 (net)                 3         0.01                0.00       7.55 f
+  mmc_APBRegisterIF/U3337/B (NAND2BX1)                              0.09      0.00       7.55 f
+  mmc_APBRegisterIF/U3337/Y (NAND2BX1)                              0.14      0.11       7.66 r
+  mmc_APBRegisterIF/n5920 (net)                 2         0.01                0.00       7.66 r
+  mmc_APBRegisterIF/U3318/A (INVX1)                                 0.14      0.00       7.66 r
+  mmc_APBRegisterIF/U3318/Y (INVX1)                                 0.07      0.07       7.73 f
+  mmc_APBRegisterIF/n6306 (net)                 2         0.01                0.00       7.73 f
+  mmc_APBRegisterIF/U3245/B (NAND2BX1)                              0.07      0.00       7.73 f
+  mmc_APBRegisterIF/U3245/Y (NAND2BX1)                              0.10      0.07       7.80 r
+  mmc_APBRegisterIF/n6305 (net)                 1         0.00                0.00       7.80 r
+  mmc_APBRegisterIF/U3338/A (INVX1)                                 0.10      0.00       7.80 r
+  mmc_APBRegisterIF/U3338/Y (INVX1)                                 0.05      0.05       7.86 f
+  mmc_APBRegisterIF/n5917 (net)                 3         0.00                0.00       7.86 f
+  mmc_APBRegisterIF/U3230/A1 (AO21X1)                               0.05      0.00       7.86 f
+  mmc_APBRegisterIF/U3230/Y (AO21X1)                                0.24      0.40       8.26 f
+  mmc_APBRegisterIF/n6387 (net)                18         0.02                0.00       8.26 f
+  mmc_APBRegisterIF/U3267/A (INVX1)                                 0.24      0.00       8.26 f
+  mmc_APBRegisterIF/U3267/Y (INVX1)                                 0.73      0.48       8.73 r
+  mmc_APBRegisterIF/n6285 (net)                32         0.05                0.00       8.73 r
+  mmc_APBRegisterIF/U3410/A0 (AO22X1)                               0.73      0.00       8.73 r
+  mmc_APBRegisterIF/U3410/Y (AO22X1)                                0.09      0.22       8.96 r
+  mmc_APBRegisterIF/n5623 (net)                 1         0.00                0.00       8.96 r
+  mmc_APBRegisterIF/CmdArg_reg_17_/D (DFFRX1)                       0.09      0.00       8.96 r
+  data arrival time                                                                      8.96
+
+  clock PCLK (rise edge)                                                     10.00      10.00
+  clock network delay (ideal)                                                 0.00      10.00
+  clock uncertainty                                                          -0.80       9.20
+  mmc_APBRegisterIF/CmdArg_reg_17_/CK (DFFRX1)                                0.00       9.20 r
+  library setup time                                                         -0.23       8.97
+  data required time                                                                     8.97
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     8.97
+  data arrival time                                                                     -8.96
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.01
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: mmc_APBRegisterIF/CmdArg_reg_18_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        7.00       7.00 f
+  PWRITE (in)                                                       1.00      0.00       7.00 f
+  PWRITE (net)                                  2         0.03                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (mmc_APBRegisterIF)                                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (net)                          0.03                0.00       7.00 f
+  mmc_APBRegisterIF/U3189/B (AND2X8)                                1.00      0.00       7.00 f
+  mmc_APBRegisterIF/U3189/Y (AND2X8)                                0.06      0.32       7.32 f
+  mmc_APBRegisterIF/n6398 (net)                 3         0.01                0.00       7.32 f
+  mmc_APBRegisterIF/U3200/C (NAND3BX1)                              0.06      0.00       7.32 f
+  mmc_APBRegisterIF/U3200/Y (NAND3BX1)                              0.20      0.14       7.46 r
+  mmc_APBRegisterIF/n6276 (net)                 2         0.01                0.00       7.46 r
+  mmc_APBRegisterIF/U3202/A (INVX1)                                 0.20      0.00       7.46 r
+  mmc_APBRegisterIF/U3202/Y (INVX1)                                 0.09      0.09       7.55 f
+  mmc_APBRegisterIF/n6309 (net)                 3         0.01                0.00       7.55 f
+  mmc_APBRegisterIF/U3337/B (NAND2BX1)                              0.09      0.00       7.55 f
+  mmc_APBRegisterIF/U3337/Y (NAND2BX1)                              0.14      0.11       7.66 r
+  mmc_APBRegisterIF/n5920 (net)                 2         0.01                0.00       7.66 r
+  mmc_APBRegisterIF/U3318/A (INVX1)                                 0.14      0.00       7.66 r
+  mmc_APBRegisterIF/U3318/Y (INVX1)                                 0.07      0.07       7.73 f
+  mmc_APBRegisterIF/n6306 (net)                 2         0.01                0.00       7.73 f
+  mmc_APBRegisterIF/U3245/B (NAND2BX1)                              0.07      0.00       7.73 f
+  mmc_APBRegisterIF/U3245/Y (NAND2BX1)                              0.10      0.07       7.80 r
+  mmc_APBRegisterIF/n6305 (net)                 1         0.00                0.00       7.80 r
+  mmc_APBRegisterIF/U3338/A (INVX1)                                 0.10      0.00       7.80 r
+  mmc_APBRegisterIF/U3338/Y (INVX1)                                 0.05      0.05       7.86 f
+  mmc_APBRegisterIF/n5917 (net)                 3         0.00                0.00       7.86 f
+  mmc_APBRegisterIF/U3230/A1 (AO21X1)                               0.05      0.00       7.86 f
+  mmc_APBRegisterIF/U3230/Y (AO21X1)                                0.24      0.40       8.26 f
+  mmc_APBRegisterIF/n6387 (net)                18         0.02                0.00       8.26 f
+  mmc_APBRegisterIF/U3267/A (INVX1)                                 0.24      0.00       8.26 f
+  mmc_APBRegisterIF/U3267/Y (INVX1)                                 0.73      0.48       8.73 r
+  mmc_APBRegisterIF/n6285 (net)                32         0.05                0.00       8.73 r
+  mmc_APBRegisterIF/U3409/A0 (AO22X1)                               0.73      0.00       8.73 r
+  mmc_APBRegisterIF/U3409/Y (AO22X1)                                0.09      0.22       8.96 r
+  mmc_APBRegisterIF/n5622 (net)                 1         0.00                0.00       8.96 r
+  mmc_APBRegisterIF/CmdArg_reg_18_/D (DFFRX1)                       0.09      0.00       8.96 r
+  data arrival time                                                                      8.96
+
+  clock PCLK (rise edge)                                                     10.00      10.00
+  clock network delay (ideal)                                                 0.00      10.00
+  clock uncertainty                                                          -0.80       9.20
+  mmc_APBRegisterIF/CmdArg_reg_18_/CK (DFFRX1)                                0.00       9.20 r
+  library setup time                                                         -0.23       8.97
+  data required time                                                                     8.97
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     8.97
+  data arrival time                                                                     -8.96
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.01
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: mmc_APBRegisterIF/CmdArg_reg_19_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        7.00       7.00 f
+  PWRITE (in)                                                       1.00      0.00       7.00 f
+  PWRITE (net)                                  2         0.03                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (mmc_APBRegisterIF)                                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (net)                          0.03                0.00       7.00 f
+  mmc_APBRegisterIF/U3189/B (AND2X8)                                1.00      0.00       7.00 f
+  mmc_APBRegisterIF/U3189/Y (AND2X8)                                0.06      0.32       7.32 f
+  mmc_APBRegisterIF/n6398 (net)                 3         0.01                0.00       7.32 f
+  mmc_APBRegisterIF/U3200/C (NAND3BX1)                              0.06      0.00       7.32 f
+  mmc_APBRegisterIF/U3200/Y (NAND3BX1)                              0.20      0.14       7.46 r
+  mmc_APBRegisterIF/n6276 (net)                 2         0.01                0.00       7.46 r
+  mmc_APBRegisterIF/U3202/A (INVX1)                                 0.20      0.00       7.46 r
+  mmc_APBRegisterIF/U3202/Y (INVX1)                                 0.09      0.09       7.55 f
+  mmc_APBRegisterIF/n6309 (net)                 3         0.01                0.00       7.55 f
+  mmc_APBRegisterIF/U3337/B (NAND2BX1)                              0.09      0.00       7.55 f
+  mmc_APBRegisterIF/U3337/Y (NAND2BX1)                              0.14      0.11       7.66 r
+  mmc_APBRegisterIF/n5920 (net)                 2         0.01                0.00       7.66 r
+  mmc_APBRegisterIF/U3318/A (INVX1)                                 0.14      0.00       7.66 r
+  mmc_APBRegisterIF/U3318/Y (INVX1)                                 0.07      0.07       7.73 f
+  mmc_APBRegisterIF/n6306 (net)                 2         0.01                0.00       7.73 f
+  mmc_APBRegisterIF/U3245/B (NAND2BX1)                              0.07      0.00       7.73 f
+  mmc_APBRegisterIF/U3245/Y (NAND2BX1)                              0.10      0.07       7.80 r
+  mmc_APBRegisterIF/n6305 (net)                 1         0.00                0.00       7.80 r
+  mmc_APBRegisterIF/U3338/A (INVX1)                                 0.10      0.00       7.80 r
+  mmc_APBRegisterIF/U3338/Y (INVX1)                                 0.05      0.05       7.86 f
+  mmc_APBRegisterIF/n5917 (net)                 3         0.00                0.00       7.86 f
+  mmc_APBRegisterIF/U3230/A1 (AO21X1)                               0.05      0.00       7.86 f
+  mmc_APBRegisterIF/U3230/Y (AO21X1)                                0.24      0.40       8.26 f
+  mmc_APBRegisterIF/n6387 (net)                18         0.02                0.00       8.26 f
+  mmc_APBRegisterIF/U3267/A (INVX1)                                 0.24      0.00       8.26 f
+  mmc_APBRegisterIF/U3267/Y (INVX1)                                 0.73      0.48       8.73 r
+  mmc_APBRegisterIF/n6285 (net)                32         0.05                0.00       8.73 r
+  mmc_APBRegisterIF/U3408/A0 (AO22X1)                               0.73      0.00       8.73 r
+  mmc_APBRegisterIF/U3408/Y (AO22X1)                                0.09      0.22       8.96 r
+  mmc_APBRegisterIF/n5621 (net)                 1         0.00                0.00       8.96 r
+  mmc_APBRegisterIF/CmdArg_reg_19_/D (DFFRX1)                       0.09      0.00       8.96 r
+  data arrival time                                                                      8.96
+
+  clock PCLK (rise edge)                                                     10.00      10.00
+  clock network delay (ideal)                                                 0.00      10.00
+  clock uncertainty                                                          -0.80       9.20
+  mmc_APBRegisterIF/CmdArg_reg_19_/CK (DFFRX1)                                0.00       9.20 r
+  library setup time                                                         -0.23       8.97
+  data required time                                                                     8.97
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     8.97
+  data arrival time                                                                     -8.96
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.01
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: mmc_APBRegisterIF/CmdArg_reg_20_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        7.00       7.00 f
+  PWRITE (in)                                                       1.00      0.00       7.00 f
+  PWRITE (net)                                  2         0.03                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (mmc_APBRegisterIF)                                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (net)                          0.03                0.00       7.00 f
+  mmc_APBRegisterIF/U3189/B (AND2X8)                                1.00      0.00       7.00 f
+  mmc_APBRegisterIF/U3189/Y (AND2X8)                                0.06      0.32       7.32 f
+  mmc_APBRegisterIF/n6398 (net)                 3         0.01                0.00       7.32 f
+  mmc_APBRegisterIF/U3200/C (NAND3BX1)                              0.06      0.00       7.32 f
+  mmc_APBRegisterIF/U3200/Y (NAND3BX1)                              0.20      0.14       7.46 r
+  mmc_APBRegisterIF/n6276 (net)                 2         0.01                0.00       7.46 r
+  mmc_APBRegisterIF/U3202/A (INVX1)                                 0.20      0.00       7.46 r
+  mmc_APBRegisterIF/U3202/Y (INVX1)                                 0.09      0.09       7.55 f
+  mmc_APBRegisterIF/n6309 (net)                 3         0.01                0.00       7.55 f
+  mmc_APBRegisterIF/U3337/B (NAND2BX1)                              0.09      0.00       7.55 f
+  mmc_APBRegisterIF/U3337/Y (NAND2BX1)                              0.14      0.11       7.66 r
+  mmc_APBRegisterIF/n5920 (net)                 2         0.01                0.00       7.66 r
+  mmc_APBRegisterIF/U3318/A (INVX1)                                 0.14      0.00       7.66 r
+  mmc_APBRegisterIF/U3318/Y (INVX1)                                 0.07      0.07       7.73 f
+  mmc_APBRegisterIF/n6306 (net)                 2         0.01                0.00       7.73 f
+  mmc_APBRegisterIF/U3245/B (NAND2BX1)                              0.07      0.00       7.73 f
+  mmc_APBRegisterIF/U3245/Y (NAND2BX1)                              0.10      0.07       7.80 r
+  mmc_APBRegisterIF/n6305 (net)                 1         0.00                0.00       7.80 r
+  mmc_APBRegisterIF/U3338/A (INVX1)                                 0.10      0.00       7.80 r
+  mmc_APBRegisterIF/U3338/Y (INVX1)                                 0.05      0.05       7.86 f
+  mmc_APBRegisterIF/n5917 (net)                 3         0.00                0.00       7.86 f
+  mmc_APBRegisterIF/U3230/A1 (AO21X1)                               0.05      0.00       7.86 f
+  mmc_APBRegisterIF/U3230/Y (AO21X1)                                0.24      0.40       8.26 f
+  mmc_APBRegisterIF/n6387 (net)                18         0.02                0.00       8.26 f
+  mmc_APBRegisterIF/U3267/A (INVX1)                                 0.24      0.00       8.26 f
+  mmc_APBRegisterIF/U3267/Y (INVX1)                                 0.73      0.48       8.73 r
+  mmc_APBRegisterIF/n6285 (net)                32         0.05                0.00       8.73 r
+  mmc_APBRegisterIF/U3407/A0 (AO22X1)                               0.73      0.00       8.73 r
+  mmc_APBRegisterIF/U3407/Y (AO22X1)                                0.09      0.22       8.96 r
+  mmc_APBRegisterIF/n5620 (net)                 1         0.00                0.00       8.96 r
+  mmc_APBRegisterIF/CmdArg_reg_20_/D (DFFRX1)                       0.09      0.00       8.96 r
+  data arrival time                                                                      8.96
+
+  clock PCLK (rise edge)                                                     10.00      10.00
+  clock network delay (ideal)                                                 0.00      10.00
+  clock uncertainty                                                          -0.80       9.20
+  mmc_APBRegisterIF/CmdArg_reg_20_/CK (DFFRX1)                                0.00       9.20 r
+  library setup time                                                         -0.23       8.97
+  data required time                                                                     8.97
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     8.97
+  data arrival time                                                                     -8.96
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.01
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: mmc_APBRegisterIF/CmdArg_reg_21_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        7.00       7.00 f
+  PWRITE (in)                                                       1.00      0.00       7.00 f
+  PWRITE (net)                                  2         0.03                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (mmc_APBRegisterIF)                                0.00       7.00 f
+  mmc_APBRegisterIF/PWRITE (net)                          0.03                0.00       7.00 f
+  mmc_APBRegisterIF/U3189/B (AND2X8)                                1.00      0.00       7.00 f
+  mmc_APBRegisterIF/U3189/Y (AND2X8)                                0.06      0.32       7.32 f
+  mmc_APBRegisterIF/n6398 (net)                 3         0.01                0.00       7.32 f
+  mmc_APBRegisterIF/U3200/C (NAND3BX1)                              0.06      0.00       7.32 f
+  mmc_APBRegisterIF/U3200/Y (NAND3BX1)                              0.20      0.14       7.46 r
+  mmc_APBRegisterIF/n6276 (net)                 2         0.01                0.00       7.46 r
+  mmc_APBRegisterIF/U3202/A (INVX1)                                 0.20      0.00       7.46 r
+  mmc_APBRegisterIF/U3202/Y (INVX1)                                 0.09      0.09       7.55 f
+  mmc_APBRegisterIF/n6309 (net)                 3         0.01                0.00       7.55 f
+  mmc_APBRegisterIF/U3337/B (NAND2BX1)                              0.09      0.00       7.55 f
+  mmc_APBRegisterIF/U3337/Y (NAND2BX1)                              0.14      0.11       7.66 r
+  mmc_APBRegisterIF/n5920 (net)                 2         0.01                0.00       7.66 r
+  mmc_APBRegisterIF/U3318/A (INVX1)                                 0.14      0.00       7.66 r
+  mmc_APBRegisterIF/U3318/Y (INVX1)                                 0.07      0.07       7.73 f
+  mmc_APBRegisterIF/n6306 (net)                 2         0.01                0.00       7.73 f
+  mmc_APBRegisterIF/U3245/B (NAND2BX1)                              0.07      0.00       7.73 f
+  mmc_APBRegisterIF/U3245/Y (NAND2BX1)                              0.10      0.07       7.80 r
+  mmc_APBRegisterIF/n6305 (net)                 1         0.00                0.00       7.80 r
+  mmc_APBRegisterIF/U3338/A (INVX1)                                 0.10      0.00       7.80 r
+  mmc_APBRegisterIF/U3338/Y (INVX1)                                 0.05      0.05       7.86 f
+  mmc_APBRegisterIF/n5917 (net)                 3         0.00                0.00       7.86 f
+  mmc_APBRegisterIF/U3230/A1 (AO21X1)                               0.05      0.00       7.86 f
+  mmc_APBRegisterIF/U3230/Y (AO21X1)                                0.24      0.40       8.26 f
+  mmc_APBRegisterIF/n6387 (net)                18         0.02                0.00       8.26 f
+  mmc_APBRegisterIF/U3267/A (INVX1)                                 0.24      0.00       8.26 f
+  mmc_APBRegisterIF/U3267/Y (INVX1)                                 0.73      0.48       8.73 r
+  mmc_APBRegisterIF/n6285 (net)                32         0.05                0.00       8.73 r
+  mmc_APBRegisterIF/U3406/A0 (AO22X1)                               0.73      0.00       8.73 r
+  mmc_APBRegisterIF/U3406/Y (AO22X1)                                0.09      0.22       8.96 r
+  mmc_APBRegisterIF/n5619 (net)                 1         0.00                0.00       8.96 r
+  mmc_APBRegisterIF/CmdArg_reg_21_/D (DFFRX1)                       0.09      0.00       8.96 r
+  data arrival time                                                                      8.96
+
+  clock PCLK (rise edge)                                                     10.00      10.00
+  clock network delay (ideal)                                                 0.00      10.00
+  clock uncertainty                                                          -0.80       9.20
+  mmc_APBRegisterIF/CmdArg_reg_21_/CK (DFFRX1)                                0.00       9.20 r
+  library setup time                                                         -0.23       8.97
+  data required time                                                                     8.97
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                     8.97
+  data arrival time                                                                     -8.96
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.01
+
+
+1
