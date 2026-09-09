@@ -1,0 +1,12 @@
+CvPoint cvReadChainPoint(CvChainPtReader* reader) {
+    void *fptr;
+    CvPoint retval;
+
+    fptr = dlsym(_Chcv_handle, "cvReadChainPoint_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvReadChainPoint, reader);
+    return retval;
+}

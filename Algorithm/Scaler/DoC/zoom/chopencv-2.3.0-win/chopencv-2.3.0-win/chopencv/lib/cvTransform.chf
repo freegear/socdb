@@ -1,0 +1,10 @@
+void cvTransform(CvArr* src, CvArr* dst, CvMat* transmat, CvMat* shiftvec) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvTransform_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvTransform, src, dst, transmat, shiftvec);
+}

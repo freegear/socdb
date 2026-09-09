@@ -1,0 +1,12 @@
+CvSeq* cvHoughCircles(CvArr* src_image, void* circle_storage, int method, double dp, double min_dist, double param1, double param2) {
+    void *fptr;
+    CvSeq*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvHoughCircles_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvHoughCircles, src_image, circle_storage, method, dp, min_dist, param1, param2);
+    return retval;
+}

@@ -1,0 +1,10 @@
+void cvCalcOpticalFlowPyrLK(CvArr* prev, CvArr* curr, CvArr* prev_pyr, CvArr* curr_pyr, CvPoint2D32f* prev_features, CvPoint2D32f* curr_features, int count, CvSize win_size, int level, char* status, float* track_error, CvTermCriteria criteria, int flags) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcOpticalFlowPyrLK_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCalcOpticalFlowPyrLK, prev, curr, prev_pyr, curr_pyr, prev_features, curr_features, count, win_size, level, status, track_error, criteria, flags);
+}

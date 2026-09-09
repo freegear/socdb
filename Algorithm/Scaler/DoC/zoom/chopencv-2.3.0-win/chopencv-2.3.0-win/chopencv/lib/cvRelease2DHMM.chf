@@ -1,0 +1,10 @@
+void cvRelease2DHMM(CvEHMM** hmm) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvRelease2DHMM_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvRelease2DHMM, hmm);
+}

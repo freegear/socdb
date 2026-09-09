@@ -1,0 +1,10 @@
+void cvUniformImgSegm(CvImgObsInfo* obs_info, CvEHMM* ehmm) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvUniformImgSegm_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvUniformImgSegm, obs_info, ehmm);
+}

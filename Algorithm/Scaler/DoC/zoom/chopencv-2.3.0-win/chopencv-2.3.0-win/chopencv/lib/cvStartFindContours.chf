@@ -1,0 +1,12 @@
+CvContourScanner cvStartFindContours(CvArr* image, CvMemStorage* storage, int header_size, int mode, int method, CvPoint offset) {
+    void *fptr;
+    CvContourScanner retval;
+
+    fptr = dlsym(_Chcv_handle, "cvStartFindContours_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvStartFindContours, image, storage, header_size, mode, method, offset);
+    return retval;
+}

@@ -1,0 +1,12 @@
+int icvCompute3DPoint(double alpha, double betta, CvStereoLineCoeff* coeffs, CvPoint3D64d* point) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "icvCompute3DPoint_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, icvCompute3DPoint, alpha, betta, coeffs, point);
+    return retval;
+}

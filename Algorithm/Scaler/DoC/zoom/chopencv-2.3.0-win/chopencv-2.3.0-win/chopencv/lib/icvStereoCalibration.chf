@@ -1,0 +1,12 @@
+int icvStereoCalibration(int numImages, int* nums, CvSize imageSize, CvPoint2D32f* imagePoints1, CvPoint2D32f* imagePoints2, CvPoint3D32f* objectPoints, CvStereoCamera* stereoparams) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "icvStereoCalibration_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, icvStereoCalibration, numImages, nums, imageSize, imagePoints1, imagePoints2, objectPoints, stereoparams);
+    return retval;
+}

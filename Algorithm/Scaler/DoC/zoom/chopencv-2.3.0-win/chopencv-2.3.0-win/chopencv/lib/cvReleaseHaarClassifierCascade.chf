@@ -1,0 +1,10 @@
+void cvReleaseHaarClassifierCascade(CvHaarClassifierCascade** cascade) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvReleaseHaarClassifierCascade_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvReleaseHaarClassifierCascade, cascade);
+}

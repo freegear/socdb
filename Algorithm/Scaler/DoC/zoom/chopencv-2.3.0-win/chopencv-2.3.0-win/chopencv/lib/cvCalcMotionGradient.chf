@@ -1,0 +1,10 @@
+void cvCalcMotionGradient(CvArr* mhi, CvArr* mask, CvArr* orientation, double delta1, double delta2, int aperture_size) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcMotionGradient_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCalcMotionGradient, mhi, mask, orientation, delta1, delta2, aperture_size);
+}

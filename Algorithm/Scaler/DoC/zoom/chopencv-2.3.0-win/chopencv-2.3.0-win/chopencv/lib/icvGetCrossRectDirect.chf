@@ -1,0 +1,10 @@
+void icvGetCrossRectDirect(CvSize imageSize, double a, double b, double c, CvPoint2D64d *start, CvPoint2D64d *end, int* result) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvGetCrossRectDirect_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvGetCrossRectDirect, imageSize, a, b, c, start, end, result);
+}

@@ -1,0 +1,12 @@
+double cvDotProduct(CvArr* src1, CvArr* src2) {
+    void *fptr;
+    double retval;
+
+    fptr = dlsym(_Chcv_handle, "cvDotProduct_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvDotProduct, src1, src2);
+    return retval;
+}

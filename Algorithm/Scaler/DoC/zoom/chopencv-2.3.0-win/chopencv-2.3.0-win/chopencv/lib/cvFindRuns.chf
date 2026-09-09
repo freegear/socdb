@@ -1,0 +1,10 @@
+void cvFindRuns(int line_count, uchar* prewarp1, uchar* prewarp2, int* line_lengths1, int* line_lengths2, int* runs1, int* runs2, int* num_runs1, int* num_runs2) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvFindRuns_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvFindRuns, line_count, prewarp1, prewarp2, line_lengths1, line_lengths2, runs1, runs2, num_runs1, num_runs2);
+}

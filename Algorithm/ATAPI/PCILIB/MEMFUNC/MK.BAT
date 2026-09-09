@@ -1,0 +1,2 @@
+tasm32 /jSMART /jJUMPS /uM520 /jLOCALS /ML /m8 /t /l MEMFUNC
+tasm32 /jSMART /jJUMPS /uM520 /jLOCALS /ML /m8 /t /l MEMFUNC2

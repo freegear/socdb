@@ -1,0 +1,10 @@
+void cvScalarToRawData(CvScalar* scalar, void* data, int type, int extend_to_12) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvScalarToRawData_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvScalarToRawData, scalar, data, type, extend_to_12);
+}

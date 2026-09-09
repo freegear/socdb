@@ -1,0 +1,10 @@
+void cvComputePerspectiveMap(double *coeffs, CvArr* rectMap) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvComputePerspectiveMap_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvComputePerspectiveMap, coeffs, rectMap);
+}

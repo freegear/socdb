@@ -1,0 +1,10 @@
+void cvEigenProjection(void* eigInput, int nEigObjs, int ioFlags, void* userData, float* coeffs, IplImage* avg, IplImage* proj) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvEigenProjection_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvEigenProjection, eigInput, nEigObjs, ioFlags, userData, coeffs, avg, proj);
+}

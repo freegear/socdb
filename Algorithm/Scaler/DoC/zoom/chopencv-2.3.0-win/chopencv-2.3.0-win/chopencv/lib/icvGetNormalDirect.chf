@@ -1,0 +1,10 @@
+void icvGetNormalDirect(CvVect64d direct, CvPoint2D64d point, CvVect64d normDirect) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvGetNormalDirect_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvGetNormalDirect, direct, point, normDirect);
+}

@@ -1,0 +1,10 @@
+void cvDrawContours(CvArr *img, CvSeq* contour, CvScalar external_color, CvScalar hole_color, int max_level, int thickness, int line_type, CvPoint offset) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvDrawContours_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvDrawContours, img, contour, external_color, hole_color, max_level, thickness, line_type, offset);
+}

@@ -1,0 +1,12 @@
+CvMat* cvGetRows(CvArr* arr, CvMat* submat, int start_row, int end_row, int delta_row) {
+    void *fptr;
+    CvMat*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGetRows_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvGetRows, arr, submat, start_row, end_row, delta_row);
+    return retval;
+}

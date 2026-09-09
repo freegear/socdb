@@ -1,0 +1,12 @@
+void* cvRead(CvFileStorage* fs, CvFileNode* node, CvAttrList* attributes) {
+    void *fptr;
+    void*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvRead_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvRead, fs, node, attributes);
+    return retval;
+}

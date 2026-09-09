@@ -1,0 +1,10 @@
+void cvInitPerspectiveTransform(CvSize size, CvPoint2D32f *vertex, double *matrix, CvArr* rectMap) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvInitPerspectiveTransform_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvInitPerspectiveTransform, size, vertex, matrix, rectMap);
+}

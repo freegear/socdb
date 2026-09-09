@@ -1,0 +1,10 @@
+void cvStartReadRawData(CvFileStorage* fs, CvFileNode* src, CvSeqReader* reader) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvStartReadRawData_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvStartReadRawData, fs, src, reader);
+}

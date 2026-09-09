@@ -1,0 +1,10 @@
+void cvPOSIT(CvPOSITObject* posit_object, CvPoint2D32f* image_points, double focal_length, CvTermCriteria criteria, CvMatr32f rotation_matrix, CvVect32f translation_vector) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvPOSIT_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvPOSIT, posit_object, image_points, focal_length, criteria, rotation_matrix, translation_vector);
+}

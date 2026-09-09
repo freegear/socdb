@@ -1,0 +1,10 @@
+void icvGetCoefForPiece(CvPoint2D64d p_start, CvPoint2D64d p_end, double *a, double *b, double *c, int* result) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvGetCoefForPiece_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvGetCoefForPiece, p_start, p_end, a, b, c, result);
+}

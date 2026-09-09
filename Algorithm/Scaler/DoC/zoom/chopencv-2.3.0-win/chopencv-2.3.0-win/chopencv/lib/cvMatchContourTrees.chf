@@ -1,0 +1,12 @@
+double cvMatchContourTrees(CvContourTree* tree1, CvContourTree* tree2, int method, double threshold) {
+    void *fptr;
+    double retval;
+
+    fptr = dlsym(_Chcv_handle, "cvMatchContourTrees_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvMatchContourTrees, tree1, tree2, method, threshold);
+    return retval;
+}

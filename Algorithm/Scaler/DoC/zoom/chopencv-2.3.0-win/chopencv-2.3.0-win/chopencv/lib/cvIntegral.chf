@@ -1,0 +1,10 @@
+void cvIntegral(CvArr* image, CvArr* sum, CvArr* sqsum, CvArr* tilted_sum) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvIntegral_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvIntegral, image, sum, sqsum, tilted_sum);
+}

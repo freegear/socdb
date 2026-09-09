@@ -1,0 +1,10 @@
+void cvSplit(CvArr* src, CvArr* dst0, CvArr* dst1, CvArr* dst2, CvArr* dst3) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSplit_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSplit, src, dst0, dst1, dst2, dst3);
+}

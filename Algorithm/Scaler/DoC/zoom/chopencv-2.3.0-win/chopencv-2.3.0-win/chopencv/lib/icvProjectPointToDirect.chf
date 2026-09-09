@@ -1,0 +1,10 @@
+void icvProjectPointToDirect(CvPoint2D64d point, CvVect64d lineCoeff, CvPoint2D64d* projectPoint) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvProjectPointToDirect_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvProjectPointToDirect, point, lineCoeff, projectPoint);
+}

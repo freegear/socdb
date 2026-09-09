@@ -1,0 +1,12 @@
+CvGLCM* cvCreateGLCM(IplImage* srcImage, int stepMagnitude, int* stepDirections, int numStepDirections, int optimizationType) {
+    void *fptr;
+    CvGLCM*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreateGLCM_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateGLCM, srcImage, stepMagnitude, stepDirections, numStepDirections, optimizationType);
+    return retval;
+}

@@ -1,0 +1,12 @@
+CvMat* cvGetMat(CvArr* arr, CvMat* header, int* coi, int allowND) {
+    void *fptr;
+    CvMat*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGetMat_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvGetMat, arr, header, coi, allowND);
+    return retval;
+}

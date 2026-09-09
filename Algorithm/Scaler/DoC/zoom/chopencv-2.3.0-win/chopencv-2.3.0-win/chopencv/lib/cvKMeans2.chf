@@ -1,0 +1,10 @@
+void cvKMeans2(CvArr* samples, int cluster_count, CvArr* labels, CvTermCriteria termcrit) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvKMeans2_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvKMeans2, samples, cluster_count, labels, termcrit);
+}

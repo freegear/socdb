@@ -1,0 +1,12 @@
+CvRect cvMaxRect(CvRect* rect1, CvRect* rect2) {
+    void *fptr;
+    CvRect retval;
+
+    fptr = dlsym(_Chcv_handle, "cvMaxRect_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvMaxRect, rect1, rect2);
+    return retval;
+}

@@ -1,0 +1,12 @@
+IplImage* cvGetImage(CvArr* arr, IplImage* image_header) {
+    void *fptr;
+    IplImage*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGetImage_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvGetImage, arr, image_header);
+    return retval;
+}

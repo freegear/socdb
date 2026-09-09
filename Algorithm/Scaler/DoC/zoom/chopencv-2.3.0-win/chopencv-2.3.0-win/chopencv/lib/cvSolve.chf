@@ -1,0 +1,12 @@
+int cvSolve(CvArr* src1, CvArr* src2, CvArr* dst, int method) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cvSolve_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvSolve, src1, src2, dst, method);
+    return retval;
+}

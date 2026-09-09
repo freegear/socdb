@@ -1,0 +1,12 @@
+CvMat* cvGetDiag(CvArr* arr, CvMat* submat, int diag) {
+    void *fptr;
+    CvMat*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGetDiag_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvGetDiag, arr, submat, diag);
+    return retval;
+}

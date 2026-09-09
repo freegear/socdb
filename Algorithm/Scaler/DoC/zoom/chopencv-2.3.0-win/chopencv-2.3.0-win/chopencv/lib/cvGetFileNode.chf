@@ -1,0 +1,12 @@
+CvFileNode* cvGetFileNode(CvFileStorage* fs, CvFileNode* map, CvStringHashNode* key, int create_missing) {
+    void *fptr;
+    CvFileNode*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGetFileNode_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvGetFileNode, fs, map, key, create_missing);
+    return retval;
+}

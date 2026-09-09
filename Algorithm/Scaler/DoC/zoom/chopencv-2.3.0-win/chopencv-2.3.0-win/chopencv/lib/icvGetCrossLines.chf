@@ -1,0 +1,12 @@
+int icvGetCrossLines(CvPoint3D64d point11, CvPoint3D64d point12, CvPoint3D64d point21, CvPoint3D64d point22, CvPoint3D64d* midPoint) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "icvGetCrossLines_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, icvGetCrossLines, point11, point12, point21, point22, midPoint);
+    return retval;
+}

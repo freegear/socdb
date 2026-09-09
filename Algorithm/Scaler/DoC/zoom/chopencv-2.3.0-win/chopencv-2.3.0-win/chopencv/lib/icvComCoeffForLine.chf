@@ -1,0 +1,12 @@
+int icvComCoeffForLine(CvPoint2D64d point1, CvPoint2D64d point2, CvPoint2D64d point3, CvPoint2D64d point4, CvMatr64d camMatr1, CvMatr64d rotMatr1, CvMatr64d transVect1, CvMatr64d camMatr2, CvMatr64d rotMatr2, CvMatr64d transVect2, CvStereoLineCoeff* coeffs, int* needSwapCameras) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "icvComCoeffForLine_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, icvComCoeffForLine, point1, point2, point3, point4, camMatr1, rotMatr1, transVect1, camMatr2, rotMatr2, transVect2, coeffs, needSwapCameras);
+    return retval;
+}

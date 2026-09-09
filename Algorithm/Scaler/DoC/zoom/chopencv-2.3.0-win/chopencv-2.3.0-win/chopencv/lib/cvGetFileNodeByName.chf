@@ -1,0 +1,12 @@
+CvFileNode* cvGetFileNodeByName(CvFileStorage* fs, CvFileNode* map, char* name) {
+    void *fptr;
+    CvFileNode*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGetFileNodeByName_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvGetFileNodeByName, fs, map, name);
+    return retval;
+}

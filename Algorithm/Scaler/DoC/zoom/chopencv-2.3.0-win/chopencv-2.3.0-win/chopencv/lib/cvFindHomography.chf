@@ -1,0 +1,10 @@
+void cvFindHomography(CvMat* src_points, CvMat* dst_points, CvMat* homography) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvFindHomography_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvFindHomography, src_points, dst_points, homography);
+}

@@ -1,0 +1,10 @@
+void cvLogPolar(CvArr* src, CvArr* dst, CvPoint2D32f center, double M, int flags) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvLogPolar_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvLogPolar, src, dst, center, M, flags);
+}

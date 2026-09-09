@@ -1,0 +1,12 @@
+CvSubdiv2DPoint* cvSubdivDelaunay2DInsert(CvSubdiv2D* subdiv, CvPoint2D32f pt) {
+    void *fptr;
+    CvSubdiv2DPoint*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvSubdivDelaunay2DInsert_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvSubdivDelaunay2DInsert, subdiv, pt);
+    return retval;
+}

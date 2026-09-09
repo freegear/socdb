@@ -1,0 +1,12 @@
+int cvGraphAddVtx(CvGraph* graph, CvGraphVtx* vtx, CvGraphVtx** inserted_vtx) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGraphAddVtx_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvGraphAddVtx, graph, vtx, inserted_vtx);
+    return retval;
+}

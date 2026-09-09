@@ -1,0 +1,10 @@
+void cvSet3D(CvArr* arr, int idx0, int idx1, int idx2, CvScalar value) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSet3D_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSet3D, arr, idx0, idx1, idx2, value);
+}

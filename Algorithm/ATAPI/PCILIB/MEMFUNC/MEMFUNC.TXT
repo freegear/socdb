@@ -1,0 +1,287 @@
+ハイメモリアクセスライブラリ(MEMFUNC) 関数一覧
+
+
+●初期化/制御関数群
+▲_getCpuMode()		CPUモード取得
+引き数	なし
+戻り値	int型 CPUモード
+備考	CPUモード値(ヘッダファイルに定義)
+	REAL_MODE        0 /*Current mode is Real mode*/
+	VCPI_MODE        1 /*Current mode is VCPI mode*/
+	DPMI_MODE        2 /*Current mode is DPMI mode*/
+	UNKNOWN_CPU_MODE -1 /*Current mode is unknown mode*/
+	この関数はライブラリを初期化しなくても呼び出し可能
+
+▲_preInitHimem()	ハイメモリアクセスライブラリの初期化
+引き数	なし
+戻り値	int型 0:正常終了   0以外:エラーコード
+備考	エラーコード(ヘッダファイルに定義)
+	ERROR_MEMORY    -1 /* Out Of Memory(needs 32KB or more)*/
+	ERROR_DRV       -2 /*This V86 driver is not support VCPI or DPMI*/
+	ERROR_CPU       -3 /*Not Support 80286 or before*/
+	ERROR_EMM       -4 /*EMM386's Device name not found(EMMXXXX0)*/
+	ERROR_VCPI_PROT -5 /*VCPI can't enter protect mode*/
+	ERROR_DPMI_PROT -6 /*DPMI can't enter protect mode*/
+	ERROR_VCPI      -7 /*Error in VCPI Function 1 or 0Ch*/
+	ERROR_DPMI      -8 /*Error in DPMI Function 2,7,8,9 or 800h*/
+
+▲_maskNMI()		NMIマスク関数
+引き数	なし
+戻り値	なし
+
+▲_unmaskNMI()		NMIマスク解除関数
+引き数	なし
+戻り値	なし
+
+
+
+●読み出し関数群
+▲_readHimemByte()
+	ハイメモリ バイト(8ビット)読み出し
+引き数	ハイメモリアドレス(unsigned long型)
+戻り値	読み出しデータ(unsigned char型)
+
+▲_readHimemWord()
+	ハイメモリ ワード(16ビット)読み出し
+引き数	ハイメモリアドレス(unsigned long型)
+戻り値	読み出しデータ(unsigned int型)
+
+▲_readHimemLong()
+	ハイメモリ ダブルワード(32ビット)読み出し
+引き数	ハイメモリアドレス(unsigned long型)
+戻り値	読み出しデータ(unsigned long型)
+
+
+
+●書き込み関数群
+▲_writeHimemByte()
+	ハイメモリ バイト(8ビット)書き込み
+引き数	ハイメモリアドレス(unsigned long型),
+	書き込みデータ(unsigned char型)
+戻り値	なし
+
+▲_writeHimemWord()
+	ハイメモリ ワード(16ビット)書き込み
+引き数	ハイメモリアドレス(unsigned long型),
+	書き込みデータ(unsigned int型)
+戻り値	なし
+
+▲_writeHimemLong()
+	ハイメモリ ダブルワード(32ビット)書き込み
+引き数	ハイメモリアドレス(unsigned long型),
+	書き込みデータ(unsigned long型)
+戻り値	なし
+
+
+●ブロック読み出し関数群
+▲_readHimemBlockByte()
+	ハイメモリブロック読み出し(アクセスサイズ8ビット)
+引き数	ハイメモリアドレス(unsigned long型),
+	バッファポインタ(unsigned char *型),
+	読み出しワード数(バイト単位,unsigned int型)
+戻り値	読み出しワード数(unsigned int型)
+
+▲_readHimemBlockWord()
+	ハイメモリブロック読み出し(アクセスサイズ16ビット)
+引き数	ハイメモリアドレス(unsigned long型),
+	バッファポインタ(unsigned char *型),
+	読み出しワード数(ワード単位,unsigned int型)
+戻り値	読み出しワード数(unsigned int型)
+
+▲_readHimemBlockLong()
+	ハイメモリブロック読み出し(アクセスサイズ32ビット)
+引き数	ハイメモリアドレス(unsigned long型),
+	バッファポインタ(unsigned char *型),
+	読み出しワード数(ダブルワード単位,unsigned int型)
+戻り値	読み出しワード数(unsigned int型)
+
+
+
+●ブロック書き込み関数群
+▲_writeHimemBlockByte()
+	ハイメモリブロック書き込み(アクセスサイズ8ビット)
+引き数	ハイメモリアドレス(unsigned long型),
+	バッファポインタ(unsigned char *型),
+	書き込みワード数(バイト単位,unsigned int型)
+戻り値	書き込みワード数(unsigned int型)
+
+▲_writeHimemBlockWord()
+	ハイメモリブロック書き込み(アクセスサイズ16ビット)
+引き数	ハイメモリアドレス(unsigned long型),
+	バッファポインタ(unsigned char *型),
+	書き込みワード数(ワード単位,unsigned int型)
+戻り値	書き込みワード数(unsigned int型)
+
+▲_writeHimemBlockLong()
+	ハイメモリブロック書き込み(アクセスサイズ32ビット)
+引き数	ハイメモリアドレス(unsigned long型),
+	バッファポインタ(unsigned char *型),
+	書き込みワード数(ダブルワード単位,unsigned int型)
+戻り値	書き込みワード数(unsigned int型)
+
+
+
+●ハイメモリ間ブロックコピー関数群
+▲_copyHimemByte()
+	ハイメモリ間ブロックコピー(アクセスサイズ8ビット)
+引き数	転送元ハイメモリアドレス(unsigned long型),
+	転送先ハイメモリアドレス(unsigned long型),
+	コピーワード数(バイト単位,unsigned long型)
+戻り値	転送ワード数(unsigned long型)
+
+▲_copyHimemWord()
+	ハイメモリ間ブロックコピー(アクセスサイズ16ビット)
+
+引き数	転送元ハイメモリアドレス(unsigned long型),
+	転送先ハイメモリアドレス(unsigned long型),
+	コピーワード数(ワード単位,unsigned long型)
+戻り値	転送ワード数(unsigned long型)
+
+▲_copyHimemLong()
+	ハイメモリ間ブロックコピー(アクセスサイズ32ビット)
+引き数	転送元ハイメモリアドレス(unsigned long型),
+	転送先ハイメモリアドレス(unsigned long型),
+	コピーワード数(ダブルワード単位,unsigned long型)
+戻り値	転送ワード数(unsigned long型)
+
+
+
+●ハイメモリフィル関数群
+▲_fillHimemByte()
+	ハイメモリフィル(アクセスサイズ8ビット)
+引き数	先頭ハイメモリアドレス(unsigned long型),
+	フィルワード数(バイト単位,unsigned long型),
+	フィルデータ(unsigned char型)
+戻り値	転送ワード数(unsigned long型)
+
+▲_fillHimemWord()
+	ハイメモリフィル(アクセスサイズ16ビット)
+引き数	先頭ハイメモリアドレス(unsigned long型),
+	フィルワード数(ワード単位,unsigned long型),
+	フィルデータ(unsigned int型)
+戻り値	転送ワード数(unsigned long型)
+
+▲_fillHimemLong()
+	ハイメモリフィル(アクセスサイズ32ビット)
+引き数	先頭ハイメモリアドレス(unsigned long型),
+	フィルワード数(ダブルワード単位,unsigned long型),
+	フィルデータ(unsigned long型)
+戻り値	転送ワード数(unsigned long型)
+
+
+
+
+●MEMFUNCの内部動作説明
+
+CPUの動作モードによって、各ファンクションの内部動作が変わります。
+
+1.REAL Modeの場合
+
+  初期化ファンクション_preInitHimemは
+      Global Descriptor Tableを作成
+      Address 20 line をEnable
+  を行います。
+
+  メモリアクセスファンクションは、
+      直接CPUを制御してProtect Modeに入る(286は考慮していません）
+      セグメントレジスタのベースアドレスをアクセス開始アドレスに設定(セグメントリミットは4GB)
+      (CSレジスタは初期化しません)
+      メモリアクセスを実行
+      セグメントレジスタをリアルモード用に初期化(セグメントリミットを64KBにする）
+      (セグメントリミットを64KBにする)
+      直接CPUを制御して、Real Modeに戻る(286は考慮していません）
+  のように実行されます。
+
+2.VCPIサーバ(EMM386)上の場合
+
+  初期化ファンクション_preInitHimemは
+      メモリページング用のテーブルを作成
+        二つPage Table Entryを作成
+        Page Directory Entryを作成
+          このとき、先頭の4MB分のentryには、専用にPage Table Entryを割り当てる
+          残りのentryには、共通にもうひとつのPage Table Entryを割り当てる
+
+            内部ではこのようなメモリマップになっている
+
+            Page Directory Entry
+             Offset
+              +0   +----------------------------+
+                   |Page Table Entry 1のアドレス|
+              +4   +----------------------------+
+                   |Page Table Entry 2のアドレス|
+              +8   +----------------------------+
+                   |Page Table Entry 2のアドレス|
+              +C   +----------------------------+
+                           :             :
+                           :             :
+              +FFC +----------------------------+
+                   |Page Table Entry 2のアドレス|
+              +FFF +----------------------------+
+
+            Page Table Entry 1
+             Offset 
+              +1000+---------+
+                   |         |
+              +1FFF+---------+
+
+            Page Table Entry 2
+              +2000+---------+
+                   |         |
+              +2FFF+---------+
+
+
+        したがってメモリマップは、
+           アドレス4MB以降は、4MB毎に同じ内容が見えるようになっている
+
+           Address
+           00000000h+------------------+
+                    |                  |
+           00400000h+------------------+
+                    |                  | <-------+
+           00800000h+------------------+         |
+                    |                  | <-------+
+           00C00000h+------------------+         |    これらは全て同じ内容が見える
+                    |                  | <-------+
+                           :    :                :
+                           :    :                :
+           FFC00000h+------------------+         |
+                    |                  | <-------+
+           FFFFFFFFh+------------------+
+
+      上記テーブルをVCPI渡し、プロテクトモードインターフェース取得
+      Address 20 line をEnable
+  を行います。
+
+  メモリアクセスファンクションは、
+      VCPIを通して、仮想86モードからプロテクトモードに移行する
+      アドレス4MBに、アクセス開始アドレスを含む4KB区切りのメモリを先頭に64KB+4KB割り当てます。
+      セグメントレジスタにアドレス4MBをアクセスするセレクタを設定
+      メモリアクセスを実行
+      VCPIを通して、プロテクトモードから仮想86モードに戻る
+
+3.DPMI(Windows)上の場合
+
+  サポートしておりません。
+  ただし、_preInitHimemでドライバの有無は判定しております。
+
+4.Address 20 lineの許可
+
+   A20がすでに許可になっている場合は何もしません。
+   判定方法は、アドレス0とアドレス1MBのメモリが同じメモリをアクセスしているかで、
+ 判定します。（詳しくはソースで）
+
+   XMSドライバ(himem.sys)が有る場合
+     XMSドライバを通して、A20を許可にします。(Global Enableで許可)
+
+   XMSドライバがない場合
+     直接、KBC(Keyboard Controller)を使ってA20を許可にします。
+     この場合、プログラム終了時に、A20を禁止にしません。(手抜きです）
+
+5.その他のファンクションの説明
+  _maskNMI
+      Memory Parity ErrorによるNMIを禁止
+
+  _unmaskNMI
+      Memory Parity Errorのステータスをクリア(NMI許可したとたんNMIが発生しないように)
+      Memory Parity ErrorによるNMIを許可
+

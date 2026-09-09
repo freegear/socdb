@@ -1,0 +1,12 @@
+int cvTrackFace(CvFaceTracker* pFaceTracker, IplImage* imgGray, CvRect* pRects, int nRects, CvPoint* ptRotate, double* dbAngleRotate) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cvTrackFace_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvTrackFace, pFaceTracker, imgGray, pRects, nRects, ptRotate, dbAngleRotate);
+    return retval;
+}

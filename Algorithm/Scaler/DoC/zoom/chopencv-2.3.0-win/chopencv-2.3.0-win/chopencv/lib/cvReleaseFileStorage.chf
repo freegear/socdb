@@ -1,0 +1,10 @@
+void cvReleaseFileStorage(CvFileStorage** fs) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvReleaseFileStorage_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvReleaseFileStorage, fs);
+}

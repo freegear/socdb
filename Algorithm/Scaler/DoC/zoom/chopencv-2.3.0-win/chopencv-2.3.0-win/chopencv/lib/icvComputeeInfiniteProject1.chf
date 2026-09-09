@@ -1,0 +1,10 @@
+void icvComputeeInfiniteProject1(CvMatr64d rotMatr, CvMatr64d camMatr1, CvMatr64d camMatr2, CvPoint2D32f point1, CvPoint2D32f *point2) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvComputeeInfiniteProject1_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvComputeeInfiniteProject1, rotMatr, camMatr1, camMatr2, point1, point2);
+}

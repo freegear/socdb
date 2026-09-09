@@ -1,0 +1,12 @@
+double cvCompareHist(CvHistogram* hist1, CvHistogram* hist2, int method) {
+    void *fptr;
+    double retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCompareHist_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvCompareHist, hist1, hist2, method);
+    return retval;
+}

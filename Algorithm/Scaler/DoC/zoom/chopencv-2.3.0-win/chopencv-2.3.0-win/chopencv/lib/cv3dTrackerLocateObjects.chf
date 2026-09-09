@@ -1,0 +1,12 @@
+int cv3dTrackerLocateObjects(int num_cameras, int num_objects, Cv3dTrackerCameraInfo *camera_info, Cv3dTracker2dTrackedObject *tracking_info, Cv3dTrackerTrackedObject *tracked_objects) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cv3dTrackerLocateObjects_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cv3dTrackerLocateObjects, num_cameras, num_objects, camera_info, tracking_info, tracked_objects);
+    return retval;
+}

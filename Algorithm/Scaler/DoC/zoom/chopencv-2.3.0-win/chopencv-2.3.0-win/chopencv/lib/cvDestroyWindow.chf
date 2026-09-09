@@ -1,0 +1,10 @@
+void cvDestroyWindow(char* name) {
+    void *fptr;
+
+    fptr = dlsym(_Chhighgui_handle, "cvDestroyWindow_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvDestroyWindow, name);
+}

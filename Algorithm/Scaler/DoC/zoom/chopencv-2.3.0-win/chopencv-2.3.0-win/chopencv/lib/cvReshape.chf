@@ -1,0 +1,12 @@
+CvMat* cvReshape(CvArr* arr, CvMat* header, int new_cn, int new_rows) {
+    void *fptr;
+    CvMat*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvReshape_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvReshape, arr, header, new_cn, new_rows);
+    return retval;
+}

@@ -1,0 +1,10 @@
+void cvCartToPolar(CvArr* x, CvArr* y, CvArr* magnitude, CvArr* angle, int angle_in_degrees) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCartToPolar_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCartToPolar, x, y, magnitude, angle, angle_in_degrees);
+}

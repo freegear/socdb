@@ -1,0 +1,12 @@
+CvSeq* cvHoughLines2(CvArr* image, void* line_storage, int method, double rho, double theta, int threshold, double param1, double param2) {
+    void *fptr;
+    CvSeq*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvHoughLines2_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvHoughLines2, image, line_storage, method, rho, theta, threshold, param1, param2);
+    return retval;
+}

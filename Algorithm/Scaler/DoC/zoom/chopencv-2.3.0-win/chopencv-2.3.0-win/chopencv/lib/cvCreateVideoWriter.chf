@@ -1,0 +1,12 @@
+CvVideoWriter* cvCreateVideoWriter(char* filename, int fourcc, double fps, CvSize frame_size, int is_color) {
+    void *fptr;
+    CvVideoWriter*retval;
+
+    fptr = dlsym(_Chhighgui_handle, "cvCreateVideoWriter_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateVideoWriter, filename, fourcc, fps, frame_size, is_color);
+    return retval;
+}

@@ -1,0 +1,10 @@
+void cvScaleAdd(CvArr* src1, CvScalar scale, CvArr* src2, CvArr* dst) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvScaleAdd_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvScaleAdd, src1, scale, src2, dst);
+}

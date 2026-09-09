@@ -1,0 +1,12 @@
+CvMatND* cvCreateMatNDHeader(int dims, int* sizes, int type) {
+    void *fptr;
+    CvMatND*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreateMatNDHeader_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateMatNDHeader, dims, sizes, type);
+    return retval;
+}

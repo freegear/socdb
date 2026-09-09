@@ -1,0 +1,12 @@
+int icvConvertPointSystem(CvPoint3D64d M2, CvPoint3D64d* M1, CvMatr64d rotMatr, CvMatr64d transVect) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "icvConvertPointSystem_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, icvConvertPointSystem, M2, M1, rotMatr, transVect);
+    return retval;
+}

@@ -1,0 +1,12 @@
+int cvVoronoiDiagramFromContour(CvSeq* ContourSeq, CvVoronoiDiagram2D** VoronoiDiagram, CvMemStorage* VoronoiStorage, CvLeeParameters contour_type, int contour_orientation, int attempt_number) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cvVoronoiDiagramFromContour_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvVoronoiDiagramFromContour, ContourSeq, VoronoiDiagram, VoronoiStorage, contour_type, contour_orientation, attempt_number);
+    return retval;
+}

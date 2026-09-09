@@ -1,0 +1,10 @@
+void cvMakeScanlines(CvMatrix3* matrix, CvSize img_size, int* scanlines1, int* scanlines2, int* lengths1, int* lengths2, int* line_count) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvMakeScanlines_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvMakeScanlines, matrix, img_size, scanlines1, scanlines2, lengths1, lengths2, line_count);
+}

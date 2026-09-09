@@ -1,0 +1,10 @@
+void cvGraphRemoveEdge(CvGraph* graph, int start_idx, int end_idx) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvGraphRemoveEdge_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvGraphRemoveEdge, graph, start_idx, end_idx);
+}

@@ -1,0 +1,10 @@
+void cvPostWarpImage(int line_count, uchar* src, int* src_nums, IplImage* img, int* scanlines) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvPostWarpImage_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvPostWarpImage, line_count, src, src_nums, img, scanlines);
+}

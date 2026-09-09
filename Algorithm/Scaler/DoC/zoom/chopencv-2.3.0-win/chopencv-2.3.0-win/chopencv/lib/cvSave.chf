@@ -1,0 +1,10 @@
+void cvSave(char* filename, void* struct_ptr, char* name, char* comment, CvAttrList attributes) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSave_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSave, filename, struct_ptr, name, comment, attributes);
+}

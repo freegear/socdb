@@ -1,0 +1,10 @@
+void cvCalcEigenObjects(int nObjects, void* input, void* output, int ioFlags, int ioBufSize, void* userData, CvTermCriteria* calcLimit, IplImage* avg, float* eigVals) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcEigenObjects_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCalcEigenObjects, nObjects, input, output, ioFlags, ioBufSize, userData, calcLimit, avg, eigVals);
+}

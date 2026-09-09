@@ -1,0 +1,12 @@
+CvSeq* cvSegmentImage(CvArr* srcarr, CvArr* dstarr, double canny_threshold, double ffill_threshold, CvMemStorage* storage) {
+    void *fptr;
+    CvSeq*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvSegmentImage_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvSegmentImage, srcarr, dstarr, canny_threshold, ffill_threshold, storage);
+    return retval;
+}

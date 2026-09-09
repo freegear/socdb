@@ -1,0 +1,12 @@
+double cvCalcGlobalOrientation(CvArr* orientation, CvArr* mask, CvArr* mhi, double timestamp, double duration) {
+    void *fptr;
+    double retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcGlobalOrientation_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvCalcGlobalOrientation, orientation, mask, mhi, timestamp, duration);
+    return retval;
+}

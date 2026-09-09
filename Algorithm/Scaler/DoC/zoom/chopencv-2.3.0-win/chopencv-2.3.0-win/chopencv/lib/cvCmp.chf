@@ -1,0 +1,10 @@
+void cvCmp(CvArr* src1, CvArr* src2, CvArr* dst, int cmp_op) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCmp_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCmp, src1, src2, dst, cmp_op);
+}

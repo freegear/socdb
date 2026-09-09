@@ -1,0 +1,10 @@
+void cvPutText(CvArr* img, char* text, CvPoint org, CvFont* font, CvScalar color) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvPutText_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvPutText, img, text, org, font, color);
+}

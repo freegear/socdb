@@ -1,0 +1,10 @@
+void cvSaveMemStoragePos(CvMemStorage* storage, CvMemStoragePos* pos) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSaveMemStoragePos_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSaveMemStoragePos, storage, pos);
+}

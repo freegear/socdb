@@ -1,0 +1,12 @@
+double cvGetCaptureProperty(CvCapture* capture, int property_id) {
+    void *fptr;
+    double retval;
+
+    fptr = dlsym(_Chhighgui_handle, "cvGetCaptureProperty_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvGetCaptureProperty, capture, property_id);
+    return retval;
+}

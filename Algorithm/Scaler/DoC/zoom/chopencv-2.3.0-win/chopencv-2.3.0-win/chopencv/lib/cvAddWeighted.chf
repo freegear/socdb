@@ -1,0 +1,10 @@
+void cvAddWeighted(CvArr* src1, double alpha, CvArr* src2, double beta, double gamma, CvArr* dst) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvAddWeighted_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvAddWeighted, src1, alpha, src2, beta, gamma, dst);
+}

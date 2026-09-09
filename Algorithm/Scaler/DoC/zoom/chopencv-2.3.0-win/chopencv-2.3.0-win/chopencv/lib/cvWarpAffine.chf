@@ -1,0 +1,10 @@
+void cvWarpAffine(CvArr* src, CvArr* dst, CvMat* map_matrix, int flags, CvScalar fillval) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvWarpAffine_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvWarpAffine, src, dst, map_matrix, flags, fillval);
+}

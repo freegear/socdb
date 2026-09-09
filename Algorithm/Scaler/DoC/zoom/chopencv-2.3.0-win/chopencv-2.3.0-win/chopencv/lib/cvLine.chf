@@ -1,0 +1,10 @@
+void cvLine(CvArr* img, CvPoint pt1, CvPoint pt2, CvScalar color, int thickness, int line_type, int shift) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvLine_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvLine, img, pt1, pt2, color, thickness, line_type, shift);
+}

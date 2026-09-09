@@ -1,0 +1,12 @@
+CvSubdiv2DPoint* cvFindNearestPoint2D(CvSubdiv2D* subdiv, CvPoint2D32f pt) {
+    void *fptr;
+    CvSubdiv2DPoint*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvFindNearestPoint2D_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvFindNearestPoint2D, subdiv, pt);
+    return retval;
+}

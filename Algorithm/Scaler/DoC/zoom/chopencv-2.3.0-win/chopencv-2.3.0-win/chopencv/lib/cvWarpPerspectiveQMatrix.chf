@@ -1,0 +1,12 @@
+CvMat* cvWarpPerspectiveQMatrix(CvPoint2D32f* src, CvPoint2D32f* dst, CvMat* map_matrix) {
+    void *fptr;
+    CvMat*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvWarpPerspectiveQMatrix_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvWarpPerspectiveQMatrix, src, dst, map_matrix);
+    return retval;
+}

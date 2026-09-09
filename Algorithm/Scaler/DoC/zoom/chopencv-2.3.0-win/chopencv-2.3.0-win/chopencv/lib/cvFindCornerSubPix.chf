@@ -1,0 +1,10 @@
+void cvFindCornerSubPix(CvArr* image, CvPoint2D32f* corners, int count, CvSize win, CvSize zero_zone, CvTermCriteria criteria) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvFindCornerSubPix_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvFindCornerSubPix, image, corners, count, win, zero_zone, criteria);
+}

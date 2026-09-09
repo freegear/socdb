@@ -1,0 +1,12 @@
+int cvWriteFrame(CvVideoWriter* writer, IplImage* image) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chhighgui_handle, "cvWriteFrame_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvWriteFrame, writer, image);
+    return retval;
+}

@@ -1,0 +1,10 @@
+void cvSetSeqBlockSize(CvSeq* seq, int delta_elems) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSetSeqBlockSize_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSetSeqBlockSize, seq, delta_elems);
+}

@@ -1,0 +1,12 @@
+const CvMat* cvKalmanPredict(CvKalman* kalman, CvMat* control) {
+    void *fptr;
+    const CvMat*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvKalmanPredict_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvKalmanPredict, kalman, control);
+    return retval;
+}

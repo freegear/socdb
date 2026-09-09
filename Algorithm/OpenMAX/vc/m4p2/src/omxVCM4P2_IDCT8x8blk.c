@@ -1,0 +1,89 @@
+/**
+ *  omxVCM4P2_IDCT8x8blk.c
+ * 
+ * (c) Copyright 2005,2006 ARM Limited. All Rights Reserved.
+ * 
+ * THIS SOFTWARE IS PROVIDED “AS IS”, ARM EXPRESSLY DISCLAIMS ALL REPRESENTATIONS, 
+ * WARRANTIES, CONDITIONS OR OTHER TERMS, EXPRESS, IMPLIED OR STATUTORY, INCLUDING 
+ * WITHOUT LIMITATION THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, 
+ * SATISFACTORY QUALITY, AND FITNESS FOR A PARTICULAR PURPOSE. 
+ * 
+ * Your use of this Software may require additional licenses, including but not 
+ * limited to copyright and patent licenses from various entities. Should any 
+ * such additional copyright, patent or other licenses be required, ARM expects 
+ * that you will and you agree to obtain any such licenses at your own expense. 
+ * You are solely responsible for obtaining any such licenses and the copyright 
+ * licenses granted herein are conditioned on you obtaining such additional 
+ * licenses.
+ * 
+ *
+ * Description:
+ * Contains modules for 8x8 block IDCT
+ * 
+ */
+
+
+#include <math.h>
+#include "omxtypes.h"
+#include "armCOMM.h"
+#include "armVCM4P2_DCT_Table.h"
+
+/**
+ *
+ *Function:  omxVCM4P2_IDCT8x8blk
+ *Description:
+ * Computes a 2D inverse DCT for a single 8x8 block, as defined in ISO/IEC 14496-2.
+ *
+ *Parameters:
+ *[in] pSrc - pointer to the start of the linearly arranged IDCT input buffer;
+ *             must be aligned on a 16 byte boundary.According to ISO/IEC 14496-2, the input coefficient values should lie within the range [-2048, 2047].
+ *[out]pDst - pointer to the start of the linearly arranged IDCT output buffer;
+ *             must be aligned on a 16 byte boundary.
+ *
+ *Return Value:
+ * OMX_StsNoErr - no error
+ * OMX_StsBadArgErr - bad arguments
+ *   - Either pSrc or pDst is NULL.
+ *   - Either pSrc or pDst is not 16 byte aligned.
+ *
+ */
+OMXResult omxVCM4P2_IDCT8x8blk (const OMX_S16 *pSrc, OMX_S16 *pDst)
+{
+    OMX_INT x, y, u, v;
+
+    /* Argument error checks */
+    armRetArgErrIf(pSrc == NULL, OMX_StsBadArgErr);
+    armRetArgErrIf(!armIs16ByteAligned(pSrc), OMX_StsBadArgErr);
+    armRetArgErrIf(pDst == NULL, OMX_StsBadArgErr);
+    armRetArgErrIf(!armIs16ByteAligned(pDst), OMX_StsBadArgErr);
+
+    for (x = 0; x < 8; x++)
+    {
+        for (y = 0; y < 8; y++)
+        {
+            OMX_F64 sum = 0.0;
+            for (u = 0; u < 8; u++)
+            {
+                for (v = 0; v < 8; v++)
+                {
+                    sum += pSrc[(u * 8) + v] *
+                        armVCM4P2_preCalcDCTCos[x][u] *
+                        armVCM4P2_preCalcDCTCos[y][v];
+                }
+            }
+            pDst[(x * 8) + y] = (OMX_S16) floor(sum + 0.5);
+
+            /* Saturate to [-256, 255] */
+            pDst[(x * 8) + y] = armClip (
+                                            -256,
+                                            255,
+                                            pDst[(x * 8) + y]);
+        }
+    }
+
+    return OMX_StsNoErr;
+}
+
+/* End of file */
+
+

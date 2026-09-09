@@ -1,0 +1,10 @@
+void cvInitFont(CvFont* font, int font_face, double hscale, double vscale, double shear, int thickness, int line_type) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvInitFont_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvInitFont, font, font_face, hscale, vscale, shear, thickness, line_type);
+}

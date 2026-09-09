@@ -1,0 +1,12 @@
+CvSeq* cvConvexHull2(CvArr* input, void* hull_storage, int orientation, int return_points) {
+    void *fptr;
+    CvSeq*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvConvexHull2_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvConvexHull2, input, hull_storage, orientation, return_points);
+    return retval;
+}

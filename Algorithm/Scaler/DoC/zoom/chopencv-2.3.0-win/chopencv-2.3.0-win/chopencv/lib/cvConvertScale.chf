@@ -1,0 +1,10 @@
+void cvConvertScale(CvArr* src, CvArr* dst, double scale, double shift) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvConvertScale_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvConvertScale, src, dst, scale, shift);
+}

@@ -1,0 +1,12 @@
+CvCapture* cvCaptureFromCAM(int index) {
+    void *fptr;
+    CvCapture*retval;
+
+    fptr = dlsym(_Chhighgui_handle, "cvCaptureFromCAM_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCaptureFromCAM, index);
+    return retval;
+}

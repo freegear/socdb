@@ -1,0 +1,10 @@
+void cvResize(CvArr* src, CvArr* dst, int interpolation) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvResize_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvResize, src, dst, interpolation);
+}

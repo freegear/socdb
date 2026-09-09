@@ -1,0 +1,12 @@
+float cvCalcEMD2(CvArr* signature1, CvArr* signature2, int distance_type, CvDistanceFunction distance_func, CvArr* cost_matrix, CvArr* flow, float* lower_bound, void* userdata) {
+    void *fptr;
+    float retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcEMD2_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvCalcEMD2, signature1, signature2, distance_type, distance_func, cost_matrix, flow, lower_bound, userdata);
+    return retval;
+}

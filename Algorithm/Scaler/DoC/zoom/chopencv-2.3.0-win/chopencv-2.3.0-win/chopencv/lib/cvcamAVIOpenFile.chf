@@ -1,0 +1,12 @@
+cvcamAVIFILE cvcamAVIOpenFile(char* file) {
+    void *fptr;
+    cvcamAVIFILE retval;
+
+    fptr = dlsym(_Chcvcam_handle, "cvcamAVIOpenFile_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvcamAVIOpenFile, file);
+    return retval;
+}

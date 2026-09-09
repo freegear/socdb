@@ -1,0 +1,10 @@
+void cvCalcSubdivVoronoi2D(CvSubdiv2D* subdiv) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcSubdivVoronoi2D_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCalcSubdivVoronoi2D, subdiv);
+}

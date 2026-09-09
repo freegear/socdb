@@ -1,0 +1,12 @@
+IplConvKernel* cvCreateStructuringElementEx(int cols, int rows, int anchor_x, int anchor_y, int shape, int* values) {
+    void *fptr;
+    IplConvKernel*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreateStructuringElementEx_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateStructuringElementEx, cols, rows, anchor_x, anchor_y, shape, values);
+    return retval;
+}

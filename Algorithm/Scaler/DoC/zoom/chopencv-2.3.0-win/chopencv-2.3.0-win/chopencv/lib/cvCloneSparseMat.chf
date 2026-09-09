@@ -1,0 +1,12 @@
+CvSparseMat* cvCloneSparseMat(CvSparseMat* mat) {
+    void *fptr;
+    CvSparseMat*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCloneSparseMat_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCloneSparseMat, mat);
+    return retval;
+}

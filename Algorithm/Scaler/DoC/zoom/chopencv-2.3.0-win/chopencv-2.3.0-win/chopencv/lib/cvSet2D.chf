@@ -1,0 +1,10 @@
+void cvSet2D(CvArr* arr, int idx0, int idx1, CvScalar value) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSet2D_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSet2D, arr, idx0, idx1, value);
+}

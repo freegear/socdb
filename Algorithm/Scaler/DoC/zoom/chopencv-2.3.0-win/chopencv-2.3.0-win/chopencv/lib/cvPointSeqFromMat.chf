@@ -1,0 +1,12 @@
+CvSeq* cvPointSeqFromMat(int seq_kind, CvArr* mat, CvContour* contour_header, CvSeqBlock* block) {
+    void *fptr;
+    CvSeq*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvPointSeqFromMat_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvPointSeqFromMat, seq_kind, mat, contour_header, block);
+    return retval;
+}

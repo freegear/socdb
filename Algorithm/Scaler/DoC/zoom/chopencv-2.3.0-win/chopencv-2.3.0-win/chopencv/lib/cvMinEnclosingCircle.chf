@@ -1,0 +1,12 @@
+int cvMinEnclosingCircle(CvArr* points, CvPoint2D32f* center, float* radius) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cvMinEnclosingCircle_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvMinEnclosingCircle, points, center, radius);
+    return retval;
+}

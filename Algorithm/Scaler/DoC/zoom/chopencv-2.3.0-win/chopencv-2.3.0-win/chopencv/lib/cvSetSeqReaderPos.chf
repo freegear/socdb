@@ -1,0 +1,10 @@
+void cvSetSeqReaderPos(CvSeqReader* reader, int index, int is_relative) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSetSeqReaderPos_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSetSeqReaderPos, reader, index, is_relative);
+}

@@ -1,0 +1,10 @@
+void cvFitLine(CvArr* points, int dist_type, double param, double reps, double aeps, float* line) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvFitLine_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvFitLine, points, dist_type, param, reps, aeps, line);
+}

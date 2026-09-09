@@ -1,0 +1,10 @@
+void cvReleaseConDensation(CvConDensation** condens) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvReleaseConDensation_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvReleaseConDensation, condens);
+}

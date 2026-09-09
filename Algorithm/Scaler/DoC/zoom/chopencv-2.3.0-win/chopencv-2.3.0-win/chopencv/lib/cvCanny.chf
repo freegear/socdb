@@ -1,0 +1,10 @@
+void cvCanny(CvArr* image, CvArr* edges, double threshold1, double threshold2, int aperture_size) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCanny_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCanny, image, edges, threshold1, threshold2, aperture_size);
+}

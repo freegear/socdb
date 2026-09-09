@@ -1,0 +1,12 @@
+double cvInvert(CvArr* src, CvArr* dst, int method) {
+    void *fptr;
+    double retval;
+
+    fptr = dlsym(_Chcv_handle, "cvInvert_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvInvert, src, dst, method);
+    return retval;
+}

@@ -1,0 +1,10 @@
+void cvComputeCorrespondEpilines(CvMat* points, int which_image, CvMat* fundamental_matrix, CvMat* correspondent_lines) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvComputeCorrespondEpilines_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvComputeCorrespondEpilines, points, which_image, fundamental_matrix, correspondent_lines);
+}

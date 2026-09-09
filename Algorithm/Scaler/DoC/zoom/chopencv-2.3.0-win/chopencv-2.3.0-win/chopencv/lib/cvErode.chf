@@ -1,0 +1,10 @@
+void cvErode(CvArr* src, CvArr* dst, IplConvKernel* element, int iterations) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvErode_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvErode, src, dst, element, iterations);
+}

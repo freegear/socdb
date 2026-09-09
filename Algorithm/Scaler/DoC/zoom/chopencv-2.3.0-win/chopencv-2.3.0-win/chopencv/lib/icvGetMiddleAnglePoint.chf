@@ -1,0 +1,10 @@
+void icvGetMiddleAnglePoint(CvPoint2D64d basePoint, CvPoint2D64d point1, CvPoint2D64d point2, CvPoint2D64d* midPoint) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvGetMiddleAnglePoint_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvGetMiddleAnglePoint, basePoint, point1, point2, midPoint);
+}

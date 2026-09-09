@@ -1,0 +1,12 @@
+CvHistogram* cvMakeHistHeaderForArray(int dims, int* sizes, CvHistogram* hist, float* data, float** ranges, int uniform) {
+    void *fptr;
+    CvHistogram*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvMakeHistHeaderForArray_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvMakeHistHeaderForArray, dims, sizes, hist, data, ranges, uniform);
+    return retval;
+}

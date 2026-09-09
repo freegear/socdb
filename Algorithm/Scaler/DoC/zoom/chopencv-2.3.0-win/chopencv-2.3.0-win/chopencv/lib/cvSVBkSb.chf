@@ -1,0 +1,10 @@
+void cvSVBkSb(CvArr* W, CvArr* U, CvArr* V, CvArr* B, CvArr* X, int flags) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSVBkSb_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSVBkSb, W, U, V, B, X, flags);
+}

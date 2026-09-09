@@ -1,0 +1,12 @@
+double cvGetReal1D(CvArr* arr, int idx0) {
+    void *fptr;
+    double retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGetReal1D_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvGetReal1D, arr, idx0);
+    return retval;
+}

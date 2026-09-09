@@ -1,0 +1,12 @@
+double cvMatchShapes(void* object1, void* object2, int method, double parameter) {
+    void *fptr;
+    double retval;
+
+    fptr = dlsym(_Chcv_handle, "cvMatchShapes_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvMatchShapes, object1, object2, method, parameter);
+    return retval;
+}

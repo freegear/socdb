@@ -1,0 +1,12 @@
+uchar* cvPtr2D(CvArr* arr, int idx0, int idx1, int* type) {
+    void *fptr;
+    uchar*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvPtr2D_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvPtr2D, arr, idx0, idx1, type);
+    return retval;
+}

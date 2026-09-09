@@ -1,0 +1,196 @@
+PCI Registor Dump for AT 2001/2/28 by SUGAWARA
+
+●ファイル構成
+
+        REDPCI.COM      実行ﾌｧｲﾙ
+        REDPCI.TXT      本ドキュメント
+        REDPCI.ASM      ｿｰｽﾌｧｲﾙ
+        VENDTBL.TXT     Vendor ID定義
+        CLASTBL.TXT     Class Code定義
+        CHIPTBL.TXT     Device ID定義
+
+●概要
+
+  ・PCIﾃﾞﾊﾞｲｽﾘｽﾄを表示
+  ・PCIｺﾝﾌｨｸﾞﾚｰｼｮﾝ空間ﾚｼﾞｽﾀを読み書きする。
+  ・PCIﾃﾞﾊﾞｲｽﾘｽﾄ表示で、Vendor ID = FFFFh の場合でも、Status,Command Register
+   が、FFFFFFFFhでなければ、ﾃﾞﾊﾞｲｽが存在するが、何らかの理由で隠されていると
+   判断して、2nd Vendor IDからﾍﾞﾝﾀﾞ名を取得する。
+
+●使用方法
+
+  REDPCI [Option] [BusNo] [DevNo] [FuncNo] [RegNo] [Data]
+
+    [Option]    /D[Size] ﾃﾞﾊﾞｲｽ一覧表示の時、ﾚｼﾞｽﾀもﾀﾞﾝﾌﾟする
+                  [Size] 1...ﾊﾞｲﾄｻｲｽﾞで読込、表示
+                         2...ﾜｰﾄﾞｻｲｽﾞで読込、表示
+                         4...ﾀﾞﾌﾞﾙﾜｰﾄﾞｻｲｽﾞで読込、表示
+                /F   ﾃﾞﾊﾞｲｽ一覧表示の時、ﾚｼﾞｽﾀをﾌｫｰﾏｯﾄ付きでﾀﾞﾝﾌﾟする
+                /A   詳細情報を表示する(Command,Status,New Function ID)
+                /M   バス番号255まで検索するようにする
+
+    [BusNo]     PCIﾊﾞｽ番号(0..255 または $0..$FF)
+                これのみ指定すると、指定したﾊﾞｽ番号のﾃﾞﾊﾞｲｽ一覧表示を行う
+
+    [DevNo]     PCIﾃﾞﾊﾞｲｽ番号(0.. 63 または $0..$1F)
+                [BusNo]と[DevNo]まで指定すると、指定したﾃﾞﾊﾞｲｽ番号の
+              ﾃﾞﾊﾞｲｽ一覧表示を行う
+
+    [FuncNo]    PCIﾌｧﾝｸｼｮﾝ番号(0..  7 または $0..$7)
+                [BusNo],[DevNo],[FuncNo]まで指定すると、そのﾃﾞﾊﾞｲｽの
+              ﾚｼﾞｽﾀﾀﾞﾝﾌﾟを行う
+                ﾚｼﾞｽﾀ値は、ﾀﾞﾌﾞﾙﾜｰﾄﾞで区切られる
+
+    [RegNo]     ﾚｼﾞｽﾀ番号(00..FF)
+                [Data]を指定しない場合、指定したﾚｼﾞｽﾀの値を表示する
+                ﾚｼﾞｽﾀ番号が4の倍数ならﾀﾞﾌﾞﾙﾜｰﾄﾞ表示
+                ﾚｼﾞｽﾀ番号が2の倍数ならﾜｰﾄﾞ表示
+                上記以外の場合、ﾊﾞｲﾄ表示
+
+    [Data]      書き込みﾃﾞｰﾀ
+                 00000000-FFFFFFFF  の場合、ﾀﾞﾌﾞﾙﾜｰﾄﾞ書き込み
+                                    (ﾚｼﾞｽﾀ番号が4の倍数の必要あり)
+                     0000-FFFF      の場合、ﾜｰﾄﾞ書き込み
+                                    (ﾚｼﾞｽﾀ番号が2の倍数の必要あり)
+                       00-FF        の場合、ﾊﾞｲﾄ書き込み
+
+●使用例
+
+例1.PCIﾃﾞﾊﾞｲｽ一覧を表示する
+
+  REDPCI [enter]
+
+  とすると、以下の様に表示される
+
+   Special Cycle Generation on Configuration Mechanism #2 : Not Supported
+   Special Cycle Generation on Configuration Mechanism #1 : Not Supported
+   Configuration Mechanism #2 : Not Supported
+   Configuration Mechanism #1 : Supported
+   PCI BIOS Interface Level Version : 02.10
+   Number of Last PCI bus : 21
+   Bus Dev Fnc VendorID DevID Rev
+     0   0   0   1179h  0601h  11 Toshiba Host Bridge
+                                  ~~~~~~~Vendor IDより判断
+     0   1   0   FFFFh  FFFFh  21 ??Hidden?? ISA Bridge
+                                  ~~~~~~~~~~Vendor IDがFFFFhでも、Status,Command Registor
+                                            がFFFFh以外ならﾃﾞﾊﾞｲｽが隠されていると判断
+     0   2   0   FFFFh  FFFFh  07 ??Hidden?? CardBus Bridge
+     +20                                     ~~~~~~~~~~~~~~Class Codeより判断
+     ~~~下位のﾊﾞｽ番号
+     0   2   1   FFFFh  FFFFh  07 ??Hidden?? CardBus Bridge
+     +21
+     0   3   0   1179h  0606h  02 Toshiba 12 34 56 ??Unknown Class Code??
+                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~不明なｸﾗｽｺｰﾄﾞの場合
+     0   6   0   1234h  0605h  04 ??Unknown Vendor?? PCI to PCI Bridge
+                                  ~~~~~~~~~不明なVendor IDの場合
+     +1
+     0   8   0   FFFFh  FFFFh  01 ??Hidden?? ISA Bridge
+     1   1   0   1179h  0603h  04 Toshiba CardBus Bridge
+     +18
+     1   1   1   1179h  0603h  04 Toshiba CardBus Bridge
+     +19
+     1   4   0   1022h  2020h  10 AMD SCSI Bus Controller
+     1   9   0   5333h  5631h  05 S3 VGA Compatible Controller
+
+例2.指定ﾊﾞｽ番号のPCIﾃﾞﾊﾞｲｽ一覧を表示
+
+  REDPCI 5
+
+  表示内容は、例1と同様
+
+例3.指定ﾊﾞｽ番号,ﾃﾞﾊﾞｲｽ番号のPCIﾃﾞﾊﾞｲｽ一覧を表示
+
+  REDPCI 5 1
+
+  表示内容は、例1と同様
+
+例4.指定PCIﾃﾞﾊﾞｲｽのﾚｼﾞｽﾀﾀﾞﾝﾌﾟ
+
+  REDPCI 5 1 2 /D
+
+  とすると、以下の様に表示される
+  ﾚｼﾞｽﾀ値は、ﾀﾞﾌﾞﾙﾜｰﾄﾞで区切られる
+
+   Bus Dev Fnc VendorID DevID Rev
+     1   1   0   1179h  0603h  04 Toshiba CardBus Bridge
+     +18
+   0000: 06031179 04800007 06070004 00820000
+   0010: FFCFF000 04800000 00121201 00000000
+   0020: 00000000 00000000 00000000 00000000
+   0030: 00000000 00000000 00000000 00000000
+   0040: 00000000 00000000 00000000 00000000
+   0050: 00000000 00000000 00000000 00000000
+   0060: 00000000 00000000 00000000 00000000
+   0070: 00000000 00000000 00000000 00000000
+   0080: 00000000 00000000 00000002 00000000
+   0090: 00000000 00000000 00000000 00000000
+   00A0: 060000D4 00000000 00000000 0000FD00
+   00B0: 00000000 00000000 00000000 00000000
+   00C0: 00000000 00000000 00000000 00000000
+   00D0: 00000000 00000000 00000000 00000000
+   00E0: 00000000 00000000 00000000 00000000
+   00F0: 00000000 00000000 00000000 00000000
+
+例5.指定PCIﾃﾞﾊﾞｲｽの指定ﾚｼﾞｽﾀの値表示
+
+  REDPCI 5 1 2 3F
+
+  とすると、以下の様に表示される
+
+   Bus = 5(d) Dev = 1(d) Fnc = 2(d) Reg = 3F(h)
+          ~~~10進表示の意味                 ~~~16進表示の意味
+   00
+   ~~読み込んだ値(この場合、ﾊﾞｲﾄで読み込んだ事を意味する)
+
+例6.指定PCIﾃﾞﾊﾞｲｽの指定ﾚｼﾞｽﾀに値を書き込む
+
+  REDPCI 5 1 2 1E 12EF
+
+  とすると、以下の様に表示される
+
+    Bus = 1(d) Dev = 1(d) Fnc = 0(d) Reg = 1E(h)
+    12EF
+    ~~~~書き込んだ値(この場合、ﾜｰﾄﾞで書き込んだ事を意味する)
+
+
+●ヴァージョン履歴(日付で管理)
+
+1997/7/14
+     初出
+1997/7/24
+     Device ID,Vendor ID,Class Code定義を外部ﾌｧｲﾙにした
+1997/7/25
+     隠しﾃﾞﾊﾞｲｽの場合、2nd IDのﾍﾞﾝﾀﾞ名が不明でも、不明と表示しないように変更
+1997/8/11
+     /Fｵﾌﾟｼｮﾝ追加
+1997/8/20
+     ﾌｫｰﾏｯﾄ付きﾚｼﾞｽﾀﾀﾞﾝﾌﾟで、出来るだけ一画面に収まるように変更
+1997/8/27
+     Bus,Device,Function番号だけを指定してﾚｼﾞｽﾀﾀﾞﾝﾌﾟするとき、ﾃﾞﾊﾞｲｽが存在
+   しない場合、ﾃﾞﾊﾞｲｽ無しと表示するように変更
+1998/1/28
+     Sub Vendor/Device IDの表示が逆なのを修正
+     ﾌｫｰﾏｯﾄ付きﾚｼﾞｽﾀﾀﾞﾝﾌﾟで、Device/Vendor ID,Class Code,Sub Device/Vendor ID
+   の値だけじゃなく、そのVendor ID,Device ID,Class Code定義から取得した名前も
+   表示するように変更
+     それに伴い、表示ﾌｫｰﾏｯﾄも一部変更（Base Address Register,Class Code)
+1999/2/24
+     PCI2.2のNew Capbilitiesに対応。
+     また、/A オプション追加
+1999/10/27
+     PCI BIOSがOSによって使えなくなっている場合に、その旨を表示して終了するように
+   変更。
+     Class Codeで、Bit毎に意味付け出来るように拡張。
+1999/11/4
+     ブリッジデバイスのSubordinate Bus Number Registerの値が、PCI BIOS Functionが
+   返した値より大きい場合、そのバス番号まで検索するように変更
+1999/11/10
+     Device ID,Vendor ID,Class Code定義ファイルのどれかがないとハングアップする
+   不具合を修正
+1999/12/6
+     レジスタダンプ(/Dオプション)に、バイトサイズ(/DB)、ワードサイズ(/DW)で読込、
+   表示するオプションを追加
+1999/12/7
+     バス番号255まで検索する /M オプション追加
+2001/2/28
+     マルチファンクションデバイスにおいて、ファンクション番号が歯抜けな場合に対応

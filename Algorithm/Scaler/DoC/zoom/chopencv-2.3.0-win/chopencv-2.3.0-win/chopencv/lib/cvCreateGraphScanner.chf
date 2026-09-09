@@ -1,0 +1,12 @@
+CvGraphScanner* cvCreateGraphScanner(CvGraph* graph, CvGraphVtx* vtx, int mask) {
+    void *fptr;
+    CvGraphScanner*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreateGraphScanner_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateGraphScanner, graph, vtx, mask);
+    return retval;
+}

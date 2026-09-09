@@ -1,0 +1,12 @@
+int cvcamGetPropertiesList(int camera, char** properties, int count) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcvcam_handle, "cvcamGetPropertiesList_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvcamGetPropertiesList, camera, properties, count);
+    return retval;
+}

@@ -1,0 +1,12 @@
+CvGraph* cvCloneGraph(CvGraph* graph, CvMemStorage* storage) {
+    void *fptr;
+    CvGraph*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCloneGraph_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCloneGraph, graph, storage);
+    return retval;
+}

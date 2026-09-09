@@ -1,0 +1,12 @@
+CvMat* cvGetSubRect(CvArr* arr, CvMat* submat, CvRect rect) {
+    void *fptr;
+    CvMat*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGetSubRect_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvGetSubRect, arr, submat, rect);
+    return retval;
+}

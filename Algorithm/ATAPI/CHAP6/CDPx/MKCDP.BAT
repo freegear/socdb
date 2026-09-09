@@ -1,0 +1,35 @@
+@ECHO OFF
+IF "%1"=="1" GOTO ATA1
+IF "%1"=="2" GOTO ATA2
+IF "%1"=="1I" GOTO ATA1I
+IF "%1"=="2I" GOTO ATA2I
+ECHO IDEポートを指定してください。
+ECHO   MKCDP 1[リターン] .... プライマリ用(割り込み未使用版)
+ECHO   MKCDP 2[リターン] .... セカンダリ用(割り込み未使用版)
+ECHO   MKCDP 1I[リターン] ... プライマリ用(割り込み使用版)
+ECHO   MKCDP 2I[リターン] ... セカンダリ用(割り込み使用版)
+GOTO QUIT
+
+:ATA1
+REM プライマリ用(割り込み未使用版)
+LCC -m -DIDE1 -o CDP1.EXE AT_IO.C IDE_BIOS.C IDEPRINT.C CDPLAY.C
+GOTO DELL
+
+:ATA2
+REM セカンダリ用(割り込み未使用版)
+LCC -m -DIDE2 -o CDP2.EXE AT_IO.C IDE_BIOS.C IDEPRINT.C CDPLAY.C
+GOTO DELL
+
+:ATA1I
+REM プライマリ用(割り込み使用版)
+LCC -m -DIDE1 -DUSE_INTERRUPT -o CDP1i.EXE -lIRQFUNC.OBJ AT_IO.C IDE_BIOS.C IDEPRINT.C CDPLAY.C
+GOTO DELL
+
+:ATA2I
+REM セカンダリ用(割り込み使用版)
+LCC -m -DIDE2 -DUSE_INTERRUPT -o CDP2i.EXE -lIRQFUNC.OBJ AT_IO.C IDE_BIOS.C IDEPRINT.C CDPLAY.C
+
+:DELL
+del *.map
+
+:QUIT

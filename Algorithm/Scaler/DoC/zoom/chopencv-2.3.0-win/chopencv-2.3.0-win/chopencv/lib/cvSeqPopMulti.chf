@@ -1,0 +1,10 @@
+void cvSeqPopMulti(CvSeq* seq, void* elements, int count, int in_front) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSeqPopMulti_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSeqPopMulti, seq, elements, count, in_front);
+}

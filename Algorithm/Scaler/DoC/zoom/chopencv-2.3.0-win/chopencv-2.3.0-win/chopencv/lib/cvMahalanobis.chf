@@ -1,0 +1,12 @@
+double cvMahalanobis(CvArr* vec1, CvArr* vec2, CvArr* mat) {
+    void *fptr;
+    double retval;
+
+    fptr = dlsym(_Chcv_handle, "cvMahalanobis_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvMahalanobis, vec1, vec2, mat);
+    return retval;
+}

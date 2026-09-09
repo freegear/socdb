@@ -1,0 +1,10 @@
+void cvFillPoly(CvArr* img, CvPoint** pts, int* npts, int contours, CvScalar color, int line_type, int shift) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvFillPoly_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvFillPoly, img, pts, npts, contours, color, line_type, shift);
+}

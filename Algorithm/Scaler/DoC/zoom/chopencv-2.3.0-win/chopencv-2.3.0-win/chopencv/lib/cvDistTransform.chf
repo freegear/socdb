@@ -1,0 +1,10 @@
+void cvDistTransform(CvArr* src, CvArr* dst, int distance_type, int mask_size, float* mask, CvArr* labels) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvDistTransform_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvDistTransform, src, dst, distance_type, mask_size, mask, labels);
+}

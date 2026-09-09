@@ -1,0 +1,12 @@
+IplImage* cvCloneImage(IplImage* image) {
+    void *fptr;
+    IplImage*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCloneImage_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCloneImage, image);
+    return retval;
+}

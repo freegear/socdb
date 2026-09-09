@@ -1,0 +1,12 @@
+CvString cvMemStorageAllocString(CvMemStorage* storage, char* ptr, int len) {
+    void *fptr;
+    CvString retval;
+
+    fptr = dlsym(_Chcv_handle, "cvMemStorageAllocString_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvMemStorageAllocString, storage, ptr, len);
+    return retval;
+}

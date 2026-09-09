@@ -1,0 +1,10 @@
+void cvCalcOpticalFlowBM(CvArr* prev, CvArr* curr, CvSize block_size, CvSize shift_size, CvSize max_range, int use_previous, CvArr* velx, CvArr* vely) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcOpticalFlowBM_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCalcOpticalFlowBM, prev, curr, block_size, shift_size, max_range, use_previous, velx, vely);
+}

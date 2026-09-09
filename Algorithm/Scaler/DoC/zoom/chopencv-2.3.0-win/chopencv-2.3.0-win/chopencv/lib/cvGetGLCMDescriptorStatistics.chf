@@ -1,0 +1,10 @@
+void cvGetGLCMDescriptorStatistics(CvGLCM* GLCM, int descriptor, double* average, double* standardDeviation) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvGetGLCMDescriptorStatistics_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvGetGLCMDescriptorStatistics, GLCM, descriptor, average, standardDeviation);
+}

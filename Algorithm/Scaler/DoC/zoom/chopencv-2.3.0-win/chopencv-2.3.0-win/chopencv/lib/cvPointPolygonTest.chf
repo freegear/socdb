@@ -1,0 +1,12 @@
+double cvPointPolygonTest(CvArr* contour, CvPoint2D32f pt, int measure_dist) {
+    void *fptr;
+    double retval;
+
+    fptr = dlsym(_Chcv_handle, "cvPointPolygonTest_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvPointPolygonTest, contour, pt, measure_dist);
+    return retval;
+}

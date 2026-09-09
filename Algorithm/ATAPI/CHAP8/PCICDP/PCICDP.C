@@ -1,0 +1,332 @@
+/*************************************************
+	CDプレーヤプログラム Ver 1.0
+		for PCI ATAホストインターフェース用
+*************************************************/
+
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include "typedef.h"
+#include "iodef.h"
+#include "ide_bios.h"
+#include "ideprint.h"
+
+#ifdef USE_INTERRUPT
+	#include "Irqfunc.h"	/* PC/AT互換機割り込み制御ライブラリ */
+#endif
+
+#include "pcifunc.h"	/* PCI BIOSコールライブラリ */
+
+int ATA_IRQ_NO;			/* PCI ATA用IRQ */
+int BASE_ATA_REGS;		/* ATAレジスタベースアドレス */
+int CTRL_BLK_ADDR;
+int Bus;				/* バス番号 */
+int Dev;				/* デバイス番号 */
+int Func;				/* ファンクション番号 */
+
+/* PCI環境チェック&PCIデバイス検索 */
+int PCI_Init(void)
+{
+	int	Bus,Dev,Func;
+	unsigned int	i;
+	unsigned long	l;
+
+	/* PCIバス環境確認 */
+	i=_pciConfigVersion();
+	l=_pciSigPCI();
+	if ( ((i & 0xff00)!=0) || (l != 0x20494350) ) {
+		printf("PCI BIOS not found\n");
+		return -1;
+	}
+	i=_pciBusVersion();
+	if (i < 0x200) {
+		printf("PCI BIOS is old\n");
+		return -1;
+	}
+	/* KEI-EVSP2 PCI ATAホストインターフェースデバイス検索 */
+	printf("PCI device search ... VenderID 6809h  DeviceID 8117h\n");
+	l=_pciFindPciDevice(0x6809,0x8117,0);
+	if ((l & 0xFFFF)!= 0) {
+		printf("PCI device not found\n");
+		return -1;
+	} else {
+		Bus=pciGetBus(l >> 16);
+		Dev=pciGetDev(l >> 16);
+		Func=pciGetFunc(l >> 16);
+		printf("PCIBus No:%d Device No:%d Function No:%d\n",Bus,Dev,Func);
+		i=_pciConfigReadWord(pciBusDevFunc(Bus,Dev,Func),0x4);
+		if ((i&1) == 0) {
+				printf("I/O space diseable\n");
+			return -1;
+		}
+	}
+	/* ベースアドレスレジスタ0 */
+	BASE_ATA_REGS=_pciConfigReadWord(pciBusDevFunc(Bus,Dev,Func),0x10) & 0xFFFC;
+	printf("Base Address 0 : %l4Xh\n",BASE_ATA_REGS);
+	CTRL_BLK_ADDR=BASE_ATA_REGS+0xE;
+	/* IRQ取得 */
+	ATA_IRQ_NO=(int)_pciConfigReadByte(pciBusDevFunc(Bus,Dev,Func),0x3c);
+	printf("IRQ %d\n",ATA_IRQ_NO);
+	return 0;
+}
+
+int CDplay(int device, int tocprint)
+{
+	struct STRUCT_TOC toc;
+	char c,read_buf[16];
+	int l,i,m,s,mode,last_trak,track_chg;
+	int current_trk,current_mm,current_ss,end_mm,end_ss,end_ff;
+	int CDplay,CDpause;
+
+	/* TOC読み出し */
+	printf("Audio CD TOC Read ... ");
+	i=IDE_atapi_read_toc(device,1/*MSF*/,0,0,804,&toc);
+	if (i!=0) {
+		printf("errorcode0=%d\n",i);
+		return -1;
+	} else {
+		printf("success\n");
+	}
+
+	if (tocprint) {	/* TOCダンプ表示 */
+		printf("\nTOC Dump!!\n");
+		l=((toc.length>>8)&0xff)|((toc.length&0xff)<<8);
+		Buffer_Dump(&toc,l+2);
+		return 0;
+	}
+
+	/* 2ch CD-DA以外なら再生しない */
+	if (((toc.point[0].adr_ctl&0xf0)!=0x10)||((toc.point[0].adr_ctl&0xc)!=0)) {
+		printf("Not 2ch-Audio Disk!\n");
+		return -1;
+	}
+
+	/* CDプレーヤ制御 */
+	/* トラック情報表示 */
+	last_trak=toc.last_trk;
+	for(l=0;l<last_trak;l++){
+		printf("Track %02d  %02dm %02ds %02df\n",toc.point[l].trk,toc.point[l].mm,toc.point[l].ss,toc.point[l].ff);
+	}
+	printf("Read OUT Time  %02dm %02ds %02df\n\n",toc.point[last_trak].mm,toc.point[last_trak].ss,toc.point[last_trak].ff);
+
+	/* トラック1からリードOUTの直前まで再生開始 */
+	end_mm=toc.point[last_trak].mm;
+	end_ss=toc.point[last_trak].ss;
+	end_ff=toc.point[last_trak].ff-1;	/* リードOUTの直前のフレームまで */
+	if (end_ff<0) {	/* 負になったら一つ上の桁を-1 */
+		end_ff=0;
+		end_ss--;
+		if (end_ss<0) {	/* 負になったら一つ上の桁を-1 */
+			end_ss=0;
+			end_mm--;
+		}
+	}
+	printf("Start CD platyer %02dm %02ds %02df - %02dm %02ds %02df\n\n",toc.point[0].mm,toc.point[0].ss,toc.point[0].ff,end_mm,end_ss,end_ff);
+	i=IDE_atapi_play_audio_msf(device,toc.point[0].mm,toc.point[0].ss,toc.point[0].ff,end_mm,end_ss,end_ff);
+
+	/* メインループ */
+	current_trk=current_mm=current_ss=-1;
+	mode=0;
+	CDpause=1;	/* 一時停止フラグ */
+	CDplay=2;	/* CD再生中 */
+	while(CDplay) {
+
+		/* 現在の再生時間(位置)取得 */
+		if (CDplay==2) {
+			i=IDE_atapi_read_subchannel(device,1/*MSF*/,1/*SubQ*/,1/*CD*/,0,16,read_buf);
+			if (i!=0) printf("errorcode1=%d\n",i);
+			if (read_buf[6]>last_trak) {	/* 再生終了時間まできたら */
+				printf("Play Stop\n");
+				i=IDE_atapi_stop_playback(device);	/* CD再生停止 */
+				if (i!=0) printf("errorcode2=%d\n",i);
+				CDplay=1;	/* CD再生停止中 */
+				current_trk=toc.point[0].trk;	/* 停止位置は先頭トラックにしておく */
+			}
+		}
+		if (CDplay==2) {	/* CD再生中 */
+			if (mode) {	/* CDの先頭からの時間 */
+				if ((current_trk!=read_buf[6])||(current_mm!=read_buf[9])||(current_ss!=read_buf[10])) {
+					l=read_buf[9]*60+read_buf[10];			/* 秒に変換 */
+					i=toc.point[0].mm*60+toc.point[0].ss;	/* 秒に変換 */
+					m=(l-i)/60;	/* 分に変換 */
+					s=(l-i)%60;	/* あまり=秒 */
+					printf("Track %02d  [ Absolute Time  %02dm %02ds ]\n",read_buf[6],m,s);
+					current_mm=read_buf[9];	/* 現在の時間を保存 */
+					current_ss=read_buf[10];
+				}
+			} else {	/* トラック時間 */
+				if ((current_trk!=read_buf[6])||(current_mm!=read_buf[13])||(current_ss!=read_buf[14])) {
+					if (current_trk!=read_buf[6]) track_chg=1;	/* トラックチェンジフラグ */
+					if ((read_buf[13]==0)&&(read_buf[14]==0)) track_chg=0;	/* フラグクリア */
+					if (track_chg) {	/* トラック間のギャップ再生中はマイナス表示 */
+						printf("Track %02d  [ Track Time -%02dm %02ds ]\n",read_buf[6],read_buf[13],read_buf[14]);
+					} else {			/* トラック再生中 */
+						printf("Track %02d  [ Track Time  %02dm %02ds ]\n",read_buf[6],read_buf[13],read_buf[14]);
+					}
+					current_mm=read_buf[13];	/* 現在の時間を保存 */
+					current_ss=read_buf[14];
+				}
+			}
+			current_trk=read_buf[6];	/* 現在のトラック番号を保存 */
+		}
+		if (kbhit()) {	/* キーバッファに文字があればキー入力取得 */
+			c=toupper(getch());
+			l=0;
+			switch(c) {	/* CDプレーヤ再生制御 */
+				case 'E':
+					i=IDE_atapi_stop_playback(device);	/* CD再生停止 */
+					if (i!=0) printf("errorcode3=%d\n",i);
+					CDplay=0;	/* CDプレーヤ終了 */
+					break;
+				case 'T':	/* 時間表示モード変更 */
+					mode=(mode+1)&1;
+					break;
+				case 'P':	/* 一時停止/復帰 */
+					if (CDplay==2) {
+						CDpause=(CDpause+1)&1;
+						if (CDpause) printf("play\n");
+						else printf("pause...");
+						IDE_atapi_pause_resume(device,CDpause);	/* CD再生一時停止/解除 */
+					}
+					break;
+				case 'S':	/* 停止状態からの再生 */
+					if (CDplay==1) {
+						l=-1;	/* トラック移動フラグ */
+					}
+					break;
+				case 'R':	/* 前のトラックへ */
+					if (CDplay==2) {
+						if (current_trk>1) {	/* トラック1より前はない */
+							track_chg=0;	/* トラック間のギャップは再生しないのでフラグクリア */
+							current_mm=-1;
+							current_trk--;
+							l=-1;	/* トラック移動フラグ */
+						}
+					}
+					break;
+				case 'F':	/* 次のトラックへ */
+					if (CDplay==2) {
+						if (current_trk<last_trak) {	/* 最終トラックより後はない */
+							track_chg=0;	/* トラック間のギャップは再生しないのでフラグクリア */
+							current_mm=-1;
+							current_trk++;
+							l=-1;	/* トラック移動フラグ */
+						}
+					}
+					break;
+			}
+			if (l==-1) {	/* 新トラックから再生 */
+				printf("Next Track %d\n",current_trk);
+				i=IDE_atapi_play_audio_msf(
+					device,toc.point[current_trk-1].mm,toc.point[current_trk-1].ss,toc.point[current_trk-1].ff,
+					end_mm,end_ss,end_ff);
+				if (i!=0) printf("errorcode4=%d\n",i);
+				CDplay=2;	/* CD再生中 */
+			}
+		}
+	}
+	return 0;
+}
+
+int main(int argc, char *argv[])
+{
+	int i,device,tocprint;
+#ifdef USE_INTERRUPT
+	unsigned long originalVector; /* 元の割り込みベクタ保存変数 */
+	unsigned int originalIrqMask; /* 元の割り込みマスク状態保存変数 */
+#endif
+
+	printf("\n\nCD plyer Ver.1.0\n\nDevice initialize ... ");
+
+	/* コマンドラインオプション指定チェック */
+	if (argc==1) {	/* コマンドライン指定なし */
+		tocprint=0;	/* CD-DA再生 */
+		device=-1;	/* デバイス自動検索 */
+	}
+	if (argc>=2) {	/* デバイス指定 / TOCダンプ指定 */
+		switch (*argv[1]) {
+			case '0':	/* デバイス0指定 */
+				tocprint=0;
+				device=0;
+				break;
+			case '1':	/* デバイス1指定 */
+				tocprint=0;
+				device=1;
+				break;
+			case 'T':	/* TOCダンプ指定 */
+			case 't':
+				tocprint=1;
+				device=-1;	/* 自動検索 */
+				break;
+		}
+	}
+	if (argc==3) {
+		if ((*argv[2]=='T')||(*argv[2]=='t')) {	/* TOCダンプ指定 */
+			tocprint=1;
+		}
+	}
+
+	/* PCIデバイス検索&リソース取得 */
+	if (PCI_Init() == -1) return -1;
+
+	/* デバイス初期化 */
+	i=IDE_Initialize_Device();	/* デバイス初期化 */
+	if (i<0) {
+		printf("initialize device mode error!!(errcode=%d)\n",i);
+		return -1;
+	} else {
+		printf("success\n");
+	}
+
+	/* 指定ドライブタイプチェック */
+	if ((device==0)&&(!(IDE_Get_Device_Type(DEVICE0)&DEVICE_CDROM))) {
+		printf("device 0 ... not CD-ROM drive\n");
+		return -1;
+	}
+	if ((device==1)&&(!(IDE_Get_Device_Type(DEVICE1)&DEVICE_CDROM))) {
+		printf("device 1 ... not CD-ROM drive\n");
+		return -1;
+	}
+	/* デバイス自動検索 */
+	if (device==-1) {
+		if (IDE_Get_Device_Type(DEVICE1)&DEVICE_CDROM) device=DEVICE1;	/* スレーブ */
+		if (IDE_Get_Device_Type(DEVICE0)&DEVICE_CDROM) device=DEVICE0;	/* マスタ */
+		if (device==-1) {
+			printf("CD-ROM Device not found\n");
+			return -1;
+		}
+	}
+
+#ifdef USE_INTERRUPT
+	/* 割り込み設定など */
+	/* 元の割り込みベクタ保存&割り込みマスク */
+	originalIrqMask=_maskIRQ(ATA_IRQ_NO,1);
+	/* 新割り込み処理関数設定 */
+	originalVector=_hookIRQ(ATA_IRQ_NO,&IDE_atapi_packet_interrupt);
+	/* ステータスリード */
+	in_byte(ATA_STR);
+	/* IRQn 割り込みマスク解除 */
+	_maskIRQ(ATA_IRQ_NO,0);
+#endif
+
+	/* メディアアクセスレディ待ち */
+	i=IDE_Media_AccessReady(device,MEDIA_ReadAccess);
+	if (i!=MEDIA_Ready) {	/* レディ状態 */
+		printf("Disk not ready\n");
+		return -1;
+	}
+
+	i=CDplay(device,tocprint);
+
+#ifdef USE_INTERRUPT
+	/* IRQn 割り込みマスク /*
+	_maskIRQ(ATA_IRQ_NO,1);
+	/* 元の割り込みベクタ復帰 */
+	_freeIRQ(ATA_IRQ_NO,originalVector);
+	/* 元の割り込みマスク状態復帰 */
+	_maskIRQ(ATA_IRQ_NO,originalIrqMask);
+#endif
+
+	return 0;
+}

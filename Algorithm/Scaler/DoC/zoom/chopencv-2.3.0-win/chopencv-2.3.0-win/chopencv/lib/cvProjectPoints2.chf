@@ -1,0 +1,10 @@
+void cvProjectPoints2(CvMat* object_points, CvMat* rotation_vector, CvMat* translation_vector, CvMat* intrinsic_matrix, CvMat* distortion_coeffs, CvMat* image_points, CvMat* dpdrot, CvMat* dpdt, CvMat* dpdf, CvMat* dpdc, CvMat* dpddist) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvProjectPoints2_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvProjectPoints2, object_points, rotation_vector, translation_vector, intrinsic_matrix, distortion_coeffs, image_points, dpdrot, dpdt, dpdf, dpdc, dpddist);
+}

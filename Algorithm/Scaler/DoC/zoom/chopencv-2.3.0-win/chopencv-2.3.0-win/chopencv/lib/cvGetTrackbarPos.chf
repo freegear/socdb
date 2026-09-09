@@ -1,0 +1,12 @@
+int cvGetTrackbarPos(char* trackbar_name, char* window_name) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chhighgui_handle, "cvGetTrackbarPos_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvGetTrackbarPos, trackbar_name, window_name);
+    return retval;
+}

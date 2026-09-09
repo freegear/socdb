@@ -1,0 +1,12 @@
+CvGraphEdge* cvFindGraphEdgeByPtr(CvGraph* graph, CvGraphVtx* start_vtx, CvGraphVtx* end_vtx) {
+    void *fptr;
+    CvGraphEdge*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvFindGraphEdgeByPtr_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvFindGraphEdgeByPtr, graph, start_vtx, end_vtx);
+    return retval;
+}

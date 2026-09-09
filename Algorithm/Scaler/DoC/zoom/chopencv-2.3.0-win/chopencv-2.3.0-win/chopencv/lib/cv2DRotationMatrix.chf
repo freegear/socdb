@@ -1,0 +1,12 @@
+CvMat* cv2DRotationMatrix(CvPoint2D32f center, double angle, double scale, CvMat* map_matrix) {
+    void *fptr;
+    CvMat*retval;
+
+    fptr = dlsym(_Chcv_handle, "cv2DRotationMatrix_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cv2DRotationMatrix, center, angle, scale, map_matrix);
+    return retval;
+}

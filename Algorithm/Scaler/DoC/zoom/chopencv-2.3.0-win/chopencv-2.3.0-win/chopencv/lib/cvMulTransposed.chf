@@ -1,0 +1,10 @@
+void cvMulTransposed(CvArr* src, CvArr* dst, int order, CvArr* delta) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvMulTransposed_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvMulTransposed, src, dst, order, delta);
+}

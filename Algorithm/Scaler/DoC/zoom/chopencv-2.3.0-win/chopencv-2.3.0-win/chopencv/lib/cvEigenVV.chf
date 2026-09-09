@@ -1,0 +1,10 @@
+void cvEigenVV(CvArr* mat, CvArr* evects, CvArr* evals, double eps) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvEigenVV_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvEigenVV, mat, evects, evals, eps);
+}

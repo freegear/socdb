@@ -1,0 +1,12 @@
+int icvGetCrossLineDirect(CvPoint2D32f p1, CvPoint2D32f p2, float a, float b, float c, CvPoint2D32f* cross) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "icvGetCrossLineDirect_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, icvGetCrossLineDirect, p1, p2, a, b, c, cross);
+    return retval;
+}

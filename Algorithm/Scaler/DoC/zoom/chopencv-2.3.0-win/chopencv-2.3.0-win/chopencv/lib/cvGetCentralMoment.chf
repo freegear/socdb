@@ -1,0 +1,12 @@
+double cvGetCentralMoment(CvMoments* moments, int x_order, int y_order) {
+    void *fptr;
+    double retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGetCentralMoment_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvGetCentralMoment, moments, x_order, y_order);
+    return retval;
+}

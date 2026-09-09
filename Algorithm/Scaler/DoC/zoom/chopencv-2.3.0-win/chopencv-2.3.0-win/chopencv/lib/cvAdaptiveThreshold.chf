@@ -1,0 +1,10 @@
+void cvAdaptiveThreshold(CvArr* src, CvArr* dst, double max_value, int adaptive_method, int threshold_type, int block_size, double param1) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvAdaptiveThreshold_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvAdaptiveThreshold, src, dst, max_value, adaptive_method, threshold_type, block_size, param1);
+}

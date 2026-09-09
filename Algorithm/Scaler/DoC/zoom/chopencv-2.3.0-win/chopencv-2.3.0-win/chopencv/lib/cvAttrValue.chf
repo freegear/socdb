@@ -1,0 +1,12 @@
+const char* cvAttrValue(CvAttrList* attr, char* attr_name) {
+    void *fptr;
+    const char*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvAttrValue_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvAttrValue, attr, attr_name);
+    return retval;
+}

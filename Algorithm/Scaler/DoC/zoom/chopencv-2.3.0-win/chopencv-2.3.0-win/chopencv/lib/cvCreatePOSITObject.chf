@@ -1,0 +1,12 @@
+CvPOSITObject* cvCreatePOSITObject(CvPoint3D32f* points, int point_count) {
+    void *fptr;
+    CvPOSITObject*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreatePOSITObject_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreatePOSITObject, points, point_count);
+    return retval;
+}

@@ -1,0 +1,10 @@
+void cvCalcArrHist(CvArr** arr, CvHistogram* hist, int accumulate, CvArr* mask) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcArrHist_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCalcArrHist, arr, hist, accumulate, mask);
+}

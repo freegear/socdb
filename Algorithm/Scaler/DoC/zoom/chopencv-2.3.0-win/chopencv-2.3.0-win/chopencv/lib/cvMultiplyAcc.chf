@@ -1,0 +1,10 @@
+void cvMultiplyAcc(CvArr* image1, CvArr* image2, CvArr* acc, CvArr* mask) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvMultiplyAcc_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvMultiplyAcc, image1, image2, acc, mask);
+}

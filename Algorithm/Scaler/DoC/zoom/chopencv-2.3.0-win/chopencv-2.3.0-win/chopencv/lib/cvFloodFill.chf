@@ -1,0 +1,10 @@
+void cvFloodFill(CvArr* image, CvPoint seed_point, CvScalar new_val, CvScalar lo_diff, CvScalar up_diff, CvConnectedComp* comp, int flags, CvArr* mask) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvFloodFill_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvFloodFill, image, seed_point, new_val, lo_diff, up_diff, comp, flags, mask);
+}

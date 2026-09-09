@@ -1,0 +1,12 @@
+CvContourTree* cvCreateContourTree(CvSeq* contour, CvMemStorage* storage, double threshold) {
+    void *fptr;
+    CvContourTree*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreateContourTree_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateContourTree, contour, storage, threshold);
+    return retval;
+}

@@ -1,0 +1,12 @@
+CvEHMM* cvCreate2DHMM(int* stateNumber, int* numMix, int obsSize) {
+    void *fptr;
+    CvEHMM*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreate2DHMM_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreate2DHMM, stateNumber, numMix, obsSize);
+    return retval;
+}

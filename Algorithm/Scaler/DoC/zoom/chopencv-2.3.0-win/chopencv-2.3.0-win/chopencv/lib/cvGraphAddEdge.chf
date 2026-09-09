@@ -1,0 +1,12 @@
+int cvGraphAddEdge(CvGraph* graph, int start_idx, int end_idx, CvGraphEdge* edge, CvGraphEdge** inserted_edge) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cvGraphAddEdge_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvGraphAddEdge, graph, start_idx, end_idx, edge, inserted_edge);
+    return retval;
+}

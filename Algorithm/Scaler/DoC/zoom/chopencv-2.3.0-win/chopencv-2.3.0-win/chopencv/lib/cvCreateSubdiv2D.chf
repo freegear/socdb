@@ -1,0 +1,12 @@
+CvSubdiv2D* cvCreateSubdiv2D(int subdiv_type, int header_size, int vtx_size, int quadedge_size, CvMemStorage* storage) {
+    void *fptr;
+    CvSubdiv2D*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreateSubdiv2D_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateSubdiv2D, subdiv_type, header_size, vtx_size, quadedge_size, storage);
+    return retval;
+}

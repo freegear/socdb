@@ -1,0 +1,10 @@
+void cvPolyLine(CvArr* img, CvPoint** pts, int* npts, int contours, int is_closed, CvScalar color, int thickness, int line_type, int shift) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvPolyLine_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvPolyLine, img, pts, npts, contours, is_closed, color, thickness, line_type, shift);
+}

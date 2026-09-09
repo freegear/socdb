@@ -1,0 +1,10 @@
+void icvGetCrossDirectDirect(CvVect64d direct1, CvVect64d direct2, CvPoint2D64d *cross, int* result) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvGetCrossDirectDirect_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvGetCrossDirectDirect, direct1, direct2, cross, result);
+}

@@ -1,0 +1,12 @@
+CvTermCriteria cvCheckTermCriteria(CvTermCriteria criteria, double default_eps, int default_max_iters) {
+    void *fptr;
+    CvTermCriteria retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCheckTermCriteria_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvCheckTermCriteria, criteria, default_eps, default_max_iters);
+    return retval;
+}

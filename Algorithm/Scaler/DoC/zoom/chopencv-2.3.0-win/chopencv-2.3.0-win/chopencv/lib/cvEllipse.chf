@@ -1,0 +1,10 @@
+void cvEllipse(CvArr* img, CvPoint center, CvSize axes, double angle, double start_angle, double end_angle, CvScalar color, int thickness, int line_type, int shift) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvEllipse_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvEllipse, img, center, axes, angle, start_angle, end_angle, color, thickness, line_type, shift);
+}

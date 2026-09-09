@@ -1,0 +1,10 @@
+void cvDrawChessboardCorners(CvArr* image, CvSize pattern_size, CvPoint2D32f* corners, int count, int pattern_was_found) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvDrawChessboardCorners_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvDrawChessboardCorners, image, pattern_size, corners, count, pattern_was_found);
+}

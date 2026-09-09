@@ -1,0 +1,10 @@
+void cvSmooth(CvArr* src, CvArr* dst, int smoothtype, int param1, int param2, double param3) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSmooth_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSmooth, src, dst, smoothtype, param1, param2, param3);
+}

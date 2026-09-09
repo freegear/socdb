@@ -1,0 +1,12 @@
+int cvVoronoiDiagramFromImage(IplImage* pImage, CvSeq** ContourSeq, CvVoronoiDiagram2D** VoronoiDiagram, CvMemStorage* VoronoiStorage, CvLeeParameters regularization_method, float approx_precision) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cvVoronoiDiagramFromImage_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvVoronoiDiagramFromImage, pImage, ContourSeq, VoronoiDiagram, VoronoiStorage, regularization_method, approx_precision);
+    return retval;
+}

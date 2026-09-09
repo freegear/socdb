@@ -1,0 +1,10 @@
+void cvReadRawDataSlice(CvFileStorage* fs, CvSeqReader* reader, int count, void* dst, char* dt) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvReadRawDataSlice_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvReadRawDataSlice, fs, reader, count, dst, dt);
+}

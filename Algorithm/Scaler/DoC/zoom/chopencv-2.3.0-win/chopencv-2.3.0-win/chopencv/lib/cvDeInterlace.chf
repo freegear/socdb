@@ -1,0 +1,10 @@
+void cvDeInterlace(CvArr* frame, CvArr* fieldEven, CvArr* fieldOdd) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvDeInterlace_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvDeInterlace, frame, fieldEven, fieldOdd);
+}

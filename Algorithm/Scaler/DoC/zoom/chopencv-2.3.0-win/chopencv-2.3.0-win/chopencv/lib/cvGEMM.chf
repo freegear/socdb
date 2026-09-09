@@ -1,0 +1,10 @@
+void cvGEMM(CvArr* src1, CvArr* src2, double alpha, CvArr* src3, double beta, CvArr* dst, int tABC) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvGEMM_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvGEMM, src1, src2, alpha, src3, beta, dst, tABC);
+}

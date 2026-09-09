@@ -1,0 +1,10 @@
+void cvMorphEpilinesMulti(int line_count, uchar* first_pix, int* first_num, uchar* second_pix, int* second_num, uchar* dst_pix, int* dst_num, float alpha, int* first, int* first_runs, int* second, int* second_runs, int* first_corr, int* second_corr) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvMorphEpilinesMulti_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvMorphEpilinesMulti, line_count, first_pix, first_num, second_pix, second_num, dst_pix, dst_num, alpha, first, first_runs, second, second_runs, first_corr, second_corr);
+}

@@ -1,0 +1,12 @@
+int icvGetSymPoint3D(CvPoint3D64d pointCorner, CvPoint3D64d point1, CvPoint3D64d point2, CvPoint3D64d *pointSym2) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "icvGetSymPoint3D_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, icvGetSymPoint3D, pointCorner, point1, point2, pointSym2);
+    return retval;
+}

@@ -1,0 +1,12 @@
+uchar* cvPtrND(CvArr* arr, int* idx, int* type, int create_node, unsigned* precalc_hashval) {
+    void *fptr;
+    uchar*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvPtrND_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvPtrND, arr, idx, type, create_node, precalc_hashval);
+    return retval;
+}

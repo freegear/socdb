@@ -1,0 +1,10 @@
+void cvDynamicCorrespondMulti(int line_count, int* first, int* first_runs, int* second, int* second_runs, int* first_corr, int* second_corr) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvDynamicCorrespondMulti_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvDynamicCorrespondMulti, line_count, first, first_runs, second, second_runs, first_corr, second_corr);
+}

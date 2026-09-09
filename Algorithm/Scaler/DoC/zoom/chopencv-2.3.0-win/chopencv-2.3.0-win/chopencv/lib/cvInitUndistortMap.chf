@@ -1,0 +1,10 @@
+void cvInitUndistortMap(CvMat* intrinsic_matrix, CvMat* distortion_coeffs, CvArr* mapx, CvArr* mapy) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvInitUndistortMap_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvInitUndistortMap, intrinsic_matrix, distortion_coeffs, mapx, mapy);
+}

@@ -1,0 +1,12 @@
+void* cvGetWindowHandle(char* name) {
+    void *fptr;
+    void*retval;
+
+    fptr = dlsym(_Chhighgui_handle, "cvGetWindowHandle_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvGetWindowHandle, name);
+    return retval;
+}

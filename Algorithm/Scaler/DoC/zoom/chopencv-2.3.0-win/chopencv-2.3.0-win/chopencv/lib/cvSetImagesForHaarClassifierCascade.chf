@@ -1,0 +1,10 @@
+void cvSetImagesForHaarClassifierCascade(CvHaarClassifierCascade* cascade, CvArr* sum, CvArr* sqsum, CvArr* tilted_sum, double scale) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSetImagesForHaarClassifierCascade_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSetImagesForHaarClassifierCascade, cascade, sum, sqsum, tilted_sum, scale);
+}

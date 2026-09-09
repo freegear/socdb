@@ -1,0 +1,12 @@
+CvSeq* cvConvexityDefects(CvArr* contour, CvArr* convexhull, CvMemStorage* storage) {
+    void *fptr;
+    CvSeq*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvConvexityDefects_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvConvexityDefects, contour, convexhull, storage);
+    return retval;
+}

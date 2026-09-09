@@ -1,0 +1,10 @@
+void icvGetCutPiece(CvVect64d areaLineCoef1, CvVect64d areaLineCoef2, CvPoint2D64d epipole, CvSize imageSize, CvPoint2D64d* point11, CvPoint2D64d* point12, CvPoint2D64d* point21, CvPoint2D64d* point22, int* result) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvGetCutPiece_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvGetCutPiece, areaLineCoef1, areaLineCoef2, epipole, imageSize, point11, point12, point21, point22, result);
+}

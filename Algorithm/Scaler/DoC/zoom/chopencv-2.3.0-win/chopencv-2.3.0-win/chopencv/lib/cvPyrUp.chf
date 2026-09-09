@@ -1,0 +1,10 @@
+void cvPyrUp(CvArr* src, CvArr* dst, int filter) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvPyrUp_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvPyrUp, src, dst, filter);
+}

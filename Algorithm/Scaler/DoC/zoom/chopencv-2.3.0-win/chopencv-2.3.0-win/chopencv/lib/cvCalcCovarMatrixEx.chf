@@ -1,0 +1,10 @@
+void cvCalcCovarMatrixEx(int nObjects, void* input, int ioFlags, int ioBufSize, uchar* buffer, void* userData, IplImage* avg, float* covarMatrix) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcCovarMatrixEx_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCalcCovarMatrixEx, nObjects, input, ioFlags, ioBufSize, buffer, userData, avg, covarMatrix);
+}

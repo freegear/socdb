@@ -1,0 +1,10 @@
+void cvCalcArrBackProjectPatch(CvArr** image, CvArr* dst, CvSize range, CvHistogram* hist, int method, double factor) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcArrBackProjectPatch_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCalcArrBackProjectPatch, image, dst, range, hist, method, factor);
+}

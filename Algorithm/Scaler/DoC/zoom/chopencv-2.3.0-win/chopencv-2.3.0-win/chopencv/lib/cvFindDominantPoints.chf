@@ -1,0 +1,12 @@
+CvSeq* cvFindDominantPoints(CvSeq* contour, CvMemStorage* storage, int method, double parameter1, double parameter2, double parameter3, double parameter4) {
+    void *fptr;
+    CvSeq*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvFindDominantPoints_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvFindDominantPoints, contour, storage, method, parameter1, parameter2, parameter3, parameter4);
+    return retval;
+}

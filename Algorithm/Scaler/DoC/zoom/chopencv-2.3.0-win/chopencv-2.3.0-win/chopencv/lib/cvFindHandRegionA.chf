@@ -1,0 +1,10 @@
+void cvFindHandRegionA(CvPoint3D32f* points, int count, CvSeq* indexs, float* line, CvSize2D32f size, int jc, CvPoint3D32f* center, CvMemStorage* storage, CvSeq ** numbers) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvFindHandRegionA_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvFindHandRegionA, points, count, indexs, line, size, jc, center, storage, numbers);
+}

@@ -1,0 +1,12 @@
+CvErrorCallback cvRedirectError(CvErrorCallback error_handler, void* userdata, void** prev_userdata) {
+    void *fptr;
+    CvErrorCallback retval;
+
+    fptr = dlsym(_Chcv_handle, "cvRedirectError_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvRedirectError, error_handler, userdata, prev_userdata);
+    return retval;
+}

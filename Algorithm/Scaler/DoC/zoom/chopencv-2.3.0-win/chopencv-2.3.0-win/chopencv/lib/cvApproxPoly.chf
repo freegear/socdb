@@ -1,0 +1,12 @@
+CvSeq* cvApproxPoly(void* src_seq, int header_size, CvMemStorage* storage, int method, double parameter, int parameter2) {
+    void *fptr;
+    CvSeq*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvApproxPoly_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvApproxPoly, src_seq, header_size, storage, method, parameter, parameter2);
+    return retval;
+}

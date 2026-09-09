@@ -1,0 +1,12 @@
+int cvFindFundamentalMat(CvMat* points1, CvMat* points2, CvMat* fundamental_matrix, int method, double param1, double param2, CvMat* status) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cvFindFundamentalMat_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvFindFundamentalMat, points1, points2, fundamental_matrix, method, param1, param2, status);
+    return retval;
+}

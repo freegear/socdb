@@ -1,0 +1,10 @@
+void icvGetCrossPieceDirect(CvPoint2D64d p_start, CvPoint2D64d p_end, double a, double b, double c, CvPoint2D64d *cross, int* result) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvGetCrossPieceDirect_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvGetCrossPieceDirect, p_start, p_end, a, b, c, cross, result);
+}

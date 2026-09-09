@@ -1,0 +1,10 @@
+void cvMakeAlphaScanlines(int* scanlines1, int* scanlines2, int* scanlinesA, int* lengths, int line_count, float alpha) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvMakeAlphaScanlines_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvMakeAlphaScanlines, scanlines1, scanlines2, scanlinesA, lengths, line_count, alpha);
+}

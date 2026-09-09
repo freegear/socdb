@@ -1,0 +1,12 @@
+char* cvSeqSearch(CvSeq* seq, void* elem, CvCmpFunc func, int is_sorted, int* elem_idx, void* userdata) {
+    void *fptr;
+    char*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvSeqSearch_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvSeqSearch, seq, elem, func, is_sorted, elem_idx, userdata);
+    return retval;
+}

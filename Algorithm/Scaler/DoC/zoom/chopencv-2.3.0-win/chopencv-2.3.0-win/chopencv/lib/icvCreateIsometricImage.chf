@@ -1,0 +1,12 @@
+IplImage* icvCreateIsometricImage(IplImage* src, IplImage* dst, int desired_depth, int desired_num_channels) {
+    void *fptr;
+    IplImage*retval;
+
+    fptr = dlsym(_Chcv_handle, "icvCreateIsometricImage_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, icvCreateIsometricImage, src, dst, desired_depth, desired_num_channels);
+    return retval;
+}

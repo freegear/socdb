@@ -1,0 +1,12 @@
+CvSeq* cvCreateSeq(int seq_flags, int header_size, int elem_size, CvMemStorage* storage) {
+    void *fptr;
+    CvSeq*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreateSeq_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateSeq, seq_flags, header_size, elem_size, storage);
+    return retval;
+}

@@ -1,0 +1,12 @@
+int cvNulDevReport(int status, char* func_name, char* err_msg, char* file_name, int line, void* userdata) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cvNulDevReport_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvNulDevReport, status, func_name, err_msg, file_name, line, userdata);
+    return retval;
+}

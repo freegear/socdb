@@ -1,0 +1,10 @@
+void cvCalcOpticalFlowHS(CvArr* prev, CvArr* curr, int use_previous, CvArr* velx, CvArr* vely, double lambda, CvTermCriteria criteria) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcOpticalFlowHS_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCalcOpticalFlowHS, prev, curr, use_previous, velx, vely, lambda, criteria);
+}

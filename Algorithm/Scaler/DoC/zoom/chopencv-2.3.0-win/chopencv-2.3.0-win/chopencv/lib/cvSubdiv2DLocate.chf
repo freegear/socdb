@@ -1,0 +1,12 @@
+CvSubdiv2DPointLocation cvSubdiv2DLocate(CvSubdiv2D* subdiv, CvPoint2D32f pt, CvSubdiv2DEdge* edge, CvSubdiv2DPoint** vertex) {
+    void *fptr;
+    CvSubdiv2DPointLocation retval;
+
+    fptr = dlsym(_Chcv_handle, "cvSubdiv2DLocate_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvSubdiv2DLocate, subdiv, pt, edge, vertex);
+    return retval;
+}

@@ -1,0 +1,10 @@
+void icvGetQuadsTransform(CvSize imageSize, CvMatr64d camMatr1, CvMatr64d rotMatr1, CvVect64d transVect1, CvMatr64d camMatr2, CvMatr64d rotMatr2, CvVect64d transVect2, CvSize* warpSize, double *quad1, double *quad2, CvMatr64d fundMatr, CvPoint3D64d* epipole1, CvPoint3D64d* epipole2) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvGetQuadsTransform_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvGetQuadsTransform, imageSize, camMatr1, rotMatr1, transVect1, camMatr2, rotMatr2, transVect2, warpSize, quad1, quad2, fundMatr, epipole1, epipole2);
+}

@@ -1,0 +1,10 @@
+void cvCornerHarris(CvArr* image, CvArr* harris_responce, int block_size, int aperture_size, double k) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCornerHarris_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCornerHarris, image, harris_responce, block_size, aperture_size, k);
+}

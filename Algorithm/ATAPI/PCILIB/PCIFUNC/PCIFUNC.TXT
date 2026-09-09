@@ -1,0 +1,176 @@
+PCI BIOSコールライブラリ(PCIFUNC) 関数一覧
+
+
+●PCIバス情報取得関数群
+▲_pciGetSts()
+	PCIバス関連情報の取得
+引き数	コンフィグレーションメカニズムバージョン変数ポインタ(unsigned char *型),
+	PCIバスバージョン変数ポインタ(unsigned int *型),
+	最大PCIバス番号変数ポインタ(unsigned char *型),
+	PCI BIOSシグネチャ変数ポインタ(unsigned long int *型)
+戻り値	unsigned int型   0:正常終了  0以外:エラー
+
+備考	戻り値が0以外だった場合、PCI BIOSおよびPCIバスがないと判断する．
+	正常終了時に各変数に格納される値
+	・コンフィグレーションメカニズムバージョン
+		_pciConfigVersion()の戻り値の下位8ビットと同様
+	・PCIバスバージョン
+		_pciBusVersion()の戻り値と同様
+	・最大PCIバス番号
+		_pciMaxBusNo()の戻り値と同様
+	・PCI BIOSシグネチャ
+		_pciSigPCI()の戻り値と同様
+
+
+▲_pciConfigVersion()
+	コンフィグレーションメカニズムバージョンほかの情報取得
+引き数	なし
+戻り値	unsigned int型
+	ビット15～8 0:正常終了  0以外:エラー
+	ビット7～6 予約(0)
+	ビット5   1:スペシャルサイクルはコンフィグレーションメカニズム2でサポート
+	          0:未サポート
+	ビット4   1:スペシャルサイクルはコンフィグレーションメカニズム1でサポート
+	          0:未サポート
+	ビット3～2 予約(0)
+	ビット1   1:コンフィグレーションメカニズム2をサポート
+	          0:未サポート
+	ビット0   1:コンフィグレーションメカニズム1をサポート
+	          0:未サポート
+備考	戻り値の上位8ビットが0以外だった場合、PCI BIOSおよびPCIバスがないと判断
+
+
+▲_pciBusVersion()
+	PCIバスバージョンの取得
+引き数	なし
+戻り値	unsigned int型
+	ビット15～8  メジャーバージョン(BCD形式)
+	ビット7～0   マイナーバージョン(BCD形式)
+備考	PCIバス バージョン2.1のときの戻り値は 0x0210
+
+
+▲_pciMaxBusNo()
+	最大PCIバス番号の取得
+引き数	なし
+戻り値	最大PCIバス番号(unsigned char型)
+備考	PCIバスが1本しかない場合は0．AGPバスもPCIバスとして数える
+
+
+▲_pciSigPCI()
+	PCI BIOSシグネチャの取得
+引き数	なし
+戻り値	unsigned long int型
+		0x0x20494350(' PCI')  シグネチャ文字列あり
+		上記数値以外          シグネチャ文字列なし
+備考	シグネチャ文字列がない場合、PCI BIOSおよびPCIバスがないと判断
+
+
+▲_pciGetIrqRoute()
+	IRQルーティングテーブル情報の取得
+引き数	unsigned int型,unsigned char far *型
+戻り値	unsigned long int型
+備考	PnP OS用ファンクション(詳細は省略)
+
+
+※コメント：
+　_pciConfigVersion()/_pciBusVersion()/_pciMaxBusNo()/_pciSigPCI()関数でそれぞれの情報を独立して取得するか、_pciGetSts()関数で一度に取得するかの違い。どちらの関数を使っても取得できる情報は同じ。
+　_pciGetIrqRoute()はプラグ&プレイ対応OS用のエントリ。使用するにはシステムに関する深い知識が必要なため、ここでは説明しない(下手に触らないほうがよい)。
+
+
+
+●PCIデバイス検索関数群
+▲_pciFindPciDevice()
+	ベンダID&デバイスIDによるPCIデバイス検索
+引き数	デバイスID(unsigned int型),ベンダID(unsigned int型),インデックス(unsigned int型)
+戻り値	PCIデバイスアドレス(unsigned long int型)
+	ビット7～0  エラーコード
+		0:正常終了
+		0x86:デバイスが存在しない
+		0x83:ベンダIDが正しくない(0xFFFFの場合)
+	ビット15～8  予約
+	ビット31～24 PCIバス番号(正常終了時)
+	ビット23～19 デバイス番号(正常終了時)
+	ビット18～16 ファンクション番号(正常終了時)
+備考	インデックスの値が0のとき、PCIバスを検索して最初に見つかった目的のデバイスのPCIデバイスアドレス(バス番号/デバイス番号/ファンクション番号)を返す。同じベンダID/デバイスIDをもったPCIデバイスが複数実装されているか、2枚目以降のデバイスを探すときはインデックスを1にする。以降同様。
+
+
+▲_pciFindPciClass()
+	クラスコードによるPCIデバイス検索
+引き数	基本クラス(unsigned char型),サブクラス(unsigned char型),プログラムI/F(unsigned char型),インデックス(unsigned int型)
+戻り値	PCIデバイスアドレス(unsigned long int型)
+	ビット7～0  エラーコード
+		0:正常終了
+		0x86:デバイスが存在しない
+		0x83:クラスコードが正しくない
+	ビット15～8  予約
+	ビット31～24 PCIバス番号(正常終了時)
+	ビット23～19 デバイス番号(正常終了時)
+	ビット18～16 ファンクション番号(正常終了時)
+備考	インデックスの使い方はpciFindPciDevice()と同様
+
+
+●コンフィグレーションレジスタ読み出し関数群
+▲_pciConfigReadByte()
+	コンフィグレーションレジスタ バイト(8ビット)読み出し
+引き数	PCIデバイスアドレス(unsigned int型),レジスタアドレス(unsigned int型)
+戻り値	読み出しデータ(unsigned char型)
+備考	PCIデバイスアドレスは、_pciFindPciDevice()や_pciFindPciClass()の戻り値と同じフォーマット．以下のコンフィグレーションレジスタ読み出し関数もすべて同様
+
+▲_pciConfigReadWord()
+	コンフィグレーションレジスタ ワード(16ビット)読み出し
+引き数	PCIデバイスアドレス(unsigned int型),レジスタアドレス(unsigned int型)
+戻り値	読み出しデータ(unsigned int型)
+備考	レジスタアドレスは偶数アドレスのみ指定
+
+▲_pciConfigReadLong()
+	コンフィグレーションレジスタ ダブルワード(32ビット)読み出し
+引き数	PCIデバイスアドレス(unsigned int型),レジスタアドレス(unsigned int型)
+戻り値	読み出しデータ(unsigned long int型)
+備考	レジスタアドレスは4バイト境界アドレスのみ指定
+
+
+
+●コンフィグレーションレジスタ書き込み関数群
+▲_pciConfigWriteByte()
+	コンフィグレーションレジスタ バイト(8ビット)書き込み
+引き数	PCIデバイスアドレス(unsigned int型),レジスタアドレス(unsigned int型),書き込みデータ(unsigned char型)
+備考	PCIデバイスアドレスは、_pciFindPciDevice()や_pciFindPciClass()の戻り値と同じフォーマット．以下のコンフィグレーションレジスタ書き込み関数もすべて同様
+
+▲_pciConfigWriteWord()
+	コンフィグレーションレジスタ ワード(16ビット)書き込み
+引き数	PCIデバイスアドレス(unsigned int型),レジスタアドレス(unsigned int型),書き込みデータ(unsigned int型)
+戻り値	なし
+備考	レジスタアドレスは偶数アドレスのみ指定
+
+▲_pciConfigWriteLong()
+	コンフィグレーションレジスタ ダブルワード(32ビット)書き込み
+引き数	PCIデバイスアドレス(unsigned int型),レジスタアドレス(unsigned int型),書き込みデータ(unsigned long int型)
+戻り値	なし
+備考	レジスタアドレスは4バイト境界アドレスのみ指定
+
+
+
+●PCIデバイスアドレス変換関数群 define定義
+▲pciBusDevFunc
+	バス番号/デバイス番号/ファンクション番号 → PCIデバイスアドレス変換
+引き数	PCIバス番号(0～255),デバイス番号(0～31),ファンクション番号(0～7)
+戻り値	PCIデバイスアドレス(unsigned int型)
+備考	PCIデバイスアドレスは、_pciFindPciDevice()や_pciFindPciClass()の戻り値と同じフォーマット．以下同様
+
+▲pciGetBus()
+	PCIデバイスアドレス → PCIバス番号取得
+引き数	PCIデバイスアドレス(unsigned int型)
+戻り値	PCIバス番号(0～255)
+
+▲pciGetDev()
+	PCIデバイスアドレス → デバイス番号取得
+引き数	PCIデバイスアドレス(unsigned int型)
+戻り値	デバイス番号(0～31)
+
+▲pciGetFunc()
+	PCIデバイスアドレス → ファンクション番号取得
+引き数	PCIデバイスアドレス(unsigned int型)
+戻り値	ファンクション番号(0～7)
+
+
+

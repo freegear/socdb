@@ -1,0 +1,12 @@
+CvFaceTracker* cvInitFaceTracker(CvFaceTracker* pFaceTracking, IplImage* imgGray, CvRect* pRects, int nRects) {
+    void *fptr;
+    CvFaceTracker*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvInitFaceTracker_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvInitFaceTracker, pFaceTracking, imgGray, pRects, nRects);
+    return retval;
+}

@@ -1,0 +1,12 @@
+float cvEViterbi(CvImgObsInfo* obs_info, CvEHMM* hmm) {
+    void *fptr;
+    float retval;
+
+    fptr = dlsym(_Chcv_handle, "cvEViterbi_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvEViterbi, obs_info, hmm);
+    return retval;
+}

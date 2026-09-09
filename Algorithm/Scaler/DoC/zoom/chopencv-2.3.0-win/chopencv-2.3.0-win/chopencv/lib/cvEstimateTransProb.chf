@@ -1,0 +1,10 @@
+void cvEstimateTransProb(CvImgObsInfo** obs_info_array, int num_img, CvEHMM* hmm) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvEstimateTransProb_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvEstimateTransProb, obs_info_array, num_img, hmm);
+}

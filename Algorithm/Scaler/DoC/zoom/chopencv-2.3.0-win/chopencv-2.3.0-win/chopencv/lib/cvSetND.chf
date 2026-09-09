@@ -1,0 +1,10 @@
+void cvSetND(CvArr* arr, int* idx, CvScalar value) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvSetND_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvSetND, arr, idx, value);
+}

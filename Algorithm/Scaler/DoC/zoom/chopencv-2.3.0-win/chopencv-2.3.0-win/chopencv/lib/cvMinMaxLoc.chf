@@ -1,0 +1,10 @@
+void cvMinMaxLoc(CvArr* arr, double* min_val, double* max_val, CvPoint* min_loc, CvPoint* max_loc, CvArr* mask) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvMinMaxLoc_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvMinMaxLoc, arr, min_val, max_val, min_loc, max_loc, mask);
+}

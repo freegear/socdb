@@ -1,0 +1,10 @@
+void cvLUT(CvArr* src, CvArr* dst, CvArr* lut) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvLUT_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvLUT, src, dst, lut);
+}

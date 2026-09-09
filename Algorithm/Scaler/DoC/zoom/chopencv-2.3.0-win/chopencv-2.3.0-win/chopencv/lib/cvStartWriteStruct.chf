@@ -1,0 +1,10 @@
+void cvStartWriteStruct(CvFileStorage* fs, char* name, int struct_flags, char* type_name, CvAttrList attributes) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvStartWriteStruct_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvStartWriteStruct, fs, name, struct_flags, type_name, attributes);
+}

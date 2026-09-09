@@ -1,0 +1,10 @@
+void cvResetImageROI(IplImage* image) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvResetImageROI_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvResetImageROI, image);
+}

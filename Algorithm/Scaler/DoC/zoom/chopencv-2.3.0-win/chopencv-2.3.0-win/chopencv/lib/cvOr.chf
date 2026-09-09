@@ -1,0 +1,10 @@
+void cvOr(CvArr* src1, CvArr* src2, CvArr* dst, CvArr* mask) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvOr_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvOr, src1, src2, dst, mask);
+}

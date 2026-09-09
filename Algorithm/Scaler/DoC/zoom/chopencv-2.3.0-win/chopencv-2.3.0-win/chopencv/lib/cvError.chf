@@ -1,0 +1,10 @@
+void cvError(int status, char* func_name, char* err_msg, char* file_name, int line) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvError_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvError, status, func_name, err_msg, file_name, line);
+}

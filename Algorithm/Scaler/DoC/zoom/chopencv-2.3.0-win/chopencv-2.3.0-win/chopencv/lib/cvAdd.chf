@@ -1,0 +1,10 @@
+void cvAdd(CvArr* src1, CvArr* src2, CvArr* dst, CvArr* mask) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvAdd_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvAdd, src1, src2, dst, mask);
+}

@@ -1,0 +1,12 @@
+CvSparseNode* cvInitSparseMatIterator(CvSparseMat* mat, CvSparseMatIterator* mat_iterator) {
+    void *fptr;
+    CvSparseNode*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvInitSparseMatIterator_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvInitSparseMatIterator, mat, mat_iterator);
+    return retval;
+}

@@ -1,0 +1,12 @@
+CvHistogram* cvCreateHist(int dims, int* sizes, int type, float** ranges, int uniform) {
+    void *fptr;
+    CvHistogram*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreateHist_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateHist, dims, sizes, type, ranges, uniform);
+    return retval;
+}

@@ -1,0 +1,12 @@
+int cvMeanShift(CvArr* prob_image, CvRect window, CvTermCriteria criteria, CvConnectedComp* comp) {
+    void *fptr;
+    int retval;
+
+    fptr = dlsym(_Chcv_handle, "cvMeanShift_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return -1;
+    }
+    dlrunfun(fptr, &retval, cvMeanShift, prob_image, window, criteria, comp);
+    return retval;
+}

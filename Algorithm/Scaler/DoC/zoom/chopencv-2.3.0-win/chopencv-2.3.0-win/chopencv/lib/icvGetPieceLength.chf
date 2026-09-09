@@ -1,0 +1,10 @@
+void icvGetPieceLength(CvPoint2D64d point1, CvPoint2D64d point2, double* dist) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvGetPieceLength_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvGetPieceLength, point1, point2, dist);
+}

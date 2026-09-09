@@ -1,0 +1,12 @@
+CvSeq* cvApproxChains(CvSeq* src_seq, CvMemStorage* storage, int method, double parameter, int minimal_perimeter, int recursive) {
+    void *fptr;
+    CvSeq*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvApproxChains_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvApproxChains, src_seq, storage, method, parameter, minimal_perimeter, recursive);
+    return retval;
+}

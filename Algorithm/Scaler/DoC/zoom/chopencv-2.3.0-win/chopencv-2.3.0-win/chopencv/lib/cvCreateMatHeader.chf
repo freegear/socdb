@@ -1,0 +1,12 @@
+CvMat* cvCreateMatHeader(int rows, int cols, int type) {
+    void *fptr;
+    CvMat*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreateMatHeader_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateMatHeader, rows, cols, type);
+    return retval;
+}

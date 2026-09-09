@@ -1,0 +1,12 @@
+CvKalman* cvCreateKalman(int dynam_params, int measure_params, int control_params) {
+    void *fptr;
+    CvKalman*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreateKalman_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateKalman, dynam_params, measure_params, control_params);
+    return retval;
+}

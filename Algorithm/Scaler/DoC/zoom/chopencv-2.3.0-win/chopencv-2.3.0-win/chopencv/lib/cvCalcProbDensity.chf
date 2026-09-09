@@ -1,0 +1,10 @@
+void cvCalcProbDensity(CvHistogram* hist1, CvHistogram* hist2, CvHistogram* dst_hist, double scale) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCalcProbDensity_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCalcProbDensity, hist1, hist2, dst_hist, scale);
+}

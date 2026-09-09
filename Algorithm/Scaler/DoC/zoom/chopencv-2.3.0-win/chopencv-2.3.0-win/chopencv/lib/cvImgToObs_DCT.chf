@@ -1,0 +1,10 @@
+void cvImgToObs_DCT(CvArr* arr, float* obs, CvSize dctSize, CvSize obsSize, CvSize delta) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvImgToObs_DCT_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvImgToObs_DCT, arr, obs, dctSize, obsSize, delta);
+}

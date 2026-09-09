@@ -1,0 +1,542 @@
+</>
+
+
+  beast  
+
+    * <-- <msg00057.html> Thread <index.html#00058> --> <msg00080.html>
+    * <-- <msg00057.html> Date <maillist.html#00058> --> <msg00059.html>
+    * Find
+
+
+  Oversampling
+
+Stefan Westerfeld
+Mon, 20 Feb 2006 15:58:01 -0800
+
+   Hi!
+
+I've implmeneted some code for per-module oversampling. It is based on
+FIR filters which are designed from a windowed sinc function.
+Oversampling ratios from 2 to 16 are supported.
+
+To test it, I've implemented Bse::Rectify, a plugin which should -
+without oversampling - generate extreme aliasing.
+
+I am attaching the code here, and an example .bse file. When running the
+bse file, use a fft scope to monitor the rectify output, while playing
+with the oversample ratio setting.
+
+Comments are welcome.
+
+   Cu... Stefan
+-- 
+Stefan Westerfeld, Hamburg/Germany, http://space.twc.de/~stefan
+
+/* BseNoise - BSE FM Operator           -*-mode: c++;-*-
+ * Copyright (C) 2006 Stefan Westerfeld
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General
+ * Public License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
+#include <bse/bsecxxmodule.idl>
+
+namespace Bse {
+
+class Rectify : Effect {
+  Info    authors     = "Stefan Westerfeld";
+  Info    license     = _("GNU Lesser General Public License");
+  Info    category    = _("/Distortion/Rectify");
+  Info    blurb       = _("Outputs -1 for signals < 0 and +1 for signals > 0");
+  IStream audio_in    = (_("Audio In"), _("Audio Input"));
+  OStream audio_out   = (_("Audio Out"), _("Audio Output"));
+
+  group _("General") {
+    Int   oversample  = (_("Oversampling"), _("The amount of internal 
+oversampling. If BSE is running with a rate of 48000 Hz, "
+                                              "an oversampling of 2 means to 
+perform internal computations with 2*48000 Hz = 96000 Hz. "
+                                              "\n\n"
+                                              "Higher oversampling means better 
+quality (less aliasing), but also more CPU usage."),
+                         1, 1, 16, 1, STANDARD) ;
+    Bool  bypass      = Bool (_("Bypass Rectification"), _("Bypasses 
+Rectification (but still does oversampling"), FALSE, STANDARD);
+
+  };
+};
+};
+
+/* BseRectify - generates rectangle signals out of normal ones
+ * Copyright (C) 2006 Stefan Westerfeld
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General
+ * Public License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
+
+#include "bserectify.genidl.hh"
+#include <bse/gslfft.h>
+#include <bse/bsemathsignal.h>
+#include <vector>
+#include <complex> /* debugging only */
+
+using namespace std;
+
+namespace Bse {
+namespace {
+
+static double
+sinc (double x)
+{
+  return sin (x * M_PI) / (x * M_PI);
+}
+
+static void
+design_filter (int oversample_ratio, int taps_per_sample, double *filter /* length: taps_per_sample * (oversample_ratio - 1) */)
+{
+  g_return_if_fail ((taps_per_sample & 1) == 0);
+
+  int o = 0;
+  for (int offset = 1; offset < oversample_ratio; offset++)
+    {
+      gdouble window_width = taps_per_sample / 2.0 * oversample_ratio;
+      for (int i = 0; i < taps_per_sample; i++)
+	{
+	  gdouble pos = oversample_ratio * i - window_width + offset;
+	  filter[o++] = bse_window_blackman (pos / window_width) * sinc (pos / oversample_ratio);
+	  //printf ("filter[%d] = %f\n", o-1, filter[o-1]);
+	}
+    }
+
+  g_assert (o == taps_per_sample * (oversample_ratio - 1));
+
+#if 0 // debugging
+  gdouble sinc_filter[oversample_ratio*taps_per_sample];
+  for (int i = 0; i < taps_per_sample; i++)
+    {
+      for (int j = 0; j < oversample_ratio-1; j++)
+	sinc_filter[i * oversample_ratio+j] = filter[i+j*taps_per_sample];
+      sinc_filter[i * oversample_ratio + oversample_ratio - 1] = 0.0;
+    }
+  sinc_filter[taps_per_sample / 2 * oversample_ratio - 1] = 1.0;
+  gfloat freq;
+  for (freq = 0; freq < PI; freq += 0.001)
+    {
+      std::complex<double> z = exp (complex<double> (0, freq));
+      std::complex<double> r = 0;
+
+      guint i;
+      for (i = 0; i < oversample_ratio*taps_per_sample; i++)
+	{
+	  r /= z;
+	  r += sinc_filter[i];
+	  printf ("sinc_filter[%d] = %f\n", i, sinc_filter[i]);
+	}
+      printf ("%f %f FTRANS\n", freq, abs (r));
+    }
+  gdouble linear_filter[3] = { 0.5, 1, 0.5 };
+  for (freq = 0; freq < PI; freq += 0.001)
+    {
+      std::complex<double> z = exp (complex<double> (0, freq));
+      std::complex<double> r = 0;
+
+      guint i;
+      for (i = 0; i < 3; i++)
+	{
+	  r /= z;
+	  r += linear_filter[i];
+	}
+      printf ("%f %f FTLIN\n", freq, abs (r));
+    }
+  gdouble downsampler[3] = { 0.5, 0.5 };
+  gfloat freq;
+  for (freq = 0; freq < PI; freq += 0.001)
+    {
+      std::complex<double> z = exp (complex<double> (0, freq));
+      std::complex<double> r = 0;
+
+      guint i;
+      for (i = 0; i < 2; i++)
+	{
+	  r /= z;
+	  r += downsampler[i];
+	}
+      printf ("%f %f FTDOWN\n", freq, abs (r));
+    }
+#endif
+}
+
+class OversampleUp {
+  const IStream& istream;
+  guint ratio;
+  static const int HMASK = 511; /* must be > 16 * TAPS_PER_SAMPLE, must be bitmask ==> 2^k-1 */
+  static const int TAPS_PER_SAMPLE = 20;
+  vector<gfloat> history;
+  vector<double> filter;
+  guint history_write_pos;
+public:
+  OversampleUp (const IStream& istream, guint ratio)
+    : istream (istream),
+      ratio (ratio),
+      history (HMASK + 1),
+      history_write_pos (0),
+      filter (TAPS_PER_SAMPLE * (ratio - 1))
+  {
+    g_return_if_fail (ratio >= 1 && ratio <= 16);
+    design_filter (ratio, TAPS_PER_SAMPLE, &filter[0]);
+  }
+  gfloat hist (int index) const
+  {
+    return history[(history_write_pos + index) & HMASK];
+  }
+  const gfloat *upsample (gfloat *buffer, unsigned int n_buffer_values)
+  {
+    if (ratio == 1)
+      return istream.values;
+
+    if (ratio == 2)
+      {
+	const gfloat *input = istream.values;
+	for (int i = 0, j = 0; i < n_buffer_values; i++)
+	  {
+	    if (i % 2) /* apply filter */
+	      {
+		//buffer[i] = (hist(-2) + hist(-1)) * 0.5; // linear
+		buffer[i] = 0;
+		for (int tap = 0; tap < TAPS_PER_SAMPLE; tap++)
+		  buffer[i] += hist(tap-TAPS_PER_SAMPLE) * filter[tap];
+	      }
+	    else /* copy data */
+	      {
+		buffer[i] = hist(-TAPS_PER_SAMPLE/2);
+		//buffer[i] = hist(-1);
+		history[history_write_pos++ & HMASK] = input[j++];
+	      }
+	  }
+      }
+    else
+      {
+	const gfloat *input = istream.values;
+	for (int i = 0, j = 0; i < n_buffer_values; i++)
+	  {
+	    if (i % ratio) /* apply filter */
+	      {
+		/*
+		 * FIXME: why is fstart computation soo difficult?
+		 * I thought I had it tweaked to the point where filter could be
+		 * simply read from start to end, instead of "quasi-reverse" adressing...?
+		 */
+		int fstart = (ratio - (i % ratio) - 1) * TAPS_PER_SAMPLE;
+		buffer[i] = 0;
+		for (int tap = 0; tap < TAPS_PER_SAMPLE; tap++)
+		  buffer[i] += hist(tap-TAPS_PER_SAMPLE) * filter[tap + fstart];
+	      }
+	    else /* copy data */
+	      {
+		buffer[i] = hist(-TAPS_PER_SAMPLE/2);
+		history[history_write_pos++ & HMASK] = input[j++];
+	      }
+	  }
+      }
+    return buffer;
+  }
+};
+
+class OversampleDown {
+  const OStream& ostream;
+  guint ratio;
+  gfloat *buffer;
+  unsigned int n_buffer_values;
+  static const int HMASK = 511; /* must be > 16 * TAPS_PER_SAMPLE, must be bitmask ==> 2^k-1 */
+  static const int TAPS_PER_SAMPLE = 20;
+  vector<gfloat> history;
+  vector<double> filter;
+  guint history_write_pos;
+public:
+  OversampleDown (const OStream& ostream, guint ratio)
+    : ostream (ostream),
+      ratio (ratio),
+      history (HMASK + 1),
+      history_write_pos (0),
+      filter (TAPS_PER_SAMPLE * (ratio - 1))
+  {
+    g_return_if_fail (ratio >= 1 && ratio <= 16);
+    design_filter (ratio, TAPS_PER_SAMPLE, &filter[0]);
+    for (guint i = 0; i < filter.size(); i++)
+      filter[i] /= ratio;
+  }
+  gfloat hist (int index) const
+  {
+    return history[(history_write_pos + index) & HMASK];
+  }
+  gfloat *downsample_begin (gfloat *buffer, unsigned int n_buffer_values)
+  {
+    if (ratio == 1)
+      return ostream.values;
+
+    this->buffer = buffer;
+    this->n_buffer_values = n_buffer_values;
+
+    return buffer;
+  }
+  void downsample_end()
+  {
+    if (ratio == 1)
+      return;
+    if (ratio == 2)
+      {
+	gfloat *output = ostream.values;
+	for (int i = 0; i < n_buffer_values; i += 2)
+	  {
+	    history[history_write_pos++ & HMASK] = buffer[i];
+	    history[history_write_pos++ & HMASK] = buffer[i+1];
+
+	    double out = 0;
+	    int pos = -2 * TAPS_PER_SAMPLE + 1;
+	    for (int tap = 0; tap < TAPS_PER_SAMPLE; tap++, pos += 2)
+	      out += hist (pos) * filter[tap];
+	    out += hist (-TAPS_PER_SAMPLE) * 0.5;
+
+	    //out = hist (-2) + hist (-1); // linear
+	    output[i / 2] = out;
+	  }
+      }
+    else
+      {
+      	gfloat *output = ostream.values;
+	for (int i = 0; i < n_buffer_values; i += ratio)
+	  {
+	    for (int j = 0; j < ratio; j++)
+	      history[history_write_pos++ & HMASK] = buffer[i+j];
+
+	    double out = 0;
+	    int pos = -ratio * TAPS_PER_SAMPLE + 1; // slow! swap loops!
+	    for (int tap = 0; tap < TAPS_PER_SAMPLE; tap++, pos += ratio)
+	      {
+		for (int j = 0; j < (ratio-1); j++)
+		  {
+		    /*
+		     * FIXME: if fstart computation is "the wrong direction" above,
+		     * why is it easy here? maybe we don't do the right thing?
+		     */
+		    int fstart = j * TAPS_PER_SAMPLE;
+		    out += hist (pos+j) * filter[tap+fstart];
+		  }
+	      }
+	    out += hist (-TAPS_PER_SAMPLE / 2 * ratio) / ratio;
+
+	    // out = (hist (-3) + hist (-2) + hist (-1)) / 3.0; // linear
+	    output[i / ratio] = out;
+	  }
+}
+  }
+};
+
+}; /* anon namespace */
+
+class Rectify : public RectifyBase {
+  /* actual computation */
+  class Module : public SynthesisModule {
+    int              oversample;
+    bool             bypass;
+    OversampleUp    *oversample_audio_in;
+    OversampleDown  *oversample_audio_out;
+  public:
+    void
+    config (RectifyProperties *properties)
+    {
+      set_oversample (properties->oversample);
+      bypass = properties->bypass;
+    }
+    void
+    reset()
+    {
+    }
+    Module()
+    {
+      oversample_audio_in = 0;
+      oversample_audio_out = 0;
+    }
+    ~Module()
+    {
+      set_oversample (0); /* delete oversample modules */
+    }
+    void
+    set_oversample (int ratio)
+    {
+      oversample = ratio;
+      if (oversample_audio_in)
+	delete oversample_audio_in;
+      if (oversample_audio_out);
+	delete oversample_audio_out;
+      if (ratio)
+	{
+	  /* FIXME: malloc in RT thread */
+	  oversample_audio_in = new OversampleUp (istream (ICHANNEL_AUDIO_IN), ratio);
+	  oversample_audio_out = new OversampleDown (ostream (OCHANNEL_AUDIO_OUT), ratio);
+	}
+    }
+
+    void
+    process (unsigned int n_values)
+    {
+      if (!istream (ICHANNEL_AUDIO_IN).connected)
+	{
+	  ostream_set (OCHANNEL_AUDIO_OUT, const_values (0));
+	  return;
+	}
+
+      n_values *= oversample;
+
+      gfloat audio_in_buffer[n_values], audio_out_buffer[n_values];
+      const gfloat *audio_in = oversample_audio_in->upsample (audio_in_buffer, n_values);
+      gfloat *audio_out = oversample_audio_out->downsample_begin (audio_out_buffer, n_values);
+
+      if (bypass)
+	{
+	  copy (audio_in, audio_in + n_values, audio_out);
+	}
+      else
+	{
+	  for (unsigned int i = 0; i < n_values; i++)
+	    audio_out[i] = (audio_in[i] < 0) ? -1 : 1;
+	}
+
+      oversample_audio_out->downsample_end();
+    }
+  };
+public:
+  /* implement creation and config methods for synthesis Module */
+  BSE_EFFECT_INTEGRATE_MODULE (Rectify, Module, RectifyProperties);
+};
+
+BSE_CXX_DEFINE_EXPORTS();
+BSE_CXX_REGISTER_EFFECT (Rectify);
+
+} // Bse
+
+#ifdef TEST_STANDALONE
+int
+main()
+{
+  // test upsampling
+    {
+      const int R = 7;
+      const int N = 1024;
+      float in[N];
+      for (int i = 0; i < N; i++)
+	in[i] = sin (i * 2 * M_PI * 440.0 / 44100.0);
+
+      Bse::IStream is;
+      is.values = in;
+      float out[R * N];
+      Bse::OversampleUp os (is, R);
+      os.upsample (out, R * N);
+      for (int i = 0; i < R * N; i++)
+	printf ("%d %f UP\n", i, out[i]);
+    }
+
+  // test downsampling
+    {
+      float high_buffer[2048];
+      float out[1024];
+      Bse::OStream os;
+      os.values = out;
+      Bse::OversampleDown ds (os, 2);
+
+      float *high = ds.downsample_begin (high_buffer, 2048);
+      for (int i = 0; i < 2048; i++)
+	high[i] = sin (i * 2 * M_PI * 440.0 / 88200.0) // desired signal
+	        + sin (i * 2 * M_PI * 30000.0 / 88200.0)*0.1; // undesired signal
+
+      ds.downsample_end();
+
+      for (int i = 0; i < 1024; i++)
+	printf ("%d %f DOWN\n", i, out[i]);
+    }
+  return 0;
+}
+#endif
+
+; BseProject
+
+(bse-version "0.6.6")
+
+(container-child "BseWaveRepo::Wave-Repository"
+  (modification-time "2006-02-17 07:26:13")
+  (creation-time "2006-02-17 07:26:13"))
+(container-child "BseCSynth::Unnamed"
+  (auto-activate #t)
+  (modification-time "2006-02-17 07:26:18")
+  (creation-time "2006-02-17 07:26:18")
+  (container-child "BseStandardOsc::StandardOsc-1"
+    (pulse-mod-perc 0)
+    (pulse-width 50)
+    (fm-n-octaves 1)
+    (exponential-fm #f)
+    (fm-perc 0)
+    (base-freq 440)
+    (wave-form bse-standard-osc-saw-fall)
+    (pos-y 1)
+    (pos-x -3))
+  (container-child "BseAmplifier::Amplifier-1"
+    (master-volume 1)
+    (base-level 2.7000000000000011)
+    (ostrength 100)
+    (ctrl-exp #f)
+    (ctrl-mul #t)
+    (clevel2 100)
+    (clevel1 100)
+    (alevel2 100)
+    (alevel1 100)
+    (pos-y 1)
+    (pos-x 1)
+    (source-input "audio-in1" (link 1 "Rectify-1") "audio-out"))
+  (container-child "BseRectify::Rectify-1"
+    (oversample 1)
+    (pos-y 1)
+    (pos-x -1)
+    (source-input "audio-in" (link 1 "StandardOsc-1") "audio-out"))
+  (container-child "BsePcmOutput::PcmOutput-1"
+    (pos-y 1.03)
+    (pos-x 3.15)
+    (source-input "left-audio-in" (link 1 "Amplifier-1") "audio-out")
+    (source-input "right-audio-in" (link 1 "Amplifier-1") "audio-out")))
+
+_______________________________________________
+beast mailing list
+beast@gnome.org
+http://mail.gnome.org/mailman/listinfo/beast
+
+    *
+      Oversampling Stefan Westerfeld
+          o Re: Oversampling <msg00080.html> Tim Janik
+                + Re: Oversampling <msg00081.html> Stefan Westerfeld
+                      # Re: Oversampling <msg00082.html> Tim Janik 
+
+    *
+      Reply via email to
+

@@ -1,0 +1,12 @@
+CvGraph* cvCreateGraph(int graph_flags, int header_size, int vtx_size, int edge_size, CvMemStorage* storage) {
+    void *fptr;
+    CvGraph*retval;
+
+    fptr = dlsym(_Chcv_handle, "cvCreateGraph_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return NULL;
+    }
+    dlrunfun(fptr, &retval, cvCreateGraph, graph_flags, header_size, vtx_size, edge_size, storage);
+    return retval;
+}

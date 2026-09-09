@@ -1,0 +1,10 @@
+void cvWriteFileNode(CvFileStorage* fs, char* new_node_name, CvFileNode* node, int embed) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvWriteFileNode_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvWriteFileNode, fs, new_node_name, node, embed);
+}

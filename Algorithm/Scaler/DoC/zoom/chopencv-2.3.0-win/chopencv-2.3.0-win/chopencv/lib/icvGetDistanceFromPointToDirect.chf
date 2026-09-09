@@ -1,0 +1,10 @@
+void icvGetDistanceFromPointToDirect(CvPoint2D64d point, CvVect64d lineCoef, double* dist) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "icvGetDistanceFromPointToDirect_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, icvGetDistanceFromPointToDirect, point, lineCoef, dist);
+}

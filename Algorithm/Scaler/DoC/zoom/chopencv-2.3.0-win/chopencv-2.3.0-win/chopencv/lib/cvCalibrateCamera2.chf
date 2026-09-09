@@ -1,0 +1,10 @@
+void cvCalibrateCamera2(CvMat* object_points, CvMat* image_points, CvMat* point_counts, CvSize image_size, CvMat* intrinsic_matrix, CvMat* distortion_coeffs, CvMat* rotation_vectors, CvMat* translation_vectors, int flags) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvCalibrateCamera2_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvCalibrateCamera2, object_points, image_points, point_counts, image_size, intrinsic_matrix, distortion_coeffs, rotation_vectors, translation_vectors, flags);
+}

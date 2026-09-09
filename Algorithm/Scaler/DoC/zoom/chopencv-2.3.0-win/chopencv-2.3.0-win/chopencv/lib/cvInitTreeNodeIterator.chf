@@ -1,0 +1,10 @@
+void cvInitTreeNodeIterator(CvTreeNodeIterator* tree_iterator, void* first, int max_level) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvInitTreeNodeIterator_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvInitTreeNodeIterator, tree_iterator, first, max_level);
+}

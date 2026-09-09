@@ -1,0 +1,10 @@
+void cvGoodFeaturesToTrack(CvArr* image, CvArr* eig_image, CvArr* temp_image, CvPoint2D32f* corners, int* corner_count, double quality_level, double min_distance, CvArr* mask, int block_size, int use_harris, double k) {
+    void *fptr;
+
+    fptr = dlsym(_Chcv_handle, "cvGoodFeaturesToTrack_chdl");
+    if(fptr == NULL) {
+        fprintf(_stderr, "Error: %s(): dlsym(): %s\n", __func__,  dlerror());
+        return;
+    }
+    dlrunfun(fptr, NULL, cvGoodFeaturesToTrack, image, eig_image, temp_image, corners, corner_count, quality_level, min_distance, mask, block_size, use_harris, k);
+}
