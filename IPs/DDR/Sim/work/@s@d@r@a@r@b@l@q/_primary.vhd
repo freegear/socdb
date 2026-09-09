@@ -1,0 +1,60 @@
+library verilog;
+use verilog.vl_types.all;
+entity SDRARBLQ is
+    generic(
+        AW              : integer := 22;
+        DW              : integer := 31;
+        BW              : integer := 3;
+        BL              : integer := 1;
+        ID              : integer := 3;
+        BBL             : integer := 3;
+        WQCD            : integer := 3;
+        WQD             : integer := 15;
+        RQCD            : integer := 4;
+        RQD             : integer := 31;
+        WBLQCD          : integer := 1;
+        WBLQD           : integer := 3;
+        RBLQCD          : integer := 3;
+        RBLQD           : integer := 15;
+        ARBLQCD         : integer := 4;
+        ARBLQD          : integer := 31;
+        MDW             : integer := 15;
+        DMW             : integer := 1;
+        BAW             : integer := 1;
+        RAW             : integer := 12;
+        CAW             : integer := 8;
+        RWW             : integer := 1;
+        CD              : integer := 4;
+        erc_powerup     : integer := 1;
+        erc_epc         : integer := 2;
+        erc_ar          : integer := 4;
+        erc_mrs         : integer := 8;
+        erc_idle        : integer := 16;
+        erc_normal      : integer := 32;
+        bc_null         : integer := 0;
+        bc_mcas         : integer := 1;
+        bc_mras         : integer := 2;
+        bc_pc           : integer := 4;
+        bc_sras         : integer := 8;
+        bc_scas         : integer := 16;
+        bc_epc          : integer := 32;
+        ebc_null        : integer := 0;
+        ebc_mcas        : integer := 1;
+        ebc_mras        : integer := 2;
+        ebc_pc          : integer := 4;
+        ebc_sras        : integer := 8;
+        ebc_scas        : integer := 16;
+        ebc_epc         : integer := 32;
+        ebc_bstop       : integer := 64
+    );
+    port(
+        nRST            : in     vl_logic;
+        Clk             : in     vl_logic;
+        WriteEn         : in     vl_logic;
+        ReadEn          : in     vl_logic;
+        WrData          : in     vl_logic_vector;
+        RdData          : out    vl_logic_vector;
+        FullFlag        : out    vl_logic;
+        EmptyFlag       : out    vl_logic
+    );
+end SDRARBLQ;
