@@ -1,0 +1,102 @@
+#-- Synplicity, Inc.
+#-- Version 7.6       
+#-- Project file D:\Project\SDI v5\ifmc_amba\Syn\ifmc_v2.2\fmc.prj
+#-- Written on Tue Apr 11 15:11:53 2006
+
+
+#add_file options
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/fm_shell.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_ana.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_bus.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_fmb.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_lpf.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_pscal.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_ptsm.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_rd.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_reg.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_serial.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_tool.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_top.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ifmc_wr.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/ssram.v"
+add_file -verilog "D:/Project/SDI v5/ifmc_amba/HDL/ifmc_amba_v2.2/fpga_fmc.v"
+
+
+#implementation: "rev_2"
+impl -add rev_2
+
+#device options
+set_option -technology EXCALIBUR_ARM
+set_option -part EPXA10
+set_option -package FC1020
+set_option -speed_grade -1
+
+#compilation/mapping options
+set_option -default_enum_encoding onehot
+set_option -symbolic_fsm_compiler 1
+set_option -resource_sharing 1
+set_option -use_fsm_explorer 0
+set_option -top_module "ifmc_top"
+
+#map options
+set_option -frequency 30.000
+set_option -fanout_limit 500
+set_option -domap 1
+set_option -disable_io_insertion 0
+set_option -cliquing 1
+set_option -pipe 0
+set_option -update_models_cp 0
+set_option -fixgatedclocks 0
+set_option -retiming 0
+
+#simulation options
+set_option -write_verilog 1
+set_option -write_vhdl 0
+
+#automatic place and route (vendor) options
+set_option -write_apr_constraint 1
+
+#set result format/file last
+project -result_file "rev_2/ifmc.vqm"
+
+
+#implementation: "rev_3"
+impl -add rev_3
+
+#device options
+set_option -technology EXCALIBUR_ARM
+set_option -part EPXA10
+set_option -package FC1020
+set_option -speed_grade -1
+
+#compilation/mapping options
+set_option -default_enum_encoding onehot
+set_option -symbolic_fsm_compiler 1
+set_option -resource_sharing 1
+set_option -use_fsm_explorer 0
+set_option -top_module "fpga_fmc"
+
+#map options
+set_option -frequency 50.000
+set_option -fanout_limit 500
+set_option -domap 1
+set_option -disable_io_insertion 0
+set_option -cliquing 1
+set_option -pipe 0
+set_option -update_models_cp 0
+set_option -fixgatedclocks 0
+set_option -retiming 0
+
+#simulation options
+set_option -write_verilog 1
+set_option -write_vhdl 0
+
+#automatic place and route (vendor) options
+set_option -write_apr_constraint 1
+
+#set result format/file last
+project -result_file "rev_3/ifmc.vqm"
+
+#implementation attributes
+set_option -compiler_compatible 1
+impl -active "rev_3"

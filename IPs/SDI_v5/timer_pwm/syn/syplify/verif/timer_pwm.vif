@@ -1,0 +1,57 @@
+#
+# Synplicity Verification Interface File
+# Generated using Synplify-pro
+#
+# Copyright (c) 1996-2005 Synplicity, Inc.
+# All rights reserved
+#
+
+# Set logfile options
+vif_set_result_file  timer_pwm.vlf
+
+# Set technology for TCL script
+vif_set_technology -architecture FPGA -vendor Xilinx
+
+# RTL and technology files
+vif_add_library -original $XILINX/verilog/verification/unisims
+vif_add_library -original $XILINX/verilog/verification/simprims
+vif_add_file -original -verilog ../../rtl/timer_pwm.v
+vif_set_top_module -original -top timer_pwm
+ 
+vif_add_library -translated $XILINX/verilog/verification/unisims
+vif_add_library -translated $XILINX/verilog/verification/simprims
+vif_add_file -translated -verilog timer_pwm.vm
+vif_set_top_module -translated -top timer_pwm 
+# Read FSM encoding
+
+# Memory map points
+
+# SRL map points
+
+# Compiler constant registers
+
+# Compiler constant latches
+
+# Compiler RTL sequential redundancies
+
+# RTL sequential redundancies
+
+# Technology sequential redundancies
+vif_set_equiv -translated R2_Z[6] R2_6_rep1_Z
+vif_set_equiv -translated R2_Z[6] R2_fast_Z[6]
+vif_set_equiv -translated R0_Z[0] R0_fast_Z[0]
+vif_set_equiv -translated Timer_Cnt_Z[0] Timer_Cnt_fast_Z[0]
+
+# Inversion map points
+
+# Port mappping and directions
+
+# Black box mapping
+
+
+# Other sequential cells, including multidimensional arrays
+
+# Constant Registers
+
+# Retimed Registers
+

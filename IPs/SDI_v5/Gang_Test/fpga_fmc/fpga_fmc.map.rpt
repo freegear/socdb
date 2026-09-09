@@ -1,0 +1,843 @@
+Analysis & Synthesis report for fpga_fmc
+Wed Apr 12 17:04:16 2006
+Version 4.2 Build 157 12/07/2004 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Hierarchy
+  5. Analysis & Synthesis Resource Utilization by Entity
+  6. Analysis & Synthesis Equations
+  7. Analysis & Synthesis Source Files Read
+  8. Analysis & Synthesis Resource Usage Summary
+  9. Analysis & Synthesis RAM Summary
+ 10. WYSIWYG Cells
+ 11. General Register Statistics
+ 12. Inverted Register Statistics
+ 13. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2004 Altera Corporation
+Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+support information,  device programming or simulation file,  and any other
+associated  documentation or information  provided by  Altera  or a partner
+under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+other  use  of such  megafunction  design,  netlist,  support  information,
+device programming or simulation file,  or any other  related documentation
+or information  is prohibited  for  any  other purpose,  including, but not
+limited to  modification,  reverse engineering,  de-compiling, or use  with
+any other  silicon devices,  unless such use is  explicitly  licensed under
+a separate agreement with  Altera  or a megafunction partner.  Title to the
+intellectual property,  including patents,  copyrights,  trademarks,  trade
+secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+support  information,  device programming or simulation file,  or any other
+related documentation or information provided by  Altera  or a megafunction
+partner, remains with Altera, the megafunction partner, or their respective
+licensors. No other licenses, including any licenses needed under any third
+party's intellectual property, are provided herein.
+
+
+
++------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                           ;
++-----------------------------+------------------------------------------+
+; Analysis & Synthesis Status ; Successful - Wed Apr 12 17:04:16 2006    ;
+; Quartus II Version          ; 4.2 Build 157 12/07/2004 SJ Full Version ;
+; Revision Name               ; fpga_fmc                                 ;
+; Top-level Entity Name       ; fpga_fmc                                 ;
+; Family                      ; EXCALIBUR_ARM                            ;
+; Total logic elements        ; 674                                      ;
+; Total pins                  ; 23                                       ;
+; Total virtual pins          ; 0                                        ;
+; Total memory bits           ; 278,528                                  ;
+; Total PLLs                  ; 0                                        ;
++-----------------------------+------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                              ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+; Option                                                                                     ; Setting       ; Default Value ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+; Device                                                                                     ; EPXA10F1020C2 ;               ;
+; Family name                                                                                ; EXCALIBUR_ARM ; Stratix       ;
+; Use smart compilation                                                                      ; Normal        ; Normal        ;
+; Create Debugging Nodes for IP Cores                                                        ; off           ; off           ;
+; Preserve fewer node names                                                                  ; On            ; On            ;
+; Disable OpenCore Plus hardware evaluation                                                  ; Off           ; Off           ;
+; Verilog Version                                                                            ; Verilog_2001  ; Verilog_2001  ;
+; VHDL Version                                                                               ; VHDL93        ; VHDL93        ;
+; Top-level entity name                                                                      ; fpga_fmc      ; fpga_fmc      ;
+; State Machine Processing                                                                   ; Auto          ; Auto          ;
+; Extract Verilog State Machines                                                             ; On            ; On            ;
+; Extract VHDL State Machines                                                                ; On            ; On            ;
+; NOT Gate Push-Back                                                                         ; On            ; On            ;
+; Power-Up Don't Care                                                                        ; On            ; On            ;
+; Remove Redundant Logic Cells                                                               ; Off           ; Off           ;
+; Remove Duplicate Registers                                                                 ; On            ; On            ;
+; Ignore CARRY Buffers                                                                       ; Off           ; Off           ;
+; Ignore CASCADE Buffers                                                                     ; Off           ; Off           ;
+; Ignore GLOBAL Buffers                                                                      ; Off           ; Off           ;
+; Ignore ROW GLOBAL Buffers                                                                  ; Off           ; Off           ;
+; Ignore LCELL Buffers                                                                       ; Off           ; Off           ;
+; Ignore SOFT Buffers                                                                        ; On            ; On            ;
+; Limit AHDL Integers to 32 Bits                                                             ; Off           ; Off           ;
+; Auto Implement in ROM                                                                      ; Off           ; Off           ;
+; Technology Mapper -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur              ; LUT           ; LUT           ;
+; Optimization Technique -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur         ; Balanced      ; Balanced      ;
+; Allow XOR Gate Usage                                                                       ; On            ; On            ;
+; Carry Chain Length                                                                         ; 48            ; 48            ;
+; Cascade Chain Length                                                                       ; 2             ; 2             ;
+; Parallel Expander Chain Length -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur ; 16            ; 16            ;
+; Auto Carry Chains                                                                          ; On            ; On            ;
+; Auto Parallel Expanders                                                                    ; On            ; On            ;
+; Auto Open-Drain Pins                                                                       ; On            ; On            ;
+; Remove Duplicate Logic                                                                     ; On            ; On            ;
+; Perform WYSIWYG Primitive Resynthesis                                                      ; Off           ; Off           ;
+; Perform gate-level register retiming                                                       ; Off           ; Off           ;
+; Allow register retiming to trade off Tsu/Tco with Fmax                                     ; On            ; On            ;
+; Auto ROM Replacement                                                                       ; On            ; On            ;
+; Auto RAM Replacement                                                                       ; On            ; On            ;
+; Auto Clock Enable Replacement                                                              ; On            ; On            ;
+; Auto Resource Sharing                                                                      ; Off           ; Off           ;
+; Allow Any RAM Size For Recognition                                                         ; Off           ; Off           ;
+; Allow Any ROM Size For Recognition                                                         ; Off           ; Off           ;
+; Allow Any Shift Register Size For Recognition                                              ; Off           ; Off           ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+
+
++-----------+
+; Hierarchy ;
++-----------+
+fpga_fmc
+ |-- ifmc_top:Top
+      |-- ifmc_fmb:fmb
+      |-- fm_shell:fmcore
+           |-- ssram:ssram_info
+                |-- altdpram:mem_rtl_1
+           |-- ssram:ssram_mass
+                |-- altdpram:mem_rtl_0
+                     |-- lpm_mux:mux
+                          |-- muxlut:$00009
+                          |-- muxlut:$00011
+                          |-- muxlut:$00013
+                          |-- muxlut:$00015
+                          |-- muxlut:$00017
+                          |-- muxlut:$00019
+                          |-- muxlut:$00021
+                          |-- muxlut:$00023
+                          |-- muxlut:$00025
+                          |-- muxlut:$00027
+                          |-- muxlut:$00029
+                          |-- muxlut:$00031
+                          |-- muxlut:$00033
+                          |-- muxlut:$00035
+                          |-- muxlut:$00037
+                          |-- muxlut:$00039
+                          |-- muxlut:$00041
+                          |-- muxlut:$00043
+                          |-- muxlut:$00045
+                          |-- muxlut:$00047
+                          |-- muxlut:$00049
+                          |-- muxlut:$00051
+                          |-- muxlut:$00053
+                          |-- muxlut:$00055
+                          |-- muxlut:$00057
+                          |-- muxlut:$00059
+                          |-- muxlut:$00061
+                          |-- muxlut:$00063
+                          |-- muxlut:$00065
+                          |-- muxlut:$00067
+                          |-- muxlut:$00069
+                          |-- muxlut:$00071
+                          |-- altshift:external_latency_ffs
+                     |-- lpm_decode:wdecoder
+                          |-- decode_e8c:auto_generated
+           |-- lpm_counter:tcnt_rtl_2
+                |-- alt_synch_counter:wysi_counter
+      |-- ifmc_bus:ifmc_bus
+           |-- ifmc_rd:ifmc_rd
+           |-- ifmc_reg:ifmc_reg
+           |-- ifmc_wr:ifmc_wr
+                |-- ifmc_pscal:pscaler
+      |-- ifmc_serial:ifmc_serial
+           |-- ifmc_ana:ifmc_ana
+           |-- ifmc_ptsm:ifmc_ptsm
+                |-- lpm_counter:fmr_adr_rtl_3
+                     |-- alt_synch_counter:wysi_counter
+           |-- ifmc_lpf:scl_in_lpf
+           |-- ifmc_lpf:sda_in_lpf
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                    ;
++-------------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+-----------------------------------------------------------------------------------------------------------------------------+
+; Compilation Hierarchy Node                      ; Logic Cells ; LC Registers ; Memory Bits ; Pins ; Virtual Pins ; LUT-Only LCs ; Register-Only LCs ; LUT/Register LCs ; Carry Chain LCs ; Full Hierarchy Name                                                                                                         ;
++-------------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+-----------------------------------------------------------------------------------------------------------------------------+
+; |fpga_fmc                                       ; 674 (4)     ; 342          ; 278528      ; 23   ; 0            ; 332 (4)      ; 149 (0)           ; 193 (0)          ; 40 (0)          ; |fpga_fmc                                                                                                                   ;
+;    |ifmc_top:Top|                               ; 670 (0)     ; 342          ; 278528      ; 0    ; 0            ; 328 (0)      ; 149 (0)           ; 193 (0)          ; 40 (0)          ; |fpga_fmc|ifmc_top:Top                                                                                                      ;
+;       |fm_shell:fmcore|                         ; 175 (64)    ; 26           ; 278528      ; 0    ; 0            ; 149 (64)     ; 0 (0)             ; 26 (0)           ; 24 (0)          ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore                                                                                      ;
+;          |lpm_counter:tcnt_rtl_2|               ; 24 (0)      ; 24           ; 0           ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 24 (0)           ; 24 (0)          ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|lpm_counter:tcnt_rtl_2                                                               ;
+;             |alt_synch_counter:wysi_counter|    ; 24 (24)     ; 24           ; 0           ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 24 (24)          ; 24 (24)         ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|lpm_counter:tcnt_rtl_2|alt_synch_counter:wysi_counter                                ;
+;          |ssram:ssram_info|                     ; 4 (4)       ; 0            ; 16384       ; 0    ; 0            ; 4 (4)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_info                                                                     ;
+;             |altdpram:mem_rtl_1|                ; 0 (0)       ; 0            ; 16384       ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_info|altdpram:mem_rtl_1                                                  ;
+;          |ssram:ssram_mass|                     ; 83 (11)     ; 2            ; 262144      ; 0    ; 0            ; 81 (11)      ; 0 (0)             ; 2 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass                                                                     ;
+;             |altdpram:mem_rtl_0|                ; 72 (2)      ; 2            ; 262144      ; 0    ; 0            ; 70 (0)       ; 0 (0)             ; 2 (2)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0                                                  ;
+;                |lpm_decode:wdecoder|            ; 6 (0)       ; 0            ; 0           ; 0    ; 0            ; 6 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_decode:wdecoder                              ;
+;                   |decode_e8c:auto_generated|   ; 6 (6)       ; 0            ; 0           ; 0    ; 0            ; 6 (6)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_decode:wdecoder|decode_e8c:auto_generated    ;
+;                |lpm_mux:mux|                    ; 64 (0)      ; 0            ; 0           ; 0    ; 0            ; 64 (0)       ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux                                      ;
+;                   |muxlut:$00009|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00009                        ;
+;                   |muxlut:$00011|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00011                        ;
+;                   |muxlut:$00013|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00013                        ;
+;                   |muxlut:$00015|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00015                        ;
+;                   |muxlut:$00017|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00017                        ;
+;                   |muxlut:$00019|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00019                        ;
+;                   |muxlut:$00021|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00021                        ;
+;                   |muxlut:$00023|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00023                        ;
+;                   |muxlut:$00025|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00025                        ;
+;                   |muxlut:$00027|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00027                        ;
+;                   |muxlut:$00029|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00029                        ;
+;                   |muxlut:$00031|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00031                        ;
+;                   |muxlut:$00033|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00033                        ;
+;                   |muxlut:$00035|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00035                        ;
+;                   |muxlut:$00037|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00037                        ;
+;                   |muxlut:$00039|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00039                        ;
+;                   |muxlut:$00041|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00041                        ;
+;                   |muxlut:$00043|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00043                        ;
+;                   |muxlut:$00045|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00045                        ;
+;                   |muxlut:$00047|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00047                        ;
+;                   |muxlut:$00049|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00049                        ;
+;                   |muxlut:$00051|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00051                        ;
+;                   |muxlut:$00053|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00053                        ;
+;                   |muxlut:$00055|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00055                        ;
+;                   |muxlut:$00057|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00057                        ;
+;                   |muxlut:$00059|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00059                        ;
+;                   |muxlut:$00061|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00061                        ;
+;                   |muxlut:$00063|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00063                        ;
+;                   |muxlut:$00065|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00065                        ;
+;                   |muxlut:$00067|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00067                        ;
+;                   |muxlut:$00069|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00069                        ;
+;                   |muxlut:$00071|               ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|lpm_mux:mux|muxlut:$00071                        ;
+;       |ifmc_fmb:fmb|                            ; 175 (175)   ; 117          ; 0           ; 0    ; 0            ; 58 (58)      ; 36 (36)           ; 81 (81)          ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|ifmc_fmb:fmb                                                                                         ;
+;       |ifmc_serial:ifmc_serial|                 ; 320 (0)     ; 199          ; 0           ; 0    ; 0            ; 121 (0)      ; 113 (0)           ; 86 (0)           ; 16 (0)          ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial                                                                              ;
+;          |ifmc_ana:ifmc_ana|                    ; 18 (18)     ; 17           ; 0           ; 0    ; 0            ; 1 (1)        ; 11 (11)           ; 6 (6)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_ana:ifmc_ana                                                            ;
+;          |ifmc_lpf:scl_in_lpf|                  ; 6 (6)       ; 4            ; 0           ; 0    ; 0            ; 2 (2)        ; 3 (3)             ; 1 (1)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf:scl_in_lpf                                                          ;
+;          |ifmc_lpf:sda_in_lpf|                  ; 6 (6)       ; 4            ; 0           ; 0    ; 0            ; 2 (2)        ; 3 (3)             ; 1 (1)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf:sda_in_lpf                                                          ;
+;          |ifmc_ptsm:ifmc_ptsm|                  ; 290 (274)   ; 174          ; 0           ; 0    ; 0            ; 116 (116)    ; 96 (96)           ; 78 (62)          ; 16 (0)          ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_ptsm:ifmc_ptsm                                                          ;
+;             |lpm_counter:fmr_adr_rtl_3|         ; 16 (0)      ; 16           ; 0           ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 16 (0)           ; 16 (0)          ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_ptsm:ifmc_ptsm|lpm_counter:fmr_adr_rtl_3                                ;
+;                |alt_synch_counter:wysi_counter| ; 16 (16)     ; 16           ; 0           ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 16 (16)          ; 16 (16)         ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_ptsm:ifmc_ptsm|lpm_counter:fmr_adr_rtl_3|alt_synch_counter:wysi_counter ;
++-------------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+-----------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------+
+; Analysis & Synthesis Equations ;
++--------------------------------+
+The equations can be found in C:/Gang_Test/fpga_fmc/fpga_fmc.map.eqn.
+
+
++--------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                   ;
++----------------------------------+-----------------+---------------------------------------------------------------------+
+; File Name with User-Entered Path ; Used in Netlist ; File Name with Absolute Path                                        ;
++----------------------------------+-----------------+---------------------------------------------------------------------+
+; ssram.v                          ; yes             ; C:/Gang_Test/fpga_fmc/ssram.v                                       ;
+; fm_shell.v                       ; yes             ; C:/Gang_Test/fpga_fmc/fm_shell.v                                    ;
+; fpga_fmc.v                       ; yes             ; C:/Gang_Test/fpga_fmc/fpga_fmc.v                                    ;
+; ifmc_ana.v                       ; yes             ; C:/Gang_Test/fpga_fmc/ifmc_ana.v                                    ;
+; ifmc_bus.v                       ; yes             ; C:/Gang_Test/fpga_fmc/ifmc_bus.v                                    ;
+; ifmc_fmb.v                       ; yes             ; C:/Gang_Test/fpga_fmc/ifmc_fmb.v                                    ;
+; ifmc_lpf.v                       ; yes             ; C:/Gang_Test/fpga_fmc/ifmc_lpf.v                                    ;
+; ifmc_pscal.v                     ; yes             ; C:/Gang_Test/fpga_fmc/ifmc_pscal.v                                  ;
+; ifmc_ptsm.v                      ; yes             ; C:/Gang_Test/fpga_fmc/ifmc_ptsm.v                                   ;
+; ifmc_rd.v                        ; yes             ; C:/Gang_Test/fpga_fmc/ifmc_rd.v                                     ;
+; ifmc_reg.v                       ; yes             ; C:/Gang_Test/fpga_fmc/ifmc_reg.v                                    ;
+; ifmc_serial.v                    ; yes             ; C:/Gang_Test/fpga_fmc/ifmc_serial.v                                 ;
+; ifmc_top.v                       ; yes             ; C:/Gang_Test/fpga_fmc/ifmc_top.v                                    ;
+; ifmc_wr.v                        ; yes             ; C:/Gang_Test/fpga_fmc/ifmc_wr.v                                     ;
+; altdpram.tdf                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/altdpram.tdf            ;
+; memmodes.inc                     ; yes             ; c:/altera/quartus42/libraries/others/maxplus2/memmodes.inc          ;
+; lpm_decode.inc                   ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_decode.inc          ;
+; lpm_mux.inc                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_mux.inc             ;
+; a_hdffe.inc                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/a_hdffe.inc             ;
+; a_rdenreg.inc                    ; yes             ; c:/altera/quartus42/libraries/megafunctions/a_rdenreg.inc           ;
+; altqpram.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/altqpram.inc            ;
+; alt_le_rden_reg.inc              ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_le_rden_reg.inc     ;
+; altsyncram.inc                   ; yes             ; c:/altera/quartus42/libraries/megafunctions/altsyncram.inc          ;
+; aglobal42.inc                    ; yes             ; c:/altera/quartus42/libraries/megafunctions/aglobal42.inc           ;
+; lpm_decode.tdf                   ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_decode.tdf          ;
+; declut.inc                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/declut.inc              ;
+; altshift.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/altshift.inc            ;
+; lpm_compare.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_compare.inc         ;
+; lpm_constant.inc                 ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_constant.inc        ;
+; db/decode_e8c.tdf                ; yes             ; C:/Gang_Test/fpga_fmc/db/decode_e8c.tdf                             ;
+; lpm_mux.tdf                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_mux.tdf             ;
+; muxlut.inc                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/muxlut.inc              ;
+; bypassff.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/bypassff.inc            ;
+; altshift.tdf                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/altshift.tdf            ;
+; muxlut.tdf                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/muxlut.tdf              ;
+; lpm_counter.tdf                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_counter.tdf         ;
+; lpm_add_sub.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_add_sub.inc         ;
+; cmpconst.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/cmpconst.inc            ;
+; lpm_counter.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_counter.inc         ;
+; dffeea.inc                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/dffeea.inc              ;
+; alt_synch_counter.inc            ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_synch_counter.inc   ;
+; alt_synch_counter_f.inc          ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_synch_counter_f.inc ;
+; alt_counter_f10ke.inc            ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_counter_f10ke.inc   ;
+; alt_counter_stratix.inc          ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_counter_stratix.inc ;
+; alt_synch_counter.tdf            ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_synch_counter.tdf   ;
+; mercury_lcell.inc                ; yes             ; c:/altera/quartus42/libraries/megafunctions/mercury_lcell.inc       ;
+; apex20ke_lcell.inc               ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_lcell.inc      ;
+; apex20k_lcell.inc                ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20k_lcell.inc       ;
+; flex6k_lcell.inc                 ; yes             ; c:/altera/quartus42/libraries/megafunctions/flex6k_lcell.inc        ;
+; alt_asynch_counter.inc           ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_asynch_counter.inc  ;
++----------------------------------+-----------------+---------------------------------------------------------------------+
+
+
++---------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary ;
++-----------------------------------+---------+
+; Resource                          ; Usage   ;
++-----------------------------------+---------+
+; Logic cells                       ; 674     ;
+; Total combinational functions     ; 525     ;
+; Total 4-input functions           ; 297     ;
+; Total 3-input functions           ; 130     ;
+; Total 2-input functions           ; 72      ;
+; Total 1-input functions           ; 24      ;
+; Total 0-input functions           ; 2       ;
+; Combinational cells for routing   ; 0       ;
+; Total registers                   ; 342     ;
+; Total logic cells in carry chains ; 40      ;
+; I/O pins                          ; 23      ;
+; Total memory bits                 ; 278528  ;
+; Maximum fan-out node              ; clk     ;
+; Maximum fan-out                   ; 503     ;
+; Total fan-out                     ; 5033    ;
+; Average fan-out                   ; 5.87    ;
++-----------------------------------+---------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis RAM Summary                                                                                                                                 ;
++--------------------------------------------------------------------------+-----------+--------------+--------------+--------------+--------------+--------+------+
+; Name                                                                     ; Mode      ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size   ; MIF  ;
++--------------------------------------------------------------------------+-----------+--------------+--------------+--------------+--------------+--------+------+
+; ifmc_top:Top|fm_shell:fmcore|ssram:ssram_info|altdpram:mem_rtl_1|content ; Dual Port ; 512          ; 32           ; 512          ; 32           ; 16384  ; none ;
+; ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|altdpram:mem_rtl_0|content ; Dual Port ; 8192         ; 32           ; 8192         ; 32           ; 262144 ; none ;
++--------------------------------------------------------------------------+-----------+--------------+--------------+--------------+--------------+--------+------+
+
+
++----------------------------------------------------------------+
+; WYSIWYG Cells                                                  ;
++--------------------------------------------------------+-------+
+; Statistic                                              ; Value ;
++--------------------------------------------------------+-------+
+; Number of WYSIWYG cells                                ; 40    ;
+; Number of synthesis-generated cells                    ; 634   ;
+; Number of WYSIWYG LUTs                                 ; 40    ;
+; Number of synthesis-generated LUTs                     ; 485   ;
+; Number of WYSIWYG registers                            ; 40    ;
+; Number of synthesis-generated registers                ; 302   ;
+; Number of cells with combinational logic only          ; 332   ;
+; Number of cells with registers only                    ; 149   ;
+; Number of cells with combinational logic and registers ; 193   ;
++--------------------------------------------------------+-------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 342   ;
+; Number of registers using Synchronous Clear  ; 24    ;
+; Number of registers using Synchronous Load   ; 16    ;
+; Number of registers using Asynchronous Clear ; 340   ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 134   ;
+; Number of registers using Output Enable      ; 0     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++------------------------------------------------------------------------------+
+; Inverted Register Statistics                                                 ;
++--------------------------------------------------------------------+---------+
+; Inverted Register                                                  ; Fan out ;
++--------------------------------------------------------------------+---------+
+; ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_ptsm:ifmc_ptsm|cs[0]     ; 15      ;
+; ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf:scl_in_lpf|out       ; 14      ;
+; ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf:sda_in_lpf|out       ; 9       ;
+; ifmc_top:Top|ifmc_fmb:fmb|rdp                                      ; 6       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[24]                            ; 1       ;
+; ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf:scl_in_lpf|in_dly[2] ; 2       ;
+; ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf:scl_in_lpf|in_dly[1] ; 3       ;
+; ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf:scl_in_lpf|in_dly[0] ; 3       ;
+; ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf:sda_in_lpf|in_dly[2] ; 2       ;
+; ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf:sda_in_lpf|in_dly[1] ; 3       ;
+; ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf:sda_in_lpf|in_dly[0] ; 3       ;
+; ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_ana:ifmc_ana|sda_dly     ; 4       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[7]                             ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[7]                                 ; 3       ;
+; ifmc_top:Top|ifmc_fmb:fmb|cnt[1]                                   ; 3       ;
+; ifmc_top:Top|ifmc_fmb:fmb|cnt[0]                                   ; 4       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[27]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|rd_cs[0]                                 ; 11      ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[24]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[6]                             ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[6]                                 ; 3       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[7]                                ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[5]                             ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[5]                                 ; 3       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[6]                                ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[4]                             ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[4]                                 ; 3       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[2]                                 ; 3       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[1]                                 ; 3       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[0]                                 ; 3       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[3]                                 ; 3       ;
+; ifmc_top:Top|ifmc_fmb:fmb|hdp                                      ; 3       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[5]                                ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[3]                             ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|cs[0]                                    ; 2       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[4]                                ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[2]                             ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[2]                                ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[1]                                ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[0]                                ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[3]                                ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[17]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[1]                             ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[0]                             ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[15]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[15]                                ; 2       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[14]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[14]                                ; 2       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[15]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[13]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[13]                                ; 2       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[14]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[12]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[12]                                ; 2       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[13]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[11]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[11]                                ; 2       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[12]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[10]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[10]                                ; 2       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[11]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[9]                             ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[9]                                 ; 2       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[10]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[8]                             ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|smart[8]                                 ; 2       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[9]                                ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[23]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[8]                                ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[22]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[23]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[21]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[22]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[20]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[21]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[19]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[20]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[18]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[19]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[17]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[18]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[16]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[16]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[30]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[29]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[30]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[28]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[29]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[27]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[28]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[26]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fmr_rdata[25]                            ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[26]                               ; 1       ;
+; ifmc_top:Top|ifmc_fmb:fmb|fm_din[25]                               ; 1       ;
+; Total number of inverted registers = 94                            ;         ;
++--------------------------------------------------------------------+---------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II Analysis & Synthesis
+    Info: Version 4.2 Build 157 12/07/2004 SJ Full Version
+    Info: Processing started: Wed Apr 12 17:04:06 2006
+Info: Command: quartus_map --import_settings_files=on --export_settings_files=off fpga_fmc -c fpga_fmc
+Warning: This product family is not recommended for new designs. Altera provides newer product families with better cost & performance attributes than ARM-Based Excalibur devices
+Info: Found 1 design units, including 1 entities, in source file ssram.v
+    Info: Found entity 1: ssram
+Info: Found 1 design units, including 1 entities, in source file fm_shell.v
+    Info: Found entity 1: fm_shell
+Info: Found 1 design units, including 1 entities, in source file fpga_fmc.v
+    Info: Found entity 1: fpga_fmc
+Info: Found 1 design units, including 1 entities, in source file gang.v
+    Info: Found entity 1: gang
+Info: Found 1 design units, including 1 entities, in source file ifmc_ana.v
+    Info: Found entity 1: ifmc_ana
+Info: Found 1 design units, including 1 entities, in source file ifmc_bus.v
+    Info: Found entity 1: ifmc_bus
+Info: Found 1 design units, including 1 entities, in source file ifmc_fmb.v
+    Info: Found entity 1: ifmc_fmb
+Info: Found 1 design units, including 1 entities, in source file ifmc_lpf.v
+    Info: Found entity 1: ifmc_lpf
+Info: Found 1 design units, including 1 entities, in source file ifmc_pscal.v
+    Info: Found entity 1: ifmc_pscal
+Info: Found 1 design units, including 1 entities, in source file ifmc_ptsm.v
+    Info: Found entity 1: ifmc_ptsm
+Info: Found 1 design units, including 1 entities, in source file ifmc_rd.v
+    Info: Found entity 1: ifmc_rd
+Info: Found 1 design units, including 1 entities, in source file ifmc_reg.v
+    Info: Found entity 1: ifmc_reg
+Info: Found 1 design units, including 1 entities, in source file ifmc_serial.v
+    Info: Found entity 1: ifmc_serial
+Info: Found 1 design units, including 1 entities, in source file ifmc_tool.v
+    Info: Found entity 1: ifmc_tool
+Info: Found 1 design units, including 1 entities, in source file ifmc_top.v
+    Info: Found entity 1: ifmc_top
+Info: Found 1 design units, including 1 entities, in source file ifmc_wr.v
+    Info: Found entity 1: ifmc_wr
+Warning: Verilog HDL Case Statement warning: implemented Verilog HDL parallel_case synthesis attribute at ifmc_wr.v(206) -- differences between design synthesis and simulation may occur
+Warning: Verilog HDL assignment warning at ifmc_wr.v(484): truncated value with size 9 to match size of target (8)
+Warning: Verilog HDL Case Statement warning: implemented Verilog HDL parallel_case synthesis attribute at ifmc_rd.v(114) -- differences between design synthesis and simulation may occur
+Warning: Verilog HDL Case Statement warning: implemented Verilog HDL parallel_case synthesis attribute at ifmc_ptsm.v(234) -- differences between design synthesis and simulation may occur
+Warning: Verilog HDL Case Statement warning: implemented Verilog HDL parallel_case synthesis attribute at ifmc_fmb.v(192) -- differences between design synthesis and simulation may occur
+Warning: Verilog HDL Case Statement warning: implemented Verilog HDL parallel_case synthesis attribute at ifmc_fmb.v(224) -- differences between design synthesis and simulation may occur
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_rd:ifmc_rd|dphase" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|fmaddr[17]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|fmaddr[16]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|fmaddr[15]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|info_rd" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][31]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][30]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][29]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][28]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][27]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][26]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][25]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][24]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][23]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][22]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][15]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][14]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][13]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][12]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][11]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][10]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][9]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][8]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][7]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][6]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][31]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][30]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][29]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][28]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][27]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][26]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][25]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][24]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][23]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][16]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][15]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][14]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][13]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][12]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][11]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][10]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][9]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][8]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][7]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][6]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][5]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][4]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][3]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][2]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][31]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][30]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][29]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][28]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][27]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][26]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][25]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][24]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][23]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][22]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][21]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][20]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][16]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][15]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][14]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][13]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][12]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][11]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][9]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][8]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][4]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][2]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][0]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][22]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][21]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][20]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][19]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][17]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][15]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][14]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][13]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][12]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][11]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][10]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][9]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][8]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][2]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][23]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][22]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][21]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][20]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][19]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][18]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][13]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][11]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][10]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][9]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][8]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][6]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][5]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][3]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][2]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][1]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][0]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][23]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][22]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][21]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][20]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][19]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][18]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][13]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][11]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][10]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][9]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][8]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][6]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][5]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][3]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][2]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][1]" with stuck data_in port to stuck value GND
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][0]" with stuck data_in port to stuck value GND
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|rdwaitcycle[1]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|rdwaitcycle[1]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|rdwaitcycle[1]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|rdwaitcycle[0]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|rdwaitcycle[0]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|rdwaitcycle[0]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][21]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][21]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][21]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][20]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][20]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][20]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][19]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][19]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][19]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][18]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][18]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][18]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][17]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][17]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][17]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][16]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][16]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][16]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][5]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][5]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][5]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][4]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][4]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][4]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][3]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][3]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][3]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][2]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][2]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][2]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][1]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][1]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][1]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][0]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][0]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[0][0]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][22]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][22]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][22]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][21]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][21]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][21]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][20]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][20]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][20]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][19]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][19]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][19]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][18]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][18]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][18]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][17]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][17]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][17]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][1]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][1]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][1]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][0]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][0]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[1][0]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][19]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][19]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][19]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][18]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][18]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][18]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][17]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][17]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][17]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][10]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][10]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][10]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][7]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][7]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][7]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][6]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][6]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][6]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][5]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][5]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][5]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][3]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][3]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][3]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][1]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][1]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[2][1]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][18]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][18]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][18]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][16]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][16]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][16]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][7]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][7]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][7]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][6]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][6]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][6]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][5]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][5]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][5]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][4]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][4]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][4]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][3]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][3]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][3]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][1]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][1]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][1]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][0]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][0]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[3][0]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][17]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][17]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][17]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][16]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][16]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][16]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][15]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][15]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][15]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][14]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][14]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][14]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][12]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][12]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][12]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][7]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][7]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][7]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][4]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][4]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[4][4]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][17]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][17]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][17]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][16]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][16]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][16]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][15]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][15]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][15]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][14]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][14]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][14]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][12]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][12]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][12]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][7]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][7]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][7]" with stuck clock port to stuck value VCC
+Info: Power-up level of register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][4]" is not specified -- using power-up level of High to minimize register
+Warning: No clock transition on "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][4]" register
+Warning: Reduced register "ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_reg:ifmc_reg|treg[5][4]" with stuck clock port to stuck value VCC
+Info: Duplicate registers merged to single register
+    Info: Duplicate register "ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_ana:ifmc_ana|scl_dly" merged to single register "ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_ptsm:ifmc_ptsm|scl_dly"
+Info: Inferred 4 megafunctions from design logic
+    Info: Inferred altdpram megafunction (NUMWORDS=8192, WIDTH=32) from the following logic: "ifmc_top:Top|fm_shell:fmcore|ssram:ssram_mass|mem~0"
+    Info: Inferred altdpram megafunction (NUMWORDS=512, WIDTH=32) from the following logic: "ifmc_top:Top|fm_shell:fmcore|ssram:ssram_info|mem~0"
+    Info: Inferred lpm_counter megafunction (LPM_WIDTH=24) from the following logic: "ifmc_top:Top|fm_shell:fmcore|tcnt[0]~48"
+    Info: Inferred lpm_counter megafunction (LPM_WIDTH=16) from the following logic: "ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_ptsm:ifmc_ptsm|fmr_adr[0]~121"
+Info: Found 1 design units, including 1 entities, in source file ../../altera/quartus42/libraries/megafunctions/altdpram.tdf
+    Info: Found entity 1: altdpram
+Info: Found 1 design units, including 1 entities, in source file ../../altera/quartus42/libraries/megafunctions/lpm_decode.tdf
+    Info: Found entity 1: lpm_decode
+Info: Found 1 design units, including 1 entities, in source file db/decode_e8c.tdf
+    Info: Found entity 1: decode_e8c
+Info: Found 1 design units, including 1 entities, in source file ../../altera/quartus42/libraries/megafunctions/lpm_mux.tdf
+    Info: Found entity 1: lpm_mux
+Info: Found 1 design units, including 1 entities, in source file ../../altera/quartus42/libraries/megafunctions/altshift.tdf
+    Info: Found entity 1: altshift
+Info: Found 1 design units, including 1 entities, in source file ../../altera/quartus42/libraries/megafunctions/muxlut.tdf
+    Info: Found entity 1: muxlut
+Info: Found 1 design units, including 1 entities, in source file ../../altera/quartus42/libraries/megafunctions/lpm_counter.tdf
+    Info: Found entity 1: lpm_counter
+Info: Found 1 design units, including 1 entities, in source file ../../altera/quartus42/libraries/megafunctions/alt_synch_counter.tdf
+    Info: Found entity 1: alt_synch_counter
+Info: Registers with preset signals will power-up high
+Info: DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Warning: Output pins are stuck at VCC or GND
+    Warning: Pin "tool_mode" stuck at VCC
+Warning: Design contains 1 input pin(s) that do not drive logic
+    Warning: No output dependent on input pin "tmode"
+Info: Implemented 857 device resources after synthesis - the final resource count might be different
+    Info: Implemented 4 input pins
+    Info: Implemented 18 output pins
+    Info: Implemented 1 bidirectional pins
+    Info: Implemented 674 logic cells
+    Info: Implemented 160 RAM segments
+Info: Quartus II Analysis & Synthesis was successful. 0 errors, 239 warnings
+    Info: Processing ended: Wed Apr 12 17:04:16 2006
+    Info: Elapsed time: 00:00:11
+
+

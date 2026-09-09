@@ -1,0 +1,35 @@
+//
+// Verplex constraint file
+// Generated using Synplify-pro
+//
+// Copyright (c) 1996-2002 Synplicity, Inc.
+// All rights reserved
+//
+
+// Set parsing options
+set log file ifmc.vlf -replace
+set naming rule "%s_Z" -register -golden
+set naming rule "%s" -register -revised
+set case sensitivity off
+// set undriven signal 0 -both
+// set undefined cell black_box -noascend
+
+// Read golden and revised designs
+read design -file lec/ifmc.vlc -verilog \
+ 	../../../HDL/ifmc_amba_v2.2/fm_shell.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_ana.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_bus.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_fmb.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_lpf.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_pscal.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_ptsm.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_rd.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_reg.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_serial.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_tool.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_top.v \
+ 	../../../HDL/ifmc_amba_v2.2/ifmc_wr.v \
+ 	../../../HDL/ifmc_amba_v2.2/ssram.v \
+ 	../../../HDL/ifmc_amba_v2.2/fpga_fmc.v \
+	-golden -root fpga_fmc
+read design -file lec/ifmc.vlc -verilog ifmc.vm -revised -root fpga_fmc

@@ -1,0 +1,392 @@
+Analysis & Synthesis report for ifmc_top
+Fri Mar 31 09:41:04 2006
+Version 4.2 Build 157 12/07/2004 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Hierarchy
+  5. Analysis & Synthesis Resource Utilization by Entity
+  6. Analysis & Synthesis Equations
+  7. Analysis & Synthesis Source Files Read
+  8. Analysis & Synthesis Resource Usage Summary
+  9. Analysis & Synthesis RAM Summary
+ 10. WYSIWYG Cells
+ 11. General Register Statistics
+ 12. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2004 Altera Corporation
+Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+support information,  device programming or simulation file,  and any other
+associated  documentation or information  provided by  Altera  or a partner
+under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+other  use  of such  megafunction  design,  netlist,  support  information,
+device programming or simulation file,  or any other  related documentation
+or information  is prohibited  for  any  other purpose,  including, but not
+limited to  modification,  reverse engineering,  de-compiling, or use  with
+any other  silicon devices,  unless such use is  explicitly  licensed under
+a separate agreement with  Altera  or a megafunction partner.  Title to the
+intellectual property,  including patents,  copyrights,  trademarks,  trade
+secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+support  information,  device programming or simulation file,  or any other
+related documentation or information provided by  Altera  or a megafunction
+partner, remains with Altera, the megafunction partner, or their respective
+licensors. No other licenses, including any licenses needed under any third
+party's intellectual property, are provided herein.
+
+
+
++------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                           ;
++-----------------------------+------------------------------------------+
+; Analysis & Synthesis Status ; Successful - Fri Mar 31 09:41:04 2006    ;
+; Quartus II Version          ; 4.2 Build 157 12/07/2004 SJ Full Version ;
+; Revision Name               ; ifmc_top                                 ;
+; Top-level Entity Name       ; fpga_fmc                                 ;
+; Family                      ; EXCALIBUR_ARM                            ;
+; Total logic elements        ; 767                                      ;
+; Total pins                  ; 14                                       ;
+; Total virtual pins          ; 0                                        ;
+; Total memory bits           ; 278,528                                  ;
+; Total PLLs                  ; 0                                        ;
++-----------------------------+------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                              ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+; Option                                                                                     ; Setting       ; Default Value ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+; Device                                                                                     ; EPXA10F1020C2 ;               ;
+; Family name                                                                                ; EXCALIBUR_ARM ; Stratix       ;
+; Top-level entity name                                                                      ; fpga_fmc      ; ifmc_top      ;
+; Use smart compilation                                                                      ; Normal        ; Normal        ;
+; Create Debugging Nodes for IP Cores                                                        ; off           ; off           ;
+; Preserve fewer node names                                                                  ; On            ; On            ;
+; Disable OpenCore Plus hardware evaluation                                                  ; Off           ; Off           ;
+; Verilog Version                                                                            ; Verilog_2001  ; Verilog_2001  ;
+; VHDL Version                                                                               ; VHDL93        ; VHDL93        ;
+; State Machine Processing                                                                   ; Auto          ; Auto          ;
+; Extract Verilog State Machines                                                             ; On            ; On            ;
+; Extract VHDL State Machines                                                                ; On            ; On            ;
+; NOT Gate Push-Back                                                                         ; On            ; On            ;
+; Power-Up Don't Care                                                                        ; On            ; On            ;
+; Remove Redundant Logic Cells                                                               ; Off           ; Off           ;
+; Remove Duplicate Registers                                                                 ; On            ; On            ;
+; Ignore CARRY Buffers                                                                       ; Off           ; Off           ;
+; Ignore CASCADE Buffers                                                                     ; Off           ; Off           ;
+; Ignore GLOBAL Buffers                                                                      ; Off           ; Off           ;
+; Ignore ROW GLOBAL Buffers                                                                  ; Off           ; Off           ;
+; Ignore LCELL Buffers                                                                       ; Off           ; Off           ;
+; Ignore SOFT Buffers                                                                        ; On            ; On            ;
+; Limit AHDL Integers to 32 Bits                                                             ; Off           ; Off           ;
+; Auto Implement in ROM                                                                      ; Off           ; Off           ;
+; Technology Mapper -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur              ; LUT           ; LUT           ;
+; Optimization Technique -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur         ; Balanced      ; Balanced      ;
+; Allow XOR Gate Usage                                                                       ; On            ; On            ;
+; Carry Chain Length                                                                         ; 48            ; 48            ;
+; Cascade Chain Length                                                                       ; 2             ; 2             ;
+; Parallel Expander Chain Length -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur ; 16            ; 16            ;
+; Auto Carry Chains                                                                          ; On            ; On            ;
+; Auto Parallel Expanders                                                                    ; On            ; On            ;
+; Auto Open-Drain Pins                                                                       ; On            ; On            ;
+; Remove Duplicate Logic                                                                     ; On            ; On            ;
+; Perform WYSIWYG Primitive Resynthesis                                                      ; Off           ; Off           ;
+; Perform gate-level register retiming                                                       ; Off           ; Off           ;
+; Allow register retiming to trade off Tsu/Tco with Fmax                                     ; On            ; On            ;
+; Auto ROM Replacement                                                                       ; On            ; On            ;
+; Auto RAM Replacement                                                                       ; On            ; On            ;
+; Auto Clock Enable Replacement                                                              ; On            ; On            ;
+; Auto Resource Sharing                                                                      ; Off           ; Off           ;
+; Allow Any RAM Size For Recognition                                                         ; Off           ; Off           ;
+; Allow Any ROM Size For Recognition                                                         ; Off           ; Off           ;
+; Allow Any Shift Register Size For Recognition                                              ; Off           ; Off           ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+
+
++-----------+
+; Hierarchy ;
++-----------+
+fpga_fmc
+ |-- ifmc_top:Top
+      |-- ifmc_fmb:fmb
+      |-- fm_shell:fmcore
+           |-- altdpram:I
+                |-- lpm_mux:mux
+                     |-- muxlut:$00009
+                     |-- muxlut:$00011
+                     |-- muxlut:$00013
+                     |-- muxlut:$00015
+                     |-- muxlut:$00017
+                     |-- muxlut:$00019
+                     |-- muxlut:$00021
+                     |-- muxlut:$00023
+                     |-- muxlut:$00025
+                     |-- muxlut:$00027
+                     |-- muxlut:$00029
+                     |-- muxlut:$00031
+                     |-- muxlut:$00033
+                     |-- muxlut:$00035
+                     |-- muxlut:$00037
+                     |-- muxlut:$00039
+                     |-- muxlut:$00041
+                     |-- muxlut:$00043
+                     |-- muxlut:$00045
+                     |-- muxlut:$00047
+                     |-- muxlut:$00049
+                     |-- muxlut:$00051
+                     |-- muxlut:$00053
+                     |-- muxlut:$00055
+                     |-- muxlut:$00057
+                     |-- muxlut:$00059
+                     |-- muxlut:$00061
+                     |-- muxlut:$00063
+                     |-- muxlut:$00065
+                     |-- muxlut:$00067
+                     |-- muxlut:$00069
+                     |-- muxlut:$00071
+                     |-- altshift:external_latency_ffs
+                |-- lpm_decode:wdecoder
+                     |-- decode_e8c:auto_generated
+           |-- altdpram:I_1
+           |-- ssram_9_32_511:ssram_info
+           |-- ssram_13_32_8191:ssram_mass
+      |-- ifmc_bus:ifmc_bus
+           |-- ifmc_rd:ifmc_rd
+           |-- ifmc_wr:ifmc_wr
+                |-- ifmc_pscal:pscaler
+      |-- ifmc_serial:ifmc_serial
+           |-- ifmc_ana:ifmc_ana
+           |-- ifmc_ptsm:ifmc_ptsm
+           |-- ifmc_tool:ifmc_tool
+           |-- ifmc_lpf:scl_in_lpf
+           |-- ifmc_lpf_1:sda_in_lpf
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                   ;
++--------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+-------------------------------------------------------------------------------------------------+
+; Compilation Hierarchy Node                 ; Logic Cells ; LC Registers ; Memory Bits ; Pins ; Virtual Pins ; LUT-Only LCs ; Register-Only LCs ; LUT/Register LCs ; Carry Chain LCs ; Full Hierarchy Name                                                                             ;
++--------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+-------------------------------------------------------------------------------------------------+
+; |fpga_fmc                                  ; 767 (55)    ; 400          ; 278528      ; 14   ; 0            ; 367 (55)     ; 120 (0)           ; 280 (0)          ; 83 (0)          ; |fpga_fmc                                                                                       ;
+;    |ifmc_top:Top|                          ; 712 (5)     ; 400          ; 278528      ; 0    ; 0            ; 312 (5)      ; 120 (0)           ; 280 (0)          ; 83 (0)          ; |fpga_fmc|ifmc_top:Top                                                                          ;
+;       |fm_shell:fmcore|                    ; 159 (70)    ; 26           ; 278528      ; 0    ; 0            ; 133 (46)     ; 2 (0)             ; 24 (24)          ; 24 (24)         ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore                                                          ;
+;          |altdpram:I_1|                    ; 0 (0)       ; 0            ; 16384       ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I_1                                             ;
+;          |altdpram:I|                      ; 70 (2)      ; 2            ; 262144      ; 0    ; 0            ; 68 (0)       ; 2 (2)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I                                               ;
+;             |lpm_decode:wdecoder|          ; 4 (0)       ; 0            ; 0           ; 0    ; 0            ; 4 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_decode:wdecoder                           ;
+;                |decode_e8c:auto_generated| ; 4 (4)       ; 0            ; 0           ; 0    ; 0            ; 4 (4)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_decode:wdecoder|decode_e8c:auto_generated ;
+;             |lpm_mux:mux|                  ; 64 (0)      ; 0            ; 0           ; 0    ; 0            ; 64 (0)       ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux                                   ;
+;                |muxlut:$00009|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00009                     ;
+;                |muxlut:$00011|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00011                     ;
+;                |muxlut:$00013|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00013                     ;
+;                |muxlut:$00015|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00015                     ;
+;                |muxlut:$00017|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00017                     ;
+;                |muxlut:$00019|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00019                     ;
+;                |muxlut:$00021|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00021                     ;
+;                |muxlut:$00023|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00023                     ;
+;                |muxlut:$00025|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00025                     ;
+;                |muxlut:$00027|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00027                     ;
+;                |muxlut:$00029|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00029                     ;
+;                |muxlut:$00031|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00031                     ;
+;                |muxlut:$00033|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00033                     ;
+;                |muxlut:$00035|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00035                     ;
+;                |muxlut:$00037|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00037                     ;
+;                |muxlut:$00039|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00039                     ;
+;                |muxlut:$00041|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00041                     ;
+;                |muxlut:$00043|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00043                     ;
+;                |muxlut:$00045|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00045                     ;
+;                |muxlut:$00047|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00047                     ;
+;                |muxlut:$00049|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00049                     ;
+;                |muxlut:$00051|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00051                     ;
+;                |muxlut:$00053|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00053                     ;
+;                |muxlut:$00055|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00055                     ;
+;                |muxlut:$00057|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00057                     ;
+;                |muxlut:$00059|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00059                     ;
+;                |muxlut:$00061|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00061                     ;
+;                |muxlut:$00063|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00063                     ;
+;                |muxlut:$00065|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00065                     ;
+;                |muxlut:$00067|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00067                     ;
+;                |muxlut:$00069|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00069                     ;
+;                |muxlut:$00071|             ; 2 (2)       ; 0            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|altdpram:I|lpm_mux:mux|muxlut:$00071                     ;
+;          |ssram_13_32_8191:ssram_mass|     ; 11 (11)     ; 0            ; 0           ; 0    ; 0            ; 11 (11)      ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram_13_32_8191:ssram_mass                              ;
+;          |ssram_9_32_511:ssram_info|       ; 8 (8)       ; 0            ; 0           ; 0    ; 0            ; 8 (8)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|fm_shell:fmcore|ssram_9_32_511:ssram_info                                ;
+;       |ifmc_bus:ifmc_bus|                  ; 108 (0)     ; 53           ; 0           ; 0    ; 0            ; 55 (0)       ; 4 (0)             ; 49 (0)           ; 34 (0)          ; |fpga_fmc|ifmc_top:Top|ifmc_bus:ifmc_bus                                                        ;
+;          |ifmc_rd:ifmc_rd|                 ; 2 (2)       ; 2            ; 0           ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 2 (2)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_rd:ifmc_rd                                        ;
+;          |ifmc_wr:ifmc_wr|                 ; 106 (96)    ; 51           ; 0           ; 0    ; 0            ; 55 (53)      ; 4 (4)             ; 47 (39)          ; 34 (27)         ; |fpga_fmc|ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_wr:ifmc_wr                                        ;
+;             |ifmc_pscal:pscaler|           ; 10 (10)     ; 8            ; 0           ; 0    ; 0            ; 2 (2)        ; 0 (0)             ; 8 (8)            ; 7 (7)           ; |fpga_fmc|ifmc_top:Top|ifmc_bus:ifmc_bus|ifmc_wr:ifmc_wr|ifmc_pscal:pscaler                     ;
+;       |ifmc_fmb:fmb|                       ; 161 (161)   ; 115          ; 0           ; 0    ; 0            ; 46 (46)      ; 4 (4)             ; 111 (111)        ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|ifmc_fmb:fmb                                                             ;
+;       |ifmc_serial:ifmc_serial|            ; 279 (0)     ; 206          ; 0           ; 0    ; 0            ; 73 (0)       ; 110 (0)           ; 96 (0)           ; 25 (0)          ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial                                                  ;
+;          |ifmc_ana:ifmc_ana|               ; 21 (21)     ; 18           ; 0           ; 0    ; 0            ; 3 (3)        ; 3 (3)             ; 15 (15)          ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_ana:ifmc_ana                                ;
+;          |ifmc_lpf:scl_in_lpf|             ; 5 (5)       ; 4            ; 0           ; 0    ; 0            ; 1 (1)        ; 4 (4)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf:scl_in_lpf                              ;
+;          |ifmc_lpf_1:sda_in_lpf|           ; 5 (5)       ; 4            ; 0           ; 0    ; 0            ; 1 (1)        ; 4 (4)             ; 0 (0)            ; 0 (0)           ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_lpf_1:sda_in_lpf                            ;
+;          |ifmc_ptsm:ifmc_ptsm|             ; 239 (239)   ; 173          ; 0           ; 0    ; 0            ; 66 (66)      ; 98 (98)           ; 75 (75)          ; 19 (19)         ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_ptsm:ifmc_ptsm                              ;
+;          |ifmc_tool:ifmc_tool|             ; 9 (9)       ; 7            ; 0           ; 0    ; 0            ; 2 (2)        ; 1 (1)             ; 6 (6)            ; 6 (6)           ; |fpga_fmc|ifmc_top:Top|ifmc_serial:ifmc_serial|ifmc_tool:ifmc_tool                              ;
++--------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+-------------------------------------------------------------------------------------------------+
+
+
++--------------------------------+
+; Analysis & Synthesis Equations ;
++--------------------------------+
+The equations can be found in D:/Project/SDI v5/ifmc_amba/FPGA/Altera/ifmc_top.map.eqn.
+
+
++------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                 ;
++------------------------------------+-----------------+-----------------------------------------------------------------+
+; File Name with User-Entered Path   ; Used in Netlist ; File Name with Absolute Path                                    ;
++------------------------------------+-----------------+-----------------------------------------------------------------+
+; ../../syn/ifmc_v2.2/rev_3/ifmc.vqm ; yes             ; D:/Project/SDI v5/ifmc_amba/syn/ifmc_v2.2/rev_3/ifmc.vqm        ;
+; altdpram.tdf                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/altdpram.tdf        ;
+; memmodes.inc                       ; yes             ; c:/altera/quartus42/libraries/others/maxplus2/memmodes.inc      ;
+; lpm_decode.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_decode.inc      ;
+; lpm_mux.inc                        ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_mux.inc         ;
+; a_hdffe.inc                        ; yes             ; c:/altera/quartus42/libraries/megafunctions/a_hdffe.inc         ;
+; a_rdenreg.inc                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/a_rdenreg.inc       ;
+; altqpram.inc                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/altqpram.inc        ;
+; alt_le_rden_reg.inc                ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_le_rden_reg.inc ;
+; altsyncram.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/altsyncram.inc      ;
+; aglobal42.inc                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/aglobal42.inc       ;
+; lpm_decode.tdf                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_decode.tdf      ;
+; declut.inc                         ; yes             ; c:/altera/quartus42/libraries/megafunctions/declut.inc          ;
+; altshift.inc                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/altshift.inc        ;
+; lpm_compare.inc                    ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_compare.inc     ;
+; lpm_constant.inc                   ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_constant.inc    ;
+; db/decode_e8c.tdf                  ; yes             ; D:/Project/SDI v5/ifmc_amba/FPGA/Altera/db/decode_e8c.tdf       ;
+; lpm_mux.tdf                        ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_mux.tdf         ;
+; muxlut.inc                         ; yes             ; c:/altera/quartus42/libraries/megafunctions/muxlut.inc          ;
+; bypassff.inc                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/bypassff.inc        ;
+; altshift.tdf                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/altshift.tdf        ;
+; muxlut.tdf                         ; yes             ; c:/altera/quartus42/libraries/megafunctions/muxlut.tdf          ;
++------------------------------------+-----------------+-----------------------------------------------------------------+
+
+
++---------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary ;
++-----------------------------------+---------+
+; Resource                          ; Usage   ;
++-----------------------------------+---------+
+; Logic cells                       ; 767     ;
+; Total combinational functions     ; 647     ;
+; Total 4-input functions           ; 313     ;
+; Total 3-input functions           ; 137     ;
+; Total 2-input functions           ; 136     ;
+; Total 1-input functions           ; 53      ;
+; Total 0-input functions           ; 8       ;
+; Combinational cells for routing   ; 0       ;
+; Total registers                   ; 400     ;
+; Total logic cells in carry chains ; 83      ;
+; I/O pins                          ; 14      ;
+; Total memory bits                 ; 278528  ;
+; Maximum fan-out node              ; clk     ;
+; Maximum fan-out                   ; 560     ;
+; Total fan-out                     ; 5552    ;
+; Average fan-out                   ; 5.90    ;
++-----------------------------------+---------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis RAM Summary                                                                                                          ;
++---------------------------------------------------+-----------+--------------+--------------+--------------+--------------+--------+------+
+; Name                                              ; Mode      ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size   ; MIF  ;
++---------------------------------------------------+-----------+--------------+--------------+--------------+--------------+--------+------+
+; ifmc_top:Top|fm_shell:fmcore|altdpram:I_1|content ; Dual Port ; 512          ; 32           ; 512          ; 32           ; 16384  ; none ;
+; ifmc_top:Top|fm_shell:fmcore|altdpram:I|content   ; Dual Port ; 8192         ; 32           ; 8192         ; 32           ; 262144 ; none ;
++---------------------------------------------------+-----------+--------------+--------------+--------------+--------------+--------+------+
+
+
++----------------------------------------------------------------+
+; WYSIWYG Cells                                                  ;
++--------------------------------------------------------+-------+
+; Statistic                                              ; Value ;
++--------------------------------------------------------+-------+
+; Number of WYSIWYG cells                                ; 696   ;
+; Number of synthesis-generated cells                    ; 71    ;
+; Number of WYSIWYG LUTs                                 ; 578   ;
+; Number of synthesis-generated LUTs                     ; 69    ;
+; Number of WYSIWYG registers                            ; 398   ;
+; Number of synthesis-generated registers                ; 2     ;
+; Number of cells with combinational logic only          ; 367   ;
+; Number of cells with registers only                    ; 120   ;
+; Number of cells with combinational logic and registers ; 280   ;
++--------------------------------------------------------+-------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 400   ;
+; Number of registers using Synchronous Clear  ; 33    ;
+; Number of registers using Synchronous Load   ; 37    ;
+; Number of registers using Asynchronous Clear ; 398   ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 227   ;
+; Number of registers using Output Enable      ; 0     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II Analysis & Synthesis
+    Info: Version 4.2 Build 157 12/07/2004 SJ Full Version
+    Info: Processing started: Fri Mar 31 09:40:54 2006
+Info: Command: quartus_map --import_settings_files=on --export_settings_files=off ifmc -c ifmc_top
+Warning: This product family is not recommended for new designs. Altera provides newer product families with better cost & performance attributes than ARM-Based Excalibur devices
+Info: Found 16 design units, including 16 entities, in source file ../../syn/ifmc_v2.2/rev_3/ifmc.vqm
+    Info: Found entity 1: ifmc_pscal
+    Info: Found entity 2: ifmc_wr
+    Info: Found entity 3: ifmc_rd
+    Info: Found entity 4: ifmc_bus
+    Info: Found entity 5: ifmc_tool
+    Info: Found entity 6: ifmc_lpf
+    Info: Found entity 7: ifmc_lpf_1
+    Info: Found entity 8: ifmc_ana
+    Info: Found entity 9: ifmc_ptsm
+    Info: Found entity 10: ifmc_serial
+    Info: Found entity 11: ifmc_fmb
+    Info: Found entity 12: ssram_13_32_8191
+    Info: Found entity 13: ssram_9_32_511
+    Info: Found entity 14: fm_shell
+    Info: Found entity 15: ifmc_top
+    Info: Found entity 16: fpga_fmc
+Info: Found 1 design units, including 1 entities, in source file c:/altera/quartus42/libraries/megafunctions/altdpram.tdf
+    Info: Found entity 1: altdpram
+Info: Found 1 design units, including 1 entities, in source file c:/altera/quartus42/libraries/megafunctions/lpm_decode.tdf
+    Info: Found entity 1: lpm_decode
+Info: Found 1 design units, including 1 entities, in source file db/decode_e8c.tdf
+    Info: Found entity 1: decode_e8c
+Info: Found 1 design units, including 1 entities, in source file c:/altera/quartus42/libraries/megafunctions/lpm_mux.tdf
+    Info: Found entity 1: lpm_mux
+Info: Found 1 design units, including 1 entities, in source file c:/altera/quartus42/libraries/megafunctions/altshift.tdf
+    Info: Found entity 1: altshift
+Info: Found 1 design units, including 1 entities, in source file c:/altera/quartus42/libraries/megafunctions/muxlut.tdf
+    Info: Found entity 1: muxlut
+Warning: LATCH primitive "ifmc_top:Top|fm_shell:fmcore|altdpram:I|xladdr[1]" is permanently enabled
+Warning: LATCH primitive "ifmc_top:Top|fm_shell:fmcore|altdpram:I|xladdr[0]" is permanently enabled
+Info: Ignored 160 buffer(s)
+    Info: Ignored 160 SOFT buffer(s)
+Info: Implemented 941 device resources after synthesis - the final resource count might be different
+    Info: Implemented 4 input pins
+    Info: Implemented 9 output pins
+    Info: Implemented 1 bidirectional pins
+    Info: Implemented 767 logic cells
+    Info: Implemented 160 RAM segments
+Info: Quartus II Analysis & Synthesis was successful. 0 errors, 3 warnings
+    Info: Processing ended: Fri Mar 31 09:41:03 2006
+    Info: Elapsed time: 00:00:10
+
+

@@ -1,0 +1,42 @@
+library verilog;
+use verilog.vl_types.all;
+entity I2cCtl is
+    port(
+        CLK             : in     vl_logic;
+        NRST            : in     vl_logic;
+        ClkEnab         : in     vl_logic;
+        MaClkEnab       : in     vl_logic;
+        SoftReset       : in     vl_logic;
+        IntSCL          : in     vl_logic;
+        Enab            : in     vl_logic;
+        IFLG            : in     vl_logic;
+        STA             : in     vl_logic;
+        STP             : in     vl_logic;
+        AAK             : in     vl_logic;
+        ReadData0       : in     vl_logic;
+        Ack             : in     vl_logic;
+        BusBusy         : in     vl_logic;
+        StartDet        : in     vl_logic;
+        StopDet         : in     vl_logic;
+        ArbLost         : in     vl_logic;
+        Slave7Det       : in     vl_logic;
+        Slave101Det     : in     vl_logic;
+        Slave102Det     : in     vl_logic;
+        GenCallDet      : in     vl_logic;
+        ExtAddrDet      : in     vl_logic;
+        OpClkEnab       : out    vl_logic;
+        OpEnab          : out    vl_logic;
+        AssertDA        : out    vl_logic;
+        SendAck         : out    vl_logic;
+        SetIFLG         : out    vl_logic;
+        ClearSTA        : out    vl_logic;
+        ClearSTP        : out    vl_logic;
+        SRLoad          : out    vl_logic;
+        SampAddr        : out    vl_logic;
+        ArbDataEnab     : out    vl_logic;
+        ArbAckEnab      : out    vl_logic;
+        Status          : out    vl_logic_vector(7 downto 3);
+        OSCL            : out    vl_logic;
+        openab2         : out    vl_logic
+    );
+end I2cCtl;

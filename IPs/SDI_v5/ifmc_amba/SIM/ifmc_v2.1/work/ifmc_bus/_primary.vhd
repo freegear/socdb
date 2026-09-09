@@ -1,0 +1,45 @@
+library verilog;
+use verilog.vl_types.all;
+entity ifmc_bus is
+    port(
+        clk             : in     vl_logic;
+        apb_clk         : in     vl_logic;
+        rstb            : in     vl_logic;
+        ahb_sel         : in     vl_logic;
+        ahb_readyin     : in     vl_logic;
+        ahb_trans       : in     vl_logic_vector(1 downto 0);
+        ahb_addr        : in     vl_logic_vector(17 downto 2);
+        ahb_write       : in     vl_logic;
+        ahb_size        : in     vl_logic_vector(2 downto 0);
+        ahb_rdata       : out    vl_logic_vector(31 downto 0);
+        ahb_ready       : out    vl_logic;
+        ahb_resp        : out    vl_logic_vector(1 downto 0);
+        apb_enable      : in     vl_logic;
+        apb_sel         : in     vl_logic;
+        apb_addr        : in     vl_logic_vector(5 downto 2);
+        apb_write       : in     vl_logic;
+        apb_wdata       : in     vl_logic_vector(31 downto 0);
+        apb_rdata       : out    vl_logic_vector(31 downto 0);
+        rdwaitcycle     : out    vl_logic_vector(1 downto 0);
+        info_rd         : out    vl_logic;
+        fmr_adr         : out    vl_logic_vector(15 downto 0);
+        fmr_rd          : out    vl_logic;
+        fmr_rdata       : in     vl_logic_vector(31 downto 0);
+        fmb_ready       : in     vl_logic;
+        fmb_ready_1cb   : in     vl_logic;
+        fm_wrmode       : out    vl_logic;
+        fmw_adr         : out    vl_logic_vector(15 downto 0);
+        fmw_xe          : out    vl_logic;
+        fmw_ye          : out    vl_logic;
+        fmw_se          : out    vl_logic;
+        fmw_erase       : out    vl_logic;
+        fmw_mas1        : out    vl_logic;
+        fmw_prog        : out    vl_logic;
+        fmw_nvstr       : out    vl_logic;
+        fmw_ifren       : out    vl_logic;
+        fmw_din         : out    vl_logic_vector(31 downto 0);
+        hdp             : in     vl_logic;
+        rdp             : in     vl_logic;
+        smart           : in     vl_logic_vector(15 downto 0)
+    );
+end ifmc_bus;

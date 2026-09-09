@@ -1,0 +1,97 @@
+--lpm_decode CASCADE_CHAIN="MANUAL" DEVICE_FAMILY="EXCALIBUR_ARM" IGNORE_CASCADE_BUFFERS="OFF" LPM_DECODES=4 LPM_WIDTH=2 data enable eq
+--VERSION_BEGIN 4.2 cbx_cycloneii 2004:08:25:19:39:42:SJ cbx_lpm_add_sub 2004:10:25:10:56:48:SJ cbx_lpm_compare 2004:10:18:11:29:46:SJ cbx_lpm_decode 2004:08:15:21:16:20:SJ cbx_mgl 2004:10:26:10:32:18:SJ cbx_stratix 2004:09:23:18:28:34:SJ cbx_stratixii 2004:08:10:15:01:36:SJ  VERSION_END
+
+
+--  Copyright (C) 1988-2002 Altera Corporation
+--  Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+--  support information,  device programming or simulation file,  and any other
+--  associated  documentation or information  provided by  Altera  or a partner
+--  under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+--  to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+--  other  use  of such  megafunction  design,  netlist,  support  information,
+--  device programming or simulation file,  or any other  related documentation
+--  or information  is prohibited  for  any  other purpose,  including, but not
+--  limited to  modification,  reverse engineering,  de-compiling, or use  with
+--  any other  silicon devices,  unless such use is  explicitly  licensed under
+--  a separate agreement with  Altera  or a megafunction partner.  Title to the
+--  intellectual property,  including patents,  copyrights,  trademarks,  trade
+--  secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+--  support  information,  device programming or simulation file,  or any other
+--  related documentation or information provided by  Altera  or a megafunction
+--  partner, remains with Altera, the megafunction partner, or their respective
+--  licensors. No other licenses, including any licenses needed under any third
+--  party's intellectual property, are provided herein.
+
+
+
+--synthesis_resources = lut 12 
+SUBDESIGN decode_e8c
+( 
+	data[1..0]	:	input;
+	enable	:	input;
+	eq[3..0]	:	output;
+) 
+VARIABLE
+	cmpr1_aeb_int	:	WIRE;
+	cmpr1_aeb	:	WIRE;
+	cmpr1_dataa[2..0]	:	WIRE;
+	cmpr1_datab[2..0]	:	WIRE;
+	cmpr2_aeb_int	:	WIRE;
+	cmpr2_aeb	:	WIRE;
+	cmpr2_dataa[2..0]	:	WIRE;
+	cmpr2_datab[2..0]	:	WIRE;
+	cmpr3_aeb_int	:	WIRE;
+	cmpr3_aeb	:	WIRE;
+	cmpr3_dataa[2..0]	:	WIRE;
+	cmpr3_datab[2..0]	:	WIRE;
+	cmpr4_aeb_int	:	WIRE;
+	cmpr4_aeb	:	WIRE;
+	cmpr4_dataa[2..0]	:	WIRE;
+	cmpr4_datab[2..0]	:	WIRE;
+	const_data0w[1..0]	: WIRE;
+	const_data1w[1..0]	: WIRE;
+	const_data2w[1..0]	: WIRE;
+	const_data3w[1..0]	: WIRE;
+	eq_node[3..0]	: WIRE;
+
+BEGIN 
+	IF (cmpr1_dataa[] == cmpr1_datab[]) THEN
+		cmpr1_aeb_int = VCC;
+	ELSE
+		cmpr1_aeb_int = GND;
+	END IF;
+	cmpr1_aeb = cmpr1_aeb_int;
+	cmpr1_dataa[] = ( enable, data[]);
+	cmpr1_datab[] = ( B"1", const_data0w[]);
+	IF (cmpr2_dataa[] == cmpr2_datab[]) THEN
+		cmpr2_aeb_int = VCC;
+	ELSE
+		cmpr2_aeb_int = GND;
+	END IF;
+	cmpr2_aeb = cmpr2_aeb_int;
+	cmpr2_dataa[] = ( enable, data[]);
+	cmpr2_datab[] = ( B"1", const_data1w[]);
+	IF (cmpr3_dataa[] == cmpr3_datab[]) THEN
+		cmpr3_aeb_int = VCC;
+	ELSE
+		cmpr3_aeb_int = GND;
+	END IF;
+	cmpr3_aeb = cmpr3_aeb_int;
+	cmpr3_dataa[] = ( enable, data[]);
+	cmpr3_datab[] = ( B"1", const_data2w[]);
+	IF (cmpr4_dataa[] == cmpr4_datab[]) THEN
+		cmpr4_aeb_int = VCC;
+	ELSE
+		cmpr4_aeb_int = GND;
+	END IF;
+	cmpr4_aeb = cmpr4_aeb_int;
+	cmpr4_dataa[] = ( enable, data[]);
+	cmpr4_datab[] = ( B"1", const_data3w[]);
+	const_data0w[] = B"00";
+	const_data1w[] = B"01";
+	const_data2w[] = B"10";
+	const_data3w[] = B"11";
+	eq[] = eq_node[];
+	eq_node[] = ( cmpr4_aeb, cmpr3_aeb, cmpr2_aeb, cmpr1_aeb);
+END;
+--VALID FILE

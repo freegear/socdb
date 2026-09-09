@@ -1,0 +1,60 @@
+library verilog;
+use verilog.vl_types.all;
+entity ifmc_fmb is
+    generic(
+        PROT_ADDR       : integer := 15;
+        SMART_ADDR      : integer := 14;
+        FMB_SM_WIDTH    : integer := 9;
+        START           : integer := 0;
+        WAIT0           : integer := 1;
+        WAIT1           : integer := 2;
+        WAIT2           : integer := 3;
+        SET_RD_PROT     : integer := 4;
+        WAIT_RD_PROT    : integer := 5;
+        SET_RD_SMART    : integer := 6;
+        WAIT_RD_SMART   : integer := 7;
+        NORMAL          : integer := 8;
+        RD_SM_WIDTH     : integer := 4;
+        IDLE            : integer := 0;
+        SETCNT          : integer := 1;
+        READ            : integer := 2;
+        RDEND           : integer := 3
+    );
+    port(
+        clk             : in     vl_logic;
+        rstb            : in     vl_logic;
+        rdwaitcycle     : in     vl_logic_vector(1 downto 0);
+        info_rd         : in     vl_logic;
+        fmr_adr         : in     vl_logic_vector(15 downto 0);
+        fmr_rd          : in     vl_logic;
+        fmr_rdata       : out    vl_logic_vector(31 downto 0);
+        ready_1cb       : out    vl_logic;
+        ready           : out    vl_logic;
+        fm_wrmode       : in     vl_logic;
+        fmw_adr         : in     vl_logic_vector(15 downto 0);
+        fmw_xe          : in     vl_logic;
+        fmw_ye          : in     vl_logic;
+        fmw_se          : in     vl_logic;
+        fmw_erase       : in     vl_logic;
+        fmw_mas1        : in     vl_logic;
+        fmw_prog        : in     vl_logic;
+        fmw_nvstr       : in     vl_logic;
+        fmw_ifren       : in     vl_logic;
+        fmw_din         : in     vl_logic_vector(31 downto 0);
+        hdp             : out    vl_logic;
+        rdp             : out    vl_logic;
+        smart           : out    vl_logic_vector(15 downto 0);
+        fm_xadr         : out    vl_logic_vector(9 downto 0);
+        fm_yadr         : out    vl_logic_vector(5 downto 0);
+        fm_xe           : out    vl_logic;
+        fm_ye           : out    vl_logic;
+        fm_se           : out    vl_logic;
+        fm_erase        : out    vl_logic;
+        fm_mas1         : out    vl_logic;
+        fm_prog         : out    vl_logic;
+        fm_nvstr        : out    vl_logic;
+        fm_ifren        : out    vl_logic;
+        fm_din          : out    vl_logic_vector(31 downto 0);
+        fm_dout         : in     vl_logic_vector(31 downto 0)
+    );
+end ifmc_fmb;

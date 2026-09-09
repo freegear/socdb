@@ -1,0 +1,66 @@
+#
+# Synplicity Verification Interface File
+# Generated using Synplify-pro
+#
+# Copyright (c) 1996-2005 Synplicity, Inc.
+# All rights reserved
+#
+
+# Set logfile options
+vif_set_result_file  adc_control.vlf
+
+# Set technology for TCL script
+vif_set_technology -architecture FPGA -vendor Xilinx
+
+# RTL and technology files
+vif_add_library -original $XILINX/verilog/verification/unisims
+vif_add_library -original $XILINX/verilog/verification/simprims
+vif_add_file -original -verilog ../../rtl/adc_control.v
+vif_set_top_module -original -top adc_control
+ 
+vif_add_library -translated $XILINX/verilog/verification/unisims
+vif_add_library -translated $XILINX/verilog/verification/simprims
+vif_add_file -translated -verilog adc_control.vm
+vif_set_top_module -translated -top adc_control 
+# Read FSM encoding
+vif_set_fsm -fsm fsm_0
+vif_set_fsmreg -original -fsm fsm_0 ADC_STATE[3:0]
+vif_set_fsmreg -translated -fsm  fsm_0 ADC_STATE[6:0]
+vif_set_state_map -fsm fsm_0 -original "0000" -translated "0000001"
+vif_set_state_map -fsm fsm_0 -original "0001" -translated "0000010"
+vif_set_state_map -fsm fsm_0 -original "0010" -translated "0000100"
+vif_set_state_map -fsm fsm_0 -original "0011" -translated "0001000"
+vif_set_state_map -fsm fsm_0 -original "0100" -translated "0010000"
+vif_set_state_map -fsm fsm_0 -original "0101" -translated "0100000"
+vif_set_state_map -fsm fsm_0 -original "0110" -translated "1000000"
+
+# Memory map points
+
+# SRL map points
+
+# Compiler constant registers
+
+# Compiler constant latches
+
+# Compiler RTL sequential redundancies
+
+# RTL sequential redundancies
+
+# Technology sequential redundancies
+vif_set_equiv -translated ADC_STATE_Z[5] ADC_STATE_fast_Z[5]
+vif_set_equiv -translated CLK_ADCCLK_1d_Z CLK_ADCCLK_1d_fast_Z
+vif_set_equiv -translated rADCCON_Z[2] rADCCON_fast_Z[2]
+
+# Inversion map points
+
+# Port mappping and directions
+
+# Black box mapping
+
+
+# Other sequential cells, including multidimensional arrays
+
+# Constant Registers
+
+# Retimed Registers
+
