@@ -1,0 +1,117 @@
+########################################################################
+#
+# This confidential and proprietary software may be used only as
+# authorised by a licensing agreement from ARM Limited
+#   (c) COPYRIGHT 1999-2005 ARM Limited
+#       ALL RIGHTS RESERVED
+# The entire notice above must be reproduced on all authorised
+# copies and copies may only be made to the extent permitted
+# by a licensing agreement from ARM Limited.
+#
+########################################################################
+
+
+1. Model Features
+
+This model is a trial version and have a set of limited features
+compared with the standard full functional models provided by ARM.
+
+The limited features of this model are:
+
+- No programmers model and debug registers trace.
+- No ARM instruction disassembler or instruction trace.
+- Simulation limit to 5 million MCLK cycles
+
+
+2. Control of JTAG ID
+
+Default JTAG ID is  0x3f0f0f0f 
+
+To change the default value, you can either use ENV variable or 
+HDL parameter.  If both are used, the ENV variable takes the priority.
+
+* Use ENV variable ARM_DEVICEID
+
+  setenv ARM_DEVICEID  "desired value"
+  
+  Here the value should be in integer format.
+
+* Use HDL parameter
+
+  When the ARM7TDMI model is instantiated add the following :
+
+
+	defparam theARM7TDMI.JTAG_ID = x;               <-----
+ 	ARM7TDMI theARM7TDMI (....
+
+  Here x is the desired value in integer format.
+
+
+
+For revision history, please ref <install_area>/DOCS/release.notes
+
+
+==========================================================
+Generic/parameters used in HDL wrapper
+==========================================================
+
+
+  o MG_LOGFILE_NAME. When dumping a log of the changes happening on the 
+    pins of the model, MG_LOGFILE_NAME is the name of the file to write 
+    this log to.  To switch this logging on, you must also set the 
+    MG_MODEL_LOG environment variable to 'yes'."
+
+  o MG_FORCED_DELAY. Obsolete as it is for built-in timing shell.
+
+  o MG_OBJECT. This generic contains the path where the Model Manager 
+    will look first to find the the shared object (.so or .sl) file for 
+    the model.  By default it is the value of the DIR_<device> environment 
+    variable.
+
+  o MG_OMI_PATH. Generic only for OMI based model. This is a colon-separated 
+    list of paths, which are the first set of places that the Model 
+    Manager will look to find the bootstrap file for OMI dropins used in this model. 
+
+  o MG_MSG_TIME.  When this is set to 1, the simulation time is printed with
+    all messages coming from this instance of the device.  When set to -1, it
+    is never printed.  When set to 0 (the default), this generic has no 
+    effect (so whether or not the time is printed is determined by the dropin
+    source or SWIFT/OMI runtime library, as with ModelGen);
+
+  o MG_MSG_INSTANCE.  When this is set to 1, the path to this instance of the
+    device is printed with all messages coming from this instance.  When set 
+    to -1, it is never printed.  When set to 0 (the default), this generic
+    has no effect (so whether or not the path is printed is determined by the
+    dropin source or SWIFT/OMI runtime library, as with ModelGen);
+
+  o MG_MSG_SEVERITY.  This can be set to "NOSEVERITY", "WARNING",
+    "INFORMATIONAL", "FATAL" or "ERROR" (or any abbreviation of these), in
+    which case all messages produced by this instance of the device will take
+    that severity level.  If set to the empty string (or anything else), this
+    generic has no effect;
+
+  o MG_MSG_SUPPRESS.  This can be set to "NOSEVERITY", "WARNING",
+    "INFORMATIONAL", "FATAL" or "ERROR" (or any abbreviation of these), in
+    which case any message produced by this instance of the device which has
+    a severity of less than or equal to this will be suppressed.  If set to
+    the empty string (or anything else), this generic has no effect.
+
+  o MG_MSG_V4_FORMAT.  For backward compatibility, the ModelGen message format 
+    can be re-enabled by setting the new MG_MSG_V4_FORMAT generic to 1; this 
+    capability may be removed in a future release;
+
+  A few things should be noted here:
+
+  - The above MG_MSG_* generics do not affect the messages produced by timing 
+    shells.  These messages can be controlled using other generics/parameters 
+    at the timing shell level;
+
+  - Messages originating from SWIFT or OMI dropins often do not supply their
+    severity information to the Model Manager.  So even though they may 
+    contain words such as "WARNING" or "ERROR".  Such messages will be
+    treated as "INFORMATIONAL" or "NOSEVERITY" messages as far as
+    MG_MSG_SUPPRESS is concerned;
+
+  - MG_MSG_TIME affects timestamps in message headers, not the (bogus)
+    timestamps which may appear within the body of messages originating from
+    SWIFT or OMI dropins.

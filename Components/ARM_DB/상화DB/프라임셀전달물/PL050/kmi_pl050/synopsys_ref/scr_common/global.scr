@@ -1,0 +1,84 @@
+/*------------------------------------------------------------------------------
+--  This confidential and proprietary software may be used only as
+--  authorised by a licensing agreement from ARM Limited
+--    (C) COPYRIGHT 1999 ARM Limited
+--        ALL RIGHTS RESERVED
+--  The entire notice above must be reproduced on all authorised
+--  copies and copies may only be made to the extent permitted
+--  by a licensing agreement from ARM Limited.
+--------------------------------------------------------------------------------
+--  
+--  Version and Release Control Information:
+--  
+--  File Name              : global.scr,v
+--  File Revision          : 1.1
+--  
+--  Release Information    : PL050-REL1v1
+--  
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- Purpose : Synopsys synthesis project/library-specific global script.
+--
+--           Located in the synopsys_ref/scr_common directory.
+--           Called by master compile script.
+--
+--           This file applies global defaults once the design   
+--           has been read in. This file is to be used when 
+--           synthesising the Verilog source. 
+--
+--           It includes library-specific setup such as        
+--           worst/best case operating conditions and         
+--           default cell load and drive strength.           
+------------------------------------------------------------------------------*/
+
+/* This script is based on use of the Avanti! Passport cb25 cell library.     */
+
+/******************************************************************************/
+/* SET OPERATING CONDITIONS                                                   */
+/******************************************************************************/
+
+set_min_library MAX_LIB_FILENAME -min_version MIN_LIB_FILENAME
+/* set_min_library cb25os163_max.db -min_version cb25os163_min.db */
+/* Multiple libraries, declare max (not min) in setup.scr, set min as above */
+
+set_operating_conditions \
+  -min BC_NAME \
+  -min_library MIN_LIB_FILENAME + ":" + MIN_TECH_LIB_NAME \
+  -max WC_NAME \
+  -max_library MAX_LIB_FILENAME + ":" + MAX_TECH_LIB_NAME
+
+/*
+ set_operating_conditions \
+   -min "BCCOM" \
+   -min_library cb25os163_min.db:cb25os163_min \
+   -max "WCCOM" \
+   -max_library cb25os163_max.db:cb25os163_max
+*/
+
+/* Define worst case and best case commercial operating conditions   */
+/* Version 1998.02 allows min and max conditions to be specified together */
+
+/******************************************************************************/
+/* SET DEFAULT CELL LOAD                                                      */
+/******************************************************************************/
+
+set_load load_of( MAX_TECH_LIB_NAME + /inv0d0/I ) \
+  * 5 all_outputs()
+/*
+ set_load load_of(cb25os163_max/inv0d0/I) \
+   * 5 all_outputs()
+*/
+
+/******************************************************************************/
+/* SET DEFAULT CELL DRIVE STRENGTH                                            */
+/******************************************************************************/
+
+set_driving_cell -library MAX_TECH_LIB_NAME \
+  -cell dfnrb1 -pin Q all_inputs()
+/*
+ set_driving_cell -library cb25os163_max \
+   -cell dfnrb1 -pin Q all_inputs()
+*/
+
+/*********************************** End **************************************/

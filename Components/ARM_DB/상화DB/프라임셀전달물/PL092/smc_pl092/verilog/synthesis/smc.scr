@@ -1,0 +1,20 @@
+
+analyze -f verilog   SmcParams.v 
+analyze -f verilog   SmcRevAnd.v 
+analyze -f verilog   SmcAhbif.v 
+analyze -f verilog   SmcSynchroniser.v 
+analyze -f verilog   SmcTSM.v 
+analyze -f verilog   SmcEIB.v 
+analyze -f verilog   SmcTimerWaitCont.v 
+analyze -f verilog   SmcWrEnGen.v 
+analyze -f verilog   SmcCore.v 
+analyze -f verilog   TIC.v 
+analyze -f verilog   DBI.v 
+analyze -f verilog   Smc.v
+
+
+elaborate Smc
+current_design Smc
+link
+
+write -f db -hier -out Smc.gtech.db

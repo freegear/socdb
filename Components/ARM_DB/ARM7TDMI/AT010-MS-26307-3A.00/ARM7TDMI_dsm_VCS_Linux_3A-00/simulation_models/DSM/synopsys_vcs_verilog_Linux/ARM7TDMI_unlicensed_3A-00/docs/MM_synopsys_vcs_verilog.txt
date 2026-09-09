@@ -1,0 +1,192 @@
+= APPLICATION NOTE =
+= Using ARM Model Manager (version 1.0.1) with Synopsys VCS =
+
+Introduction
+============
+
+Intended audience
+-----------------
+
+This application note provides information for users of models managed
+with version 1.0.1 of the ARM Model Manager for Synopsys VCS.
+
+It describes:
+
+ - an introduction to the Model Manager
+ - initial preparations for simulation
+ - configuring the simulator to use the Model Manager
+ - how the Model Manager loads a model (including SWIFT models)
+
+Please read this document even if you are familiar with previous model
+releases, because some of the details have changed.
+
+
+The Model Manager
+-----------------
+
+Your model is called a "foreign-language model", because it was written
+using a language other than the native HDL of the simulator.  You have
+been supplied with this model in the form of an object file.  Different
+simulators can have different interfaces for communicating with foreign-
+language models.  The purpose of the Model Manager is to provide a
+standard (that is, simulator-independent) interface to the models it
+manages and to handle all communication between those models and the
+simulator.
+
+The Model Manager (or MM) has been designed so that you do not have to
+load each model separately into the simulation.  Instead, the simulator
+opens or links against a single copy of the MM, which handles all the
+requests to load MM models in that simulation.  A single MM can service
+multiple instances of multiple models in a simulation.  You do not have
+to rebuild the simulator executable or libraries when a new MM model is
+added to a simulation.
+
+The instructions on using the Model Manager vary between simulators
+because different simulators have different methods of integrating
+foreign models into their simulations.
+
+
+Initial preparations
+====================
+
+You must set the environment variable MG_LIB to point to the directory
+containing the Model Manager before you can run any simulation which
+uses the MM.  Set MG_LIB to:
+
+   On Solaris (32-bit)  <Model_Manager_root>/SunOS/MM
+
+   On Solaris (64-bit)  <Model_Manager_root>/SunOS-64/MM
+
+   On HP-UX (32-bit)    <Model_Manager_root>/HP-UX/MM
+
+   On HP-UX (64-bit)    <Model_Manager_root>/HP-UX-64/MM
+
+   On Linux             <Model_Manager_root>/Linux/MM
+
+where <Model_Manager_root> is the Model Manager root directory,
+as described in the model-specific documentation.
+
+Some Model Managers are not supported on some of the platforms above.
+
+
+Configuring VCS to use the Model Manager
+========================================
+
+Foreign language models can be loaded into VCS using the Verilog PLI
+(Programming Language Interface) by creating a new simulator executable
+(usually called "simv") using the "vcs" command.  This new executable
+must incorporate code to allow all the foreign language models to
+operate.  In our case, this code is the Model Manager.
+
+To build an executable containing a Model Manager, specify the following
+on the vcs command line:
+
+ - A PLI table for the model.  For a single model or socket model,
+   you can use the supplied pli.tab, by including the following on the
+   command line:
+
+	-P pli.tab
+
+ - The location and name of the Model Manager library.  
+
+   For Solaris, include the following on the command line:
+
+	-LDFLAGS "-L${MG_LIB}/synopsys_vcs_verilog" -lmgmm
+
+   For Linux, include the following:
+
+	-LDFLAGS "-L${MG_LIB}/synopsys_vcs_verilog" -lmgmm -ldl
+
+   For HP-UX:
+
+	-LDFLAGS \
+	  "-L${MG_LIB}/synopsys_vcs_verilog -Wl,-a,shared_archive,-Fz" \
+	  -lmgmm -ldld
+
+   The extra linking flags used on Linux and HPUX are necessary to
+   enable VCS to interact with shared libraries as well as statically
+   link against libraries built as archive files.
+
+ - The Verilog files necessary for the simulation, including the
+   Verilog wrapper for the model.
+
+For example, consider a model named "MY_MODEL" with a Verilog testbench
+"MY_MODEL_TEST.v", where both the testbench and the model's Verilog
+wrapper are in the current directory.  To build an executable on
+Solaris, change to the directory containing the model and run the
+command:
+
+  vcs -Mupdate -P pli.tab \
+    -LDFLAGS "-L${MG_LIB}/synopsys_vcs_verilog" \
+    -lmgmm MY_MODEL.v MY_MODEL_TEST.v
+
+Alternatively, to build an executable on HP-UX, use:
+
+  vcs -Mupdate -P pli.tab -LDFLAGS \
+    "-L${MG_LIB}/synopsys_vcs_verilog -Wl,-a,shared_archive,-Fz" \
+     -lmgmm -ldld MY_MODEL.v MY_MODEL_TEST.v
+
+Before running the simulation, you must also ensure that:
+
+ - On Solaris and Linux, the directory ${MG_LIB}/synopsys_vcs_verilog
+   appears in the LD_LIBRARY_PATH environment variable;
+
+ - On HP-UX, the directory ${MG_LIB}/synopsys_vcs_verilog appears in
+   the SHLIB_PATH environment variable.
+
+To simulate, run the simv executable which is created in the current
+directory.
+
+
+Adding further PLI code
+-----------------------
+
+If you need to simulate with other PLI applications, you must alter the
+PLI table to include the entry points for those applications before
+building the executable.  You must also include any necessary libraries
+or object files on the "vcs" command line.
+
+Adding PLI code to a simulation is described in the VCS documentation.
+
+
+How the Model Manager loads a model
+===================================
+
+The Model Manager extends the syntax of Verilog by adding the command
+"$mm".  This command takes a number of arguments, and the first of
+these is the model's device name.  The Verilog shell for the model
+contains a call to the "$mm" command, with this name as its argument.
+
+The shared library containing the model must have the same name as the
+device (which we will call <device>), plus the appropriate OS-specific
+shared library filename extension.
+
+The Model Manager first looks for the library in the directory specified
+in the MG_OBJECT generic or parameter in the model's HDL wrapper.  This
+generic is set to the environment variable DIR_<device> by default.
+
+If the MM cannot find the library there, it looks in the current
+directory.
+
+
+SWIFT models
+------------
+
+The Model Manager can handle models which have SWIFT models (such as 
+those built with VMC from Synopsys) as sub-components.  The model-
+specific documentation describes the details.  Before you can simulate
+these models you must ensure that the environment variable LMC_HOME is
+set appropriately.
+
+The Synopsys VMC documentation provides further details and is available
+on-line at the Synopsys website, "www.synopsys.com".
+
+
+Timing
+------
+
+A model can have an SDF-annotatable timing shell associated with it,
+or can be simulated without any timing.  To choose the kind of
+simulation you want, select the appropriate HDL wrapper.  The name and
+location of HDL wrappers are described in the model-specific
+documentation.

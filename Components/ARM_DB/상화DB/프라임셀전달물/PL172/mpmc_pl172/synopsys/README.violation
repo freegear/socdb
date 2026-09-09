@@ -1,0 +1,47 @@
+-- --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2001-2002 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- -----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : README.violation.rca
+-- File Revision          : 1.4
+--
+-- Release Information    : PrimeCell(TM)-PL172-r2p3-00rel0
+--
+-- -----------------------------------------------------------------------------
+-- Purpose : 
+--           README file for violations and warnings that can be ignored in the
+--           synopsys synthesis logs
+--
+-- --=========================================================================--
+
+Violations reported in the log files
+------------------------------------
+
+The CAPTURE VIOLATIONS that are reported in the scaninsert synthesis runs can
+be ignored. These violations are reported due to the clock gating effect of the
+OR logic on MPMCCLK to generate the MPMC output clocks MPMCCLKOUT[3:0].
+
+An example of such violations is in the file
+ log/Mpmc_scaninsert_vhdl_vhdl_synth.log on line no.s 424 and 6861.
+
+Warnings reported in the log files
+----------------------------------
+
+Synopsys produces the following warning when the fanout of any net exceeds
+1000. 
+--------------------------------------------------------------------------------
+Warning: Design %s contains %d high-fanout nets. A fanout number of 
+1000 will be used for delay calculations involving these nets. (TIM-134)
+--------------------------------------------------------------------------------
+
+This warning appears in the current Mpmc logs and reports. It has been checked
+that this warning is being issued only for clocks and resets, and that there
+are no buffers present on Clocks and Resets.

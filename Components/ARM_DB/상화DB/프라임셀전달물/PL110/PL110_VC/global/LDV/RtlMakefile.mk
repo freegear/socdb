@@ -1,0 +1,35 @@
+#-----------------------------------------------------------------------
+#- This confidential and proprietary software may be used only as
+#- authorised by a licensing agreement from ARM Limited
+#-   (C) COPYRIGHT 2000 ARM Limited
+#-       ALL RIGHTS RESERVED
+#- The entire notice above must be reproduced on all authorised
+#- copies and copies may only be made to the extent permitted
+#- by a licensing agreement from ARM Limited.
+#-
+#-----------------------------------------------------------------------
+#- Version and Release Control Information:
+#-
+#- File Name              : RtlMakefile.mk.rca
+#- File Revision          : 1.3
+#-
+#- Release Information    : PrimeCell(TM)-GLOBAL-REL1v6
+#-
+#-----------------------------------------------------------------------
+#-  Purpose  :
+#-             A makefile to build lower level directories
+#-----------------------------------------------------------------------
+
+
+all :
+
+
+check:  
+	@spyglass -verilog *.v > spyglass.log
+	@verilint *.v > verilint.log
+
+clean :
+	@rm -f verilint.* spyglass.*
+
+
+################################ End ###################################

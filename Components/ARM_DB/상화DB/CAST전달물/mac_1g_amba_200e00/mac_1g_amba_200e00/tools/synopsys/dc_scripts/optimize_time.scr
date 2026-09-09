@@ -1,0 +1,160 @@
+/* ************************************************************************ */
+/* Copyright (c) 1999-2003  Evatronix SA                                    */
+/* ************************************************************************ */
+/* Please review the terms of the license agreement before using this file. */
+/* If you are not an authorised user, please destroy this script file and   */
+/* notify Evatronix S.A. immediately that you inadvertently received an     */
+/* unauthorised copy.                                                       */
+/* ************************************************************************ */
+/* ------------------------------------------------------------------------ */
+/* Project name         : MAC-1G_AMBA                                       */
+/* Project description  : Gigabit Ethernet Media Access Controller          */
+/* File name            : optimize_time.scr	                            */
+/* File contents        : MAC-1G_AMBA synthesis		                    */
+/* Purpose              : Master synthesis script                           */
+/*                        Sample Script for Synopsys                        */
+/* Design Engineer      : D.B.	 					    */			
+/* Version              : 1.0                                               */
+/* Last modification    : 2003-11-28					    */
+/* ------------------------------------------------------------------------ */
+
+
+/* to achieve the best results please make sure to enable */
+/* DesignWare Foundation if you are licensed to use  it */
+
+/* specifying some variables */
+work_dir    = "./tools/synopsys/work/"
+work1_dir    = "./tools/synopsys/work1/"
+source_dir  = "./src/core/"
+report_dir  = "./tools/synopsys/dc_reports/"
+result_dir  = "./tools/synopsys/dc_results/"
+db_dir  = "./tools/synopsys/dbdir/"
+
+mac_dir = "./src/core/mac_1g/"
+amba_dir = "./src/core/mac2amba/"
+
+top = "MAC_1G_AMBA"
+lib_mac = "MAC_1G_LIB"
+lib_amba = "MAC2AMBA_LIB"
+
+/* to remove existing design from memory */
+remove_design -all
+
+/* creating necessary directories */ 
+sh mkdir work_dir
+sh mkdir work1_dir
+sh mkdir report_dir
+sh mkdir result_dir
+sh mkdir db_dir
+
+/* setting a few more variables */
+define_design_lib lib_mac -path work_dir
+define_design_lib lib_amba -path work1_dir
+hdlin_vhdl93_concat = "false"
+hdlin_enable_rtldrc_info = "true"
+set_default_scan_style = multiplexed_flip_flop
+
+
+/*  analyzing the source files */ 
+/*  components of core MAC  */ 
+
+analyze -format vhdl -lib lib_mac {mac_dir + "utility_mac_1g.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "rc.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "tc.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "bd.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "tfifo.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "rfifo.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "tlsm.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "rlsm.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "dma.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "csr.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "rstc.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "miism.vhd"}
+analyze -format vhdl -lib lib_mac {mac_dir + "mac_1g.vhd"} 
+
+/* components of core MAC2AMBA */
+
+analyze -format vhdl -lib lib_amba {amba_dir + "mac2amba_package.vhd"} 
+analyze -format vhdl -lib lib_amba {amba_dir + "macdata2ahb.vhd"}
+analyze -format vhdl -lib lib_amba {amba_dir + "maccsr2apb.vhd"}
+analyze -format vhdl -lib lib_amba {amba_dir + "mac2amba.vhd"}
+
+/* components of core MAC_AMBA */
+
+analyze -format vhdl -lib lib_mac {source_dir + "mac_1g_amba.vhd"}
+
+/* elaborating the design */
+elaborate top -lib lib_mac  
+current_design top
+uniquify
+check_design > report_dir + dc_ + top + rtl.rep
+link
+rtldrc > report_dir + dc_ + top + rtldrc.rep
+set_operating_conditions "TYPICAL" 
+set_fix_multiple_port_nets -all -buffer_constants
+
+/* specifying clocks */
+
+create_clock -name "clkr" -period 8 {"clkr"}
+create_clock -name "clkt" -period 8 {"clkt"}
+create_clock -name "pclk" -period 8 {"pclk"}
+create_clock -name "hclk" -period 8 {"hclk"}
+derive_clocks
+
+set_drive 0 {clkr, clkt, pclk hclk}
+set_dont_touch_network {clkr, clkt, pclk hclk}
+report_clock > report_dir + dc_ + top + report_clock.rep
+report_port > report_dir + dc_ + top + report_port.rep
+
+group_path -default -critical_range 2
+set_auto_disable_drc_nets -constant false
+
+/* to use ultra mode DC-Ultra license is needed */
+set_ultra_optimization true
+report_ultra_optimization
+
+set_false_path -from clkr -to {clkt, pclk, hclk}
+set_false_path -from clkt -to {clkr, pclk, hclk}
+set_false_path -from pclk -to {clkt, clkr, hclk}
+set_false_path -from hclk -to {clkt, pclk, clkr}
+set_false_path -from all_inputs() -{clkr, clkt, pclk, hclk}
+
+write -format db -hierarchy -output db_dir + dc_ + top + ".db"
+
+sh date
+compile -map_effort medium
+sh date
+
+/* the loop needed to ungroup DesignWare components */
+foreach (module_name, find("design","*")) {
+    current_design = module_name
+    lista = filter(find(cell,"*"), "@is_nmodule == true")    
+    if (lista != {}) {
+       echo "Found a DesignWare cells"
+       ungroup -flatten lista
+    }
+  }
+
+current_design top
+report_timing -max_paths 5 > report_dir + dc_ + top + "timing.rep"
+report_area > report_dir + dc_ + top + "area.rep"
+report_cell > report_dir + dc_ + top + "cell.rep"
+report_net_fanout -threshold 33 > report_dir + dc_ + top + "fanout.rep"
+
+/* writing out the design in numerous formats */
+
+change_names -rule verilog -hierarchy
+write_sdf -version 2.1 result_dir + dc_ + top + ".sdf"
+write -format verilog -hierarchy -output result_dir + dc_ + top + ".v"
+write -format vhdl -hierarchy -output result_dir + dc_ + top + ".vhd"
+write -format db -hierarchy -output db_dir + dc_ + top + ".db"
+write_script -output  result_dir + dc_ + top + ".constr"
+write_parasitics -output result_dir + dc_ + top + ".reduced"
+
+/* the purpose of the following command is to find any unmapped logic
+   if the result is {} then the design is fully mapped 		   */
+unmapped = filter(find (cell,"*" -hierarchy), "@is_unmapped == true")   
+    if (unmapped != {}) {
+       echo "Found a DesignWare cells"
+       ungroup -flatten lista
+    }

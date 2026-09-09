@@ -1,0 +1,225 @@
+--------------------------------------------------------------------------------
+--  This confidential and proprietary software may be used only as
+--  authorised by a licensing agreement from ARM Limited
+--    (C) COPYRIGHT 2000-2002 ARM Limited
+--        ALL RIGHTS RESERVED
+--  The entire notice above must be reproduced on all authorised
+--  copies and copies may only be made to the extent permitted
+--  by a licensing agreement from ARM Limited.
+--------------------------------------------------------------------------------
+--  
+--  Version and Release Control Information:
+--  
+--  File Name           : README,v
+--  File Revision       : 1.2
+-- 
+--  Release Information : ADK_REL1v1
+--  
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+--  Purpose  : README file
+--
+--------------------------------------------------------------------------------
+
+- Generic README file covering both VHDL and Verilog release variants.
+
+ARM922T AHB Wrapper
+===================
+
+This directory contains the files for the ARM922T AHB wrapper.
+
+The compilation order of the core AHB wrapper files is:
+
+ClockInv.v(hd)        (in global_ADK/verilog or global_ADK/vhdl)
+LATR.v(hd)            (in global_ADK/verilog or global_ADK/vhdl)
+A920TWrapMaster.v(hd)
+A920TWrapSM.v(hd)
+A920TWrapSlave.v(hd)
+A920TWrap.v(hd)
+A922T.v(hd)
+
+
+Changes in REL01
+===============
+
+Enhancement: Improved HBURST signalling
+---------------------------------------
+
+When the A922T loses ownership of the AHB or receives a SPLIT or RETRY
+response, the affected access is placed into a holding register.
+Prior to REL01, when the access could re-commence, HBURST was always
+forced to INCR.  REL01 improves this by preserving the information
+indicated on HBURST if it is the first access of a burst which is
+interrupted.  For example, if the A922T wishes to perform a cache
+linefill (INCR8) but is not yet granted the AHB and so cannot complete 
+any beats, it will still assert
+
+AHB Protocol: Single cycle loss of grant
+----------------------------------------
+
+Prior to REL01, if the A922T lost ownership of the bus for a single
+cycle, and in that cycle was attempting to perform a BUSY transfer,
+then if the the next access continued the burst it would be signalled
+as SEQ (i.e. HTRANS would indicate a sequential trasnfer) rather than
+NONSEQ.
+
+Page Table Walks
+----------------
+
+The A922T AHB wrapper cannot correctly determine the cacheable status
+of page table walks.  Previously they were indicated (via HPROT[3]) as 
+non-cacheable, but from REL01 they are indicated as cacheable.  This is 
+because page table walk accesses will ignore an ERROR response in the
+same way as a cached access, which can ease the design of external
+logic which may need to know of this.
+
+
+Changes in BET05
+================
+
+Bug Fix : Lost Data on LDM of 2 Values
+--------------------------------------
+
+This affects all versions prior to BET05.  If an LDM (load multiple)
+instruction was used to load precisely two registers from an uncached
+region of memory, and this load commenced immediately after a buffered
+write which was delayed (see below), then the second register would
+not be loaded correctly by the LDM.  The "delay" to the buffered write
+could be any of:
+
+- wait state (i.e. HREADY low)
+- loss of grant on the AHB, or the A922T was not granted prior to
+  commencing the write
+- a SPLIT, RETRY or ERROR response was issued by the addressed
+  peripheral in response to the write
+
+A system would be immune to the bug if either:
+
+- all LDM instructions fetching 2 registers access only cached memory
+
+or:
+
+- the A922T was the only bus master on the AHB during normal operation 
+  (i.e. it would never get de-granted), and...
+- all memory regions set as bufferable (either NCB, write-through or
+  write-back) were zero-wait-state and could not give SPLIT, RETRY or
+  ERROR responses to accesses.
+
+It was not sufficient to ensure that an LDM of two registers did not
+immediately follow an instruction which would give rise to a buffered
+store, as the pipeline delays in the write buffer process would allow
+time for other instructions to execute in between the store and the
+load without affecting the operations performed on the bus.
+
+The reason for the bug was because the NCMAHB signal from the ARM922T
+core does not follow the same timing as the ASB signals, and does not
+hold the value for the last bus access when WAITIN is asserted to the
+core (instead it advances to the next access).
+
+BET05 fixes this bug by locally extending the NCMAHB signal during
+waited accesses.
+
+
+Changes in BET04
+================
+
+Bug Fix: Linefill counter
+-------------------------
+
+Legacy code from BET02 (before error support was added) meant that the
+burst counter for a cache linefill would be incorrectly pre-loaded if
+the linefill followed a waited access.  This would result in 9 reads
+being performed on the AHB bus rather than the required 8.  The
+ARM922T received the correct data: the only effects of the extra read
+would be an extra cycle taken up on the bus, and any side-effects due
+to the addressed area being read-sensitive (e.g. a FIFO).
+
+The software workaround was to ensure that only address areas which
+were not read-sensitive were cached.  BET04 fixes this bug by
+correctly pre-loading the linefill burst counter in all cases.
+
+
+Bug Fix: Error response
+-----------------------
+
+A bug was found with the ERROR response functionality in the BET03
+wrapper.  An ERROR response should only be accepted by the ARM922T if
+it is in response to a non-cacheable or non-bufferable access.  The
+BET03 AHB wrapper therefore only added wait states to non-bufferable
+writes when ERROR support was added, since buffered writes did not
+need to be held up in order to propagate the response.  However the
+ERROR response from the AHB was still propagated to the ASB in all
+cases.  Thus a C/B access to the AHB which resulted in an ERROR
+response, followed by a NC/NB access, meant that the ERROR response
+appeared on the ARM922T ASB interface as the response to the NC/NB
+access and so was accepted.
+
+The software workaround was to never access address regions which are
+capable of generating error responses with C/B accesses.  BET04 fixes
+this behaviour by only propagating ERROR responses through the AHB
+wrapper in response to NC/NB accesses.
+
+
+Enhancement: TIC test performance
+---------------------------------
+
+The AHB slave interface of the ARM922T AHB wrapper has been simplified
+to remove the extra wait states and decode cycles which were being
+added for timing reasons.  This will allow TIC testing of an
+AHB-wrapped ARM922T core in a similar number of cycles to an
+ASB-native core.  This change necessitated the use of transparent
+latches on the slave interface: these are instantiated directly using
+the LATR.v(hd) component.
+
+New synthesis scripts are included: please read carefully the README
+file located in the synthesis directory as it contains important
+information regarding the Synopsys LIB files for the ARM922T hard
+macrocell.
+
+
+
+Changes in BET03
+================
+
+Bug Fix
+-------
+
+The bug regarding non-cacheable/non-bufferable writes has been fixed.
+Previous revisions of the ARM922T AHB wrapper would accept a write
+command from the core, pass it to the AHB, and then release the core
+to continue running before the write had actually completed on the
+AHB.  This broke the programmers model for the ARM, and could cause
+problems, e.g. when trying to clear an external interrupt before
+re-enabling interrupts internally.
+
+Error Support
+-------------
+
+Fixing the previous bug has also allowed error support to be added.
+The AHB-wrapped ARM922T will now accept an error response on HRESP for
+non-cacheable/non-bufferable data accesses.  Note that cacheable or
+bufferable accesses will ignore an error response - this is a function
+of the core itself.
+
+Signal Naming
+-------------
+
+Signal naming on the AHB ports has been changed to bring the block
+into line with future AHB designs from ARM.
+
+New Port
+--------
+
+The HREADYS input port has been added: this is the HREADY input for
+the slave test port, and in most designs should be connected to AHB
+signal HREADY (the same signal connected to HREADYM).  The HREADYS
+port is included as future-proofing for designs which attach the slave
+test port to a separate AHB bus.
+
+New Design Partition
+--------------------
+
+The ClockInv module has been added: this is a clock gate and is
+included to allow clock gating to be predictable post-synthesis.
+

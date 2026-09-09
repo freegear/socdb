@@ -1,0 +1,328 @@
+#!/usr/local/bin/perl -w
+#--------------------------------------------------------------------
+#  This confidential and proprietary software may be used only as
+#  authorised by a licensing agreement from ARM Limited
+#
+#    (C) COPYRIGHT 1999-2001 ARM Limited
+#        ALL RIGHTS RESERVED
+#
+#  The entire notice above must be reproduced on all authorised
+#  copies and copies may only be made to the extent permitted
+#  by a licensing agreement from ARM Limited.
+#
+# Version and Release Control Information:
+#
+# File Name     : INSTALL
+# File Revision : $Revision: 2.04 $
+#
+#--------------------------------------------------------------------
+# Description : Unpacks ARM PrimeCell deliverable parts tree to original 
+#               format.
+# 
+# Usage       : INSTALL <PLnum> <release> [<PLnum> <release>] <destination>
+#
+#--------------------------------------------------------------------
+require 5.003 ;
+use strict ;
+use Cwd            qw(abs_path) ;
+use File::Basename qw(basename dirname) ;
+use File::Copy     qw(copy move) ;
+
+use vars qw($unpack_dir $base_dir $gtar @deliverables %bundles %parts) ;
+
+# to avoid problems when untarring files, we need to find GNU tar
+# version 1.13 or later;  other versions cause all sorts of problems...
+
+sub find_gtar {
+  # search path for GNU tar version 1.13 or greater
+  # (exploits the fact that GNU tar responds to the --version switch with
+  # version information)
+
+  # you can override this search by specifying the FORCE_TAR_EXE envariable
+  # to be the command to use
+
+  return $ENV{FORCE_TAR_EXE}
+    if ((exists $ENV{FORCE_TAR_EXE}) && (-x $ENV{FORCE_TAR_EXE})) ;
+
+  foreach my $t (qw(gtar gnutar tar)) {
+    foreach my $p (split(':', $ENV{PATH})) {
+      next unless (-x "$p/$t") ;
+      if (open(TEST, "$p/$t --version 2>&1 |")) {
+        while (<TEST>) {
+          if (/GNU tar\D*(\d+)\.(\d+)/) {
+            my $ver = ($1 * 1000) + $2 ;
+            if ($ver >= 1013) {
+              close(TEST) ;
+              return "$p/$t" ;
+            }
+          }
+        }
+        close(TEST) ;
+      }
+    }
+  }
+  die <<END ;
+ERROR: Cannot find suitable GNU tar executable on your path
+
+       This install script looks for GNU tar version 1.13 or later;
+       other "tar" executables are known to cause problems when
+       unpacking large distributions.
+
+       You can force this script to use the tar executable of your
+       choice by setting the environment variable FORCE_TAR_EXE
+       to the full path of the executable, for example:
+
+            setenv FORCE_TAR_EXE /path/to/my/tar
+
+END
+}
+$gtar = &find_gtar() ;
+
+# the following is a list of the bundles that compose a new-style
+# release
+
+%bundles = (
+  'BU-00' => 'Global Bundle',
+  'BU-01' => 'VC Bundle',
+) ;
+
+# the following is a list of the components of this release we are
+# expecting to find
+
+%parts = (
+  'DA-03' => 'DataSheet (PDF)',
+  'DC-02' => 'Design Manual (PDF)',
+  'DC-06' => 'Release Note (PDF)',
+  'DC-08' => 'User Guide (PDF)',
+  'DC-10' => 'Integration Manual (PDF)',
+  'DC-11' => 'Errata (PDF)',
+  'MN-01' => 'Synthesis Scripts',
+  'MN-23' => 'VHDL',
+  'MN-22' => 'Verilog',
+  'VE-01' => 'Vectors',
+) ;
+
+die <<END if ((@ARGV < 2) || (((@ARGV + 0) % 2) == 0)) ;
+USAGE : INSTALL <PLnum> <release> [<PLnum> <release>] <destination>
+
+        This script will unpack the specified ARM PrimeCell deliverables
+        into the directory <destination>.
+
+        <PLnum> should be the ARM Code for the PrimeCell to be unpacked,
+        for example "PL170"
+
+        <release> should be the release version to be unpacked,
+        for example "REL2v1"
+
+        <destination> should be the directory into which you want the
+        distribution unpacked.  If the destination directory already
+        exists, any files overwritten by this new distribution will be
+        renamed to include a ".bak" extension.
+
+        For example,
+
+          ./INSTALL PL170 REL2v1 /arm/primecells
+
+END
+
+$unpack_dir = pop @ARGV ;
+$base_dir   = dirname(abs_path(dirname($0))) ;
+
+# Check to make sure we can find the base distribution directory
+
+(-d $base_dir) or die <<END ;
+ERROR : Failed to locate the base directory for the distribution.
+
+        Please ensure that you are running this script "in-place",
+        i.e. from within the distribution itself.
+
+END
+
+# This script may be buried within a PL000-BU release;  if so, we need
+# to crawl up to the root of that
+
+if (basename($base_dir) eq 'SoftWare') {
+  my $b = dirname($base_dir) ;
+  if (basename($b) =~ /^PL000-BU-/) {
+    $base_dir = dirname($b) ;
+  }
+}
+    
+# Get a list of the parts included in this distribution
+
+opendir(D, $base_dir) or die "ERROR: Cannot examine '$base_dir' : $!\n" ;
+@deliverables = grep /^PL\d\d\d/, readdir(D) ;
+closedir(D) ;
+
+(@deliverables > 0) or die <<END ;
+ERROR: The base directory, '$base_dir',
+       does not contain any PrimeCell deliverables.
+
+       Please ensure that you are running this INSTALL script from within
+       the distribution.
+
+END
+
+# Warn the user if the unpack directory already exists, as we're going to
+# overlay the files
+
+if (-d $unpack_dir) {
+  print <<END ;
+NOTE: Directory '$unpack_dir' already exists.
+      Any files that are replaced by the new deliverables will be moved
+      to '.bak' files.
+END
+} else {
+  mkdir($unpack_dir, 0777)
+    or die "ERROR: Failed to make directory $unpack_dir : $!\n" ;
+}
+
+print "Unpacking deliverables into directory '", $unpack_dir, "'\n" ;
+
+use vars qw(%files_installed $deliverables_installed $deliverables_skipped) ;
+
+%files_installed        = () ;
+$deliverables_installed = 0 ;
+$deliverables_skipped   = 0 ;
+
+sub rcopy {
+  my ($src, $dest) = @_ ;
+
+  # recursively copy contents of $src into $dest
+
+  opendir(D, $src) or die "cannot read $src : $!\n" ;
+  my @contents = grep !/^\.\.?$/, readdir(D) ;
+  closedir(D) ;
+  foreach my $c (@contents) {
+    if (-d "$src/$c") {
+      if (! -d "$dest/$c") {
+        mkdir("$dest/$c", 0777)
+          or die "ERROR: Failed to create directory '$dest/$c' : $!\n" ;
+      }
+      rcopy("$src/$c", "$dest/$c") ;
+    } elsif (-f "$src/$c") {
+      next if (exists $files_installed{"$dest/$c"}) ;
+      if (-f "$dest/$c") {
+        move("$dest/$c", "$dest/$c.bak")
+          or die "ERROR: Failed to create '$dest/$c.bak' : $!\n" ;
+      }
+      copy("$src/$c", "$dest/$c")
+        or die "ERROR: Failed to create '$dest/$c' : $!\n" ;
+      $files_installed{"$dest/$c"} = 1 ;
+    } else {
+      print "WARNING: Skipping $src/$c : unknown type\n" ;
+    }
+  }
+}
+
+sub bcopy {
+  my ($plnum, $src, $dest) = @_ ;
+
+  # search $src for tar files and unpack them into $dest
+  # if .pdf files are found in $src, copy them into $dest
+  # if .lst files are found in $src, ignore them
+  # if anything else found, warn user
+
+  opendir(D, $src) or die "cannot read $src : $!\n" ;
+  my @contents = grep !/^\.\.?$/, readdir(D) ;
+  closedir(D) ;
+  foreach my $c (@contents) {
+    my $sc = "$src/$c" ;
+    if (-d $sc) {
+      bcopy($plnum, $sc, $dest) ;
+    } else {
+      # see if the filename matches one of our expected types; if not
+      # we'll ignore it
+      if ($c =~ /(($plnum|PL000)-(\w\w-\d\d).*)\.(tar(.Z)?|pdf|lst)$/) {
+        my $pname  = $1 ;
+        my $ptype  = $3 ;
+        my $suffix = $4 ;
+
+        if (! exists $parts{$ptype}) {
+          print "WARNING: Skipping $sc : unknown part\n" ;
+          next ;
+        }
+        next if ($suffix eq 'lst') ;
+
+        print "  INSTALLING $pname [", $parts{$ptype}, "]\n" ;
+        if ($suffix eq 'tar') {
+          chdir($dest) ;
+          system("$gtar xf $sc") == 0
+            or die "ERROR: Failed to unpack $sc : $?\n" ;
+        } elsif ($suffix eq 'tar.Z') {
+          chdir($dest) ;
+          system("$gtar xZf $sc") == 0
+            or die "ERROR: Failed to uncompress and unpack $sc : $?\n" ;
+        } elsif ($suffix eq 'pdf') {
+          if (-f "$dest/$c") {
+            move("$dest/$c", "$dest/$c.bak")
+              or die "ERROR: Failed to create '$dest/$c.bak' : $!\n" ;
+          }
+          copy($sc, "$dest/$c")
+            or die "ERROR: Failed to create '$dest/$c' : $!\n" ;
+        }
+        $deliverables_installed++ ;
+      } else {
+        print "WARNING: Skipping $sc : unknown type\n" ;
+      }
+    }
+  }
+}
+
+while (@ARGV) {
+  my $plnum = shift @ARGV ;
+  my $plrel = shift @ARGV ;
+  my $plver = $plrel ;
+
+  $plnum =~ /^PL\d\d\d$/ or do {
+    print "IGNORING $plnum - not a valid PrimeCell code\n" ;
+    next ;
+  } ;
+
+  # convert the release name to the dot-version format if it is not already
+  # specified that way
+
+  $plver =~ s/^REL(\d+)v(\d+)$/sprintf("%d.%02d",       $1, $2)/e ;
+  $plver =~ s/^BET(\d+)v(\d+)$/sprintf("%d.%02d.beta",  $1, $2)/e ;
+  $plver =~ s/^ALP(\d+)v(\d+)$/sprintf("%d.%02d.alpha", $1, $2)/e ;
+
+  print "ARM ", $plnum, " [", $plrel, "] INSTALLATION\n" ;
+
+  # is this a bundled release, or an ordinary one?
+  # if we see a PLXXX-BU-00000 part, it's bundled
+
+  my $bundle_found = 0 ;
+  while (my ($btype, $desc) = each(%bundles)) {
+    my $prefix = $plnum . '-' . $btype ;
+    my $suffix = '-' . $plver ;
+    foreach my $bundle (grep /$prefix\d\d\d$suffix/, @deliverables) {
+      print "INSTALLING $bundle [$desc]\n" ;
+      bcopy($plnum, "$base_dir/$bundle", $unpack_dir) ;
+      $bundle_found = 1 ;
+    }
+  }
+  next if $bundle_found ;
+
+  # we didn't find a bundle, so this must be an old-style release;
+  # look for the individual parts
+
+  my $parts_found = 0 ;
+  while (my ($ptype, $desc) = each(%parts)) {
+    my $prefix = $plnum . '-' . $ptype ;
+    my $suffix = '-' . $plver ;
+    foreach my $part (grep /$prefix\d\d\d$suffix/, @deliverables) {
+      print "INSTALLING $part [$desc]\n" ;
+      rcopy("$base_dir/$part", $unpack_dir) ;
+      $deliverables_installed++ ;
+      $parts_found = 1 ;
+    }
+  }
+
+  print "NO $plnum DELIVERABLES FOUND\n" unless $parts_found ;
+}
+
+exit(1) unless ($deliverables_installed > 0) ;
+
+print "Unpacking complete\n";
+print $deliverables_installed, " deliverables installed\n" ;
+exit(0) ;

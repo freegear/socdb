@@ -1,0 +1,82 @@
+-- --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2001-2002 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+-- -----------------------------------------------------------------------------
+--
+-- Version and Release Control Information:
+--
+-- File Name              : README_Denali.rca
+-- File Revision          : 1.10
+--
+-- Release Information    : PrimeCell(TM)-PL172-r2p3-00rel0
+--
+-- -----------------------------------------------------------------------------
+-- Purpose :
+--           README file containing tips to run Denali Memory Model based
+--           simulations with Modelsim Verilog and Cadence LDV Verilog-XL
+--
+-- --=========================================================================--
+
+I. Running Denali Memory Model based Simulation with Modelsim Verilog
+   ------------------------------------------------------------------
+     In the local "modelsim.ini" file set the following variable in the [vsim]
+   section.
+
+     Veriuser = $DENALI/mtipli.so 
+     [Please refer to the "modelsim.ini" file in the "Mpmc_rtl" directory.]
+
+   To run the simulation using modelsim, type
+   "make TBENCH=<tbench_number> rtl"
+
+   Eg.:
+      1.To run the modelsim simulation using tbench7 type
+        make TBENCH=7 rtl
+
+      2.To run the modelsim simulation using tbench type
+         make TBENCH= rtl
+
+     This command will start the RTL simulations for the Denali tests.
+
+
+II. Running Denali Memory Model based Simulation with LDV Verilog-XL
+    ----------------------------------------------------------------
+      For running Denali Memory model based simulations with LDV Verilog-XL, a
+    customised local Verilog-XL executable needs to be created. This custom
+    Verilog-XL executable will contain the required PLI information. Please
+    refer to the following readme help file for the creation of the Verilog-XL
+    executable : 
+      $DENALI/verilog/README.verilog
+
+    Further tips for the creation of the customised Verilog-XL executable :
+      Some of the options to be chosen are as follows - 
+      o  Standalone
+      o  Generate libpli
+      o  Dynamically linked PLI
+      o  All other entries as specified in the README.verilog
+
+      o  Set the LD_LIBRARY_PATH environment variable to include the path where
+         the new "Verilog-XL" executable and the "libpli.o" files reside.
+
+    Use the new custom created "Verilog-XL" executable for the simulations. 
+ 
+    NOTE : The verification/verilog/tbench/SimMakefile_LDV.mk file needs
+           to have the exact name & path of the "Verilog-XL" executable file.
+    
+   To run the simulation using LDV, type
+   "make TBENCH=<tbench_number> rtl"
+
+   Eg.:
+      1.To run the LDV simulation using tbench7 type
+        make TBENCH=7 rtl
+
+      2.To run the LDV simulation using tbench type
+         make TBENCH= rtl
+
+     This command will start the RTL simulations for the Denali tests.
+
+-- --================================ End ====================================--

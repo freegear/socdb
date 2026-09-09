@@ -1,0 +1,13 @@
+
+analyze -f verilog  ../../../global_ADK/verilog/Lite2AHB.v 
+analyze -f verilog Ahb2Lite.v 
+analyze -f verilog Ahb2Ahb.v 
+
+
+elaborate Ahb2Ahb
+current_design Ahb2Ahb
+link
+
+write -f db -hier -out Ahb2Ahb.gtech.db
+
+

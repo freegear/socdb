@@ -1,0 +1,16 @@
+analyze -f verilog RtcApbif.v 
+analyze -f verilog RtcSynctoPCLK.v 
+analyze -f verilog RtcControl.v 
+analyze -f verilog RtcCounter.v 
+analyze -f verilog RtcUpdate.v 
+analyze -f verilog RtcInterrupt.v
+analyze -f verilog RtcRevAnd.v 
+analyze -f verilog Rtc.v
+
+
+elaborate Rtc
+current_design Rtc
+link
+
+write -f db -hier -out Rtc.gtech.db
+

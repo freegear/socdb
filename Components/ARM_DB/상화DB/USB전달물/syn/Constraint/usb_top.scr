@@ -1,0 +1,62 @@
+##
+## usb_top synthesis
+##
+
+## source synopsys_setup
+source .synopsys_dc.setup
+
+## Read db
+read_db db/moon_top.db
+
+## Check design
+current_design usb_top
+check_design > Report/usb_top.check_design
+
+## GENERAL Constraint
+set_fix_multiple_port_nets -all -buffer_constants
+set auto_wire_load_selection true
+set_max_fanout 16 $current_design
+set_operating_conditions -library std110 -max V230WTP1250
+
+## Constraint design
+source Budget_Result/usb_top.dctcl
+set_max_area 0.0
+#uniquify
+
+## Compile
+current_design usb_top
+compile -map_effort high
+
+## Write DB
+write -format db -hierarchy usb_top -output db/usb_top.db
+
+change_names -rules BLOCK_LEVEL -h -verbose > Report/change_names.rpt
+write -format verilog -hier usb_top -output Netlist/usb_top.gv
+
+## Check Timing
+check_timing > Report/usb_top.check_timing
+
+## Report
+report_design > Report/usb_top.design_rpt
+report_area >> Report/usb_top.design_rpt
+report_cell >> Report/usb_top.design_rpt
+report_timing -path end > Report/usb_top.timing_rpt
+report_timing -max_path 100 >> Report/usb_top.timing_rpt
+report_clock > Clock/usb_top.clock
+report_port -verbose > Report/usb_top.port
+all_registers -level_sensitive
+list dc_shell_status > Report/usb_top.latch
+
+# report_reference
+# report_port -verbose
+# report_net
+# report_compile_options
+# report_constraint -all_violators -verbose
+
+## Budgeting
+## Write_script
+
+## Recompile
+
+remove_design -all
+#exit

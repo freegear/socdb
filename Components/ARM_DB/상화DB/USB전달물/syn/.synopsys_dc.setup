@@ -1,0 +1,219 @@
+#
+#         GLOTREX ASIC Design ".synopsys_dc.setup" Initialization File
+#               for Design Compiler - Version v2003.10
+#               by Mark Ryoo
+#
+
+# Variables
+set designer {Designer Name}
+set company {Company Name}
+set SYNOPSYS_PATH
+set SYNOPSYS_LIB_PATH
+set SYNOPSYS_DB_NAME
+
+#***********************************************************
+#                                                           
+# Library environment for setup.                    
+#                                                           
+#***********************************************************
+set search_path [list . ./db \
+           $SYNOPSYS_PATH/libraries/syn \
+           $SYNOPSYS_LIB_PATH]
+
+set synthetic_library [list \
+                  dw01.sldb dw02.sldb dw03.sldb dw04.sldb \
+                  dw05.sldb dw06.sldb dw07.sldb dw08.sldb]
+
+set link_library [list "*" \
+                  dw01.sldb dw02.sldb dw03.sldb dw04.sldb \
+                  dw05.sldb dw06.sldb dw07.sldb dw08.sldb \
+                  $SYNOPSYS_DB_NAME]
+
+
+set target_library [list \
+                  $SYNOPSYS_DB_NAME]
+
+define_design_lib WORK -path "./WORK"
+ 
+#set synlib_dont_get_license {DesignWare-Foundation}
+set suppress_errors {UISN-18}
+
+set suppress_errors [concat  $suppress_errors [list {}]]
+
+# When auto getup to command window.
+set view_command_win true
+
+
+#***********************************************************
+#                                                           
+#  Compile Variables:                                        
+#                                                           
+#***********************************************************
+set compile_instance_name_prefix {U}
+set compile_instance_name_suffix {}
+set compile_use_low_timing_effort {false}
+set compile_create_mux_op_hierarchy {false}
+set compile_preserve_subdesign_interfaces {false}
+set compile_delete_unloaded_sequential_cells {true}
+set compile_assume_fully_decoded_three_state_busses {false}
+set compile_mux_no_boundary_optimization {false}
+set compile_disable_hierarchical_inverter_opt {false}
+set enable_recovery_removal_arcs {false}
+set compile_sequential_area_recovery {true}
+
+set synthetic_design_naming_style {%p_%s_%d}
+
+
+#***********************************************************
+#                                                           
+#  Interface Variables:                                      
+#  These variables define the behavior of the DC system     
+#  interfaces: EDIF                                         
+#                                                           
+#***********************************************************
+set edifin_autoconnect_ports {false}
+set edifin_delete_empty_cells {true}
+set edifout_netlist_only {true}
+set edifout_power_and_ground_representation {cell}
+set edifout_no_array {true}
+set edifout_skip_port_implementations {false}
+
+#***********************************************************
+#                                                           
+#  VERILOG-HDL default varibales:                           
+#  These variables are for controlling hdl reading, writing,
+#  and optimizing.                                          
+#                                                           
+#***********************************************************
+set hdl_keep_licenses {false}
+
+set hdlin_enable_vpp false
+set hdlin_preserve_vpp_files false
+set hdlin_ff_always_async_set_reset {true}
+set hdlin_latch_always_async_set_reset {true}
+set hdlin_ff_always_sync_set_reset {false}
+set hdlin_keep_feedback {false}
+set hdlin_keep_inv_feedback {true}
+set hdlin_check_no_latch {true}
+set hdlin_report_inferred_modules {true}
+set hdlin_dont_infer_mux_for_resource_sharing {true}
+set hdlin_mux_size_limit {32}
+set hdlin_replace_synthetic {false}
+
+set verilogout_equation {false}
+set verilogout_single_bit {false}
+set verilogout_higher_designs_first {true}
+set verilogout_no_tri {true}
+set verilogout_show_unconnected_pins {false}
+
+
+#**********************************************************
+#                                                          
+# VHDL default varibales:                                  
+# These variables are for controlling hdl reading, writing,
+# and optimizing.                                          
+#                                                          
+#**********************************************************
+
+set vhdlout_bit_type {std_logic}
+set vhdlout_bit_vector_type {std_logic_vector}
+set vhdlout_equations {false}
+set vhdlout_write_architecture {true}
+set vhdlout_write_components {false}
+set vhdlout_dont_write_types {true}
+set vhdlout_write_entity {true}
+set vhdlout_follow_vector_direction {true}
+set vhdlout_single_bit {vector}
+set vhdlout_preserve_hierarchical_types {vector}
+set vhdlout_use_packages [list \
+     {IEEE.std_logic_1164} {SC82_CM.BANK_COMPONENTS} {SC82.components}]
+set vhdlout_architecture_name {SYN_%a_%u}
+set vhdlout_one_name {'1'}
+set vhdlout_package_naming_style {CONV_PACK_%d}
+set vhdlout_three_state_name {'Z'}
+set vhdlout_top_configuration_arch_name {A}
+set vhdlout_top_configuration_entity_name {E}
+set vhdlout_top_congfiguration_name {CFG_TB_E}
+set vhdlout_unknown_name {'X'}
+set vhdlout_write_top_configuration {false}
+set vhdlout_zero_name {'0'}
+define_design_lib IEEE -path [format "%s%s" $synopsys_root {/packages/IEEE/lib}]
+
+#***********************************************************
+#                                                           
+#  Test Compiler default variables.                         
+#                                                           
+#***********************************************************
+set atpg_test_asynchronous_pins {false}
+set test_default_bidir_delay 55
+set test_default_delay 5
+set test_default_min_fault_coverage 95
+set test_default_strobe 95
+set test_default_period 100
+set test_disable_find_best_scan_out {true}
+set insert_test_design_naming_style {%s_test_%d}
+set test_clock_port_naming_style {XTCK%s}
+set test_scan_clock_a_port_naming_style {XACK%s}
+set test_scan_clock_b_port_naming_style {XBCK%s}
+set test_scan_clock_port_naming_style {test_sc%s}
+set test_scan_enable_inverted_port_naming_style {test_sei%s}
+set test_scan_enable_port_naming_style {XSM%s}
+set test_scan_in_port_naming_style {SDI%s}
+set test_scan_out_port_naming_style {SDO%s}
+
+#***********************************************************
+#                                                           
+#  naming rules setup.                              
+#                                                           
+#***********************************************************
+define_name_rules CHIP_LEVEL -max_length 16 -type port ;
+define_name_rules CHIP_LEVEL -max_length 32 -type cell ;
+define_name_rules CHIP_LEVEL -max_length 32 -type net ;
+define_name_rules CHIP_LEVEL -allowed "A-Z a-z 0-9 _" ;
+define_name_rules CHIP_LEVEL -first_restricted "0-9" ;
+define_name_rules CHIP_LEVEL -replacement_char "_" ;
+define_name_rules CHIP_LEVEL -collapse_name_space ;
+define_name_rules CHIP_LEVEL -case_insensitive ;
+define_name_rules CHIP_LEVEL -target_bus_naming_style "%s_%d_" ;
+
+define_name_rules BLOCK_LEVEL -max_length 32 ;
+define_name_rules BLOCK_LEVEL -allowed "A-Z a-z 0-9 _ $" ;
+define_name_rules BLOCK_LEVEL -first_restricted "0-9$" ;
+define_name_rules BLOCK_LEVEL -replacement_char "_" ;
+define_name_rules BLOCK_LEVEL -collapse_name_space ;
+define_name_rules BLOCK_LEVEL -case_insensitive ;
+define_name_rules BLOCK_LEVEL -target_bus_naming_style "%s_%d_" ;
+
+define_name_rules SC_BLOCK_LEVEL -max_length 16 -type port ;
+define_name_rules SC_BLOCK_LEVEL -max_length 32 -type cell ;
+define_name_rules SC_BLOCK_LEVEL -max_length 32 -type net ;
+define_name_rules SC_BLOCK_LEVEL -allowed "A-Z a-z 0-9 _" ;
+define_name_rules SC_BLOCK_LEVEL -first_restricted "0-9" ;
+define_name_rules SC_BLOCK_LEVEL -replacement_char "_" ;
+define_name_rules SC_BLOCK_LEVEL -collapse_name_space ;
+define_name_rules SC_BLOCK_LEVEL -case_insensitive ;
+define_name_rules SC_BLOCK_LEVEL -target_bus_naming_style "%s_%d_" ;
+
+set default_name_rules SC_BLOCK_LEVEL
+set bus_dimension_separator_style {_}
+set bus_naming_style {%s[%d]}
+set bus_range_separator_style {:}
+set bus_inference_descending_sort {true}
+set bus_inference_style {%s[%d]}
+set write_name_nets_same_as_ports {false}
+set bus_minus_style {-%d}
+set bus_extraction_style {%s[%d:%d]}
+
+set change_names_dont_change_bus_members {false}
+
+#***********************************************************
+#                                                           
+#  Power default variables.                                 
+#                                                           
+#***********************************************************
+set power_keep_license_after_power_commands {false}
+set power_rtl_saif_file {power_rtl.saif}
+set power_sdpd_saif_file {power_sdpd.saif}
+set power_preserve_rtl_hier_names {false}
+
+1

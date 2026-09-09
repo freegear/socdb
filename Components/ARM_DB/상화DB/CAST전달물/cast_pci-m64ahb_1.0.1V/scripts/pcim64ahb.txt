@@ -1,0 +1,54 @@
+
+
+analyze -f verilog  ../src/m64core/pci_m64_params.v  
+analyze -f verilog  ../src/m64core/pci_gclkbuf.v  
+analyze -f verilog  ../src/m64core/pci_ibuf.v     
+analyze -f verilog  ../src/m64core/pci_iobuf.v    
+analyze -f verilog  ../src/m64core/pci_obuf.v     
+analyze -f verilog  ../src/m64core/pci_obufoc.v   
+analyze -f verilog  ../src/m64core/pci_obuft.v    
+analyze -f verilog  ../src/m64core/pci_chkpar64.v 
+analyze -f verilog  ../src/m64core/pci_genpar64.v 
+analyze -f verilog  ../src/m64core/pci_cead.v     
+analyze -f verilog  ../src/m64core/pci_barreg.v   
+analyze -f verilog  ../src/m64core/pci_cfgebar.v  
+analyze -f verilog  ../src/m64core/pci_cfgspace.v 
+analyze -f verilog  ../src/m64core/pci_genframe.v 
+analyze -f verilog  ../src/m64core/pci_genreq64.v 
+analyze -f verilog  ../src/m64core/pci_genirdy.v  
+analyze -f verilog  ../src/m64core/pci_gendevsel.v
+analyze -f verilog  ../src/m64core/pci_genack64.v 
+analyze -f verilog  ../src/m64core/pci_genotad.v  
+analyze -f verilog  ../src/m64core/pci_genotcbe.v 
+analyze -f verilog  ../src/m64core/pci_gentrdy.v 
+analyze -f verilog  ../src/m64core/pci_genstop.v  
+analyze -f verilog  ../src/m64core/pci_mtfsm64.v  
+analyze -f verilog  ../src/m64core/pci_m64core.v  
+analyze -f verilog  ../src/ahb/psync.v            
+analyze -f verilog  ../src/ahb/dma64_fiforam.v    
+analyze -f verilog  ../src/ahb/dma64wrfifo.v      
+analyze -f verilog  ../src/ahb/dma64rdfifo.v     
+analyze -f verilog  ../src/ahb/dma64txctrl.v      
+analyze -f verilog  ../src/ahb/dma64regs.v        
+analyze -f verilog  ../src/ahb/fifosram.v         
+analyze -f verilog  ../src/ahb/fifo_async.v       
+analyze -f verilog  ../src/ahb/t64ahb.v           
+analyze -f verilog  ../src/ahb/intctrl.v          
+analyze -f verilog  ../src/ahb/mailbox.v          
+analyze -f verilog  ../src/ahb/mailboxblk.v       
+analyze -f verilog  ../src/ahb/ahbslave.v         
+analyze -f verilog  ../src/ahb/ahbmaster.v        
+analyze -f verilog  ../src/ahb/dma64ahb.v         
+analyze -f verilog  ../src/ahb/mt64ahb.v          
+analyze -f verilog  ../src/ahb/pcim64ahb.v       
+analyze -f verilog  ../src/ahb/pcim64ahbw.v
+
+
+elaborate pcim64ahbw
+current_design pcim64ahbw
+link
+
+write -f db -hier -out pcim64ahbw.gtech.db
+
+
+

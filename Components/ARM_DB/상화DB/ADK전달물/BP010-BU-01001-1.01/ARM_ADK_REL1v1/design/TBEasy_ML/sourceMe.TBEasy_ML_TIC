@@ -1,0 +1,143 @@
+#- --===============================================================--
+#- This confidential and proprietary software may be used only as
+#- authorised by a licensing agreement from ARM Limited
+#-   (C) COPYRIGHT 2001 ARM Limited
+#-       ALL RIGHTS RESERVED
+#- The entire notice above must be reproduced on all authorised
+#- copies and copies may only be made to the extent permitted
+#- by a licensing agreement from ARM Limited.
+#-
+#- -------------------------------------------------------------------
+#- Version and Release Control Information:
+#-
+#- File Name              : sourceMe.TBEasy_ML_TIC,v
+#- File Revision          : 1.6
+#-
+#- Release Information    : ADK_REL1v1
+#-
+#- -------------------------------------------------------------------
+#- Purpose : 
+#-           EASY_ML TIC testbench sourceMe
+#-
+#-           This file sets a number of environment variables which
+#-           are required by the ADK scripts.  Please read the
+#-           comments included below for further explanations.
+#- --===============================================================--
+
+######################################################################
+# ADK System Variables
+######################################################################
+
+# Primary AHB Master.  This indicates to the makefiles how to process
+# the test source files
+setenv TEST_ENV   TICTALK
+
+# The name of the testbench used to simulate the chosen EASY system
+setenv TEST_BENCH TBEasy_ML_TIC
+
+# Type of EASY system
+# Currently supported values are shown below - uncomment the relevant
+# one for the system which is to be used
+setenv EASY       EASY_ML
+
+# The PERIPH environment variable is used throughout the makefile
+# system, and is over-ridden in the local makefiles.  A dummy value is
+# set here to aid de-bugging when adding new peripherals.
+setenv PERIPH     TBEasy_ML
+
+######################################################################
+# TEST specific setup
+#
+# TEST_NAME     - Name of the test to be run on the system
+#                 Set to blank if not required
+#
+# TEST_NAME_ROM -  not used for TIC testing, but still present in the
+#                  generic scripts - used to form part of the name of
+#                  the simulation transcript file
+#
+# Currently supported values are shown below - uncomment the relevant
+# one for the test which is to be run
+#
+#                     ********************************
+#               If TEST_NAME or TEST_NAME_ROM are changed
+#           do 'make clean' from $ADK/design/<TBEasy_xxx>/integration
+#                 prior to 'make rtl' for the new test
+#                    ********************************
+#           
+#
+# $(TEST_NAME)_$(TEST_NAME_ROM)_ is used as the root for the 
+# simulation transcript file
+#
+######################################################################
+
+setenv TEST_NAME_ROM blank
+
+setenv TEST_NAME ARM922T_BCLK_a920t_cache_pt1_fastbclk                                 
+#setenv TEST_NAME ARM922T_BCLK_a920t_cache_pt2_fastbclk                                 
+#setenv TEST_NAME ARM922T_BCLK_a920t_cache_pt3_fastbclk                                 
+#setenv TEST_NAME ARM922T_BCLK_a920t_cache_pt4_fastbclk                                 
+#setenv TEST_NAME ARM922T_BCLK_a920t_cp15_arb_fastbclk                                  
+#setenv TEST_NAME ARM922T_BCLK_a920t_cp15_prod_final_R1_fastbclk                        
+#setenv TEST_NAME ARM922T_BCLK_a920t_disable_linefill_fastbclk                          
+#setenv TEST_NAME ARM922T_BCLK_a920t_disable_streaming_fastbclk                         
+#setenv TEST_NAME ARM922T_BCLK_a920t_dstreaming_prod_fastbclk                           
+#setenv TEST_NAME ARM922T_BCLK_a920t_ext_cp_prod_final_fastbclk                         
+#setenv TEST_NAME ARM922T_BCLK_a920t_fcse_prod_final_fastbclk                           
+#setenv TEST_NAME ARM922T_BCLK_a920t_istream_dtlb_fastbclk                              
+#setenv TEST_NAME ARM922T_BCLK_a920t_istreaming_prod_fastbclk                           
+#setenv TEST_NAME ARM922T_BCLK_a920t_loadpremcr_fastbclk                                
+#setenv TEST_NAME ARM922T_BCLK_a920t_mcrprefetch_prod_fastbclk                          
+#setenv TEST_NAME ARM922T_BCLK_a920t_missabort_fastbclk                                 
+#setenv TEST_NAME ARM922T_BCLK_a920t_mmu_prod_pt1_fastbclk                              
+#setenv TEST_NAME ARM922T_BCLK_a920t_mmu_prod_pt2_fastbclk                              
+#setenv TEST_NAME ARM922T_BCLK_a920t_mmu_prod_pt3_fastbclk                              
+#setenv TEST_NAME ARM922T_BCLK_a920t_mmu_prod_pt4_fastbclk                              
+#setenv TEST_NAME ARM922T_BCLK_a920t_mmu_tmill_fastbclk                                 
+#setenv TEST_NAME ARM922T_BCLK_a920t_ncldm_fastbclk                                     
+#setenv TEST_NAME ARM922T_BCLK_a920t_ncnbstr_fastbclk                                   
+#setenv TEST_NAME ARM922T_BCLK_a920t_strpremcr_fastbclk                                 
+#setenv TEST_NAME ARM922T_BCLK_a920t_swap_prod_fastbclk                                 
+#setenv TEST_NAME ARM922T_BCLK_a920t_wb_abandon_fastbclk                                
+#setenv TEST_NAME ARM922T_BCLK_a920t_wbcommit_itlbmiss_fastbclk                         
+#setenv TEST_NAME ARM922T_BCLK_a920t_wfi_isync_fastbclk                                 
+#setenv TEST_NAME ARM922T_BCLK_a922t_cache_regress_fastbclk                             
+#setenv TEST_NAME ARM922T_BCLK_a922t_debug_patag_fastbclk                               
+#setenv TEST_NAME ARM922T_BCLK_a9td_PFAbort2_fastbclk                                   
+#setenv TEST_NAME ARM922T_BCLK_a9td_short_ice_fastbclk                                  
+#setenv TEST_NAME ARM922T_BCLK_a9tdalufault_fastbclk                                    
+#setenv TEST_NAME ARM922T_BCLK_a9tdbscode_fastbclk                                      
+#setenv TEST_NAME ARM922T_BCLK_a9tdice_fastbclk                                         
+#setenv TEST_NAME ARM922T_BCLK_a9tdicefault_fastbclk                                    
+#setenv TEST_NAME ARM922T_BCLK_a9tdmultiply_fastbclk                                    
+#setenv TEST_NAME ARM922T_BCLK_a9tdrev1_fastbclk                                        
+#setenv TEST_NAME ARM922T_BCLK_a9tdrev2_fastbclk                                        
+#setenv TEST_NAME ARM922T_BCLK_a9tdrev3_fastbclk                                        
+#setenv TEST_NAME ARM922T_BCLK_a9tdthumb_fastbclk                                       
+#setenv TEST_NAME ARM922T_BCLK_a_copro_dtl_fastbclk                                     
+#setenv TEST_NAME ARM922T_BCLK_arm9td_fastbclk                                          
+#setenv TEST_NAME ARM922T_BCLK_arm9tdctl_fastbclk                                       
+#setenv TEST_NAME ARM922T_BCLK_mmu_aborts_fastbclk                                      
+#setenv TEST_NAME ARM922T_BCLK_mmu_ldr_str_fastbclk                                     
+#setenv TEST_NAME ARM922T_BCLK_mmu_tlb_faults_fastbclk                                  
+#setenv TEST_NAME ARM922T_BCLK_mmu_tlb_short_faults_fastbclk                            
+#setenv TEST_NAME ARM922T_BCLK_wback_regress_dma                                        
+#setenv TEST_NAME ARM922T_BCLK_wback_regress_fastbclk                                   
+#setenv TEST_NAME CacheTop                                                              
+#setenv TEST_NAME DCacheSeg0                                                            
+#setenv TEST_NAME DCacheSeg1                                                            
+#setenv TEST_NAME DCacheSeg2                                                            
+#setenv TEST_NAME DCacheSeg3                                                            
+#setenv TEST_NAME DMMU                                                                  
+#setenv TEST_NAME ICacheSeg0                                                            
+#setenv TEST_NAME ICacheSeg1                                                            
+#setenv TEST_NAME ICacheSeg2                                                            
+#setenv TEST_NAME ICacheSeg3                                                            
+#setenv TEST_NAME IMMU                                                                  
+#setenv TEST_NAME MMUTop                                                                
+#setenv TEST_NAME PATagBlock0                                                           
+#setenv TEST_NAME PATagBlock1                                                           
+#setenv TEST_NAME PATagTop                                                              
+
+# The location of the TIC tests
+# NOTE: these are supplied with the CPU core itself, not ADK
+setenv TIC_DIR ${ADK}/TICtests/ARM922T_rev0

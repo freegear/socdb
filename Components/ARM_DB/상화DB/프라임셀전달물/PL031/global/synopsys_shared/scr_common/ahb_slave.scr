@@ -1,0 +1,221 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- -----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : ahb_slave.scr.rca
+-- File Revision          : 1.2
+--
+-- Release Information    : PrimeCell(TM)-GLOBAL-REL1v2
+--
+-- -----------------------------------------------------------------------------
+-- Purpose : 
+--           Synopsys synthesis script to define AMBA AHB 
+--           timing constraints.
+--           Located in the synopsys_shared/scr_common directory.
+--           Called by master compile script.
+--
+-- --=========================================================================*/
+
+/* It is possible for a peripheral to have an AHB Master port as well         */
+/* as an AHB slave port. In such cases, the same base name could              */
+/* lead to two different port names - one of which could be an input          */
+/* connecting to the AHB Slave interface, while the other could be an         */
+/* output from the AHB Master interface. For example, HADDR[31:0] is          */
+/* an input to the AHB Slave interface, whereas HADDRM[31:0] is an            */
+/* output from the AHB Master interface. Since the base name of HADDR         */
+/* is known, to set constraints on the Slave interface port, the              */
+/* port_direction attribute is checked.                                       */
+
+/******************************************************************************/
+/* HCLK DEFINTION                                                             */
+/******************************************************************************/
+
+create_clock -p tclk -w {0 tclkh} find(port, "HCLK")
+/* period tclk, rise at 0, fall after tclkh High phase */
+
+set_clock_skew -ideal -plus_uncertainty tpskew find(clock, HCLK)
+/* set plus clock skew */
+
+set_clock_skew -ideal -minus_uncertainty tmskew find(clock, HCLK)
+/* set minus clock skew */
+
+set_clock_transition 0 HCLK
+/* ignore all transition times as it is an ideal clock */
+
+set_drive 0 HCLK
+/* Infinite drive strength clock signal */
+
+set_load 0 HCLK
+/* Zero load clock signal */
+
+remove_driving_cell find(port, HCLK)
+/* Set no driving cell on clock */
+
+set_resistance 0 find(net, HCLK)
+/* Zero resistance for zero net delay(interconnect delay) on */
+/* ideal clock net                                           */
+
+set_dont_touch_network find(clock, HCLK)
+/* Preserve the clock net during optimisation */
+
+/******************************************************************************/
+/* RESET SIGNAL CONSTRAINTS                                                   */
+/******************************************************************************/
+ 
+set_input_delay -clock HCLK -max tidmaxresetn HRESETn
+set_input_delay -clock HCLK -min tidminresetn HRESETn
+
+set_drive 0 HRESETn
+/* Infinite drive strength reset signal */
+
+set_load 0 HRESETn
+/* Zero load reset signal */
+
+remove_driving_cell find(port, HRESETn)
+/* Set no driving cell on reset */
+
+set_resistance 0 find(net, HRESETn)
+/* Zero resistance for zero net delay(interconnect delay) on */
+/* ideal reset net                                           */
+
+set_dont_touch_network find(port, HRESETn)
+/* Preserve the reset net during optimisation */
+
+/******************************************************************************/
+/* HIGH FANOUT NETS                                                           */
+/******************************************************************************/
+/* For peripherals that have an AHB Master interface as well, the             */
+/* command below would include the HREADYIN port on the AHB Master            */
+/* interface. Note that the ahb_master.scr script also includes               */
+/* constraints for the HREADYIN ports, so that the script is                  */
+/* generic enough to be used with designs that have only an AHB               */
+/* Master interface (and no AHB Slave interface). This is not a               */
+/* problem since the constraint values that are applied by the two            */
+/* scripts are the same.                                                      */
+set_max_fanout 1.0 HREADYIN*
+
+/******************************************************************************/
+/* INPUT CONSTRAINTS                                                          */
+/******************************************************************************/
+/* AHB Slave port names could clash with those of an AHB Master block         */
+/* in the same module. Hence, the port_direction attribute is used            */
+/* to filter out Slave ports from Master ports.                               */
+
+input_port_list = filter(find (port, "HADDR*"), \
+                  "@port_direction == in")
+foreach (input_port_name, input_port_list) {
+  set_input_delay -clock HCLK -min tholdmax     input_port_name
+  set_input_delay -clock HCLK -max tidmaxhaddr  input_port_name
+}
+remove_variable input_port_list
+
+input_port_list = filter(find (port, "HTRANS*"), \
+                  "@port_direction == in")
+foreach (input_port_name, input_port_list) {
+  set_input_delay -clock HCLK -min tholdmax     input_port_name
+  set_input_delay -clock HCLK -max tidmaxhtrans input_port_name
+}
+remove_variable input_port_list
+
+input_port_list = filter(find (port, "HWRITE*"), \
+                  "@port_direction == in")
+foreach (input_port_name, input_port_list) {
+  set_input_delay -clock HCLK -min tholdmax     input_port_name
+  set_input_delay -clock HCLK -max tidmaxhwrite input_port_name
+}
+remove_variable input_port_list
+
+input_port_list = filter(find (port, "HSIZE*"), \
+                  "@port_direction == in")
+foreach (input_port_name, input_port_list) {
+  set_input_delay -clock HCLK -min tholdmax     input_port_name
+  set_input_delay -clock HCLK -max tidmaxhsize  input_port_name
+}
+remove_variable input_port_list
+
+input_port_list = filter(find (port, "HBURST*"), \
+                  "@port_direction == in")
+foreach (input_port_name, input_port_list) {
+  set_input_delay -clock HCLK -min tholdmax     input_port_name
+  set_input_delay -clock HCLK -max tidmaxhburst input_port_name
+}
+remove_variable input_port_list
+
+input_port_list = filter(find (port, "HPROT*"), \
+                  "@port_direction == in")
+foreach (input_port_name, input_port_list) {
+  set_input_delay -clock HCLK -min tholdmax    input_port_name
+  set_input_delay -clock HCLK -max tidmaxhprot input_port_name
+}
+remove_variable input_port_list
+
+input_port_list = filter(find (port, "HWDATA*"), \
+                  "@port_direction == in")
+foreach (input_port_name, input_port_list) {
+  set_input_delay -clock HCLK -min tholdmax     input_port_name
+  set_input_delay -clock HCLK -max tidmaxhwdata input_port_name
+}
+remove_variable input_port_list
+
+input_port_list = filter(find (port, "HSEL*"), \
+                    "@port_direction == in")
+foreach (input_port_name, input_port_list) {
+  set_input_delay -clock HCLK -min tholdmax   input_port_name
+  set_input_delay -clock HCLK -max tidmaxhsel input_port_name
+}
+remove_variable input_port_list
+
+/* For peripherals that have an AHB Master interface as well, the             */
+/* command below would include the HREADYIN port on the AHB Master            */
+/* interface. Note that the ahb_master.scr script also includes               */
+/* constraints for the HREADYIN ports, so that the script is                  */
+/* generic enough to be used with designs that have only an AHB               */
+/* Master interface (and no AHB Slave interface). This is not a               */
+/* problem since the constraint values that are applied by the two            */
+/* scripts are the same.                                                      */
+
+input_port_list = filter(find (port, "HREADYIN*"), \
+                    "@port_direction == in")
+foreach (input_port_name, input_port_list) {
+  set_input_delay -clock HCLK -min tholdmax     input_port_name
+  set_input_delay -clock HCLK -max tidmaxhready input_port_name
+}
+remove_variable input_port_list
+
+/******************************************************************************/
+/* OUTPUT CONSTRAINTS                                                         */
+/******************************************************************************/
+/* AHB Slave port names could clash with those of an AHB Master block         */
+/* in the same module. Hence, the port_direction attribute is used            */
+/* to filter out Slave ports from Master ports.                               */
+
+output_port_list = filter(find (port, "HRDATA*"), \
+                    "@port_direction == out")
+foreach (output_port_name, output_port_list) {
+  set_output_delay -clock HCLK -min tholdmin     output_port_name
+  set_output_delay -clock HCLK -max todmaxhrdata output_port_name
+}
+remove_variable output_port_list
+
+/* Since HREADYOUT port can exist only for an AHB Slave interface             */
+/* and not for an AHB Master interface, there is no need to filter            */
+set_output_delay -clock HCLK -min tholdmin     HREADYOUT*
+set_output_delay -clock HCLK -max todmaxhready HREADYOUT*
+
+output_port_list = filter(find (port, "HRESP*"), \
+                    "@port_direction == out")
+foreach (output_port_name, output_port_list) {
+  set_output_delay -clock HCLK -min tholdmin     output_port_name
+  set_output_delay -clock HCLK -max todmaxhresp  output_port_name
+}
+remove_variable output_port_list
+
+/*********************************** End **************************************/

@@ -1,0 +1,158 @@
+/*------------------------------------------------------------------------------
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 1999 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--------------------------------------------------------------------------------
+--  
+-- Version and Release Control Information:
+--  
+-- File Name              : name_rules.scr,v
+-- File Revision          : 1.3
+--  
+-- Release Information    : PrimeCell(TM)-PL170-REL2v2
+--  
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- Purpose : Synopsys synthesis naming rules.
+--
+--           Naming rules and the change_names command are used to
+--           change the names of cells, nets and ports in a design.
+--           This is ensure SDF and netlist files are
+--           written out with matching names and no invalid characters.
+--           Length of names has been restricted to overcome problems that can
+--           occur with some back-end (layout, place-and-route) tools.
+--
+--           Located in the synopsys_ref/scr_common directory.
+--           Called by master compile script.
+--------------------------------------------------------------------------------
+--
+--  1. This script supports basic naming rules.  
+--       Macro Parts 					
+--         [ 4 & 6 & 7 & 8.c) & 8.e) & 8.f) ]
+--       Top Parts 					
+--         [ 2 & 3 & 7 & 8.a) & 8.b) & 8.f) ] 	
+--     Please select if you want to check the parts 
+--
+--  2. 'define_name_rules' can't distinguish instance
+--     names and cell names. If instance names have
+--     "$" string in your design, Design Compiler
+--     displays warning messages which can be ignored.
+--     These naming rules permits
+--     "$" string of instance names.
+--
+-- CB25_CAD Name Rules :
+--
+--   1. Case insensitive
+--   2. Terminal Name  [a-zA-Z0-9_]
+--   3. Top Cell Name  [a-zA-Z0-9_]
+--   4. Cell Name      [a-zA-Z0-9_]
+--   5. Instance Name  [a-zA-Z0-9_]
+--   6. Pin Name       [a-zA-Z0-9_]
+--   7. Net Name       [a-zA-Z0-9_]
+--   8. String Length
+--	  a) Terminal Name  1<= L <=31
+--        b) Top Cell Name  1<= L <=31
+--        c) Cell Name      1<= L <=31
+--        d) Instance Name  1<= L <=31
+--        e) Pin Name       1<= L <=31
+--        f) Net Name       1<= L <=31
+--	
+------------------------------------------------------------------------------*/
+
+/* Naming Rules for Macro */
+
+define_name_rules CB25_NET  -max_length  27 -allowed "a-z A-Z 0-9 _" \
+ -first_restricted "0-9_" -case_insensitive \
+ -type net
+define_name_rules CB25_CELL -max_length  27 -allowed "a-z A-Z 0-9 _" \
+ -first_restricted "0-9_" -case_insensitive \
+ -type cell
+define_name_rules CB25_PORT -max_length  27 -allowed "a-z A-Z 0-9 _" \
+ -first_restricted "0-9_" -case_insensitive \
+ -type port
+
+/* Not used. Alternative naming method using restricted characters */
+/*
+ define_name_rules CB25_NET  -max_length  27 -restricted "!@#$%^&*()+\\-" \
+  -first_restricted "0-9_" -case_insensitive \
+  -type net
+ define_name_rules CB25_CELL -max_length  27 -restricted "!@#$%^&*()+\\-" \
+  -first_restricted "0-9_" -case_insensitive \
+  -type cell
+ define_name_rules CB25_PORT -max_length  27 -restricted "!@#$%^&*()+\\-" \
+  -first_restricted "0-9_" -case_insensitive \
+  -type port
+*/
+
+/* Naming Rules, generic */
+define_name_rules "CB25CAD" -max_length "32" -allowed "a-z A-Z 0-9_" \
+  -case_insensitive -type cell
+define_name_rules "CB25CAD" -max_length "64" -allowed "A-Z 0-9_$[]" \
+  -case_insensitive -type port
+define_name_rules "CB25CAD" -max_length "255" -allowed "a-z A-Z 0-9_$[]" \
+  -case_insensitive -type net
+
+/* Naming Rules for VHDL */
+define_name_rules "CB25CAD_VHDL" -max_length "31"  -allowed "A-Z a-z _ 0-9" \
+ -first_restricted "0-9 _()" -last_restricted "_" -case_insensitive \
+ -type net
+define_name_rules "CB25CAD_VHDL" -max_length "31" -allowed "A-Z a-z _ 0-9" \
+ -first_restricted "0-9 _()" -last_restricted "_" -case_insensitive \
+ -type port
+define_name_rules "CB25CAD_VHDL" -max_length "31" -allowed "A-Z a-z _ 0-9" \
+ -first_restricted "0-9 _()" -last_restricted "_"  -case_insensitive \
+ -type cell
+define_name_rules "CB25CAD_VHDL" -reserved_words { \
+ 'abs', 'access', 'after', 'alias', 'all', 'and', 'architecture', 'array', \
+ 'assert', 'attribute', 'begin', 'block', 'body', 'buffer', 'bus', 'case', \
+ 'component', 'configuration', 'constant', 'disconnect', 'downto', 'else', \
+ 'elsif', 'end', 'entity', 'exit', 'file', 'for', 'function', 'generate', \
+ 'generic', 'guarded', 'if', 'in', 'inout', 'is', 'label', 'library', 'linkage', \
+ 'loop', 'map', 'mod', 'nand', 'new', 'next', 'nor', 'not', 'null', 'of', 'on', \
+ 'open', 'or', 'others', 'out', 'package', 'port', 'procedure', 'process', \
+ 'range', 'record', 'register', 'rem', 'report', 'return', 'select', 'severity', \
+ 'signal', 'subtype', 'then, to', 'transport', 'type', 'units', 'until', 'use', \
+ 'variable', 'wait', 'when', 'while', 'with', 'xor'}
+define_name_rules "CB25CAD_VHDL" -replacement_char "_"
+define_name_rules "CB25CAD_VHDL" -map {{"__","_"}} -type cell
+
+/* Special vhdl rule to replace consecutive underscores which is invalid VHDL.*/
+define_name_rules SPECIAL_VHDL -special vhdl
+
+
+/* Naming Rules for Verilog */
+define_name_rules "CB25CAD_VLOG" -max_length "31"  -allowed "A-Z a-z _ 0-9[]" \
+ -first_restricted "0-9 _()" -last_restricted "_" \
+ -type net
+define_name_rules "CB25CAD_VLOG" -max_length "31" -allowed "A-Z a-z _ 0-9[]" \
+ -first_restricted "0-9 _()" -last_restricted "_" \
+ -type port
+define_name_rules "CB25CAD_VLOG" -max_length "31" -allowed "A-Z a-z _ 0-9" \
+ -first_restricted "0-9 _()" -last_restricted "_" \
+ -type cell
+define_name_rules "CB25CAD_VLOG" -reserved_words { \
+ 'always', 'and', 'assign', 'begin', 'buf', 'bufif0', 'bufif1', 'case', \
+ 'casex', 'casez', 'cmos', 'deassign', 'default', 'defparam', 'disable', \
+ 'edge', 'else', 'end', 'endattribute', 'endcase', 'endfunction', 'endmodule', \
+ 'endprimitive', 'endspecify', 'endtable', 'endtask', 'event', 'for', 'force', \
+ 'forever', 'fork', 'function', 'highz0', 'highz1', 'if', 'initial', 'inout', \
+ 'input', 'integer', 'join', 'large', 'macromodule', 'medium', 'module', 'nand', \
+ 'negedge', 'nmos', 'nor', 'not', 'notif0', 'notif1', 'or', 'output', \
+ 'parameter', 'pmos', 'posedge', 'primitive', 'pull0', 'pull1', 'pullup', \
+ 'pulldown', 'reg', 'rcmos', 'reg', 'release', 'repeat', 'rnmos', 'rpmos', \
+ 'rtran', 'rtranif0', 'rtranif1', 'scalared', 'small', 'specify', 'specparam', \
+ 'strength', 'strong0', 'strong1', 'supply0', 'supply1', 'table', 'task', \
+ 'time', 'tran', 'tranif0', 'tranif1', 'tri', 'tri0', 'tri1', 'trinand', \
+ 'trior', 'trireg', 'use', 'vectored', 'wait', 'wand', 'weak0', 'weak1', \
+ 'while', 'wire', 'wor', 'xor', 'xnor'}
+
+define_name_rules COLLAPSE -collapse_name_space
+/* See note SYNTH-486.html, use recommended to ensure unique/matching Verilog
+   names in SDF and netlist. */
+
+/************************************* End ************************************/

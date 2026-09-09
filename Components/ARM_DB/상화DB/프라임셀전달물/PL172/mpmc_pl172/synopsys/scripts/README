@@ -1,0 +1,65 @@
+#- -----------------------------------------------------------------------------
+#- This confidential and proprietary software may be used only as
+#- authorised by a licensing agreement from ARM Limited
+#-   (C) COPYRIGHT 2001-2002 ARM Limited
+#-       ALL RIGHTS RESERVED
+#- The entire notice above must be reproduced on all authorised
+#- copies and copies may only be made to the extent permitted
+#- by a licensing agreement from ARM Limited.
+#-
+#- -----------------------------------------------------------------------------
+#- Version and Release Control Information:
+#-
+#- File Name              : README.rca
+#- File Revision          : 1.2
+#-
+#- Release Information    : PrimeCell(TM)-PL172-BET1v2
+#-
+#- -----------------------------------------------------------------------------
+#- Purpose : 
+#-           Explains the compilation dependency of each script
+#-
+#- --=========================================================================--
+
+Synthesis methodology
+=====================
+
+In order to run a toplevel compile of the MPMC, the lower levels
+(MpmcCore and MpmcTIC) are compiled separately at their target frequencies
+(156 MHz and 10 MHz respectively).
+
+The Mpmc toplevel compile can be done only if the required dbs of MpmcCore and
+MpmcTIC are made available in ./db by compiling them separately first using the
+'MpmcCore.cmd' and 'MpmcTIC.cmd' scripts and then using the toplevel compile
+script 'Mpmc.cmd'.
+
+The TEST_METH variable should not be set to 'scaninsert' for the MpmcCore and
+MpmcTIC compiles. In order to create a fully routed scan netlist of the MPMC,
+the MpmcCore and MpmcTIC are to be compiled with the TEST_METH variable set to
+'scanready'. The TEST_METH variable is set to 'scaninsert' only during the
+toplevel compile of Mpmc. These changes will be made by the makefile during
+scaninsert synthesis.
+
+Synthesis script files
+======================
+
+Top level, Mpmc, synthesis files
+--------------------------------
+Mpmc.cmd : Top level synthesis command file
+Mpmc.scr : Top level constraints file
+Mpmc_exceptions.scr : Top level exceptions file
+Mpmc_scan.cmd : Top level scan insertion file
+
+MpmcCore sub-block synthesis files
+----------------------------------
+MpmcCore.cmd : MpmcCore synthesis command file
+MpmcCore.scr : MpmcCore constraints file
+MpmcCore_exceptions.scr : Mpmc exceptions file
+
+MpmcTIC sub-block synthesis files
+---------------------------------
+MpmcTIC.cmd : MpmcTIC synthesis command file
+MpmcTIC.scr : MpmcTIC constraints file
+
+
+/************************************ End *************************************/

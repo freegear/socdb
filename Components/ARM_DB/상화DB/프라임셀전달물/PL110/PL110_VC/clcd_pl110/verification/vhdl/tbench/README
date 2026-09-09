@@ -1,0 +1,146 @@
+#-------------------------------------------------------------------------------
+# This confidential and proprietary software may be used only as
+# authorised by a licensing agreement from ARM Limited
+#   (C) COPYRIGHT 1999 ARM Limited
+#       ALL RIGHTS RESERVED
+# The entire notice above must be reproduced on all authorised
+# copies and copies may only be made to the extent permitted
+# by a licensing agreement from ARM Limited.
+#-------------------------------------------------------------------------------
+# 
+# Version and Release Control Information:
+# 
+# File Name              : README,v
+# File Revision          : 1.1
+# 
+# Release Information    : PrimeCell(TM)-PL110-REL1v1
+# 
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Purpose : README file for BusTalk simulations
+#-------------------------------------------------------------------------------
+
+Note : 
+------
+At the start of each simulation session, ensure that the file 
+clcd_pl110/SourceMe is sourced to initialise certain environment variables.
+
+Example SourceMe file:
+# Set up variables specific to this peripheral macro block
+# --------------------------------------------------------
+# Set the path environment variable to the peripheral design root directory
+# For example clcd_pl110/
+setenv PERIPH /home/nbray/work/tryfan/clcd_pl110
+
+# Set the peripheral name abbreviation, for example Clcd
+setenv PERIPHERAL Clcd
+
+# Set the ARM Product number for this peripheral, for example pl110
+setenv PRODUCT PL110
+
+# VHDL Cell library
+# -----------------
+# Set the path environment variable to the technology library VITAL timing views
+# For VHDL gate level simulations use LIB_VITAL
+
+# Set the generic library path for the Avant! CB25 VITAL library
+setenv CB25_VITAL $PERIPH/../../LIBRARIES/avanti/1999.1/cb25/v2.1/vital
+
+# Set the path to the Avant! CB25 VITAL library, standard cell zero delay view
+setenv LIB_VITAL $CB25_VITAL/cb25os163/zero
+
+# VERILOG Cell library
+# --------------------
+# Set the path environment variable to the technology library Verilog timing views
+# For Verilog gate level simulations use LIB_VERILOG
+
+# Set the generic library path for the Avant! CB25 Verilog library
+setenv CB25_VERILOG $PERIPH/../../LIBRARIES/avanti/1999.1/cb25/v2.1/verilog
+
+# Set the path to the Avant! CB25 VITAL library, standard cell zero delay view
+setenv LIB_VERILOG $CB25_VERILOG/cb25os163/zero
+
+--------------------------------------------------------------------------------
+
+Steps for running BusTalk VHDL simulations. 
+
+The C sources of the test pattern files reside in the
+BusTalk/bustests directory.
+
+There are currently eleven test pattern that need to
+be run to fully validate the CLCDC:
+
+Check_Large.c
+Check_Flat.c
+Check_Vertical.c
+Check_Retry.c
+Check_STNDualC.c
+Check_STNDualM.c
+Check_STNSingleC.c
+Check_STNSingleM.c
+Check_TFT.c
+IntrTest.c
+FreqTest.c (parameter "Ratio" modifiable within this file)
+
+The following instructions should be applied to each of
+the above test patterns.
+
+Functional Tests
+----------------
+1. VHDL RTL simulations
+------------------------
+- In the BusTalk/bustests directory,
+  for each of the respective pattern files 
+  'make <pattern file>' 
+  This will create the respective invec/<pattern file>.bif
+  e.g. make Check_TFT will create invec/Check_TFT.bif
+
+  Change the link from BusTalk/vhdl/tbench/infile.bif
+  to the test vector file in BusTalk/bustests/invec/<pattern file>.bif
+  For example,
+  cd BusTalk/vhdl/tbench/
+  ln -s ../../bustests/invec/Check_TFT.bif infile.bif
+
+- In the BusTalk/vhdl/modeltech directory edit file 'libmap'
+  so that the library 'uut' points to the VHDL RTL
+  uut = $PERIPH/vhdl/uut/work
+
+- Do a 'make clean' in the clcd_pl110/vhdl/uut directory
+
+- Do a 'make clean' in the BusTalk/vhdl/tbench directory
+  (Alternatively one can selectively compile the following file:
+  In the BusTalk/vhdl/tbench directory  : vcom tb_Clcd.vhd)
+
+- In the BusTalk/vhdl/tbench directory, run simulations using
+  vsim tb_Clcd
+
+2. VHDL NETLIST simulations
+---------------------------
+- In the BusTalk/bustests directory,
+  for each of the respective pattern files 
+  'make <pattern file>' 
+  This will create the respective invec/<pattern file>.bif
+  e.g. make Check_TFT will create invec/Check_TFT.bif
+
+  Change the link from BusTalk/vhdl/tbench/infile.bif
+  to the test vector file in BusTalk/bustests/invec/<pattern file>.bif
+  For example,
+  cd BusTalk/vhdl/tbench/
+  ln -s ../../bustests/invec/Check_TFT.bif infile.bif
+
+- In the BusTalk/vhdl/modeltech directory edit file 'libmap'
+  so that the library 'uut' points to the VHDL NETLIST
+  uut = $PERIPH/vhdl/uutNetlist/work
+
+- Do a 'make clean' in the clcd_pl110/vhdl/uutNetlist directory
+
+- Do a 'make clean' in the BusTalk/vhdl/tbench directory
+  (Alternatively one can selectively compile the following file:
+    In the BusTalk/vhdl/tbench directory  : vcom tb_Clcd.vhd)
+
+- In the BusTalk/vhdl/tbench directory, run simulations using
+  vsim +no_glitch_msg -sdfmax u_CLcd=../../../vhdl/uutNetlist/Clcd_Vhdl_dtype.sdf21 tb_Clcd
+  vsim +no_glitch_msg -sdfmin u_CLcd=../../../vhdl/uutNetlist/Clcd_Vhdl_dtype.sdf21 tb_Clcd
+
+#-------------------------------------- End ------------------------------------

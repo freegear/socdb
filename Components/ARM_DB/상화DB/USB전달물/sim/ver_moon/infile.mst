@@ -1,0 +1,118 @@
+
+nop;
+#5000;
+
+////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////      Start of Code    ////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+$display("//////////////////////////////////////////////////////////");
+$display("// Reg Definition For DMA                                 ");
+$display("//////////////////////////////////////////////////////////");
+write (`irq_enable,32'h0000_0006,2'b10);      // IRQ enable
+
+write (`bufsize_reg,`ALLOC_BUFSIZE_,2'b10);   // Write buffer size
+
+`ifdef USB
+  `include "infile_usb"
+`endif
+
+  write(32'hc100_31c0, 32'h5555aaaa, 2'b10);
+  read(32'hc100_31c0, DATA_RD, 2'b10);
+  write(32'hc100_3200, 32'h5555aaaa, 2'b10);
+  read(32'hc100_3200, DATA_RD, 2'b10);
+  write(32'hc100_3240, 32'h5555aaaa, 2'b10);
+  read(32'hc100_3240, DATA_RD, 2'b10);
+  write(32'hc100_3260, 32'h5555aaaa, 2'b10);
+  read(32'hc100_3260, DATA_RD, 2'b10);
+  write(32'hc100_3400, 32'h5555aaaa, 2'b10);
+  read(32'hc100_3400, DATA_RD, 2'b10);
+
+forever begin
+
+  wait (!nLMINT);
+  nop;
+  read (`irq_rawint_src,DATA_RD1,2'b10);
+
+  if (DATA_RD1[2]) begin     // BUFFER ALLOCATION INTERRUPT
+    read (`buf_ptr_reg,DATA_RD,2'b10);
+    $display ($time,,"BUFFER ALLOCATION INTERRUPT GENERATED: 32'h%h", DATA_RD);
+
+    for (pba_wcnt = 0; pba_wcnt < 16; pba_wcnt = pba_wcnt + 1) begin
+      pba_wptr = DATA_RD[12:8] + pba_wcnt;
+      write (`LBUF_BADDR_ + 4*pba_wptr,pdesc_wptr,2'b10);
+      write (`DBUF_BADDR_ + 4*pba_wptr,pdata_wptr,2'b10);
+      pdesc_wptr = pdesc_wptr + 16;
+      if (pdesc_wptr[31:12] !== `DESC_AREA_) pdesc_wptr = `DESC_BADDR_;
+      pdata_wptr = pdata_wptr + `ALLOC_BUFSIZE_;
+      if (pdata_wptr[31:20] !== {`DATA_AREA_,4'h0}) pdata_wptr = `DATA_BADDR_;
+    end
+    pba_wptr = DATA_RD[12:8] + pba_wcnt;
+    write (`buf_ptr_reg,{DATA_RD[31:13],pba_wptr,DATA_RD[7:0]},2'b10);
+  end
+
+  nop;
+  if (DATA_RD1[1]) begin     // USB INTERRUPT
+
+    read (`u_intr_src_reg,SRCINT_DATA,2'b10);
+    $display ($time,,"USB INTERRUPT GENERATED: 32'h%h", SRCINT_DATA);
+
+    nop;
+    if (SRCINT_DATA[1]) begin
+      $display ("USB TX END OF FRAME INTERRUPT");
+
+      // Read interrupt queue
+      read_iqueue (`U_TXINTR_,SRCINT_DATA[31:28],intr_data0,intr_data1);
+
+      // TX interrupt clear
+      write (`u_intr_src_reg,32'h0000_0200,2'b10);
+
+      if (intr_data0[18:16] !== 3'h1) begin
+        $stop;
+      end
+      else begin
+        // TX data compare
+        utx_dcompare (intr_data1,intr_data0[10:0]);
+      end
+    end
+
+    nop;
+    if (SRCINT_DATA[0]) begin
+      $display ("USB RX END OF FRAME INTERRUPT");
+
+      // Read interrupt queue
+      read_iqueue (`U_RXINTR_,SRCINT_DATA[23:20],intr_data0,intr_data1);
+
+      // RX interrupt clear
+      write (`u_intr_src_reg,32'h0000_0100,2'b10);
+
+      if (intr_data0[20:16] !== 5'h01) begin
+        $stop;
+      end
+      else begin
+        // RX data compare
+        urx_dcompare (intr_data1,intr_data0[10:0],erxd_success);
+        erxd_success = 1;
+        nop;
+
+        if (erxd_success) begin
+
+          // Write TX packet queue
+          write_txpque (`u_txpkt_sptr_reg,`u_txpkt_len_reg,`u_txpkt_que_reg,
+                        intr_data1,intr_data0);
+
+        end
+      end
+    end
+
+  end           // USB interrupt end
+
+  nop;
+  nop;
+  nop;
+  nop;
+
+
+end
+

@@ -1,0 +1,42 @@
+#!/bin/sh
+#-------------------------------------------------------------------------------
+#-  This confidential and proprietary software may be used only as
+#-  authorised by a licensing agreement from ARM Limited
+#-    (C) COPYRIGHT 1999 ARM Limited
+#-        ALL RIGHTS RESERVED
+#-  The entire notice above must be reproduced on all authorised
+#-  copies and copies may only be made to the extent permitted
+#-  by a licensing agreement from ARM Limited.
+#-------------------------------------------------------------------------------
+#-  
+#-  Version and Release Control Information:
+#-  
+#-  File Name              : patch_netlist,v
+#-  File Revision          : 1.1
+#-  
+#-  Release Information    : PrimeCell(TM)-PL170-REL2v2
+#-  
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+#-  Purpose  : This shell script tailors the netlist written out by Synopsys
+#-             to make it suitable for sdf simulations.
+#-
+#-------------------------------------------------------------------------------
+
+echo Tailoring netlist files for sdf simulation ....
+echo Please Wait ....
+
+if [ $1 = "Sdram_net.vhd" ];
+then
+   sed 's/_label//g' $1 > 1.tmp
+   cp 1.tmp ../../vhdl/uutNetlist/Sdram_net.vhd;
+   rm 1.tmp
+fi
+
+if [ $1 = "Sdram_net.v" ];
+then
+  cp $1 ../../verilog/uutNetlist/Sdram_net.v;
+fi
+
+echo Complete

@@ -1,0 +1,58 @@
+##
+## network_top synthesis
+##
+
+## source synopsys_setup
+source .synopsys_dc.setup
+
+## Read db
+read_db db/moon_top.db
+current_design moon_top
+check_design > Report/moon_top.check_design
+
+## GENERAL Constraint
+set_fix_multiple_port_nets -all -buffer_constants
+set_wire_load_mode enclosed
+set auto_wire_load_selection true
+set_max_fanout 16 $current_design
+set_operating_conditions -library std110 -max V230WTP1250
+
+## Constraint design
+source Constraint/moon_top_io.scr
+set_max_area 0.0
+
+## Compile
+current_design moon_top
+compile -top
+
+## Write DB
+report_hierarchy > Report/moon_top.hier
+
+write -format db -hier moon_top -output db/moon_top.db
+
+change_names -rules FUJITSU_BLOCK_LEVEL -h -verbose > Report/change_names.rpt
+write -format verilog -hier moon_top -output Netlist/moon_top.gv
+
+## Check Timing
+check_timing > Report/moon_top.check_timing
+
+## Report
+report_design > Report/moon_top.design_rpt
+report_area >> Report/moon_top.design_rpt
+report_cell >> Report/moon_top.design_rpt
+report_timing -path end > Report/moon_top.timing_rpt
+report_timing -max_path 100 >> Report/moon_top.timing_rpt
+report_clock > Clock/moon_top.clock
+report_port -verbose > Report/moon_top.port
+all_registers -level_sensitive
+list dc_shell_status > Report/moon_top.latch
+
+# report_reference
+# report_port -verbose
+# report_net
+# report_compile_options
+# report_constraint -all_violators -verbose
+
+remove_design -all
+
+#exit

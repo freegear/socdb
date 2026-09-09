@@ -1,0 +1,15 @@
+
+analyze -f verilog   ../../../global_ADK/verilog/ClockInv.v 
+analyze -f verilog   ../../../global_ADK/verilog/LATR.v 
+analyze -f verilog   A920TWrapMaster.v 
+analyze -f verilog   A920TWrapSM.v 
+analyze -f verilog   A920TWrapSlave.v 
+analyze -f verilog   A920TWrap.v 
+analyze -f verilog   A922T.v
+
+
+elaborate A922T
+current_design A922T
+link
+
+write -f db -hier -out A922T.gtech.db

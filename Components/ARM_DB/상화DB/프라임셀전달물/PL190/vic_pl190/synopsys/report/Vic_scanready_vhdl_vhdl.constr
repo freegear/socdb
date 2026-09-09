@@ -1,0 +1,235 @@
+ 
+****************************************
+Report : design
+Design : Vic
+Version: 2000.05
+Date   : Fri Oct 27 19:32:46 2000
+****************************************
+
+Design allows ideal nets on clock nets.
+
+Library(s) Used:
+
+    cb25os163_max (File: /home/dcroxfor/work/primecell/LIBS/cb25v2_1/cb25os163/synopsys/cb25os163_max.db)
+
+Local Link Library:
+
+    {cb25os163_max.db}
+
+Flip-Flop Types:
+
+    No flip-flop types specified.
+
+Latch Types:
+
+    No latch types specified.
+
+Operating Conditions:
+
+    Name       Library       Process     Temp    Volt    Interconnect Model
+    ----------------------------------------------------------------------------
+    WCCOM      cb25os163_max    1.20   125.00    2.30    worst_case_tree
+
+Min Operating Conditions:
+
+    Name       Library       Process     Temp    Volt    Interconnect Model
+    ----------------------------------------------------------------------------
+    BCCOM      cb25os163_min    0.80   -55.00    2.70    best_case_tree
+
+Wire Loading Model:
+
+    Selected manually by the user.
+
+Name           :   16000
+Location       :   cb25os163_max
+Resistance     :   0.00019
+Capacitance    :   0.000154
+Area           :   0.01
+Slope          :   145.8
+Fanout   Length   Points Average Cap Std Deviation
+--------------------------------------------------------------
+     1    22.25
+     2    44.28
+     3    70.63
+     4   126.36
+     5   155.79
+     6   192.35
+     7   207.90
+     8   332.64
+     9   342.36
+    10   426.60
+    11   543.24
+    12   609.12
+    13   617.76
+    14   644.76
+    15   680.40
+    16   708.48
+    17   764.64
+    18   878.04
+    19  1001.16
+    20  1146.96
+
+
+Wire Loading Model for Minimum Delay Analysis:
+
+    Selected manually by the user.
+
+Name           :   ForQA
+Location       :   cb25os163_max
+Resistance     :   0.00019
+Capacitance    :   0.000154
+Area           :   0.01
+Slope          :   135
+Fanout   Length   Points Average Cap Std Deviation
+--------------------------------------------------------------
+     1    20.60
+     2    41.00
+     3    65.40
+     4   117.00
+     5   144.25
+     6   178.10
+     7   192.50
+     8   308.00
+     9   317.00
+    10   395.00
+    11   503.00
+    12   564.00
+    13   572.00
+    14   597.00
+    15   630.00
+    16   656.00
+    17   708.00
+    18   813.00
+    19   927.00
+    20  1062.00
+
+
+
+Wire Loading Model Mode: enclosed.
+
+Timing Ranges:
+
+    No timing ranges specified.
+
+Pin Input Delays:
+
+    None specified.
+
+Pin Output Delays:
+
+    None specified.
+
+Disabled Timing Arcs:
+
+    No arcs disabled.
+
+Required Licenses:
+
+    None Required
+
+Design Parameters:
+
+    None specified.
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : constraint
+Design : Vic
+Version: 2000.05
+Date   : Fri Oct 27 19:33:00 2000
+****************************************
+
+
+                                                   Weighted
+    Group (max_delay/setup)      Cost     Weight     Cost
+    -----------------------------------------------------
+    HCLK                         0.00      1.00      0.00
+    default                      0.00      1.00      0.00
+    -----------------------------------------------------
+    max_delay/setup                                  0.00
+
+                              Total Neg  Critical
+    Group (critical_range)      Slack    Endpoints   Cost
+    -----------------------------------------------------
+    HCLK                         0.00         0      0.00
+    default                      0.00         0      0.00
+    -----------------------------------------------------
+    critical_range                                   0.00
+
+                                                   Weighted
+    Group (min_delay/hold)       Cost     Weight     Cost
+    -----------------------------------------------------
+    HCLK                         0.00      1.00      0.00
+    default                      0.00      1.00      0.00
+    -----------------------------------------------------
+    min_delay/hold                                   0.00
+
+
+    Constraint                                       Cost
+    -----------------------------------------------------
+    multiport_net                                    0.00 (MET)
+    max_transition                                   0.00 (MET)
+    max_fanout                                       0.00 (MET)
+    max_capacitance                                  0.00 (MET)
+    max_delay/setup                                  0.00 (MET)
+    critical_range                                   0.00 (MET)
+    min_delay/hold                                   0.00 (MET)
+    max_area                                     23247.99 (VIOLATED)
+
+
+ 
+****************************************
+Report : clocks
+Design : Vic
+Version: 2000.05
+Date   : Fri Oct 27 19:33:01 2000
+****************************************
+
+Attributes:
+    d - dont_touch_network
+    f - fix_hold
+    p - propagated_clock
+    G - generated_clock
+
+Clock          Period   Waveform            Attrs     Sources
+--------------------------------------------------------------------------------
+HCLK            10.00   {0 5}               d, f      {HCLK}
+--------------------------------------------------------------------------------
+ 
+****************************************
+Report : Attribute
+Design : Vic
+Version: 2000.05
+Date   : Fri Oct 27 19:33:01 2000
+****************************************
+
+Design          Object             Type      Attribute Name            Value
+--------------------------------------------------------------------------------
+Vic             Vic                design    hdl_canonical_params      
+Vic             Vic                design    hdl_parameters            
+Vic             Vic                design    hdl_template              Vic
+Vic             Vic                design    link_design_libraries     IEEE
+Vic             Vic                design    wire_load_model_mode      enclosed
+Vic             Vic                design    wire_load_selection_type  1
+Vic             Vic                design    min_wire_load_selection_type
+                                                                       1
+Vic             Vic                design    max_transition            2.000000
+Vic             Vic                design    max_area                  0.000000
+Vic             Vic                design    minimum_multibit_width    2
+Vic             Vic                design    fix_multiple_port_nets    feedthroughs constants outputs buffer_constants
+Vic             Vic                design    ungroup_all               false
+Vic             Vic                design    ba_attaches_on_pins       false
+Vic             Vic                design    net_area                  7165.744141
+Vic             Vic                design    map                       true
+Vic             Vic                design    compile_cpu_hostname      n800079c4
+Vic             Vic                design    compile_abo_cpu_time      455.780518
+Vic             Vic                design    compile_rbo_cpu_time      2912.639893
+Vic             Vic                design    compile_tot_cpu_time      3443.000000
+Vic             Vic                design    compile_lib_cpu_time      9.209999
+Vic             Vic                design    compile_tdrs_cpu_time     52.020325
+Vic             Vic                design    annotated_net_resistances true
+Vic             Vic                design    annotated_net_capacitances
+                                                                       false
+Vic             Vic                design    annotated_connect_delays  false
+Vic             Vic                design    annotated_cell_delays     false
+

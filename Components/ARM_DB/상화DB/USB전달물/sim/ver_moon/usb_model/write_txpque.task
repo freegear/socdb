@@ -1,0 +1,33 @@
+///////////////////////////////////////////////////////////////////////////
+// TASKS for ETHERNET model
+// 
+//  write_txpque: Write TX packet queue
+///////////////////////////////////////////////////////////////////////////
+
+task write_txpque;
+input [31:0] ptxpkt_sptr_reg;
+input [31:0] ptxpkt_len_reg;
+input [31:0] ptxpkt_que_reg;
+input [31:0] ptxpkt_sptr;
+input [31:0] ptxpkt_len;
+
+reg   [31:0] pdata_rd;
+begin
+
+  read (ptxpkt_que_reg,pdata_rd,2'b10);
+
+  if (pdata_rd[31:30] == 2'b00) begin
+    write (ptxpkt_sptr_reg,ptxpkt_sptr,2'b10);
+    write (ptxpkt_len_reg,ptxpkt_len,2'b10);
+    read (ptxpkt_que_reg,pdata_rd,2'b10);
+    write (ptxpkt_que_reg,(pdata_rd | `INC_TXPQ_),2'b10);
+  end
+  else begin
+    if (ptxpkt_sptr_reg[23:20] == 4'h2)
+      $display ("\tETHERNET #1 TX PACKET QUEUE FULL!!");
+    else if (ptxpkt_sptr_reg[23:20] == 4'h3)
+      $display ("\tUSB TX PACKET QUEUE FULL!!");
+  end
+
+end
+endtask

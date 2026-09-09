@@ -1,0 +1,58 @@
+// --=========================================================================--
+// Module Name : AHB Bus Decoder
+// Date        : Jan 24, 2003
+// Author      : Mark Ryoo
+// --=========================================================================--
+ 
+module Decoder (
+  HRESETn, 
+  HADDR, 
+  HSELSDRAM,
+  HSELRetry, 
+  HSELLM,
+  HSELDefault
+);
+
+ 
+  input         HRESETn;
+  input [31:0]  HADDR;
+
+  output        HSELSDRAM;   // SDRAM
+  output        HSELRetry;   // External Memory
+  output        HSELLM;      // LM
+  output        HSELDefault; // Default Slave
+ 
+//------------------------------------------------------------------------------
+// AHB address decoding for slave selection and read data multiplexer control
+//------------------------------------------------------------------------------
+// Address decoding of HADDR is performed continuously.
+// Address map is:
+//
+// 0x0000_0000 - 0xBFFF_FFFF                              : Default
+// 0x8000_0000 - 0x9FFF_FFFF                              : SDRAM
+// 0xC000_0000 - 0xCFFF_FFFF                              : LM
+// 0xD000_0000 - 0xDFFF_FFFF                              : Retry Slave
+// 0xE000_0000 - 0xFFFF_FFFF                              : Default
+//
+
+`protected
+]<I6ESQ:5DT^<3b:>Ye]>NFmlKoC>63XMO4TlFO?;>e3<FE^AnS5N:Ng9dmQW<E6
+^a`jZAqHCMC5@2j?[CdKT1SE=p9kG]IiHQ\ZYIBB^VEE>R6Q;TRB7?JY29[jC@T_
+_9C1bk?Y:q]T5o4Oqk[<<cj87h2:TJfPhkbBHoeDpWgB>`;BPEG=4NHURS7h>ME8
+pWLLO?R_LNeFGJYZ:?djp80B02[dV=N<Pgd:Q<KKh_LAiC8qCn;[MhI?@?=:]?md
+6oEYoL:FEEOlEL73<L9pfk5ZoDGpUaA@;n[9Jm0TCn[^_ZfKYVoI0\MWm^m08jqJ
+2M4@U3YFFGaNdBDBD5@f0ZPMhjFK`1[]`q6Xd=@DSgSjWcCE2C?j3?CeDGk]mGq>
+Gcj^kd]S`]]\C7lVWdcAc[d4K<d`DpGK?MX4hBQN7Wn1^R\[k;MT\kVfJDhVBhcP
+8dq29Uim\gKE4eXI4<BIfG21]Rq4@8@cXJQX[LON7@<ZS=hk:OkikO1Fce5RFLYp
+`6dP43][L;8l[gaQ7TE]FP<;e0?8KTBR6ETCoPTc<W3dII<gY3YF1nP4AolVRVAa
+j=\EpUcM0i:pI>IIHTT9:DKF:W`QZB5;m?9W]bU=>XQ7Ub7^dF[g1R74_OhTD0QK
+pj`>ZV5XfnTBjY6lnL3k5T6K05;<hR;FRh6pS_Toi>qnXM1mZ4OkDS?K3<O4To0K
+5Qn[dnhh6T0M]T77SZS71eoSc9?Jm:BcAqhIKbNIY8@@6Wi7O@YilccT;kb0:R92
+pc>a>Yc6gQJ[eeX2U2cjETWUH9>o4FEZ7jRIeo\\RNG<2I0pTUT<RgpEX7`5d4gm
+W:G:PQNc9OPIJgHT8a5^<B\`SE8EVU8MAl3S;jN<U68LRp^4mQQl`onk:fOU<>_4
+UHL9GbAA_G];OMgbqJ[2\m72pfJT@VN[;]G7I]ajQaZ3TY\i834NGY==FQh^6pY3
+N9`aK$
+`endprotected
+endmodule
+
+// --================================= End ===================================--

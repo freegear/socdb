@@ -1,0 +1,339 @@
+// ---------------------------------------------------------------------
+// This confidential and proprietary software may be used only as
+// authorised by a licensing agreement from ARM Limited
+//   (c) COPYRIGHT 1999-2003 ARM Limited
+//       ALL RIGHTS RESERVED
+// The entire notice above must be reproduced on all authorised
+// copies and copies may only be made to the extent permitted
+// by a licensing agreement from ARM Limited.
+//
+// ---------------------------------------------------------------------
+
+ARM Condensed Reference File (CRF) format
+=========================================
+
+The CRF file is used to encode test patterns for chips; it makes
+full use of the strobe capabilities of a tester.
+
+The CRF file takes the form of a table of stimuli - each line in the
+table represents a tester cycle which shows what stimuli should be
+applied to the chip, and what results are expected on the outputs. The
+strobe timing information is given in a separate file (the "CTRM"
+file), and its format is described later.
+
+Each pin of the chip has an associated column in the CRF table, and
+various symbols are used to represent the signal level and direction
+of drive (into or out of the chip) for that pin in each tester cycle:-
+
+CRF file test characters
+========================
+                          +------------------------------+
+                          |       SIGNAL  LEVEL          |
+                          +-------+--------+-------------+
+                          |  LOW  |  HIGH  |  UNDEFINED  |
+   +-----------+----------+-------+--------+-------------+
+   |           |    INPUT |  "L"  |  "H"   |    "u"      |
+   |   SIGNAL  +----------+-------+--------+-------------+
+   | DIRECTION |   OUTPUT |  "0"  |  "1"   |    "."      |
+   |           +----------+-------+--------+-------------+
+   |           | UNDRIVEN |  "s"  |  "t"   |    "z"      |
+   +-----------+----------+-------+--------+-------------+
+
+    INPUT - signifies that the signal is being driven INTO the chip under
+            test.
+
+   OUTPUT - signifies that the signal is being driven OUT OF the chip
+            under test.
+
+ UNDRIVEN - signifies that the signal WAS being driven OUT OF the chip
+            under test, but that it is no longer being driven.
+
+The CTRM file is an adjunct to the CRF file which describes the type
+of strobe to be used for each pin on the chip. There are three types
+of input strobe (RT0, RT1 & NRZ) and one type of output strobe
+(CHK). These strobes fully define the timing associated with each pin
+for the entire CRF test (i.e. there are no dynamic strobe changes
+during the test).
+
+CTRM file strobes
+=================
+
+RT0(t1,t2)
+~~~~~~~~~~
+
+Return-to-zero strobe; if an "H" character is specified in a CRF
+vector, the corresponding pin should be driven high at time 't1,' and
+low again at time 't2.' If an "L" or "u" character is specified, the
+pin should be driven low for the cycle duration.
+
+RT1(t1,t2)
+~~~~~~~~~~
+
+Return-to-one strobe; if an "L" or "u" character is specified in a CRF
+vector, the corresponding pin should be driven low at time 't1,' and
+high again at time 't2.' If an "H" character is specified, the pin
+should be driven high for the cycle duration.
+
+NRZ(t1)
+~~~~~~~
+
+Non-return-to-zero strobe; if an "L" or "u" character is specified in
+a CRF vector, the corresponding pin should be driven low at time 't1.'
+If an "H" character is specified, the pin should be driven high at
+time 't1.'
+
+CHK(t1)
+~~~~~~~
+
+Check strobe; if any of the "0", "1", ".", "s", "t" or "z" characters
+are specified in a CRF vector, the tester must *not* drive the chip
+for the duration of the cycle. If either the "0" or "1" characters
+were specified, the tester should sample the value on the pin at time
+'t1' and flag any difference between the sampled & specified output
+level. Note that the "." character implies that the pin output level
+should be ignored for that cycle.  The characters "s", "t" and "z"
+mean that the tester should check that the pin is not being driven by
+the chip.
+
+In order to run the CRF test patterns, each vector should be
+considered as a test cycle:-
+
+1) Any pin of the chip which is marked as an INPUT ("L", "H" or "u")
+in the table should be interpreted as a signal to be driven into the
+chip by the tester during that cycle. Note that the character "u"
+should be treated as "L" (i.e. a low level input); the "u" character
+should only occur in the first few vectors of the test if at all.
+
+Input strobes may be specified as RT0, RT1 or NRZ, but bidirectional
+pins are only ever attached to NRZ strobes in the CRF tests supplied.
+
+In the case of bidirectional signals, it is important to avoid drive
+clashes between the tester and chip. It is assumed that the tester
+enables its drivers at the start of a test cycle (around 0ns) if the
+pin is marked as an INPUT for that vector, but that the value
+initially input by the tester matches the value output by the chip in
+the preceding (output) cycle. The tester then switches to the new
+input level at the specified NRZ strobe point in the cycle.
+
+2) Any pin that is marked as an OUTPUT ("0", "1" or ".") in the table
+indicates that the chip will be driving the appropriate value out of
+the pin during that cycle; the tester must disable its drivers at the
+start of the cycle (around 0ns) in order to avoid a drive clash.
+
+The level on the pin should be sampled at the time specified by the
+CHK strobe, and compared to the value predicted in the CRF file; the
+character "0" indicates that the chip is expected to be driving the
+pin low at the sample time, "1" indicates a high level drive, and "."
+indicates an undefined drive level (which the tester should treat as
+don't care).
+
+3) Any pin that is marked as UNDRIVEN ("s", "t" or "z") in the table
+indicates that the chip should stop driving the pin during that cycle;
+the tester must *not* drive the pin during such cycles, and should
+check that the chip has stopped driving the pin.
+
+CTRM file format
+================
+ The CTRM file includes information on both the test strobes to be used in
+conjunction with the CRF file, and the sample points that were used in the
+original simulation to generate the test.
+ An example file is shown below:
+
+     ! ##################
+     ! # ARM60 AC2 Test #
+     ! ##################
+     !
+     ! Note: All propagation & strobe times doubled to guarantee simulation
+     !       Hold times adjusted suitably.
+
+
+     CYCLE: Xmclk (/)  PRD(200)
+
+     INPUTS:
+     Xmclk      <I> Xmclk (/)  RT0(30,130)
+     XNwait     <I> Xmclk (/)  RT0(20,140)
+
+     Xbigend    <I> Xmclk (\)  NRZ(100)
+     Xlateabt   <I> Xmclk (\)  NRZ(100)
+     Xprog32    <I> Xmclk (\)  NRZ(100)
+     Xdata32    <I> Xmclk (\)  NRZ(100)
+
+     XNreset    <I> Xmclk (/)  NRZ(110)
+     XNirq      <I> Xmclk (\)  NRZ(110)
+     XNfiq      <I> Xmclk (\)  NRZ(110)
+     Xabort     <I> Xmclk (/)  NRZ(50)
+     Xcpa       <I> Xmclk (/)  NRZ(50)
+     Xcpb       <I> Xmclk (/)  NRZ(50)
+     Xale       <I> Xmclk (/)  RT0(32,130)
+     Xabe       <I> Xmclk (/)  RT0(31,130)
+     Xdbe       <I> Xmclk (/)  RT0(30,140)
+
+     XNTrst     <I> Xmclk (/)  NRZ(110)
+     XTck       <I> Xmclk (/)  NRZ(110)
+     XTms       <I> Xmclk (/)  NRZ(110)
+     XTdi       <I> Xmclk (/)  NRZ(110)
+
+     BIDIRECTIONAL:
+     Xd[31:0]   <I> Xmclk (\) <O> Xmclk (\) <D> Xmclk (\)  NRZ(110) CHK(131)
+
+     OUTPUTS:
+     XTdo       <O> Xmclk (/)  CHK(131)
+
+     Xa[31:0]   <O> Xmclk (\)  CHK(90)
+     XNmreq     <O> Xmclk (\)  CHK(131)
+     Xseq       <O> Xmclk (\)  CHK(131)
+     XNrw       <O> Xmclk (\)  CHK(110)
+     XNbw       <O> Xmclk (\)  CHK(110)
+     Xlock      <O> Xmclk (\)  CHK(110)
+     XNtrans    <O> Xmclk (\)  CHK(110)
+     XNopc      <O> Xmclk (\)  CHK(80)
+     XNcpi      <O> Xmclk (\)  CHK(131)
+
+     END
+
+ With reference to the example above:
+
+ 1) The "CYCLE" statement defines the period of the tester cycle.
+     e.g.
+       PRD(200) ==> 200ns tester cycle
+
+    When the patterns are extracted, the signal specified defines when
+    a new pattern is made.  eg in the above example, a new vector is
+    made on every RISING edge of Xmclk.
+
+ 2) The "INPUTS:" keyword denotes that the following pins are all input
+    only. For each pin, the tester strobe information is shown at the end of
+    the line.
+    e.g.
+      XNwait     <I> Xmclk (/)  RT0(20,140)
+      ======     =============  ===========
+        |              |             |
+      Signal        Ignore         Test input
+       name   (sample point info)    strobe
+
+    The sample point info defines when the signal is sampled as the
+    patterns are made.  In this case, the signal is sampled on the
+    RISING edge of Xmclk, and the value becomes the value for that
+    vector.
+
+ 3) The "BIDIRECTIONAL:" keyword denotes that the following pins are all
+    bidirectionals. For each pin, both an input strobe time and output
+    check time are specified at the end of the line.
+    e.g.
+      Xd[31:0]  <I> Xmclk (\) <O> Xmclk (\) <D> Xmclk (\) NRZ(110) CHK(131)
+      ========  ========================================= ======== ========
+         |                        |                          |        |
+      Signal                   Ignore                      Test     Test
+       name              (sample point info)               input    output
+     (a bus in                                             strobe   strobe
+      this case)
+
+    The sample point info defines when the signal is sampled as the
+    vectors are made.  In this case, when Xd[] is an input bus, the
+    value of the vector is the value on the bus at the FALLING edge of
+    Xmclk.  When the vectors are played back, this new value is
+    applied 110ns into the cycle.  When the bus is configured as
+    output, the value in the vectors is the value on the FALLING edge
+    of Xmclk.  Note that the input and output sample edge can be
+    different.  The direction of the data bus for the vector is
+    determined at the sample time specified after the <D>.  In this
+    case, the direction of the bus is determined on the FALLING edge
+    of Xmclk.
+
+ 4) The "OUTPUTS:" keyword denotes that the following pins are all output
+    only. For each pin, the tester strobe information is shown at the end of
+    the line.
+    e.g.
+      Xa[31:0]   <O> Xmclk (\)  CHK(90)
+      ======     =============  =======
+        |              |            |
+      Signal        Ignore        Test output
+       name   (sample point info)   strobe
+
+    The sample point info defines when the output is sampled as the
+    vectors are made.  In this case, the value for the vector is the
+    value sampled on the falling edge of Xmclk.
+
+  5) The "END" keyword denotes the end of the file.
+
+
+
+Other notes
+===========
+ 1) The number quoted at the end of each vector (e.g. "}  12030") represents
+the simulation time at which the vector was generated, and makes a useful
+reference which is independent of the number of vectors in a file.
+
+2) Comments may be included in the table at appropriate points - they take the
+form of a hash in the first column followed by the comment text.
+ e.g.
+       "# Comment line"
+
+3) No outputs should be checked until the specified vector is reached (to
+allow for chip initialisation). The vector at which the outputs should be
+checked may be marked with the comment "# $check on". All outputs from the
+start of the test up to the specified vector should be treated as don't
+care.
+
+4) The comment "# $test end" denotes the end of the test, and no further
+vectors should be checked. If this comment is omitted, the end of the table
+denotes the end of the test.
+
+Sample Point Info Notes
+=======================
+
+In the above example, the period of the vectors was defined from Xmclk
+rising to Xmclk rising.
+
+             _________           _____
+        ____/         \_________/
+
+            |<- Vector Period ->|
+
+When a signal is defined to be sampled on the rising edge of this
+clock, the sample occurs on the rising edge at the END of the cycle.
+Likewise, for a bidirectional bus where the direction test is
+performed on the rising edge, this happens at the end of the cycle.
+
+Sampling HighZ Values in CRF
+============================
+
+When a high impedance signal is sampled, either an "s" or a "t" will
+be written into the vector file.  An "s" denotes that a signal went
+from logic "0" to high-impedance, a "t" denotes that a signal went
+from logic "1" to high impedance.  However, the vector written into
+the CRF file does not necessarily have the correct value.  The
+sampling mechanism is correct in that is notices that the signal has
+gone high impedance, but always takes the value from the previous
+vector, not the current value.  Consider the following example where
+the 3-State output signal AOUT, with enable EN, is sampled on the
+falling edge of CLK :
+
+                ________          ________
+      CLK _____/        \________/        \_______
+          __________________________
+      EN                            \____________
+             _______________
+     AOUT __/               \__________ZZZZZZZZZZ
+
+
+Here, since AOUT was low and then went high-impedance, the correct
+value to appear in the output vectors would be "s".  However, when the
+CRF sampler sees that a signal has gone high-impedance, it bases the
+"s" or "t" value on the previously sampled value.  Thus, in the above
+case, the value "t" gets written into the test patterns.
+
+Although this behaviour is incorrect, it does not actually matter too
+much.  The purpose of the above test is to drive AOUT from logic "0"
+to high-impedance (and later in the test the signal should go from
+logic "1" to high-impedance).  When the patterns are run on the
+tester, this device will exhibit the desired behaviour.  The tester
+will interpret both "s" and "t" as high-impedance, and should ignore
+the value since there is no way for the tester to tell whether the
+signal was a "1" or a "0" before going tristate.  Therefore, tester
+will simply check that AOUT has gone to the high-impedance state, and
+the test will work as intended.
+
+                            ==============
+
+

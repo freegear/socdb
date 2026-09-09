@@ -1,0 +1,1160 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Vic
+Version: 2000.05
+Date   : Mon Oct 30 13:55:42 2000
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Vic' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0VicRevAnd               0      0     0     0      0     0     0      6   0.00%
+u0VicVectBank           129      0     0     0      0     0     0   1218  10.59%
+u1VicRevAnd               1      0     1     0      0     0     0      6  20.00%
+u1VicVectBank           135      0     0     0      0     0     0   1218  11.08%
+u2VicRevAnd               0      0     0     0      0     0     0      6   0.00%
+u2VicVectBank           121      0     0     0      0     0     0   1130  10.71%
+u3VicRevAnd               0      0     0     0      0     0     0      6   0.00%
+u3VicVectBank           131      0     0     0      0     0     0   1220  10.74%
+u4VicVectBank           140      0     0     0      0     0     0   1222  11.46%
+u5VicVectBank           134      0     0     0      0     0     0   1218  11.00%
+u6VicVectBank           144      0     0     0      0     0     0   1270  11.34%
+u7VicVectBank           138      0     0     0      0     0     0   1250  11.04%
+u8VicVectBank           134      0     0     0      0     0     0   1230  10.89%
+u9VicVectBank           136      0     0     0      0     0     0   1206  11.28%
+u10VicVectBank          120      0     0     0      0     0     0   1154  10.40%
+u11VicVectBank          134      0     0     0      0     0     0   1174  11.41%
+u12VicVectBank          124      0     0     0      0     0     0   1144  10.84%
+u13VicVectBank          134      0     0     0      0     0     0   1178  11.38%
+u14VicVectBank          132      0     0     0      0     0     0   1250  10.56%
+u15VicVectBank          131      0     0     0      0     0     0   1190  11.01%
+uVicAhbifReg           2175      0     2     6      0     0     0  19880  10.95%
+uVicPriority            655      0     0     0      0     0     0   5884  11.13%
+uVicSynctoHCLK          262      0     0     0      0     0     0   2406  10.89%
+Vic                    5310      0     3     6      0     0     0  48354  10.98%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Vic
+Version: 2000.05
+Date   : Mon Oct 30 13:55:46 2000
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Vic
+Version: 2000.05
+Date   : Mon Oct 30 13:55:46 2000
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain (SCANINHCLK --> SCANOUTHCLK) contains 1050 cells:
+
+  SCANINHCLK	->
+  u15VicVectBank/iVICVectCntl_reg_2	->
+  u15VicVectBank/iVICVectCntl_reg_3	->
+  u15VicVectBank/iVICVectCntl_reg_4	->
+  u15VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u15VicVectBank/iVICVectAddr_reg_0	->
+  u15VicVectBank/iVICVectAddr_reg_1	->
+  u15VicVectBank/iVICVectAddr_reg_2	->
+  u15VicVectBank/iVICVectAddr_reg_3	->
+  u15VicVectBank/iVICVectAddr_reg_4	->
+  u15VicVectBank/iVICVectAddr_reg_5	->
+  u15VicVectBank/iVICVectAddr_reg_6	->
+  u15VicVectBank/iVICVectAddr_reg_7	->
+  u15VicVectBank/iVICVectAddr_reg_8	->
+  u15VicVectBank/iVICVectAddr_reg_9	->
+  u15VicVectBank/iVICVectAddr_reg_10	->
+  u15VicVectBank/iVICVectAddr_reg_11	->
+  u15VicVectBank/iVICVectAddr_reg_12	->
+  u15VicVectBank/iVICVectAddr_reg_13	->
+  u15VicVectBank/iVICVectAddr_reg_14	->
+  u15VicVectBank/iVICVectAddr_reg_15	->
+  u15VicVectBank/iVICVectAddr_reg_16	->
+  u15VicVectBank/iVICVectAddr_reg_17	->
+  u15VicVectBank/iVICVectAddr_reg_18	->
+  u15VicVectBank/iVICVectAddr_reg_19	->
+  u15VicVectBank/iVICVectAddr_reg_20	->
+  u15VicVectBank/iVICVectAddr_reg_21	->
+  u15VicVectBank/iVICVectAddr_reg_22	->
+  u15VicVectBank/iVICVectAddr_reg_23	->
+  u15VicVectBank/iVICVectAddr_reg_24	->
+  u15VicVectBank/iVICVectAddr_reg_25	->
+  u15VicVectBank/iVICVectAddr_reg_26	->
+  u15VicVectBank/iVICVectAddr_reg_27	->
+  u15VicVectBank/iVICVectAddr_reg_28	->
+  u15VicVectBank/iVICVectAddr_reg_29	->
+  u15VicVectBank/iVICVectAddr_reg_30	->
+  u15VicVectBank/iVICVectAddr_reg_31	->
+  u15VicVectBank/iVICVectCntl_reg_0	->
+  u15VicVectBank/iVICVectCntl_reg_1	->
+  u3VicVectBank/iVICVectCntl_reg_0	->
+  u3VicVectBank/iVICVectCntl_reg_1	->
+  u3VicVectBank/iVICVectCntl_reg_2	->
+  u3VicVectBank/iVICVectCntl_reg_3	->
+  u3VicVectBank/iVICVectCntl_reg_4	->
+  u3VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u3VicVectBank/iVICVectAddr_reg_0	->
+  u3VicVectBank/iVICVectAddr_reg_1	->
+  u3VicVectBank/iVICVectAddr_reg_2	->
+  u3VicVectBank/iVICVectAddr_reg_3	->
+  u3VicVectBank/iVICVectAddr_reg_4	->
+  u3VicVectBank/iVICVectAddr_reg_5	->
+  u3VicVectBank/iVICVectAddr_reg_6	->
+  u3VicVectBank/iVICVectAddr_reg_7	->
+  u3VicVectBank/iVICVectAddr_reg_8	->
+  u3VicVectBank/iVICVectAddr_reg_9	->
+  u3VicVectBank/iVICVectAddr_reg_10	->
+  u3VicVectBank/iVICVectAddr_reg_11	->
+  u3VicVectBank/iVICVectAddr_reg_12	->
+  u3VicVectBank/iVICVectAddr_reg_13	->
+  u3VicVectBank/iVICVectAddr_reg_14	->
+  u3VicVectBank/iVICVectAddr_reg_15	->
+  u3VicVectBank/iVICVectAddr_reg_16	->
+  u3VicVectBank/iVICVectAddr_reg_17	->
+  u3VicVectBank/iVICVectAddr_reg_18	->
+  u3VicVectBank/iVICVectAddr_reg_19	->
+  u3VicVectBank/iVICVectAddr_reg_20	->
+  u3VicVectBank/iVICVectAddr_reg_21	->
+  u3VicVectBank/iVICVectAddr_reg_22	->
+  u3VicVectBank/iVICVectAddr_reg_23	->
+  u3VicVectBank/iVICVectAddr_reg_24	->
+  u3VicVectBank/iVICVectAddr_reg_25	->
+  u3VicVectBank/iVICVectAddr_reg_26	->
+  u3VicVectBank/iVICVectAddr_reg_27	->
+  u3VicVectBank/iVICVectAddr_reg_28	->
+  u3VicVectBank/iVICVectAddr_reg_29	->
+  u3VicVectBank/iVICVectAddr_reg_30	->
+  u3VicVectBank/iVICVectAddr_reg_31	->
+  u12VicVectBank/iVICVectCntl_reg_0	->
+  u12VicVectBank/iVICVectCntl_reg_2	->
+  u12VicVectBank/iVICVectCntl_reg_3	->
+  u12VicVectBank/iVICVectCntl_reg_4	->
+  u12VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u12VicVectBank/iVICVectAddr_reg_0	->
+  u12VicVectBank/iVICVectAddr_reg_1	->
+  u12VicVectBank/iVICVectAddr_reg_2	->
+  u12VicVectBank/iVICVectAddr_reg_3	->
+  u12VicVectBank/iVICVectAddr_reg_4	->
+  u12VicVectBank/iVICVectAddr_reg_5	->
+  u12VicVectBank/iVICVectAddr_reg_6	->
+  u12VicVectBank/iVICVectAddr_reg_7	->
+  u12VicVectBank/iVICVectAddr_reg_8	->
+  u12VicVectBank/iVICVectAddr_reg_9	->
+  u12VicVectBank/iVICVectAddr_reg_10	->
+  u12VicVectBank/iVICVectAddr_reg_11	->
+  u12VicVectBank/iVICVectAddr_reg_12	->
+  u12VicVectBank/iVICVectAddr_reg_13	->
+  u12VicVectBank/iVICVectAddr_reg_14	->
+  u12VicVectBank/iVICVectAddr_reg_15	->
+  u12VicVectBank/iVICVectAddr_reg_16	->
+  u12VicVectBank/iVICVectAddr_reg_17	->
+  u12VicVectBank/iVICVectAddr_reg_18	->
+  u12VicVectBank/iVICVectAddr_reg_19	->
+  u12VicVectBank/iVICVectAddr_reg_20	->
+  u12VicVectBank/iVICVectAddr_reg_21	->
+  u12VicVectBank/iVICVectAddr_reg_22	->
+  u12VicVectBank/iVICVectAddr_reg_23	->
+  u12VicVectBank/iVICVectAddr_reg_24	->
+  u12VicVectBank/iVICVectAddr_reg_25	->
+  u12VicVectBank/iVICVectAddr_reg_26	->
+  u12VicVectBank/iVICVectAddr_reg_27	->
+  u12VicVectBank/iVICVectAddr_reg_28	->
+  u12VicVectBank/iVICVectAddr_reg_29	->
+  u12VicVectBank/iVICVectAddr_reg_30	->
+  u12VicVectBank/iVICVectAddr_reg_31	->
+  u12VicVectBank/iVICVectCntl_reg_1 (*)	->
+  u11VicVectBank/iVICVectCntl_reg_2	->
+  u11VicVectBank/iVICVectCntl_reg_3	->
+  u11VicVectBank/iVICVectCntl_reg_4	->
+  u11VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u11VicVectBank/iVICVectAddr_reg_0	->
+  u11VicVectBank/iVICVectAddr_reg_1	->
+  u11VicVectBank/iVICVectAddr_reg_2	->
+  u11VicVectBank/iVICVectAddr_reg_3	->
+  u11VicVectBank/iVICVectAddr_reg_4	->
+  u11VicVectBank/iVICVectAddr_reg_5	->
+  u11VicVectBank/iVICVectAddr_reg_6	->
+  u11VicVectBank/iVICVectAddr_reg_7	->
+  u11VicVectBank/iVICVectAddr_reg_8	->
+  u11VicVectBank/iVICVectAddr_reg_9	->
+  u11VicVectBank/iVICVectAddr_reg_10	->
+  u11VicVectBank/iVICVectAddr_reg_11	->
+  u11VicVectBank/iVICVectAddr_reg_12	->
+  u11VicVectBank/iVICVectAddr_reg_13	->
+  u11VicVectBank/iVICVectAddr_reg_14	->
+  u11VicVectBank/iVICVectAddr_reg_15	->
+  u11VicVectBank/iVICVectAddr_reg_16	->
+  u11VicVectBank/iVICVectAddr_reg_17	->
+  u11VicVectBank/iVICVectAddr_reg_18	->
+  u11VicVectBank/iVICVectAddr_reg_19	->
+  u11VicVectBank/iVICVectAddr_reg_20	->
+  u11VicVectBank/iVICVectAddr_reg_21	->
+  u11VicVectBank/iVICVectAddr_reg_22	->
+  u11VicVectBank/iVICVectAddr_reg_23	->
+  u11VicVectBank/iVICVectAddr_reg_24	->
+  u11VicVectBank/iVICVectAddr_reg_25	->
+  u11VicVectBank/iVICVectAddr_reg_26	->
+  u11VicVectBank/iVICVectAddr_reg_27	->
+  u11VicVectBank/iVICVectAddr_reg_28	->
+  u11VicVectBank/iVICVectAddr_reg_29	->
+  u11VicVectBank/iVICVectAddr_reg_30	->
+  u11VicVectBank/iVICVectAddr_reg_31	->
+  u11VicVectBank/iVICVectCntl_reg_0	->
+  u11VicVectBank/iVICVectCntl_reg_1	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_0	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_1	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_2	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_3	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_4	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_5	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_6	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_7	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_8	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_9	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_10	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_11	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_12	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_13	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_14	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_15	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_16	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_17	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_18	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_19	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_20	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_21	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_22	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_23	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_24	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_25	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_26	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_27	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_28	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_29	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_30	->
+  uVicSynctoHCLK/VICFIQStatusSync_reg_31	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_0	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_1	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_2	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_3	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_4	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_5	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_6	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_7	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_8	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_9	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_10	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_11	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_12	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_13	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_14	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_15	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_16	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_17	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_18	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_19	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_20	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_21	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_22	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_23	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_24	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_25	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_26	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_27	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_28	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_29	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_30	->
+  uVicSynctoHCLK/VICFIQStatSync1_reg_31	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_0	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_2	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_3	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_4	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_5	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_6	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_8	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_9	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_10	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_11	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_12	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_13	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_14	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_16	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_17	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_18	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_19	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_20	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_21	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_22	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_23	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_24	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_25	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_26	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_27	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_28	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_29	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_30	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_31	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_0	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_1	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_2	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_3	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_4	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_5	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_6	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_7	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_8	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_9	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_10	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_11	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_12	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_13	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_14	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_15	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_16	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_17	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_18	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_19	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_20	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_21	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_22	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_23	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_24	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_25	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_26	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_27	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_28	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_29	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_30	->
+  uVicSynctoHCLK/VICIRQStatSync1_reg_31	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_0	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_1	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_2	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_3	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_4	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_5	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_6	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_7	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_8	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_9	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_10	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_11	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_12	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_13	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_14	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_15	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_16	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_17	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_18	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_19	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_20	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_21	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_22	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_23	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_24	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_25	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_26	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_27	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_28	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_29	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_30	->
+  uVicSynctoHCLK/VICRawIntrSync_reg_31	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_0	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_1	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_2	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_3	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_4	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_5	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_6	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_7	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_8	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_9	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_10	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_11	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_12	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_13	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_14	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_15	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_16	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_17	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_18	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_19	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_20	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_21	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_22	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_23	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_24	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_25	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_26	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_27	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_28	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_29	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_30	->
+  uVicSynctoHCLK/VICRawIntrSync1_reg_31	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_15	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_7	->
+  uVicSynctoHCLK/VICIRQStatusSync_reg_1	->
+  u14VicVectBank/iVICVectCntl_reg_2	->
+  u14VicVectBank/iVICVectCntl_reg_3	->
+  u14VicVectBank/iVICVectCntl_reg_4	->
+  u14VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u14VicVectBank/iVICVectAddr_reg_0	->
+  u14VicVectBank/iVICVectAddr_reg_1	->
+  u14VicVectBank/iVICVectAddr_reg_2	->
+  u14VicVectBank/iVICVectAddr_reg_3	->
+  u14VicVectBank/iVICVectAddr_reg_4	->
+  u14VicVectBank/iVICVectAddr_reg_5	->
+  u14VicVectBank/iVICVectAddr_reg_6	->
+  u14VicVectBank/iVICVectAddr_reg_7	->
+  u14VicVectBank/iVICVectAddr_reg_8	->
+  u14VicVectBank/iVICVectAddr_reg_9	->
+  u14VicVectBank/iVICVectAddr_reg_10	->
+  u14VicVectBank/iVICVectAddr_reg_11	->
+  u14VicVectBank/iVICVectAddr_reg_12	->
+  u14VicVectBank/iVICVectAddr_reg_13	->
+  u14VicVectBank/iVICVectAddr_reg_14	->
+  u14VicVectBank/iVICVectAddr_reg_15	->
+  u14VicVectBank/iVICVectAddr_reg_16	->
+  u14VicVectBank/iVICVectAddr_reg_17	->
+  u14VicVectBank/iVICVectAddr_reg_18	->
+  u14VicVectBank/iVICVectAddr_reg_19	->
+  u14VicVectBank/iVICVectAddr_reg_20	->
+  u14VicVectBank/iVICVectAddr_reg_21	->
+  u14VicVectBank/iVICVectAddr_reg_22	->
+  u14VicVectBank/iVICVectAddr_reg_23	->
+  u14VicVectBank/iVICVectAddr_reg_24	->
+  u14VicVectBank/iVICVectAddr_reg_25	->
+  u14VicVectBank/iVICVectAddr_reg_26	->
+  u14VicVectBank/iVICVectAddr_reg_27	->
+  u14VicVectBank/iVICVectAddr_reg_28	->
+  u14VicVectBank/iVICVectAddr_reg_29	->
+  u14VicVectBank/iVICVectAddr_reg_30	->
+  u14VicVectBank/iVICVectAddr_reg_31	->
+  u14VicVectBank/iVICVectCntl_reg_0 (*)	->
+  u14VicVectBank/iVICVectCntl_reg_1	->
+  u9VicVectBank/iVICVectCntl_reg_0	->
+  u9VicVectBank/iVICVectCntl_reg_1	->
+  u9VicVectBank/iVICVectCntl_reg_2	->
+  u9VicVectBank/iVICVectCntl_reg_3	->
+  u9VicVectBank/iVICVectCntl_reg_4	->
+  u9VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u9VicVectBank/iVICVectAddr_reg_0	->
+  u9VicVectBank/iVICVectAddr_reg_1	->
+  u9VicVectBank/iVICVectAddr_reg_2	->
+  u9VicVectBank/iVICVectAddr_reg_3	->
+  u9VicVectBank/iVICVectAddr_reg_4	->
+  u9VicVectBank/iVICVectAddr_reg_5	->
+  u9VicVectBank/iVICVectAddr_reg_6	->
+  u9VicVectBank/iVICVectAddr_reg_7	->
+  u9VicVectBank/iVICVectAddr_reg_8	->
+  u9VicVectBank/iVICVectAddr_reg_9	->
+  u9VicVectBank/iVICVectAddr_reg_10	->
+  u9VicVectBank/iVICVectAddr_reg_11	->
+  u9VicVectBank/iVICVectAddr_reg_12	->
+  u9VicVectBank/iVICVectAddr_reg_13	->
+  u9VicVectBank/iVICVectAddr_reg_14	->
+  u9VicVectBank/iVICVectAddr_reg_15	->
+  u9VicVectBank/iVICVectAddr_reg_16	->
+  u9VicVectBank/iVICVectAddr_reg_17	->
+  u9VicVectBank/iVICVectAddr_reg_18	->
+  u9VicVectBank/iVICVectAddr_reg_19	->
+  u9VicVectBank/iVICVectAddr_reg_20	->
+  u9VicVectBank/iVICVectAddr_reg_21	->
+  u9VicVectBank/iVICVectAddr_reg_22	->
+  u9VicVectBank/iVICVectAddr_reg_23	->
+  u9VicVectBank/iVICVectAddr_reg_24	->
+  u9VicVectBank/iVICVectAddr_reg_25	->
+  u9VicVectBank/iVICVectAddr_reg_26	->
+  u9VicVectBank/iVICVectAddr_reg_27	->
+  u9VicVectBank/iVICVectAddr_reg_28	->
+  u9VicVectBank/iVICVectAddr_reg_29	->
+  u9VicVectBank/iVICVectAddr_reg_30	->
+  u9VicVectBank/iVICVectAddr_reg_31	->
+  u7VicVectBank/iVICVectCntl_reg_0	->
+  u7VicVectBank/iVICVectCntl_reg_1	->
+  u7VicVectBank/iVICVectCntl_reg_2	->
+  u7VicVectBank/iVICVectCntl_reg_3	->
+  u7VicVectBank/iVICVectCntl_reg_4	->
+  u7VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u7VicVectBank/iVICVectAddr_reg_0	->
+  u7VicVectBank/iVICVectAddr_reg_1	->
+  u7VicVectBank/iVICVectAddr_reg_2	->
+  u7VicVectBank/iVICVectAddr_reg_3	->
+  u7VicVectBank/iVICVectAddr_reg_4	->
+  u7VicVectBank/iVICVectAddr_reg_5	->
+  u7VicVectBank/iVICVectAddr_reg_6	->
+  u7VicVectBank/iVICVectAddr_reg_7	->
+  u7VicVectBank/iVICVectAddr_reg_8	->
+  u7VicVectBank/iVICVectAddr_reg_9	->
+  u7VicVectBank/iVICVectAddr_reg_10	->
+  u7VicVectBank/iVICVectAddr_reg_11	->
+  u7VicVectBank/iVICVectAddr_reg_12	->
+  u7VicVectBank/iVICVectAddr_reg_13	->
+  u7VicVectBank/iVICVectAddr_reg_14	->
+  u7VicVectBank/iVICVectAddr_reg_15	->
+  u7VicVectBank/iVICVectAddr_reg_16	->
+  u7VicVectBank/iVICVectAddr_reg_17	->
+  u7VicVectBank/iVICVectAddr_reg_18	->
+  u7VicVectBank/iVICVectAddr_reg_19	->
+  u7VicVectBank/iVICVectAddr_reg_20	->
+  u7VicVectBank/iVICVectAddr_reg_21	->
+  u7VicVectBank/iVICVectAddr_reg_22	->
+  u7VicVectBank/iVICVectAddr_reg_23	->
+  u7VicVectBank/iVICVectAddr_reg_24	->
+  u7VicVectBank/iVICVectAddr_reg_25	->
+  u7VicVectBank/iVICVectAddr_reg_26	->
+  u7VicVectBank/iVICVectAddr_reg_27	->
+  u7VicVectBank/iVICVectAddr_reg_28	->
+  u7VicVectBank/iVICVectAddr_reg_29	->
+  u7VicVectBank/iVICVectAddr_reg_30	->
+  u7VicVectBank/iVICVectAddr_reg_31	->
+  u4VicVectBank/iVICVectCntl_reg_2	->
+  u4VicVectBank/iVICVectCntl_reg_3	->
+  u4VicVectBank/iVICVectCntl_reg_4	->
+  u4VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u4VicVectBank/iVICVectAddr_reg_0	->
+  u4VicVectBank/iVICVectAddr_reg_1	->
+  u4VicVectBank/iVICVectAddr_reg_2	->
+  u4VicVectBank/iVICVectAddr_reg_3	->
+  u4VicVectBank/iVICVectAddr_reg_4	->
+  u4VicVectBank/iVICVectAddr_reg_5	->
+  u4VicVectBank/iVICVectAddr_reg_6	->
+  u4VicVectBank/iVICVectAddr_reg_7	->
+  u4VicVectBank/iVICVectAddr_reg_8	->
+  u4VicVectBank/iVICVectAddr_reg_9	->
+  u4VicVectBank/iVICVectAddr_reg_10	->
+  u4VicVectBank/iVICVectAddr_reg_11	->
+  u4VicVectBank/iVICVectAddr_reg_12	->
+  u4VicVectBank/iVICVectAddr_reg_13	->
+  u4VicVectBank/iVICVectAddr_reg_14	->
+  u4VicVectBank/iVICVectAddr_reg_15	->
+  u4VicVectBank/iVICVectAddr_reg_16	->
+  u4VicVectBank/iVICVectAddr_reg_17	->
+  u4VicVectBank/iVICVectAddr_reg_18	->
+  u4VicVectBank/iVICVectAddr_reg_19	->
+  u4VicVectBank/iVICVectAddr_reg_20	->
+  u4VicVectBank/iVICVectAddr_reg_21	->
+  u4VicVectBank/iVICVectAddr_reg_22	->
+  u4VicVectBank/iVICVectAddr_reg_23	->
+  u4VicVectBank/iVICVectAddr_reg_24	->
+  u4VicVectBank/iVICVectAddr_reg_25	->
+  u4VicVectBank/iVICVectAddr_reg_26	->
+  u4VicVectBank/iVICVectAddr_reg_27	->
+  u4VicVectBank/iVICVectAddr_reg_28	->
+  u4VicVectBank/iVICVectAddr_reg_29	->
+  u4VicVectBank/iVICVectAddr_reg_30	->
+  u4VicVectBank/iVICVectAddr_reg_31	->
+  u4VicVectBank/iVICVectCntl_reg_0	->
+  u4VicVectBank/iVICVectCntl_reg_1	->
+  u2VicVectBank/iVICVectCntl_reg_0	->
+  u2VicVectBank/iVICVectCntl_reg_1	->
+  u2VicVectBank/iVICVectCntl_reg_2	->
+  u2VicVectBank/iVICVectCntl_reg_3	->
+  u2VicVectBank/iVICVectCntl_reg_4	->
+  u2VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u2VicVectBank/iVICVectAddr_reg_0	->
+  u2VicVectBank/iVICVectAddr_reg_1	->
+  u2VicVectBank/iVICVectAddr_reg_2	->
+  u2VicVectBank/iVICVectAddr_reg_3	->
+  u2VicVectBank/iVICVectAddr_reg_4	->
+  u2VicVectBank/iVICVectAddr_reg_5	->
+  u2VicVectBank/iVICVectAddr_reg_6	->
+  u2VicVectBank/iVICVectAddr_reg_7	->
+  u2VicVectBank/iVICVectAddr_reg_8	->
+  u2VicVectBank/iVICVectAddr_reg_9	->
+  u2VicVectBank/iVICVectAddr_reg_10	->
+  u2VicVectBank/iVICVectAddr_reg_11	->
+  u2VicVectBank/iVICVectAddr_reg_12	->
+  u2VicVectBank/iVICVectAddr_reg_13	->
+  u2VicVectBank/iVICVectAddr_reg_14	->
+  u2VicVectBank/iVICVectAddr_reg_15	->
+  u2VicVectBank/iVICVectAddr_reg_16	->
+  u2VicVectBank/iVICVectAddr_reg_17	->
+  u2VicVectBank/iVICVectAddr_reg_18	->
+  u2VicVectBank/iVICVectAddr_reg_19	->
+  u2VicVectBank/iVICVectAddr_reg_20	->
+  u2VicVectBank/iVICVectAddr_reg_21	->
+  u2VicVectBank/iVICVectAddr_reg_22	->
+  u2VicVectBank/iVICVectAddr_reg_23	->
+  u2VicVectBank/iVICVectAddr_reg_24	->
+  u2VicVectBank/iVICVectAddr_reg_25	->
+  u2VicVectBank/iVICVectAddr_reg_26	->
+  u2VicVectBank/iVICVectAddr_reg_27	->
+  u2VicVectBank/iVICVectAddr_reg_28	->
+  u2VicVectBank/iVICVectAddr_reg_29	->
+  u2VicVectBank/iVICVectAddr_reg_30	->
+  u2VicVectBank/iVICVectAddr_reg_31	->
+  u13VicVectBank/iVICVectCntl_reg_2	->
+  u13VicVectBank/iVICVectCntl_reg_3	->
+  u13VicVectBank/iVICVectCntl_reg_4	->
+  u13VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u13VicVectBank/iVICVectAddr_reg_0	->
+  u13VicVectBank/iVICVectAddr_reg_1	->
+  u13VicVectBank/iVICVectAddr_reg_2	->
+  u13VicVectBank/iVICVectAddr_reg_3	->
+  u13VicVectBank/iVICVectAddr_reg_4	->
+  u13VicVectBank/iVICVectAddr_reg_5	->
+  u13VicVectBank/iVICVectAddr_reg_6	->
+  u13VicVectBank/iVICVectAddr_reg_7	->
+  u13VicVectBank/iVICVectAddr_reg_8	->
+  u13VicVectBank/iVICVectAddr_reg_9	->
+  u13VicVectBank/iVICVectAddr_reg_10	->
+  u13VicVectBank/iVICVectAddr_reg_11	->
+  u13VicVectBank/iVICVectAddr_reg_12	->
+  u13VicVectBank/iVICVectAddr_reg_13	->
+  u13VicVectBank/iVICVectAddr_reg_14	->
+  u13VicVectBank/iVICVectAddr_reg_15	->
+  u13VicVectBank/iVICVectAddr_reg_16	->
+  u13VicVectBank/iVICVectAddr_reg_17	->
+  u13VicVectBank/iVICVectAddr_reg_18	->
+  u13VicVectBank/iVICVectAddr_reg_19	->
+  u13VicVectBank/iVICVectAddr_reg_20	->
+  u13VicVectBank/iVICVectAddr_reg_21	->
+  u13VicVectBank/iVICVectAddr_reg_22	->
+  u13VicVectBank/iVICVectAddr_reg_23	->
+  u13VicVectBank/iVICVectAddr_reg_24	->
+  u13VicVectBank/iVICVectAddr_reg_25	->
+  u13VicVectBank/iVICVectAddr_reg_26	->
+  u13VicVectBank/iVICVectAddr_reg_27	->
+  u13VicVectBank/iVICVectAddr_reg_28	->
+  u13VicVectBank/iVICVectAddr_reg_29	->
+  u13VicVectBank/iVICVectAddr_reg_30	->
+  u13VicVectBank/iVICVectAddr_reg_31	->
+  u13VicVectBank/iVICVectCntl_reg_0	->
+  u13VicVectBank/iVICVectCntl_reg_1	->
+  uVicPriority/CurrServ_reg_11 (*)	->
+  uVicPriority/CurrServ_reg_12	->
+  uVicPriority/CurrServ_reg_13 (*)	->
+  uVicPriority/CurrServ_reg_14	->
+  uVicPriority/CurrServ_reg_15 (*)	->
+  uVicPriority/CurrServ_reg_16 (*)	->
+  uVicPriority/ActiveIrq_reg_0	->
+  uVicPriority/ActiveIrq_reg_1	->
+  uVicPriority/ActiveIrq_reg_2	->
+  uVicPriority/ActiveIrq_reg_3	->
+  uVicPriority/ActiveIrq_reg_4	->
+  uVicPriority/ActiveIrq_reg_5	->
+  uVicPriority/ActiveIrq_reg_6	->
+  uVicPriority/ActiveIrq_reg_7	->
+  uVicPriority/ActiveIrq_reg_8	->
+  uVicPriority/ActiveIrq_reg_9	->
+  uVicPriority/ActiveIrq_reg_10	->
+  uVicPriority/ActiveIrq_reg_11	->
+  uVicPriority/ActiveIrq_reg_12	->
+  uVicPriority/ActiveIrq_reg_13	->
+  uVicPriority/ActiveIrq_reg_14	->
+  uVicPriority/ActiveIrq_reg_15	->
+  uVicPriority/ActiveIrq_reg_16	->
+  uVicPriority/VICVECTADDROUT_reg_0	->
+  uVicPriority/VICVECTADDROUT_reg_1	->
+  uVicPriority/VICVECTADDROUT_reg_2	->
+  uVicPriority/VICVECTADDROUT_reg_3	->
+  uVicPriority/VICVECTADDROUT_reg_4	->
+  uVicPriority/VICVECTADDROUT_reg_5	->
+  uVicPriority/VICVECTADDROUT_reg_6	->
+  uVicPriority/VICVECTADDROUT_reg_7	->
+  uVicPriority/VICVECTADDROUT_reg_8	->
+  uVicPriority/VICVECTADDROUT_reg_9	->
+  uVicPriority/VICVECTADDROUT_reg_10	->
+  uVicPriority/VICVECTADDROUT_reg_11	->
+  uVicPriority/VICVECTADDROUT_reg_12	->
+  uVicPriority/VICVECTADDROUT_reg_13	->
+  uVicPriority/VICVECTADDROUT_reg_14	->
+  uVicPriority/VICVECTADDROUT_reg_15	->
+  uVicPriority/VICVECTADDROUT_reg_16	->
+  uVicPriority/VICVECTADDROUT_reg_17	->
+  uVicPriority/VICVECTADDROUT_reg_18	->
+  uVicPriority/VICVECTADDROUT_reg_19	->
+  uVicPriority/VICVECTADDROUT_reg_20	->
+  uVicPriority/VICVECTADDROUT_reg_21	->
+  uVicPriority/VICVECTADDROUT_reg_22	->
+  uVicPriority/VICVECTADDROUT_reg_23	->
+  uVicPriority/VICVECTADDROUT_reg_24	->
+  uVicPriority/VICVECTADDROUT_reg_25	->
+  uVicPriority/VICVECTADDROUT_reg_26	->
+  uVicPriority/VICVECTADDROUT_reg_27	->
+  uVicPriority/VICVECTADDROUT_reg_28	->
+  uVicPriority/VICVECTADDROUT_reg_29	->
+  uVicPriority/VICVECTADDROUT_reg_30	->
+  uVicPriority/VICVECTADDROUT_reg_31	->
+  uVicPriority/CurrServ_reg_8	->
+  uVicPriority/CurrServ_reg_10 (*)	->
+  uVicPriority/CurrServ_reg_1	->
+  uVicPriority/CurrServ_reg_7	->
+  uVicPriority/CurrServ_reg_0	->
+  uVicPriority/CurrServ_reg_6 (*)	->
+  uVicPriority/CurrServ_reg_3 (*)	->
+  uVicPriority/CurrServ_reg_5 (*)	->
+  uVicPriority/CurrServ_reg_4 (*)	->
+  uVicPriority/CurrServ_reg_9 (*)	->
+  uVicPriority/CurrServ_reg_2 (*)	->
+  u10VicVectBank/iVICVectCntl_reg_2	->
+  u10VicVectBank/iVICVectCntl_reg_3	->
+  u10VicVectBank/iVICVectCntl_reg_4	->
+  u10VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u10VicVectBank/iVICVectAddr_reg_0	->
+  u10VicVectBank/iVICVectAddr_reg_1	->
+  u10VicVectBank/iVICVectAddr_reg_2	->
+  u10VicVectBank/iVICVectAddr_reg_3	->
+  u10VicVectBank/iVICVectAddr_reg_4	->
+  u10VicVectBank/iVICVectAddr_reg_5	->
+  u10VicVectBank/iVICVectAddr_reg_6	->
+  u10VicVectBank/iVICVectAddr_reg_7	->
+  u10VicVectBank/iVICVectAddr_reg_8	->
+  u10VicVectBank/iVICVectAddr_reg_9	->
+  u10VicVectBank/iVICVectAddr_reg_10	->
+  u10VicVectBank/iVICVectAddr_reg_11	->
+  u10VicVectBank/iVICVectAddr_reg_12	->
+  u10VicVectBank/iVICVectAddr_reg_13	->
+  u10VicVectBank/iVICVectAddr_reg_14	->
+  u10VicVectBank/iVICVectAddr_reg_15	->
+  u10VicVectBank/iVICVectAddr_reg_16	->
+  u10VicVectBank/iVICVectAddr_reg_17	->
+  u10VicVectBank/iVICVectAddr_reg_18	->
+  u10VicVectBank/iVICVectAddr_reg_19	->
+  u10VicVectBank/iVICVectAddr_reg_20	->
+  u10VicVectBank/iVICVectAddr_reg_21	->
+  u10VicVectBank/iVICVectAddr_reg_22	->
+  u10VicVectBank/iVICVectAddr_reg_23	->
+  u10VicVectBank/iVICVectAddr_reg_24	->
+  u10VicVectBank/iVICVectAddr_reg_25	->
+  u10VicVectBank/iVICVectAddr_reg_26	->
+  u10VicVectBank/iVICVectAddr_reg_27	->
+  u10VicVectBank/iVICVectAddr_reg_28	->
+  u10VicVectBank/iVICVectAddr_reg_29	->
+  u10VicVectBank/iVICVectAddr_reg_30	->
+  u10VicVectBank/iVICVectAddr_reg_31	->
+  u10VicVectBank/iVICVectCntl_reg_0	->
+  u10VicVectBank/iVICVectCntl_reg_1 (*)	->
+  u6VicVectBank/iVICVectCntl_reg_0	->
+  u6VicVectBank/iVICVectCntl_reg_1	->
+  u6VicVectBank/iVICVectCntl_reg_2	->
+  u6VicVectBank/iVICVectCntl_reg_3	->
+  u6VicVectBank/iVICVectCntl_reg_4	->
+  u6VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u6VicVectBank/iVICVectAddr_reg_0	->
+  u6VicVectBank/iVICVectAddr_reg_1	->
+  u6VicVectBank/iVICVectAddr_reg_2	->
+  u6VicVectBank/iVICVectAddr_reg_3	->
+  u6VicVectBank/iVICVectAddr_reg_4	->
+  u6VicVectBank/iVICVectAddr_reg_5	->
+  u6VicVectBank/iVICVectAddr_reg_6	->
+  u6VicVectBank/iVICVectAddr_reg_7	->
+  u6VicVectBank/iVICVectAddr_reg_8	->
+  u6VicVectBank/iVICVectAddr_reg_9	->
+  u6VicVectBank/iVICVectAddr_reg_10	->
+  u6VicVectBank/iVICVectAddr_reg_11	->
+  u6VicVectBank/iVICVectAddr_reg_12	->
+  u6VicVectBank/iVICVectAddr_reg_13	->
+  u6VicVectBank/iVICVectAddr_reg_14	->
+  u6VicVectBank/iVICVectAddr_reg_15	->
+  u6VicVectBank/iVICVectAddr_reg_16	->
+  u6VicVectBank/iVICVectAddr_reg_17	->
+  u6VicVectBank/iVICVectAddr_reg_18	->
+  u6VicVectBank/iVICVectAddr_reg_19	->
+  u6VicVectBank/iVICVectAddr_reg_20	->
+  u6VicVectBank/iVICVectAddr_reg_21	->
+  u6VicVectBank/iVICVectAddr_reg_22	->
+  u6VicVectBank/iVICVectAddr_reg_23	->
+  u6VicVectBank/iVICVectAddr_reg_24	->
+  u6VicVectBank/iVICVectAddr_reg_25	->
+  u6VicVectBank/iVICVectAddr_reg_26	->
+  u6VicVectBank/iVICVectAddr_reg_27	->
+  u6VicVectBank/iVICVectAddr_reg_28	->
+  u6VicVectBank/iVICVectAddr_reg_29	->
+  u6VicVectBank/iVICVectAddr_reg_30	->
+  u6VicVectBank/iVICVectAddr_reg_31	->
+  u5VicVectBank/iVICVectCntl_reg_2	->
+  u5VicVectBank/iVICVectCntl_reg_3	->
+  u5VicVectBank/iVICVectCntl_reg_4	->
+  u5VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u5VicVectBank/iVICVectAddr_reg_0	->
+  u5VicVectBank/iVICVectAddr_reg_1	->
+  u5VicVectBank/iVICVectAddr_reg_2	->
+  u5VicVectBank/iVICVectAddr_reg_3	->
+  u5VicVectBank/iVICVectAddr_reg_4	->
+  u5VicVectBank/iVICVectAddr_reg_5	->
+  u5VicVectBank/iVICVectAddr_reg_6	->
+  u5VicVectBank/iVICVectAddr_reg_7	->
+  u5VicVectBank/iVICVectAddr_reg_8	->
+  u5VicVectBank/iVICVectAddr_reg_9	->
+  u5VicVectBank/iVICVectAddr_reg_10	->
+  u5VicVectBank/iVICVectAddr_reg_11	->
+  u5VicVectBank/iVICVectAddr_reg_12	->
+  u5VicVectBank/iVICVectAddr_reg_13	->
+  u5VicVectBank/iVICVectAddr_reg_14	->
+  u5VicVectBank/iVICVectAddr_reg_15	->
+  u5VicVectBank/iVICVectAddr_reg_16	->
+  u5VicVectBank/iVICVectAddr_reg_17	->
+  u5VicVectBank/iVICVectAddr_reg_18	->
+  u5VicVectBank/iVICVectAddr_reg_19	->
+  u5VicVectBank/iVICVectAddr_reg_20	->
+  u5VicVectBank/iVICVectAddr_reg_21	->
+  u5VicVectBank/iVICVectAddr_reg_22	->
+  u5VicVectBank/iVICVectAddr_reg_23	->
+  u5VicVectBank/iVICVectAddr_reg_24	->
+  u5VicVectBank/iVICVectAddr_reg_25	->
+  u5VicVectBank/iVICVectAddr_reg_26	->
+  u5VicVectBank/iVICVectAddr_reg_27	->
+  u5VicVectBank/iVICVectAddr_reg_28	->
+  u5VicVectBank/iVICVectAddr_reg_29	->
+  u5VicVectBank/iVICVectAddr_reg_30	->
+  u5VicVectBank/iVICVectAddr_reg_31	->
+  u5VicVectBank/iVICVectCntl_reg_1	->
+  u5VicVectBank/iVICVectCntl_reg_0	->
+  u1VicVectBank/iVICVectCntl_reg_0	->
+  u1VicVectBank/iVICVectCntl_reg_1	->
+  u1VicVectBank/iVICVectCntl_reg_2	->
+  u1VicVectBank/iVICVectCntl_reg_3	->
+  u1VicVectBank/iVICVectCntl_reg_4	->
+  u1VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u1VicVectBank/iVICVectAddr_reg_0	->
+  u1VicVectBank/iVICVectAddr_reg_1	->
+  u1VicVectBank/iVICVectAddr_reg_2	->
+  u1VicVectBank/iVICVectAddr_reg_3	->
+  u1VicVectBank/iVICVectAddr_reg_4	->
+  u1VicVectBank/iVICVectAddr_reg_5	->
+  u1VicVectBank/iVICVectAddr_reg_6	->
+  u1VicVectBank/iVICVectAddr_reg_7	->
+  u1VicVectBank/iVICVectAddr_reg_8	->
+  u1VicVectBank/iVICVectAddr_reg_9	->
+  u1VicVectBank/iVICVectAddr_reg_10	->
+  u1VicVectBank/iVICVectAddr_reg_11	->
+  u1VicVectBank/iVICVectAddr_reg_12	->
+  u1VicVectBank/iVICVectAddr_reg_13	->
+  u1VicVectBank/iVICVectAddr_reg_14	->
+  u1VicVectBank/iVICVectAddr_reg_15	->
+  u1VicVectBank/iVICVectAddr_reg_16	->
+  u1VicVectBank/iVICVectAddr_reg_17	->
+  u1VicVectBank/iVICVectAddr_reg_18	->
+  u1VicVectBank/iVICVectAddr_reg_19	->
+  u1VicVectBank/iVICVectAddr_reg_20	->
+  u1VicVectBank/iVICVectAddr_reg_21	->
+  u1VicVectBank/iVICVectAddr_reg_22	->
+  u1VicVectBank/iVICVectAddr_reg_23	->
+  u1VicVectBank/iVICVectAddr_reg_24	->
+  u1VicVectBank/iVICVectAddr_reg_25	->
+  u1VicVectBank/iVICVectAddr_reg_26	->
+  u1VicVectBank/iVICVectAddr_reg_27	->
+  u1VicVectBank/iVICVectAddr_reg_28	->
+  u1VicVectBank/iVICVectAddr_reg_29	->
+  u1VicVectBank/iVICVectAddr_reg_30	->
+  u1VicVectBank/iVICVectAddr_reg_31	->
+  u0VicVectBank/iVICVectCntl_reg_2	->
+  u0VicVectBank/iVICVectCntl_reg_3	->
+  u0VicVectBank/iVICVectCntl_reg_4	->
+  u0VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u0VicVectBank/iVICVectAddr_reg_0	->
+  u0VicVectBank/iVICVectAddr_reg_1	->
+  u0VicVectBank/iVICVectAddr_reg_2	->
+  u0VicVectBank/iVICVectAddr_reg_3	->
+  u0VicVectBank/iVICVectAddr_reg_4	->
+  u0VicVectBank/iVICVectAddr_reg_5	->
+  u0VicVectBank/iVICVectAddr_reg_6	->
+  u0VicVectBank/iVICVectAddr_reg_7	->
+  u0VicVectBank/iVICVectAddr_reg_8	->
+  u0VicVectBank/iVICVectAddr_reg_9	->
+  u0VicVectBank/iVICVectAddr_reg_10	->
+  u0VicVectBank/iVICVectAddr_reg_11	->
+  u0VicVectBank/iVICVectAddr_reg_12	->
+  u0VicVectBank/iVICVectAddr_reg_13	->
+  u0VicVectBank/iVICVectAddr_reg_14	->
+  u0VicVectBank/iVICVectAddr_reg_15	->
+  u0VicVectBank/iVICVectAddr_reg_16	->
+  u0VicVectBank/iVICVectAddr_reg_17	->
+  u0VicVectBank/iVICVectAddr_reg_18	->
+  u0VicVectBank/iVICVectAddr_reg_19	->
+  u0VicVectBank/iVICVectAddr_reg_20	->
+  u0VicVectBank/iVICVectAddr_reg_21	->
+  u0VicVectBank/iVICVectAddr_reg_22	->
+  u0VicVectBank/iVICVectAddr_reg_23	->
+  u0VicVectBank/iVICVectAddr_reg_24	->
+  u0VicVectBank/iVICVectAddr_reg_25	->
+  u0VicVectBank/iVICVectAddr_reg_26	->
+  u0VicVectBank/iVICVectAddr_reg_27	->
+  u0VicVectBank/iVICVectAddr_reg_28	->
+  u0VicVectBank/iVICVectAddr_reg_29	->
+  u0VicVectBank/iVICVectAddr_reg_30	->
+  u0VicVectBank/iVICVectAddr_reg_31	->
+  u0VicVectBank/iVICVectCntl_reg_0	->
+  u0VicVectBank/iVICVectCntl_reg_1	->
+  u8VicVectBank/iVICVectCntl_reg_0	->
+  u8VicVectBank/iVICVectCntl_reg_2	->
+  u8VicVectBank/iVICVectCntl_reg_3	->
+  u8VicVectBank/iVICVectCntl_reg_4	->
+  u8VicVectBank/iVICVectCntl_reg_5 (*)	->
+  u8VicVectBank/iVICVectAddr_reg_0	->
+  u8VicVectBank/iVICVectAddr_reg_1	->
+  u8VicVectBank/iVICVectAddr_reg_2	->
+  u8VicVectBank/iVICVectAddr_reg_3	->
+  u8VicVectBank/iVICVectAddr_reg_4	->
+  u8VicVectBank/iVICVectAddr_reg_5	->
+  u8VicVectBank/iVICVectAddr_reg_6	->
+  u8VicVectBank/iVICVectAddr_reg_7	->
+  u8VicVectBank/iVICVectAddr_reg_8	->
+  u8VicVectBank/iVICVectAddr_reg_9	->
+  u8VicVectBank/iVICVectAddr_reg_10	->
+  u8VicVectBank/iVICVectAddr_reg_11	->
+  u8VicVectBank/iVICVectAddr_reg_12	->
+  u8VicVectBank/iVICVectAddr_reg_13	->
+  u8VicVectBank/iVICVectAddr_reg_14	->
+  u8VicVectBank/iVICVectAddr_reg_15	->
+  u8VicVectBank/iVICVectAddr_reg_16	->
+  u8VicVectBank/iVICVectAddr_reg_17	->
+  u8VicVectBank/iVICVectAddr_reg_18	->
+  u8VicVectBank/iVICVectAddr_reg_19	->
+  u8VicVectBank/iVICVectAddr_reg_20	->
+  u8VicVectBank/iVICVectAddr_reg_21	->
+  u8VicVectBank/iVICVectAddr_reg_22	->
+  u8VicVectBank/iVICVectAddr_reg_23	->
+  u8VicVectBank/iVICVectAddr_reg_24	->
+  u8VicVectBank/iVICVectAddr_reg_25	->
+  u8VicVectBank/iVICVectAddr_reg_26	->
+  u8VicVectBank/iVICVectAddr_reg_27	->
+  u8VicVectBank/iVICVectAddr_reg_28	->
+  u8VicVectBank/iVICVectAddr_reg_29	->
+  u8VicVectBank/iVICVectAddr_reg_30	->
+  u8VicVectBank/iVICVectAddr_reg_31	->
+  u8VicVectBank/iVICVectCntl_reg_1	->
+  uVicAhbifReg/VICProtection_reg (*)	->
+  uVicAhbifReg/AccessEn_reg	->
+  uVicAhbifReg/HSELVicD1_reg	->
+  uVicAhbifReg/HReadyInD1_reg	->
+  uVicAhbifReg/HREADYOUT_reg (*)	->
+  uVicAhbifReg/VICITIP2_reg_0	->
+  uVicAhbifReg/VICITIP2_reg_1	->
+  uVicAhbifReg/VICITIP2_reg_2 (*)	->
+  uVicAhbifReg/VICITIP2_reg_3	->
+  uVicAhbifReg/VICITIP2_reg_4	->
+  uVicAhbifReg/VICITIP2_reg_5	->
+  uVicAhbifReg/VICITIP2_reg_6	->
+  uVicAhbifReg/VICITIP2_reg_7	->
+  uVicAhbifReg/VICITIP2_reg_8	->
+  uVicAhbifReg/VICITIP2_reg_9	->
+  uVicAhbifReg/VICITIP2_reg_10	->
+  uVicAhbifReg/VICITIP2_reg_11	->
+  uVicAhbifReg/VICITIP2_reg_12	->
+  uVicAhbifReg/VICITIP2_reg_13	->
+  uVicAhbifReg/VICITIP2_reg_14	->
+  uVicAhbifReg/VICITIP2_reg_15	->
+  uVicAhbifReg/VICITIP2_reg_16	->
+  uVicAhbifReg/VICITIP2_reg_17	->
+  uVicAhbifReg/VICITIP2_reg_18	->
+  uVicAhbifReg/VICITIP2_reg_19	->
+  uVicAhbifReg/VICITIP2_reg_20	->
+  uVicAhbifReg/VICITIP2_reg_21	->
+  uVicAhbifReg/VICITIP2_reg_22	->
+  uVicAhbifReg/VICITIP2_reg_23	->
+  uVicAhbifReg/VICITIP2_reg_24	->
+  uVicAhbifReg/VICITIP2_reg_25	->
+  uVicAhbifReg/VICITIP2_reg_26	->
+  uVicAhbifReg/VICITIP2_reg_27	->
+  uVicAhbifReg/VICITIP2_reg_28	->
+  uVicAhbifReg/VICITIP2_reg_29	->
+  uVicAhbifReg/VICITIP2_reg_30	->
+  uVicAhbifReg/VICITIP2_reg_31	->
+  uVicAhbifReg/VICITIP1_reg_6	->
+  uVicAhbifReg/VICITIP1_reg_7	->
+  uVicAhbifReg/iVICDefVectAddr_reg_0	->
+  uVicAhbifReg/iVICDefVectAddr_reg_1	->
+  uVicAhbifReg/iVICDefVectAddr_reg_2	->
+  uVicAhbifReg/iVICDefVectAddr_reg_3	->
+  uVicAhbifReg/iVICDefVectAddr_reg_4	->
+  uVicAhbifReg/iVICDefVectAddr_reg_5	->
+  uVicAhbifReg/iVICDefVectAddr_reg_6 (*)	->
+  uVicAhbifReg/iVICDefVectAddr_reg_7	->
+  uVicAhbifReg/iVICDefVectAddr_reg_8	->
+  uVicAhbifReg/iVICDefVectAddr_reg_9	->
+  uVicAhbifReg/iVICDefVectAddr_reg_10	->
+  uVicAhbifReg/iVICDefVectAddr_reg_11	->
+  uVicAhbifReg/iVICDefVectAddr_reg_12	->
+  uVicAhbifReg/iVICDefVectAddr_reg_13	->
+  uVicAhbifReg/iVICDefVectAddr_reg_14	->
+  uVicAhbifReg/iVICDefVectAddr_reg_15	->
+  uVicAhbifReg/iVICDefVectAddr_reg_16	->
+  uVicAhbifReg/iVICDefVectAddr_reg_17	->
+  uVicAhbifReg/iVICDefVectAddr_reg_18	->
+  uVicAhbifReg/iVICDefVectAddr_reg_19	->
+  uVicAhbifReg/iVICDefVectAddr_reg_20	->
+  uVicAhbifReg/iVICDefVectAddr_reg_21	->
+  uVicAhbifReg/iVICDefVectAddr_reg_22	->
+  uVicAhbifReg/iVICDefVectAddr_reg_23	->
+  uVicAhbifReg/iVICDefVectAddr_reg_24	->
+  uVicAhbifReg/iVICDefVectAddr_reg_25	->
+  uVicAhbifReg/iVICDefVectAddr_reg_26	->
+  uVicAhbifReg/iVICDefVectAddr_reg_27	->
+  uVicAhbifReg/iVICDefVectAddr_reg_28	->
+  uVicAhbifReg/iVICDefVectAddr_reg_29	->
+  uVicAhbifReg/iVICDefVectAddr_reg_30	->
+  uVicAhbifReg/iVICDefVectAddr_reg_31	->
+  uVicAhbifReg/VICSoftInt_reg_0 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_1 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_2	->
+  uVicAhbifReg/VICSoftInt_reg_3 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_4	->
+  uVicAhbifReg/VICSoftInt_reg_5	->
+  uVicAhbifReg/VICSoftInt_reg_6 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_7 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_8 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_9	->
+  uVicAhbifReg/VICSoftInt_reg_10	->
+  uVicAhbifReg/VICSoftInt_reg_11 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_12	->
+  uVicAhbifReg/VICSoftInt_reg_13 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_14	->
+  uVicAhbifReg/VICSoftInt_reg_15 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_16 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_17 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_18 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_19	->
+  uVicAhbifReg/VICSoftInt_reg_20 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_21	->
+  uVicAhbifReg/VICSoftInt_reg_22 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_23 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_24 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_25 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_26 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_27 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_28 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_29 (*)	->
+  uVicAhbifReg/VICSoftInt_reg_30	->
+  uVicAhbifReg/VICSoftInt_reg_31 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_0 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_1 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_2 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_3 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_4 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_5 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_6 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_7 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_8 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_9 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_10 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_11 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_12 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_13 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_14 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_15 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_16 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_17 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_18 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_19 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_20 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_21 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_22 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_23 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_24 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_25 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_26 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_27 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_28 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_29 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_30 (*)	->
+  uVicAhbifReg/VICIntEnable_reg_31 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_0 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_1 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_2	->
+  uVicAhbifReg/VICIntSelect_reg_3 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_4 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_5 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_6 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_7 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_8 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_9 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_10 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_11 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_12 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_13 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_14 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_15 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_16 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_17 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_18 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_19	->
+  uVicAhbifReg/VICIntSelect_reg_20 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_21 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_22 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_23	->
+  uVicAhbifReg/VICIntSelect_reg_24 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_25 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_26 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_27 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_28 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_29 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_30 (*)	->
+  uVicAhbifReg/VICIntSelect_reg_31 (*)	->
+  uVicAhbifReg/IntHAddr_reg_6	->
+  uVicAhbifReg/IntHAddr_reg_7	->
+  uVicAhbifReg/HRESP_reg_0	->
+  uVicAhbifReg/HRESP_reg_1 (*)	->
+  uVicAhbifReg/IntHTrans_reg	->
+  uVicAhbifReg/IntHWrite_reg	->
+  uVicAhbifReg/ErrorResp_reg	->
+  uVicAhbifReg/PriorWrEn_reg (*)	->
+  uVicAhbifReg/IntHAddr_reg_5	->
+  uVicAhbifReg/IntHAddr_reg_8	->
+  uVicAhbifReg/IntHAddr_reg_4	->
+  uVicAhbifReg/IntHAddr_reg_3	->
+  uVicAhbifReg/VICITCR_reg	->
+  uVicAhbifReg/IntHAddr_reg_9	->
+  uVicAhbifReg/IntHAddr_reg_2	->
+  uVicAhbifReg/IntHAddr_reg_11	->
+  uVicAhbifReg/IntHAddr_reg_10	->
+  SCANOUTHCLK
+

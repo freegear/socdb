@@ -1,0 +1,388 @@
+===================================================================
+
+ This confidential and proprietary software may be used only as
+ authorised by a licensing agreement from ARM Limited
+   (c) COPYRIGHT 1999-2005 ARM Limited
+       ALL RIGHTS RESERVED
+ The entire notice above must be reproduced on all authorised
+ copies and copies may only be made to the extent permitted
+ by a licensing agreement from ARM Limited.
+
+===================================================================
+
+
+
+
+
+===================================================================
+  ARM7TDMI  Design Simulation Model 
+===================================================================
+
+
+
+Date            : Fri Mar 04 09:25:54 GMT 2005
+Model           : ARM7TDMI Verilog Wrapped DSM
+Part No         : AT010-MS-26302-3A-00
+Si Revision     : 3A
+Platform        : SunOS sol28
+Verified with   : Synopsys VCS Verilog Simulator 
+Version         : vcs7.1.1
+Modelling Tools : DSMGen2.2.0 - Fastnet2004_02
+Flexlm Version  : This is an unlicensed model.
+
+
+
+
+===================================================================
+     Contents Of This Release Note
+===================================================================
+
+This Release Note is organized into the following sections:
+
+  * Introduction
+  * Contents of the Release Directory
+  * Setting up The Model
+  * Testing The Model Setup - CrfTester
+  * Model Usage
+  * Documentation
+  * About simulator wrappers
+  * Important Points
+  * Common Warnings and Errors
+
+
+
+
+
+===================================================================
+              Introduction
+===================================================================
+
+This directory contains ARM's ARM7TDMI Design Simulation Model.
+It is a protected IP model of the ARM7TDMI. 
+The accuracy of the DSM is the same as the original Verilog code.
+
+The DSM includes a ModelManager, targeted for one simulator. 
+
+The user will find herein the information : 
+     - to setup the DSM environment
+     - to test the DSM correct setup using the crftester
+     - to use the DSM
+
+
+
+
+
+===================================================================
+    Contents Of The Release Directory
+===================================================================
+     <ARM_IP_install_area>/
+      |
+      |--> simulation_models/
+                |
+                |--> DSM/
+                |     |
+                |     |--> synopsys_vcs_verilog_SunOS/
+                |             |
+                |             |--> ARM7TDMI_unlicensed_3A-00/
+                |                       ARM7TDMI/
+                |                       testing/
+                |                       docs/
+                |                       SDF_TOOLS/
+                |                       README 
+                |                       setup.csh
+                |                       setup.sh
+                |
+                |--> ModelManager/
+                |        MMAPI_5.0.1/
+                |               SunOS/
+                |                     MM/
+                |                       synopsys_vcs_verilog/
+                |                       <lib files>
+                |
+                |--> flexlm/  (for licensed model only)
+                         v9.0/
+                                SunOS/
+                                   <lm* files>
+                                HP-UX/
+                                   <lm* files>
+                                Linux/
+                                   <lm* files>
+
+<ARM_IP_install_area> is where you choose to install ARM IP. It is 
+recommended to install all ARM simulation models into this same
+directory.
+
+Contents in simulation_models/DSM/synopsys_vcs_verilog_SunOS/ARM7TDMI_unlicensed_3A-00
+(this directory is pointed by the environment variable $ARM7TDMI_HOME) :
+
+
+   README       - this file
+
+   ARM7TDMI  	- contains all required model files
+   		     See paragraph "About simulator wrappers" for details
+   
+   testing 	- contains crftester model files, one crf vector file 
+   		     and its associated ctrm file
+   
+   docs		- contains device related README_2, CRF readme file,
+   		     DSM User Guide and Model Manager application notes.
+   
+   SDF_TOOLS    - contains backannotation tools sdfgen and sdfremap
+
+   setup.(c)sh  - setup files
+
+
+
+
+
+===================================================================
+             Setting up The Model
+===================================================================
+
+1) Set the environment variable ARM7TDMI_HOME to point to the release directory.
+
+   The release directory is the directory where the current README file is, 
+   and where the directory structure mentioned in the previous paragraph 
+   is available. 
+
+   Go into the release directory : 
+                cd <release directory>
+
+   Set the environment variable : 
+
+         C   shell :     setenv ARM7TDMI_HOME `pwd`
+      Bourne shell :     ARM7TDMI_HOME=`pwd` 
+                         export ARM7TDMI_HOME 
+
+2) Setup the environment, by sourcing the setup script
+
+         C   shell :     source $ARM7TDMI_HOME/setup.csh
+      Bourne shell :        .   $ARM7TDMI_HOME/setup.sh
+ 
+   Note that the environment variable DIR_ARM7TDMI is created and points at 
+   "release_directory"/ARM7TDMI, the directory where all the model files are 
+   included.
+
+
+
+
+
+===================================================================
+    Testing The Model Setup - CrfTester
+===================================================================
+
+The supplied crftester can be used to test the model.
+
+1) Setup the simulator environment.
+
+
+2) Run the crftester script 
+      - SDF timing : 
+             $ARM7TDMI_HOME/testing/crftest.csh
+      - NO timing : 
+             $ARM7TDMI_HOME/testing/crftest_extra.csh
+
+
+3) The crftester simulation should run the vector set with
+   '0 vectors failed', and the following completion message should be 
+   displayed : 
+        
+          "The ARM7TDMI DSM is correctly setup"
+
+  An example of crftester simulation log trace is supplied :
+      - SDF timing : 
+          $ARM7TDMI_HOME/testing/reference_crftest.log	
+      - No timing : 
+          $ARM7TDMI_HOME/testing/reference_crftest_extra.log
+
+
+
+===================================================================
+            Use The model
+===================================================================
+
+1) Setup the simulator environment.
+
+2) Compile the HDL files.
+   Two separate HDL wrappers are supplied. Select the appropriate 
+   one when compiling/elaborating your design. 
+
+      - HDL wrapper with SDF timing shell (also called SDF timing wrapper):
+          ARM7TDMI/ARM7TDMI.v    
+      - HDL wrapper without timing shell (also called no-timing wrapper):   
+          ARM7TDMI/extra_wrapper/ARM7TDMI.v  
+
+   Note that the SDF timing file template is available in the 
+   directory "ARM7TDMI". ARM7TDMI.tdef file only contains example timing values 
+   and are not representative of any given process or characterization.
+
+3) The crftester simulation run when testing the setup of the DSM shows 
+   an example of how to compile/elaborate and run the DSM :
+      - SDF timing : 
+            $ARM7TDMI_HOME/testing/crftest.csh
+      - No timing : 
+            $ARM7TDMI_HOME/testing/crftest_extra.csh
+
+
+===================================================================
+         Documentation
+===================================================================
+
+The following documentation is supplied with the Model in  
+the directory $ARM7TDMI_HOME/docs : 
+       - device related documentation in the 'README_2' file (if supplied)
+       - ModelManager documentation in 'MM_synopsys_vcs_verilog.txt' 
+       - CRF vectors and the associated '.ctrm' file in 'crf_file.readme' 
+       - sdfgen and sdfremap as manpages
+       - DSM User Guide
+
+Note that $ARM7TDMI_HOME is the DSM installation directory.
+
+NOTE:
+Documentation about setting up the appropriate timing model can be found 
+also in the ModelManager documentation in 'docs/MM_synopsys_vcs_verilog.txt' 
+(section labelled : Timing)
+
+
+===================================================================
+     About simulator wrappers - Withdrawal of the TDEF timing
+===================================================================
+
+The simulator wrapper HDL files in this model are arranged differently
+to previous models. 
+
+Previous models contained two wrapper files, one called
+"ARM7TDMI_sdf.v" for timing annotation from SDF, and one called 
+"ARM7TDMI.v" for annotation from a TDEF file using the built-in
+timing shell.  For earlier releases, these were both located in the
+"ARM7TDMI" directory, and for more recent releases the SDF wrapper was
+renamed to "ARM7TDMI.v" and located in the "ARM7TDMI" directory 
+while the built-in timing wrapper in the "ARM7TDMI/extra" directory.
+
+From this release, TDEF annotation has been withdrawn and instead a
+simulator wrapper which contains no timing shell is provided in
+"ARM7TDMI/extra_wrapper" directory.  This file can be used to run the 
+model with no timing annotated.
+
+===================================================================
+               Important Points
+===================================================================
+
+1)  This DSM does not support restart or checkpointing.
+    
+2)  DSMs are only intended to be used for functional and timing simulation,
+    they are not designed for fault simulation or static timing analysis.
+    
+3)  It is imperative that you don't mix parts of the DSM with earlier 
+    versions, this will lead to the DSM not working correctly!!  Only use
+    the HDL wrapper file ARM7TDMI.v  that was supplied 
+    with the current version of the DSM, with supplied version of 
+    library (for example ARM7TDMI.so) and the supplied version
+    of the Model Manager.
+    
+4)  If you have more than one DSM in a simulation and one of the DSMs is 
+    older than the other, always make sure that you are using the Model
+    Manager from the most recent version, otherwise the Model Manager
+    will not load the most recent shared object library.
+    
+5)  When using LD_LIBRARY_PATH (or SHLIB_PATH) environment variable and 
+    this variable is already set up, it is important to make sure that
+    the path of the Model Manager appears as the first item in the path.
+    
+6)  For Modelsim VHDL DSM, if you want to run with the 64-bit version 
+    of the simulator, make sure that you have the 64-bit version of the 
+    DSM.  This will be indicated in the version information at the top
+    of the README file, eg, 
+    
+    	 Platform :  SunOS-64
+    
+    If this just says SunOS, then this model is only intended to be used
+    with the 32-bit version of the simulator.  The 32-bit version of the 
+    DSM will not run under the 64-bit version of vsim.
+    
+7)  For Modelsim VHDL DSM, when compiling with VHDL/SDF wrapper, make
+    sure you use
+    	vcom -novitalcheck
+    otherwise the wrapper won't compile correctly.
+    
+8)  The DSM ARM produced should run on Solaris 2.5.1, 2.6, 7 or 8 in 32-bit
+    mode.  We don't support 64-bit mode except for Modelsim VHDL on 
+    Solaris 8.  It's also worth noting that not all simulators support all 
+    of these Solaris versions.  For example. newer Synopsys simulators
+    don't support 2.5.1 or 2.6,  and newer Cadence simulators don't support
+    2.5.1.
+    
+9)  Do not modify the HDL wrapper (eg ARM7TDMI.v) at all.  Doing so might
+    result in the model failing in a subtle way.  We cannot support the DSM 
+    when the wrappers have been modified. Please ref to 
+       $ARM7TDMI_HOME/docs/README_2 
+    regarding how to modify the model's generics/defparam.
+    
+10) Do not try and enable the Built-In Timing shell when using the HDL/SDF
+    wrapper.  In other words, do not set the MG_ENABLE_BUILTIN_TIMING = 1
+    within the HDL/SDF wrapper file, otherwise the DSM will not work 
+    correctly.  Always make sure this parameter/generics is set to 0 when
+    using this type of wrapper.
+
+
+===================================================================
+          Common Warnings and Errors
+===================================================================
+
+1)  When Installing the Models
+    
+    > ERROR: ARM7TDMI_sdf.vhd(1053): VITAL timing generic size does not match
+    > product of associated port sizes ( 32 /= 32 * 32 ) 
+    > (1076.4 section 4.3.2.1.2)
+    > ERROR: ARM7TDMI_sdf.vhd(1248): VHDL Compiler exiting 
+    
+    This error is produced when compiling with vcom using the Modelsim HDL/SDF
+    wrapper file without the -novitalcheck switch. To correct this:
+    
+     vcom -novitalcheck ARM7TDMI.vhd
+
+2)  When Simulating the Models 
+
+    When simulating Swift/VhMC/VMC based DSMs there will be lots of warning 
+    messages at time 0 when the model starts up. In general all warning 
+    messages at time 0 until the model has been properly reset can be ignored. 
+
+    For example :
+    
+    > Warning! 0 fs - ARM7TDMICRFTESTERTOP.theARM7TDMI.thetiming.theinout:
+    > 
+    > Assertion WARNING at 0 PS in design unit XXXX from process XXXX: 
+    > [MG_Model-MGWARNING] "/arm/chips/dsm/gwang/work/ARM7TDMIr3_vhmc/
+    > 	ModelGen/collated/r3/ve...
+    
+    These type of warning messages arise from the Swift/VhMC/VMC component 
+    within the DSM which hasn't initialized properly.
+
+    
+    > " To_Integer --- 'X' encountered in the input vector. Returning zero result."
+    > " To_Integer --- 'X' encountered in the input vector. Returning zero result."
+
+    At time 0 those can also be safely ignored. These type of warning messages 
+    arise from the Swift/VhMC/VMC component within the DSM when the model is 
+    initializing at time 0.
+
+    > # Output violation on nEXEC
+    > # ModelGen Warning, Time 74376852 ps, Instance
+
+    Output violation messages are only associated with the Built-In timing 
+    shell, they won't be produced when using the HDL/SDF timing shell.
+    These messages occur when the timing shell for the model fails
+    to match an output transition with an input causal event and therefore
+    can't assign an appropriate time to the output. This could arise 
+    due to two possible reasons, these are:
+
+      i) The model hasn't been reset properly. Or
+      ii) A timing path is missing in the timing shell for the model.
+    
+      In this situation the  Built-In timing shell can't find a delay 
+      value to annotate and the default value is used for the output. In 
+      practice this means the output has zero delay.
+
+    For ARM7TDMI DSM, it is important to properly reset the core at the 
+    start of the simulation.  This is done by pulsing nTRST signal low 
+    and then high as well as the nRESET signal. 

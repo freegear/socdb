@@ -1,0 +1,183 @@
+#- --=========================================================================--
+#- This confidential and proprietary software may be used only as
+#- authorised by a licensing agreement from ARM Limited
+#-   (C) COPYRIGHT 2001-2002 ARM Limited
+#-       ALL RIGHTS RESERVED
+#- The entire notice above must be reproduced on all authorised
+#- copies and copies may only be made to the extent permitted
+#- by a licensing agreement from ARM Limited.
+#-
+#- -----------------------------------------------------------------------------
+#- Version and Release Control Information:
+#-
+#- File Name              : README.rca
+#- File Revision          : 1.10
+#-
+#- Release Information    : PrimeCell(TM)-PL172-r2p3-00rel0
+#-
+#- -----------------------------------------------------------------------------
+#- Purpose :
+#-           This README file indicates how to setup the Denali memory
+#-           modeller envronment. These models are used for verification
+#-           simulations.
+#-
+#- -----------------------------------------------------------------------------
+#- Summary :
+#- Denali memory models are third party memory models written by Denali, a
+#- company specialising in memory models.
+#- You can download a limited period licence from the Denali web site
+#- www.denalisoft.com.
+#-
+#- --=========================================================================--
+
+   Denali version used for PL172 is Denali Memory Model Version 3.000-0011
+
+   All Denali models are used for the verification tests. Refer to the
+   PL172 Design Manual (PL172_DDES_0000_A.doc) for details about test cases
+   that uses Denali models.
+
+Whilst SOMA files can be downloaded from the web page separately, the .spc and 
+.dat files will be delivered as part of the PL172 delivery. These can be found in
+the mpmc_pl172/verification/denali directory.
+
+#- Below are the steps involved in using the DENALI memory models, including 
+downloading them from the Denali website
+
+1. Download Denali license
+   You can download a limited period license from the Denali web-site.
+   Log on to www.denalisoft.com for more information about getting a
+   license.
+
+2. Download SOMA files from the web
+   Required 'Specification of Memory Architecture' (SOMA) files need to be
+   downloaded from the web. It is available at the web-site www.ememory.com
+   (Log on to www.ememory.com for more information about downloading
+    SOMA files and their copyright terms)
+   Downloaded SOMA files are kept in the verification/denali directory.
+
+   .soma and .dat files of denali directory have the same name as that of the
+   part name of the memory. 
+
+3. Save the .soma as .spc and create VHDL/Verilog source
+   a. Open the .soma file using memmaker
+   b. Choose 'Save SOMA As' from the file menu
+   c. Save as .spc file. Choose the name of the .spc as given in the table
+      below
+
+   Create VHDL/Verilog source
+   VHDL or Verilog wrapper/source file for the memory models have to be
+   generated using the PureView (memmaker) utility.
+   Steps for creating the VHDL/Verilog source file :
+   a. Open the SOMA using the PureView (memmaker)
+      e.g. memmaker at27lv040a_15.soma &
+   b. Select the 'Source' tab
+   c. Select appropriate 'Simulation Environment' under the 'Options' menu
+      e.g. If you use ModelTech Modelsim VHDL, select
+              Model Technology Modelsim (Unix)
+           If you use Cadence Verilog-XL simulator, select
+              Cadence Verilog-XL
+   d. Change the entity name according to the table below
+   e. Make sure that the wrapper file is pointing to the corresponding
+      .spc indeed.
+   f. Save the source file in the mpmc_pl172/verification/vhdl/tbench/memmodels
+      directory, in case of VHDL, and
+      mpmc_pl172/verification/verilog/tbench/memmodels directory, in case of
+      Verilog, with the same name as entity and with a .vhd or .v extension by
+      selecting 'Save Source' option under the File menu.
+      e.g. Save source as at27lv040a_15.vhd in
+           mpmc_pl172/verification/vhdl/tbench directory.
+           (In case of Verilog source files, keep it in
+            mpmc_pl172/verification/verilog/tbench directory)
+   g. Close memmaker
+
+   Repeat step 3 for all models.
+
+4. Set the DENALIRC environment variable
+   Set the DENALIRC environment variable to denali directory. All the user
+   preferences for Denali simulations are specified in the .denalirc file
+   in the denali directory.
+   e.g. setenv DENALIRC ~/armmpmc/mpmc_pl172/verification/denali
+
+5. Running Denali Memory Model based Simulation with Modelsim VHDL
+   Prior to running Denali memory model based simulation with Modelsim VHDL,
+   set the DENALI and license path variable to proper values.
+
+6. Running Denali Memory Model based Simulation with Modelsim Verilog
+   Prior to running Denali memory model based simulation with Modelsim Verilog,
+   a. Set the DENALI and license path variable to proper values.
+   b. Add the following line :
+      Veriuser = $DENALI/mtipli.so
+      in the [vsim] section of the local modelsim.ini from where you invoke
+      vsim [Refer to README_Denali in mpmc_pl172/verification/verilog]
+
+7. Running Denali Memory Model based Simulation with LDV Verilog-XL
+   For running Denali Memory model based simulations with LDV Verilog-XL, a
+   customised local Verilog-XL executable needs to be created. This custom
+   Verilog-XL executable will contain the required PLI information. Please
+   refer to the following readme help files for the creation of the Verilog-XL
+   executable :
+   a. mpmc_pl172/verification/verilog/README_Denali
+   b. $DENALI/verilog/README.verilog
+
+8. Running Denali Memory Model based Simulation with any other supported
+   Simulator
+   Refer to the corresponding README help file at $DENALI/verilog directory
+
+9. Memory models used in PL172 is as below,
+
+   Memory Part Number             Vendor
+   ==================            ========
+   I28f320w18b_70                 Intel
+   Int28f800f3b115                Intel
+   Int28f800f3b95                 Intel
+   am29pl320db_90                 AMD
+   am29pl320dt_60r                AMD
+   at27lv040a_12                  Atmel
+   at27lv040a_15                  Atmel
+   at27lv040a_90                  Atmel
+   hm5212165f_75a                 Hitachi
+   hm5212805f_75                  Hitachi
+   hm5225325f_b60                 Hitachi
+   hm5225805b_75                  Hitachi
+   hm5257805b_a6                  Hitachi
+   hm5264165f_75                  Hitachi
+   hm5264805f_75                  Hitachi
+   hyb25l128800ac                 Infineon 
+   k3n9vu1000m                    Samsung
+   k3p9vu1000m_3_0v               Samsung
+   k3p9vu1000m_3_3v               Samsung
+   k4s281632c_75                  Samsung
+   k4s561632a_75                  Samsung
+   k4s641632d_60                  Samsung
+   k4s643232c_60                  Samsung
+   k6r1016v1c_12                  Samsung
+   k6r1016v1c_15                  Samsung
+   k6r4016c1c_10                  Samsung
+   k6r4016c1c_12                  Samsung
+   k6t8016c3m_55                  Samsung
+   k6t8016c3m_70                  Samsung
+   mt28f002b3vg                   Micron   
+   mt28f002b3vg_9b                Micron
+   mt28f004b5_6t1                 Micron
+   mt28f004b5_6t2                 Micron
+   mt28f004b5_8b_et               Micron
+   mt28f400b5sg                   Micron
+   mt28f400b5sg_8b_et             Micron
+   mt28f400b5sg_8t                Micron
+   mt28s4m16lc_10                 Micron
+   mt28s4m16lc_12                 Micron
+   mt48lc16m16a2_75               Micron
+   mt48lc16m8a2_75                Micron
+   mt48lc1m16a1_6s                Micron
+   mt48lc2m32b2_6                 Micron
+   mt48lc2m32lffc_8               Micron
+   mt48lc32m16a2_75               Micron
+   mt48lc4m16a2_75                Micron
+   mt48lc4m32b2_6                 Micron
+   mt48lc8m16a2_7e                Micron
+   mt48lc8m8a2_7e                 Micron
+   mt5c2568_12                    Micron
+   mt5c2568_20                    Micron
+   sst37vf020_90                  SST
+   upd4516821g5                   Elpida
+   x28c256_15                     Xicor

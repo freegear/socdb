@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+#  Simple utility to repeat a command within each
+#  sub-directory of the build tree.
+#
+#  Run as:
+#	doit command
+#
+#  Note:
+#	Quote the command if it has spaces in it...
+#	doit "co RCS/*"
+
+export PATH || (echo "OOPS, this isn't sh.  Desperation time."; sh $0 $argv; kill $$)
+
+#
+# All of the subdirectories "do"
+#
+subdirs=". ./h ./h/ebsa110 ./h/sidearm ./h/ebsa285 ./h/brutus ./docs
+./tools ./demo ./demo/ebsa110 ./demo/sidearm ./demo/ebsa285
+./demo/brutus ./lib ./lib/ebsa110 ./lib/sidearm ./lib/ebsa285 ./lib/brutus
+./ucos ./ucos/ebsa110 ./ucos/sidearm ./ucos/ebsa285 ./ucos/brutus"
+
+#
+# "Do" every subdirectory.
+#
+for sd in ${subdirs} ; 
+do
+    if [ -d ${sd} ]; then
+	echo '############' "Doing ${sd}" '############'
+	(cd ${sd}; 	$1)
+    fi
+done

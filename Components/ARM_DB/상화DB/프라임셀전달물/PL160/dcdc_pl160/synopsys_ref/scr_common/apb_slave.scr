@@ -1,0 +1,99 @@
+/*------------------------------------------------------------------------------
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 1999 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--------------------------------------------------------------------------------
+--  
+-- Version and Release Control Information:
+-- 
+-- File Name              : apb_slave.scr,v
+-- File Revision          : 1.1
+-- 
+-- Release Information    : PL160-REL1v1
+-- 
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- Purpose : Synopsys synthesis script 
+--           to define AMBA APB timing constraints.             
+--           Located in the synopsys_ref/scr_common directory. 
+--           Called by master compile script.
+------------------------------------------------------------------------------*/
+
+/******************************************************************************/
+/* Define PCLK, including clock skew                                          */
+/******************************************************************************/
+
+create_clock -p tclk  -w {0 tclkh}  find(port, "PCLK")
+/* period tclk, rise at 0, fall after tclkh High phase */
+
+set_clock_skew -ideal -plus_uncertainty tpskew   find(clock, PCLK)
+/* set plus clock skew */
+
+set_clock_skew -ideal -minus_uncertainty tmskew   find(clock, PCLK)
+/* set minus clock skew */
+
+set_clock_transition 0 PCLK
+/* ignore all transition times as it is an ideal clock */
+
+set_drive 0 PCLK
+/* Infinite drive strength clock signal */
+
+set_driving_cell -none find(port , PCLK)
+/* Set no driving cell on clock */
+
+set_resistance 0 find(net , PCLK)
+/* Zero resistance for zero net delay(interconnect delay) on ideal clock net */
+
+set_dont_touch_network find(clock , PCLK)
+/* Preserve the clock net during optimisation */
+
+/******************************************************************************/
+/* Reset signal constraints                                                   */
+/******************************************************************************/
+ 
+set_input_delay  -clock PCLK -max tidmaxnres    BnRES
+set_input_delay  -clock PCLK -min tidminnres    BnRES
+
+set_drive 0 BnRES
+/* Infinite drive strength reset signal */
+
+set_driving_cell -none find(port , BnRES)
+/* Set no driving cell on reset */
+
+set_max_fanout 1.0 PENABLE
+set_max_fanout 1.0 PSEL
+set_max_fanout 1.0 PWRITE
+/* Set max fanout 1, to minimise loading on nets */
+
+/******************************************************************************/
+/* Input Constraints                                                          */
+/******************************************************************************/
+
+set_input_delay  -clock PCLK -min tidminpenable PENABLE 
+set_input_delay  -clock PCLK -max tidmaxpenable PENABLE
+
+set_input_delay  -clock PCLK -min tidminpsel    PSEL 
+set_input_delay  -clock PCLK -max tidmaxpsel    PSEL 
+
+set_input_delay  -clock PCLK -min tidminpa      PADDR* 
+set_input_delay  -clock PCLK -max tidmaxpa      PADDR* 
+
+set_input_delay  -clock PCLK -min tidminpw      PWRITE 
+set_input_delay  -clock PCLK -max tidmaxpw      PWRITE 
+
+set_input_delay  -clock PCLK -min tidminpdw     PWDATA* 
+set_input_delay  -clock PCLK -max tidmaxpdw     PWDATA* 
+
+/******************************************************************************/
+/* Output Constraints                                                         */
+/******************************************************************************/
+
+set_output_delay -clock PCLK -min todminpdr     PRDATA* 
+set_output_delay -clock PCLK -max todmaxpdr     PRDATA*
+
+/************************************* End ************************************/

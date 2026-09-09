@@ -1,0 +1,32 @@
+
+analyze -f verilog UartRegBlock.v 
+analyze -f verilog UartSynctoUCLK.v
+analyze -f verilog UartSynctoPCLK.v 
+analyze -f verilog UartBaudCntr.v 
+analyze -f verilog UartApbif.v 
+analyze -f verilog UartModem.v 
+analyze -f verilog UartIrDA.v 
+analyze -f verilog UartRXFCntl.v 
+analyze -f verilog UartRXRegFile.v 
+analyze -f verilog UartRXFIFO.v 
+analyze -f verilog UartDataStp.v 
+analyze -f verilog UartRXParShft.v 
+analyze -f verilog UartRXCntl.v 
+analyze -f verilog UartReceive.v 
+analyze -f verilog UartTest.v 
+analyze -f verilog UartTXCntl.v 
+analyze -f verilog UartTXFCntl.v 
+analyze -f verilog UartTXRegFile.v 
+analyze -f verilog UartTXFIFO.v 
+analyze -f verilog UartDMA.v 
+analyze -f verilog UartRevAnd.v 
+analyze -f verilog UartInterrupt.v 
+analyze -f verilog Uart.v
+
+elaborate Uart
+current_design Uart
+link
+
+write -f db -hier -out Uart.gtech.db
+
+

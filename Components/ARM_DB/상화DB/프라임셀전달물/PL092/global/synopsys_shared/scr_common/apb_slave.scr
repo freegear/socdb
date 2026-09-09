@@ -1,0 +1,91 @@
+/* --=================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- ---------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : apb_slave.scr.rca
+-- File Revision          : 1.2
+--
+-- Release Information    : PrimeCell(TM)-GLOBAL-REL1v3
+--
+-- ---------------------------------------------------------------------
+-- Purpose 
+--         : Synopsys synthesis script to define AMBA APB timing
+--           constraints.             
+-- 
+--           Located in the synopsys_shared/scr_common directory.    
+--
+-- --=================================================================*/
+
+/**********************************************************************/
+/* Define PCLK, including clock skew                                  */
+/**********************************************************************/
+
+create_clock -p tclk -w {0 tclkh} find(port, "PCLK")
+/* period tclk, rise at 0, fall after tclkh High phase */
+
+set_clock_skew -plus_uncertainty tpskew find(clock, PCLK)
+/* set plus clock skew */
+
+set_clock_skew -minus_uncertainty tmskew find(clock, PCLK)
+/* set minus clock skew */
+
+set_dont_touch_network find(clock, PCLK)
+/* Preserve the clock net during optimisation */
+
+set_resistance 0 PCLK
+
+set_drive 0 PCLK
+/* Infinite drive strength clock signal */
+
+/**********************************************************************/
+/* Reset signal constraints                                           */
+/**********************************************************************/
+ 
+set_input_delay -clock PCLK -clock_fall -max tidmaxnres PRESETn
+set_input_delay -clock PCLK -clock_fall -min tidminnres PRESETn
+
+set_resistance 0 PRESETn
+
+set_drive 0 PRESETn
+/* Infinite drive strength reset signal */
+
+/* The peripheral should present only a single load to the APB */
+set_max_fanout 1.0 PENABLE
+set_max_fanout 1.0 PSEL
+set_max_fanout 1.0 PWRITE
+
+/**********************************************************************/
+/* Input Constraints                                                  */
+/**********************************************************************/
+
+set_input_delay  -clock PCLK -min tidminpenable PENABLE 
+set_input_delay  -clock PCLK -max tidmaxpenable PENABLE
+
+set_input_delay  -clock PCLK -min tidminpsel    PSEL 
+set_input_delay  -clock PCLK -max tidmaxpsel    PSEL 
+
+set_input_delay  -clock PCLK -min tidminpa      PADDR* 
+set_input_delay  -clock PCLK -max tidmaxpa      PADDR* 
+
+set_input_delay  -clock PCLK -min tidminpw      PWRITE 
+set_input_delay  -clock PCLK -max tidmaxpw      PWRITE 
+
+set_input_delay  -clock PCLK -min tidminpdw     PWDATA* 
+set_input_delay  -clock PCLK -max tidmaxpdw     PWDATA* 
+
+/**********************************************************************/
+/* Output Constraints                                                 */
+/**********************************************************************/
+
+set_output_delay -clock PCLK -min todminpdr     PRDATA* 
+set_output_delay -clock PCLK -max todmaxpdr     PRDATA*
+
+/*********************** End of apb_slave.scr *************************/

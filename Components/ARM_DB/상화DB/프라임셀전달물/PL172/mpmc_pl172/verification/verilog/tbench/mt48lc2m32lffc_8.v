@@ -1,0 +1,35 @@
+// Module:                      mt48lc2m32lffc_8
+// SOMA file:                   ../../denali/mt48lc2m32lffc_8.soma
+// Initial contents file:       ../../denali/mt48lc2m32lffc_8.dat
+
+`timescale 1ps/1ps
+module mt48lc2m32lffc_8(
+    a,
+    rasbar,
+    casbar,
+    webar,
+    csbar,
+    dqm,
+    clk,
+    cke,
+    dq,
+    ba
+);
+    parameter memory_spec = "../../denali/mt48lc2m32lffc_8.soma";
+    parameter init_file   = "../../denali/mt48lc2m32lffc_8.dat";
+    input [10:0] a;
+    input rasbar;
+    input casbar;
+    input webar;
+    input csbar;
+    input [3:0] dqm;
+    input clk;
+    input cke;
+    inout [31:0] dq;
+      reg [31:0] den_dq;
+      assign dq = den_dq;
+    input [1:0] ba;
+initial
+    $sdram_access();
+endmodule
+

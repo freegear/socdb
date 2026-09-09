@@ -1,0 +1,304 @@
+/*--------------------------------------------------------------------
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+----------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name           : EASY_ML.scr,v
+-- File Revision       : 1.8
+-- 
+-- Release Information : ADK_REL1v1
+-- 
+----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+-- Purpose : Synopsys synthesis timing constraint script for the
+--           EASY_ML top-level.
+--
+--           Located in the synopsys/scripts directory.
+--           Called by master compile script.
+--
+--           This file sets the module input and output delay
+--           constraints.
+--------------------------------------------------------------------*/
+
+/******************************************************************************/
+/* DEFINE XCLKIN                                                              */
+/******************************************************************************/
+
+create_clock -p tclk -w {0 tclkh} find(port, "XCLKIN")
+/* period tclk, rise at 0, fall after tclkh High phase */
+
+set_clock_uncertainty -hold tpskew find(clock, XCLKIN)
+/* set clock skew for hold checks */
+
+set_clock_uncertainty -setup tmskew find(clock, XCLKIN)
+/* set clock skew for setup checks */
+
+set_clock_transition 0 XCLKIN
+/* ignore all transition times as it is an ideal clock */
+
+set_drive 0 XCLKIN
+/* Infinite drive strength clock signal */
+
+set_load 0 XCLKIN
+/* Zero load clock signal */
+
+remove_driving_cell find(port, XCLKIN)
+/* Set no driving cell on clock */
+
+set_resistance 0 find(net, XCLKIN)
+/* Zero resistance for zero net delay (interconnect delay) on ideal clock net */
+
+set_dont_touch_network find(clock, XCLKIN)
+/* Preserve the clock net during optimisation */
+
+/******************************************************************************/
+/* DEFINE TCK                                                                 */
+/******************************************************************************/
+
+create_clock -p tclk -w {0 tclkh} find(port, "TCK")
+/* period tclk, rise at 0, fall after tclkh High phase */
+
+set_clock_uncertainty -hold tpskew find(clock, TCK)
+/* set clock skew for hold checks */
+
+set_clock_uncertainty -setup tmskew find(clock, TCK)
+/* set clock skew for setup checks */
+
+set_clock_transition 0 TCK
+/* ignore all transition times as it is an ideal clock */
+
+set_drive 0 TCK
+/* Infinite drive strength clock signal */
+
+set_load 0 TCK
+/* Zero load clock signal */
+
+remove_driving_cell find(port, TCK)
+/* Set no driving cell on clock */
+
+set_resistance 0 find(net, TCK)
+/* Zero resistance for zero net delay (interconnect delay) on ideal clock net */
+
+set_dont_touch_network find(clock, TCK)
+/* Preserve the clock net during optimisation */
+
+/**********************************************************************/
+/* RESET SIGNAL CONSTRAINTS - HRESETn                                 */
+/**********************************************************************/
+ 
+set_disable_timing find(port, nReset)
+/* Do not check reset timing during synthesis */
+
+set_load 0 nReset
+/* Zero load reset signal */
+
+set_resistance 0 find(net, nReset)
+/* Zero resistance for zero net delay (interconnect delay) on ideal reset net */
+
+set_drive 0 nReset
+/* Infinite drive strength reset signal */
+
+remove_driving_cell find(port, nReset)
+/* Set no driving cell on reset */
+
+set_ideal_net find(net, nReset)
+/* Define an ideal net for the reset net */
+
+/* Set the internal HRESETn net as ideal */
+set_load 0 find(net, HRESETn)
+set_resistance 0 find(net, HRESETn)
+set_dont_touch find(net, HRESETn)
+
+/* Don't consider HRESETn for timing reports */
+set_false_path -through uResetCntl/HRESETn
+
+/**********************************************************************/
+/* RESET SIGNAL CONSTRAINTS - JTAG                                    */
+/**********************************************************************/
+
+set_disable_timing find(port, nTRST)
+/* Do not check reset timing during synthesis */
+
+set_load 0 nTRST
+/* Zero load reset signal */
+
+set_resistance 0 find(net, nTRST)
+/* Zero resistance for zero net delay (interconnect delay) on ideal reset net */
+
+set_drive 0 nTRST
+/* Infinite drive strength reset signal */
+
+remove_driving_cell find(port, nTRST)
+/* Set no driving cell on reset */
+
+set_ideal_net find(net, nTRST)
+/* Define an ideal net for the reset net */
+
+/********************************************************************/
+/* EXTRA TIMING PARAMETERS                                          */
+/********************************************************************/
+
+/* ****  GPIO CONSTRAINTS COPIED FROM GPIO SYTHESIS SCRIPTS  **** */
+
+/* Timing parameters for non-AMBA signals, */
+/* set to the XCLKIN frequency */
+
+/* Input setup and hold times */
+
+tis1 = 0.4 * tclk
+tih1 = 0
+
+/* Output valid and hold times */
+
+tov1 = 0.2 * tclk   
+toh1 = 0
+
+/* Convert the above into synthesis parameters */
+
+tidmax1 = tclk - tis1
+tidmin1 = tih1
+
+todmax1 = tclk - tov1
+todmin1 = toh1
+
+/* ****  CONSTRAINTS FOR JTAG SIGNALS ON PORT INTERFACE  **** */
+
+/* Timing parameters for non-AMBA signals, */
+/* set to the XCLKIN frequency */
+
+/* Input setup and hold times */
+
+tis2 = 1 * tclk
+tih2 = 0
+
+/* Output valid and hold times */
+
+tov2 = 1 * tclk
+toh2 = 0
+
+/* Convert the above into synthesis parameters */
+
+tidmax2 = tclk - tis2
+tidmin2 = tih2
+
+todmax2 = tclk - tov2
+todmin2 = toh2
+
+/* ****  CONSTRAINTS FOR CPU SIGNALS ON PORT INTERFACE  **** */
+
+/* Timing parameters for non-AMBA signals, */
+/* set to the XCLKIN frequency */
+
+/* Input setup and hold times */
+
+tis3 = 1 * tclk
+tih3 = 0
+
+/* Output valid and hold times */
+
+tov3 = 1 * tclk
+toh3 = 0
+
+/* Convert the above into synthesis parameters */
+
+tidmax3 = tclk - tis3
+tidmin3 = tih3
+
+todmax3 = tclk - tov3
+todmin3 = toh3
+
+/* ****  CONSTRAINTS FOR SMI SIGNALS ON PORT INTERFACE **** */
+
+/* Timing parameters for non-AMBA signals, */
+/* set to the XCLKIN frequency */
+
+/* Constraints for SMI external address/control signals */
+tidmaxsmi = tclk * 0.7
+todmaxsmi = tclk * 0.6
+
+/* Constraints for SMI external data signals */
+tidmaxsmid = tclk * 0.2
+todmaxsmid = tclk * 0.1
+
+/* Constraints for SMI external test signals */
+tidmaxsmit = tclk * 0.2
+todmaxsmit = tclk * 0.1
+
+/********************************************************************/
+/* EXTRA INPUT CONSTRAINTS                                          */
+/********************************************************************/
+
+/* ****  GPIO CONSTRAINTS COPIED FROM GPIO SYTHESIS SCRIPTS  **** */
+
+/* The following input delay constraints are arbitrary since the      */
+/* corresponding signals are asynchronous to the clock that samples   */
+/* them. Ensure that they are synchronized internally before use.     */
+
+set_input_delay -clock XCLKIN -min tmskew GPIN
+set_input_delay -clock XCLKIN -max tidmax1 GPIN
+
+set_input_delay -clock XCLKIN -min tmskew nGPAFEN
+set_input_delay -clock XCLKIN -max tidmax1 nGPAFEN
+
+set_input_delay -clock XCLKIN -min tmskew GPAFOUT
+set_input_delay -clock XCLKIN -max tidmax1 GPAFOUT
+
+
+/* Constrain other input signals in the top-level module port interface */
+
+set_input_delay -clock XCLKIN -min tholdmax   SMDATAIN
+set_input_delay -clock XCLKIN -max tidmaxsmid SMDATAIN
+
+set_input_delay -clock XCLKIN -min tholdmax   TESTREQA
+set_input_delay -clock XCLKIN -max tidmaxsmit TESTREQA
+
+set_input_delay -clock XCLKIN -min tholdmax   TESTREQB
+set_input_delay -clock XCLKIN -max tidmaxsmit TESTREQB
+
+/********************************************************************/
+/* EXTRA OUTPUT CONSTRAINTS                                         */
+/********************************************************************/
+
+/* ****  GPIO CONSTRAINTS COPIED FROM GPIO SYTHESIS SCRIPTS  **** */
+
+set_output_delay -clock XCLKIN -min todmin1 nGPEN
+set_output_delay -clock XCLKIN -max todmax1 nGPEN 
+
+set_output_delay -clock XCLKIN -min todmin1 GPOUT
+set_output_delay -clock XCLKIN -max todmax1 GPOUT
+
+set_output_delay -clock XCLKIN -min todmin1 GPAFIN
+set_output_delay -clock XCLKIN -max todmax1 GPAFIN
+
+/* Constrain other output signals in the top-level module port interface */
+
+set_output_delay -clock XCLKIN -min tholdmin SMDATAOUT
+set_output_delay -clock XCLKIN -max todmaxsmid SMDATAOUT
+
+set_output_delay -clock XCLKIN -min tholdmin nSMDATAEN
+set_output_delay -clock XCLKIN -max todmaxsmi nSMDATAEN
+
+set_output_delay -clock XCLKIN -min tholdmin SMADDR
+set_output_delay -clock XCLKIN -max todmaxsmi SMADDR
+
+set_output_delay -clock XCLKIN -min tholdmin SMCS
+set_output_delay -clock XCLKIN -max todmaxsmi SMCS
+
+set_output_delay -clock XCLKIN -min tholdmin nSMBLS
+set_output_delay -clock XCLKIN -max todmaxsmi nSMBLS
+
+set_output_delay -clock XCLKIN -min tholdmin nSMOEN
+set_output_delay -clock XCLKIN -max todmaxsmi nSMOEN
+
+set_output_delay -clock XCLKIN -min tholdmin   TESTACK
+set_output_delay -clock XCLKIN -max todmaxsmit TESTACK
+
+/***************************** End **********************************/

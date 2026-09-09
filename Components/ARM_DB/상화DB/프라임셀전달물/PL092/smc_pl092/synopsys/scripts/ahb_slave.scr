@@ -1,0 +1,192 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- ----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : ahb_slave.scr.rca
+-- File Revision          : 1.10
+--
+-- Release Information    : PrimeCell(TM)-PL092-REL1v1
+--
+-- ----------------------------------------------------------------------------
+-- Purpose : 
+--           Synopsys synthesis script to define AMBA AHB 
+--           timing constraints.
+--           Located in the synopsys_shared/scr_common directory.
+--           Called by master compile script.
+--
+-- --======================================================================-- */
+
+/******************************************************************************/
+/* HCLK DEFINTION                                                             */
+/******************************************************************************/
+
+create_clock -p tclk -w {0 tclkh} find(port, "HCLK")
+/* period tclk, rise at 0, fall after tclkh High phase */
+
+/* set_clock_skew -ideal -plus_uncertainty tpskew find(clock, HCLK) */
+/* set plus clock skew */
+
+/* set_clock_skew -ideal -minus_uncertainty tmskew find(clock, HCLK) */
+/* set minus clock skew */
+/* Skew definitions above are obsolete, latest definitions are used below     */
+
+set_clock_uncertainty -hold tpskew find(clock, HCLK)
+/* set plus clock skew */
+
+set_clock_uncertainty -setup tmskew find(clock, HCLK)
+/* set minus clock skew */
+
+set_clock_transition 0 HCLK
+/* ignore all transition times as it is an ideal clock */
+
+set_drive 0 HCLK
+/* Infinite drive strength clock signal */
+
+set_load 0 HCLK
+/* Zero load clock signal */
+
+remove_driving_cell find(port, HCLK)
+/* Set no driving cell on clock */
+
+set_resistance 0 find(net, HCLK)
+/* Zero resistance for zero net delay(interconnect delay) on */
+/* ideal clock net                                           */
+
+set_dont_touch_network find(clock, HCLK)
+/* Preserve the clock net during optimisation */
+
+/******************************************************************************/
+/* nHCLK DEFINTION (Inverted HCLK)                                            */
+/******************************************************************************/
+
+create_clock -p tclk -w {tclkh tclk} find(port, "nHCLK")
+/* period tclk, rise at tclkh, fall at tclk */
+
+/* set_clock_skew -ideal -plus_uncertainty tpskew find(clock, nHCLK) */
+/* set plus clock skew */
+
+/* set_clock_skew -ideal -minus_uncertainty tmskew find(clock, nHCLK) */
+/* set minus clock skew */
+/* Skew definitions above are for versions earlier to 1999.05, latest         */
+/* definitions are used below                                                 */
+
+set_clock_uncertainty -hold tpskew find(clock, nHCLK)
+/* set plus clock skew */
+
+set_clock_uncertainty -setup tmskew find(clock, nHCLK)
+/* set minus clock skew */
+
+set_clock_transition 0 nHCLK
+/* ignore all transition times as it is an ideal clock */
+
+set_drive 0 nHCLK
+/* Infinite drive strength clock signal */
+
+set_load 0 nHCLK
+/* Zero load clock signal */
+
+remove_driving_cell find(port, nHCLK)
+/* Set no driving cell on clock */
+
+set_resistance 0 find(net, nHCLK)
+/* Zero resistance for zero net delay(interconnect delay) on */
+/* ideal clock net                                           */
+
+set_dont_touch_network find(clock, nHCLK)
+/* Preserve the clock net during optimisation */
+
+/******************************************************************************/
+/* RESET SIGNAL CONSTRAINTS                                                   */
+/******************************************************************************/
+ 
+set_input_delay -clock HCLK -rise -max tidmaxresetn HRESETn
+set_input_delay -clock HCLK -rise -min tidminresetn HRESETn
+
+set_disable_timing find(port, HRESETn)
+/* Do not check reset timing during synthesis */
+
+set_drive 0 HRESETn
+/* Infinite drive strength reset signal */
+
+set_load 0 HRESETn
+/* Zero load reset signal */
+
+remove_driving_cell find(port, HRESETn)
+/* Set no driving cell on reset */
+
+set_resistance 0 find(net, HRESETn)
+/* Zero resistance for zero net delay(interconnect delay) on */
+/* ideal reset net                                           */
+
+set_ideal_net find(net, HRESETn)
+/* Define an ideal net for the reset net */
+
+/* set_ideal_net & set_dont_touch_network should not be used together in      */
+/* the later versions of the DC namely 2000.05 & 2000.11                      */
+/*
+set_dont_touch_network find(port, HRESETn)
+*/
+/* Preserve the reset net during optimisation */
+
+/******************************************************************************/
+/* HIGH FANOUT NETS                                                           */
+/******************************************************************************/
+
+set_max_fanout 1.0 HREADYIN
+
+/******************************************************************************/
+/* INPUT CONSTRAINTS                                                          */
+/******************************************************************************/
+/* These constraints are for the SmcCore which is an AHB Slave        */
+
+set_input_delay -clock HCLK -min tholdmax     HADDR
+set_input_delay -clock HCLK -max tidmaxhaddr  HADDR
+
+set_input_delay -clock HCLK -min tholdmax     HTRANS
+set_input_delay -clock HCLK -max tidmaxhtrans HTRANS
+
+set_input_delay -clock HCLK -min tholdmax     HWRITE
+set_input_delay -clock HCLK -max tidmaxhwrite HWRITE
+
+set_input_delay -clock HCLK -min tholdmax     HSIZE
+set_input_delay -clock HCLK -max tidmaxhsize  HSIZE
+
+set_input_delay -clock HCLK -min tholdmax     HBURST
+set_input_delay -clock HCLK -max tidmaxhburst HBURST
+
+set_input_delay -clock HCLK -min tholdmax     HWDATA
+set_input_delay -clock HCLK -max tidmaxhwdata HWDATA
+
+set_input_delay -clock HCLK -min tholdmax     HSELSMC
+set_input_delay -clock HCLK -max tidmaxhsel   HSELSMC
+
+set_input_delay -clock HCLK -min tholdmax     HSELREG
+set_input_delay -clock HCLK -max tidmaxhsel   HSELREG
+
+set_input_delay -clock HCLK -min tholdmax     HREADYIN
+set_input_delay -clock HCLK -max tidmaxhready HREADYIN
+
+
+/******************************************************************************/
+/* OUTPUT CONSTRAINTS                                                         */
+/******************************************************************************/
+/* These constraints are for the SmcCore which is an AHB Slave        */
+
+set_output_delay -clock HCLK -min tholdmin     HRDATA
+set_output_delay -clock HCLK -max todmaxhrdata HRDATA
+
+set_output_delay -clock HCLK -min tholdmin     HREADYOUT
+set_output_delay -clock HCLK -max todmaxhready HREADYOUT
+
+set_output_delay -clock HCLK -min tholdmin     HRESP
+set_output_delay -clock HCLK -max todmaxhresp  HRESP
+
+/********************************* End ****************************************/

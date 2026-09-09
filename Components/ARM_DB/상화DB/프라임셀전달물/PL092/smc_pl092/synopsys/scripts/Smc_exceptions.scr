@@ -1,0 +1,70 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- -----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : Smc_exceptions.scr.rca
+-- File Revision          : 1.10
+--
+-- Release Information    : PrimeCell(TM)-PL092-REL1v1
+--
+-- -----------------------------------------------------------------------------
+-- Purpose : 
+--           Synopsys synthesis timing constraint script for the 
+--           SMC block             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the point-to-point exceptions 
+--           set for the SMC block synthesis. 
+--
+-- --=========================================================================*/
+
+/* False paths are being set for the TIC module which does not need   */
+/* run at 100 MHz.                                                    */
+/* All the normal-mode paths of the SmcCore block are constrained.    */
+
+/* uTIC/HRDATAIN to the SMDATAOUT path */
+set_false_path -from find(port,{"uTIC/HRDATATIC*"}) \
+               -to find(port,{"SMDATAOUT*"})
+
+/* uTIC/HREADYIN to all paths reporting violations */ 
+set_false_path -from find(port,{"uTIC/HREADYIN"}) \
+               -to find(port,{"uTIC/HADDRTIC*"})
+
+set_false_path -through find(port,{"uTIC/HADDRTIC*"})
+
+set_false_path -from find(port,{"uTIC/HREADYIN"}) \
+               -to find(port,{"TESTACK"})
+
+set_false_path -from find(port,{"uTIC/HREADYIN"}) \
+               -to find(port,{"uTIC/HPROTTIC*"})
+
+set_false_path -from find(port,{"uTIC/HREADYIN"}) \
+               -to find(port,{"uTIC/HLOCKTIC"})
+
+set_false_path -from find(port,{"uTIC/TESTREQA"}) \
+               -to find(port,{"uTIC/HADDRTIC*"})
+
+set_false_path -from find(port,{"uTIC/TESTREQA"}) \
+               -to find(port,{"uTIC/HPROTTIC*"})
+
+/******************************************************************************/
+/* False paths set for the BIGENDIAN and SMMWCS7 pins which are tied off      */
+/******************************************************************************/
+set_false_path -setup -from find(port,{"BIGENDIAN"})
+set_false_path -setup -from find(port,{"SMMWCS7"})
+
+/* False path is set for the EXTBUSMUX tied input which determines whether    */
+/* the internal DBI is used or the external EbiSdram will be used             */
+
+set_false_path -setup -from EXTBUSMUX
+
+/******************** End of Smc_exceptions.scr *******************************/

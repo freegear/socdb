@@ -1,0 +1,15 @@
+
+analyze -f verilog   VicParams.v 
+analyze -f verilog   VicVectBank.v 
+analyze -f verilog   VicPriority.v 
+analyze -f verilog   VicRevAnd.v 
+analyze -f verilog   VicAhbifReg.v 
+analyze -f verilog   VicSynctoHCLK.v
+analyze -f verilog   Vic.v
+
+
+elaborate Vic
+current_design Vic
+link
+
+write -f db -hier -out Vic.gtech.db

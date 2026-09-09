@@ -1,0 +1,1419 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Mmci
+Version: 2000.05
+Date   : Thu Dec 21 12:33:09 2000
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Mmci' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+u0MmciRevAnd              1      0     0     0      0     0     0      6  16.67%
+u1MmciRevAnd              0      0     1     0      0     0     0      6   0.00%
+u2MmciRevAnd              0      0     1     0      1     0     0      6   0.00%
+u3MmciRevAnd              0      0     0     0      0     0     0      6   0.00%
+uMmciApbifReg           970      0     0     0      2     0     0   8816  11.00%
+uMmciCPSM               635      0     0     0      0     0     0   5784  10.98%
+uMmciClockAnd             0      0     0     0      0     0     0      6   0.00%
+uMmciClockMux             0      0     0     0      1     0     0      8   0.00%
+uMmciDPSM               959     10     0     0      0     0     0   8892  10.78%
+uMmciFIFOReg           1611      0     0     0      0     0     0  14604  11.03%
+uMmciFifoDmaCtr         376      6     0     0      2     0     0   3522  10.68%
+uMmciIntGen              25      0     0     0      0     0     0    252   9.92%
+uMmciOPReSync            29      0     0     0      1     0     0    252  11.51%
+uMmciPwrClkCtr           53      0     0     0      0     0     0    446  11.88%
+uMmciRegUpd              88      0     0     0      0     0     0    810  10.86%
+uMmciSynctoMCLK          49      0     0     0      0     0     0    456  10.75%
+uMmciSynctoPCLK          47      0     0     0      0     0     0    432  10.88%
+Mmci                   4874     16     2     0      7     0     0  44536  10.94%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Mmci
+Version: 2000.05
+Date   : Thu Dec 21 12:33:12 2000
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Mmci
+Version: 2000.05
+Date   : Thu Dec 21 12:33:12 2000
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain #1 (SCANINPCLK --> SCANOUTPCLK) contains 826 cells:
+
+  SCANINPCLK	->
+  uMmciFIFOReg/Reg15_reg[0]	->
+  uMmciFIFOReg/Reg15_reg[1]	->
+  uMmciFIFOReg/Reg15_reg[2]	->
+  uMmciFIFOReg/Reg15_reg[3]	->
+  uMmciFIFOReg/Reg15_reg[4]	->
+  uMmciFIFOReg/Reg15_reg[5]	->
+  uMmciFIFOReg/Reg15_reg[6]	->
+  uMmciFIFOReg/Reg15_reg[7]	->
+  uMmciFIFOReg/Reg15_reg[8]	->
+  uMmciFIFOReg/Reg15_reg[9]	->
+  uMmciFIFOReg/Reg15_reg[10]	->
+  uMmciFIFOReg/Reg15_reg[11]	->
+  uMmciFIFOReg/Reg15_reg[12]	->
+  uMmciFIFOReg/Reg15_reg[13]	->
+  uMmciFIFOReg/Reg15_reg[14]	->
+  uMmciFIFOReg/Reg15_reg[15]	->
+  uMmciFIFOReg/Reg15_reg[16]	->
+  uMmciFIFOReg/Reg15_reg[17]	->
+  uMmciFIFOReg/Reg15_reg[18]	->
+  uMmciFIFOReg/Reg15_reg[19]	->
+  uMmciFIFOReg/Reg15_reg[20]	->
+  uMmciFIFOReg/Reg15_reg[21]	->
+  uMmciFIFOReg/Reg15_reg[22]	->
+  uMmciFIFOReg/Reg15_reg[23]	->
+  uMmciFIFOReg/Reg15_reg[24]	->
+  uMmciFIFOReg/Reg15_reg[25]	->
+  uMmciFIFOReg/Reg15_reg[26]	->
+  uMmciFIFOReg/Reg15_reg[27]	->
+  uMmciFIFOReg/Reg15_reg[28]	->
+  uMmciFIFOReg/Reg15_reg[29]	->
+  uMmciFIFOReg/Reg15_reg[30]	->
+  uMmciFIFOReg/Reg15_reg[31]	->
+  uMmciFIFOReg/Reg14_reg[0]	->
+  uMmciFIFOReg/Reg14_reg[1]	->
+  uMmciFIFOReg/Reg14_reg[2]	->
+  uMmciFIFOReg/Reg14_reg[3]	->
+  uMmciFIFOReg/Reg14_reg[4]	->
+  uMmciFIFOReg/Reg14_reg[5]	->
+  uMmciFIFOReg/Reg14_reg[6]	->
+  uMmciFIFOReg/Reg14_reg[7]	->
+  uMmciFIFOReg/Reg14_reg[8]	->
+  uMmciFIFOReg/Reg14_reg[9]	->
+  uMmciFIFOReg/Reg14_reg[10]	->
+  uMmciFIFOReg/Reg14_reg[11]	->
+  uMmciFIFOReg/Reg14_reg[12]	->
+  uMmciFIFOReg/Reg14_reg[13]	->
+  uMmciFIFOReg/Reg14_reg[14]	->
+  uMmciFIFOReg/Reg14_reg[15]	->
+  uMmciFIFOReg/Reg14_reg[16]	->
+  uMmciFIFOReg/Reg14_reg[17]	->
+  uMmciFIFOReg/Reg14_reg[18]	->
+  uMmciFIFOReg/Reg14_reg[19]	->
+  uMmciFIFOReg/Reg14_reg[20]	->
+  uMmciFIFOReg/Reg14_reg[21]	->
+  uMmciFIFOReg/Reg14_reg[22]	->
+  uMmciFIFOReg/Reg14_reg[23]	->
+  uMmciFIFOReg/Reg14_reg[24]	->
+  uMmciFIFOReg/Reg14_reg[25]	->
+  uMmciFIFOReg/Reg14_reg[26]	->
+  uMmciFIFOReg/Reg14_reg[27]	->
+  uMmciFIFOReg/Reg14_reg[28]	->
+  uMmciFIFOReg/Reg14_reg[29]	->
+  uMmciFIFOReg/Reg14_reg[30]	->
+  uMmciFIFOReg/Reg14_reg[31]	->
+  uMmciFIFOReg/Reg13_reg[0]	->
+  uMmciFIFOReg/Reg13_reg[1]	->
+  uMmciFIFOReg/Reg13_reg[2]	->
+  uMmciFIFOReg/Reg13_reg[3]	->
+  uMmciFIFOReg/Reg13_reg[4]	->
+  uMmciFIFOReg/Reg13_reg[5]	->
+  uMmciFIFOReg/Reg13_reg[6]	->
+  uMmciFIFOReg/Reg13_reg[7]	->
+  uMmciFIFOReg/Reg13_reg[8]	->
+  uMmciFIFOReg/Reg13_reg[9]	->
+  uMmciFIFOReg/Reg13_reg[10]	->
+  uMmciFIFOReg/Reg13_reg[11]	->
+  uMmciFIFOReg/Reg13_reg[12]	->
+  uMmciFIFOReg/Reg13_reg[13]	->
+  uMmciFIFOReg/Reg13_reg[14]	->
+  uMmciFIFOReg/Reg13_reg[15]	->
+  uMmciFIFOReg/Reg13_reg[16]	->
+  uMmciFIFOReg/Reg13_reg[17]	->
+  uMmciFIFOReg/Reg13_reg[18]	->
+  uMmciFIFOReg/Reg13_reg[19]	->
+  uMmciFIFOReg/Reg13_reg[20]	->
+  uMmciFIFOReg/Reg13_reg[21]	->
+  uMmciFIFOReg/Reg13_reg[22]	->
+  uMmciFIFOReg/Reg13_reg[23]	->
+  uMmciFIFOReg/Reg13_reg[24]	->
+  uMmciFIFOReg/Reg13_reg[25]	->
+  uMmciFIFOReg/Reg13_reg[26]	->
+  uMmciFIFOReg/Reg13_reg[27]	->
+  uMmciFIFOReg/Reg13_reg[28]	->
+  uMmciFIFOReg/Reg13_reg[29]	->
+  uMmciFIFOReg/Reg13_reg[30]	->
+  uMmciFIFOReg/Reg13_reg[31]	->
+  uMmciFIFOReg/Reg12_reg[0]	->
+  uMmciFIFOReg/Reg12_reg[1]	->
+  uMmciFIFOReg/Reg12_reg[2]	->
+  uMmciFIFOReg/Reg12_reg[3]	->
+  uMmciFIFOReg/Reg12_reg[4]	->
+  uMmciFIFOReg/Reg12_reg[5]	->
+  uMmciFIFOReg/Reg12_reg[6]	->
+  uMmciFIFOReg/Reg12_reg[7]	->
+  uMmciFIFOReg/Reg12_reg[8]	->
+  uMmciFIFOReg/Reg12_reg[9]	->
+  uMmciFIFOReg/Reg12_reg[10]	->
+  uMmciFIFOReg/Reg12_reg[11]	->
+  uMmciFIFOReg/Reg12_reg[12]	->
+  uMmciFIFOReg/Reg12_reg[13]	->
+  uMmciFIFOReg/Reg12_reg[14]	->
+  uMmciFIFOReg/Reg12_reg[15]	->
+  uMmciFIFOReg/Reg12_reg[16]	->
+  uMmciFIFOReg/Reg12_reg[17]	->
+  uMmciFIFOReg/Reg12_reg[18]	->
+  uMmciFIFOReg/Reg12_reg[19]	->
+  uMmciFIFOReg/Reg12_reg[20]	->
+  uMmciFIFOReg/Reg12_reg[21]	->
+  uMmciFIFOReg/Reg12_reg[22]	->
+  uMmciFIFOReg/Reg12_reg[23]	->
+  uMmciFIFOReg/Reg12_reg[24]	->
+  uMmciFIFOReg/Reg12_reg[25]	->
+  uMmciFIFOReg/Reg12_reg[26]	->
+  uMmciFIFOReg/Reg12_reg[27]	->
+  uMmciFIFOReg/Reg12_reg[28]	->
+  uMmciFIFOReg/Reg12_reg[29]	->
+  uMmciFIFOReg/Reg12_reg[30]	->
+  uMmciFIFOReg/Reg12_reg[31]	->
+  uMmciFIFOReg/Reg11_reg[0]	->
+  uMmciFIFOReg/Reg11_reg[1]	->
+  uMmciFIFOReg/Reg11_reg[2]	->
+  uMmciFIFOReg/Reg11_reg[3]	->
+  uMmciFIFOReg/Reg11_reg[4]	->
+  uMmciFIFOReg/Reg11_reg[5]	->
+  uMmciFIFOReg/Reg11_reg[6]	->
+  uMmciFIFOReg/Reg11_reg[7]	->
+  uMmciFIFOReg/Reg11_reg[8]	->
+  uMmciFIFOReg/Reg11_reg[9]	->
+  uMmciFIFOReg/Reg11_reg[10]	->
+  uMmciFIFOReg/Reg11_reg[11]	->
+  uMmciFIFOReg/Reg11_reg[12]	->
+  uMmciFIFOReg/Reg11_reg[13]	->
+  uMmciFIFOReg/Reg11_reg[14]	->
+  uMmciFIFOReg/Reg11_reg[15]	->
+  uMmciFIFOReg/Reg11_reg[16]	->
+  uMmciFIFOReg/Reg11_reg[17]	->
+  uMmciFIFOReg/Reg11_reg[18]	->
+  uMmciFIFOReg/Reg11_reg[19]	->
+  uMmciFIFOReg/Reg11_reg[20]	->
+  uMmciFIFOReg/Reg11_reg[21]	->
+  uMmciFIFOReg/Reg11_reg[22]	->
+  uMmciFIFOReg/Reg11_reg[23]	->
+  uMmciFIFOReg/Reg11_reg[24]	->
+  uMmciFIFOReg/Reg11_reg[25]	->
+  uMmciFIFOReg/Reg11_reg[26]	->
+  uMmciFIFOReg/Reg11_reg[27]	->
+  uMmciFIFOReg/Reg11_reg[28]	->
+  uMmciFIFOReg/Reg11_reg[29]	->
+  uMmciFIFOReg/Reg11_reg[30]	->
+  uMmciFIFOReg/Reg11_reg[31]	->
+  uMmciFIFOReg/Reg10_reg[0]	->
+  uMmciFIFOReg/Reg10_reg[1]	->
+  uMmciFIFOReg/Reg10_reg[2]	->
+  uMmciFIFOReg/Reg10_reg[3]	->
+  uMmciFIFOReg/Reg10_reg[4]	->
+  uMmciFIFOReg/Reg10_reg[5]	->
+  uMmciFIFOReg/Reg10_reg[6]	->
+  uMmciFIFOReg/Reg10_reg[7]	->
+  uMmciFIFOReg/Reg10_reg[8]	->
+  uMmciFIFOReg/Reg10_reg[9]	->
+  uMmciFIFOReg/Reg10_reg[10]	->
+  uMmciFIFOReg/Reg10_reg[11]	->
+  uMmciFIFOReg/Reg10_reg[12]	->
+  uMmciFIFOReg/Reg10_reg[13]	->
+  uMmciFIFOReg/Reg10_reg[14]	->
+  uMmciFIFOReg/Reg10_reg[15]	->
+  uMmciFIFOReg/Reg10_reg[16]	->
+  uMmciFIFOReg/Reg10_reg[17]	->
+  uMmciFIFOReg/Reg10_reg[18]	->
+  uMmciFIFOReg/Reg10_reg[19]	->
+  uMmciFIFOReg/Reg10_reg[20]	->
+  uMmciFIFOReg/Reg10_reg[21]	->
+  uMmciFIFOReg/Reg10_reg[22]	->
+  uMmciFIFOReg/Reg10_reg[23]	->
+  uMmciFIFOReg/Reg10_reg[24]	->
+  uMmciFIFOReg/Reg10_reg[25]	->
+  uMmciFIFOReg/Reg10_reg[26]	->
+  uMmciFIFOReg/Reg10_reg[27]	->
+  uMmciFIFOReg/Reg10_reg[28]	->
+  uMmciFIFOReg/Reg10_reg[29]	->
+  uMmciFIFOReg/Reg10_reg[30]	->
+  uMmciFIFOReg/Reg10_reg[31]	->
+  uMmciFIFOReg/Reg9_reg[0]	->
+  uMmciFIFOReg/Reg9_reg[1]	->
+  uMmciFIFOReg/Reg9_reg[2]	->
+  uMmciFIFOReg/Reg9_reg[3]	->
+  uMmciFIFOReg/Reg9_reg[4]	->
+  uMmciFIFOReg/Reg9_reg[5]	->
+  uMmciFIFOReg/Reg9_reg[6]	->
+  uMmciFIFOReg/Reg9_reg[7]	->
+  uMmciFIFOReg/Reg9_reg[8]	->
+  uMmciFIFOReg/Reg9_reg[9]	->
+  uMmciFIFOReg/Reg9_reg[10]	->
+  uMmciFIFOReg/Reg9_reg[11]	->
+  uMmciFIFOReg/Reg9_reg[12]	->
+  uMmciFIFOReg/Reg9_reg[13]	->
+  uMmciFIFOReg/Reg9_reg[14]	->
+  uMmciFIFOReg/Reg9_reg[15]	->
+  uMmciFIFOReg/Reg9_reg[16]	->
+  uMmciFIFOReg/Reg9_reg[17]	->
+  uMmciFIFOReg/Reg9_reg[18]	->
+  uMmciFIFOReg/Reg9_reg[19]	->
+  uMmciFIFOReg/Reg9_reg[20]	->
+  uMmciFIFOReg/Reg9_reg[21]	->
+  uMmciFIFOReg/Reg9_reg[22]	->
+  uMmciFIFOReg/Reg9_reg[23]	->
+  uMmciFIFOReg/Reg9_reg[24]	->
+  uMmciFIFOReg/Reg9_reg[25]	->
+  uMmciFIFOReg/Reg9_reg[26]	->
+  uMmciFIFOReg/Reg9_reg[27]	->
+  uMmciFIFOReg/Reg9_reg[28]	->
+  uMmciFIFOReg/Reg9_reg[29]	->
+  uMmciFIFOReg/Reg9_reg[30]	->
+  uMmciFIFOReg/Reg9_reg[31]	->
+  uMmciFIFOReg/Reg8_reg[0]	->
+  uMmciFIFOReg/Reg8_reg[1]	->
+  uMmciFIFOReg/Reg8_reg[2]	->
+  uMmciFIFOReg/Reg8_reg[3]	->
+  uMmciFIFOReg/Reg8_reg[4]	->
+  uMmciFIFOReg/Reg8_reg[5]	->
+  uMmciFIFOReg/Reg8_reg[6]	->
+  uMmciFIFOReg/Reg8_reg[7]	->
+  uMmciFIFOReg/Reg8_reg[8]	->
+  uMmciFIFOReg/Reg8_reg[9]	->
+  uMmciFIFOReg/Reg8_reg[10]	->
+  uMmciFIFOReg/Reg8_reg[11]	->
+  uMmciFIFOReg/Reg8_reg[12]	->
+  uMmciFIFOReg/Reg8_reg[13]	->
+  uMmciFIFOReg/Reg8_reg[14]	->
+  uMmciFIFOReg/Reg8_reg[15]	->
+  uMmciFIFOReg/Reg8_reg[16]	->
+  uMmciFIFOReg/Reg8_reg[17]	->
+  uMmciFIFOReg/Reg8_reg[18]	->
+  uMmciFIFOReg/Reg8_reg[19]	->
+  uMmciFIFOReg/Reg8_reg[20]	->
+  uMmciFIFOReg/Reg8_reg[21]	->
+  uMmciFIFOReg/Reg8_reg[22]	->
+  uMmciFIFOReg/Reg8_reg[23]	->
+  uMmciFIFOReg/Reg8_reg[24]	->
+  uMmciFIFOReg/Reg8_reg[25]	->
+  uMmciFIFOReg/Reg8_reg[26]	->
+  uMmciFIFOReg/Reg8_reg[27]	->
+  uMmciFIFOReg/Reg8_reg[28]	->
+  uMmciFIFOReg/Reg8_reg[29]	->
+  uMmciFIFOReg/Reg8_reg[30]	->
+  uMmciFIFOReg/Reg8_reg[31]	->
+  uMmciFIFOReg/Reg7_reg[0]	->
+  uMmciFIFOReg/Reg7_reg[1]	->
+  uMmciFIFOReg/Reg7_reg[2]	->
+  uMmciFIFOReg/Reg7_reg[3]	->
+  uMmciFIFOReg/Reg7_reg[4]	->
+  uMmciFIFOReg/Reg7_reg[5]	->
+  uMmciFIFOReg/Reg7_reg[6]	->
+  uMmciFIFOReg/Reg7_reg[7]	->
+  uMmciFIFOReg/Reg7_reg[8]	->
+  uMmciFIFOReg/Reg7_reg[9]	->
+  uMmciFIFOReg/Reg7_reg[10]	->
+  uMmciFIFOReg/Reg7_reg[11]	->
+  uMmciFIFOReg/Reg7_reg[12]	->
+  uMmciFIFOReg/Reg7_reg[13]	->
+  uMmciFIFOReg/Reg7_reg[14]	->
+  uMmciFIFOReg/Reg7_reg[15]	->
+  uMmciFIFOReg/Reg7_reg[16]	->
+  uMmciFIFOReg/Reg7_reg[17]	->
+  uMmciFIFOReg/Reg7_reg[18]	->
+  uMmciFIFOReg/Reg7_reg[19]	->
+  uMmciFIFOReg/Reg7_reg[20]	->
+  uMmciFIFOReg/Reg7_reg[21]	->
+  uMmciFIFOReg/Reg7_reg[22]	->
+  uMmciFIFOReg/Reg7_reg[23]	->
+  uMmciFIFOReg/Reg7_reg[24]	->
+  uMmciFIFOReg/Reg7_reg[25]	->
+  uMmciFIFOReg/Reg7_reg[26]	->
+  uMmciFIFOReg/Reg7_reg[27]	->
+  uMmciFIFOReg/Reg7_reg[28]	->
+  uMmciFIFOReg/Reg7_reg[29]	->
+  uMmciFIFOReg/Reg7_reg[30]	->
+  uMmciFIFOReg/Reg7_reg[31]	->
+  uMmciFIFOReg/Reg6_reg[0]	->
+  uMmciFIFOReg/Reg6_reg[1]	->
+  uMmciFIFOReg/Reg6_reg[2]	->
+  uMmciFIFOReg/Reg6_reg[3]	->
+  uMmciFIFOReg/Reg6_reg[4]	->
+  uMmciFIFOReg/Reg6_reg[5]	->
+  uMmciFIFOReg/Reg6_reg[6]	->
+  uMmciFIFOReg/Reg6_reg[7]	->
+  uMmciFIFOReg/Reg6_reg[8]	->
+  uMmciFIFOReg/Reg6_reg[9]	->
+  uMmciFIFOReg/Reg6_reg[10]	->
+  uMmciFIFOReg/Reg6_reg[11]	->
+  uMmciFIFOReg/Reg6_reg[12]	->
+  uMmciFIFOReg/Reg6_reg[13]	->
+  uMmciFIFOReg/Reg6_reg[14]	->
+  uMmciFIFOReg/Reg6_reg[15]	->
+  uMmciFIFOReg/Reg6_reg[16]	->
+  uMmciFIFOReg/Reg6_reg[17]	->
+  uMmciFIFOReg/Reg6_reg[18]	->
+  uMmciFIFOReg/Reg6_reg[19]	->
+  uMmciFIFOReg/Reg6_reg[20]	->
+  uMmciFIFOReg/Reg6_reg[21]	->
+  uMmciFIFOReg/Reg6_reg[22]	->
+  uMmciFIFOReg/Reg6_reg[23]	->
+  uMmciFIFOReg/Reg6_reg[24]	->
+  uMmciFIFOReg/Reg6_reg[25]	->
+  uMmciFIFOReg/Reg6_reg[26]	->
+  uMmciFIFOReg/Reg6_reg[27]	->
+  uMmciFIFOReg/Reg6_reg[28]	->
+  uMmciFIFOReg/Reg6_reg[29]	->
+  uMmciFIFOReg/Reg6_reg[30]	->
+  uMmciFIFOReg/Reg6_reg[31]	->
+  uMmciFIFOReg/Reg5_reg[0]	->
+  uMmciFIFOReg/Reg5_reg[1]	->
+  uMmciFIFOReg/Reg5_reg[2]	->
+  uMmciFIFOReg/Reg5_reg[3]	->
+  uMmciFIFOReg/Reg5_reg[4]	->
+  uMmciFIFOReg/Reg5_reg[5]	->
+  uMmciFIFOReg/Reg5_reg[6]	->
+  uMmciFIFOReg/Reg5_reg[7]	->
+  uMmciFIFOReg/Reg5_reg[8]	->
+  uMmciFIFOReg/Reg5_reg[9]	->
+  uMmciFIFOReg/Reg5_reg[10]	->
+  uMmciFIFOReg/Reg5_reg[11]	->
+  uMmciFIFOReg/Reg5_reg[12]	->
+  uMmciFIFOReg/Reg5_reg[13]	->
+  uMmciFIFOReg/Reg5_reg[14]	->
+  uMmciFIFOReg/Reg5_reg[15]	->
+  uMmciFIFOReg/Reg5_reg[16]	->
+  uMmciFIFOReg/Reg5_reg[17]	->
+  uMmciFIFOReg/Reg5_reg[18]	->
+  uMmciFIFOReg/Reg5_reg[19]	->
+  uMmciFIFOReg/Reg5_reg[20]	->
+  uMmciFIFOReg/Reg5_reg[21]	->
+  uMmciFIFOReg/Reg5_reg[22]	->
+  uMmciFIFOReg/Reg5_reg[23]	->
+  uMmciFIFOReg/Reg5_reg[24]	->
+  uMmciFIFOReg/Reg5_reg[25]	->
+  uMmciFIFOReg/Reg5_reg[26]	->
+  uMmciFIFOReg/Reg5_reg[27]	->
+  uMmciFIFOReg/Reg5_reg[28]	->
+  uMmciFIFOReg/Reg5_reg[29]	->
+  uMmciFIFOReg/Reg5_reg[30]	->
+  uMmciFIFOReg/Reg5_reg[31]	->
+  uMmciFIFOReg/Reg4_reg[0]	->
+  uMmciFIFOReg/Reg4_reg[1]	->
+  uMmciFIFOReg/Reg4_reg[2]	->
+  uMmciFIFOReg/Reg4_reg[3]	->
+  uMmciFIFOReg/Reg4_reg[4]	->
+  uMmciFIFOReg/Reg4_reg[5]	->
+  uMmciFIFOReg/Reg4_reg[6]	->
+  uMmciFIFOReg/Reg4_reg[7]	->
+  uMmciFIFOReg/Reg4_reg[8]	->
+  uMmciFIFOReg/Reg4_reg[9]	->
+  uMmciFIFOReg/Reg4_reg[10]	->
+  uMmciFIFOReg/Reg4_reg[11]	->
+  uMmciFIFOReg/Reg4_reg[12]	->
+  uMmciFIFOReg/Reg4_reg[13]	->
+  uMmciFIFOReg/Reg4_reg[14]	->
+  uMmciFIFOReg/Reg4_reg[15]	->
+  uMmciFIFOReg/Reg4_reg[16]	->
+  uMmciFIFOReg/Reg4_reg[17]	->
+  uMmciFIFOReg/Reg4_reg[18]	->
+  uMmciFIFOReg/Reg4_reg[19]	->
+  uMmciFIFOReg/Reg4_reg[20]	->
+  uMmciFIFOReg/Reg4_reg[21]	->
+  uMmciFIFOReg/Reg4_reg[22]	->
+  uMmciFIFOReg/Reg4_reg[23]	->
+  uMmciFIFOReg/Reg4_reg[24]	->
+  uMmciFIFOReg/Reg4_reg[25]	->
+  uMmciFIFOReg/Reg4_reg[26]	->
+  uMmciFIFOReg/Reg4_reg[27]	->
+  uMmciFIFOReg/Reg4_reg[28]	->
+  uMmciFIFOReg/Reg4_reg[29]	->
+  uMmciFIFOReg/Reg4_reg[30]	->
+  uMmciFIFOReg/Reg4_reg[31]	->
+  uMmciFIFOReg/Reg3_reg[0]	->
+  uMmciFIFOReg/Reg3_reg[1]	->
+  uMmciFIFOReg/Reg3_reg[2]	->
+  uMmciFIFOReg/Reg3_reg[3]	->
+  uMmciFIFOReg/Reg3_reg[4]	->
+  uMmciFIFOReg/Reg3_reg[5]	->
+  uMmciFIFOReg/Reg3_reg[6]	->
+  uMmciFIFOReg/Reg3_reg[7]	->
+  uMmciFIFOReg/Reg3_reg[8]	->
+  uMmciFIFOReg/Reg3_reg[9]	->
+  uMmciFIFOReg/Reg3_reg[10]	->
+  uMmciFIFOReg/Reg3_reg[11]	->
+  uMmciFIFOReg/Reg3_reg[12]	->
+  uMmciFIFOReg/Reg3_reg[13]	->
+  uMmciFIFOReg/Reg3_reg[14]	->
+  uMmciFIFOReg/Reg3_reg[15]	->
+  uMmciFIFOReg/Reg3_reg[16]	->
+  uMmciFIFOReg/Reg3_reg[17]	->
+  uMmciFIFOReg/Reg3_reg[18]	->
+  uMmciFIFOReg/Reg3_reg[19]	->
+  uMmciFIFOReg/Reg3_reg[20]	->
+  uMmciFIFOReg/Reg3_reg[21]	->
+  uMmciFIFOReg/Reg3_reg[22]	->
+  uMmciFIFOReg/Reg3_reg[23]	->
+  uMmciFIFOReg/Reg3_reg[24]	->
+  uMmciFIFOReg/Reg3_reg[25]	->
+  uMmciFIFOReg/Reg3_reg[26]	->
+  uMmciFIFOReg/Reg3_reg[27]	->
+  uMmciFIFOReg/Reg3_reg[28]	->
+  uMmciFIFOReg/Reg3_reg[29]	->
+  uMmciFIFOReg/Reg3_reg[30]	->
+  uMmciFIFOReg/Reg3_reg[31]	->
+  uMmciFIFOReg/Reg2_reg[0]	->
+  uMmciFIFOReg/Reg2_reg[1]	->
+  uMmciFIFOReg/Reg2_reg[2]	->
+  uMmciFIFOReg/Reg2_reg[3]	->
+  uMmciFIFOReg/Reg2_reg[4]	->
+  uMmciFIFOReg/Reg2_reg[5]	->
+  uMmciFIFOReg/Reg2_reg[6]	->
+  uMmciFIFOReg/Reg2_reg[7]	->
+  uMmciFIFOReg/Reg2_reg[8]	->
+  uMmciFIFOReg/Reg2_reg[9]	->
+  uMmciFIFOReg/Reg2_reg[10]	->
+  uMmciFIFOReg/Reg2_reg[11]	->
+  uMmciFIFOReg/Reg2_reg[12]	->
+  uMmciFIFOReg/Reg2_reg[13]	->
+  uMmciFIFOReg/Reg2_reg[14]	->
+  uMmciFIFOReg/Reg2_reg[15]	->
+  uMmciFIFOReg/Reg2_reg[16]	->
+  uMmciFIFOReg/Reg2_reg[17]	->
+  uMmciFIFOReg/Reg2_reg[18]	->
+  uMmciFIFOReg/Reg2_reg[19]	->
+  uMmciFIFOReg/Reg2_reg[20]	->
+  uMmciFIFOReg/Reg2_reg[21]	->
+  uMmciFIFOReg/Reg2_reg[22]	->
+  uMmciFIFOReg/Reg2_reg[23]	->
+  uMmciFIFOReg/Reg2_reg[24]	->
+  uMmciFIFOReg/Reg2_reg[25]	->
+  uMmciFIFOReg/Reg2_reg[26]	->
+  uMmciFIFOReg/Reg2_reg[27]	->
+  uMmciFIFOReg/Reg2_reg[28]	->
+  uMmciFIFOReg/Reg2_reg[29]	->
+  uMmciFIFOReg/Reg2_reg[30]	->
+  uMmciFIFOReg/Reg2_reg[31]	->
+  uMmciFIFOReg/Reg1_reg[0]	->
+  uMmciFIFOReg/Reg1_reg[1]	->
+  uMmciFIFOReg/Reg1_reg[2]	->
+  uMmciFIFOReg/Reg1_reg[3]	->
+  uMmciFIFOReg/Reg1_reg[4]	->
+  uMmciFIFOReg/Reg1_reg[5]	->
+  uMmciFIFOReg/Reg1_reg[6]	->
+  uMmciFIFOReg/Reg1_reg[7]	->
+  uMmciFIFOReg/Reg1_reg[8]	->
+  uMmciFIFOReg/Reg1_reg[9]	->
+  uMmciFIFOReg/Reg1_reg[10]	->
+  uMmciFIFOReg/Reg1_reg[11]	->
+  uMmciFIFOReg/Reg1_reg[12]	->
+  uMmciFIFOReg/Reg1_reg[13]	->
+  uMmciFIFOReg/Reg1_reg[14]	->
+  uMmciFIFOReg/Reg1_reg[15]	->
+  uMmciFIFOReg/Reg1_reg[16]	->
+  uMmciFIFOReg/Reg1_reg[17]	->
+  uMmciFIFOReg/Reg1_reg[18]	->
+  uMmciFIFOReg/Reg1_reg[19]	->
+  uMmciFIFOReg/Reg1_reg[20]	->
+  uMmciFIFOReg/Reg1_reg[21]	->
+  uMmciFIFOReg/Reg1_reg[22]	->
+  uMmciFIFOReg/Reg1_reg[23]	->
+  uMmciFIFOReg/Reg1_reg[24]	->
+  uMmciFIFOReg/Reg1_reg[25]	->
+  uMmciFIFOReg/Reg1_reg[26]	->
+  uMmciFIFOReg/Reg1_reg[27]	->
+  uMmciFIFOReg/Reg1_reg[28]	->
+  uMmciFIFOReg/Reg1_reg[29]	->
+  uMmciFIFOReg/Reg1_reg[30]	->
+  uMmciFIFOReg/Reg1_reg[31]	->
+  uMmciFIFOReg/Reg0_reg[0]	->
+  uMmciFIFOReg/Reg0_reg[1]	->
+  uMmciFIFOReg/Reg0_reg[2]	->
+  uMmciFIFOReg/Reg0_reg[3]	->
+  uMmciFIFOReg/Reg0_reg[4]	->
+  uMmciFIFOReg/Reg0_reg[5]	->
+  uMmciFIFOReg/Reg0_reg[6]	->
+  uMmciFIFOReg/Reg0_reg[7]	->
+  uMmciFIFOReg/Reg0_reg[8]	->
+  uMmciFIFOReg/Reg0_reg[9]	->
+  uMmciFIFOReg/Reg0_reg[10]	->
+  uMmciFIFOReg/Reg0_reg[11]	->
+  uMmciFIFOReg/Reg0_reg[12]	->
+  uMmciFIFOReg/Reg0_reg[13]	->
+  uMmciFIFOReg/Reg0_reg[14]	->
+  uMmciFIFOReg/Reg0_reg[15]	->
+  uMmciFIFOReg/Reg0_reg[16]	->
+  uMmciFIFOReg/Reg0_reg[17]	->
+  uMmciFIFOReg/Reg0_reg[18]	->
+  uMmciFIFOReg/Reg0_reg[19]	->
+  uMmciFIFOReg/Reg0_reg[20]	->
+  uMmciFIFOReg/Reg0_reg[21]	->
+  uMmciFIFOReg/Reg0_reg[22]	->
+  uMmciFIFOReg/Reg0_reg[23]	->
+  uMmciFIFOReg/Reg0_reg[24]	->
+  uMmciFIFOReg/Reg0_reg[25]	->
+  uMmciFIFOReg/Reg0_reg[26]	->
+  uMmciFIFOReg/Reg0_reg[27]	->
+  uMmciFIFOReg/Reg0_reg[28]	->
+  uMmciFIFOReg/Reg0_reg[29]	->
+  uMmciFIFOReg/Reg0_reg[30]	->
+  uMmciFIFOReg/Reg0_reg[31]	->
+  uMmciFifoDmaCtr/DelRxActiveSync_reg	->
+  uMmciFifoDmaCtr/RxWrDone_reg	->
+  uMmciFifoDmaCtr/DMALBREQ_reg (*)	->
+  uMmciFifoDmaCtr/DelTxFRdIncSync_reg	->
+  uMmciFifoDmaCtr/Wrap_reg (*)	->
+  uMmciFifoDmaCtr/DelRxWrEnSync_reg	->
+  uMmciFifoDmaCtr/FifoEmpty_reg	->
+  uMmciFifoDmaCtr/TxDataAvl_reg (*)	->
+  uMmciFifoDmaCtr/FifoFull_reg	->
+  uMmciFifoDmaCtr/RxFifoEmpty_reg (*)	->
+  uMmciFifoDmaCtr/DelTxActive_reg	->
+  uMmciFifoDmaCtr/DelDATEnUpd_reg	->
+  uMmciFifoDmaCtr/DMABREQ_reg (*)	->
+  uMmciFifoDmaCtr/RxOverrun_reg	->
+  uMmciFifoDmaCtr/RxFifoHF_reg	->
+  uMmciFifoDmaCtr/DMALSREQ_reg (*)	->
+  uMmciFifoDmaCtr/TxFifoHE_reg (*)	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[0]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[1]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[2]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[3] (*)	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[4]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[5]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[6]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[7]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[8]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[9]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[10]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[11]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[12]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[13]	->
+  uMmciFifoDmaCtr/MMCIFifoCnt_reg[14] (*)	->
+  uMmciFifoDmaCtr/RdPtr_reg[0]	->
+  uMmciFifoDmaCtr/RdPtr_reg[2] (*)	->
+  uMmciFifoDmaCtr/RdPtr_reg[3] (*)	->
+  uMmciFifoDmaCtr/WrPtr_reg[0]	->
+  uMmciFifoDmaCtr/WrPtr_reg[1] (*)	->
+  uMmciFifoDmaCtr/WrPtr_reg[2] (*)	->
+  uMmciFifoDmaCtr/WrPtr_reg[3] (*)	->
+  uMmciFifoDmaCtr/DMASREQ_reg (*)	->
+  uMmciFifoDmaCtr/RdPtr_reg[1] (*)	->
+  uMmciSynctoPCLK/RxWrEnSync_reg	->
+  uMmciSynctoPCLK/CSentSync1_reg	->
+  uMmciSynctoPCLK/DCtrDoneSync1_reg	->
+  uMmciSynctoPCLK/PowerUpdDoneSync_reg	->
+  uMmciSynctoPCLK/RxWrEnSync1_reg	->
+  uMmciSynctoPCLK/DBEndSync1_reg	->
+  uMmciSynctoPCLK/PowerDoneSync1_reg	->
+  uMmciSynctoPCLK/RxActiveSync_reg	->
+  uMmciSynctoPCLK/CSentSync_reg	->
+  uMmciSynctoPCLK/TxRdPtrIncSync1_reg	->
+  uMmciSynctoPCLK/DToutSync1_reg	->
+  uMmciSynctoPCLK/TxUndSync1_reg	->
+  uMmciSynctoPCLK/DCtrUpdDoneSync_reg	->
+  uMmciSynctoPCLK/DToutSync_reg	->
+  uMmciSynctoPCLK/ClockDoneSync1_reg	->
+  uMmciSynctoPCLK/TxActClrSync_reg	->
+  uMmciSynctoPCLK/DEndSync_reg	->
+  uMmciSynctoPCLK/DCrcFSync1_reg	->
+  uMmciSynctoPCLK/CCrcFSync_reg	->
+  uMmciSynctoPCLK/CmdActClrSync1_reg	->
+  uMmciSynctoPCLK/TxActClrSync1_reg	->
+  uMmciSynctoPCLK/DCrcFSync_reg	->
+  uMmciSynctoPCLK/DEndSync1_reg	->
+  uMmciSynctoPCLK/CRspESync_reg	->
+  uMmciSynctoPCLK/CmdActClrSync_reg	->
+  uMmciSynctoPCLK/CToutSync_reg	->
+  uMmciSynctoPCLK/TxRdPtrIncSync_reg	->
+  uMmciSynctoPCLK/DBEndSync_reg	->
+  uMmciSynctoPCLK/CmdUpdDoneSync_reg	->
+  uMmciSynctoPCLK/TxUndSync_reg	->
+  uMmciSynctoPCLK/CCrcFSync1_reg	->
+  uMmciSynctoPCLK/ClockUpdDoneSync_reg	->
+  uMmciSynctoPCLK/CRspESync1_reg	->
+  uMmciSynctoPCLK/CmdDoneSync1_reg	->
+  uMmciSynctoPCLK/RxActiveSync1_reg	->
+  uMmciSynctoPCLK/CToutSync1_reg	->
+  uMmciApbifReg/CMDEnUpd_reg	->
+  uMmciApbifReg/PowerUpd_reg	->
+  uMmciApbifReg/DATEnUpd_reg	->
+  uMmciApbifReg/DelTxActClrSync_reg	->
+  uMmciApbifReg/CSentClr_reg	->
+  uMmciApbifReg/MMCITxFIFOWr_reg	->
+  uMmciApbifReg/MMCITCR_reg[2]	->
+  uMmciApbifReg/MMCITCR_reg[0]	->
+  uMmciApbifReg/DelCmdActClrSync_reg	->
+  uMmciApbifReg/MMCITCR_reg[4] (*)	->
+  uMmciApbifReg/DBEndClr_reg	->
+  uMmciApbifReg/IntDATEnUpd_reg	->
+  uMmciApbifReg/MMCITCR_reg[5] (*)	->
+  uMmciApbifReg/IntCMDEnUpd_reg	->
+  uMmciApbifReg/MMCIITIP_reg	->
+  uMmciApbifReg/MMCITCR_reg[1] (*)	->
+  uMmciApbifReg/CRspEClr_reg	->
+  uMmciApbifReg/MMCITCR_reg[3] (*)	->
+  uMmciApbifReg/CmdActive_reg (*)	->
+  uMmciApbifReg/CmdUpd_reg	->
+  uMmciApbifReg/DCtrUpd_reg	->
+  uMmciApbifReg/CCrcFClr_reg	->
+  uMmciApbifReg/DToutClr_reg	->
+  uMmciApbifReg/TxUndClr_reg	->
+  uMmciApbifReg/ClockUpd_reg	->
+  uMmciApbifReg/DCrcFClr_reg	->
+  uMmciApbifReg/RxFRdPtrInc_reg	->
+  uMmciApbifReg/CToutClr_reg	->
+  uMmciApbifReg/DEndClr_reg	->
+  uMmciApbifReg/MMCIITOP_reg[0]	->
+  uMmciApbifReg/MMCIITOP_reg[1]	->
+  uMmciApbifReg/MMCIITOP_reg[2]	->
+  uMmciApbifReg/MMCIITOP_reg[3]	->
+  uMmciApbifReg/MMCIITOP_reg[4]	->
+  uMmciApbifReg/MMCIITOP_reg[5]	->
+  uMmciApbifReg/MMCIITOP_reg[6]	->
+  uMmciApbifReg/MMCIITOP_reg[8] (*)	->
+  uMmciApbifReg/MMCIITOP_reg[9] (*)	->
+  uMmciApbifReg/MMCIITOP_reg[10] (*)	->
+  uMmciApbifReg/MMCIMask1_reg[0] (*)	->
+  uMmciApbifReg/MMCIMask1_reg[1] (*)	->
+  uMmciApbifReg/MMCIMask1_reg[2]	->
+  uMmciApbifReg/MMCIMask1_reg[3] (*)	->
+  uMmciApbifReg/MMCIMask1_reg[4] (*)	->
+  uMmciApbifReg/MMCIMask1_reg[5]	->
+  uMmciApbifReg/MMCIMask1_reg[6] (*)	->
+  uMmciApbifReg/MMCIMask1_reg[7]	->
+  uMmciApbifReg/MMCIMask1_reg[8]	->
+  uMmciApbifReg/MMCIMask1_reg[10] (*)	->
+  uMmciApbifReg/MMCIMask1_reg[11] (*)	->
+  uMmciApbifReg/MMCIMask1_reg[12]	->
+  uMmciApbifReg/MMCIMask1_reg[13]	->
+  uMmciApbifReg/MMCIMask1_reg[14]	->
+  uMmciApbifReg/MMCIMask1_reg[15]	->
+  uMmciApbifReg/MMCIMask1_reg[16]	->
+  uMmciApbifReg/MMCIMask1_reg[17]	->
+  uMmciApbifReg/MMCIMask1_reg[18]	->
+  uMmciApbifReg/MMCIMask1_reg[19]	->
+  uMmciApbifReg/MMCIMask1_reg[20]	->
+  uMmciApbifReg/MMCIMask1_reg[21]	->
+  uMmciApbifReg/MMCIMask0_reg[0]	->
+  uMmciApbifReg/MMCIMask0_reg[1] (*)	->
+  uMmciApbifReg/MMCIMask0_reg[2] (*)	->
+  uMmciApbifReg/MMCIMask0_reg[3] (*)	->
+  uMmciApbifReg/MMCIMask0_reg[4] (*)	->
+  uMmciApbifReg/MMCIMask0_reg[5]	->
+  uMmciApbifReg/MMCIMask0_reg[6] (*)	->
+  uMmciApbifReg/MMCIMask0_reg[7] (*)	->
+  uMmciApbifReg/MMCIMask0_reg[8]	->
+  uMmciApbifReg/MMCIMask0_reg[9]	->
+  uMmciApbifReg/MMCIMask0_reg[10]	->
+  uMmciApbifReg/MMCIMask0_reg[11]	->
+  uMmciApbifReg/MMCIMask0_reg[12]	->
+  uMmciApbifReg/MMCIMask0_reg[13]	->
+  uMmciApbifReg/MMCIMask0_reg[14]	->
+  uMmciApbifReg/MMCIMask0_reg[15]	->
+  uMmciApbifReg/MMCIMask0_reg[16]	->
+  uMmciApbifReg/MMCIMask0_reg[17]	->
+  uMmciApbifReg/MMCIMask0_reg[18]	->
+  uMmciApbifReg/MMCIMask0_reg[19]	->
+  uMmciApbifReg/MMCIMask0_reg[20]	->
+  uMmciApbifReg/MMCIMask0_reg[21]	->
+  uMmciApbifReg/MMCIDataCtrl_reg[0]	->
+  uMmciApbifReg/MMCIDataCtrl_reg[1]	->
+  uMmciApbifReg/MMCIDataCtrl_reg[2]	->
+  uMmciApbifReg/MMCIDataCtrl_reg[3] (*)	->
+  uMmciApbifReg/MMCIDataCtrl_reg[4]	->
+  uMmciApbifReg/MMCIDataCtrl_reg[5]	->
+  uMmciApbifReg/MMCIDataCtrl_reg[6]	->
+  uMmciApbifReg/MMCIDataCtrl_reg[7] (*)	->
+  uMmciApbifReg/MMCIDataLength_reg[0]	->
+  uMmciApbifReg/MMCIDataLength_reg[1]	->
+  uMmciApbifReg/MMCIDataLength_reg[2]	->
+  uMmciApbifReg/MMCIDataLength_reg[4] (*)	->
+  uMmciApbifReg/MMCIDataLength_reg[5] (*)	->
+  uMmciApbifReg/MMCIDataLength_reg[6] (*)	->
+  uMmciApbifReg/MMCIDataLength_reg[7] (*)	->
+  uMmciApbifReg/MMCIDataLength_reg[8]	->
+  uMmciApbifReg/MMCIDataLength_reg[9]	->
+  uMmciApbifReg/MMCIDataLength_reg[10]	->
+  uMmciApbifReg/MMCIDataLength_reg[11]	->
+  uMmciApbifReg/MMCIDataLength_reg[12]	->
+  uMmciApbifReg/MMCIDataLength_reg[13]	->
+  uMmciApbifReg/MMCIDataLength_reg[14]	->
+  uMmciApbifReg/MMCIDataLength_reg[15] (*)	->
+  uMmciApbifReg/MMCIDataTimer_reg[0]	->
+  uMmciApbifReg/MMCIDataTimer_reg[1]	->
+  uMmciApbifReg/MMCIDataTimer_reg[2]	->
+  uMmciApbifReg/MMCIDataTimer_reg[3]	->
+  uMmciApbifReg/MMCIDataTimer_reg[4] (*)	->
+  uMmciApbifReg/MMCIDataTimer_reg[5]	->
+  uMmciApbifReg/MMCIDataTimer_reg[6]	->
+  uMmciApbifReg/MMCIDataTimer_reg[7]	->
+  uMmciApbifReg/MMCIDataTimer_reg[8]	->
+  uMmciApbifReg/MMCIDataTimer_reg[9]	->
+  uMmciApbifReg/MMCIDataTimer_reg[10] (*)	->
+  uMmciApbifReg/MMCIDataTimer_reg[11]	->
+  uMmciApbifReg/MMCIDataTimer_reg[12]	->
+  uMmciApbifReg/MMCIDataTimer_reg[13]	->
+  uMmciApbifReg/MMCIDataTimer_reg[14]	->
+  uMmciApbifReg/MMCIDataTimer_reg[15]	->
+  uMmciApbifReg/MMCIDataTimer_reg[16]	->
+  uMmciApbifReg/MMCIDataTimer_reg[17]	->
+  uMmciApbifReg/MMCIDataTimer_reg[18]	->
+  uMmciApbifReg/MMCIDataTimer_reg[19]	->
+  uMmciApbifReg/MMCIDataTimer_reg[20]	->
+  uMmciApbifReg/MMCIDataTimer_reg[21]	->
+  uMmciApbifReg/MMCIDataTimer_reg[22]	->
+  uMmciApbifReg/MMCIDataTimer_reg[23]	->
+  uMmciApbifReg/MMCIDataTimer_reg[24]	->
+  uMmciApbifReg/MMCIDataTimer_reg[25]	->
+  uMmciApbifReg/MMCIDataTimer_reg[26]	->
+  uMmciApbifReg/MMCIDataTimer_reg[27]	->
+  uMmciApbifReg/MMCIDataTimer_reg[28]	->
+  uMmciApbifReg/MMCIDataTimer_reg[29]	->
+  uMmciApbifReg/MMCIDataTimer_reg[30]	->
+  uMmciApbifReg/MMCIDataTimer_reg[31]	->
+  uMmciApbifReg/MMCICommand_reg[0]	->
+  uMmciApbifReg/MMCICommand_reg[1]	->
+  uMmciApbifReg/MMCICommand_reg[2]	->
+  uMmciApbifReg/MMCICommand_reg[3]	->
+  uMmciApbifReg/MMCICommand_reg[4]	->
+  uMmciApbifReg/MMCICommand_reg[5]	->
+  uMmciApbifReg/MMCICommand_reg[6]	->
+  uMmciApbifReg/MMCICommand_reg[7]	->
+  uMmciApbifReg/MMCICommand_reg[8]	->
+  uMmciApbifReg/MMCICommand_reg[9]	->
+  uMmciApbifReg/MMCICommand_reg[10]	->
+  uMmciApbifReg/MMCIArgument_reg[0]	->
+  uMmciApbifReg/MMCIArgument_reg[1]	->
+  uMmciApbifReg/MMCIArgument_reg[2]	->
+  uMmciApbifReg/MMCIArgument_reg[3]	->
+  uMmciApbifReg/MMCIArgument_reg[4]	->
+  uMmciApbifReg/MMCIArgument_reg[5]	->
+  uMmciApbifReg/MMCIArgument_reg[6]	->
+  uMmciApbifReg/MMCIArgument_reg[7]	->
+  uMmciApbifReg/MMCIArgument_reg[8]	->
+  uMmciApbifReg/MMCIArgument_reg[9]	->
+  uMmciApbifReg/MMCIArgument_reg[10]	->
+  uMmciApbifReg/MMCIArgument_reg[11]	->
+  uMmciApbifReg/MMCIArgument_reg[12]	->
+  uMmciApbifReg/MMCIArgument_reg[13]	->
+  uMmciApbifReg/MMCIArgument_reg[14]	->
+  uMmciApbifReg/MMCIArgument_reg[15]	->
+  uMmciApbifReg/MMCIArgument_reg[16]	->
+  uMmciApbifReg/MMCIArgument_reg[17]	->
+  uMmciApbifReg/MMCIArgument_reg[18]	->
+  uMmciApbifReg/MMCIArgument_reg[19]	->
+  uMmciApbifReg/MMCIArgument_reg[20]	->
+  uMmciApbifReg/MMCIArgument_reg[21]	->
+  uMmciApbifReg/MMCIArgument_reg[22] (*)	->
+  uMmciApbifReg/MMCIArgument_reg[23] (*)	->
+  uMmciApbifReg/MMCIArgument_reg[24] (*)	->
+  uMmciApbifReg/MMCIArgument_reg[25] (*)	->
+  uMmciApbifReg/MMCIArgument_reg[26] (*)	->
+  uMmciApbifReg/MMCIArgument_reg[27] (*)	->
+  uMmciApbifReg/MMCIArgument_reg[28] (*)	->
+  uMmciApbifReg/MMCIArgument_reg[29] (*)	->
+  uMmciApbifReg/MMCIArgument_reg[30] (*)	->
+  uMmciApbifReg/MMCIArgument_reg[31] (*)	->
+  uMmciApbifReg/MMCIClock_reg[0]	->
+  uMmciApbifReg/MMCIClock_reg[1]	->
+  uMmciApbifReg/MMCIClock_reg[2]	->
+  uMmciApbifReg/MMCIClock_reg[3]	->
+  uMmciApbifReg/MMCIClock_reg[4]	->
+  uMmciApbifReg/MMCIClock_reg[5]	->
+  uMmciApbifReg/MMCIClock_reg[6]	->
+  uMmciApbifReg/MMCIClock_reg[7]	->
+  uMmciApbifReg/MMCIClock_reg[8]	->
+  uMmciApbifReg/MMCIClock_reg[9]	->
+  uMmciApbifReg/MMCIClock_reg[10]	->
+  uMmciApbifReg/MMCIPower_reg[0]	->
+  uMmciApbifReg/MMCIPower_reg[1]	->
+  uMmciApbifReg/MMCIPower_reg[2]	->
+  uMmciApbifReg/MMCIPower_reg[3] (*)	->
+  uMmciApbifReg/MMCIPower_reg[4] (*)	->
+  uMmciApbifReg/MMCIPower_reg[5] (*)	->
+  uMmciApbifReg/MMCIPower_reg[6]	->
+  uMmciApbifReg/MMCIPower_reg[7]	->
+  uMmciApbifReg/PRDATA_reg[0]	->
+  uMmciApbifReg/PRDATA_reg[1]	->
+  uMmciApbifReg/PRDATA_reg[2]	->
+  uMmciApbifReg/PRDATA_reg[3]	->
+  uMmciApbifReg/PRDATA_reg[4]	->
+  uMmciApbifReg/PRDATA_reg[5]	->
+  uMmciApbifReg/PRDATA_reg[6]	->
+  uMmciApbifReg/PRDATA_reg[7]	->
+  uMmciApbifReg/PRDATA_reg[8]	->
+  uMmciApbifReg/PRDATA_reg[9]	->
+  uMmciApbifReg/PRDATA_reg[10]	->
+  uMmciApbifReg/PRDATA_reg[11]	->
+  uMmciApbifReg/PRDATA_reg[12]	->
+  uMmciApbifReg/PRDATA_reg[13]	->
+  uMmciApbifReg/PRDATA_reg[14]	->
+  uMmciApbifReg/PRDATA_reg[15]	->
+  uMmciApbifReg/PRDATA_reg[16]	->
+  uMmciApbifReg/PRDATA_reg[17]	->
+  uMmciApbifReg/PRDATA_reg[18]	->
+  uMmciApbifReg/PRDATA_reg[19]	->
+  uMmciApbifReg/PRDATA_reg[20]	->
+  uMmciApbifReg/PRDATA_reg[21]	->
+  uMmciApbifReg/PRDATA_reg[22]	->
+  uMmciApbifReg/PRDATA_reg[23]	->
+  uMmciApbifReg/PRDATA_reg[24]	->
+  uMmciApbifReg/PRDATA_reg[25]	->
+  uMmciApbifReg/PRDATA_reg[26]	->
+  uMmciApbifReg/PRDATA_reg[27]	->
+  uMmciApbifReg/PRDATA_reg[28]	->
+  uMmciApbifReg/PRDATA_reg[29]	->
+  uMmciApbifReg/PRDATA_reg[30]	->
+  uMmciApbifReg/PRDATA_reg[31]	->
+  uMmciApbifReg/MMCIITOP_reg[7] (*)	->
+  uMmciApbifReg/MMCIMask1_reg[9]	->
+  uMmciApbifReg/MMCIDataLength_reg[3] (*)	->
+  uMmciApbifReg/MMCIITOP_reg[11]	->
+  uMmciApbifReg/WrEn_reg	->
+  uMmciApbifReg/TxActive_reg	->
+  SCANOUTPCLK
+
+Complete scan chain #2 (SCANINMCLK --> SCANOUTMCLK) contains 466 cells:
+
+  SCANINMCLK	->
+  uMmciCPSM/CMDCnt_reg[5]	->
+  uMmciCPSM/CMDShift_reg[6]	->
+  uMmciCPSM/CPSMStL_reg (*)	->
+  uMmciCPSM/CMDShift_reg[2]	->
+  uMmciCPSM/CMDTxShiftEn_reg (*)	->
+  uMmciCPSM/CSent_reg	->
+  uMmciCPSM/CMDCnt_reg[1] (*)	->
+  uMmciCPSM/CmdActClr_reg	->
+  uMmciCPSM/CMDShift_reg[9]	->
+  uMmciCPSM/CTout_reg	->
+  uMmciCPSM/CMDShift_reg[0]	->
+  uMmciCPSM/CMDCnt_reg[3]	->
+  uMmciCPSM/CMDCnt_reg[7]	->
+  uMmciCPSM/CMDShift_reg[4]	->
+  uMmciCPSM/CMDShift_reg[11]	->
+  uMmciCPSM/CMDShift_reg[22]	->
+  uMmciCPSM/CMDShift_reg[18]	->
+  uMmciCPSM/CMDShift_reg[26]	->
+  uMmciCPSM/CMDShift_reg[15]	->
+  uMmciCPSM/CMDRxShiftEn_reg (*)	->
+  uMmciCPSM/PendLatch_reg	->
+  uMmciCPSM/CMDShift_reg[17]	->
+  uMmciCPSM/CMDShift_reg[24]	->
+  uMmciCPSM/CmdPSave_reg	->
+  uMmciCPSM/DelCSentClrSync_reg	->
+  uMmciCPSM/nIntCMDEN_reg	->
+  uMmciCPSM/CMDShift_reg[29]	->
+  uMmciCPSM/CMDShift_reg[30] (*)	->
+  uMmciCPSM/DelCCrcFClrSync_reg	->
+  uMmciCPSM/CMDShift_reg[13]	->
+  uMmciCPSM/CMDShift_reg[20]	->
+  uMmciCPSM/CMDShift_reg[28]	->
+  uMmciCPSM/CMDShift_reg[31]	->
+  uMmciCPSM/CMDShift_reg[12]	->
+  uMmciCPSM/CMDShift_reg[21]	->
+  uMmciCPSM/CMDShift_reg[25]	->
+  uMmciCPSM/CMDShift_reg[16]	->
+  uMmciCPSM/Del1CMDEnUpdSync_reg	->
+  uMmciCPSM/CMDShift_reg[14]	->
+  uMmciCPSM/CMDShift_reg[27]	->
+  uMmciCPSM/DelCToutClrSync_reg	->
+  uMmciCPSM/CMDCRCRxEn_reg	->
+  uMmciCPSM/Del2CMDEnUpdSync_reg	->
+  uMmciCPSM/CMDShift_reg[23]	->
+  uMmciCPSM/CMDShift_reg[10]	->
+  uMmciCPSM/CMDShift_reg[19]	->
+  uMmciCPSM/CMDCnt_reg[6]	->
+  uMmciCPSM/CMDShift_reg[5]	->
+  uMmciCPSM/CMDShift_reg[8]	->
+  uMmciCPSM/CMDShift_reg[1]	->
+  uMmciCPSM/CMDCnt_reg[2] (*)	->
+  uMmciCPSM/CMDShift_reg[3]	->
+  uMmciCPSM/CMDCnt_reg[0] (*)	->
+  uMmciCPSM/CCrcF_reg (*)	->
+  uMmciCPSM/CMDCnt_reg[4]	->
+  uMmciCPSM/CMDShift_reg[7]	->
+  uMmciCPSM/CRspE_reg	->
+  uMmciCPSM/DelCRspEClrSync_reg	->
+  uMmciCPSM/CMDCRCTxEn_reg	->
+  uMmciCPSM/CPSMState_reg[1]	->
+  uMmciCPSM/CPSMState_reg[2] (*)	->
+  uMmciCPSM/MMCIResponse3_reg[0]	->
+  uMmciCPSM/MMCIResponse3_reg[1]	->
+  uMmciCPSM/MMCIResponse3_reg[2]	->
+  uMmciCPSM/MMCIResponse3_reg[3]	->
+  uMmciCPSM/MMCIResponse3_reg[4]	->
+  uMmciCPSM/MMCIResponse3_reg[5]	->
+  uMmciCPSM/MMCIResponse3_reg[6]	->
+  uMmciCPSM/MMCIResponse3_reg[7]	->
+  uMmciCPSM/MMCIResponse3_reg[8]	->
+  uMmciCPSM/MMCIResponse3_reg[9]	->
+  uMmciCPSM/MMCIResponse3_reg[10]	->
+  uMmciCPSM/MMCIResponse3_reg[11]	->
+  uMmciCPSM/MMCIResponse3_reg[12]	->
+  uMmciCPSM/MMCIResponse3_reg[13]	->
+  uMmciCPSM/MMCIResponse3_reg[14]	->
+  uMmciCPSM/MMCIResponse3_reg[15]	->
+  uMmciCPSM/MMCIResponse3_reg[16]	->
+  uMmciCPSM/MMCIResponse3_reg[17]	->
+  uMmciCPSM/MMCIResponse3_reg[18]	->
+  uMmciCPSM/MMCIResponse3_reg[19]	->
+  uMmciCPSM/MMCIResponse3_reg[20]	->
+  uMmciCPSM/MMCIResponse3_reg[21]	->
+  uMmciCPSM/MMCIResponse3_reg[22]	->
+  uMmciCPSM/MMCIResponse3_reg[23]	->
+  uMmciCPSM/MMCIResponse3_reg[24]	->
+  uMmciCPSM/MMCIResponse3_reg[25]	->
+  uMmciCPSM/MMCIResponse3_reg[26]	->
+  uMmciCPSM/MMCIResponse3_reg[27]	->
+  uMmciCPSM/MMCIResponse3_reg[28]	->
+  uMmciCPSM/MMCIResponse3_reg[29]	->
+  uMmciCPSM/MMCIResponse3_reg[30]	->
+  uMmciCPSM/MMCIResponse2_reg[0]	->
+  uMmciCPSM/MMCIResponse2_reg[1]	->
+  uMmciCPSM/MMCIResponse2_reg[2]	->
+  uMmciCPSM/MMCIResponse2_reg[3]	->
+  uMmciCPSM/MMCIResponse2_reg[4]	->
+  uMmciCPSM/MMCIResponse2_reg[5]	->
+  uMmciCPSM/MMCIResponse2_reg[6]	->
+  uMmciCPSM/MMCIResponse2_reg[7]	->
+  uMmciCPSM/MMCIResponse2_reg[8]	->
+  uMmciCPSM/MMCIResponse2_reg[9]	->
+  uMmciCPSM/MMCIResponse2_reg[10]	->
+  uMmciCPSM/MMCIResponse2_reg[11]	->
+  uMmciCPSM/MMCIResponse2_reg[12]	->
+  uMmciCPSM/MMCIResponse2_reg[13]	->
+  uMmciCPSM/MMCIResponse2_reg[14]	->
+  uMmciCPSM/MMCIResponse2_reg[15]	->
+  uMmciCPSM/MMCIResponse2_reg[16]	->
+  uMmciCPSM/MMCIResponse2_reg[17]	->
+  uMmciCPSM/MMCIResponse2_reg[18]	->
+  uMmciCPSM/MMCIResponse2_reg[19]	->
+  uMmciCPSM/MMCIResponse2_reg[20]	->
+  uMmciCPSM/MMCIResponse2_reg[21]	->
+  uMmciCPSM/MMCIResponse2_reg[22]	->
+  uMmciCPSM/MMCIResponse2_reg[23]	->
+  uMmciCPSM/MMCIResponse2_reg[24]	->
+  uMmciCPSM/MMCIResponse2_reg[25]	->
+  uMmciCPSM/MMCIResponse2_reg[26]	->
+  uMmciCPSM/MMCIResponse2_reg[27]	->
+  uMmciCPSM/MMCIResponse2_reg[28]	->
+  uMmciCPSM/MMCIResponse2_reg[29]	->
+  uMmciCPSM/MMCIResponse2_reg[30]	->
+  uMmciCPSM/MMCIResponse2_reg[31]	->
+  uMmciCPSM/MMCIResponse1_reg[0]	->
+  uMmciCPSM/MMCIResponse1_reg[1]	->
+  uMmciCPSM/MMCIResponse1_reg[2]	->
+  uMmciCPSM/MMCIResponse1_reg[3]	->
+  uMmciCPSM/MMCIResponse1_reg[4]	->
+  uMmciCPSM/MMCIResponse1_reg[5]	->
+  uMmciCPSM/MMCIResponse1_reg[6]	->
+  uMmciCPSM/MMCIResponse1_reg[7]	->
+  uMmciCPSM/MMCIResponse1_reg[8]	->
+  uMmciCPSM/MMCIResponse1_reg[9]	->
+  uMmciCPSM/MMCIResponse1_reg[10]	->
+  uMmciCPSM/MMCIResponse1_reg[11]	->
+  uMmciCPSM/MMCIResponse1_reg[12]	->
+  uMmciCPSM/MMCIResponse1_reg[13]	->
+  uMmciCPSM/MMCIResponse1_reg[14]	->
+  uMmciCPSM/MMCIResponse1_reg[15]	->
+  uMmciCPSM/MMCIResponse1_reg[16]	->
+  uMmciCPSM/MMCIResponse1_reg[17]	->
+  uMmciCPSM/MMCIResponse1_reg[18]	->
+  uMmciCPSM/MMCIResponse1_reg[19]	->
+  uMmciCPSM/MMCIResponse1_reg[20]	->
+  uMmciCPSM/MMCIResponse1_reg[21]	->
+  uMmciCPSM/MMCIResponse1_reg[22]	->
+  uMmciCPSM/MMCIResponse1_reg[23]	->
+  uMmciCPSM/MMCIResponse1_reg[24]	->
+  uMmciCPSM/MMCIResponse1_reg[25]	->
+  uMmciCPSM/MMCIResponse1_reg[26]	->
+  uMmciCPSM/MMCIResponse1_reg[27]	->
+  uMmciCPSM/MMCIResponse1_reg[28]	->
+  uMmciCPSM/MMCIResponse1_reg[29]	->
+  uMmciCPSM/MMCIResponse1_reg[30]	->
+  uMmciCPSM/MMCIResponse1_reg[31]	->
+  uMmciCPSM/MMCIResponse0_reg[0]	->
+  uMmciCPSM/MMCIResponse0_reg[1]	->
+  uMmciCPSM/MMCIResponse0_reg[2]	->
+  uMmciCPSM/MMCIResponse0_reg[3]	->
+  uMmciCPSM/MMCIResponse0_reg[4]	->
+  uMmciCPSM/MMCIResponse0_reg[5]	->
+  uMmciCPSM/MMCIResponse0_reg[6]	->
+  uMmciCPSM/MMCIResponse0_reg[7]	->
+  uMmciCPSM/MMCIResponse0_reg[8]	->
+  uMmciCPSM/MMCIResponse0_reg[9]	->
+  uMmciCPSM/MMCIResponse0_reg[10]	->
+  uMmciCPSM/MMCIResponse0_reg[11]	->
+  uMmciCPSM/MMCIResponse0_reg[12]	->
+  uMmciCPSM/MMCIResponse0_reg[13]	->
+  uMmciCPSM/MMCIResponse0_reg[14]	->
+  uMmciCPSM/MMCIResponse0_reg[15]	->
+  uMmciCPSM/MMCIResponse0_reg[16]	->
+  uMmciCPSM/MMCIResponse0_reg[17]	->
+  uMmciCPSM/MMCIResponse0_reg[18]	->
+  uMmciCPSM/MMCIResponse0_reg[19]	->
+  uMmciCPSM/MMCIResponse0_reg[20]	->
+  uMmciCPSM/MMCIResponse0_reg[21]	->
+  uMmciCPSM/MMCIResponse0_reg[22]	->
+  uMmciCPSM/MMCIResponse0_reg[23]	->
+  uMmciCPSM/MMCIResponse0_reg[24]	->
+  uMmciCPSM/MMCIResponse0_reg[25]	->
+  uMmciCPSM/MMCIResponse0_reg[26]	->
+  uMmciCPSM/MMCIResponse0_reg[27]	->
+  uMmciCPSM/MMCIResponse0_reg[28]	->
+  uMmciCPSM/MMCIResponse0_reg[29]	->
+  uMmciCPSM/MMCIResponse0_reg[30]	->
+  uMmciCPSM/MMCIResponse0_reg[31]	->
+  uMmciCPSM/MMCIRespCmd_reg[0]	->
+  uMmciCPSM/MMCIRespCmd_reg[1]	->
+  uMmciCPSM/MMCIRespCmd_reg[2]	->
+  uMmciCPSM/MMCIRespCmd_reg[3]	->
+  uMmciCPSM/MMCIRespCmd_reg[4]	->
+  uMmciCPSM/MMCIRespCmd_reg[5]	->
+  uMmciCPSM/CMDCRCShift_reg[0]	->
+  uMmciCPSM/CMDCRCShift_reg[1]	->
+  uMmciCPSM/CMDCRCShift_reg[2]	->
+  uMmciCPSM/CMDCRCShift_reg[3]	->
+  uMmciCPSM/CMDCRCShift_reg[4]	->
+  uMmciCPSM/CMDCRCShift_reg[5]	->
+  uMmciCPSM/CMDCRCShift_reg[6] (*)	->
+  uMmciCPSM/CPSMState_reg[0]	->
+  uMmciPwrClkCtr/MMCICLK_reg	->
+  uMmciPwrClkCtr/CntState_reg	->
+  uMmciPwrClkCtr/IntMMCIPWR_reg	->
+  uMmciPwrClkCtr/ClkDivCnt_reg[0] (*)	->
+  uMmciPwrClkCtr/ClkDivCnt_reg[1]	->
+  uMmciPwrClkCtr/ClkDivCnt_reg[2]	->
+  uMmciPwrClkCtr/ClkDivCnt_reg[3]	->
+  uMmciPwrClkCtr/ClkDivCnt_reg[4]	->
+  uMmciPwrClkCtr/ClkDivCnt_reg[5]	->
+  uMmciPwrClkCtr/ClkDivCnt_reg[6]	->
+  uMmciPwrClkCtr/ClkDivCnt_reg[7]	->
+  uMmciSynctoMCLK/TxUndClrSync1_reg	->
+  uMmciSynctoMCLK/RxFifoEmptySync_reg	->
+  uMmciSynctoMCLK/RxFifoEmptySync1_reg	->
+  uMmciSynctoMCLK/TxDataAvlSync_reg	->
+  uMmciSynctoMCLK/CToutClrSync1_reg	->
+  uMmciSynctoMCLK/DToutClrSync1_reg	->
+  uMmciSynctoMCLK/CCrcFClrSync_reg	->
+  uMmciSynctoMCLK/CSentClrSync_reg	->
+  uMmciSynctoMCLK/CMDEnUpdSync_reg	->
+  uMmciSynctoMCLK/RxOverrunSync_reg	->
+  uMmciSynctoMCLK/DEndClrSync1_reg	->
+  uMmciSynctoMCLK/DToutClrSync_reg	->
+  uMmciSynctoMCLK/CmdUpdSync_reg	->
+  uMmciSynctoMCLK/ClockUpdSync_reg	->
+  uMmciSynctoMCLK/DCtrUpdSync1_reg	->
+  uMmciSynctoMCLK/CmdUpdSync1_reg	->
+  uMmciSynctoMCLK/PowerUpdSync_reg	->
+  uMmciSynctoMCLK/DBEndClrSync1_reg	->
+  uMmciSynctoMCLK/DEndClrSync_reg	->
+  uMmciSynctoMCLK/TxUndClrSync_reg	->
+  uMmciSynctoMCLK/DCrcFClrSync_reg	->
+  uMmciSynctoMCLK/DCrcFClrSync1_reg	->
+  uMmciSynctoMCLK/PowerUpdSync1_reg	->
+  uMmciSynctoMCLK/RxWrDoneSync_reg	->
+  uMmciSynctoMCLK/CRspEClrSync1_reg	->
+  uMmciSynctoMCLK/DATEnUpdSync_reg	->
+  uMmciSynctoMCLK/DATEnUpdSync1_reg	->
+  uMmciSynctoMCLK/CSentClrSync1_reg	->
+  uMmciSynctoMCLK/CRspEClrSync_reg	->
+  uMmciSynctoMCLK/CCrcFClrSync1_reg	->
+  uMmciSynctoMCLK/RxOverrunSync1_reg	->
+  uMmciSynctoMCLK/TxDataAvlSync1_reg	->
+  uMmciSynctoMCLK/DBEndClrSync_reg	->
+  uMmciSynctoMCLK/RxWrDoneSync1_reg	->
+  uMmciSynctoMCLK/DCtrUpdSync_reg	->
+  uMmciSynctoMCLK/ClockUpdSync1_reg	->
+  uMmciSynctoMCLK/CToutClrSync_reg	->
+  uMmciSynctoMCLK/CMDEnUpdSync1_reg	->
+  uMmciDPSM/nDATEN_reg (*)	->
+  uMmciDPSM/DCrcF_reg	->
+  uMmciDPSM/DelDToutClrSync_reg	->
+  uMmciDPSM/TxRdPtrInc_reg	->
+  uMmciDPSM/DATCRCRxEn_reg (*)	->
+  uMmciDPSM/TxUnd_reg	->
+  uMmciDPSM/CRCCheck_reg	->
+  uMmciDPSM/ShiftNotE_reg	->
+  uMmciDPSM/DATCRCTxEn_reg	->
+  uMmciDPSM/DataCntEn_reg (*)	->
+  uMmciDPSM/Del2DATEnUpd_reg	->
+  uMmciDPSM/IntOverrun_reg	->
+  uMmciDPSM/StartBit_reg (*)	->
+  uMmciDPSM/StopBit_reg	->
+  uMmciDPSM/DelDBEndClrSync_reg	->
+  uMmciDPSM/DEnd_reg	->
+  uMmciDPSM/RxWrEn_reg	->
+  uMmciDPSM/DBEnd_reg	->
+  uMmciDPSM/TxActClr_reg	->
+  uMmciDPSM/DATOUT_reg (*)	->
+  uMmciDPSM/DelRxWrDoneSync_reg	->
+  uMmciDPSM/BsyMode_reg (*)	->
+  uMmciDPSM/DelTxUndClrSync_reg	->
+  uMmciDPSM/DelDCrcFClrSync_reg	->
+  uMmciDPSM/RxActive_reg	->
+  uMmciDPSM/TokenRxSEn_reg	->
+  uMmciDPSM/DataPSave_reg	->
+  uMmciDPSM/PendPulse_reg (*)	->
+  uMmciDPSM/Del1DATEnUpd_reg	->
+  uMmciDPSM/DelDEndClrSync_reg	->
+  uMmciDPSM/Wtoken_reg	->
+  uMmciDPSM/DPSMState_reg[0] (*)	->
+  uMmciDPSM/DPSMState_reg[1]	->
+  uMmciDPSM/DPSMState_reg[2] (*)	->
+  uMmciDPSM/RxFWrData_reg[0]	->
+  uMmciDPSM/RxFWrData_reg[1]	->
+  uMmciDPSM/RxFWrData_reg[2]	->
+  uMmciDPSM/RxFWrData_reg[3]	->
+  uMmciDPSM/RxFWrData_reg[4]	->
+  uMmciDPSM/RxFWrData_reg[5]	->
+  uMmciDPSM/RxFWrData_reg[6]	->
+  uMmciDPSM/RxFWrData_reg[7]	->
+  uMmciDPSM/RxFWrData_reg[8]	->
+  uMmciDPSM/RxFWrData_reg[9]	->
+  uMmciDPSM/RxFWrData_reg[10]	->
+  uMmciDPSM/RxFWrData_reg[11]	->
+  uMmciDPSM/RxFWrData_reg[12]	->
+  uMmciDPSM/RxFWrData_reg[13]	->
+  uMmciDPSM/RxFWrData_reg[14]	->
+  uMmciDPSM/RxFWrData_reg[15]	->
+  uMmciDPSM/RxFWrData_reg[16]	->
+  uMmciDPSM/RxFWrData_reg[17]	->
+  uMmciDPSM/RxFWrData_reg[18]	->
+  uMmciDPSM/RxFWrData_reg[19]	->
+  uMmciDPSM/RxFWrData_reg[20]	->
+  uMmciDPSM/RxFWrData_reg[21]	->
+  uMmciDPSM/RxFWrData_reg[22]	->
+  uMmciDPSM/RxFWrData_reg[23]	->
+  uMmciDPSM/RxFWrData_reg[24]	->
+  uMmciDPSM/RxFWrData_reg[25]	->
+  uMmciDPSM/RxFWrData_reg[26]	->
+  uMmciDPSM/RxFWrData_reg[27]	->
+  uMmciDPSM/RxFWrData_reg[28]	->
+  uMmciDPSM/RxFWrData_reg[29]	->
+  uMmciDPSM/RxFWrData_reg[30]	->
+  uMmciDPSM/RxFWrData_reg[31]	->
+  uMmciDPSM/DATCRCShift0_reg[0] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[1] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[2] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[3] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[4] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[5] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[6] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[7] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[8] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[9] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[10] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[11] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[12] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[13] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[14] (*)	->
+  uMmciDPSM/DATCRCShift0_reg[15] (*)	->
+  uMmciDPSM/DATShift_reg[0]	->
+  uMmciDPSM/DATShift_reg[1]	->
+  uMmciDPSM/DATShift_reg[2]	->
+  uMmciDPSM/DATShift_reg[3]	->
+  uMmciDPSM/DATShift_reg[4]	->
+  uMmciDPSM/DATShift_reg[5]	->
+  uMmciDPSM/DATShift_reg[6]	->
+  uMmciDPSM/DATShift_reg[7]	->
+  uMmciDPSM/DATShift_reg[8]	->
+  uMmciDPSM/DATShift_reg[9]	->
+  uMmciDPSM/DATShift_reg[10]	->
+  uMmciDPSM/DATShift_reg[11]	->
+  uMmciDPSM/DATShift_reg[12]	->
+  uMmciDPSM/DATShift_reg[13]	->
+  uMmciDPSM/DATShift_reg[14]	->
+  uMmciDPSM/DATShift_reg[15]	->
+  uMmciDPSM/DATShift_reg[16]	->
+  uMmciDPSM/DATShift_reg[17]	->
+  uMmciDPSM/DATShift_reg[18]	->
+  uMmciDPSM/DATShift_reg[19]	->
+  uMmciDPSM/DATShift_reg[20]	->
+  uMmciDPSM/DATShift_reg[21]	->
+  uMmciDPSM/DATShift_reg[22]	->
+  uMmciDPSM/DATShift_reg[23]	->
+  uMmciDPSM/DATShift_reg[24]	->
+  uMmciDPSM/DATShift_reg[25]	->
+  uMmciDPSM/DATShift_reg[26]	->
+  uMmciDPSM/DATShift_reg[27]	->
+  uMmciDPSM/DATShift_reg[28]	->
+  uMmciDPSM/DATShift_reg[29]	->
+  uMmciDPSM/DATShift_reg[30]	->
+  uMmciDPSM/DATShift_reg[31]	->
+  uMmciDPSM/TokenCnt_reg[0] (*)	->
+  uMmciDPSM/TokenCnt_reg[1] (*)	->
+  uMmciDPSM/TokenCnt_reg[2] (*)	->
+  uMmciDPSM/BitCnt_reg[0]	->
+  uMmciDPSM/BitCnt_reg[1]	->
+  uMmciDPSM/BitCnt_reg[2] (*)	->
+  uMmciDPSM/WRDCnt_reg[0]	->
+  uMmciDPSM/WRDCnt_reg[1]	->
+  uMmciDPSM/BLKTCnt_reg[0] (*)	->
+  uMmciDPSM/BLKTCnt_reg[1] (*)	->
+  uMmciDPSM/BLKTCnt_reg[2] (*)	->
+  uMmciDPSM/BLKTCnt_reg[3] (*)	->
+  uMmciDPSM/BLKTCnt_reg[4] (*)	->
+  uMmciDPSM/BLKTCnt_reg[5] (*)	->
+  uMmciDPSM/BLKTCnt_reg[6] (*)	->
+  uMmciDPSM/BLKTCnt_reg[7]	->
+  uMmciDPSM/BLKTCnt_reg[8]	->
+  uMmciDPSM/BLKTCnt_reg[9] (*)	->
+  uMmciDPSM/BLKTCnt_reg[10] (*)	->
+  uMmciDPSM/BLKTCnt_reg[11] (*)	->
+  uMmciDPSM/BLKTCnt_reg[12] (*)	->
+  uMmciDPSM/BLKTCnt_reg[13]	->
+  uMmciDPSM/BLKTCnt_reg[14] (*)	->
+  uMmciDPSM/BLKTCnt_reg[15]	->
+  uMmciDPSM/BLKTCnt_reg[16]	->
+  uMmciDPSM/BLKTCnt_reg[17]	->
+  uMmciDPSM/BLKTCnt_reg[18] (*)	->
+  uMmciDPSM/BLKTCnt_reg[19]	->
+  uMmciDPSM/BLKTCnt_reg[20] (*)	->
+  uMmciDPSM/BLKTCnt_reg[21]	->
+  uMmciDPSM/BLKTCnt_reg[22]	->
+  uMmciDPSM/BLKTCnt_reg[23] (*)	->
+  uMmciDPSM/BLKTCnt_reg[24] (*)	->
+  uMmciDPSM/BLKTCnt_reg[25]	->
+  uMmciDPSM/BLKTCnt_reg[26] (*)	->
+  uMmciDPSM/BLKTCnt_reg[27]	->
+  uMmciDPSM/BLKTCnt_reg[28]	->
+  uMmciDPSM/BLKTCnt_reg[29]	->
+  uMmciDPSM/BLKTCnt_reg[30]	->
+  uMmciDPSM/BLKTCnt_reg[31]	->
+  uMmciDPSM/DataCnt_reg[0] (*)	->
+  uMmciDPSM/DataCnt_reg[1] (*)	->
+  uMmciDPSM/DataCnt_reg[2]	->
+  uMmciDPSM/DataCnt_reg[3]	->
+  uMmciDPSM/DataCnt_reg[4]	->
+  uMmciDPSM/DataCnt_reg[5]	->
+  uMmciDPSM/DataCnt_reg[6]	->
+  uMmciDPSM/DataCnt_reg[7]	->
+  uMmciDPSM/DataCnt_reg[8]	->
+  uMmciDPSM/DataCnt_reg[9]	->
+  uMmciDPSM/DataCnt_reg[10]	->
+  uMmciDPSM/DataCnt_reg[11]	->
+  uMmciDPSM/DataCnt_reg[12]	->
+  uMmciDPSM/DataCnt_reg[13]	->
+  uMmciDPSM/DataCnt_reg[14]	->
+  uMmciDPSM/DataCnt_reg[15]	->
+  uMmciDPSM/DATCRCTxSEn_reg	->
+  uMmciDPSM/DTout_reg (*)	->
+  uMmciDPSM/DPSMStL_reg (*)	->
+  uMmciDPSM/TokenChk_reg (*)	->
+  uMmciDPSM/LdDataBuffer_reg (*)	->
+  uMmciRegUpd/DelCmdUpdSync_reg	->
+  uMmciRegUpd/DelPowerUpdSync_reg	->
+  uMmciRegUpd/DelClockUpdSync_reg	->
+  uMmciRegUpd/CmdUpdDone_reg	->
+  uMmciRegUpd/PowerUpdDone_reg	->
+  uMmciRegUpd/ClockUpdDone_reg	->
+  uMmciRegUpd/DelDCtrUpdSync_reg	->
+  uMmciRegUpd/DCtrUpdDone_reg	->
+  uMmciRegUpd/DCtr_reg[1]	->
+  uMmciRegUpd/DCtr_reg[2]	->
+  uMmciRegUpd/DCtr_reg[3]	->
+  uMmciRegUpd/DCtr_reg[4]	->
+  uMmciRegUpd/DCtr_reg[5]	->
+  uMmciRegUpd/DCtr_reg[6]	->
+  uMmciRegUpd/Cmd_reg[0]	->
+  uMmciRegUpd/Cmd_reg[1]	->
+  uMmciRegUpd/Cmd_reg[2]	->
+  uMmciRegUpd/Cmd_reg[3]	->
+  uMmciRegUpd/Cmd_reg[4]	->
+  uMmciRegUpd/Cmd_reg[5]	->
+  uMmciRegUpd/Cmd_reg[6]	->
+  uMmciRegUpd/Cmd_reg[7]	->
+  uMmciRegUpd/Cmd_reg[8]	->
+  uMmciRegUpd/Cmd_reg[9]	->
+  uMmciRegUpd/Cmd_reg[10]	->
+  uMmciRegUpd/Clock_reg[0]	->
+  uMmciRegUpd/Clock_reg[1]	->
+  uMmciRegUpd/Clock_reg[2]	->
+  uMmciRegUpd/Clock_reg[3]	->
+  uMmciRegUpd/Clock_reg[4]	->
+  uMmciRegUpd/Clock_reg[5]	->
+  uMmciRegUpd/Clock_reg[6]	->
+  uMmciRegUpd/Clock_reg[7]	->
+  uMmciRegUpd/Clock_reg[8]	->
+  uMmciRegUpd/Clock_reg[9]	->
+  uMmciRegUpd/Clock_reg[10]	->
+  uMmciRegUpd/Power_reg[0]	->
+  uMmciRegUpd/Power_reg[1]	->
+  uMmciRegUpd/Power_reg[2]	->
+  uMmciRegUpd/DCtr_reg[0]	->
+  SCANOUTMCLK
+
+Complete scan chain #3 (SCANINnMCLK --> SCANOUTnMCLK) contains 2 cells:
+
+  SCANINnMCLK	->
+  uMmciOPReSync/NegBypass_reg	->
+  uMmciOPReSync/NegPowerDown_reg	->
+  SCANOUTnMCLK
+
+Complete scan chain #4 (SCANINMMCIFBCLK --> SCANOUTMMCIFBCLK) contains 6 cells:
+
+  SCANINMMCIFBCLK	->
+  uMmciOPReSync/nIntMMCICMDEN_reg (*)	->
+  uMmciOPReSync/CMDIN_reg (*)	->
+  uMmciOPReSync/DATIN_reg	->
+  uMmciOPReSync/IntMMCIDATOUT_reg (*)	->
+  uMmciOPReSync/IntMMCICMDOUT_reg (*)	->
+  uMmciOPReSync/nIntMMCIDATEN_reg	->
+  SCANOUTMMCIFBCLK
+

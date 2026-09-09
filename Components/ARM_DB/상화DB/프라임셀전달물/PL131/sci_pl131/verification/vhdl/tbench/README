@@ -1,0 +1,79 @@
+#- --=================================================================--
+#- This confidential and proprietary software may be used only as
+#- authorised by a licensing agreement from ARM Limited
+#-   (C) COPYRIGHT 2000 ARM Limited
+#-       ALL RIGHTS RESERVED
+#- The entire notice above must be reproduced on all authorised
+#- copies and copies may only be made to the extent permitted
+#- by a licensing agreement from ARM Limited.
+#-
+#- ---------------------------------------------------------------------
+#- Version and Release Control Information:
+#-
+#- File Name              : README.rca
+#- File Revision          : 1.1
+#-
+#- Release Information    : PrimeCell(TM)-PL131-REL1v0
+#-
+#- ---------------------------------------------------------------------
+#- Purpose :
+#-           README file for BusTalk simulations
+#- --=================================================================--
+
+------------------------------------------------------------------------
+
+Steps for running BusTalk simulations. 
+
+Ensure that the following variables are set as per the user's
+local environment settings.
+
+eg : setenv GLOBAL /h/arm/global 
+
+eg : setenv LIB_VHDL /AVANT/1999.1/cb25/v2.1/vital/cb25os163/zero  
+
+eg : setenv LIB_SYNOP /NIS/backup/ARMOURY/armdata/AVANT/1999.1/cb25/v2.1/synopsys/cb25os163/1997.01/models
+
+Please note that the above paths are EXAMPLE paths.
+
+Additionally set the following environment variables to control
+simulation. 
+
+setenv PERIPH Periph
+setenv SIMULATOR modelsim
+setenv TEST_METH scaninsert
+setenv HDL_SOURCE vhdl
+setenv HDL_NETL vhdl
+
+1. VHDL RTL simulations
+------------------------
+- In the verification/bustest directory 'make <testname>'
+  where <testname> refers to the specific test vector set
+  that needs to be used for simulations.
+
+  [Please refer to verification/bustest/makefile for the 
+   complete list of <testnames>.]
+
+  This will create verification/bustest/invec/infile.bif
+
+- In the verification/vhdl/ directory
+  'make rtl'
+
+2. VHDL SCAN NETLIST simulations
+------------------------------------
+- In the verification/bustest directory 'make <testname>'
+  where <testname> refers to the specific test vector set
+  that needs to be used for simulations.
+
+  [Please refer to verification/bustest/makefile for the 
+   complete list of <testnames>.]
+
+  This will create verification/bustest/invec/infile.bif
+
+- In the verification/vhdl/ directory
+  'make net_max'
+
+  This will perform a MAXIMUM timing annotated simulation 
+  on the scan-inserted VHDL netlist generated from VHDL
+  RTL. 
+
+#- --============================= End ===============================--

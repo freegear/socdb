@@ -1,0 +1,241 @@
+ 
+****************************************
+Report : test
+          -coverage
+Design : Ebi
+Version: 2000.11-SP1
+Date   : Tue Dec 17 14:39:11 2002
+****************************************
+
+Warning: Only 11% of faults were considered in ATPG run. (UIT-22)
+
+Test program : `Ebi' 
+Depends on   : 
+
+Fault Coverage Report :
+
+    Detect   : Number of faults Detected
+    Aband    : Number of faults Abandoned
+    Tied     : Number of faults Tied High or Low
+    Redun    : Number of faults Redundant
+    Untest   : Number of faults Untested
+    Probl    : Number of faults Probably Detected
+    Unpro    : Number of faults Hyperactive/Oscillating
+    Total    : Number of faults Total
+    Coverage : Detect / (Total - Tied - Redund)
+
+Design/Cell          Detect  Aband  Tied Redun Untest Probl Unpro Total Coverage
+--------------------------------------------------------------------------------
+uEbiArbCntl/p_TimeCount1Comb/p_TimeCount1Comb/sub_293
+                         12      0     0     0      0     0     0    106  11.32%
+uEbiArbCntl/p_TimeCount2Comb/p_TimeCount2Comb/sub_306
+                         10      0     0     0      0     0     0    106   9.43%
+uEbiArbCntl/p_TimeCount3Comb/p_TimeCount3Comb/sub_319
+                         13      0     0     0      0     0     0    106  12.26%
+uEbiArbCntl             304      0     0     0      0     0     0   2760  11.01%
+uEbiMux                 459      0     0     0      0     0     0   4222  10.87%
+Ebi                     852      0     0     0      0     0     0   7742  11.00%
+ 
+****************************************
+Report : test
+          -configuration
+Design : Ebi
+Version: 2000.11-SP1
+Date   : Tue Dec 17 14:39:12 2002
+****************************************
+
+Test Methodology             : full_scan
+Scan style 'multiplexed_flip_flop' has signals:
+  test_scan_enable (optional)
+  test_scan_enable_inverted (optional)
+  test_scan_in 
+  test_scan_out (optional)
+  test_scan_out_inverted (optional)
+Existing Scan                : True
+
+Number of Scan Chains        : Default
+Clock Mixing                 : no_mix
+Rebalance Scan Chains        : False
+Make Multibits into Segments : True
+
+Add Lockups                  : False
+Dedicated Scan Ports         : True
+Isolate Hierarchical Outputs : False
+Replace                      : True
+Route                        : True
+Route signals                : serial, scan_enables
+Test_clock_by_system_clock   : False
+Internal_clocks              : False
+
+Disable                      : True
+Internal Tristates           : enable_one
+External Tristates           : disable_all
+Bidirectional Mode           : Input
+
+Physical                     : False
+
+ 
+****************************************
+Report : test
+          -scan_path
+Design : Ebi
+Version: 2000.11-SP1
+Date   : Tue Dec 17 14:39:12 2002
+****************************************
+
+  (*) indicates change of polarity in scan data
+  (c) indicates cell is scan controllable only
+  (o) indicates cell is scan observable only
+  (x) indicates cell cannot capture
+
+Complete scan chain (SCANINEBICLK --> SCANOUTEBICLK) contains 146 cells:
+
+  SCANINEBICLK	->
+  uEbiMux/nEBIEXTDATAENQ_reg[0]	->
+  uEbiMux/nEBIEXTDATAENQ_reg[1]	->
+  uEbiMux/nEBIEXTDATAENQ_reg[2]	->
+  uEbiMux/nEBIEXTDATAENQ_reg[3]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[0]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[1]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[2]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[3]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[4]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[5]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[6]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[7]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[8]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[9]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[10]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[11]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[12]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[13]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[14]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[15]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[16]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[17]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[18]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[19]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[20]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[21]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[22]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[23]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[24]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[25]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[26]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[27]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[28]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[29]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[30]	->
+  uEbiMux/EBIEXTDATAOUTQ_reg[31]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[0]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[1]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[2]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[3]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[4]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[5]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[6]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[7]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[8]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[9]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[10]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[11]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[12]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[13]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[14]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[15]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[16]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[17]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[18]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[19]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[20]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[21]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[22]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[23]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[24]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[25]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[26]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[27]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[28]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[29]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[30]	->
+  uEbiMux/EBIEXTADDROUTQ_reg[31]	->
+  uEbiArbCntl/EBIREQ3Q_reg	->
+  uEbiArbCntl/EBIREQ2Q_reg	->
+  uEbiArbCntl/EBIBACKOFF3_reg	->
+  uEbiArbCntl/EBIGNT1Q_reg	->
+  uEbiArbCntl/EBIBACKOFF1_reg	->
+  uEbiArbCntl/EBIREQ1Q_reg	->
+  uEbiArbCntl/EBIGNT2Q_reg	->
+  uEbiArbCntl/EBIGNT3Q_reg	->
+  uEbiArbCntl/EBIBACKOFF2_reg	->
+  uEbiArbCntl/HighPri_reg[0] (*)	->
+  uEbiArbCntl/HighPri_reg[1] (*)	->
+  uEbiArbCntl/HighPri_reg[2]	->
+  uEbiArbCntl/ArbPointer_reg[0]	->
+  uEbiArbCntl/ArbPointer_reg[2] (*)	->
+  uEbiArbCntl/GntedPort_reg[0] (*)	->
+  uEbiArbCntl/GntedPort_reg[1] (*)	->
+  uEbiArbCntl/GntedPort_reg[2]	->
+  uEbiArbCntl/EBITIMEOUTVAL3Q_reg[0] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL3Q_reg[1] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL3Q_reg[2] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL3Q_reg[3]	->
+  uEbiArbCntl/EBITIMEOUTVAL3Q_reg[4]	->
+  uEbiArbCntl/EBITIMEOUTVAL3Q_reg[5]	->
+  uEbiArbCntl/EBITIMEOUTVAL3Q_reg[6]	->
+  uEbiArbCntl/EBITIMEOUTVAL3Q_reg[7]	->
+  uEbiArbCntl/EBITIMEOUTVAL3Q_reg[8] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL3Q_reg[9] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL2Q_reg[0] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL2Q_reg[1] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL2Q_reg[2] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL2Q_reg[3]	->
+  uEbiArbCntl/EBITIMEOUTVAL2Q_reg[4]	->
+  uEbiArbCntl/EBITIMEOUTVAL2Q_reg[5]	->
+  uEbiArbCntl/EBITIMEOUTVAL2Q_reg[6]	->
+  uEbiArbCntl/EBITIMEOUTVAL2Q_reg[7]	->
+  uEbiArbCntl/EBITIMEOUTVAL2Q_reg[8] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL2Q_reg[9] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL1Q_reg[0] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL1Q_reg[1] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL1Q_reg[2] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL1Q_reg[3]	->
+  uEbiArbCntl/EBITIMEOUTVAL1Q_reg[4]	->
+  uEbiArbCntl/EBITIMEOUTVAL1Q_reg[5]	->
+  uEbiArbCntl/EBITIMEOUTVAL1Q_reg[6]	->
+  uEbiArbCntl/EBITIMEOUTVAL1Q_reg[7]	->
+  uEbiArbCntl/EBITIMEOUTVAL1Q_reg[8] (*)	->
+  uEbiArbCntl/EBITIMEOUTVAL1Q_reg[9] (*)	->
+  uEbiArbCntl/TimeOutCount3_reg[0]	->
+  uEbiArbCntl/TimeOutCount3_reg[1]	->
+  uEbiArbCntl/TimeOutCount3_reg[2]	->
+  uEbiArbCntl/TimeOutCount3_reg[3]	->
+  uEbiArbCntl/TimeOutCount3_reg[4]	->
+  uEbiArbCntl/TimeOutCount3_reg[5]	->
+  uEbiArbCntl/TimeOutCount3_reg[6]	->
+  uEbiArbCntl/TimeOutCount3_reg[7]	->
+  uEbiArbCntl/TimeOutCount3_reg[8]	->
+  uEbiArbCntl/TimeOutCount3_reg[9]	->
+  uEbiArbCntl/TimeOutCount2_reg[0]	->
+  uEbiArbCntl/TimeOutCount2_reg[1]	->
+  uEbiArbCntl/TimeOutCount2_reg[2]	->
+  uEbiArbCntl/TimeOutCount2_reg[3]	->
+  uEbiArbCntl/TimeOutCount2_reg[4]	->
+  uEbiArbCntl/TimeOutCount2_reg[5]	->
+  uEbiArbCntl/TimeOutCount2_reg[6]	->
+  uEbiArbCntl/TimeOutCount2_reg[7]	->
+  uEbiArbCntl/TimeOutCount2_reg[8]	->
+  uEbiArbCntl/TimeOutCount2_reg[9]	->
+  uEbiArbCntl/TimeOutCount1_reg[0]	->
+  uEbiArbCntl/TimeOutCount1_reg[1]	->
+  uEbiArbCntl/TimeOutCount1_reg[2]	->
+  uEbiArbCntl/TimeOutCount1_reg[3]	->
+  uEbiArbCntl/TimeOutCount1_reg[4]	->
+  uEbiArbCntl/TimeOutCount1_reg[5]	->
+  uEbiArbCntl/TimeOutCount1_reg[6]	->
+  uEbiArbCntl/TimeOutCount1_reg[7]	->
+  uEbiArbCntl/TimeOutCount1_reg[8]	->
+  uEbiArbCntl/TimeOutCount1_reg[9]	->
+  uEbiArbCntl/ArbPointer_reg[1]	->
+  SCANOUTEBICLK
+

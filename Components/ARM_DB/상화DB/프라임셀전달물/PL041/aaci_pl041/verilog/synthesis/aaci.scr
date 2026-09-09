@@ -1,0 +1,30 @@
+
+analyze -f verilog  AaciParams.v 
+analyze -f verilog  AaciRevAnd.v 
+analyze -f verilog  AaciFrmGen.v 
+analyze -f verilog  AaciSlot0Gen.v 
+analyze -f verilog  AaciFrmDec.v 
+analyze -f verilog  AaciTxCntl.v 
+analyze -f verilog  AaciRxCntl.v 
+analyze -f verilog  AaciTmgCntl.v 
+analyze -f verilog  AaciApbifReg.v 
+analyze -f verilog  AaciTxFCntl.v  
+analyze -f verilog  AaciDMATxFCntl.v  
+analyze -f verilog  AaciRxFCntl.v 
+analyze -f verilog  AaciDMARxFCntl.v 
+analyze -f verilog  AaciTxRegFile.v 
+analyze -f verilog  AaciRxRegFile.v 
+analyze -f verilog  AaciTxChannel.v 
+analyze -f verilog  AaciDMATChannel.v 
+analyze -f verilog  AaciRxChannel.v 
+analyze -f verilog  AaciDMARChannel.v 
+analyze -f verilog  AaciIntrGen.v 
+analyze -f verilog  AaciBtoPSync.v 
+analyze -f verilog  AaciPtoBSync.v 
+analyze -f verilog  Aaci.v
+
+elaborate Aaci
+current_design Aaci
+link
+
+write -f db -hier -out Aaci.gtech.db

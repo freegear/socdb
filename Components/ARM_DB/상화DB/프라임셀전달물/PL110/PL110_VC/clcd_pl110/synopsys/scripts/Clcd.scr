@@ -1,0 +1,240 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2002 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+-- -----------------------------------------------------------------------------
+-- 
+-- Version and Release Control Information:
+-- 
+-- File Name              : Clcd.scr.rca
+-- File Revision          : 1.2
+-- 
+-- Release Information    : PrimeCell(TM)-PL110-r1p2-00ltd0
+-- 
+-- -----------------------------------------------------------------------------
+-- Purpose :
+--           Synopsys synthesis timing constraint script for the 
+--           Colour LCD Contoller block.             
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the input and output delay     
+--           constraints for the non-AMBA I/O in the CLCD block. 
+--
+-- --=========================================================================*/
+
+/*****************************************************************************/
+/* CLCD CONTROLLER BLOCK-SPECIFIC TIMING PARAMETERS                          */
+/*****************************************************************************/
+
+/******************************************************************************/
+/* Input Delays. Constraints used are the same as AHB Input signals.          */
+/******************************************************************************/
+
+/***************************/
+/* Peripheral Inputs       */
+/***************************/
+
+/* Maximum allowable input delay on the non amba inputs (30% input setup time)*/
+tidnamax  = 0.7 * tclk
+
+/* Minimum input delay on the non amba inputs */
+tidnamin  = 0.0
+
+/***************/
+/* Scan Inputs */
+/***************/
+/* The input delay on the Scan related input signals has been set to         */
+/* a small non-zero value to avoid scan d-type "zero" hold time violations   */
+/* as a consequence of the application of the theoretical plus clock         */
+/* uncertainty.                                                              */
+tidscanmax = 0.3
+tidscanmin = 0.3
+
+/**********************/
+/* Peripheral Outputs */
+/**********************/
+
+/********************************/
+/* Standard Non-Amba Outputs    */
+/********************************/
+
+/* Maximum allowable output delay on non amba outputs (40% output valid time)*/
+todnamax     = 0.6 * tclk
+todclcdnamax = 0.6 * tclcdclk
+
+/* Minimum allowable output delay on the non amba outputs */
+todnamin    = 0
+
+/*********************************/
+/* Special Consideration Outputs */
+/*********************************/
+
+/* Maximum allowable output delay CLCP (clock) output (80% output valid time)*/
+todclcpnamax    = 0.2 * tclcdclk
+
+/* Minimum allowable output delay on the non amba outputs */
+todclcpnamin    = 0
+
+/****************/
+/* Scan Outputs */
+/****************/
+
+/* The output delay on the Scan related output signals has been set   */
+/* to a zero value to prevent addition of extra gates in these paths. */
+todscanmax = 0.0
+todscanmin = 0.0
+
+/******************************************************************************/
+/* INPUT CONSTRAINTS FOR NON-AMBA PORTS. Constraints used are same as input   */
+/* delays of AHB signals.                                                     */
+/******************************************************************************/
+
+/*********************/
+/* Peripheral Inputs */
+/*********************/
+
+/***************/
+/* Scan Inputs */
+/***************/
+
+set_input_delay -clock HCLK -min tidscanmin SCANENABLE
+set_input_delay -clock HCLK -max tidscanmax SCANENABLE
+
+set_input_delay -clock HCLK -min tidscanmin SCANINHCLK
+set_input_delay -clock HCLK -max tidscanmax SCANINHCLK
+
+set_input_delay -clock CLCDCLK -min tidscanmin SCANINCLCDCLK
+set_input_delay -clock CLCDCLK -max tidscanmax SCANINCLCDCLK
+
+set_input_delay -clock nCLCDCLK -min tidscanmin SCANINnCLCDCLK
+set_input_delay -clock nCLCDCLK -max tidscanmax SCANINnCLCDCLK
+
+
+/******************************************************************************/
+/* SCAN SIGNAL CONSTRAINTS                                                    */
+/******************************************************************************/
+
+set_drive 0 SCANENABLE
+/* Infinite drive strength Scan Enable signal */
+
+set_load 0 SCANENABLE
+/* Zero load Scan Enable signal */
+
+remove_driving_cell find(port, SCANENABLE)
+/* Set no driving cell on Scan Enable */
+
+set_dont_touch_network find(port, SCANENABLE)
+/* Preserve the Scan Enable net during optimisation */
+
+set_drive 0 SCANINHCLK
+/* Infinite drive strength Scan input signal */
+
+set_load 0 SCANINHCLK
+/* Zero load Scan input signal */
+
+remove_driving_cell find(port, SCANINHCLK)
+/* Set no driving cell on Scan input */
+
+set_dont_touch_network find(port, SCANINHCLK)
+/* Preserve the Scan input net during optimisation */
+
+set_drive 0 SCANINCLCDCLK
+/* Infinite drive strength Scan input signal */
+
+set_load 0 SCANINCLCDCLK
+/* Zero load Scan input signal */
+
+remove_driving_cell find(port, SCANINCLCDCLK)
+/* Set no driving cell on Scan input */
+
+set_dont_touch_network find(port, SCANINCLCDCLK)
+/* Preserve the Scan input net during optimisation */
+
+set_drive 0 SCANINnCLCDCLK
+/* Infinite drive strength Scan input signal */
+
+set_load 0 SCANINnCLCDCLK
+/* Zero load Scan input signal */
+
+remove_driving_cell find(port, SCANINnCLCDCLK)
+/* Set no driving cell on Scan input */
+
+set_dont_touch_network find(port, SCANINnCLCDCLK)
+/* Preserve the Scan input net during optimisation */
+
+/******************************************************************************/
+/* OUTPUT CONSTRAINTS FOR NON-AMBA PORTS. Constraints used are same as AHB    */
+/* output signals.                                                            */
+/******************************************************************************/
+
+/*****************************/
+/* Peripheral signal Outputs */
+/*****************************/
+
+/*  CLCDCLK clock domain outputs */
+
+set_output_delay -clock CLCDCLK -max todclcdnamax CLPOWER
+set_output_delay -clock CLCDCLK -min todnamin     CLPOWER
+
+set_output_delay -clock CLCDCLK -max todclcdnamax CLLP
+set_output_delay -clock CLCDCLK -min todnamin     CLLP
+
+set_output_delay -clock CLCDCLK -max todclcpnamax CLCP
+set_output_delay -clock CLCDCLK -min todclcpnamin CLCP
+
+set_output_delay -clock CLCDCLK -max todclcdnamax CLFP
+set_output_delay -clock CLCDCLK -min todnamin     CLFP
+
+set_output_delay -clock CLCDCLK -max todclcdnamax CLAC
+set_output_delay -clock CLCDCLK -min todnamin     CLAC
+
+set_output_delay -clock CLCDCLK -max todclcdnamax CLD
+set_output_delay -clock CLCDCLK -min todnamin     CLD
+
+set_output_delay -clock CLCDCLK -max todclcdnamax CLLE
+set_output_delay -clock CLCDCLK -min todnamin     CLLE
+
+/*  nCLCDCLK clock domain outputs */
+
+set_output_delay -clock nCLCDCLK -max todnamax CLFP
+set_output_delay -clock nCLCDCLK -min todnamin CLFP
+
+/*  HCLK clock domain outputs */
+
+set_output_delay -clock HCLK -max todnamax CLCDMBEINTR
+set_output_delay -clock HCLK -min todnamin CLCDMBEINTR
+
+set_output_delay -clock HCLK -max todnamax CLCDFUFINTR
+set_output_delay -clock HCLK -min todnamin CLCDFUFINTR
+
+set_output_delay -clock HCLK -max todnamax CLCDLNBUINTR
+set_output_delay -clock HCLK -min todnamin CLCDLNBUINTR
+
+set_output_delay -clock HCLK -max todnamax CLCDVCOMPINTR
+set_output_delay -clock HCLK -min todnamin CLCDVCOMPINTR
+
+set_output_delay -clock HCLK -max todnamax CLCDINTR
+set_output_delay -clock HCLK -min todnamin CLCDINTR
+
+set_output_delay -clock HCLK -max todnamax CLCDCLKSEL
+set_output_delay -clock HCLK -min todnamin CLCDCLKSEL
+
+/****************/
+/* Scan Outputs */
+/****************/
+
+set_output_delay -clock HCLK -min todscanmin SCANOUTHCLK
+set_output_delay -clock HCLK -max todscanmax SCANOUTHCLK
+
+set_output_delay -clock CLCDCLK -min todscanmin SCANOUTCLCDCLK
+set_output_delay -clock CLCDCLK -max todscanmax SCANOUTCLCDCLK
+
+set_output_delay -clock nCLCDCLK -min todscanmin SCANOUTnCLCDCLK
+set_output_delay -clock nCLCDCLK -max todscanmax SCANOUTnCLCDCLK
+
+/******************************** End of Clcd.scr *****************************/

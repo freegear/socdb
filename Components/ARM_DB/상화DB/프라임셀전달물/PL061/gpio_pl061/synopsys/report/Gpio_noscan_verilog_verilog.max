@@ -1,0 +1,496 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -nworst 10
+        -max_paths 10
+Design : Gpio
+Version: 2000.05
+Date   : Tue Sep 12 15:34:26 2000
+****************************************
+
+ * Some/all delay information is back-annotated.
+
+Operating Conditions: WCCOM   Library: cb25os163_max
+Wire Load Model Mode: enclosed
+
+  Startpoint: uGpioApbif/iGPIODATA_reg[7]
+              (rising edge-triggered flip-flop clocked by PCLK)
+  Endpoint: GPIOINTR (output port clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Gpio               16000                 cb25os163_max
+  GpioInt            8000                  cb25os163_max
+  GpioApbif          8000                  cb25os163_max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  uGpioApbif/iGPIODATA_reg[7]/CP (dfcrq1)                 0.00       0.00 r
+  uGpioApbif/iGPIODATA_reg[7]/Q (dfcrq1)                  0.63       0.63 f
+  uGpioApbif/GPIODATA[7] (GpioApbif)                      0.00       0.63 f
+  uGpioInt/GPIODATA[7] (GpioInt)                          0.00       0.63 f
+  uGpioInt/U154/ZN (mi02d1)                               0.48       1.11 r
+  uGpioInt/U134/Z (mx02d1)                                0.25       1.37 r
+  uGpioInt/U87/ZN (inv0d1)                                0.09       1.46 f
+  uGpioInt/U156/ZN (oai21d1)                              0.11       1.56 r
+  uGpioInt/U62/Z (mx02d1)                                 0.22       1.79 r
+  uGpioInt/U140/Z (or12d1)                                0.14       1.92 f
+  uGpioInt/U141/Z (mx02d1)                                0.33       2.25 f
+  uGpioInt/GPIORIS[7] (GpioInt)                           0.00       2.25 f
+  uGpioApbif/GPIORIS[7] (GpioApbif)                       0.00       2.25 f
+  uGpioApbif/U1073/Z (an02d1)                             0.21       2.46 f
+  uGpioApbif/U994/Z (mx02d1)                              0.40       2.86 f
+  uGpioApbif/U1063/ZN (inv0d1)                            0.12       2.98 r
+  uGpioApbif/U1138/Z (an04d1)                             0.30       3.27 r
+  uGpioApbif/U1103/ZN (nd03d2)                            0.17       3.44 f
+  uGpioApbif/GPIOINTR (GpioApbif)                         0.00       3.44 f
+  GPIOINTR (out)                                          0.00       3.44 f
+  data arrival time                                                  3.44
+
+  clock PCLK (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  clock uncertainty                                      -0.50       9.50
+  output external delay                                  -6.00       3.50
+  data required time                                                 3.50
+  --------------------------------------------------------------------------
+  data required time                                                 3.50
+  data arrival time                                                 -3.44
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.06
+
+
+  Startpoint: PADDR[9] (input port clocked by PCLK)
+  Endpoint: uGpioApbif/iPRDATA_reg[1]
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Gpio               16000                 cb25os163_max
+  GpioApbif          8000                  cb25os163_max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  input external delay                                    6.00       6.00 f
+  PADDR[9] (in)                                           0.03       6.03 f
+  U6/Z (bufbd1)                                           0.45       6.48 f
+  uGpioApbif/PADDR[9] (GpioApbif)                         0.00       6.48 f
+  uGpioApbif/U1047/ZN (inv0d1)                            0.39       6.87 r
+  uGpioApbif/U1125/Z (or12d1)                             0.24       7.11 r
+  uGpioApbif/U941/Z (or02d1)                              0.26       7.37 r
+  uGpioApbif/U921/Z (an12d1)                              0.49       7.87 f
+  uGpioApbif/U1145/Z (aoim22d1)                           0.23       8.09 r
+  uGpioApbif/U995/ZN (nd03d1)                             0.17       8.26 f
+  uGpioApbif/U1218/Z (mx02d1)                             0.30       8.56 f
+  uGpioApbif/U1219/ZN (aoi221d1)                          0.30       8.87 r
+  uGpioApbif/U990/Z (mx02d1)                              0.23       9.10 r
+  uGpioApbif/U1205/ZN (nd02d1)                            0.10       9.20 f
+  uGpioApbif/iPRDATA_reg[1]/D (dfcrq1)                    0.00       9.20 f
+  data arrival time                                                  9.20
+
+  clock PCLK (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  clock uncertainty                                      -0.50       9.50
+  uGpioApbif/iPRDATA_reg[1]/CP (dfcrq1)                   0.00       9.50 r
+  library setup time                                     -0.21       9.29
+  data required time                                                 9.29
+  --------------------------------------------------------------------------
+  data required time                                                 9.29
+  data arrival time                                                 -9.20
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.09
+
+
+  Startpoint: uGpioApbif/iGPIODATA_reg[6]
+              (rising edge-triggered flip-flop clocked by PCLK)
+  Endpoint: GPIOINTR (output port clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Gpio               16000                 cb25os163_max
+  GpioInt            8000                  cb25os163_max
+  GpioApbif          8000                  cb25os163_max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  uGpioApbif/iGPIODATA_reg[6]/CP (dfcrq1)                 0.00       0.00 r
+  uGpioApbif/iGPIODATA_reg[6]/Q (dfcrq1)                  0.64       0.64 f
+  uGpioApbif/GPIODATA[6] (GpioApbif)                      0.00       0.64 f
+  uGpioInt/GPIODATA[6] (GpioInt)                          0.00       0.64 f
+  uGpioInt/U69/ZN (mi02d1)                                0.48       1.12 r
+  uGpioInt/U67/Z (mx02d1)                                 0.25       1.37 r
+  uGpioInt/U68/ZN (inv0d1)                                0.09       1.46 f
+  uGpioInt/U122/ZN (nd02d1)                               0.09       1.55 r
+  uGpioInt/U124/Z (mx02d1)                                0.20       1.76 r
+  uGpioInt/U133/ZN (nd12d1)                               0.14       1.90 f
+  uGpioInt/U114/Z (mx02d1)                                0.32       2.22 f
+  uGpioInt/GPIORIS[6] (GpioInt)                           0.00       2.22 f
+  uGpioApbif/GPIORIS[6] (GpioApbif)                       0.00       2.22 f
+  uGpioApbif/U1072/Z (an02d1)                             0.21       2.43 f
+  uGpioApbif/U1057/Z (mx02d1)                             0.40       2.82 f
+  uGpioApbif/U1062/ZN (inv0d1)                            0.11       2.93 r
+  uGpioApbif/U1138/Z (an04d1)                             0.29       3.23 r
+  uGpioApbif/U1103/ZN (nd03d2)                            0.17       3.40 f
+  uGpioApbif/GPIOINTR (GpioApbif)                         0.00       3.40 f
+  GPIOINTR (out)                                          0.00       3.40 f
+  data arrival time                                                  3.40
+
+  clock PCLK (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  clock uncertainty                                      -0.50       9.50
+  output external delay                                  -6.00       3.50
+  data required time                                                 3.50
+  --------------------------------------------------------------------------
+  data required time                                                 3.50
+  data arrival time                                                 -3.40
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.10
+
+
+  Startpoint: uGpioApbif/iGPIODATA_reg[5]
+              (rising edge-triggered flip-flop clocked by PCLK)
+  Endpoint: GPIOINTR (output port clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Gpio               16000                 cb25os163_max
+  GpioInt            8000                  cb25os163_max
+  GpioApbif          8000                  cb25os163_max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  uGpioApbif/iGPIODATA_reg[5]/CP (dfcrq1)                 0.00       0.00 r
+  uGpioApbif/iGPIODATA_reg[5]/Q (dfcrq1)                  0.64       0.64 f
+  uGpioApbif/GPIODATA[5] (GpioApbif)                      0.00       0.64 f
+  uGpioInt/GPIODATA[5] (GpioInt)                          0.00       0.64 f
+  uGpioInt/U72/ZN (mi02d1)                                0.48       1.12 r
+  uGpioInt/U70/Z (mx02d1)                                 0.25       1.37 r
+  uGpioInt/U71/ZN (inv0d1)                                0.09       1.46 f
+  uGpioInt/U126/ZN (nd02d1)                               0.09       1.55 r
+  uGpioInt/U127/Z (mx02d1)                                0.20       1.76 r
+  uGpioInt/U132/ZN (nd12d1)                               0.14       1.89 f
+  uGpioInt/U116/Z (mx02d1)                                0.32       2.21 f
+  uGpioInt/GPIORIS[5] (GpioInt)                           0.00       2.21 f
+  uGpioApbif/GPIORIS[5] (GpioApbif)                       0.00       2.21 f
+  uGpioApbif/U1071/Z (an02d1)                             0.21       2.42 f
+  uGpioApbif/U1056/Z (mx02d1)                             0.40       2.82 f
+  uGpioApbif/U1061/ZN (inv0d1)                            0.11       2.93 r
+  uGpioApbif/U1138/Z (an04d1)                             0.28       3.21 r
+  uGpioApbif/U1103/ZN (nd03d2)                            0.17       3.38 f
+  uGpioApbif/GPIOINTR (GpioApbif)                         0.00       3.38 f
+  GPIOINTR (out)                                          0.00       3.38 f
+  data arrival time                                                  3.38
+
+  clock PCLK (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  clock uncertainty                                      -0.50       9.50
+  output external delay                                  -6.00       3.50
+  data required time                                                 3.50
+  --------------------------------------------------------------------------
+  data required time                                                 3.50
+  data arrival time                                                 -3.38
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.12
+
+
+  Startpoint: uGpioApbif/iGPIODATA_reg[4]
+              (rising edge-triggered flip-flop clocked by PCLK)
+  Endpoint: GPIOINTR (output port clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Gpio               16000                 cb25os163_max
+  GpioInt            8000                  cb25os163_max
+  GpioApbif          8000                  cb25os163_max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  uGpioApbif/iGPIODATA_reg[4]/CP (dfcrq1)                 0.00       0.00 r
+  uGpioApbif/iGPIODATA_reg[4]/Q (dfcrq1)                  0.64       0.64 f
+  uGpioApbif/GPIODATA[4] (GpioApbif)                      0.00       0.64 f
+  uGpioInt/GPIODATA[4] (GpioInt)                          0.00       0.64 f
+  uGpioInt/U75/ZN (mi02d1)                                0.48       1.12 r
+  uGpioInt/U73/Z (mx02d1)                                 0.25       1.37 r
+  uGpioInt/U74/ZN (inv0d1)                                0.09       1.46 f
+  uGpioInt/U129/ZN (nd02d1)                               0.09       1.55 r
+  uGpioInt/U130/Z (mx02d1)                                0.20       1.76 r
+  uGpioInt/U131/ZN (nd12d1)                               0.14       1.90 f
+  uGpioInt/U118/Z (mx02d1)                                0.32       2.22 f
+  uGpioInt/GPIORIS[4] (GpioInt)                           0.00       2.22 f
+  uGpioApbif/GPIORIS[4] (GpioApbif)                       0.00       2.22 f
+  uGpioApbif/U1070/Z (an02d1)                             0.21       2.43 f
+  uGpioApbif/U1055/Z (mx02d1)                             0.40       2.82 f
+  uGpioApbif/U1060/ZN (inv0d1)                            0.11       2.93 r
+  uGpioApbif/U1138/Z (an04d1)                             0.27       3.20 r
+  uGpioApbif/U1103/ZN (nd03d2)                            0.17       3.37 f
+  uGpioApbif/GPIOINTR (GpioApbif)                         0.00       3.37 f
+  GPIOINTR (out)                                          0.00       3.37 f
+  data arrival time                                                  3.37
+
+  clock PCLK (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  clock uncertainty                                      -0.50       9.50
+  output external delay                                  -6.00       3.50
+  data required time                                                 3.50
+  --------------------------------------------------------------------------
+  data required time                                                 3.50
+  data arrival time                                                 -3.37
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.13
+
+
+  Startpoint: uGpioAfm/GPINSync2_reg[7]
+              (rising edge-triggered flip-flop clocked by PCLK)
+  Endpoint: GPIOINTR (output port clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Gpio               16000                 cb25os163_max
+  GpioInt            8000                  cb25os163_max
+  GpioApbif          8000                  cb25os163_max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  uGpioAfm/GPINSync2_reg[7]/CP (dfcrq1)                   0.00       0.00 r
+  uGpioAfm/GPINSync2_reg[7]/Q (dfcrq1)                    0.57       0.57 f
+  uGpioAfm/GPINSync2[7] (GpioAfm)                         0.00       0.57 f
+  uGpioInt/GPINSync2[7] (GpioInt)                         0.00       0.57 f
+  uGpioInt/U154/ZN (mi02d1)                               0.47       1.04 r
+  uGpioInt/U134/Z (mx02d1)                                0.25       1.29 r
+  uGpioInt/U87/ZN (inv0d1)                                0.09       1.38 f
+  uGpioInt/U156/ZN (oai21d1)                              0.11       1.49 r
+  uGpioInt/U62/Z (mx02d1)                                 0.22       1.71 r
+  uGpioInt/U140/Z (or12d1)                                0.14       1.84 f
+  uGpioInt/U141/Z (mx02d1)                                0.33       2.17 f
+  uGpioInt/GPIORIS[7] (GpioInt)                           0.00       2.17 f
+  uGpioApbif/GPIORIS[7] (GpioApbif)                       0.00       2.17 f
+  uGpioApbif/U1073/Z (an02d1)                             0.21       2.38 f
+  uGpioApbif/U994/Z (mx02d1)                              0.40       2.78 f
+  uGpioApbif/U1063/ZN (inv0d1)                            0.12       2.90 r
+  uGpioApbif/U1138/Z (an04d1)                             0.30       3.20 r
+  uGpioApbif/U1103/ZN (nd03d2)                            0.17       3.37 f
+  uGpioApbif/GPIOINTR (GpioApbif)                         0.00       3.37 f
+  GPIOINTR (out)                                          0.00       3.37 f
+  data arrival time                                                  3.37
+
+  clock PCLK (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  clock uncertainty                                      -0.50       9.50
+  output external delay                                  -6.00       3.50
+  data required time                                                 3.50
+  --------------------------------------------------------------------------
+  data required time                                                 3.50
+  data arrival time                                                 -3.37
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.13
+
+
+  Startpoint: PADDR[6] (input port clocked by PCLK)
+  Endpoint: uGpioApbif/iPRDATA_reg[4]
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Gpio               16000                 cb25os163_max
+  GpioApbif          8000                  cb25os163_max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  input external delay                                    6.00       6.00 f
+  PADDR[6] (in)                                           0.02       6.02 f
+  uGpioApbif/PADDR[6] (GpioApbif)                         0.00       6.02 f
+  uGpioApbif/U1173/Z (buffd1)                             0.30       6.32 f
+  uGpioApbif/U1023/ZN (inv0d1)                            0.14       6.46 r
+  uGpioApbif/U985/ZN (nd03d1)                             0.34       6.80 f
+  uGpioApbif/U943/ZN (nr02d1)                             0.27       7.08 r
+  uGpioApbif/U944/ZN (inv0d1)                             0.14       7.22 f
+  uGpioApbif/U941/Z (or02d1)                              0.36       7.57 f
+  uGpioApbif/U921/Z (an12d1)                              0.67       8.25 r
+  uGpioApbif/U931/ZN (nd02d1)                             0.13       8.38 f
+  uGpioApbif/U955/Z (ora211d1)                            0.27       8.65 f
+  uGpioApbif/U1106/ZN (nd03d1)                            0.14       8.79 r
+  uGpioApbif/U1217/Z (mx02d1)                             0.22       9.01 r
+  uGpioApbif/U1211/ZN (nd13d1)                            0.17       9.19 r
+  uGpioApbif/iPRDATA_reg[4]/D (dfcrq1)                    0.00       9.19 r
+  data arrival time                                                  9.19
+
+  clock PCLK (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  clock uncertainty                                      -0.50       9.50
+  uGpioApbif/iPRDATA_reg[4]/CP (dfcrq1)                   0.00       9.50 r
+  library setup time                                     -0.18       9.32
+  data required time                                                 9.32
+  --------------------------------------------------------------------------
+  data required time                                                 9.32
+  data arrival time                                                 -9.19
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.13
+
+
+  Startpoint: PADDR[9] (input port clocked by PCLK)
+  Endpoint: uGpioApbif/iPRDATA_reg[5]
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Gpio               16000                 cb25os163_max
+  GpioApbif          8000                  cb25os163_max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  input external delay                                    6.00       6.00 f
+  PADDR[9] (in)                                           0.03       6.03 f
+  U6/Z (bufbd1)                                           0.45       6.48 f
+  uGpioApbif/PADDR[9] (GpioApbif)                         0.00       6.48 f
+  uGpioApbif/U1047/ZN (inv0d1)                            0.39       6.87 r
+  uGpioApbif/U1125/Z (or12d1)                             0.24       7.11 r
+  uGpioApbif/U941/Z (or02d1)                              0.26       7.37 r
+  uGpioApbif/U921/Z (an12d1)                              0.49       7.87 f
+  uGpioApbif/U926/ZN (nd02d1)                             0.17       8.04 r
+  uGpioApbif/U1146/ZN (nd02d1)                            0.13       8.17 f
+  uGpioApbif/U951/ZN (aoi211d1)                           0.26       8.43 r
+  uGpioApbif/U1100/ZN (nd13d1)                            0.18       8.60 f
+  uGpioApbif/U1216/Z (mx02d1)                             0.31       8.91 f
+  uGpioApbif/U1210/ZN (nd13d1)                            0.23       9.14 f
+  uGpioApbif/iPRDATA_reg[5]/D (dfcrq1)                    0.00       9.14 f
+  data arrival time                                                  9.14
+
+  clock PCLK (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  clock uncertainty                                      -0.50       9.50
+  uGpioApbif/iPRDATA_reg[5]/CP (dfcrq1)                   0.00       9.50 r
+  library setup time                                     -0.23       9.27
+  data required time                                                 9.27
+  --------------------------------------------------------------------------
+  data required time                                                 9.27
+  data arrival time                                                 -9.14
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.13
+
+
+  Startpoint: PSEL (input port clocked by PCLK)
+  Endpoint: uGpioApbif/iPRDATA_reg[1]
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Gpio               16000                 cb25os163_max
+  GpioApbif          8000                  cb25os163_max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  input external delay                                    6.00       6.00 f
+  PSEL (in)                                               0.03       6.03 f
+  U18/Z (bufbd1)                                          0.20       6.23 f
+  uGpioApbif/PSEL (GpioApbif)                             0.00       6.23 f
+  uGpioApbif/U965/Z (or13d1)                              0.52       6.75 r
+  uGpioApbif/U1010/ZN (inv0d1)                            0.20       6.95 f
+  uGpioApbif/U1125/Z (or12d1)                             0.12       7.07 r
+  uGpioApbif/U941/Z (or02d1)                              0.26       7.33 r
+  uGpioApbif/U921/Z (an12d1)                              0.49       7.82 f
+  uGpioApbif/U1145/Z (aoim22d1)                           0.23       8.05 r
+  uGpioApbif/U995/ZN (nd03d1)                             0.17       8.22 f
+  uGpioApbif/U1218/Z (mx02d1)                             0.30       8.52 f
+  uGpioApbif/U1219/ZN (aoi221d1)                          0.30       8.82 r
+  uGpioApbif/U990/Z (mx02d1)                              0.23       9.05 r
+  uGpioApbif/U1205/ZN (nd02d1)                            0.10       9.15 f
+  uGpioApbif/iPRDATA_reg[1]/D (dfcrq1)                    0.00       9.15 f
+  data arrival time                                                  9.15
+
+  clock PCLK (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  clock uncertainty                                      -0.50       9.50
+  uGpioApbif/iPRDATA_reg[1]/CP (dfcrq1)                   0.00       9.50 r
+  library setup time                                     -0.21       9.29
+  data required time                                                 9.29
+  --------------------------------------------------------------------------
+  data required time                                                 9.29
+  data arrival time                                                 -9.15
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.14
+
+
+  Startpoint: PADDR[6] (input port clocked by PCLK)
+  Endpoint: uGpioApbif/iPRDATA_reg[1]
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Gpio               16000                 cb25os163_max
+  GpioApbif          8000                  cb25os163_max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock PCLK (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  input external delay                                    6.00       6.00 f
+  PADDR[6] (in)                                           0.02       6.02 f
+  uGpioApbif/PADDR[6] (GpioApbif)                         0.00       6.02 f
+  uGpioApbif/U1173/Z (buffd1)                             0.30       6.32 f
+  uGpioApbif/U1023/ZN (inv0d1)                            0.14       6.46 r
+  uGpioApbif/U985/ZN (nd03d1)                             0.34       6.80 f
+  uGpioApbif/U943/ZN (nr02d1)                             0.27       7.08 r
+  uGpioApbif/U944/ZN (inv0d1)                             0.14       7.22 f
+  uGpioApbif/U941/Z (or02d1)                              0.36       7.57 f
+  uGpioApbif/U925/ZN (nr02d1)                             0.61       8.19 r
+  uGpioApbif/U939/ZN (nd02d1)                             0.14       8.33 f
+  uGpioApbif/U995/ZN (nd03d1)                             0.16       8.49 r
+  uGpioApbif/U1218/Z (mx02d1)                             0.22       8.71 r
+  uGpioApbif/U1219/ZN (aoi221d1)                          0.07       8.77 f
+  uGpioApbif/U990/Z (mx02d1)                              0.32       9.10 f
+  uGpioApbif/U1205/ZN (nd02d1)                            0.09       9.19 r
+  uGpioApbif/iPRDATA_reg[1]/D (dfcrq1)                    0.00       9.19 r
+  data arrival time                                                  9.19
+
+  clock PCLK (rise edge)                                 10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  clock uncertainty                                      -0.50       9.50
+  uGpioApbif/iPRDATA_reg[1]/CP (dfcrq1)                   0.00       9.50 r
+  library setup time                                     -0.18       9.32
+  data required time                                                 9.32
+  --------------------------------------------------------------------------
+  data required time                                                 9.32
+  data arrival time                                                 -9.19
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.14
+
+

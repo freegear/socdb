@@ -1,0 +1,472 @@
+.TH sdfremap 1 "Revision 1" "Version 2"
+.SH NAME
+.B sdfremap
+- Remap data in an SDF file into a form where it may be annotated into
+an ARM Design Simulation Model (DSM).
+.SH SYNOPSIS
+.B sdfremap
+[
+.B -v
+] [
+.B -q
+] [
+.B -h
+] [
+.B -V
+] [
+.B -n
+] [
+.B -d
+] [
+.BI -p file
+] [
+.BI -l file
+] [
+.BI -L dir
+] [
+.BR -min | -typ | -max
+]
+.B -cell
+.I cellname
+.RB ...
+[
+.I sdfin
+[
+.I sdfout
+]]
+
+.SH DESCRIPTION
+.LP
+
+.B SDF
+files produced as part of a back-annotation process are often
+unsuitable for loading into ARM simulation models. The SDF annotators
+in use today are typically very strict about the format of the files
+they will annotate, and many tools either cannot, or are not
+configured to, produce files of precisely the same structure as the
+SDF template file.
+
+.B sdfremap
+acts as a filter on such SDF files, replacing
+.B CELL
+blocks for which a DSM SDF template file has been specified with
+blocks suitable for annotating into the model for the given template, and passing other
+.B CELL
+blocks through unchanged. It does this by scanning the original
+.B CELL
+block for
+.B IOPATH
+and
+.B TIMINGCHECK
+entries that could apply to a particular entry in the template file,
+and then applying a set of heuristics to chose the best fit for the
+template from the original SDF file. The tool then outputs a new
+entry using the structure from the template file, and the timing values
+from the SDF file.
+
+If timing data for a particular template entry cannot be found in the
+original file, it may optionally be inserted from a
+.B ARM timing defaults
+.RB ( .TDEF )
+file.
+
+Each decision taken is recorded in a log file, which is intended to
+form part of an audit trail within the back annotation flow. This file
+lists each line in the template along with all the lines in the
+original SDF file that were considered as possible matches for that line.
+
+In cases of ambiguity, the matching process can be refined on a per
+cell basis through a user specified preferences file.
+
+.SH OPTIONS
+.TP 20
+.B -v
+Produce verbose output.
+.TP 20
+.B -q
+Run quietly.
+.TP 20
+.B -h
+Display help.
+.TP 20
+.B -V
+Display version number.
+.TP 20
+.B -n
+Don't look in timing defaults file (repeatable).
+.TP 20
+.B -d
+Do look in timing defaults file (repeatable).
+.TP 20
+.BI -p file
+Read preferences for this
+.I cell
+from
+.I file
+(repeatable).
+.TP 20
+.BI -l file
+Record audit log in
+.I file
+(default is
+.BR sdfremap.log )
+.TP 20
+.BI -L dir
+Add directory
+.I dir
+to search path for cell templates (not currently implemented).
+.TP 20
+.B -min
+Look for defaults in
+.IB cell _min.tdef
+before looking in
+.IB cell .tdef
+.TP 20
+.B -typ
+Look for defaults in
+.IB cell _typ.tdef
+before looking in
+.IB cell .tdef
+.TP 20
+.B -max
+Look for defaults in
+.IB cell _max.tdef
+before looking in
+.IB cell .tdef
+.TP 20
+.BI "-cell " cell
+Read template from
+.IB cell .sdft
+and use for remapping. This option may be repeated to allow remapping
+of a single SDF file containing multiple cell types.
+.TP 20
+.I sdfin
+SDF file to remap. If not specified, the tool works on the standard
+input.
+.TP 20
+.I sdfout
+File to write remapped SDF file to. If not specified, the tool writes
+on the standard output.
+
+.LP
+Arguments marked as
+.B (repeatable)
+may be repeated before each
+.B -cell
+option. The
+.B -n
+and
+.B -d
+options persist across
+.B -cell
+options. The other repeatable options apply to the next
+.B -cell
+only.
+
+.SH REMAPPINGS
+.LP
+The tool works by going through
+.B DELAY
+and
+.B TIMINGCHECK
+entries in the template, line by line, and searching for lines in the
+original
+.B CELL
+that could apply to the template entry. The basic selection criterion
+is that both ports (or the single port for a
+.B WIDTH
+or
+.B PERIOD
+check) must match the template. For
+.B TIMINGCHECK
+entries, the check must also be of the same, or be a superset of the
+check in question. For example, a
+.B SETUPHOLD
+check is a superset of a
+.B SETUP
+check.
+.B SETUPHOLD
+checks are considered as seperate
+.B SETUP
+and
+.B HOLD
+checks unless otherwise specified in the
+.B preferences file
+(see below).
+
+If more than one entry could apply to the template, they are ranked
+according to a scoring system, based on active edges.
+.B TIMINGCHECK
+entries may optionally be ranked based on how closely the check type
+resembles the template (see the section on the
+.B preferences file
+below for more information). In the case of
+.B IOPATH
+entries, if two or more matches are ranked first, then a second round
+of scoring is used for those entries, based on their
+.B COND
+fields.
+
+If, after initial attempts to find a match, there are still multiple
+possible candidates, the timing arc with the most pessimistic time
+value is used. For
+.B IOPATH
+timing arcs, where up to six transition-dependent timing values may be
+present, the average (mean) value of the times given is used to
+determine the most pessimistic arc.
+
+If no match can be found, information can be taken from a timing
+defaults
+.RB ( .TDEF )
+file, if available, otherwise the entry's timing values are left
+blank.
+
+When matching
+.B IOPATH
+entries using 
+.B COND
+fields, the program attempts to parse the conditions and compare parse
+trees. If the conditions evaluate to give the same result, but are not
+written in the same way, the program may not be able to determine that
+they are equivalent. In this case, the equivalence of certain
+conditions may be specified in a
+.B condition equivalence block
+in the preferences file for the
+.B CELL
+in question. See the section on 
+.B preferences files
+below for more information.
+
+.SH PREFERENCES FILE
+.LP
+The precise behavior of
+.B sdfremap
+can be configurfed on a per-template cell basis by the use of a
+preferences file. Preferences files are identified on the command line
+using the
+.BI -p filename
+option prior to the cell to which the given
+.I filename
+applies. This option may be specified once for each
+.B cell.
+.LP
+The format of the preferences file is straightforward. It consists of
+a number of directives, each of which is specified by including the
+keyword in angle-brackets, i.e.
+.BI < keyword >.
+Certain directive types consist of nothing but the
+.BI < keyword >
+line while others are followed by one or more paramaters. Currently
+supported directives are:
+.TP 20
+.B <celleq>
+This directive is followed by one or more quoted strings, each on a line
+by itself. Each string specified an alias for the
+.B CELLTYPE
+entry in the template, that is cells whith a
+.B CELLTYPE
+which is the same as the template, or one of the specified aliases,
+will be remapped to that template.
+
+.TP 20
+.B <condeq>
+This directive is followed by one or more lines of the form,
+.RI `` sourcecond ''
+.B =
+.RI `` templatecond ''.
+Each one of these entries indicates that any instance of
+.I sourcecond
+in a 
+.B COND
+block of an
+.B IOPATH
+entry in the original SDF is to be regarded as equivalent to the
+given
+.I templatecond
+in the template file. Other than whitespace, the conditions in the
+preferences file must appear exactly as they do in the source SDF and
+template files. A condition specified as equivalent in this way is
+regarded as a better match as two conditions which have been
+determined as being equivalent by the tool itself. The preferences
+file can therefore be used to "overrule" the tool in certain
+instances.
+
+.TP 20
+.B <emit_mipd>
+If present, the
+.B <emit_mipd>
+directive will ensure that any
+.B INTERCONNECT
+delays in remapped cells are preserved and emitted in the output. By
+default,
+.B INTERCONNECT
+delays are ignored in remapped cells (but not in other cells).
+
+.TP 20
+.B <emit_retain>
+If present, the
+.B <emit_retain>
+directive will ensure that any
+.B IOPATH RETAIN
+entries in remapped cells are preserved and emitted in the output. By
+default, the
+.B RETAIN
+portion of
+.B IOPATH
+entries are discarded in remapped cells (but not in other cells).
+
+.TP 20
+.B <nomerge>
+By default, multiple
+.B IOPATH
+entries with the same set of qualifying conditions, vector ranges and
+edge specifications will be treated as a single entry. For example,
+the following two lines will be treated as a single IOPATH:
+
+.B (IOPATH Q (posedge CLK) (1) (2) () () () ())
+
+and
+
+.B (IOPATH Q (posedge CLK) () () (3) (4) () ())
+
+These will be treated as though the input contained:
+
+.B (IOPATH Q (posedge CLK) (1) (2) (3) (4) () ())
+
+Specifying the
+.B <nomerge>
+directive disables this behavior and causes all
+.B IOPATH
+entries to be treated individually.
+
+.TP 20
+.B <pathtrails>
+If present, the
+.B <pathtrails>
+directive will cause the
+.B
+INSTANCE
+paths in remapped cells to have the module/entity name of the timing
+shell added to them. Use this directive if the input SDF cells
+reference a higher level of hierarchy than the timing shell.
+
+.TP 20
+.B <zero_negatives>
+If present, the
+.B <zero_negatives>
+directive will cause negative numbers in timimg checks to be set to
+zero in remapped
+.B CELL
+blocks and a warning emited in the log file. Negtiave numbers in
+timing checks are preserved by default.
+
+.TP 20
+.B <pessim>
+This directive is followed (on a newline) by one of the keywords,
+.BR min ,
+.B typ
+or
+.BR max .
+It determines which process-speed (
+.BR min imum,
+.BR typ ical
+or
+.BR max imum)
+is used for calculating the most pessimistic timing value in cases
+where there are multiple potential matches for an entry in the
+template. The default is for the
+.BR typ ical
+delay to be used. This entry is ignored for single-value SDF.
+
+.TP 20
+.B <sh_nosplit>
+If present, the
+.B <sh_nosplit>
+directive will cause the tool to attempt to match
+.B SETUPHOLD
+arcs in the template with
+.B SETUPHOLD
+arcs in the input file, and only consider them as seperate
+.B SETUP
+and
+.B HOLD
+arcs if this fails. This mimics the behavior of version
+.B 1.x
+of
+.BR sdfremap .
+Note that if this facility is enabled and multiple
+.B SETUPHOLD
+arcs are identified as suitable matches for a
+.B SETUPHOLD
+arc in the template, then the width of the setup and hold window is
+used to determine which entry is the most pessimistic.
+
+.TP 20
+.B <checktype>
+If present, the
+.B <checktype>
+directive will cause the tool to treat timing checks of the same exact
+type as the template as closer matches for the template than
+"compatible" arcs, even if the "compatible" arc has more pessimistic
+timing behavior. For example, a
+.B SETUP
+entry in the input file will be preferred over a
+.B RECOVERY
+or the setup portion of a
+.B SETUPHOLD
+arc when matching a
+.B SETUP
+arc in the template file. By default, all "compatible" timing checks
+are treated equally. This feature mimics the behavior of version
+.B 1.x
+of
+.BR sdfremap .
+
+.SH FILES
+.TP 30
+.IB cell .sdft
+SDF template file for
+.IR cell .
+.TP 30
+.IB cell .tdef
+Timing defaults file for 
+.IR cell .
+.TP 30
+.IB cell _min.tdef
+Timing defaults file containing minimum times for 
+.IR cell .
+.TP 30
+.IB cell _typ.tdef
+Timing defaults file containing typical times for 
+.IR cell .
+.TP 30
+.IB cell _max.tdef
+Timing defaults file containing maximum times for 
+.IR cell .
+.TP 30
+.I preferences
+Preferences file for next
+.IR cell .
+.TP 30
+.B sdfremap.log
+Audit log  created by the remapping process.
+.SH EXAMPLES
+.LP
+.B % sdfremap -n -v -pcellprefs -cell MYCELL in.sdf out.sdf
+
+Remaps instances of the cell found in
+.B MYCELL.sdft
+in
+.BR in.sdf ,
+placing the result in
+.BR out.sdf .
+.SH BUGS
+.LP
+Certain SDF 3.0/4.0 constructs are not supported and will cause an
+error if present in the input for remapped cells (but not other
+cells). Perhaps most significantly,
+.B CONDELSE
+is not supported. Delay values which feature pulse-rejection limits
+and X filter limits are also not supported in remapped cells.
+.SH SEE ALSO
+sdfgen(1)

@@ -1,0 +1,38 @@
+#! /bin/sh
+#-------------------------------------------------------------------------------
+#-  This confidential and proprietary software may be used only as
+#-  authorised by a licensing agreement from ARM Limited
+#-    (C) COPYRIGHT 1998 ARM Limited
+#-        ALL RIGHTS RESERVED
+#-  The entire notice above must be reproduced on all authorised
+#-  copies and copies may only be made to the extent permitted
+#-  by a licensing agreement from ARM Limited.
+#-------------------------------------------------------------------------------
+#-  
+#-  Version and Release Control Information:
+#-  
+#-  File Name              : cpy_vect,v
+#-  File Revision          : 1.2
+#-  
+#-  Release Information    : PL050-REL1v1
+#-  
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# Purpose : Script to generate .bif or .tif file
+#-------------------------------------------------------------------------------
+
+echo "Env variable VECT_TYPE currently set to \" $VECT_TYPE \" "
+
+
+if [ "$VECT_TYPE" = TIF ]
+then
+    echo "Creating $1/$2.tif" 
+    cp $1/$2.tmp $1/$2.tif
+else
+    echo "Creating $1/$2.bif" 
+    sed 's/$RCSfile/RCSfile/g' $1/$2.tmp > $1/$2.tmp1
+    sed 's/$Revision/Revision/g' $1/$2.tmp1 > $1/$2.tmp
+    sed 's/$State/State/g' $1/$2.tmp > $1/$2.bif
+fi
+ 

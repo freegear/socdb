@@ -1,0 +1,58 @@
+/*------------------------------------------------------------------------------
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 1999-2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--------------------------------------------------------------------------------
+--  
+-- Version and Release Control Information:
+-- 
+-- File Name           : apb_master.scr,v
+-- File Revision       : 1.1
+-- 
+-- Release Information : ADK_REL1v1
+-- 
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- Purpose : Synopsys synthesis script
+--           to define AMBA APB timing constraints.
+--           Located in the synopsys/scr_common directory.
+--           Called by master compile script.
+------------------------------------------------------------------------------*/
+
+/******************************************************************************/
+/* INPUT CONSTRAINTS                                                          */
+/******************************************************************************/
+
+/* Input constraints are not set on PRDATA for the current version of
+   the APBif as it is passed directly through to HRDATA.  These
+   constraints should be re-enabled if the APBif is modified to add
+   registers in this path */
+
+/* set_input_delay -clock HCLK -min tholdmax     PRDATA */
+/* set_input_delay -clock HCLK -max tidmaxprdata PRDATA */
+
+/******************************************************************************/
+/* OUTPUT CONSTRAINTS                                                         */
+/******************************************************************************/
+
+set_output_delay -clock HCLK -min tholdmin      PWDATA
+set_output_delay -clock HCLK -max todmaxpwdata  PWDATA
+
+set_output_delay -clock HCLK -min tholdmin      PENABLE
+set_output_delay -clock HCLK -max todmaxpenable PENABLE
+
+set_output_delay -clock HCLK -min tholdmin      PSEL*
+set_output_delay -clock HCLK -max todmaxpsel    PSEL*
+
+set_output_delay -clock HCLK -min tholdmin      PADDR
+set_output_delay -clock HCLK -max todmaxpaddr   PADDR
+
+set_output_delay -clock HCLK -min tholdmin      PWRITE
+set_output_delay -clock HCLK -max todmaxpwrite  PWRITE
+
+/************************************* End ************************************/

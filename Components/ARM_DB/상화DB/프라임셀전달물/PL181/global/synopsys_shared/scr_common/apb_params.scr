@@ -1,0 +1,201 @@
+/* --=================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- ---------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : apb_params.scr.rca
+-- File Revision          : 1.2
+--
+-- Release Information    : PrimeCell(TM)-GLOBAL-REL1v1
+--
+-- ---------------------------------------------------------------------
+-- Purpose : 
+--           Synopsys synthesis script for AMBA APB parameters. 
+--
+--           Located in the synopsys_shared/scr_common directory.    
+--
+-- --=================================================================*/
+
+/*** This file contains a generic set of parameters for synthesis   ***/
+/*** of APB modules. Parameters for both the APB bridge and the APB ***/
+/*** slaves are contained within the same file, thus making it      ***/
+/*** simple to adjust the clock budget between output valid and     ***/
+/*** input setup times.                                             ***/
+/***                                                                ***/
+/*** A number of timing parameters are defined for each AMBA module ***/
+/*** and these use the following nomenclature:                      ***/
+/***                                                                ***/
+/***  Tis - Input setup time                                        ***/
+/***  Tih - Input hold time                                         ***/
+/***  Tov - Output valid time                                       ***/
+/***  Toh - Output hold time                                        ***/
+/***                                                                ***/
+/*** For the purpose of synthesis this script takes a target set of ***/
+/*** parameters and converts them into those suitable to constrain  ***/
+/*** the synthesis. For synthesis the following nomenclature is     ***/
+/**  used                                                           ***/
+/***                                                                ***/
+/***  Tidmin - Input delay minimum                                  ***/
+/***  Tidmax - Input delay maximum                                  ***/
+/***  Todmin - Output delay minimum                                 ***/
+/***  Todmax - Output delay maximum                                 ***/
+/***                                                                ***/
+/*** Conversion between the target module parameters and the        ***/
+/*** synthesis constraints is done using the following equations:   ***/
+/***                                                                ***/
+/***  Tidmax = Tclk - Tis                                           ***/
+/***  Tidmin = Tih                                                  ***/
+/***  Todmax = Tclk - Tov                                           ***/
+/***  Todmin = Toh                                                  ***/
+/***                                                                ***/
+
+/**********************************************************************/
+/* APB clock parameters                                               */
+/**********************************************************************/
+
+/*** tclk is the period of PCLK and by default all other            ***/
+/*** parameters are automatically derived from                      ***/
+/*** this parameter. The PCLK period is allocated as follows:       ***/
+/***                                                                ***/
+/***      20% - Output valid time                                   ***/
+/***      40% - Input setup time                                    ***/
+/***                                                                ***/
+/*** These values are a compromise to allow single pass trial       ***/
+/*** synthesis which meets constraints of different bridge designs  ***/
+/*** having logic either before or after the registers for block    ***/
+/*** input/outputs. Where the APB bridge has registered outputs the ***/
+/*** constraints can be written with much smaller maximum input     ***/
+/*** delay, achieving better area results from synthesis.           ***/
+
+/*** It is strongly recommended that these constraints are modified ***/
+/*** to suit the implementation of the accompanying APB bridge.     ***/
+
+/*** NOTE: These constraints are for Rev.E of the AMBA APB          ***/
+/***       specification.                                           ***/
+
+/* HIGH phase of clock */
+/* tclkh is defined in the <periph>.cmd file */
+
+/* Clock LOW phase equals clock HIGH phase */
+tclkl = tclkh
+
+/* Clock period of PCLK */
+tclk  = tclkl + tclkh     
+
+/* Clock skew */
+tpskew = 0.2      /* plus skew set to 0.2 ns - for hold checks   */
+tmskew = 0.5      /* minus skew set to 0.5 ns - for setup checks */
+
+/**********************************************************************/
+/* APB slave parameters                                               */
+/**********************************************************************/
+
+/* Input setup and hold times */
+
+tispenable    = 0.40 * tclk      /* PENABLE */
+tihpenable    = 0
+
+tispsel       = 0.40 * tclk      /* PSEL */
+tihpsel       = 0
+
+tispa         = 0.40 * tclk      /* PADDR */
+tihpa         = 0
+
+tispw         = 0.40 * tclk      /* PWRITE */
+tihpw         = 0
+
+tispdw        = 0.40 * tclk      /* PWDATA */
+tihpdw        = 0
+
+/* Output valid and hold */
+
+tovpdr        = 0.20 * tclk      /* PRDATA */
+tohpdr        = 0
+
+/* Convert the above into synthesis parameters */
+
+tidmaxpenable = tclk - tispenable
+tidminpenable = tihpenable
+
+tidmaxpsel    = tclk - tispsel
+tidminpsel    = tihpsel
+
+tidmaxpa      = tclk - tispa
+tidminpa      = tihpa
+
+tidmaxpw      = tclk - tispw
+tidminpw      = tihpw
+
+tidmaxpdw     = tclk - tispdw
+tidminpdw     = tihpdw
+
+todmaxpdr     = tclk - tovpdr
+todminpdr     = tohpdr
+
+/**********************************************************************/
+/* APB bridge parameters                                              */
+/**********************************************************************/
+
+/* Input setup and hold times */
+
+tispdr        = 0.40 * tclk
+tihpdr        = 0
+
+/* Output valid and hold times    */
+/* All output hold times are zero */
+
+tovpenable    = 0.40 * tclk
+tohpenable    = 0
+
+tovpsel       = 0.40 * tclk
+tohpsel       = 0
+
+tovpa         = 0.40 * tclk
+tohpa         = 0
+
+tovpw         = 0.40 * tclk
+tohpw         = 0
+
+tovpdw        = 0.40 * tclk
+tohpdw        = 0
+
+/* Convert the above into synthesis parameters */
+
+tidmaxpdr     = tclk - tispdr
+tidminpdr     = tihpdr
+
+todmaxpenable = tclk - tovpenable
+todminpenable = tohpenable
+
+todmaxpsel    = tclk - tovpsel
+todminpsel    = tohpsel
+
+todmaxpa      = tclk - tovpa
+todminpa      = tohpa
+
+todmaxpw      = tclk - tovpw
+todminpw      = tohpw
+
+todmaxpdw     = tclk - tovpdw
+todminpdw     = tohpdw
+
+/**********************************************************************/
+/* Reset signal parameters                                            */
+/* These should be confirmed against the specification of             */
+/* the reset controller.                                              */
+/**********************************************************************/
+
+tovnres       = 0.40 * tclk
+tohnres       = 0.10 * tclk
+
+tidmaxnres    = tovnres
+tidminnres    = tohnres
+
+/*********************** End of apb_params.scr ************************/

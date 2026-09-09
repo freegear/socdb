@@ -1,0 +1,103 @@
+.TH sdfgen 1 "Revision 0" "ModelGen 2.0"
+.SH NAME
+.B sdfgen
+- Produce an SDF file for use with ModelGen models.
+.SH SYNOPSIS
+.B sdfgen
+[
+.B -q
+] [
+.B -f
+]
+.I tdef_file
+.I sdft_file
+.I sdf_file
+.SH DESCRIPTION
+.LP
+.B sdfgen
+produces a standard delay format (SDF) file from an SDF template file
+and a timing definitions (TDEF) file. SDF files are used to
+back-annotate models which use VITAL or Verilog HDL timing
+shells. Since the timing behavior is derived from the structure of the
+SDF file, unlike a C timing shell where the timing behavior is bound
+to specific timing parameter names, timing shells using SDF files are
+more flexible, but generally much slower than C timing shells.
+.LP
+The SDF template file has the same syntax as an SDF file, but instead
+of actual timing values, it uses the names of timing parameters, as
+specified in the
+.IB device .td
+file as place holders.
+.B sdfgen
+replaces these by matching the parameter name with a parameter/value
+pair in the
+.IB device .tdef
+file. Other than for producing an SDF file from the template and TDEF
+files, the names of timing parameters have no relevance to a model
+back-annotated from an SDF file. The final build directory will
+contain an SDF template file, as well as a copy of the
+.IB revision / device .tdef
+file. The parameter names and values may be edited freely in these
+files, and a new SDF file produced without the model requiring a
+re-target or re-compilation.
+.LP
+The SDF template file is produced automatically during targeting by
+the
+.B MG_target
+tool. If a
+.IB device .tdef
+file exists in the
+.I revision
+directory,
+.B sdfgen
+will be invoked automatically by
+.B MG_target
+to produce a default SDF file, from which the model may be
+back-annotated.
+.SH OPTIONS
+.TP 20
+.B -q
+Run quietly. The default is verbose operation.
+.TP 20
+.B -f
+Force the generation of
+.IR sdf_file .
+By default, the tool will not overwrite an existing file.
+.TP 20
+.I tdef_file
+The path name of the TDEF file containing the timing parameter/value
+pairs.
+.TP 20
+.I sdft_file
+The path name of the SDF template file to use.
+.TP 20
+.I sdf_file
+The name of the SDF file to generate.
+.SH DISTRIBUTION
+.LP
+.B sdfgen
+and this manual page may be distributed unchanged with any SDF
+back-annotatable model produced by ModelGen.
+.B sdfgen
+does not require the armlmd license daemon.
+.SH FILES
+.TP 30
+.IB device *.sdft
+SDF template file, created by
+.B MG_target
+.TP 30
+.IB revision / device .tdef
+Timing definitions file
+.TP 30
+.IB device *.sdf
+created by
+.B sdfgen
+execution
+.SH EXAMPLES
+.TP
+.B % sdfgen ARM7TDMI.tdef ARM7TDMI.sdft ARM7TDMI.sdf
+.SH SEE ALSO
+MG_collate(1),
+MG_target(1),
+Document ARM DDI 0064 "ModelGen Modeling Specification",
+Document ARM DUI 0050 "ModelGen Modeling Techniques"

@@ -1,0 +1,103 @@
+///////////////////////////////////////////////////////////////////////////
+// TASKS for USB model
+// 
+//  utx_dcompare: Compare USB TX data
+///////////////////////////////////////////////////////////////////////////
+
+task utx_dcompare;
+input[31:0] mem_ptr;
+input[10:0] data_length;
+
+reg[31:0]   data_sptr;
+reg[31:0]   desc_length;
+reg[31:0]   next_mem_ptr;
+reg[31:0]   temp_addr;
+reg[31:0]   temp_data;
+reg[10:0]   desc_tlength;
+reg[7:0]    psrc_data;
+reg[5:0]    petx_did;
+reg         flag_success;
+reg         compare_done;
+integer     utx_i;
+begin
+
+  // Get TX descriptor
+  read (mem_ptr,data_sptr,2'b10);
+  read (mem_ptr+4,desc_length,2'b10);
+  read (mem_ptr+8,next_mem_ptr,2'b10);
+
+  compare_done = 0;
+  desc_tlength = 0;
+  flag_success = 1'b1;
+
+  while (!compare_done) begin
+
+    for (utx_i = 0; utx_i < desc_length; utx_i = utx_i + 4) begin
+      temp_addr = data_sptr + utx_i;
+      read (temp_addr,temp_data,2'b10);
+
+      psrc_data = data_length + utx_i;
+      if (temp_data[7:0] !== psrc_data) begin
+        $display ("USB TX DATA ERROR!! %d: 0x%x, 0x%x",
+                  utx_i,psrc_data,temp_data[7:0]);
+        flag_success = 1'b0;
+        $stop;
+      end
+      psrc_data = psrc_data + 1;
+      if (desc_tlength + utx_i + 1 < data_length) begin
+        if (temp_data[15:8] !== psrc_data) begin
+          $display ("USB TX DATA ERROR!! %d: 0x%x, 0x%x",
+                    utx_i,psrc_data,temp_data[15:8]);
+          flag_success = 1'b0;
+          $stop;
+        end
+      end
+      psrc_data = psrc_data + 1;
+      if (desc_tlength + utx_i + 2 < data_length) begin
+        if (temp_data[23:16] !== psrc_data) begin
+          $display ("USB TX DATA ERROR!! %d: 0x%x, 0x%x",
+                    utx_i,psrc_data,temp_data[23:16]);
+          flag_success = 1'b0;
+          $stop;
+        end
+      end
+      psrc_data = psrc_data + 1;
+      if (desc_tlength + utx_i + 3 < data_length) begin
+        if (temp_data[31:24] !== psrc_data) begin
+          $display ("USB TX DATA ERROR!! %d: 0x%x, 0x%x",
+                    utx_i,psrc_data,temp_data[31:24]);
+          flag_success = 1'b0;
+          $stop;
+        end
+      end
+  
+    end       // for-loop end
+
+    desc_tlength = desc_tlength + desc_length[10:0];
+    nop;
+
+    if (next_mem_ptr === 32'hffff_ffff) begin
+      // Get transmitted TX data length
+      if (desc_tlength !== data_length) begin
+        $display ("USB TX LENGTH ERROR!!!: %d, %d",
+                   desc_tlength,data_length);
+        $stop;
+      end
+      compare_done = 1;
+    end
+    else begin
+      // Get next TX descriptor
+      mem_ptr = next_mem_ptr;
+      nop;
+      read (next_mem_ptr,data_sptr,2'b10);
+      read (mem_ptr+4,desc_length,2'b10);
+      read (mem_ptr+8,next_mem_ptr,2'b10);
+    end
+
+  end         // while-loop end
+
+  if (flag_success)
+    $display ("USB TX SUCCESS: LENGTH: %d", data_length);
+
+end
+endtask

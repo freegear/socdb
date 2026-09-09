@@ -1,0 +1,16 @@
+analyze -f verilog    ../../../global_ADK/verilog/ClockNand.v 
+analyze -f verilog    ../../../global_ADK/verilog/ClockInv.v 
+analyze -f verilog    ../../../global_ADK/verilog/LATS.v 
+analyze -f verilog   A7TWrapCtrl.v 
+analyze -f verilog   A7TWrapTest.v 
+analyze -f verilog   A7WrapMaster.v 
+analyze -f verilog   A7WrapSM.v 
+analyze -f verilog   A7TWrap.v 
+analyze -f verilog   A7TDMI.v
+
+
+elaborate A7TDMI
+current_design A7TDMI
+link
+
+write -f db -hier -out A7TDMI.gtech.db

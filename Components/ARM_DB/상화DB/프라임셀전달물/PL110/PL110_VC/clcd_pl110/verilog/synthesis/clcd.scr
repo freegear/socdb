@@ -1,0 +1,37 @@
+analyze -f verilog    ClcdDefine.v 
+analyze -f verilog    ClcdConfig.v 
+analyze -f verilog    ClcdFifoReg.v 
+#analyze -f verilog    dpram128x32.v 
+analyze -f verilog    dpram128x32_wrap.v 
+analyze -f verilog     pram128x32.v 
+#analyze -f verilog    tpram64x32.v 
+analyze -f verilog    tpram64x32_wrap.v 
+analyze -f verilog    ClcdDmaFRegWrap.v 
+analyze -f verilog    ClcdDmaFRamWrap.v 
+analyze -f verilog    ClcdFifoCntl.v 
+analyze -f verilog    ClcdDMAFifo.v 
+analyze -f verilog    ClcdAhbSlaveIf.v 
+analyze -f verilog    ClcdAhbMasterIf.v 
+analyze -f verilog    ClcdAhbIf.v 
+analyze -f verilog    ClcdSyncCLCDCLK.v 
+analyze -f verilog    ClcdSyncHCLK.v 
+analyze -f verilog    ClcdUnpack.v 
+analyze -f verilog    ClcdPalette.v 
+analyze -f verilog    ClcdSerialiser.v 
+analyze -f verilog    ClcdCPGen.v 
+analyze -f verilog    ClcdFormat.v 
+analyze -f verilog    ClcdGS.v 
+analyze -f verilog    ClcdTiming.v 
+analyze -f verilog    ClcdMain.v 
+analyze -f verilog    ClcdOutMux.v 
+analyze -f verilog    ClcdTest.v 
+analyze -f verilog    ClcdCntl.v 
+analyze -f verilog    ClcdRevAnd.v 
+analyze -f verilog    Clcd.v
+
+elaborate Clcd
+current_design Clcd
+link
+
+write -f db -hier -out Clcd.gtech.db
+

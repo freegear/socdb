@@ -1,0 +1,49 @@
+/* ************************************************************************ */
+/* Copyright (c) 1999-2003  Evatronix SA                                    */
+/* ************************************************************************ */
+/* Please review the terms of the license agreement before using this file. */
+/* If you are not an authorised user, please destroy this script file and   */
+/* notify Evatronix S.A. immediately that you inadvertently received an     */
+/* unauthorised copy.                                                       */
+/* ************************************************************************ */
+/* ------------------------------------------------------------------------ */
+/* Project name         : MAC-1G_AMBA                                       */
+/* Project description  : Gigabit Ethernet Media Access Controller          */
+/* File name            : compile.scr			                    */
+/* File contents        : MAC-1G_AMBA synthesis		                    */
+/* Purpose              : Master synthesis script                           */
+/*                        Sample Script for Synopsys                        */
+/* Design Engineer      : D.B.	 					    */			
+/* Version              : 1.0                                               */
+/* Last modification    : 2003-11-28					    */
+/* ------------------------------------------------------------------------ */
+
+/* specifying variables */
+source_dir = "./src/core/"
+work_dir   = "./tools/synopsys/work/"
+
+/* creating necessary directories */ 
+sh mkdir work_dir
+
+/* setting additional variables */
+define_design_lib MAC_1G_LIB -path work_dir
+
+/*  analyzing the source files */ 
+
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "utility_mac_1g.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "bd.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "csr.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "dma.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "rc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "tc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "rfifo.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "rlsm.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "tfifo.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "tlsm.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "rstc.vhd"}
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "miism.vhd"}
+
+analyze -format vhdl -lib MAC_1G_LIB {source_dir + "mac_1g.v"}
+
+/* ************************************************************************ */
+

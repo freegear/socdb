@@ -1,0 +1,736 @@
+/* --=================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- ---------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : Aaci.scr.rca
+-- File Revision          : 1.2
+--
+-- Release Information    : PrimeCell(TM)-PL041-REL1v0
+--
+-- ---------------------------------------------------------------------
+-- Purpose : 
+--           Synopsys synthesis timing constraint script for the 
+--           AACI block.
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the input and output delay     
+--           constraints for the non-AMBA I/O in the AACI block. 
+--
+-- --=================================================================*/
+
+/**********************************************************************/
+/* AACI BLOCK-SPECIFIC TIMING PARAMETERS                              */
+/**********************************************************************/
+
+/* AACIBITCLK clock parameters */
+
+tbitclkh = 40.0            /* AACIBITCLK high phase                   */
+                           /* The AACIBITCLK frequency is fixed at    */
+                           /* 12.288 Mhz. This translates to a period */
+                           /* of 81.38 ns and a phase of 40.69 ns.    */
+                           /* The design is synthesised with a phase  */
+                           /* of 40.0 ns to round off the clock and   */
+                           /* at the same time provide some extra     */
+                           /* margin.                                 */
+
+tbitclkl = tbitclkh            /* AACIBITCLK low phase        */
+
+tbitclk  = tbitclkh + tbitclkl /* AACIBITCLK period           */
+
+tbitclkpskew = tpskew          /* AACIBITCLK plus clock skew  */
+tbitclkmskew = tmskew          /* AACIBITCLK minus clock skew */
+
+/* Input setup and hold times */
+
+/* AACISDATAIN constraints */
+/* As per specification. AACISDATAIN should have a minimum hold time  */
+/* of 5 ns wrt the falling edge of AACIBITCLK. The AACI is being      */
+/* synthesised with a more restrictive 0 ns hold time requirement.    */
+/* As per specification, AACISDATAIN should have a minimum setup time */
+/* of 15 ns wrt the falling edge of AACIBITCLK. This corresponds to a */
+/* setup requirement of 15/80 = 18.75 %. The AACI is being            */
+/* synthesised with a more restrictive 12 ns = 15 % setup time        */
+/* requirement.                                                       */
+
+/* Scalability note : As AACISDATAIN is directly clocked into the   */
+/* AACI without any combinational logic before the F/F, a much more */
+/* restrictive setup value is automatically supported.              */
+
+tissdatain = 0.15 * tbitclk /* AACISDATAIN setup time set to 15 % of */
+                            /* AACIBITCLK                            */
+tihsdatain = 0.0             
+
+tisdmaclrrx = 0.4 * tclk    /* AACIDMACLRRX setup time set to 40 % of */
+                            /* PCLK                                   */
+tihdmaclrrx = 0.0             
+
+tisdmaclrtx = 0.4 * tclk    /* AACIDMACLRTX setup time set to 40 % of */
+                            /* PCLK                                   */
+tihdmaclrtx = 0.0             
+
+/* nAACIBITCLKRST constraints */
+/* nAACIBITCLKRST constraints have been specified such that this      */
+/* signal changes in the low phase of AACIBITCLK. A setup value of    */
+/* 40 % has been specified. A small non-zero hold value has been      */
+/* specified instead of a 0 ns value. This has been done to prevent   */
+/* any extra gates from being added in the reset path to fix any hold */
+/* "violations".                                                      */
+/* Note that the AACI synthesis assumes that nAACIBITCLKRST will be   */
+/* treated separately in layout.                                      */
+
+tidnbitclkrstmax = 0.40  * tbitclk /* setup of 40 % of AACIBITCLK */ 
+tidnbitclkrstmin = 0.025 * tbitclk /* hold of 2.0 ns              */
+
+/* nFAACIBITCLKRST constraints */
+/* nFAACIBITCLKRST constraints have been specified such that this     */
+/* signal changes in the low phase of nAACIBITCLK. A setup value of   */
+/* 40 % has been specified. A small non-zero hold value has been      */
+/* specified instead of a 0 ns value. This has been done to prevent   */
+/* any extra gates from being added in the reset path to fix any hold */
+/* "violations".                                                      */
+/* Note that the AACI synthesis assumes that nFAACIBITCLKRST will be  */
+/* treated separately in layout.                                      */
+
+tidnfbitclkrstmax = 0.40  * tbitclk /* setup of 40 % of nAACIBITCLK */ 
+tidnfbitclkrstmin = 0.025 * tbitclk /* hold of 2.0 ns               */
+
+/* Output valid and hold times */
+
+tovreset = 0.2 * tclk           /* AACIRESET */ 
+tohreset = 0
+
+tovaacitxintr1 = 0.3 * tclk     /* AACITXINTR1 */ 
+tohaacitxintr1 = 0
+
+tovaacitxintr2 = 0.3 * tclk     /* AACITXINTR2 */ 
+tohaacitxintr2 = 0
+
+tovaacitxintr3 = 0.3 * tclk     /* AACITXINTR3 */ 
+tohaacitxintr3 = 0
+
+tovaacitxintr4 = 0.3 * tclk     /* AACITXINTR4 */ 
+tohaacitxintr4 = 0
+
+tovaacirxintr1 = 0.3 * tclk     /* AACIRXINTR1 */ 
+tohaacirxintr1 = 0
+
+tovaacirxintr2 = 0.3 * tclk     /* AACIRXINTR2 */ 
+tohaacirxintr2 = 0
+
+tovaacirxintr3 = 0.3 * tclk     /* AACIRXINTR3 */ 
+tohaacirxintr3 = 0
+
+tovaacirxintr4 = 0.3 * tclk     /* AACIRXINTR4 */ 
+tohaacirxintr4 = 0
+
+tovaaciorintr1 = 0.3 * tclk     /* AACIORINTR1 */ 
+tohaaciorintr1 = 0
+
+tovaaciorintr2 = 0.3 * tclk     /* AACIORINTR2 */ 
+tohaaciorintr2 = 0
+
+tovaaciorintr3 = 0.3 * tclk     /* AACIORINTR3 */ 
+tohaaciorintr3 = 0
+
+tovaaciorintr4 = 0.3 * tclk     /* AACIORINTR4 */ 
+tohaaciorintr4 = 0
+
+tovaaciurintr1 = 0.3 * tclk     /* AACIURINTR1 */ 
+tohaaciurintr1 = 0
+
+tovaaciurintr2 = 0.3 * tclk     /* AACIURINTR2 */ 
+tohaaciurintr2 = 0
+
+tovaaciurintr3 = 0.3 * tclk     /* AACIURINTR3 */ 
+tohaaciurintr3 = 0
+
+tovaaciurintr4 = 0.3 * tclk     /* AACIURINTR4 */ 
+tohaaciurintr4 = 0
+
+tovaacitxcintr1 = 0.3 * tclk    /* AACITXCINTR1 */ 
+tohaacitxcintr1 = 0
+
+tovaacitxcintr2 = 0.3 * tclk    /* AACITXCINTR2 */ 
+tohaacitxcintr2 = 0
+
+tovaacitxcintr3 = 0.3 * tclk    /* AACITXCINTR3 */ 
+tohaacitxcintr3 = 0
+
+tovaacitxcintr4 = 0.3 * tclk    /* AACITXCINTR4 */ 
+tohaacitxcintr4 = 0
+
+tovaacirxtointr1 = 0.3 * tclk   /* AACIRXTOINTR1 */ 
+tohaacirxtointr1 = 0
+
+tovaacirxtointr2 = 0.3 * tclk   /* AACIRXTOINTR2 */ 
+tohaacirxtointr2 = 0
+
+tovaacirxtointr3 = 0.3 * tclk   /* AACIRXTOINTR3 */ 
+tohaacirxtointr3 = 0
+
+tovaacirxtointr4 = 0.3 * tclk   /* AACIRXTOINTR4 */ 
+tohaacirxtointr4 = 0
+
+tovaacirxtofeintr1 = 0.3 * tclk /* AACIRXTOFEINTR1 */ 
+tohaacirxtofeintr1 = 0
+
+tovaacirxtofeintr2 = 0.3 * tclk /* AACIRXTOFEINTR2 */ 
+tohaacirxtofeintr2 = 0
+
+tovaacirxtofeintr3 = 0.3 * tclk /* AACIRXTOFEINTR3 */ 
+tohaacirxtofeintr3 = 0
+
+tovaacirxtofeintr4 = 0.3 * tclk /* AACIRXTOFEINTR4 */ 
+tohaacirxtofeintr4 = 0
+
+tovaaciwintr = 0.3 * tclk       /* AACIWINTR */ 
+tohaaciwintr = 0
+
+tovaacigpiointr = 0.3 * tclk    /* AACIGPIOINTR */ 
+tohaacigpiointr = 0
+
+tovaacis2rxintr = 0.3 * tclk    /* AACIS2RXINTR */
+tohaacis2rxintr = 0
+
+tovaacis2txintr = 0.3 * tclk    /* AACIS2TXINTR */
+tohaacis2txintr = 0
+
+tovaacis12rxintr = 0.3 * tclk   /* AACIS12RXINTR */ 
+tohaacis12rxintr = 0
+
+tovaacis12txintr = 0.3 * tclk   /* AACIS12TXINTR */ 
+tohaacis12txintr = 0
+
+tovaacis1rxintr = 0.3 * tclk    /* AACIS1RXINTR */ 
+tohaacis1rxintr = 0
+
+tovaacis1txintr = 0.3 * tclk    /* AACIS1TXINTR */ 
+tohaacis1txintr = 0
+
+tovaaciintr = 0.3 * tclk        /* AACIINTR */
+tohaaciintr = 0
+
+tovdmasreqrx = 0.3 * tclk       /* AACIDMASREQRX */ 
+tohdmasreqrx = 0
+
+tovdmalsreqrx = 0.3 * tclk      /* AACIDMALSREQRX */ 
+tohdmalsreqrx = 0
+
+tovdmabreqrx = 0.3 * tclk       /* AACIDMABREQRX */ 
+tohdmabreqrx = 0
+
+tovdmalbreqrx = 0.3 * tclk      /* AACIDMALBREQRX */ 
+tohdmalbreqrx = 0
+
+tovdmabreqtx = 0.3 * tclk       /* AACIDMABREQTX */ 
+tohdmabreqtx = 0
+
+/* AACISDATAOUT constraints */
+/* As per specification. AACISDATAOUT should have a minimum hold time */
+/* of 5 ns wrt the falling edge of AACIBITCLK.                        */
+/* As per specification, AACISDATAOUT should have a minimum setup     */
+/* time of 15 ns wrt the falling edge of AACIBITCLK. This corresponds */
+/* to a setup requirement of 15/80 = 18.75 %. The AACI is being       */
+/* synthesised with a more restrictive 20 ns = 25 % setup time        */
+/* requirement.                                                       */
+
+/* Scalability note : As AACISDATAOUT is directly clocked out of the */
+/* AACI off the rising edge of AACIBITCLK, with no combinational     */
+/* logic at the output of the F/F, a more restrictive setup and hold */
+/* value is automatically supported. This corresponds to nearly half */
+/* a AACIBITCLK of available setup and hold.                         */
+
+tovsdataout = 0.75 * tbitclk       /* AACISDATAOUT wrt AACIBITCLK */ 
+tohsdataout = 5.0 
+
+tpovsdataout = 0.2 * tclk          /* AACISDATAOUT wrt PCLK */ 
+tpohsdataout = 0.0 
+
+/* AACISYNC constraints */
+/* As per specification, AACISYNC should have a minimum hold time of  */
+/* 5 ns wrt the falling edge of AACIBITCLK.                           */
+/* As per specification. AACISYNC should have a minimum setup time of */
+/* 15 ns wrt the falling edge of AACIBITCLK. This corresponds to a    */
+/* setup requirement of 15/80 = 18.75 %. The AACI is being            */
+/* synthesised with a more restrictive 20 ns = 25 % setup time        */
+/* requirement.                                                       */
+
+/* Scalability note : As AACISYNC is directly clocked out of the AACI */
+/* off the rising edge of AACIBITCLK, with no combinational logic at  */
+/* the output of the F/F, a more restrictive setup and hold value is  */
+/* automatically supported. This corresponds to nearly half an        */
+/* AACIBITCLK of available setup and hold.                            */
+
+tovsync = 0.75 * tbitclk           /* AACISYNC wrt AACIBITCLK */ 
+tohsync = 5.0 
+
+tpovsync = 0.2 * tclk              /* AACISYNC wrt PCLK */ 
+tpohsync = 0.0 
+
+/* Convert the setup/hold values into input delay synthesis */
+/* parameters                                               */
+
+tidsdatainmax = tbitclk - tissdatain   /* AACISDATAIN */
+tidsdatainmin = tihsdatain
+
+/* The input delay on the Scan related input signals has been set to  */
+/* a small non-zero value to prevent addition of extra gates in these */
+/* paths.                                                             */
+tidscanmax = 0.3  
+tidscanmin = 0.3 
+
+tiddmaclrrxmax = tclk - tisdmaclrrx    /* AACIDMACLRRX */
+tiddmaclrrxmin = tihdmaclrrx
+
+tiddmaclrtxmax = tclk - tisdmaclrtx    /* AACIDMACLRTX */
+tiddmaclrtxmin = tihdmaclrtx
+
+/* Convert the valid/hold values into output delay synthesis */
+/* parameters                                                */
+todresetmax = tclk - tovreset          /* AACIRESET */
+todresetmin = tohreset
+
+todsyncmax = tbitclk - tovsync         /* AACISYNC wrt AACIBITCLK */
+todsyncmin = 0.0 - tohsync
+
+tpodsyncmax = tclk - tpovsync          /* AACISYNC wrt PCLK */
+tpodsyncmin = tpohsync
+
+todsdataoutmax = tbitclk - tovsdataout /* AACISDATAOUT wrt AACIBITCLK */
+todsdataoutmin = 0.0 - tohsdataout
+
+tpodsdataoutmax = tclk - tpovsdataout  /* AACISDATAOUT wrt PCLK */
+tpodsdataoutmin = tpohsdataout
+
+todaacitxintr1max = tclk - tovaacitxintr1       /* AACITXINTR1 */
+todaacitxintr1min = tohaacitxintr1
+
+todaacitxintr2max = tclk - tovaacitxintr2       /* AACITXINTR2 */
+todaacitxintr2min = tohaacitxintr2
+
+todaacitxintr3max = tclk - tovaacitxintr3       /* AACITXINTR3 */
+todaacitxintr3min = tohaacitxintr3
+
+todaacitxintr4max = tclk - tovaacitxintr4       /* AACITXINTR4 */
+todaacitxintr4min = tohaacitxintr4
+
+todaacirxintr1max = tclk - tovaacirxintr1       /* AACIRXINTR1 */
+todaacirxintr1min = tohaacirxintr1
+
+todaacirxintr2max = tclk - tovaacirxintr2       /* AACIRXINTR2 */
+todaacirxintr2min = tohaacirxintr2
+
+todaacirxintr3max = tclk - tovaacirxintr3       /* AACIRXINTR3 */
+todaacirxintr3min = tohaacirxintr3
+
+todaacirxintr4max = tclk - tovaacirxintr4       /* AACIRXINTR4 */
+todaacirxintr4min = tohaacirxintr4
+
+todaaciorintr1max = tclk - tovaaciorintr1       /* AACIORINTR1 */
+todaaciorintr1min = tohaaciorintr1
+
+todaaciorintr2max = tclk - tovaaciorintr2       /* AACIORINTR2 */
+todaaciorintr2min = tohaaciorintr2
+
+todaaciorintr3max = tclk - tovaaciorintr3       /* AACIORINTR3 */
+todaaciorintr3min = tohaaciorintr3
+
+todaaciorintr4max = tclk - tovaaciorintr4       /* AACIORINTR4 */
+todaaciorintr4min = tohaaciorintr4
+
+todaaciurintr1max = tclk - tovaaciurintr1       /* AACIURINTR1 */
+todaaciurintr1min = tohaaciurintr1
+
+todaaciurintr2max = tclk - tovaaciurintr2       /* AACIURINTR2 */
+todaaciurintr2min = tohaaciurintr2
+
+todaaciurintr3max = tclk - tovaaciurintr3       /* AACIURINTR3 */
+todaaciurintr3min = tohaaciurintr3
+
+todaaciurintr4max = tclk - tovaaciurintr4       /* AACIURINTR4 */
+todaaciurintr4min = tohaaciurintr4
+
+todaacitxcintr1max = tclk - tovaacitxcintr1     /* AACITXCINTR1 */
+todaacitxcintr1min = tohaacitxcintr1
+
+todaacitxcintr2max = tclk - tovaacitxcintr2     /* AACITXCINTR2 */
+todaacitxcintr2min = tohaacitxcintr2
+
+todaacitxcintr3max = tclk - tovaacitxcintr3     /* AACITXCINTR3 */
+todaacitxcintr3min = tohaacitxcintr3
+
+todaacitxcintr4max = tclk - tovaacitxcintr4     /* AACITXCINTR4 */
+todaacitxcintr4min = tohaacitxcintr4
+
+todaacirxtointr1max = tclk - tovaacirxtointr1   /* AACIRXTOINTR1 */
+todaacirxtointr1min = tohaacirxtointr1
+
+todaacirxtointr2max = tclk - tovaacirxtointr2   /* AACIRXTOINTR2 */
+todaacirxtointr2min = tohaacirxtointr2
+
+todaacirxtointr3max = tclk - tovaacirxtointr3   /* AACIRXTOINTR3 */
+todaacirxtointr3min = tohaacirxtointr3
+
+todaacirxtointr4max = tclk - tovaacirxtointr4   /* AACIRXTOINTR4 */
+todaacirxtointr4min = tohaacirxtointr4
+
+todaacirxtofeintr1max = tclk - tovaacirxtofeintr1 
+todaacirxtofeintr1min = tohaacirxtofeintr1      /* AACIRXTOFEINTR1 */
+
+todaacirxtofeintr2max = tclk - tovaacirxtofeintr2 
+todaacirxtofeintr2min = tohaacirxtofeintr2      /* AACIRXTOFEINTR2 */
+
+todaacirxtofeintr3max = tclk - tovaacirxtofeintr3 
+todaacirxtofeintr3min = tohaacirxtofeintr3      /* AACIRXTOFEINTR3 */
+
+todaacirxtofeintr4max = tclk - tovaacirxtofeintr4 
+todaacirxtofeintr4min = tohaacirxtofeintr4      /* AACIRXTOFEINTR4 */
+
+todaaciwintrmax = tclk - tovaaciwintr           /* AACIWINTR */
+todaaciwintrmin = tohaaciwintr
+
+todaacigpiointrmax = tclk - tovaacigpiointr     /* AACIGPIOINTR */
+todaacigpiointrmin = tohaacigpiointr
+
+todaacis2rxintrmax = tclk - tovaacis2rxintr     /* AACIS2RXINTR */
+todaacis2rxintrmin = tohaacis2rxintr
+
+todaacis2txintrmax = tclk - tovaacis2txintr     /* AACIS2TXINTR */
+todaacis2txintrmin = tohaacis2txintr
+
+todaacis12rxintrmax = tclk - tovaacis12rxintr   /* AACIS12RXINTR */
+todaacis12rxintrmin = tohaacis12rxintr
+
+todaacis12txintrmax = tclk - tovaacis12txintr   /* AACIS12TXINTR */
+todaacis12txintrmin = tohaacis12txintr
+
+todaacis1rxintrmax = tclk - tovaacis1rxintr     /* AACIS1RXINTR */
+todaacis1rxintrmin = tohaacis1rxintr
+
+todaacis1txintrmax = tclk - tovaacis1txintr     /* AACIS1TXINTR */
+todaacis1txintrmin = tohaacis1txintr
+
+todaaciintrmax = tclk - tovaaciintr             /* AACIINTR */
+todaaciintrmin = tohaaciintr
+
+toddmasreqrxmax = tclk - tovdmasreqrx           /* AACIDMASREQRX */
+toddmasreqrxmin = tohdmasreqrx
+
+toddmalsreqrxmax = tclk - tovdmalsreqrx         /* AACIDMALSREQRX */
+toddmalsreqrxmin = tohdmalsreqrx
+
+toddmabreqrxmax = tclk - tovdmabreqrx           /* AACIDMABREQRX */
+toddmabreqrxmin = tohdmabreqrx
+
+toddmalbreqrxmax = tclk - tovdmalbreqrx         /* AACIDMALBREQRX */
+toddmalbreqrxmin = tohdmalbreqrx
+
+toddmabreqtxmax = tclk - tovdmabreqtx           /* DMALBREQTX */
+toddmabreqtxmin = tohdmabreqtx
+
+/* The output delay on the Scan related input signals has been set to */
+/* a zero value to prevent addition of extra gates in these paths.    */
+todscanmax = 0.0
+todscanmin = 0.0
+
+/**********************************************************************/
+/* DEFINE AC-Link related clocks AACIBITCLK and nAACIBITCLK           */
+/*                                                                    */
+/* Note that the AC-Link has a single clock - AACIBITCLK. Its         */
+/* inverted version - nAACIBITCLK will have to be generated within    */
+/* the chip containing the AACI.                                      */
+/**********************************************************************/
+
+/* Define AACIBITCLK */
+create_clock -p tbitclk -w {0 tbitclkh} find(port, "AACIBITCLK")
+/* period tbitclk, rise at 0, fall after tbitclkh */
+
+set_clock_skew -plus_uncertainty tbitclkpskew find(clock, AACIBITCLK)
+/* set plus clock skew */
+
+set_clock_skew -minus_uncertainty tbitclkmskew find(clock, AACIBITCLK)
+/* set minus clock skew */
+
+set_dont_touch_network find(clock, AACIBITCLK)
+/* Preserve the clock net during optimisation */
+
+set_resistance 0 AACIBITCLK
+set_drive 0 AACIBITCLK
+/* Infinite drive strength clock signal */
+
+/* Define nAACIBITCLK */
+create_clock -p tbitclk -w {tbitclkh tbitclk} find(port, "nAACIBITCLK")
+/* period tbitclk, rise at tbitclkh, fall after tbitclk */
+
+set_clock_skew -plus_uncertainty tbitclkpskew find(clock, nAACIBITCLK)
+/* set plus clock skew */
+
+set_clock_skew -minus_uncertainty tbitclkmskew find(clock, nAACIBITCLK)
+/* set minus clock skew */
+
+set_dont_touch_network find(clock, nAACIBITCLK)
+/* Preserve the clock net during optimisation */
+
+set_resistance 0 nAACIBITCLK
+set_drive 0 nAACIBITCLK
+/* Infinite drive strength clock signal */
+
+/**********************************************************************/
+/* INPUT CONSTRAINTS FOR NON-AMBA PORTS                               */
+/**********************************************************************/
+
+/* AC-Link related signals */
+
+/* AACISDATAIN */
+set_input_delay -clock nAACIBITCLK -min tidsdatainmin AACISDATAIN
+set_input_delay -clock nAACIBITCLK -max tidsdatainmax AACISDATAIN
+
+/* nAACIBITCLKRST */
+set_input_delay -clock AACIBITCLK -min tidnbitclkrstmin nAACIBITCLKRST
+set_input_delay -clock AACIBITCLK -max tidnbitclkrstmax nAACIBITCLKRST
+
+set_resistance 0 nAACIBITCLKRST
+set_drive 0 nAACIBITCLKRST
+/* Infinite drive strength reset signal */
+
+/* nFAACIBITCLKRST */
+set_input_delay -clock nAACIBITCLK -min tidnfbitclkrstmin \
+  nFAACIBITCLKRST
+set_input_delay -clock nAACIBITCLK -max tidnfbitclkrstmax \
+  nFAACIBITCLKRST
+
+set_resistance 0 nFAACIBITCLKRST
+set_drive 0 nFAACIBITCLKRST
+/* Infinite drive strength reset signal */
+
+/* Scan Inputs */
+set_input_delay -clock PCLK -min tidscanmin SCANINPCLK
+set_input_delay -clock PCLK -max tidscanmax SCANINPCLK
+
+set_input_delay -clock AACIBITCLK -min tidscanmin SCANINBITCLK
+set_input_delay -clock AACIBITCLK -max tidscanmax SCANINBITCLK
+
+set_input_delay -clock nAACIBITCLK -min tidscanmin SCANINnBITCLK
+set_input_delay -clock nAACIBITCLK -max tidscanmax SCANINnBITCLK
+
+set_input_delay -clock PCLK -min tidscanmin SCANENABLE
+set_input_delay -clock PCLK -max tidscanmax SCANENABLE
+
+set_input_delay -clock AACIBITCLK -min tidscanmin -add_delay SCANENABLE
+set_input_delay -clock AACIBITCLK -max tidscanmax -add_delay SCANENABLE
+
+set_input_delay -clock nAACIBITCLK -min tidscanmin -add_delay SCANENABLE
+set_input_delay -clock nAACIBITCLK -max tidscanmax -add_delay SCANENABLE
+
+set_drive 0 SCANENABLE
+/* Infinite drive strength Scan Enable signal */
+
+/* DMA Inputs */
+set_input_delay -clock PCLK -min tiddmaclrrxmin AACIDMACLRRX
+set_input_delay -clock PCLK -max tiddmaclrrxmax AACIDMACLRRX
+
+set_input_delay -clock PCLK -min tiddmaclrtxmin AACIDMACLRTX
+set_input_delay -clock PCLK -max tiddmaclrtxmax AACIDMACLRTX
+
+/**********************************************************************/
+/* OUTPUT CONSTRAINTS FOR NON-AMBA PORTS                              */
+/**********************************************************************/
+
+/* Interrupt Outputs - PCLK domain */
+
+set_output_delay -clock PCLK -min todaacitxintr1min AACITXINTR1
+set_output_delay -clock PCLK -max todaacitxintr1max AACITXINTR1
+
+set_output_delay -clock PCLK -min todaacitxintr2min AACITXINTR2
+set_output_delay -clock PCLK -max todaacitxintr2max AACITXINTR2
+
+set_output_delay -clock PCLK -min todaacitxintr3min AACITXINTR3
+set_output_delay -clock PCLK -max todaacitxintr3max AACITXINTR3
+
+set_output_delay -clock PCLK -min todaacitxintr4min AACITXINTR4
+set_output_delay -clock PCLK -max todaacitxintr4max AACITXINTR4
+
+set_output_delay -clock PCLK -min todaacirxintr1min AACIRXINTR1
+set_output_delay -clock PCLK -max todaacirxintr1max AACIRXINTR1
+
+set_output_delay -clock PCLK -min todaacirxintr2min AACIRXINTR2
+set_output_delay -clock PCLK -max todaacirxintr2max AACIRXINTR2
+
+set_output_delay -clock PCLK -min todaacirxintr3min AACIRXINTR3
+set_output_delay -clock PCLK -max todaacirxintr3max AACIRXINTR3
+
+set_output_delay -clock PCLK -min todaacirxintr4min AACIRXINTR4
+set_output_delay -clock PCLK -max todaacirxintr4max AACIRXINTR4
+
+set_output_delay -clock PCLK -min todaaciorintr1min AACIORINTR1
+set_output_delay -clock PCLK -max todaaciorintr1max AACIORINTR1
+
+set_output_delay -clock PCLK -min todaaciorintr2min AACIORINTR2
+set_output_delay -clock PCLK -max todaaciorintr2max AACIORINTR2
+
+set_output_delay -clock PCLK -min todaaciorintr3min AACIORINTR3
+set_output_delay -clock PCLK -max todaaciorintr3max AACIORINTR3
+
+set_output_delay -clock PCLK -min todaaciorintr4min AACIORINTR4
+set_output_delay -clock PCLK -max todaaciorintr4max AACIORINTR4
+
+set_output_delay -clock PCLK -min todaaciurintr1min AACIURINTR1
+set_output_delay -clock PCLK -max todaaciurintr1max AACIURINTR1
+
+set_output_delay -clock PCLK -min todaaciurintr2min AACIURINTR2
+set_output_delay -clock PCLK -max todaaciurintr2max AACIURINTR2
+
+set_output_delay -clock PCLK -min todaaciurintr3min AACIURINTR3
+set_output_delay -clock PCLK -max todaaciurintr3max AACIURINTR3
+
+set_output_delay -clock PCLK -min todaaciurintr4min AACIURINTR4
+set_output_delay -clock PCLK -max todaaciurintr4max AACIURINTR4
+
+set_output_delay -clock PCLK -min todaacitxcintr1min AACITXCINTR1
+set_output_delay -clock PCLK -max todaacitxcintr1max AACITXCINTR1
+
+set_output_delay -clock PCLK -min todaacitxcintr2min AACITXCINTR2
+set_output_delay -clock PCLK -max todaacitxcintr2max AACITXCINTR2
+
+set_output_delay -clock PCLK -min todaacitxcintr3min AACITXCINTR3
+set_output_delay -clock PCLK -max todaacitxcintr3max AACITXCINTR3
+
+set_output_delay -clock PCLK -min todaacitxcintr4min AACITXCINTR4
+set_output_delay -clock PCLK -max todaacitxcintr4max AACITXCINTR4
+
+set_output_delay -clock PCLK -min todaacirxtointr1min AACIRXTOINTR1
+set_output_delay -clock PCLK -max todaacirxtointr1max AACIRXTOINTR1
+
+set_output_delay -clock PCLK -min todaacirxtointr2min AACIRXTOINTR2
+set_output_delay -clock PCLK -max todaacirxtointr2max AACIRXTOINTR2
+
+set_output_delay -clock PCLK -min todaacirxtointr3min AACIRXTOINTR3
+set_output_delay -clock PCLK -max todaacirxtointr3max AACIRXTOINTR3
+
+set_output_delay -clock PCLK -min todaacirxtointr4min AACIRXTOINTR4
+set_output_delay -clock PCLK -max todaacirxtointr4max AACIRXTOINTR4
+
+set_output_delay -clock PCLK -min todaacirxtofeintr1min AACIRXTOFEINTR1
+set_output_delay -clock PCLK -max todaacirxtofeintr1max AACIRXTOFEINTR1
+
+set_output_delay -clock PCLK -min todaacirxtofeintr2min AACIRXTOFEINTR2
+set_output_delay -clock PCLK -max todaacirxtofeintr2max AACIRXTOFEINTR2
+
+set_output_delay -clock PCLK -min todaacirxtofeintr3min AACIRXTOFEINTR3
+set_output_delay -clock PCLK -max todaacirxtofeintr3max AACIRXTOFEINTR3
+
+set_output_delay -clock PCLK -min todaacirxtofeintr4min AACIRXTOFEINTR4
+set_output_delay -clock PCLK -max todaacirxtofeintr4max AACIRXTOFEINTR4
+
+set_output_delay -clock PCLK -min todaacigpiointrmin AACIGPIOINTR
+set_output_delay -clock PCLK -max todaacigpiointrmax AACIGPIOINTR
+
+set_output_delay -clock PCLK -min todaacis2rxintrmin AACIS2RXINTR
+set_output_delay -clock PCLK -max todaacis2rxintrmax AACIS2RXINTR
+
+set_output_delay -clock PCLK -min todaacis2txintrmin AACIS2TXINTR
+set_output_delay -clock PCLK -max todaacis2txintrmax AACIS2TXINTR
+
+set_output_delay -clock PCLK -min todaacis12rxintrmin AACIS12RXINTR
+set_output_delay -clock PCLK -max todaacis12rxintrmax AACIS12RXINTR
+
+set_output_delay -clock PCLK -min todaacis12txintrmin AACIS12TXINTR
+set_output_delay -clock PCLK -max todaacis12txintrmax AACIS12TXINTR
+
+set_output_delay -clock PCLK -min todaacis1rxintrmin AACIS1RXINTR
+set_output_delay -clock PCLK -max todaacis1rxintrmax AACIS1RXINTR
+
+set_output_delay -clock PCLK -min todaacis1txintrmin AACIS1TXINTR
+set_output_delay -clock PCLK -max todaacis1txintrmax AACIS1TXINTR
+
+set_output_delay -clock PCLK -min todaaciintrmin AACIINTR
+set_output_delay -clock PCLK -max todaaciintrmax AACIINTR
+
+/* Interrupt Outputs */
+/* Note that the AACIWINTR is raised combinationally from        */
+/* AACISDATAIN. In the synchronised WakeUp interrupt mode, this  */ 
+/* signal is clocked off a PCLK F/F to create AACIWINTR.         */
+/* The constraint on AACIWINTR has been set for this mode.       */
+/* A constraint has not been put on AACIWINTR for the async mode */ 
+/* because this constraint can only be arbitrary and never       */
+/* accurate.                                                     */
+
+set_output_delay -clock PCLK -min todaaciwintrmin AACIWINTR
+set_output_delay -clock PCLK -max todaaciwintrmax AACIWINTR
+
+set_output_delay -clock PCLK -min toddmasreqrxmin AACIDMASREQRX
+set_output_delay -clock PCLK -max toddmasreqrxmax AACIDMASREQRX
+
+set_output_delay -clock PCLK -min toddmalsreqrxmin AACIDMALSREQRX
+set_output_delay -clock PCLK -max toddmalsreqrxmax AACIDMALSREQRX
+
+set_output_delay -clock PCLK -min toddmabreqrxmin AACIDMABREQRX
+set_output_delay -clock PCLK -max toddmabreqrxmax AACIDMABREQRX
+
+set_output_delay -clock PCLK -min toddmalbreqrxmin AACIDMALBREQRX
+set_output_delay -clock PCLK -max toddmalbreqrxmax AACIDMALBREQRX
+
+set_output_delay -clock PCLK -min toddmabreqtxmin AACIDMABREQTX
+set_output_delay -clock PCLK -max toddmabreqtxmax AACIDMABREQTX
+
+/* AC-Link Outputs */
+
+/* AACIRESET - PCLK domain */
+/* Note that even though AACIRESET is an AC-Link signal, its          */
+/* constraints are being set wrt PCLK and not wrt AACIBITCLK. This is */
+/* because AACIRESET is generated off a PCLK domain F/F               */
+/* The AC-Link constraint on AACIRESET is Trst2clk = 162.8 ns. This   */
+/* is to be ensured by s/w.                                           */
+set_output_delay -clock PCLK -min todresetmin AACIRESET
+set_output_delay -clock PCLK -max todresetmax AACIRESET
+
+/* AACISDATAOUT - AACIBITCLK domain */
+/* This path is relevant in normal operating mode */
+set_output_delay -clock AACIBITCLK -clock_fall -min todsdataoutmin \
+  AACISDATAOUT
+set_output_delay -clock AACIBITCLK -clock_fall -max todsdataoutmax \
+  AACISDATAOUT
+
+/* AACISDATAOUT - PCLK domain */
+/* During test mode, the AACISDATAOUT output is driven from a PCLK */
+/* domain register bit. Hence an additional PCLK-referenced        */
+/* constraint is placed on AACISDATAOUT.                           */
+set_output_delay -clock PCLK -add_delay -min tpodsdataoutmin \
+  AACISDATAOUT
+set_output_delay -clock PCLK -add_delay -max tpodsdataoutmax \
+  AACISDATAOUT
+
+/* AACISYNC - AACIBITCLK domain */
+/* This path is relevant in normal operating mode */
+set_output_delay -clock AACIBITCLK -clock_fall -min todsyncmin AACISYNC
+set_output_delay -clock AACIBITCLK -clock_fall -max todsyncmax AACISYNC
+
+/* AACISYNC - PCLK domain */
+/* During Warm Reset, the AACISYNC output is driven from a PCLK */ 
+/* domain register bit. Hence an additional PCLK-referenced     */
+/* constraint is placed on AACISYNC.                            */ 
+set_output_delay -clock PCLK -add_delay -min tpodsyncmin AACISYNC
+set_output_delay -clock PCLK -add_delay -max tpodsyncmax AACISYNC
+
+/* Scan Outputs - PCLK domain */
+set_output_delay -clock PCLK -min todscanmin SCANOUTPCLK
+set_output_delay -clock PCLK -max todscanmax SCANOUTPCLK
+
+/* Scan Outputs - AACIBITCLK domain */
+set_output_delay -clock AACIBITCLK -min todscanmin SCANOUTBITCLK
+set_output_delay -clock AACIBITCLK -max todscanmax SCANOUTBITCLK
+
+/* Scan Outputs - nAACIBITCLK domain */
+set_output_delay -clock nAACIBITCLK -min todscanmin SCANOUTnBITCLK
+set_output_delay -clock nAACIBITCLK -max todscanmax SCANOUTnBITCLK
+
+/************************* End of Aaci.scr ****************************/

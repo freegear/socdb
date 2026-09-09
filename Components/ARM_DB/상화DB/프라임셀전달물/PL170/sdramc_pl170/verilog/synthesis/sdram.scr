@@ -1,0 +1,25 @@
+analyze -f verilog  SdramDefs.v
+analyze -f verilog  SdramBigEndian.v 
+analyze -f verilog  SdramAhbif.v 
+analyze -f verilog  SdramAhbRegBlk.v 
+analyze -f verilog  SdramAhbWrBuf0.v 
+analyze -f verilog  SdramAhbWrBuf1.v 
+analyze -f verilog  SdramAhbRdBuf0.v 
+analyze -f verilog  SdramArbFSM.v 
+analyze -f verilog  SdramArbiter.v 
+analyze -f verilog  SdramDramFSM.v 
+analyze -f verilog  SdramTimCntl.v 
+analyze -f verilog  SdramDramCntl.v 
+analyze -f verilog  SdramCmdSeq.v 
+analyze -f verilog  SdramEngine.v 
+analyze -f verilog  SdramPins.v 
+analyze -f verilog  Sdram.v
+
+
+elaborate Sdram
+current_design Sdram
+link
+
+write -f db -hier -out Sdram.gtech.db
+
+

@@ -1,0 +1,57 @@
+/* --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- -----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : DBI_tic_exceptions.scr.rca
+-- File Revision          : 1.8
+--
+-- Release Information    : PrimeCell(TM)-PL092-REL1v1
+--
+-- -----------------------------------------------------------------------------
+-- Purpose : 
+--           Synopsys synthesis timing constraint script for the 
+--           DBI block in TIC mode            
+--
+--           Located in the synopsys/scripts directory.   
+--
+--           This file specifies the point-to-point exceptions 
+--           set for the DBI block synthesis in TIC mode. 
+--
+-- --=========================================================================*/
+
+/* False paths are being set for the SmcCore and MC inputs to the DBI in the  */
+/* TIC mode of operation                                                      */
+/* The other paths which are TIC specific are constrained for operation at    */
+/* at 10 MHz                                                                  */
+
+set_false_path -from find(port,{"SMCDATAOUT*"})
+
+set_false_path -from find(port,{"MCDATAOUT*"})
+
+set_false_path -from find(port,{"SMCADDR*"})
+
+set_false_path -from find(port,{"MCADDR*"})
+
+set_false_path -from find(port,{"nSMCDATAEN*"})
+
+set_false_path -from find(port,{"MCDATAEN*"})
+
+set_false_path -from find(port,{"SMBUSREQ"})
+
+set_false_path -from find(port,{"MCBUSREQ"})
+
+set_false_path -through find(port,{"SMADDR*"})
+
+set_false_path -through find(port,{"SMBUSGNT"})
+
+set_false_path -through find(port,{"MCBUSGNT"})
+
+/******************** End of DBI_tic_exceptions.scr ***************************/

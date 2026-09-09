@@ -1,0 +1,24 @@
+///////////////////////////////////////////////////////////////////////////
+// TASKS for ETHERNET model
+// 
+//  read_iqueue: Read interrupt queue
+///////////////////////////////////////////////////////////////////////////
+
+task read_iqueue;
+input [3:0]  intr_id;
+input [3:0]  intr_idx;
+output[31:0] read_data0;
+output[31:0] read_data1;
+begin
+
+  if (intr_id == 2) begin
+    read ({`U_BLOCK_AREA_,16'h0020,1'b1,intr_idx,3'h0},read_data0,2'b10);
+    read ({`U_BLOCK_AREA_,16'h0020,1'b1,intr_idx,3'h4},read_data1,2'b10);
+  end
+  else if (intr_id == 3) begin
+    read ({`U_BLOCK_AREA_,16'h0020,1'b0,intr_idx,3'h0},read_data0,2'b10);
+    read ({`U_BLOCK_AREA_,16'h0020,1'b0,intr_idx,3'h4},read_data1,2'b10);
+  end
+
+end
+endtask

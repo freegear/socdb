@@ -1,0 +1,553 @@
+ 
+****************************************
+Report : design
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 15:02:28 2001
+****************************************
+
+Design allows ideal nets on clock nets.
+
+Library(s) Used:
+
+    cb25os163_max (File: /chips/sc049/LIBRARIES/avanti/cb25/v2.1/synopsys/cb25os163/1997.01/models/cb25os163_max.db)
+
+Local Link Library:
+
+    {cb25os163_max.db}
+
+Flip-Flop Types:
+
+    No flip-flop types specified.
+
+Latch Types:
+
+    No latch types specified.
+
+Operating Conditions:
+
+    Name       Library       Process     Temp    Volt    Interconnect Model
+    ----------------------------------------------------------------------------
+    WCCOM      cb25os163_max    1.20   125.00    2.30    worst_case_tree
+
+Min Operating Conditions:
+
+    Name       Library       Process     Temp    Volt    Interconnect Model
+    ----------------------------------------------------------------------------
+    BCCOM      cb25os163_min    0.80   -55.00    2.70    best_case_tree
+
+Wire Loading Model:
+
+    Selected manually by the user.
+
+Name           :   8000
+Location       :   cb25os163_max
+Resistance     :   0.00019
+Capacitance    :   0.000154
+Area           :   0.01
+Slope          :   135
+Fanout   Length   Points Average Cap Std Deviation
+--------------------------------------------------------------
+     1    20.60
+     2    41.00
+     3    65.40
+     4   117.00
+     5   144.25
+     6   178.10
+     7   192.50
+     8   308.00
+     9   317.00
+    10   395.00
+    11   503.00
+    12   564.00
+    13   572.00
+    14   597.00
+    15   630.00
+    16   656.00
+    17   708.00
+    18   813.00
+    19   927.00
+    20  1062.00
+
+
+
+Wire Loading Model Mode: enclosed.
+
+Timing Ranges:
+
+    No timing ranges specified.
+
+Pin Input Delays:
+
+    None specified.
+
+Pin Output Delays:
+
+    None specified.
+
+Disabled Timing Arcs:
+
+    No arcs disabled.
+
+Required Licenses:
+
+    None Required
+
+Design Parameters:
+
+    None specified.
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : constraint
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 15:03:28 2001
+****************************************
+
+
+                                                   Weighted
+    Group (max_delay/setup)      Cost     Weight     Cost
+    -----------------------------------------------------
+    CLK1HZ                       0.00      1.00      0.00
+    PCLK                         0.00      1.00      0.00
+    default                      0.00      1.00      0.00
+    -----------------------------------------------------
+    max_delay/setup                                  0.00
+
+                              Total Neg  Critical
+    Group (critical_range)      Slack    Endpoints   Cost
+    -----------------------------------------------------
+    CLK1HZ                       0.00         0      0.00
+    PCLK                         0.00         0      0.00
+    default                      0.00         0      0.00
+    -----------------------------------------------------
+    critical_range                                   0.00
+
+                                                   Weighted
+    Group (min_delay/hold)       Cost     Weight     Cost
+    -----------------------------------------------------
+    CLK1HZ                       0.00      1.00      0.00
+    PCLK                         0.00      1.00      0.00
+    default                      0.00      1.00      0.00
+    -----------------------------------------------------
+    min_delay/hold                                   0.00
+
+
+    Constraint                                       Cost
+    -----------------------------------------------------
+    multiport_net                                    0.00 (MET)
+    max_transition                                   0.00 (MET)
+    max_fanout                                       0.00 (MET)
+    max_capacitance                                  0.00 (MET)
+    max_delay/setup                                  0.00 (MET)
+    critical_range                                   0.00 (MET)
+    min_delay/hold                                   0.00 (MET)
+    max_area                                      6730.50 (VIOLATED)
+
+
+ 
+****************************************
+Report : cell
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 15:03:28 2001
+****************************************
+
+Attributes:
+    b - black box (unknown)
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    u - contains unmapped logic
+
+Cell                      Reference       Library             Area  Attributes
+--------------------------------------------------------------------------------
+U4                        bufbd1          cb25os163_max       1.00  
+U5                        buffd1          cb25os163_max       1.00  
+U6                        buffd1          cb25os163_max       1.00  
+U7                        buffd1          cb25os163_max       1.00  
+U8                        buffd7          cb25os163_max       2.25  
+U9                        buffd7          cb25os163_max       2.25  
+U10                       bufbd7          cb25os163_max       2.50  
+u0RtcRevAnd               RtcRevAnd_1                         1.25  h
+u1RtcRevAnd               RtcRevAnd_3                         1.25  h
+u2RtcRevAnd               RtcRevAnd_0                         1.25  h
+u3RtcRevAnd               RtcRevAnd_2                         1.25  h
+uRtcApbif                 RtcApbif                         2187.00  h, n
+uRtcControl               RtcControl                         10.00  h, n
+uRtcCounter               RtcCounter                        460.50  h, n
+uRtcInterrupt             RtcInterrupt                      101.00  h, n
+uRtcSynctoPCLK            RtcSynctoPCLK                     400.00  h, n
+uRtcUpdate                RtcUpdate                        1604.00  h, n
+--------------------------------------------------------------------------------
+Total 17 cells                                             4778.50
+ 
+****************************************
+Report : reference
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 15:03:28 2001
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+RtcApbif                       2187.000000       1   2187.000000  h, n
+RtcControl                       10.000000       1     10.000000  h, n
+RtcCounter                      460.500000       1    460.500000  h, n
+RtcInterrupt                    101.000000       1    101.000000  h, n
+RtcRevAnd_0                       1.250000       1      1.250000  h
+RtcRevAnd_1                       1.250000       1      1.250000  h
+RtcRevAnd_2                       1.250000       1      1.250000  h
+RtcRevAnd_3                       1.250000       1      1.250000  h
+RtcSynctoPCLK                   400.000000       1    400.000000  h, n
+RtcUpdate                      1604.000000       1   1604.000000  h, n
+bufbd1             cb25os163_max
+                                  1.000000       1      1.000000  
+bufbd7             cb25os163_max
+                                  2.500000       1      2.500000  
+buffd1             cb25os163_max
+                                  1.000000       3      3.000000  
+buffd7             cb25os163_max
+                                  2.250000       2      4.500000  
+-----------------------------------------------------------------------------
+Total 14 references                                  4778.500000
+ 
+****************************************
+Report : design
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 15:03:29 2001
+****************************************
+
+Design allows ideal nets on clock nets.
+
+Library(s) Used:
+
+    cb25os163_max (File: /chips/sc049/LIBRARIES/avanti/cb25/v2.1/synopsys/cb25os163/1997.01/models/cb25os163_max.db)
+
+Local Link Library:
+
+    {cb25os163_max.db}
+
+Flip-Flop Types:
+
+    No flip-flop types specified.
+
+Latch Types:
+
+    No latch types specified.
+
+Operating Conditions:
+
+    Name       Library       Process     Temp    Volt    Interconnect Model
+    ----------------------------------------------------------------------------
+    WCCOM      cb25os163_max    1.20   125.00    2.30    worst_case_tree
+
+Min Operating Conditions:
+
+    Name       Library       Process     Temp    Volt    Interconnect Model
+    ----------------------------------------------------------------------------
+    BCCOM      cb25os163_min    0.80   -55.00    2.70    best_case_tree
+
+Wire Loading Model:
+
+    Selected manually by the user.
+
+Name           :   8000
+Location       :   cb25os163_max
+Resistance     :   0.00019
+Capacitance    :   0.000154
+Area           :   0.01
+Slope          :   135
+Fanout   Length   Points Average Cap Std Deviation
+--------------------------------------------------------------
+     1    20.60
+     2    41.00
+     3    65.40
+     4   117.00
+     5   144.25
+     6   178.10
+     7   192.50
+     8   308.00
+     9   317.00
+    10   395.00
+    11   503.00
+    12   564.00
+    13   572.00
+    14   597.00
+    15   630.00
+    16   656.00
+    17   708.00
+    18   813.00
+    19   927.00
+    20  1062.00
+
+
+
+Wire Loading Model Mode: enclosed.
+
+Timing Ranges:
+
+    No timing ranges specified.
+
+Pin Input Delays:
+
+    None specified.
+
+Pin Output Delays:
+
+    None specified.
+
+Disabled Timing Arcs:
+
+    No arcs disabled.
+
+Required Licenses:
+
+    None Required
+
+Design Parameters:
+
+    None specified.
+ 
+****************************************
+Report : hierarchy
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 15:03:29 2001
+****************************************
+
+Rtc
+    RtcApbif
+        an02d0            cb25os163_max
+        an02d1            cb25os163_max
+        an02d2            cb25os163_max
+        an02d4            cb25os163_max
+        an04d1            cb25os163_max
+        aoi21d1           cb25os163_max
+        aoi22d1           cb25os163_max
+        aoi221d1          cb25os163_max
+        aoi222d1          cb25os163_max
+        aoim22d1          cb25os163_max
+        aon211d1          cb25os163_max
+        aor21d1           cb25os163_max
+        aor22d1           cb25os163_max
+        aor221d1          cb25os163_max
+        aor222d1          cb25os163_max
+        aor311d1          cb25os163_max
+        bufbd1            cb25os163_max
+        bufbd3            cb25os163_max
+        buffd3            cb25os163_max
+        inv0d0            cb25os163_max
+        inv0d1            cb25os163_max
+        inv0d2            cb25os163_max
+        inv0d4            cb25os163_max
+        inv0d7            cb25os163_max
+        invbd2            cb25os163_max
+        invbd4            cb25os163_max
+        mx02d0            cb25os163_max
+        mx02d1            cb25os163_max
+        nd02d0            cb25os163_max
+        nd02d1            cb25os163_max
+        nd02d2            cb25os163_max
+        nd04d1            cb25os163_max
+        nd13d1            cb25os163_max
+        nr03d1            cb25os163_max
+        nr04d1            cb25os163_max
+        oai21d1           cb25os163_max
+        oai22d1           cb25os163_max
+        oai31d1           cb25os163_max
+        oai211d1          cb25os163_max
+        oai222d1          cb25os163_max
+        oaim22d1          cb25os163_max
+        or02d1            cb25os163_max
+        or13d1            cb25os163_max
+        or23d1            cb25os163_max
+        sdcrb1            cb25os163_max
+        sdcrq2            cb25os163_max
+    RtcControl
+        ora21d1           cb25os163_max
+        sdcrq2            cb25os163_max
+    RtcCounter
+        an03d1            cb25os163_max
+        inv0d1            cb25os163_max
+        mx02d0            cb25os163_max
+        nd02d1            cb25os163_max
+        nd03d1            cb25os163_max
+        nr23d1            cb25os163_max
+        or12d1            cb25os163_max
+        sdcrq2            cb25os163_max
+        sdprb1            cb25os163_max
+        xn02d1            cb25os163_max
+        xr02d1            cb25os163_max
+    RtcInterrupt
+        aoim21d1          cb25os163_max
+        aon211d1          cb25os163_max
+        inv0d1            cb25os163_max
+        nd04d1            cb25os163_max
+        nr02d1            cb25os163_max
+        nr04d1            cb25os163_max
+        sdcrq2            cb25os163_max
+        xr02d1            cb25os163_max
+    RtcRevAnd_0
+        an02d1            cb25os163_max
+    RtcRevAnd_1
+        an02d1            cb25os163_max
+    RtcRevAnd_2
+        an02d1            cb25os163_max
+    RtcRevAnd_3
+        an02d1            cb25os163_max
+    RtcSynctoPCLK
+        an12d1            cb25os163_max
+        inv0d2            cb25os163_max
+        invbd2            cb25os163_max
+        mx02d0            cb25os163_max
+        sdcrb1            cb25os163_max
+        sdcrq2            cb25os163_max
+        xr02d1            cb25os163_max
+    RtcUpdate
+        an02d1            cb25os163_max
+        an12d1            cb25os163_max
+        aoi21d1           cb25os163_max
+        aoi22d1           cb25os163_max
+        aoi31d1           cb25os163_max
+        aoim21d1          cb25os163_max
+        aon211d1          cb25os163_max
+        aor21d1           cb25os163_max
+        aor22d1           cb25os163_max
+        buffd3            cb25os163_max
+        buffd7            cb25os163_max
+        buffda            cb25os163_max
+        cg01d1            cb25os163_max
+        inv0d0            cb25os163_max
+        inv0d1            cb25os163_max
+        inv0d2            cb25os163_max
+        invbd2            cb25os163_max
+        invbd4            cb25os163_max
+        mi02d1            cb25os163_max
+        mx02d0            cb25os163_max
+        mx02d1            cb25os163_max
+        nd02d1            cb25os163_max
+        nd02d2            cb25os163_max
+        nd02d4            cb25os163_max
+        nd03d1            cb25os163_max
+        nd12d1            cb25os163_max
+        nd23d1            cb25os163_max
+        nr02d0            cb25os163_max
+        nr02d1            cb25os163_max
+        nr03d1            cb25os163_max
+        oai21d1           cb25os163_max
+        oai31d1           cb25os163_max
+        oai211d1          cb25os163_max
+        oai321d1          cb25os163_max
+        oaim21d1          cb25os163_max
+        oaim22d1          cb25os163_max
+        oaim31d1          cb25os163_max
+        oan211d1          cb25os163_max
+        or02d0            cb25os163_max
+        or02d1            cb25os163_max
+        or12d1            cb25os163_max
+        or23d1            cb25os163_max
+        ora21d1           cb25os163_max
+        sdcrb1            cb25os163_max
+        sdcrq2            cb25os163_max
+        xn02d1            cb25os163_max
+        xr02d1            cb25os163_max
+        xr03d1            cb25os163_max
+        xr03d2            cb25os163_max
+    bufbd1                cb25os163_max
+    bufbd7                cb25os163_max
+    buffd1                cb25os163_max
+    buffd7                cb25os163_max
+ 
+****************************************
+Report : area
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 15:03:29 2001
+****************************************
+
+Library(s) Used:
+
+    cb25os163_max (File: /chips/sc049/LIBRARIES/avanti/cb25/v2.1/synopsys/cb25os163/1997.01/models/cb25os163_max.db)
+
+Number of ports:               88
+Number of nets:               399
+Number of cells:               17
+Number of references:          14
+
+Combinational area:       1981.250000
+Noncombinational area:    2797.250000
+Net Interconnect area:    1951.996948  
+
+Total cell area:          4778.500000
+Total area:               6730.497070
+ 
+****************************************
+Report : clocks
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 15:03:29 2001
+****************************************
+
+Attributes:
+    d - dont_touch_network
+    f - fix_hold
+    p - propagated_clock
+    G - generated_clock
+
+Clock          Period   Waveform            Attrs     Sources
+--------------------------------------------------------------------------------
+CLK1HZ          10.00   {0 5}               d, f      {CLK1HZ}
+PCLK            10.00   {0 5}               d, f      {PCLK}
+--------------------------------------------------------------------------------
+ 
+****************************************
+Report : Attribute
+Design : Rtc
+Version: 2000.11-SP1
+Date   : Fri Oct 12 15:03:29 2001
+****************************************
+
+Design          Object             Type      Attribute Name            Value
+--------------------------------------------------------------------------------
+Rtc             Rtc                design    hdl_canonical_params      
+Rtc             Rtc                design    hdl_parameters            
+Rtc             Rtc                design    hdl_template              Rtc
+Rtc             Rtc                design    link_design_libraries     IEEE
+Rtc             Rtc                design    wire_load_model_mode      enclosed
+Rtc             Rtc                design    wire_load_selection_type  1
+Rtc             Rtc                design    min_wire_load_selection_type
+                                                                       1
+Rtc             Rtc                design    max_transition            1.000000
+Rtc             Rtc                design    max_area                  0.000000
+Rtc             Rtc                design    minimum_multibit_width    2
+Rtc             Rtc                design    fix_multiple_port_nets    feedthroughs constants outputs buffer_constants
+Rtc             Rtc                design    ungroup_all               false
+Rtc             Rtc                design    ba_attaches_on_pins       false
+Rtc             Rtc                design    net_area                  1951.996948
+Rtc             Rtc                design    map                       true
+Rtc             Rtc                design    compile_cpu_hostname      n8001001c
+Rtc             Rtc                design    compile_abo_cpu_time      115.130035
+Rtc             Rtc                design    compile_rbo_cpu_time      265.869995
+Rtc             Rtc                design    compile_tot_cpu_time      442.339996
+Rtc             Rtc                design    compile_lib_cpu_time      10.410000
+Rtc             Rtc                design    compile_tdrs_cpu_time     29.600037
+Rtc             Rtc                design    annotated_net_resistances true
+Rtc             Rtc                design    annotated_net_capacitances
+                                                                       false
+Rtc             Rtc                design    annotated_connect_delays  false
+Rtc             Rtc                design    annotated_cell_delays     false
+

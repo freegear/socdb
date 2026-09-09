@@ -1,0 +1,72 @@
+-- --=========================================================================--
+-- This confidential and proprietary software may be used only as
+-- authorised by a licensing agreement from ARM Limited
+--   (C) COPYRIGHT 2000-2001 ARM Limited
+--       ALL RIGHTS RESERVED
+-- The entire notice above must be reproduced on all authorised
+-- copies and copies may only be made to the extent permitted
+-- by a licensing agreement from ARM Limited.
+--
+-- -----------------------------------------------------------------------------
+-- Version and Release Control Information:
+--
+-- File Name              : README.rca
+-- File Revision          : 1.10
+--
+-- Release Information    : PrimeCell(TM)-PL092-REL1v1
+--
+-- -----------------------------------------------------------------------------
+-- Purpose :
+--           README file for creation of .bif and .sim formatted
+--           vectors from BusTalk code
+--
+-- --=========================================================================--
+
+Steps to create .bif and .sim formatted vectors from the BusTalk
+code (default)
+--------------------------------------------------------------------------------
+make <testname>
+
+This will create infile.bif and bif.sim in the ./invec directory
+
+Please refer to the 'makefile' for legal 'testname's.
+
+RUNNING THE COMPLETE TEST SUITE
+===============================
+All the tests for the Smc cannot be run together because of the 
+large bif/tif files that will be created because of the large number of test
+cases presnt. Instead the tests have been partitioned into 4 sub-tests to 
+facilitate running the complete tests.
+They are :
+1. Smc1
+2. Smc2
+3. Smc3
+4. Smc4
+
+Please compile these tests seperately, and issue make rtl from the top level 
+each time to run the tests. For example, the following string of commands will
+compile and run all the tests. After setting all the environment variables 
+metioned in the smc_pl092/README file :
+From smc_pl092 directory:
+
+cd verification/bustest
+make Smc1
+cd ../..
+make rtl
+cd verification/bustest
+make Smc2
+cd ../..
+make rtl
+cd verification/bustest
+make Smc3
+cd ../..
+make rtl
+cd verification/bustest
+make Smc4
+cd ../..
+make rtl
+
+The above string of commands, can be cut and paste into a file, and sourced
+from top level to acheive the same.
+
+-- --================================= End ===================================--

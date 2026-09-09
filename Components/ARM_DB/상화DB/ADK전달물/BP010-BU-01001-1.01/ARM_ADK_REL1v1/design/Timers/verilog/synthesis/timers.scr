@@ -1,0 +1,13 @@
+
+analyze -f verilog  ../../../global_ADK/verilog/RevAnd.v 
+analyze -f verilog TimersPackage.v 
+analyze -f verilog TimersFrc.v 
+analyze -f verilog Timers.v
+
+
+
+elaborate Timers
+current_design Timers
+link
+
+write -f db -hier -out Timers.gtech.db
