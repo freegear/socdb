@@ -1,0 +1,110 @@
+#--------------------------------------------------------------
+# Clock related
+#--------------------------------------------------------------
+NET "clk_i" TNM_NET = "clk_i";
+TIMESPEC "TS_clk_i" = PERIOD "clk_i" 50 MHz HIGH 50 %;
+NET "clk" TNM_NET = "clk";
+TIMESPEC "TS_clk" = PERIOD "clk" 50 MHz HIGH 50 %;
+
+#NET "serial_inst/baud_accum_311" TNM_NET = "serial_inst/baud_accum_311";
+#TIMESPEC "TS_serial_inst_baud_accum_311" = PERIOD "serial_inst/baud_accum_311" 1 MHz HIGH 50 %;
+#NET "serial_inst/tx_inst/div16_inst/bbclk_c" TNM_NET = "serial_inst/tx_inst/div16_inst/bbclk_c";
+#NET "serial_inst/baud_accum_c(31)" TNM_NET = "serial_inst/baud_accum_c(31)";
+#TIMESPEC "TS_serial_inst_tx_inst_div16_inst_bbclk_" = PERIOD "serial_inst/tx_inst/div16_inst/bbclk_c" 1 MHZ HIGH 50 %;
+
+NET "clk_i" LOC = "C9";
+NET "reset_i"  LOC = "K17" | PULLDOWN;
+#--------------------------------------------------------------
+# Prohibit VREF pins
+#--------------------------------------------------------------
+CONFIG PROHIBIT = D2;
+CONFIG PROHIBIT = G4;
+CONFIG PROHIBIT = J6;
+CONFIG PROHIBIT = L5;
+CONFIG PROHIBIT = R4;
+#--------------------------------------------------------------
+# LEDs
+#--------------------------------------------------------------
+NET "seg_led<7>" LOC = "F9";
+NET "seg_led<6>" LOC = "E9";
+NET "seg_led<5>" LOC = "D11";
+NET "seg_led<4>" LOC = "C11";
+NET "seg_led<3>" LOC = "F11";
+NET "seg_led<2>" LOC = "E11";
+NET "seg_led<1>" LOC = "E12";
+NET "seg_led<0>" LOC = "F12";
+#--------------------------------------------------------------
+# Serial (UART)
+#--------------------------------------------------------------
+NET "rxpin" LOC = "R7";
+NET "txpin" LOC = "M14";
+#--------------------------------------------------------------
+# DDR Pins
+#--------------------------------------------------------------
+NET "a_q<0>" LOC = "T1";
+NET "a_q<10>" LOC = "T2";
+NET "a_q<11>" LOC = "N5";
+NET "a_q<12>" LOC = "P2";
+NET "a_q<1>" LOC = "R3";
+NET "a_q<2>" LOC = "R2";
+NET "a_q<3>" LOC = "P1";
+NET "a_q<4>" LOC = "F4";
+NET "a_q<5>" LOC = "H4";
+NET "a_q<6>" LOC = "H3";
+NET "a_q<7>" LOC = "H1";
+NET "a_q<8>" LOC = "H2";
+NET "a_q<9>" LOC = "N4";
+NET "a_q<*>"   IOSTANDARD=SSTL2_I;
+NET "data<0>" LOC = "L1";
+NET "data<1>" LOC = "L2";
+NET "data<2>" LOC = "L3";
+NET "data<3>" LOC = "L4";
+NET "data<4>" LOC = "M3";
+NET "data<5>" LOC = "M4";
+NET "data<6>" LOC = "M5";
+NET "data<7>" LOC = "M6";
+NET "data<8>" LOC = "E1";
+NET "data<9>" LOC = "E2";
+NET "data<10>" LOC = "F1";
+NET "data<11>" LOC = "F2";
+NET "data<12>" LOC = "G6";
+NET "data<13>" LOC = "G5";
+NET "data<14>" LOC = "H6";
+NET "data<15>" LOC = "H5";
+NET "data<*>"  IOSTANDARD=SSTL2_I;
+NET "ba_q<0>" LOC = "K5";
+NET "ba_q<1>" LOC = "K6";
+NET "ba_q<*>"  IOSTANDARD=SSTL2_I;
+NET "cas_qn"    LOC = "C2" | IOSTANDARD=SSTL2_I;
+NET "sdr_clk_n" LOC = "J4" | IOSTANDARD=SSTL2_I;
+NET "sdr_clk"  LOC = "J5"  | IOSTANDARD=SSTL2_I;
+NET "cke_q"    LOC = "K3" | IOSTANDARD=SSTL2_I;
+NET "cs_qn"    LOC = "K4" | IOSTANDARD=SSTL2_I;
+NET "we_qn"    LOC = "D1" | IOSTANDARD=SSTL2_I;
+NET "dm_q<0>" LOC = "J2";
+NET "dm_q<1>" LOC = "J1";
+NET "dm_q<*>"  IOSTANDARD=SSTL2_I;
+NET "dqs_q<0>" LOC = "L6";
+NET "dqs_q<1>" LOC = "G3";
+NET "dqs_q<*>" IOSTANDARD=SSTL2_I;
+NET "ras_qn"   LOC = "C1" | IOSTANDARD=SSTL2_I;
+NET "clk_fb" LOC = "B9";
+#--------------------------------------------------------------
+# Ethernet (PHY)
+#--------------------------------------------------------------
+NET "phy_mdc" LOC = "P9";
+NET "phy_mdio" LOC = "U5";
+NET "phy_rx_clk" LOC = "V3";
+NET "phy_rx_col" LOC = "U6";
+NET "phy_rx_crs" LOC = "U13";
+NET "phy_rx_dv" LOC = "V2";
+NET "phy_rxd<0>" LOC = "V8";
+NET "phy_rxd<1>" LOC = "T11";
+NET "phy_rxd<2>" LOC = "U11";
+NET "phy_rxd<3>" LOC = "V14";
+NET "phy_tx_clk" LOC = "T7";
+NET "phy_tx_en" LOC = "P15";
+NET "phy_txd<0>" LOC = "R11";
+NET "phy_txd<1>" LOC = "T15";
+NET "phy_txd<2>" LOC = "R5";
+NET "phy_txd<3>" LOC = "T5";

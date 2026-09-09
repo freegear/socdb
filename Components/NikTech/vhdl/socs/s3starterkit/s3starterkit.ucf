@@ -1,0 +1,103 @@
+#--------------------------------------------------------------
+# Clock related
+#--------------------------------------------------------------
+NET "clk_i" TNM_NET = "clk_i";
+TIMESPEC "TS_clk_i" = PERIOD "clk_i" 50 MHz HIGH 50 %;
+NET "clk" TNM_NET = "clk";
+TIMESPEC "TS_clk" = PERIOD "clk" 60 MHz HIGH 50 %;
+
+#-- Serial when XST
+#NET "serial_inst/baud_accum_311" TNM_NET = "baudx16"
+#TIMESPEC "TS_baudx16" = PERIOD "baudx16" 1 MHz HIGH 50 %
+#-- Serial for Synplicity
+#NET "serial_inst/tx_inst/div16_inst/bbclk_c" TNM_NET = "serial_inst/tx_inst/div16_inst/bbclk_c"
+#NET "serial_inst/baud_accum_c(31)" TNM_NET = "serial_inst/baud_accum_c(31)"
+#TIMESPEC "TS_serial_inst_tx_inst_div16_inst_bbclk_" = PERIOD "serial_inst/tx_inst/div16_inst/bbclk_c" 1 MHZ HIGH 50 %
+
+
+NET "clk_i" LOC = "T9";
+NET "reset_i" LOC = "L14";
+#--------------------------------------------------------------
+# OnChipSram BRAM Locs
+#--------------------------------------------------------------
+INST ocsyncram_1/ocsram_0 LOC = "RAMB16_X0Y0";
+INST ocsyncram_1/ocsram_1 LOC = "RAMB16_X0Y1";
+INST ocsyncram_1/ocsram_2 LOC = "RAMB16_X0Y2";
+INST ocsyncram_1/ocsram_3 LOC = "RAMB16_X0Y3";
+#--------------------------------------------------------------
+# LEDs
+#--------------------------------------------------------------
+NET "seg_led<0>" LOC = "K12";
+NET "seg_led<1>" LOC = "P14";
+NET "seg_led<2>" LOC = "L12";
+NET "seg_led<3>" LOC = "N14";
+NET "seg_led<4>" LOC = "P13";
+NET "seg_led<5>" LOC = "N12";
+NET "seg_led<6>" LOC = "P12";
+NET "seg_led<7>" LOC = "P11";
+#--------------------------------------------------------------
+# Serial (UART)
+#--------------------------------------------------------------
+NET "rxpin" LOC = "T13";
+NET "txpin" LOC = "R13";
+#--------------------------------------------------------------
+# Async - SRAM
+#--------------------------------------------------------------
+NET "sram_addr<17>"  LOC = "L3"  ;
+NET "sram_addr<16>"  LOC = "K5"  ;
+NET "sram_addr<15>"  LOC = "K3"  ;
+NET "sram_addr<14>"  LOC = "J3"  ;
+NET "sram_addr<13>"  LOC = "J4"  ;
+NET "sram_addr<12>"  LOC = "H4"  ;
+NET "sram_addr<11>"  LOC = "H3"  ;
+NET "sram_addr<0>"  LOC = "L5"  ;
+NET "sram_addr<10>"  LOC = "G5"  ;
+NET "sram_addr<1>"  LOC = "N3"  ;
+NET "sram_addr<2>"  LOC = "M4"  ;
+NET "sram_addr<3>"  LOC = "M3"  ;
+NET "sram_addr<4>"  LOC = "L4"  ;
+NET "sram_addr<5>"  LOC = "G4"  ;
+NET "sram_addr<6>"  LOC = "F3"  ;
+NET "sram_addr<7>"  LOC = "F4"  ;
+NET "sram_addr<8>"  LOC = "E3"  ;
+NET "sram_addr<9>"  LOC = "E4"  ;
+NET "sram_benN<0>"  LOC = "P6"  ;
+NET "sram_benN<1>"  LOC = "T4"  ;
+NET "sram_benN<2>"  LOC = "P5"  ;
+NET "sram_benN<3>"  LOC = "R4"  ;
+NET "sram_csn<0>"  LOC = "P7"  ;
+NET "sram_csn<1>"  LOC = "N5"  ;
+NET "sram_data<0>"  LOC = "N7" ;
+NET "sram_data<10>"  LOC = "F2" ;
+NET "sram_data<11>"  LOC = "H1" ;
+NET "sram_data<12>"  LOC = "J2" ;
+NET "sram_data<13>"  LOC = "L2" ;
+NET "sram_data<14>"  LOC = "P1" ;
+NET "sram_data<15>"  LOC = "R1" ;
+NET "sram_data<16>"  LOC = "P2" ;
+NET "sram_data<17>"  LOC = "N2" ;
+NET "sram_data<18>"  LOC = "M2" ;
+NET "sram_data<19>"  LOC = "K1" ;
+NET "sram_data<1>"  LOC = "T8" ;
+NET "sram_data<20>"  LOC = "J1" ;
+NET "sram_data<21>"  LOC = "G2" ;
+NET "sram_data<22>"  LOC = "E1" ;
+NET "sram_data<23>"  LOC = "D1" ;
+NET "sram_data<24>"  LOC = "D2" ;
+NET "sram_data<25>"  LOC = "E2" ;
+NET "sram_data<26>"  LOC = "G1" ;
+NET "sram_data<27>"  LOC = "F5" ;
+NET "sram_data<28>"  LOC = "C3" ;
+NET "sram_data<29>"  LOC = "K2" ;
+NET "sram_data<2>"  LOC = "R6" ;
+NET "sram_data<30>"  LOC = "M1" ;
+NET "sram_data<31>"  LOC = "N1" ;
+NET "sram_data<3>"  LOC = "T5" ;
+NET "sram_data<4>"  LOC = "R5" ;
+NET "sram_data<5>"  LOC = "C2" ;
+NET "sram_data<6>"  LOC = "C1" ;
+NET "sram_data<7>"  LOC = "B1" ;
+NET "sram_data<8>"  LOC = "D3" ;
+NET "sram_data<9>"  LOC = "P8" ;
+NET "sram_oen" LOC = "K4";
+NET "sram_wen" LOC = "G3";

@@ -1,0 +1,100 @@
+#
+##-- Synplicity, Inc.
+##-- Project file manik_soc.prj.
+##-- Generated using ISE.
+
+#implementation: manik_soc
+impl -add "manik_soc"
+
+##device options
+proc findmatch {spec args} {  set _Arglist [join $args " "];  set _Idx [lsearch -glob $_Arglist $spec];  if {$_Idx != -1} {  return [lindex $_Arglist $_Idx];  } else {  return $spec;  }  }
+         
+proc findpackage {spec} { findmatch $spec [partdata -package [part]]}
+proc findgrade   {spec} { findmatch $spec [partdata -grade   [part]]}
+set_option -technology SPARTAN3E
+set_option -part xc3s500e
+set_option -package [findpackage {fg320}]
+set_option -speed_grade [findgrade {-4}]
+
+## Libraries
+
+## Source files
+add_file -verilog {"C:/Synplicity/fpga_861/bin/../lib/xilinx/unisim.v"}
+add_file {../../../vhdl/socs/s3Estarterkit/manikconfig.vhd}
+add_file {../../../vhdl/manik/manikpackage.vhd}
+add_file {../../../vhdl/manik/manikxilinx.vhd}
+add_file {C:/Synplicity/fpga_861/lib/xilinx/unisim.vhd}
+add_file {../../../vhdl/manik/maniklib.vhd}
+add_file {../../../vhdl/manik/manikaltera.vhd}
+add_file {../../../vhdl/manik/manikactel.vhd}
+add_file {../../../vhdl/manik/maniklattice.vhd}
+add_file {../../../vhdl/manik/szextend.vhd}
+add_file {../../../vhdl/manik/logicop.vhd}
+add_file {../../../vhdl/manik/addsub.vhd}
+add_file {../../../vhdl/cores/wbddr.vhd}
+add_file {../../../vhdl/manik/wback.vhd}
+add_file {../../../vhdl/manik/tfflagmod.vhd}
+add_file {../../../vhdl/manik/tagmem.vhd}
+add_file {../../../vhdl/manik/shifter.vhd}
+add_file {../../../vhdl/manik/regfile.vhd}
+add_file {../../../vhdl/manik/immdecode.vhd}
+add_file {../../../vhdl/manik/dbusmux.vhd}
+add_file {../../../vhdl/manik/cachemem.vhd}
+add_file {../../../vhdl/manik/aluopdecode.vhd}
+add_file {../../../vhdl/manik/alubsel.vhd}
+add_file {../../../vhdl/manik/alu.vhd}
+add_file {../../../vhdl/cores/serial.vhd}
+add_file {../../../vhdl/cores/eth_mac.vhd}
+add_file {../../../vhdl/manik/ucache.vhd}
+add_file {../../../vhdl/manik/icache_sp.vhd}
+add_file {../../../vhdl/manik/dcache_sp.vhd}
+add_file {../../../vhdl/manik/timer.vhd}
+add_file {../../../vhdl/manik/sfrs.vhd}
+add_file {../../../vhdl/manik/rfunit.vhd}
+add_file {../../../vhdl/manik/pipectrl.vhd}
+add_file {../../../vhdl/manik/multshift.vhd}
+add_file {../../../vhdl/manik/intr.vhd}
+add_file {../../../vhdl/manik/ifdeunit.vhd}
+add_file {../../../vhdl/manik/iagunit.vhd}
+add_file {../../../vhdl/manik/exunit.vhd}
+add_file {../../../vhdl/manik/manik2top.vhd}
+add_file {../../../vhdl/cores/gpio.vhd}
+add_file {../../../vhdl/cores/debounce.vhd}
+add_file {../../../manikremote/manikremote.vhd}
+add_file {../../../vhdl/socs/s3Estarterkit/manik_soc.vhd}
+
+## Additional _Compile options
+set_option -symbolic_fsm_compiler 1
+set_option -resource_sharing 1
+set_option -default_enum_encoding default
+set_option -top_module manik_soc
+set_option -use_fsm_explorer 0
+
+## Additional _Map options
+set_option -frequency 100
+set_option -fanout_limit 100
+set_option -disable_io_insertion 0
+set_option -pipe 1
+set_option -modular 0
+set_option -retiming 0
+
+## Additional _Simulation options
+set_option -write_verilog 0
+set_option -write_vhdl 0
+
+## Additional _PlaceAndRoute options
+set_option -write_apr_constraint 1
+
+## Additional _ImplAttr options
+set_option -num_critical_paths 0
+set_option -num_startend_points 0
+
+set_option -vlog_std v2001
+set_option -compiler_compatible 0
+
+##--Set result format/file last
+project -result_file {../../../synth/s3Estarterkit/scripts/manik_soc.edn}
+
+##-- p_Constraint file
+add_file -constraint {../../../synth/s3Estarterkit/scripts/manik_soc.sdc}
+
