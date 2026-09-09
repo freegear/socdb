@@ -1,0 +1,3 @@
+mba2440-ram.gz :
+	RAMDISK File system image for MBA2440
+	This is compressed file...
