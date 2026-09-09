@@ -1,0 +1,150 @@
+ARM Physical IP, Inc. 
+ 
+TSMC CL013GFSG (0.13um Generic Process with FSG dielectric)  
+1.2V SAGE-X(tm) v2.0 Release Notes 
+------------------------------------------------------------------------------- 
+2005q3v1 (09/16/2005) 
+ 
+Impact on Designs Using 2004q1v1 
+-------------------------------- 
+This section describes the impact of this release on current designs 
+which are using the previous release. 
+ 
+*** This is a mandatory update. *** 
+ 
+ARM Update Recommendation: 
+ 
+  Install version 2005q3v1. Discontinue using 2004q1v1. 
+ 
+  o GDS2 has not changed 
+  o P&R footprints have not changed. 
+  o Updated the three_state equation in the .lib for RF1R1WX1 cell. 
+  o Updated the Enable and Latch statements in the .tlf for RF1R1WX1 and 
+    RF2R1WX1 cells. 
+  o Updated power for the following cells to add fall_power model to 
+    passive arc CK (when !D && E && !RN). 
+  o Timing and power have not changed for all other cells. 
+  o Updated LEF and Apollo tf to design rule document T-013-LO-DR-001 Rev 2.1. 
+  o Updated sdf post processor for PrimeTime. 
+ 
+Process Technology Data 
+----------------------- 
+This section lists all of the foundry documents and technology files 
+used to design this product. 
+ 
+  o Design Rule Document 
+      - T-013-LO-DR-001 Rev 2.1 03-31-04 
+  o DRC Command File 
+      - 0.13um CALIBRE DRC COMMAND FILE - CL13S_8M.21c (VER 2.1c, 6/14/2004) 
+  o LVS Command File 
+      - TSMC 0.13UM CALIBRE ERC/LVS COMMAND FILE V1.3c, 2002/06/25 
+  o Layer Map File 
+      - TSMC T-013-LO-LE-001 v2.1a 5/24/2004 
+  o Process Name 
+      - 0.13um LOGIC SALICIDE FSG IMD (1P8M,1.2V/2.5V) (CL013G) 
+  o Process Document 
+      - T-013-LO-SP-004 V1.3 
+  o Process Models 
+      - 1.3P1 Jan 11, 2002 
+ 
+EDA Support 
+----------- 
+This section lists the EDA tools and versions supported for this 
+product release. The items indicated by the "*" were used during the 
+QA testing of this release. This set of tools and versions corresponds 
+to ARM EDA Package 3.0.1. 
+ 
+    * Cadence NC-Sim (Verilog) 
+
+        - 3.1 
+    o Cadence Verilog-XL (Verilog) 
+        - 3.10-p001 
+    * Synopsys VCS (Verilog) 
+        - 5.1 
+    o Mentor ModelSim (Verilog) 
+        - 5.5 
+    o Cadence NC-VHDL (VHDL) 
+        - 3.1 
+    o Synopsys VSS (VHDL) 
+        - 2000.12 
+    * Mentor ModelSim (VHDL) 
+        - 5.5 
+    * Simulation Model SDF Compatibility 
+        - SDF 2.1 
+    * Synopsys Design Compiler (Synthesis, Delay Calculation) 
+        - 2000.11 
+    o Synopsys Module Compiler 
+        - 2000.11 
+    * Cadence BuildGates/PKS 
+        - 4.0-s009 
+    o Synopsys Physical Compiler 
+        - 2000.11 
+    o Synopsys Chip Architect 
+        - 2000.11 
+    * Synopsys PrimeTime (Static Timing, Delay Calculation) 
+        - 2001.06 
+    * Cadence Pearl (Static Timing, Delay Calculation) 
+        - 4.3-s086 (TLF 4.1) 
+    * Cadence NanoRoute (SoC Encounter) 
+        - 2.1 (3.1) with LEF 5.4 & .lib 
+    o Cadence Silicon Ensemble 
+        - 5.4-USR4 with LEF 5.4 & TLF 4.1 
+    * Synopsys Apollo-II (FRAM, CEL verified; TIM, PWR, CLF supported) 
+        - 2000.2 
+    * Mentor Graphics Calibre (GDSII, CDL) 
+        - d.1 
+    * Cadence Composer (Schematic Entry) 
+        - DFII 4.4.3.72 
+    o Synopsys DFT Compiler 
+        - 2000.11 
+    * Synopsys Power Compiler 
+        - 2000.11 
+    * Adobe Acrobat Reader (PDF Documentation) 
+        - 5.0 
+    o Synopsys HSPICE 
+        - 2003.03 
+ 
+ 
+Technology Implementation 
+------------------------- 
+This section provides information on items that may not be included 
+in the foundry documentation. 
+ 
+  Characterization 
+      - Timing and power views characterized at the following conditions: 
+        fast     P/V/T = FF/1.32V/-40C 
+
+        fastz    P/V/T = FF/1.32V/0C 
+        typical  P/V/T = TT/1.20V/25C 
+        slow     P/V/T = SS/1.08V/125C 
+ 
+  Mandatory Tapeout layers required for foundry: 
+ 
+      - GDS2 text layer 63:63 is allocated by TSMC for IP marking. 
+        *** This is a mandatory tapeout layer **** 
+ 
+  TSMC Calibre DRC/LVS/LPE, SPICE models 
+      - Calibre rules files and SPICE models available at TSMC's website: 
+            http://online.tsmc.com.tw/ 
+ 
+Methodology 
+----------- 
+This section describes design flow issues that may be applicable to 
+this release. 
+ 
+ 
+  o DRC 
+      -  The FILL1 cell will fail a variety of DRC errors when run on 
+         FILL1 individually. These errors will disappear at chip-level DRC due 
+         to interaction with neighboring cells: 
+ 
+         NP.A.1, Min. area of NP 0.25 
+         PP.A.1, Min. area of PP 0.25 
+         OD.A.1, Min. area of stand-alone OD region 0.122 
+ 
+Known Problems and Solutions 
+---------------------------- 
+This section describes known problems and work-arounds as of the 
+release date of this library. 
+ 
+  o There are no known problems with this release. 

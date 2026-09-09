@@ -1,0 +1,7 @@
+string을 direct로 넣을 경우 link시에 잘못된 주소를 load하는 현상이 발생.
+--> C source code compile시 -fPIC option을 제거해야 한다.
+--> link script에서     
+    *(.rodata*)
+    *(.rodata1)
+    /**(.rodata.str1.4)*/
+    로 수정해야 한다.
