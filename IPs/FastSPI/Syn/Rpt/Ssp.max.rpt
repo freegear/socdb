@@ -1,0 +1,792 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -nworst 10
+        -input_pins
+        -nets
+        -max_paths 10
+        -transition_time
+        -capacitance
+Design : Ssp
+Version: V-2004.06
+Date   : Tue Apr 17 13:50:15 2007
+****************************************
+
+ * Some/all delay information is back-annotated.
+
+Operating Conditions: slow   Library: USERLIB
+Wire Load Model Mode: top
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: uSspTxFIFO/uSspTxRegFile/TxReg6_reg_0_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                       14.00      14.00 f
+  PWRITE (in)                                                       1.00      0.00      14.00 f
+  PWRITE (net)                                  3         0.01                0.00      14.00 f
+  uSspApbif/PWRITE (SspApbif)                                                 0.00      14.00 f
+  uSspApbif/PWRITE (net)                                  0.01                0.00      14.00 f
+  uSspApbif/U730/C (AND3X2)                                         1.00      0.00      14.00 f
+  uSspApbif/U730/Y (AND3X2)                                         0.09      0.47      14.47 f
+  uSspApbif/n1285 (net)                         2         0.01                0.00      14.47 f
+  uSspApbif/U713/B (NAND2BX1)                                       0.09      0.00      14.47 f
+  uSspApbif/U713/Y (NAND2BX1)                                       0.11      0.10      14.57 r
+  uSspApbif/n1150 (net)                         3         0.00                0.00      14.57 r
+  uSspApbif/U701/AN (NAND2BX1)                                      0.11      0.00      14.57 r
+  uSspApbif/U701/Y (NAND2BX1)                                       0.08      0.13      14.70 r
+  uSspApbif/n1160 (net)                         1         0.00                0.00      14.70 r
+  uSspApbif/U700/A (BUFX2)                                          0.08      0.00      14.70 r
+  uSspApbif/U700/Y (BUFX2)                                          0.19      0.19      14.89 r
+  uSspApbif/n1287 (net)                        17         0.03                0.00      14.89 r
+  uSspApbif/U698/A (INVX1)                                          0.19      0.00      14.89 r
+  uSspApbif/U698/Y (INVX1)                                          0.17      0.16      15.05 f
+  uSspApbif/SPITXDATWr (net)                   17         0.02                0.00      15.05 f
+  uSspApbif/SPITXDATWr (SspApbif)                                             0.00      15.05 f
+  SPITXDATWr (net)                                        0.02                0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (SspTxFIFO)                                              0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (net)                                0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (SspTxFCntl)                                 0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (net)                    0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/B0 (OAI2BB1X1)                        0.17      0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/Y (OAI2BB1X1)                         0.19      0.17      15.22 r
+  uSspTxFIFO/uSspTxFCntl/n442 (net)             4         0.01                0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/A (INVX1)                             0.19      0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/Y (INVX1)                             0.10      0.10      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (net)      5         0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (SspTxFCntl)                             0.00      15.32 f
+  uSspTxFIFO/RegFileWrEn (net)                            0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (SspTxRegFile)                         0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (net)              0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/A (AND2X2)                         0.10      0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/Y (AND2X2)                         0.08      0.19      15.51 f
+  uSspTxFIFO/uSspTxRegFile/n1261 (net)          4         0.01                0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/C (NAND3BX1)                        0.08      0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/Y (NAND3BX1)                        0.14      0.11      15.62 r
+  uSspTxFIFO/uSspTxRegFile/n1144 (net)          1         0.00                0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/A (BUFX2)                           0.14      0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/Y (BUFX2)                           0.19      0.21      15.83 r
+  uSspTxFIFO/uSspTxRegFile/n1268 (net)         17         0.03                0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/A (INVX1)                           0.19      0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/Y (INVX1)                           0.16      0.15      15.98 f
+  uSspTxFIFO/uSspTxRegFile/n1145 (net)         16         0.02                0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1089/B0 (AO22X1)                        0.16      0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1089/Y (AO22X1)                         0.09      0.32      16.29 f
+  uSspTxFIFO/uSspTxRegFile/n1115 (net)          1         0.00                0.00      16.29 f
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_0_/D (DFFRX1)                 0.09      0.00      16.29 f
+  data arrival time                                                                     16.29
+
+  clock PCLK (rise edge)                                                     20.00      20.00
+  clock network delay (ideal)                                                 0.00      20.00
+  clock uncertainty                                                          -1.30      18.70
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_0_/CK (DFFRX1)                          0.00      18.70 r
+  library setup time                                                         -0.21      18.49
+  data required time                                                                    18.49
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    18.49
+  data arrival time                                                                    -16.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            2.19
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: uSspTxFIFO/uSspTxRegFile/TxReg6_reg_1_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                       14.00      14.00 f
+  PWRITE (in)                                                       1.00      0.00      14.00 f
+  PWRITE (net)                                  3         0.01                0.00      14.00 f
+  uSspApbif/PWRITE (SspApbif)                                                 0.00      14.00 f
+  uSspApbif/PWRITE (net)                                  0.01                0.00      14.00 f
+  uSspApbif/U730/C (AND3X2)                                         1.00      0.00      14.00 f
+  uSspApbif/U730/Y (AND3X2)                                         0.09      0.47      14.47 f
+  uSspApbif/n1285 (net)                         2         0.01                0.00      14.47 f
+  uSspApbif/U713/B (NAND2BX1)                                       0.09      0.00      14.47 f
+  uSspApbif/U713/Y (NAND2BX1)                                       0.11      0.10      14.57 r
+  uSspApbif/n1150 (net)                         3         0.00                0.00      14.57 r
+  uSspApbif/U701/AN (NAND2BX1)                                      0.11      0.00      14.57 r
+  uSspApbif/U701/Y (NAND2BX1)                                       0.08      0.13      14.70 r
+  uSspApbif/n1160 (net)                         1         0.00                0.00      14.70 r
+  uSspApbif/U700/A (BUFX2)                                          0.08      0.00      14.70 r
+  uSspApbif/U700/Y (BUFX2)                                          0.19      0.19      14.89 r
+  uSspApbif/n1287 (net)                        17         0.03                0.00      14.89 r
+  uSspApbif/U698/A (INVX1)                                          0.19      0.00      14.89 r
+  uSspApbif/U698/Y (INVX1)                                          0.17      0.16      15.05 f
+  uSspApbif/SPITXDATWr (net)                   17         0.02                0.00      15.05 f
+  uSspApbif/SPITXDATWr (SspApbif)                                             0.00      15.05 f
+  SPITXDATWr (net)                                        0.02                0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (SspTxFIFO)                                              0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (net)                                0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (SspTxFCntl)                                 0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (net)                    0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/B0 (OAI2BB1X1)                        0.17      0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/Y (OAI2BB1X1)                         0.19      0.17      15.22 r
+  uSspTxFIFO/uSspTxFCntl/n442 (net)             4         0.01                0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/A (INVX1)                             0.19      0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/Y (INVX1)                             0.10      0.10      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (net)      5         0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (SspTxFCntl)                             0.00      15.32 f
+  uSspTxFIFO/RegFileWrEn (net)                            0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (SspTxRegFile)                         0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (net)              0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/A (AND2X2)                         0.10      0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/Y (AND2X2)                         0.08      0.19      15.51 f
+  uSspTxFIFO/uSspTxRegFile/n1261 (net)          4         0.01                0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/C (NAND3BX1)                        0.08      0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/Y (NAND3BX1)                        0.14      0.11      15.62 r
+  uSspTxFIFO/uSspTxRegFile/n1144 (net)          1         0.00                0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/A (BUFX2)                           0.14      0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/Y (BUFX2)                           0.19      0.21      15.83 r
+  uSspTxFIFO/uSspTxRegFile/n1268 (net)         17         0.03                0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/A (INVX1)                           0.19      0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/Y (INVX1)                           0.16      0.15      15.98 f
+  uSspTxFIFO/uSspTxRegFile/n1145 (net)         16         0.02                0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1088/B0 (AO22X1)                        0.16      0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1088/Y (AO22X1)                         0.09      0.32      16.29 f
+  uSspTxFIFO/uSspTxRegFile/n1114 (net)          1         0.00                0.00      16.29 f
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_1_/D (DFFRX1)                 0.09      0.00      16.29 f
+  data arrival time                                                                     16.29
+
+  clock PCLK (rise edge)                                                     20.00      20.00
+  clock network delay (ideal)                                                 0.00      20.00
+  clock uncertainty                                                          -1.30      18.70
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_1_/CK (DFFRX1)                          0.00      18.70 r
+  library setup time                                                         -0.21      18.49
+  data required time                                                                    18.49
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    18.49
+  data arrival time                                                                    -16.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            2.19
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: uSspTxFIFO/uSspTxRegFile/TxReg6_reg_2_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                       14.00      14.00 f
+  PWRITE (in)                                                       1.00      0.00      14.00 f
+  PWRITE (net)                                  3         0.01                0.00      14.00 f
+  uSspApbif/PWRITE (SspApbif)                                                 0.00      14.00 f
+  uSspApbif/PWRITE (net)                                  0.01                0.00      14.00 f
+  uSspApbif/U730/C (AND3X2)                                         1.00      0.00      14.00 f
+  uSspApbif/U730/Y (AND3X2)                                         0.09      0.47      14.47 f
+  uSspApbif/n1285 (net)                         2         0.01                0.00      14.47 f
+  uSspApbif/U713/B (NAND2BX1)                                       0.09      0.00      14.47 f
+  uSspApbif/U713/Y (NAND2BX1)                                       0.11      0.10      14.57 r
+  uSspApbif/n1150 (net)                         3         0.00                0.00      14.57 r
+  uSspApbif/U701/AN (NAND2BX1)                                      0.11      0.00      14.57 r
+  uSspApbif/U701/Y (NAND2BX1)                                       0.08      0.13      14.70 r
+  uSspApbif/n1160 (net)                         1         0.00                0.00      14.70 r
+  uSspApbif/U700/A (BUFX2)                                          0.08      0.00      14.70 r
+  uSspApbif/U700/Y (BUFX2)                                          0.19      0.19      14.89 r
+  uSspApbif/n1287 (net)                        17         0.03                0.00      14.89 r
+  uSspApbif/U698/A (INVX1)                                          0.19      0.00      14.89 r
+  uSspApbif/U698/Y (INVX1)                                          0.17      0.16      15.05 f
+  uSspApbif/SPITXDATWr (net)                   17         0.02                0.00      15.05 f
+  uSspApbif/SPITXDATWr (SspApbif)                                             0.00      15.05 f
+  SPITXDATWr (net)                                        0.02                0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (SspTxFIFO)                                              0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (net)                                0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (SspTxFCntl)                                 0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (net)                    0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/B0 (OAI2BB1X1)                        0.17      0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/Y (OAI2BB1X1)                         0.19      0.17      15.22 r
+  uSspTxFIFO/uSspTxFCntl/n442 (net)             4         0.01                0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/A (INVX1)                             0.19      0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/Y (INVX1)                             0.10      0.10      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (net)      5         0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (SspTxFCntl)                             0.00      15.32 f
+  uSspTxFIFO/RegFileWrEn (net)                            0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (SspTxRegFile)                         0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (net)              0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/A (AND2X2)                         0.10      0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/Y (AND2X2)                         0.08      0.19      15.51 f
+  uSspTxFIFO/uSspTxRegFile/n1261 (net)          4         0.01                0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/C (NAND3BX1)                        0.08      0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/Y (NAND3BX1)                        0.14      0.11      15.62 r
+  uSspTxFIFO/uSspTxRegFile/n1144 (net)          1         0.00                0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/A (BUFX2)                           0.14      0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/Y (BUFX2)                           0.19      0.21      15.83 r
+  uSspTxFIFO/uSspTxRegFile/n1268 (net)         17         0.03                0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/A (INVX1)                           0.19      0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/Y (INVX1)                           0.16      0.15      15.98 f
+  uSspTxFIFO/uSspTxRegFile/n1145 (net)         16         0.02                0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1087/B0 (AO22X1)                        0.16      0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1087/Y (AO22X1)                         0.09      0.32      16.29 f
+  uSspTxFIFO/uSspTxRegFile/n1113 (net)          1         0.00                0.00      16.29 f
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_2_/D (DFFRX1)                 0.09      0.00      16.29 f
+  data arrival time                                                                     16.29
+
+  clock PCLK (rise edge)                                                     20.00      20.00
+  clock network delay (ideal)                                                 0.00      20.00
+  clock uncertainty                                                          -1.30      18.70
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_2_/CK (DFFRX1)                          0.00      18.70 r
+  library setup time                                                         -0.21      18.49
+  data required time                                                                    18.49
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    18.49
+  data arrival time                                                                    -16.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            2.19
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: uSspTxFIFO/uSspTxRegFile/TxReg6_reg_3_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                       14.00      14.00 f
+  PWRITE (in)                                                       1.00      0.00      14.00 f
+  PWRITE (net)                                  3         0.01                0.00      14.00 f
+  uSspApbif/PWRITE (SspApbif)                                                 0.00      14.00 f
+  uSspApbif/PWRITE (net)                                  0.01                0.00      14.00 f
+  uSspApbif/U730/C (AND3X2)                                         1.00      0.00      14.00 f
+  uSspApbif/U730/Y (AND3X2)                                         0.09      0.47      14.47 f
+  uSspApbif/n1285 (net)                         2         0.01                0.00      14.47 f
+  uSspApbif/U713/B (NAND2BX1)                                       0.09      0.00      14.47 f
+  uSspApbif/U713/Y (NAND2BX1)                                       0.11      0.10      14.57 r
+  uSspApbif/n1150 (net)                         3         0.00                0.00      14.57 r
+  uSspApbif/U701/AN (NAND2BX1)                                      0.11      0.00      14.57 r
+  uSspApbif/U701/Y (NAND2BX1)                                       0.08      0.13      14.70 r
+  uSspApbif/n1160 (net)                         1         0.00                0.00      14.70 r
+  uSspApbif/U700/A (BUFX2)                                          0.08      0.00      14.70 r
+  uSspApbif/U700/Y (BUFX2)                                          0.19      0.19      14.89 r
+  uSspApbif/n1287 (net)                        17         0.03                0.00      14.89 r
+  uSspApbif/U698/A (INVX1)                                          0.19      0.00      14.89 r
+  uSspApbif/U698/Y (INVX1)                                          0.17      0.16      15.05 f
+  uSspApbif/SPITXDATWr (net)                   17         0.02                0.00      15.05 f
+  uSspApbif/SPITXDATWr (SspApbif)                                             0.00      15.05 f
+  SPITXDATWr (net)                                        0.02                0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (SspTxFIFO)                                              0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (net)                                0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (SspTxFCntl)                                 0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (net)                    0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/B0 (OAI2BB1X1)                        0.17      0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/Y (OAI2BB1X1)                         0.19      0.17      15.22 r
+  uSspTxFIFO/uSspTxFCntl/n442 (net)             4         0.01                0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/A (INVX1)                             0.19      0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/Y (INVX1)                             0.10      0.10      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (net)      5         0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (SspTxFCntl)                             0.00      15.32 f
+  uSspTxFIFO/RegFileWrEn (net)                            0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (SspTxRegFile)                         0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (net)              0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/A (AND2X2)                         0.10      0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/Y (AND2X2)                         0.08      0.19      15.51 f
+  uSspTxFIFO/uSspTxRegFile/n1261 (net)          4         0.01                0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/C (NAND3BX1)                        0.08      0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/Y (NAND3BX1)                        0.14      0.11      15.62 r
+  uSspTxFIFO/uSspTxRegFile/n1144 (net)          1         0.00                0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/A (BUFX2)                           0.14      0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/Y (BUFX2)                           0.19      0.21      15.83 r
+  uSspTxFIFO/uSspTxRegFile/n1268 (net)         17         0.03                0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/A (INVX1)                           0.19      0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/Y (INVX1)                           0.16      0.15      15.98 f
+  uSspTxFIFO/uSspTxRegFile/n1145 (net)         16         0.02                0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1086/B0 (AO22X1)                        0.16      0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1086/Y (AO22X1)                         0.09      0.32      16.29 f
+  uSspTxFIFO/uSspTxRegFile/n1112 (net)          1         0.00                0.00      16.29 f
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_3_/D (DFFRX1)                 0.09      0.00      16.29 f
+  data arrival time                                                                     16.29
+
+  clock PCLK (rise edge)                                                     20.00      20.00
+  clock network delay (ideal)                                                 0.00      20.00
+  clock uncertainty                                                          -1.30      18.70
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_3_/CK (DFFRX1)                          0.00      18.70 r
+  library setup time                                                         -0.21      18.49
+  data required time                                                                    18.49
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    18.49
+  data arrival time                                                                    -16.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            2.19
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: uSspTxFIFO/uSspTxRegFile/TxReg6_reg_4_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                       14.00      14.00 f
+  PWRITE (in)                                                       1.00      0.00      14.00 f
+  PWRITE (net)                                  3         0.01                0.00      14.00 f
+  uSspApbif/PWRITE (SspApbif)                                                 0.00      14.00 f
+  uSspApbif/PWRITE (net)                                  0.01                0.00      14.00 f
+  uSspApbif/U730/C (AND3X2)                                         1.00      0.00      14.00 f
+  uSspApbif/U730/Y (AND3X2)                                         0.09      0.47      14.47 f
+  uSspApbif/n1285 (net)                         2         0.01                0.00      14.47 f
+  uSspApbif/U713/B (NAND2BX1)                                       0.09      0.00      14.47 f
+  uSspApbif/U713/Y (NAND2BX1)                                       0.11      0.10      14.57 r
+  uSspApbif/n1150 (net)                         3         0.00                0.00      14.57 r
+  uSspApbif/U701/AN (NAND2BX1)                                      0.11      0.00      14.57 r
+  uSspApbif/U701/Y (NAND2BX1)                                       0.08      0.13      14.70 r
+  uSspApbif/n1160 (net)                         1         0.00                0.00      14.70 r
+  uSspApbif/U700/A (BUFX2)                                          0.08      0.00      14.70 r
+  uSspApbif/U700/Y (BUFX2)                                          0.19      0.19      14.89 r
+  uSspApbif/n1287 (net)                        17         0.03                0.00      14.89 r
+  uSspApbif/U698/A (INVX1)                                          0.19      0.00      14.89 r
+  uSspApbif/U698/Y (INVX1)                                          0.17      0.16      15.05 f
+  uSspApbif/SPITXDATWr (net)                   17         0.02                0.00      15.05 f
+  uSspApbif/SPITXDATWr (SspApbif)                                             0.00      15.05 f
+  SPITXDATWr (net)                                        0.02                0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (SspTxFIFO)                                              0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (net)                                0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (SspTxFCntl)                                 0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (net)                    0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/B0 (OAI2BB1X1)                        0.17      0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/Y (OAI2BB1X1)                         0.19      0.17      15.22 r
+  uSspTxFIFO/uSspTxFCntl/n442 (net)             4         0.01                0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/A (INVX1)                             0.19      0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/Y (INVX1)                             0.10      0.10      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (net)      5         0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (SspTxFCntl)                             0.00      15.32 f
+  uSspTxFIFO/RegFileWrEn (net)                            0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (SspTxRegFile)                         0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (net)              0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/A (AND2X2)                         0.10      0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/Y (AND2X2)                         0.08      0.19      15.51 f
+  uSspTxFIFO/uSspTxRegFile/n1261 (net)          4         0.01                0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/C (NAND3BX1)                        0.08      0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/Y (NAND3BX1)                        0.14      0.11      15.62 r
+  uSspTxFIFO/uSspTxRegFile/n1144 (net)          1         0.00                0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/A (BUFX2)                           0.14      0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/Y (BUFX2)                           0.19      0.21      15.83 r
+  uSspTxFIFO/uSspTxRegFile/n1268 (net)         17         0.03                0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/A (INVX1)                           0.19      0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/Y (INVX1)                           0.16      0.15      15.98 f
+  uSspTxFIFO/uSspTxRegFile/n1145 (net)         16         0.02                0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1085/B0 (AO22X1)                        0.16      0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1085/Y (AO22X1)                         0.09      0.32      16.29 f
+  uSspTxFIFO/uSspTxRegFile/n1111 (net)          1         0.00                0.00      16.29 f
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_4_/D (DFFRX1)                 0.09      0.00      16.29 f
+  data arrival time                                                                     16.29
+
+  clock PCLK (rise edge)                                                     20.00      20.00
+  clock network delay (ideal)                                                 0.00      20.00
+  clock uncertainty                                                          -1.30      18.70
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_4_/CK (DFFRX1)                          0.00      18.70 r
+  library setup time                                                         -0.21      18.49
+  data required time                                                                    18.49
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    18.49
+  data arrival time                                                                    -16.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            2.19
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: uSspTxFIFO/uSspTxRegFile/TxReg6_reg_5_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                       14.00      14.00 f
+  PWRITE (in)                                                       1.00      0.00      14.00 f
+  PWRITE (net)                                  3         0.01                0.00      14.00 f
+  uSspApbif/PWRITE (SspApbif)                                                 0.00      14.00 f
+  uSspApbif/PWRITE (net)                                  0.01                0.00      14.00 f
+  uSspApbif/U730/C (AND3X2)                                         1.00      0.00      14.00 f
+  uSspApbif/U730/Y (AND3X2)                                         0.09      0.47      14.47 f
+  uSspApbif/n1285 (net)                         2         0.01                0.00      14.47 f
+  uSspApbif/U713/B (NAND2BX1)                                       0.09      0.00      14.47 f
+  uSspApbif/U713/Y (NAND2BX1)                                       0.11      0.10      14.57 r
+  uSspApbif/n1150 (net)                         3         0.00                0.00      14.57 r
+  uSspApbif/U701/AN (NAND2BX1)                                      0.11      0.00      14.57 r
+  uSspApbif/U701/Y (NAND2BX1)                                       0.08      0.13      14.70 r
+  uSspApbif/n1160 (net)                         1         0.00                0.00      14.70 r
+  uSspApbif/U700/A (BUFX2)                                          0.08      0.00      14.70 r
+  uSspApbif/U700/Y (BUFX2)                                          0.19      0.19      14.89 r
+  uSspApbif/n1287 (net)                        17         0.03                0.00      14.89 r
+  uSspApbif/U698/A (INVX1)                                          0.19      0.00      14.89 r
+  uSspApbif/U698/Y (INVX1)                                          0.17      0.16      15.05 f
+  uSspApbif/SPITXDATWr (net)                   17         0.02                0.00      15.05 f
+  uSspApbif/SPITXDATWr (SspApbif)                                             0.00      15.05 f
+  SPITXDATWr (net)                                        0.02                0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (SspTxFIFO)                                              0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (net)                                0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (SspTxFCntl)                                 0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (net)                    0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/B0 (OAI2BB1X1)                        0.17      0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/Y (OAI2BB1X1)                         0.19      0.17      15.22 r
+  uSspTxFIFO/uSspTxFCntl/n442 (net)             4         0.01                0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/A (INVX1)                             0.19      0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/Y (INVX1)                             0.10      0.10      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (net)      5         0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (SspTxFCntl)                             0.00      15.32 f
+  uSspTxFIFO/RegFileWrEn (net)                            0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (SspTxRegFile)                         0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (net)              0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/A (AND2X2)                         0.10      0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/Y (AND2X2)                         0.08      0.19      15.51 f
+  uSspTxFIFO/uSspTxRegFile/n1261 (net)          4         0.01                0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/C (NAND3BX1)                        0.08      0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/Y (NAND3BX1)                        0.14      0.11      15.62 r
+  uSspTxFIFO/uSspTxRegFile/n1144 (net)          1         0.00                0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/A (BUFX2)                           0.14      0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/Y (BUFX2)                           0.19      0.21      15.83 r
+  uSspTxFIFO/uSspTxRegFile/n1268 (net)         17         0.03                0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/A (INVX1)                           0.19      0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/Y (INVX1)                           0.16      0.15      15.98 f
+  uSspTxFIFO/uSspTxRegFile/n1145 (net)         16         0.02                0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1084/B0 (AO22X1)                        0.16      0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1084/Y (AO22X1)                         0.09      0.32      16.29 f
+  uSspTxFIFO/uSspTxRegFile/n1110 (net)          1         0.00                0.00      16.29 f
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_5_/D (DFFRX1)                 0.09      0.00      16.29 f
+  data arrival time                                                                     16.29
+
+  clock PCLK (rise edge)                                                     20.00      20.00
+  clock network delay (ideal)                                                 0.00      20.00
+  clock uncertainty                                                          -1.30      18.70
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_5_/CK (DFFRX1)                          0.00      18.70 r
+  library setup time                                                         -0.21      18.49
+  data required time                                                                    18.49
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    18.49
+  data arrival time                                                                    -16.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            2.19
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: uSspTxFIFO/uSspTxRegFile/TxReg6_reg_6_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                       14.00      14.00 f
+  PWRITE (in)                                                       1.00      0.00      14.00 f
+  PWRITE (net)                                  3         0.01                0.00      14.00 f
+  uSspApbif/PWRITE (SspApbif)                                                 0.00      14.00 f
+  uSspApbif/PWRITE (net)                                  0.01                0.00      14.00 f
+  uSspApbif/U730/C (AND3X2)                                         1.00      0.00      14.00 f
+  uSspApbif/U730/Y (AND3X2)                                         0.09      0.47      14.47 f
+  uSspApbif/n1285 (net)                         2         0.01                0.00      14.47 f
+  uSspApbif/U713/B (NAND2BX1)                                       0.09      0.00      14.47 f
+  uSspApbif/U713/Y (NAND2BX1)                                       0.11      0.10      14.57 r
+  uSspApbif/n1150 (net)                         3         0.00                0.00      14.57 r
+  uSspApbif/U701/AN (NAND2BX1)                                      0.11      0.00      14.57 r
+  uSspApbif/U701/Y (NAND2BX1)                                       0.08      0.13      14.70 r
+  uSspApbif/n1160 (net)                         1         0.00                0.00      14.70 r
+  uSspApbif/U700/A (BUFX2)                                          0.08      0.00      14.70 r
+  uSspApbif/U700/Y (BUFX2)                                          0.19      0.19      14.89 r
+  uSspApbif/n1287 (net)                        17         0.03                0.00      14.89 r
+  uSspApbif/U698/A (INVX1)                                          0.19      0.00      14.89 r
+  uSspApbif/U698/Y (INVX1)                                          0.17      0.16      15.05 f
+  uSspApbif/SPITXDATWr (net)                   17         0.02                0.00      15.05 f
+  uSspApbif/SPITXDATWr (SspApbif)                                             0.00      15.05 f
+  SPITXDATWr (net)                                        0.02                0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (SspTxFIFO)                                              0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (net)                                0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (SspTxFCntl)                                 0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (net)                    0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/B0 (OAI2BB1X1)                        0.17      0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/Y (OAI2BB1X1)                         0.19      0.17      15.22 r
+  uSspTxFIFO/uSspTxFCntl/n442 (net)             4         0.01                0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/A (INVX1)                             0.19      0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/Y (INVX1)                             0.10      0.10      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (net)      5         0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (SspTxFCntl)                             0.00      15.32 f
+  uSspTxFIFO/RegFileWrEn (net)                            0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (SspTxRegFile)                         0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (net)              0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/A (AND2X2)                         0.10      0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/Y (AND2X2)                         0.08      0.19      15.51 f
+  uSspTxFIFO/uSspTxRegFile/n1261 (net)          4         0.01                0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/C (NAND3BX1)                        0.08      0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/Y (NAND3BX1)                        0.14      0.11      15.62 r
+  uSspTxFIFO/uSspTxRegFile/n1144 (net)          1         0.00                0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/A (BUFX2)                           0.14      0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/Y (BUFX2)                           0.19      0.21      15.83 r
+  uSspTxFIFO/uSspTxRegFile/n1268 (net)         17         0.03                0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/A (INVX1)                           0.19      0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/Y (INVX1)                           0.16      0.15      15.98 f
+  uSspTxFIFO/uSspTxRegFile/n1145 (net)         16         0.02                0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1083/B0 (AO22X1)                        0.16      0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1083/Y (AO22X1)                         0.09      0.32      16.29 f
+  uSspTxFIFO/uSspTxRegFile/n1109 (net)          1         0.00                0.00      16.29 f
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_6_/D (DFFRX1)                 0.09      0.00      16.29 f
+  data arrival time                                                                     16.29
+
+  clock PCLK (rise edge)                                                     20.00      20.00
+  clock network delay (ideal)                                                 0.00      20.00
+  clock uncertainty                                                          -1.30      18.70
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_6_/CK (DFFRX1)                          0.00      18.70 r
+  library setup time                                                         -0.21      18.49
+  data required time                                                                    18.49
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    18.49
+  data arrival time                                                                    -16.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            2.19
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: uSspTxFIFO/uSspTxRegFile/TxReg6_reg_7_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                       14.00      14.00 f
+  PWRITE (in)                                                       1.00      0.00      14.00 f
+  PWRITE (net)                                  3         0.01                0.00      14.00 f
+  uSspApbif/PWRITE (SspApbif)                                                 0.00      14.00 f
+  uSspApbif/PWRITE (net)                                  0.01                0.00      14.00 f
+  uSspApbif/U730/C (AND3X2)                                         1.00      0.00      14.00 f
+  uSspApbif/U730/Y (AND3X2)                                         0.09      0.47      14.47 f
+  uSspApbif/n1285 (net)                         2         0.01                0.00      14.47 f
+  uSspApbif/U713/B (NAND2BX1)                                       0.09      0.00      14.47 f
+  uSspApbif/U713/Y (NAND2BX1)                                       0.11      0.10      14.57 r
+  uSspApbif/n1150 (net)                         3         0.00                0.00      14.57 r
+  uSspApbif/U701/AN (NAND2BX1)                                      0.11      0.00      14.57 r
+  uSspApbif/U701/Y (NAND2BX1)                                       0.08      0.13      14.70 r
+  uSspApbif/n1160 (net)                         1         0.00                0.00      14.70 r
+  uSspApbif/U700/A (BUFX2)                                          0.08      0.00      14.70 r
+  uSspApbif/U700/Y (BUFX2)                                          0.19      0.19      14.89 r
+  uSspApbif/n1287 (net)                        17         0.03                0.00      14.89 r
+  uSspApbif/U698/A (INVX1)                                          0.19      0.00      14.89 r
+  uSspApbif/U698/Y (INVX1)                                          0.17      0.16      15.05 f
+  uSspApbif/SPITXDATWr (net)                   17         0.02                0.00      15.05 f
+  uSspApbif/SPITXDATWr (SspApbif)                                             0.00      15.05 f
+  SPITXDATWr (net)                                        0.02                0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (SspTxFIFO)                                              0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (net)                                0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (SspTxFCntl)                                 0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (net)                    0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/B0 (OAI2BB1X1)                        0.17      0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/Y (OAI2BB1X1)                         0.19      0.17      15.22 r
+  uSspTxFIFO/uSspTxFCntl/n442 (net)             4         0.01                0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/A (INVX1)                             0.19      0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/Y (INVX1)                             0.10      0.10      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (net)      5         0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (SspTxFCntl)                             0.00      15.32 f
+  uSspTxFIFO/RegFileWrEn (net)                            0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (SspTxRegFile)                         0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (net)              0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/A (AND2X2)                         0.10      0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/Y (AND2X2)                         0.08      0.19      15.51 f
+  uSspTxFIFO/uSspTxRegFile/n1261 (net)          4         0.01                0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/C (NAND3BX1)                        0.08      0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/Y (NAND3BX1)                        0.14      0.11      15.62 r
+  uSspTxFIFO/uSspTxRegFile/n1144 (net)          1         0.00                0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/A (BUFX2)                           0.14      0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/Y (BUFX2)                           0.19      0.21      15.83 r
+  uSspTxFIFO/uSspTxRegFile/n1268 (net)         17         0.03                0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/A (INVX1)                           0.19      0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/Y (INVX1)                           0.16      0.15      15.98 f
+  uSspTxFIFO/uSspTxRegFile/n1145 (net)         16         0.02                0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1082/B0 (AO22X1)                        0.16      0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1082/Y (AO22X1)                         0.09      0.32      16.29 f
+  uSspTxFIFO/uSspTxRegFile/n1108 (net)          1         0.00                0.00      16.29 f
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_7_/D (DFFRX1)                 0.09      0.00      16.29 f
+  data arrival time                                                                     16.29
+
+  clock PCLK (rise edge)                                                     20.00      20.00
+  clock network delay (ideal)                                                 0.00      20.00
+  clock uncertainty                                                          -1.30      18.70
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_7_/CK (DFFRX1)                          0.00      18.70 r
+  library setup time                                                         -0.21      18.49
+  data required time                                                                    18.49
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    18.49
+  data arrival time                                                                    -16.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            2.19
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: uSspTxFIFO/uSspTxRegFile/TxReg6_reg_8_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                       14.00      14.00 f
+  PWRITE (in)                                                       1.00      0.00      14.00 f
+  PWRITE (net)                                  3         0.01                0.00      14.00 f
+  uSspApbif/PWRITE (SspApbif)                                                 0.00      14.00 f
+  uSspApbif/PWRITE (net)                                  0.01                0.00      14.00 f
+  uSspApbif/U730/C (AND3X2)                                         1.00      0.00      14.00 f
+  uSspApbif/U730/Y (AND3X2)                                         0.09      0.47      14.47 f
+  uSspApbif/n1285 (net)                         2         0.01                0.00      14.47 f
+  uSspApbif/U713/B (NAND2BX1)                                       0.09      0.00      14.47 f
+  uSspApbif/U713/Y (NAND2BX1)                                       0.11      0.10      14.57 r
+  uSspApbif/n1150 (net)                         3         0.00                0.00      14.57 r
+  uSspApbif/U701/AN (NAND2BX1)                                      0.11      0.00      14.57 r
+  uSspApbif/U701/Y (NAND2BX1)                                       0.08      0.13      14.70 r
+  uSspApbif/n1160 (net)                         1         0.00                0.00      14.70 r
+  uSspApbif/U700/A (BUFX2)                                          0.08      0.00      14.70 r
+  uSspApbif/U700/Y (BUFX2)                                          0.19      0.19      14.89 r
+  uSspApbif/n1287 (net)                        17         0.03                0.00      14.89 r
+  uSspApbif/U698/A (INVX1)                                          0.19      0.00      14.89 r
+  uSspApbif/U698/Y (INVX1)                                          0.17      0.16      15.05 f
+  uSspApbif/SPITXDATWr (net)                   17         0.02                0.00      15.05 f
+  uSspApbif/SPITXDATWr (SspApbif)                                             0.00      15.05 f
+  SPITXDATWr (net)                                        0.02                0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (SspTxFIFO)                                              0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (net)                                0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (SspTxFCntl)                                 0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (net)                    0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/B0 (OAI2BB1X1)                        0.17      0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/Y (OAI2BB1X1)                         0.19      0.17      15.22 r
+  uSspTxFIFO/uSspTxFCntl/n442 (net)             4         0.01                0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/A (INVX1)                             0.19      0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/Y (INVX1)                             0.10      0.10      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (net)      5         0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (SspTxFCntl)                             0.00      15.32 f
+  uSspTxFIFO/RegFileWrEn (net)                            0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (SspTxRegFile)                         0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (net)              0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/A (AND2X2)                         0.10      0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/Y (AND2X2)                         0.08      0.19      15.51 f
+  uSspTxFIFO/uSspTxRegFile/n1261 (net)          4         0.01                0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/C (NAND3BX1)                        0.08      0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/Y (NAND3BX1)                        0.14      0.11      15.62 r
+  uSspTxFIFO/uSspTxRegFile/n1144 (net)          1         0.00                0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/A (BUFX2)                           0.14      0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/Y (BUFX2)                           0.19      0.21      15.83 r
+  uSspTxFIFO/uSspTxRegFile/n1268 (net)         17         0.03                0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/A (INVX1)                           0.19      0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/Y (INVX1)                           0.16      0.15      15.98 f
+  uSspTxFIFO/uSspTxRegFile/n1145 (net)         16         0.02                0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1081/B0 (AO22X1)                        0.16      0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1081/Y (AO22X1)                         0.09      0.32      16.29 f
+  uSspTxFIFO/uSspTxRegFile/n1107 (net)          1         0.00                0.00      16.29 f
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_8_/D (DFFRX1)                 0.09      0.00      16.29 f
+  data arrival time                                                                     16.29
+
+  clock PCLK (rise edge)                                                     20.00      20.00
+  clock network delay (ideal)                                                 0.00      20.00
+  clock uncertainty                                                          -1.30      18.70
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_8_/CK (DFFRX1)                          0.00      18.70 r
+  library setup time                                                         -0.21      18.49
+  data required time                                                                    18.49
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    18.49
+  data arrival time                                                                    -16.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            2.19
+
+
+  Startpoint: PWRITE (input port clocked by PCLK)
+  Endpoint: uSspTxFIFO/uSspTxRegFile/TxReg6_reg_9_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: max
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                       14.00      14.00 f
+  PWRITE (in)                                                       1.00      0.00      14.00 f
+  PWRITE (net)                                  3         0.01                0.00      14.00 f
+  uSspApbif/PWRITE (SspApbif)                                                 0.00      14.00 f
+  uSspApbif/PWRITE (net)                                  0.01                0.00      14.00 f
+  uSspApbif/U730/C (AND3X2)                                         1.00      0.00      14.00 f
+  uSspApbif/U730/Y (AND3X2)                                         0.09      0.47      14.47 f
+  uSspApbif/n1285 (net)                         2         0.01                0.00      14.47 f
+  uSspApbif/U713/B (NAND2BX1)                                       0.09      0.00      14.47 f
+  uSspApbif/U713/Y (NAND2BX1)                                       0.11      0.10      14.57 r
+  uSspApbif/n1150 (net)                         3         0.00                0.00      14.57 r
+  uSspApbif/U701/AN (NAND2BX1)                                      0.11      0.00      14.57 r
+  uSspApbif/U701/Y (NAND2BX1)                                       0.08      0.13      14.70 r
+  uSspApbif/n1160 (net)                         1         0.00                0.00      14.70 r
+  uSspApbif/U700/A (BUFX2)                                          0.08      0.00      14.70 r
+  uSspApbif/U700/Y (BUFX2)                                          0.19      0.19      14.89 r
+  uSspApbif/n1287 (net)                        17         0.03                0.00      14.89 r
+  uSspApbif/U698/A (INVX1)                                          0.19      0.00      14.89 r
+  uSspApbif/U698/Y (INVX1)                                          0.17      0.16      15.05 f
+  uSspApbif/SPITXDATWr (net)                   17         0.02                0.00      15.05 f
+  uSspApbif/SPITXDATWr (SspApbif)                                             0.00      15.05 f
+  SPITXDATWr (net)                                        0.02                0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (SspTxFIFO)                                              0.00      15.05 f
+  uSspTxFIFO/SSPDRWr (net)                                0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (SspTxFCntl)                                 0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/SSPDRWr (net)                    0.02                0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/B0 (OAI2BB1X1)                        0.17      0.00      15.05 f
+  uSspTxFIFO/uSspTxFCntl/U255/Y (OAI2BB1X1)                         0.19      0.17      15.22 r
+  uSspTxFIFO/uSspTxFCntl/n442 (net)             4         0.01                0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/A (INVX1)                             0.19      0.00      15.22 r
+  uSspTxFIFO/uSspTxFCntl/U244/Y (INVX1)                             0.10      0.10      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (net)      5         0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxFCntl/RegFileWrEn (SspTxFCntl)                             0.00      15.32 f
+  uSspTxFIFO/RegFileWrEn (net)                            0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (SspTxRegFile)                         0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/RegFileWrEn (net)              0.01                0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/A (AND2X2)                         0.10      0.00      15.32 f
+  uSspTxFIFO/uSspTxRegFile/U1092/Y (AND2X2)                         0.08      0.19      15.51 f
+  uSspTxFIFO/uSspTxRegFile/n1261 (net)          4         0.01                0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/C (NAND3BX1)                        0.08      0.00      15.51 f
+  uSspTxFIFO/uSspTxRegFile/U955/Y (NAND3BX1)                        0.14      0.11      15.62 r
+  uSspTxFIFO/uSspTxRegFile/n1144 (net)          1         0.00                0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/A (BUFX2)                           0.14      0.00      15.62 r
+  uSspTxFIFO/uSspTxRegFile/U954/Y (BUFX2)                           0.19      0.21      15.83 r
+  uSspTxFIFO/uSspTxRegFile/n1268 (net)         17         0.03                0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/A (INVX1)                           0.19      0.00      15.83 r
+  uSspTxFIFO/uSspTxRegFile/U937/Y (INVX1)                           0.16      0.15      15.98 f
+  uSspTxFIFO/uSspTxRegFile/n1145 (net)         16         0.02                0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1080/B0 (AO22X1)                        0.16      0.00      15.98 f
+  uSspTxFIFO/uSspTxRegFile/U1080/Y (AO22X1)                         0.09      0.32      16.29 f
+  uSspTxFIFO/uSspTxRegFile/n1106 (net)          1         0.00                0.00      16.29 f
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_9_/D (DFFRX1)                 0.09      0.00      16.29 f
+  data arrival time                                                                     16.29
+
+  clock PCLK (rise edge)                                                     20.00      20.00
+  clock network delay (ideal)                                                 0.00      20.00
+  clock uncertainty                                                          -1.30      18.70
+  uSspTxFIFO/uSspTxRegFile/TxReg6_reg_9_/CK (DFFRX1)                          0.00      18.70 r
+  library setup time                                                         -0.21      18.49
+  data required time                                                                    18.49
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    18.49
+  data arrival time                                                                    -16.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            2.19
+
+
+1

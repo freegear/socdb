@@ -1,0 +1,12 @@
+#!/bin/csh -fx
+
+dc_shell-t -f Ssp.tcl | tee /dev/tty >&! ./Log/Ssp.log
+
+#----========================================================================----
+#-- Proper Sdf Generaion Fitted to TSMC 
+#----========================================================================----
+./pt_postprocessor.pl -s ./Sdf/temp.sdf -o ./Sdf/Ssp.noscan.sdf
+
+\rm -rf *.log ./Sdf/temp.sdf
+
+exit

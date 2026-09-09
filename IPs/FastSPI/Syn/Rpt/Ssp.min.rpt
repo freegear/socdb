@@ -1,0 +1,352 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay min
+        -nworst 10
+        -input_pins
+        -nets
+        -max_paths 10
+        -transition_time
+        -capacitance
+Design : Ssp
+Version: V-2004.06
+Date   : Tue Apr 17 13:50:15 2007
+****************************************
+
+ * Some/all delay information is back-annotated.
+
+Operating Conditions: slow   Library: USERLIB
+Wire Load Model Mode: top
+
+  Startpoint: SSPCLKIN (input port)
+  Endpoint: uSspSTxRxCntl/DelCLKINSync_reg
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock (input port clock) (rise edge)                                        0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        0.00       0.00 f
+  SSPCLKIN (in)                                                     1.00      0.00       0.00 f
+  SSPCLKIN (net)                                3         0.01                0.00       0.00 f
+  uSspSTxRxCntl/CLKINSync (SspSTxRxCntl)                                      0.00       0.00 f
+  uSspSTxRxCntl/CLKINSync (net)                           0.01                0.00       0.00 f
+  uSspSTxRxCntl/DelCLKINSync_reg/D (DFFRX1)                         1.00      0.00       0.00 f
+  data arrival time                                                                      0.00
+
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  uSspSTxRxCntl/DelCLKINSync_reg/CK (DFFRX1)                                  0.00       0.00 r
+  library hold time                                                          -0.18      -0.18
+  data required time                                                                    -0.18
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    -0.18
+  data arrival time                                                                      0.00
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.18
+
+
+  Startpoint: SSPCLKIN (input port)
+  Endpoint: uSspSTxRxCntl/DelCLKINSync_reg
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock (input port clock) (rise edge)                                        0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        0.00       0.00 r
+  SSPCLKIN (in)                                                     1.00      0.00       0.00 r
+  SSPCLKIN (net)                                3         0.01                0.00       0.00 r
+  uSspSTxRxCntl/CLKINSync (SspSTxRxCntl)                                      0.00       0.00 r
+  uSspSTxRxCntl/CLKINSync (net)                           0.01                0.00       0.00 r
+  uSspSTxRxCntl/DelCLKINSync_reg/D (DFFRX1)                         1.00      0.00       0.00 r
+  data arrival time                                                                      0.00
+
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  uSspSTxRxCntl/DelCLKINSync_reg/CK (DFFRX1)                                  0.00       0.00 r
+  library hold time                                                          -0.18      -0.18
+  data required time                                                                    -0.18
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    -0.18
+  data arrival time                                                                      0.00
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.18
+
+
+  Startpoint: PWDATA[4] (input port clocked by PCLK)
+  Endpoint: uSspApbif/RORIC_reg
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: min
+
+  Point                        Fanout       Cap     Trans      Incr       Path
+  -------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                       0.00       0.00
+  clock network delay (ideal)                                  0.00       0.00
+  input external delay                                         0.00       0.00 r
+  PWDATA[4] (in)                                     1.00      0.00       0.00 r
+  PWDATA[4] (net)               13         0.02                0.00       0.00 r
+  uSspApbif/PWDATA[4] (SspApbif)                               0.00       0.00 r
+  uSspApbif/PWDATA[4] (net)                0.02                0.00       0.00 r
+  uSspApbif/U748/AN (NOR2BX1)                        1.00      0.00       0.00 r
+  uSspApbif/U748/Y (NOR2BX1)                         0.08      0.19       0.19 r
+  uSspApbif/NextRORIC (net)      1         0.00                0.00       0.19 r
+  uSspApbif/RORIC_reg/D (DFFRX1)                     0.08      0.00       0.19 r
+  data arrival time                                                       0.19
+
+  clock PCLK (rise edge)                                       0.00       0.00
+  clock network delay (ideal)                                  0.00       0.00
+  uSspApbif/RORIC_reg/CK (DFFRX1)                              0.00       0.00 r
+  library hold time                                           -0.11      -0.11
+  data required time                                                     -0.11
+  -------------------------------------------------------------------------------
+  data required time                                                     -0.11
+  data arrival time                                                      -0.19
+  -------------------------------------------------------------------------------
+  slack (MET)                                                             0.30
+
+
+  Startpoint: PWDATA[0] (input port clocked by PCLK)
+  Endpoint: uSspApbif/SPIINTDMA_reg_0_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        0.00       0.00 r
+  PWDATA[0] (in)                                                    1.00      0.00       0.00 r
+  PWDATA[0] (net)                              13         0.02                0.00       0.00 r
+  uSspApbif/PWDATA[0] (SspApbif)                                              0.00       0.00 r
+  uSspApbif/PWDATA[0] (net)                               0.02                0.00       0.00 r
+  uSspApbif/U767/B1 (AO22X1)                                        1.00      0.00       0.00 r
+  uSspApbif/U767/Y (AO22X1)                                         0.07      0.26       0.26 r
+  uSspApbif/n1136 (net)                         1         0.00                0.00       0.26 r
+  uSspApbif/SPIINTDMA_reg_0_/D (DFFSX1)                             0.07      0.00       0.26 r
+  data arrival time                                                                      0.26
+
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  uSspApbif/SPIINTDMA_reg_0_/CK (DFFSX1)                                      0.00       0.00 r
+  library hold time                                                          -0.04      -0.04
+  data required time                                                                    -0.04
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    -0.04
+  data arrival time                                                                     -0.26
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.30
+
+
+  Startpoint: PWDATA[5] (input port clocked by PCLK)
+  Endpoint: uSspApbif/SPIINTDMA_reg_5_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        0.00       0.00 r
+  PWDATA[5] (in)                                                    1.00      0.00       0.00 r
+  PWDATA[5] (net)                              13         0.02                0.00       0.00 r
+  uSspApbif/PWDATA[5] (SspApbif)                                              0.00       0.00 r
+  uSspApbif/PWDATA[5] (net)                               0.02                0.00       0.00 r
+  uSspApbif/U766/B1 (AO22X1)                                        1.00      0.00       0.00 r
+  uSspApbif/U766/Y (AO22X1)                                         0.07      0.26       0.26 r
+  uSspApbif/n1131 (net)                         1         0.00                0.00       0.26 r
+  uSspApbif/SPIINTDMA_reg_5_/D (DFFSX1)                             0.07      0.00       0.26 r
+  data arrival time                                                                      0.26
+
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  uSspApbif/SPIINTDMA_reg_5_/CK (DFFSX1)                                      0.00       0.00 r
+  library hold time                                                          -0.04      -0.04
+  data required time                                                                    -0.04
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    -0.04
+  data arrival time                                                                     -0.26
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.30
+
+
+  Startpoint: PWDATA[4] (input port clocked by PCLK)
+  Endpoint: uSspApbif/SPIHIDDEN_reg_4_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        0.00       0.00 r
+  PWDATA[4] (in)                                                    1.00      0.00       0.00 r
+  PWDATA[4] (net)                              13         0.02                0.00       0.00 r
+  uSspApbif/PWDATA[4] (SspApbif)                                              0.00       0.00 r
+  uSspApbif/PWDATA[4] (net)                               0.02                0.00       0.00 r
+  uSspApbif/U751/B0 (AO22X1)                                        1.00      0.00       0.00 r
+  uSspApbif/U751/Y (AO22X1)                                         0.07      0.29       0.29 r
+  uSspApbif/n1141 (net)                         1         0.00                0.00       0.29 r
+  uSspApbif/SPIHIDDEN_reg_4_/D (DFFSX1)                             0.07      0.00       0.29 r
+  data arrival time                                                                      0.29
+
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  uSspApbif/SPIHIDDEN_reg_4_/CK (DFFSX1)                                      0.00       0.00 r
+  library hold time                                                          -0.04      -0.04
+  data required time                                                                    -0.04
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    -0.04
+  data arrival time                                                                     -0.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.33
+
+
+  Startpoint: PWDATA[5] (input port clocked by PCLK)
+  Endpoint: uSspApbif/SPIHIDDEN_reg_5_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        0.00       0.00 r
+  PWDATA[5] (in)                                                    1.00      0.00       0.00 r
+  PWDATA[5] (net)                              13         0.02                0.00       0.00 r
+  uSspApbif/PWDATA[5] (SspApbif)                                              0.00       0.00 r
+  uSspApbif/PWDATA[5] (net)                               0.02                0.00       0.00 r
+  uSspApbif/U750/B0 (AO22X1)                                        1.00      0.00       0.00 r
+  uSspApbif/U750/Y (AO22X1)                                         0.07      0.29       0.29 r
+  uSspApbif/n1140 (net)                         1         0.00                0.00       0.29 r
+  uSspApbif/SPIHIDDEN_reg_5_/D (DFFSX1)                             0.07      0.00       0.29 r
+  data arrival time                                                                      0.29
+
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  uSspApbif/SPIHIDDEN_reg_5_/CK (DFFSX1)                                      0.00       0.00 r
+  library hold time                                                          -0.04      -0.04
+  data required time                                                                    -0.04
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    -0.04
+  data arrival time                                                                     -0.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.33
+
+
+  Startpoint: PWDATA[6] (input port clocked by PCLK)
+  Endpoint: uSspApbif/SPIHIDDEN_reg_6_
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  input external delay                                                        0.00       0.00 r
+  PWDATA[6] (in)                                                    1.00      0.00       0.00 r
+  PWDATA[6] (net)                              12         0.01                0.00       0.00 r
+  uSspApbif/PWDATA[6] (SspApbif)                                              0.00       0.00 r
+  uSspApbif/PWDATA[6] (net)                               0.01                0.00       0.00 r
+  uSspApbif/U749/B0 (AO22X1)                                        1.00      0.00       0.00 r
+  uSspApbif/U749/Y (AO22X1)                                         0.07      0.29       0.29 r
+  uSspApbif/n1139 (net)                         1         0.00                0.00       0.29 r
+  uSspApbif/SPIHIDDEN_reg_6_/D (DFFSX1)                             0.07      0.00       0.29 r
+  data arrival time                                                                      0.29
+
+  clock PCLK (rise edge)                                                      0.00       0.00
+  clock network delay (ideal)                                                 0.00       0.00
+  uSspApbif/SPIHIDDEN_reg_6_/CK (DFFSX1)                                      0.00       0.00 r
+  library hold time                                                          -0.04      -0.04
+  data required time                                                                    -0.04
+  ----------------------------------------------------------------------------------------------
+  data required time                                                                    -0.04
+  data arrival time                                                                     -0.29
+  ----------------------------------------------------------------------------------------------
+  slack (MET)                                                                            0.33
+
+
+  Startpoint: PWDATA[5] (input port clocked by PCLK)
+  Endpoint: uSspApbif/RTIC_reg
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: min
+
+  Point                        Fanout       Cap     Trans      Incr       Path
+  -------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                       0.00       0.00
+  clock network delay (ideal)                                  0.00       0.00
+  input external delay                                         0.00       0.00 r
+  PWDATA[5] (in)                                     1.00      0.00       0.00 r
+  PWDATA[5] (net)               13         0.02                0.00       0.00 r
+  uSspApbif/PWDATA[5] (SspApbif)                               0.00       0.00 r
+  uSspApbif/PWDATA[5] (net)                0.02                0.00       0.00 r
+  uSspApbif/U824/A (INVX1)                           1.00      0.00       0.00 r
+  uSspApbif/U824/Y (INVX1)                           0.18      0.10       0.10 f
+  uSspApbif/n1154 (net)          1         0.00                0.00       0.10 f
+  uSspApbif/U823/B0 (OAI32X1)                        0.18      0.00       0.10 f
+  uSspApbif/U823/Y (OAI32X1)                         0.18      0.12       0.21 r
+  uSspApbif/n1137 (net)          1         0.00                0.00       0.21 r
+  uSspApbif/RTIC_reg/D (DFFRX1)                      0.18      0.00       0.21 r
+  data arrival time                                                       0.21
+
+  clock PCLK (rise edge)                                       0.00       0.00
+  clock network delay (ideal)                                  0.00       0.00
+  uSspApbif/RTIC_reg/CK (DFFRX1)                               0.00       0.00 r
+  library hold time                                           -0.12      -0.12
+  data required time                                                     -0.12
+  -------------------------------------------------------------------------------
+  data required time                                                     -0.12
+  data arrival time                                                      -0.21
+  -------------------------------------------------------------------------------
+  slack (MET)                                                             0.34
+
+
+  Startpoint: PWDATA[5] (input port clocked by PCLK)
+  Endpoint: uSspApbif/RTIC_reg
+            (rising edge-triggered flip-flop clocked by PCLK)
+  Path Group: PCLK
+  Path Type: min
+
+  Point                        Fanout       Cap     Trans      Incr       Path
+  -------------------------------------------------------------------------------
+  clock PCLK (rise edge)                                       0.00       0.00
+  clock network delay (ideal)                                  0.00       0.00
+  input external delay                                         0.00       0.00 f
+  PWDATA[5] (in)                                     1.00      0.00       0.00 f
+  PWDATA[5] (net)               13         0.02                0.00       0.00 f
+  uSspApbif/PWDATA[5] (SspApbif)                               0.00       0.00 f
+  uSspApbif/PWDATA[5] (net)                0.02                0.00       0.00 f
+  uSspApbif/U824/A (INVX1)                           1.00      0.00       0.00 f
+  uSspApbif/U824/Y (INVX1)                           0.21      0.22       0.22 r
+  uSspApbif/n1154 (net)          1         0.00                0.00       0.22 r
+  uSspApbif/U823/B0 (OAI32X1)                        0.21      0.00       0.22 r
+  uSspApbif/U823/Y (OAI32X1)                         0.07      0.11       0.34 f
+  uSspApbif/n1137 (net)          1         0.00                0.00       0.34 f
+  uSspApbif/RTIC_reg/D (DFFRX1)                      0.07      0.00       0.34 f
+  data arrival time                                                       0.34
+
+  clock PCLK (rise edge)                                       0.00       0.00
+  clock network delay (ideal)                                  0.00       0.00
+  uSspApbif/RTIC_reg/CK (DFFRX1)                               0.00       0.00 r
+  library hold time                                           -0.02      -0.02
+  data required time                                                     -0.02
+  -------------------------------------------------------------------------------
+  data required time                                                     -0.02
+  data arrival time                                                      -0.34
+  -------------------------------------------------------------------------------
+  slack (MET)                                                             0.36
+
+
+1
