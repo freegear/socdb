@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<schema xmlns:dmp2_ipmpinfo="urn:dmp:idp2:mpeg21:2004:01-IPMPINFO-NS:2006:02" xmlns:didmodel="urn:mpeg:mpeg21:2002:02-DIDMODEL-NS" xmlns:dmp1_dii="urn:dmp:idp1:mpeg21:2002:01-DII-NS:2005:04" xmlns:dmp2rc="urn:dmp:idp2:Represent:Content:2006:02" xmlns:dmp2_didl="urn:dmp:idp2:mpeg21:2002:02-DIDL-NS:2006:02" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:dmp:idp2:mpeg21:2002:02-DIDL-NS:2006:02" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.1">
+	<import namespace="urn:mpeg:mpeg21:2002:02-DIDMODEL-NS" schemaLocation="didmodel.xsd"/>
+	<import namespace="urn:dmp:idp2:Represent:Content:2006:02" schemaLocation="dmp2rc-2006-02.xsd"/>
+	<import namespace="urn:dmp:idp1:mpeg21:2002:01-DII-NS:2005:04" schemaLocation="dmp1dii-2005-04.xsd"/>
+	<import namespace="urn:dmp:idp2:mpeg21:2004:01-IPMPINFO-NS:2006:02" schemaLocation="dmp2ipmpinfo-2006-02.xsd"/>
+	<!--=========================================================-->
+	<attributeGroup name="ID_ATTRS">
+		<attribute name="id" type="ID" use="optional"/>
+	</attributeGroup>
+	<element name="DIDL" type="dmp2_didl:DIDLType"/>
+	<complexType name="DIDLType">
+		<sequence>
+			<element ref="didmodel:Container"/>
+		</sequence>
+		<attribute name="DIDLDocumentId" type="anyURI"/>
+		<anyAttribute namespace="##other" processContents="lax"/>
+	</complexType>
+	<element name="DIDLInfo" type="dmp2_didl:DIDLInfoType"/>
+	<complexType name="DIDLInfoType">
+		<sequence>
+			<any namespace="##any" processContents="lax"/>
+		</sequence>
+	</complexType>
+	<element name="Container" type="dmp2_didl:ContainerType" substitutionGroup="didmodel:Container"/>
+	<complexType name="ContainerType">
+		<complexContent>
+			<extension base="didmodel:ContainerType">
+				<sequence>
+					<element ref="didmodel:Item"/>
+					<element ref="didmodel:Descriptor" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Item" type="dmp2_didl:ItemType" substitutionGroup="didmodel:Item"/>
+	<complexType name="ItemType">
+		<complexContent>
+			<extension base="didmodel:ItemType">
+				<sequence>
+					<element ref="didmodel:Descriptor" minOccurs="0" maxOccurs="unbounded"/>
+					<choice minOccurs="0" maxOccurs="unbounded">
+						<element ref="didmodel:Item"/>
+						<element ref="didmodel:Component"/>
+					</choice>
+				</sequence>
+				<attributeGroup ref="dmp2_didl:ID_ATTRS"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Descriptor" type="dmp2_didl:DescriptorType" substitutionGroup="didmodel:Descriptor"/>
+	<complexType name="DescriptorType">
+		<complexContent>
+			<extension base="didmodel:DescriptorType">
+				<sequence>
+					<element ref="didmodel:Statement"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Statement" type="dmp2_didl:StatementType" substitutionGroup="didmodel:Statement"/>
+	<complexType name="StatementType" mixed="true">
+		<complexContent mixed="true">
+			<extension base="didmodel:StatementType">
+				<sequence>
+					<choice>
+						<element ref="dmp2rc:DMPInformation"/>
+						<element ref="dmp1_dii:Identifier"/>
+						<element ref="dmp1_dii:RelatedIdentifier"/>
+						<element ref="dmp2_ipmpinfo:IPMPGeneralInfoDescriptor"/>
+						<choice>
+							<element ref="dmp2rc:DCISignature"/>
+							<element ref="dmp2rc:DCIHash"/>
+						</choice>
+					</choice>
+				</sequence>
+				<attribute name="mimeType" type="string"/>
+				<attribute name="ref" type="anyURI"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Component" type="dmp2_didl:ComponentType" substitutionGroup="didmodel:Component"/>
+	<complexType name="ComponentType">
+		<complexContent>
+			<extension base="didmodel:ComponentType">
+				<sequence>
+					<element ref="didmodel:Resource" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Resource" type="dmp2_didl:ResourceType" substitutionGroup="didmodel:Resource"/>
+	<complexType name="ResourceType" mixed="true">
+		<complexContent mixed="true">
+			<extension base="didmodel:ResourceType">
+				<sequence>
+					<any namespace="##any" processContents="lax" minOccurs="0"/>
+				</sequence>
+				<attribute name="mimeType" type="string" use="required"/>
+				<attribute name="ref" type="anyURI"/>
+				<attribute name="encoding" type="string"/>
+				<attribute name="contentEncoding" type="NMTOKENS"/>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:dmp2mdi="urn:dmp:idp2:Manage:DeviceIdentifier:2006:02" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" targetNamespace="urn:dmp:idp2:Manage:DeviceIdentifier:2006:02" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<complexType name="IdentifierBaseType" abstract="true"/>
+	<complexType name="IdentifierProtocolType">
+		<complexContent>
+			<extension base="dmp2mdi:IdentifierBaseType">
+				<sequence>
+					<element name="TransactionID" type="unsignedInt"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="DeviceIdentifier" type="dmp2mdi:IDType"/>
+	<complexType name="IDType">
+		<complexContent>
+			<extension base="dmp2mdi:IdentifierBaseType">
+				<sequence>
+					<choice>
+						<element name="id" type="anyURI"/>
+						<element ref="dsig:X509Data"/>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="RequestDeviceID" type="dmp2mdi:RequestDeviceIDType"/>
+	<complexType name="RequestDeviceIDType">
+		<complexContent>
+			<extension base="dmp2mdi:IdentifierProtocolType">
+				<sequence>
+					<element name="VendorID" type="dmp2mdi:IDType"/>
+					<element name="ModelID" type="anyURI"/>
+					<element name="SerialNumber" type="anyURI" minOccurs="0"/>
+					<element ref="dsig:Signature" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="DeviceID" type="dmp2mdi:DeviceIDType"/>
+	<complexType name="DeviceIDType">
+		<complexContent>
+			<extension base="dmp2mdi:IdentifierProtocolType">
+				<sequence>
+					<element ref="dmp2mdi:DeviceIdentifier"/>
+					<element name="Version" type="integer" minOccurs="0"/>
+					<element name="IssuerID" type="dmp2mdi:IDType"/>
+					<element name="SerialNumber" type="anyURI" minOccurs="0"/>
+					<element ref="dsig:Signature" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>

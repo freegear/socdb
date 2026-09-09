@@ -1,0 +1,49 @@
+# remove_design -all
+
+set search_path ".  ../LIB"
+set link_path "* tpd973g_usb2wc.db slow.db"
+
+set svr_keep_unconnected_nets true
+set link_create_black_boxes false	
+
+read_verilog ../3_apr/TOP_apr.v
+
+current_design TOP
+link_design
+
+create_clock -name PLL480 -period 2.08 -waveform {0 1.04} [get_pins X1/PLL480]
+create_clock -name CLKP -period 16.64 -waveform {0 8.32} [get_pins X1/CLKP]
+create_generated_clock -name CLK -source X1/CLKP -div 1 -invert [get_pins X1/CLK]
+
+set_clock_uncertainty 0.3 [all_clocks]
+set_propagated_clock [all_clocks]
+
+set timing_disable_internal_inout_cell_paths false
+
+set auto_wire_load_selection false
+set timing_self_loops_no_skew true
+
+set_min_library slow.db -min_version fast.db
+set_operating_conditions -max "slow" -max_library "slow" -min "fast" -min_library "fast"
+
+read_parasitics ../4_rc/TOP.spf
+report_annotated_parasitics  -max_nets 20 -list_not_annotated
+
+set_driving_cell -lib_cell INVX4 [all_inputs]
+set_max_transition 0.2 [current_design]
+set_load 0.5 END
+set_input_delay 5 -clock CLK Reset_IN
+set_output_delay 5 -clock CLK END
+
+update_timing
+
+write_sdf -context verilog -version 2.1 TOP.sdf -no_edge
+
+check_timing -verbose > TOP_check_timing.rpt
+report_clock -skew -attributes > TOP_clock.rpt
+report_constraint -all_violators -max_delay -min_delay > TOP_violators_syn.rpt
+report_timing -delay max -nworst 5 -max_paths 5 -tran -net -cap -path_type full_clock_expanded > TOP_worst_path_syn.rpt
+report_timing -thro X1/TXVALID -path full_clock -net -cap -tran > timing_input.rpt
+report_timing -thro X1/TXREADY -path full_clock -net -cap -tran > timing_output.rpt
+
+quit

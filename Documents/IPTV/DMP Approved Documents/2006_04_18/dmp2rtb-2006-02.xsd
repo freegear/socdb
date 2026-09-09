@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:dmp2rdi="urn:dmp:idp2:Represent:DeviceInformation:2006:02" xmlns:dmp2rtb="urn:dmp:idp2:Represent:ToolBody:2006:02" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" targetNamespace="urn:dmp:idp2:Represent:ToolBody:2006:02" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<import namespace="urn:dmp:idp2:Represent:DeviceInformation:2006:02" schemaLocation="dmp2rdi-2006-02.xsd"/>
+	<!-- elements -->
+	<element name="ToolBody" type="dmp2rtb:ToolBodyType"/>
+	<complexType name="ToolBodyType">
+		<sequence>
+			<choice>
+				<element ref="dmp2rtb:Tool" maxOccurs="unbounded"/>
+				<element ref="dmp2rtb:ToolPack" maxOccurs="unbounded"/>
+			</choice>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="BodyType"/>
+	<element name="ToolPack" type="dmp2rtb:ToolPackType"/>
+	<complexType name="ToolPackType">
+		<sequence>
+			<element ref="dmp2rtb:ToolBodyID"/>
+			<element ref="dmp2rdi:DeviceInformation" minOccurs="0"/>
+			<element name="ToolPackageType" type="string" minOccurs="0"/>
+			<element name="ToolAgent" type="dmp2rtb:ToolAgentType"/>
+			<element name="ToolGroup" type="dmp2rtb:ToolGroupType" minOccurs="0"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="ToolAgent" type="dmp2rtb:ToolAgentType"/>
+	<complexType name="ToolAgentType">
+		<sequence>
+			<element name="ToolAgentID" type="anyURI"/>
+			<element name="ToolAgentBody" type="base64Binary"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="ToolGroup" type="dmp2rtb:ToolGroupType"/>
+	<complexType name="ToolGroupType">
+		<sequence>
+			<element name="ToolGroupID" type="anyURI"/>
+			<element name="ToolGroupBody" type="base64Binary"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="Tool" type="dmp2rtb:ToolType"/>
+	<complexType name="ToolType">
+		<sequence>
+			<element ref="dmp2rtb:ToolBodyID"/>
+			<element ref="dmp2rdi:DeviceInformation" minOccurs="0"/>
+			<element name="ToolPackageType" type="string" minOccurs="0"/>
+			<element name="ToolBody" type="base64Binary"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="ToolUpdateType"/>
+	<element name="ToolBodyID" type="anyURI"/>
+</schema>

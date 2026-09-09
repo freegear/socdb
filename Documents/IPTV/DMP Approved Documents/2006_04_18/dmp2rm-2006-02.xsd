@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="urn:dmp:idp2:Represent:Metadata:2006:02" xmlns:dmp2rm="urn:dmp:idp2:Represent:Metadata:2006:02" xmlns:mpeg7="urn:mpeg:mpeg7:schema:2001" xmlns:dmp2_tva="urn:dmp:idp2:tva:metadata:2002:2006:02" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<annotation>
+		<documentation xml:lang="en">
+
+ This XML Schema file specifies normative DMP  metadata types. It is based on a reduced profile of urn:tva:metadata:2002,  ETSI TS 102 822-3-1 V1.1.1 (2003-05)	
+	The tva profile on which this namespace depends differs  from  ETSI TS 102 822-3-1 V1.1.1 (2003-05) in that it it does not include the following second level elements from urn:tva:metadata:2002
+		ServiceInformationTable
+		SegmentInformationTable
+		ProgramReviewTable
+		ProgramLocationTable.		
+		UserDescriptionTable
+		All of which are defined in   ETSI TS 102 822-3-1 V1.1.1 (2003-05) with minOccurrs=0 
+		
+		The DMP profile is compatible with urn:tva:metadata:2002 because it uses modified elements TVAMainType and ProgrameDescriptionType defined here in the urn:dmp:represent:metadata space
+
+		</documentation>
+	</annotation>
+	<import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+	<import namespace="urn:mpeg:mpeg7:schema:2001" schemaLocation="./mpeg7.xsd"/>
+	<import namespace="urn:dmp:idp2:tva:metadata:2002:2006:02" schemaLocation="dmp2tva-2006-02.xsd"/>
+	<element name="TVAMain" type="dmp2rm:TVAMainType"/>
+	<complexType name="TVAMainType">
+		<sequence>
+			<element name="CopyrightNotice" type="string" minOccurs="0"/>
+			<element name="ClassificationSchemeTable" type="dmp2_tva:ClassificationSchemeTableType" minOccurs="0"/>
+			<element name="ProgramDescription" type="dmp2rm:ProgramDescriptionType" minOccurs="0"/>
+		</sequence>
+		<attribute ref="xml:lang" use="optional" default="en"/>
+		<attribute name="publisher" type="string" use="optional"/>
+		<attribute name="publicationTime" type="dateTime" use="optional"/>
+		<attribute name="rightsOwner" type="string" use="optional"/>
+		<attribute name="version" type="unsignedInt" use="optional"/>
+	</complexType>
+	<complexType name="ProgramDescriptionType">
+		<sequence>
+			<element name="ProgramInformationTable" type="dmp2_tva:ProgramInformationTableType" minOccurs="0"/>
+			<element name="GroupInformationTable" type="dmp2_tva:GroupInformationTableType" minOccurs="0"/>
+			<element name="CreditsInformationTable" type="dmp2_tva:CreditsInformationTableType" minOccurs="0"/>
+		</sequence>
+	</complexType>
+</schema>

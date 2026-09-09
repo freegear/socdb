@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<schema targetNamespace="urn:dmp:idp1:mpeg21:2004:01-IPMPINFO-NS:2005:04" xmlns:dmp1rc="urn:dmp:idp1:Represent:Content:2005:04" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:dmp1_rel_r="urn:dmp:idp1:mpeg21:2003:01-REL-R-NS:2005:04" xmlns:idp1_dii="urn:dmp:idp1:mpeg21:2002:01-DII-NS:2005:04" xmlns:dmp1_ipmpinfo="urn:dmp:idp1:mpeg21:2004:01-IPMPINFO-NS:2005:04" xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.01">
+	<import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<import namespace="urn:dmp:idp1:mpeg21:2003:01-REL-R-NS:2005:04" schemaLocation="dmp1-rel-r-2005-04.xsd"/>
+	<import namespace="urn:dmp:idp1:Represent:Content:2005:04" schemaLocation="dmp1rc-2005-04.xsd"/>
+	<import namespace="http://www.w3.org/2001/04/xmlenc#" schemaLocation="http://www.w3.org/TR/2002/REC-xmlenc-core-20021210/xenc-schema.xsd"/>
+	<element name="IPMPInfoDescriptor" type="dmp1_ipmpinfo:IPMPInfoDescriptorType"/>
+	<complexType name="IPMPInfoDescriptorType">
+		<sequence>
+			<element ref="dmp1_ipmpinfo:Tool" minOccurs="0" maxOccurs="unbounded"/>
+			<element ref="dmp1_ipmpinfo:RightsDescriptor" minOccurs="0" maxOccurs="unbounded"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="Tool" type="dmp1_ipmpinfo:ToolType"/>
+	<complexType name="ToolType">
+		<sequence>
+			<element ref="dmp1_ipmpinfo:ToolBaseDescription"/>
+			<element ref="dmp1_ipmpinfo:InitializationSettings" minOccurs="0"/>
+			<element ref="dmp1_ipmpinfo:RightsDescriptor" minOccurs="0"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+		<attribute name="order" type="positiveInteger"/>
+	</complexType>
+	<element name="ToolBaseDescription" type="dmp1_ipmpinfo:ToolBaseDescriptionType"/>
+	<complexType name="ToolBaseDescriptionType">
+		<sequence>
+			<element ref="dmp1_ipmpinfo:IPMPToolID"/>
+		</sequence>
+	</complexType>
+	<element name="IPMPToolID" type="anyURI"/>
+	<element name="InitializationSettings" type="dmp1_ipmpinfo:InitializationSettingsType"/>
+	<complexType name="InitializationSettingsType" mixed="true">
+		<sequence>
+			<element ref="dmp1_ipmpinfo:InitializationData"/>
+		</sequence>
+	</complexType>
+	<element name="InitializationData" type="dmp1_ipmpinfo:InitializationDataType"/>
+	<complexType name="InitializationDataType" mixed="true">
+		<sequence>
+			<element ref="dsig:KeyInfo" minOccurs="0"/>
+			<element name="KeySize" type="xenc:KeySizeType" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="RightsDescriptor" type="dmp1_ipmpinfo:RightsDescriptorType"/>
+	<complexType name="RightsDescriptorType">
+		<sequence>
+			<element ref="dmp1_ipmpinfo:License" minOccurs="0"/>
+			<element ref="dmp1_ipmpinfo:LicenseReference" minOccurs="0"/>
+			<element ref="dmp1_ipmpinfo:LicenseService" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="License" type="dmp1_ipmpinfo:LicenseType"/>
+	<complexType name="LicenseType" mixed="true">
+		<sequence>
+			<element ref="dmp1rc:License" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<element name="LicenseService" type="dmp1_ipmpinfo:LicenseServiceType"/>
+	<complexType name="LicenseServiceType" mixed="true">
+		<sequence>
+			<any namespace="##any" processContents="lax" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="LicenseReference" type="dmp1_ipmpinfo:LicenseReferenceType"/>
+	<complexType name="LicenseReferenceType">
+		<simpleContent>
+			<extension base="anyURI"/>
+		</simpleContent>
+	</complexType>
+	<!-- IPMPGeneralInfoDescriptor -->
+	<element name="IPMPGeneralInfoDescriptor" type="dmp1_ipmpinfo:IPMPGeneralInfoDescriptorType"/>
+	<complexType name="IPMPGeneralInfoDescriptorType">
+		<sequence>
+			<element ref="dmp1_ipmpinfo:ToolList" minOccurs="0"/>
+			<element ref="dmp1_ipmpinfo:LicenseCollection" minOccurs="0"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+			<!--Signature for the IPMPGeneralInfoDescriptor element and children -->
+		</sequence>
+	</complexType>
+	<element name="ToolList" type="dmp1_ipmpinfo:ToolListType"/>
+	<complexType name="ToolListType">
+		<sequence>
+			<element ref="dmp1_ipmpinfo:ToolDescription" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<element name="ToolDescription" type="dmp1_ipmpinfo:ToolDescriptionType"/>
+	<complexType name="ToolDescriptionType">
+		<sequence>
+			<element ref="dmp1_ipmpinfo:IPMPToolID"/>
+		</sequence>
+		<attribute name="localID" type="ID" use="required"/>
+	</complexType>
+	<element name="LicenseCollection" type="dmp1_ipmpinfo:LicenseCollectionType"/>
+	<complexType name="LicenseCollectionType" mixed="true">
+		<sequence>
+			<element ref="dmp1_ipmpinfo:RightsDescriptor" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+</schema>

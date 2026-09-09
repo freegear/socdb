@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:dmp2rdm="urn:dmp:idp2:Represent:DRMMessages:2006:02" xmlns:dmp2ram="urn:dmp:idp2:Represent:AuthenticationMessages:2006:02" targetNamespace="urn:dmp:idp2:Represent:AuthenticationMessages:2006:02" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="urn:dmp:idp2:Represent:DRMMessages:2006:02" schemaLocation="dmp2rdm-2006-02.xsd"/>
+	<import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<!--InitAuthentication-->
+	<element name="InitAuthentication" type="dmp2ram:InitAuthenticationType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="InitAuthenticationType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="ContextID" type="anyURI" minOccurs="0"/>
+					<element name="AuthType" type="dmp2ram:AUTType"/>
+					<!--Context ID of the logical instance of the Tool with which mutual authentication is to be performed-->
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<simpleType name="AUTType">
+		<annotation>
+			<documentation>
+				"01" - No Authentication Required
+				"02" - No ID verify, Do secure channel
+				"03" - Do ID verify, No secure channel
+				"04" - Do ID verify, Do secure channel			
+			</documentation>
+		</annotation>
+		<restriction base="integer">
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+			<enumeration value="04"/>
+		</restriction>
+	</simpleType>
+	<!--MutualAuthentication-->
+	<element name="MutualAuthentication" type="dmp2ram:MutualAuthenticationType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="MutualAuthenticationType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<choice>
+						<element name="requestNegotiation" type="dmp2ram:requestNegotiationType"/>
+						<element name="successNegotiation" type="dmp2ram:successNegotiationType"/>
+						<element name="failedNegotiation" type="boolean" fixed="true"/>
+					</choice>
+					<element name="authenticationData" type="hexBinary" minOccurs="0"/>
+					<element name="authCodes" type="dmp2ram:AuthCodesType" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="requestNegotiationType">
+		<sequence>
+			<element name="candidateAlgorithms" type="dmp2ram:AlgorithmDescriptorType"/>
+		</sequence>
+	</complexType>
+	<complexType name="AlgorithmDescriptorType">
+		<sequence>
+			<element name="algoID" type="anyURI" maxOccurs="unbounded"/>
+			<element ref="dmp2rdm:opaqueData" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="successNegotiationType">
+		<sequence>
+			<element name="agreedAlgorithms" type="dmp2ram:AlgorithmDescriptorType" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<complexType name="AuthCodesType">
+		<sequence>
+			<element name="certificates" type="dsig:KeyInfoType" maxOccurs="unbounded"/>
+			<element name="trustData" type="hexBinary" minOccurs="0"/>
+		</sequence>
+	</complexType>
+</schema>

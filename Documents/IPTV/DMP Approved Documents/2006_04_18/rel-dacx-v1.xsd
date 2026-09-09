@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:mpeg:mpeg21:2006:01-REL-DACX-NS" xmlns:bpx="urn:mpeg:mpeg21:2005:01-REL-BPX-NS" xmlns:dacx="urn:mpeg:mpeg21:2006:01-REL-DACX-NS" xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:mx="urn:mpeg:mpeg21:2003:01-REL-MX-NS" xmlns:sx="urn:mpeg:mpeg21:2003:01-REL-SX-NS" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+	<xsd:import namespace="urn:mpeg:mpeg21:2003:01-REL-R-NS" schemaLocation="rel-r-bpx-v1.xsd"/>
+	<xsd:import namespace="urn:mpeg:mpeg21:2003:01-REL-SX-NS" schemaLocation="rel-sx-bpx-v1.xsd"/>
+	<xsd:import namespace="urn:mpeg:mpeg21:2003:01-REL-MX-NS" schemaLocation="rel-mx-bpx-v1.xsd"/>
+	<xsd:import namespace="urn:mpeg:mpeg21:2005:01-REL-BPX-NS" schemaLocation="rel-bpx-v1.xsd"/>
+	<xsd:import namespace="http://www.w3.org/2001/04/xmlenc#" schemaLocation="http://www.w3.org/TR/2002/REC-xmlenc-core-20021210/xenc-schema.xsd"/>
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<!-- Elements -->
+	<xsd:element name="export" type="dacx:Export" substitutionGroup="r:right"/>
+	<xsd:element name="extendRights" type="dacx:ExtendRights" substitutionGroup="r:right"/>
+	<xsd:element name="simultaneousAccessCount" type="dacx:SimultaneousAccessCount" substitutionGroup="r:condition"/>
+	<xsd:element name="destinationPrincipal" type="dacx:DestinationPrincipal" substitutionGroup="r:condition"/>
+	<xsd:element name="destinationCondition" type="dacx:DestinationCondition" substitutionGroup="r:condition"/>
+	<xsd:element name="securityLevel" type="dacx:SecurityLevel" substitutionGroup="r:condition"/>
+	<xsd:element name="proximity" type="dacx:Proximity" substitutionGroup="r:condition"/>
+	<xsd:element name="scrambling" type="dacx:Scrambling" substitutionGroup="r:condition"/>
+	<xsd:element name="timedExerciseLimit" type="dacx:TimedExerciseLimit" substitutionGroup="r:condition"/>
+	<xsd:element name="timeShiftDuration" type="dacx:TimeShiftDuration" substitutionGroup="r:condition"/>
+	<!-- Complex Type -->
+	<xsd:complexType name="DestinationPrincipal">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence>
+					<xsd:element ref="r:principal"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DestinationCondition">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence minOccurs="0">
+					<xsd:element ref="r:condition"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Export">
+		<xsd:complexContent>
+			<xsd:extension base="r:Right"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ControlledPlay">
+		<xsd:complexContent>
+			<xsd:extension base="mx:Play">
+				<xsd:attribute name="bufferDuration" type="xsd:QName" default="immediate"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ExtendRights">
+		<xsd:complexContent>
+			<xsd:extension base="r:Right">
+				<xsd:sequence>
+					<xsd:element ref="bpx:serviceLocation"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SimultaneousAccessCount">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence>
+					<xsd:element name="count" type="xsd:positiveInteger"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SecurityLevel">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence>
+					<xsd:element name="level" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Proximity">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Scrambling">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:attribute name="cipherType" type="xsd:QName" use="optional"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="TimedExerciseLimit">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence>
+					<xsd:choice>
+						<xsd:element name="duration" type="xsd:duration" minOccurs="0"/>
+						<xsd:element name="quantum" type="xsd:duration" minOccurs="0"/>
+					</xsd:choice>
+					<xsd:element name="count" type="xsd:integer" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="TimeShiftDuration">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence>
+					<xsd:element name="duration" type="xsd:duration" minOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

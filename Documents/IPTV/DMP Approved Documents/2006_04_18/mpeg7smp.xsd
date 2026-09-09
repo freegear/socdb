@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- ****************************************************************************
+
+   This XML document was originally developed in the course of development of the 
+   ISO/IEC 15938 standard (MPEG-7). This XML document contains either a part of 
+   the MPEG-7 schema implementation for one or more MPEG-7 tools as specified by 
+   the MPEG-7 Requirements or MPEG-7 description examples conformant to the 
+   MPEG-7 schema.
+
+   ISO/IEC gives users of MPEG-7 free license to this XML document or modifications 
+   Thereof for use in hardware or software products claiming conformance to MPEG-7.
+
+   Those intending to use this XML document in hardware or software products are 
+   advised that its use may infringe existing patents. The original developers of 
+   this XML document and his/her company, the subsequent editors and their companies, 
+   and ISO/IEC have no liability for use of this XML document or modifications 
+   thereof in an implementation.
+
+   Copyright is not released for non MPEG-7 conforming products. The organizations 
+   Who contributed to this XML document retain the full right to use the code for 
+   their own purpose, assign or donate their contribution to a third party and 
+   inhibit third parties from using their contribution for non MPEG-7 conforming 
+   products.
+
+   Copyright (c) 1999-2003 ISO/IEC. 
+
+   This XML document is provided for informative purposes only. If any parts of this 
+   XML document contradict the normative part of the corresponding standard document 
+   then the normative part should be used as the definitive specification.
+
+   This notice must be included in all copies or derivative works.
+************************************************************************** -->
+<!--####################################################################### -->
+<!-- ISO/IEC 15938 Information Technology-Multimedia Content Description Interface -->
+<!-- Part 9: MPEG-7 Profiles and Levels (ISO/IEC 15938-9)                          -->
+<!-- Simple Meatadata Profile                                                      -->
+<!--                                                                               -->
+<!-- Last updated:  22 July 2004                                                   -->
+<!-- ############################################################################# -->
+<!-- SMP-Light, version:1, date:July 23, 2003 -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:mpeg7="urn:mpeg:mpeg7:smp:schema:2001" targetNamespace="urn:mpeg:mpeg7:smp:schema:2001" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<annotation>
+		<documentation>
+      This document contains MDS tools defined in ISO/IEC 15938-5
+    </documentation>
+	</annotation>
+	<!-- ########################################################### -->
+	<!--  import xml components                                      -->
+	<!-- ########################################################### -->
+	<import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+	<!-- ########################################################### -->
+	<!-- include MPEG-7 specific extensions for DDL(ISO/IEC 15938-2) -->
+	<!-- ########################################################### -->
+	<element name="Mpeg7">
+		<complexType>
+			<complexContent>
+				<extension base="mpeg7:Mpeg7Type">
+					<choice>
+						<element name="Description" type="mpeg7:CompleteDescriptionType" maxOccurs="unbounded"/>
+					</choice>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+	<!-- Definition of Mpeg7Type datatype -->
+	<complexType name="Mpeg7Type" abstract="true">
+		<sequence>
+			<!-- DescriptionProfile element added per ISO/IEC 15938 Part 5 Cor1 - July 2004 -->
+			<element name="DescriptionProfile" type="mpeg7:DescriptionProfileType" minOccurs="0"/>
+		</sequence>
+		<attribute ref="xml:lang" use="optional"/>
+	</complexType>
+	<!-- DescriptionProfileType datatype added per ISO/IEC 15938 Part 5 Cor1 - July 2004 -->
+	<!-- Definition of DescriptionProfileType datatype -->
+	<complexType name="DescriptionProfileType">
+		<attribute name="profileAndLevelIndication" use="required">
+			<simpleType>
+				<list itemType="anyURI"/>
+			</simpleType>
+		</attribute>
+	</complexType>
+	<complexType name="Mpeg7BaseType" abstract="true">
+		<complexContent>
+			<restriction base="anyType"/>
+		</complexContent>
+	</complexType>
+	<simpleType name="timePointType">
+		<restriction base="mpeg7:basicTimePointType">
+			<pattern value="(\-?\d+(\-\d{2}(\-\d{2})?)?)?(T\d{2}(:\d{2}(:\d{2}(:\d+)?)?)?)?(F\d+)?((\-|\+)\d{2}:\d{2})?"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="basicTimePointType">
+		<restriction base="string">
+			<pattern value="\-?(\d+(\-\d{2}(\-\d{2})?)?)?(T\d{2}(:\d{2}(:\d{2}(:\d+(\.\d{2})?)?)?)?)?(F\d+)?((\-|\+)\d{2}:\d{2})?"/>
+		</restriction>
+	</simpleType>
+	<complexType name="TextAnnotationType">
+		<choice maxOccurs="unbounded">
+			<element name="FreeTextAnnotation" type="mpeg7:TextualType"/>
+			<element name="StructuredAnnotation" type="mpeg7:StructuredAnnotationType"/>
+		</choice>
+		<attribute ref="xml:lang"/>
+	</complexType>
+	<complexType name="TextualType">
+		<simpleContent>
+			<extension base="mpeg7:TextualBaseType"/>
+		</simpleContent>
+	</complexType>
+	<complexType name="TextualBaseType" abstract="true">
+		<simpleContent>
+			<extension base="string">
+				<attribute ref="xml:lang" use="optional"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="StructuredAnnotationType">
+		<sequence>
+			<element name="Who" type="mpeg7:TermUseType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="WhatObject" type="mpeg7:TermUseType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="WhatAction" type="mpeg7:TermUseType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="Where" type="mpeg7:TermUseType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="When" type="mpeg7:TermUseType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="Why" type="mpeg7:TermUseType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="How" type="mpeg7:TermUseType" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+		<attribute ref="xml:lang" use="optional"/>
+	</complexType>
+	<complexType name="TermUseType">
+		<complexContent>
+			<extension base="mpeg7:InlineTermDefinitionType">
+				<attribute name="href" type="mpeg7:termReferenceType" use="optional"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="InlineTermDefinitionType" abstract="true">
+		<sequence>
+			<element name="Name" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<simpleContent>
+						<extension base="mpeg7:TextualType">
+							<attribute name="preferred" type="boolean" use="optional"/>
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+			<element name="Definition" type="mpeg7:TextualType" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<simpleType name="termRelationQualifierType">
+		<union>
+			<simpleType>
+				<restriction base="NMTOKEN">
+					<enumeration value="NT"/>
+					<enumeration value="BT"/>
+					<enumeration value="RT"/>
+					<enumeration value="US"/>
+					<enumeration value="UF"/>
+				</restriction>
+			</simpleType>
+			<simpleType>
+				<restriction base="mpeg7:termReferenceType"/>
+			</simpleType>
+		</union>
+	</simpleType>
+	<simpleType name="termReferenceType">
+		<union>
+			<simpleType>
+				<restriction base="NMTOKEN">
+					<whiteSpace value="collapse"/>
+					<pattern value=":[^:]+:[^:]+"/>
+				</restriction>
+			</simpleType>
+			<simpleType>
+				<restriction base="anyURI"/>
+			</simpleType>
+		</union>
+	</simpleType>
+	<complexType name="CreatorType">
+		<complexContent>
+			<extension base="mpeg7:MediaAgentType"/>
+		</complexContent>
+	</complexType>
+	<complexType name="MediaAgentType">
+		<sequence>
+			<element name="Role" type="mpeg7:ControlledTermUseType"/>
+			<choice>
+				<element name="Agent" type="mpeg7:AgentType"/>
+			</choice>
+		</sequence>
+	</complexType>
+	<complexType name="ControlledTermUseType">
+		<complexContent>
+			<extension base="mpeg7:InlineTermDefinitionType">
+				<attribute name="href" type="mpeg7:termReferenceType" use="required"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="AgentType" abstract="true">
+		<complexContent>
+			<extension base="mpeg7:DSType">
+				<sequence>
+					<element name="Icon" type="mpeg7:MediaLocatorType" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="PersonType">
+		<complexContent>
+			<extension base="mpeg7:AgentType">
+				<sequence>
+					<choice maxOccurs="unbounded">
+						<element name="Name" type="mpeg7:PersonNameType"/>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="DSType" abstract="true">
+		<complexContent>
+			<extension base="mpeg7:Mpeg7BaseType">
+				<attribute name="id" type="ID" use="optional"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="MediaLocatorType">
+		<sequence>
+			<choice minOccurs="0">
+				<element name="MediaUri" type="anyURI"/>
+			</choice>
+			<element name="StreamID" type="nonNegativeInteger" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="PersonNameType">
+		<sequence>
+			<choice maxOccurs="unbounded">
+				<element name="GivenName" type="mpeg7:NameComponentType"/>
+				<element name="FamilyName" type="mpeg7:NameComponentType" minOccurs="0"/>
+			</choice>
+		</sequence>
+		<attribute ref="xml:lang" use="optional"/>
+	</complexType>
+	<complexType name="NameComponentType">
+		<simpleContent>
+			<extension base="mpeg7:TextualBaseType">
+				<attribute name="initial" type="string" use="optional"/>
+				<attribute name="abbrev" type="string" use="optional"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="CreationToolType">
+		<sequence>
+			<element name="Tool" type="mpeg7:TermUseType"/>
+			<element name="Setting" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<attribute name="name" type="string" use="required"/>
+					<attribute name="value" type="string" use="required"/>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="PlaceType">
+		<complexContent>
+			<extension base="mpeg7:DSType">
+				<sequence>
+					<element name="GeographicPosition" minOccurs="0">
+						<complexType>
+							<sequence>
+								<element name="Point" type="mpeg7:GeographicPointType"/>
+							</sequence>
+							<attribute name="datum" type="string" use="optional"/>
+						</complexType>
+					</element>
+				</sequence>
+				<attribute ref="xml:lang" use="optional"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="GeographicPointType">
+		<attribute name="longitude" use="required">
+			<simpleType>
+				<restriction base="double">
+					<minInclusive value="-180.0"/>
+					<maxInclusive value="180.0"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="latitude" use="required">
+			<simpleType>
+				<restriction base="double">
+					<minInclusive value="-90.0"/>
+					<maxInclusive value="90.0"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="altitude" type="double" use="optional"/>
+	</complexType>
+	<complexType name="CompleteDescriptionType" abstract="true">
+		<sequence>
+			<!--
+			<element name="DescriptionMetadata" type="mpeg7:DescriptionMetadataType" minOccurs="0"/>
+			<element name="Relationships" type="mpeg7:GraphType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="OrderingKey" type="mpeg7:OrderingKeyType" minOccurs="0" maxOccurs="unbounded"/>
+-->
+		</sequence>
+	</complexType>
+	<complexType name="ContentManagementType" abstract="true">
+		<complexContent>
+			<extension base="mpeg7:CompleteDescriptionType"/>
+		</complexContent>
+	</complexType>
+	<complexType name="RatingType">
+		<sequence>
+			<element name="RatingValue" type="float"/>
+			<element name="RatingScheme">
+				<complexType>
+					<complexContent>
+						<extension base="mpeg7:TermUseType">
+							<attribute name="best" type="float" use="optional"/>
+							<attribute name="worst" type="float" use="optional"/>
+							<attribute name="style" use="required">
+								<simpleType>
+									<restriction base="NMTOKEN">
+										<enumeration value="higherBetter"/>
+										<enumeration value="lowerBetter"/>
+									</restriction>
+								</simpleType>
+							</attribute>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="MediaInstanceType">
+		<complexContent>
+			<extension base="mpeg7:DSType">
+				<sequence>
+					<choice>
+						<element name="MediaLocator" type="mpeg7:MediaLocatorType"/>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="CreationDescriptionType">
+		<complexContent>
+			<extension base="mpeg7:ContentManagementType">
+				<sequence>
+					<element name="CreationInformation" type="mpeg7:CreationInformationType" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="CreationInformationType">
+		<complexContent>
+			<extension base="mpeg7:DSType">
+				<sequence>
+					<element name="Creation" type="mpeg7:CreationType"/>
+					<element name="Classification" type="mpeg7:ClassificationType" minOccurs="0"/>
+					<element name="RelatedMaterial" type="mpeg7:RelatedMaterialType" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="CreationType">
+		<complexContent>
+			<extension base="mpeg7:DSType">
+				<sequence>
+					<element name="Title" type="mpeg7:TitleType" maxOccurs="unbounded"/>
+					<element name="TitleMedia" type="mpeg7:TitleMediaType" minOccurs="0"/>
+					<element name="Abstract" type="mpeg7:TextAnnotationType" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="Creator" type="mpeg7:CreatorType" minOccurs="0" maxOccurs="unbounded"/>
+					<element ref="mpeg7:CreationCoordinates" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<sequence>
+								<element name="Location" type="mpeg7:PlaceType" minOccurs="0"/>
+								<element name="Date" type="mpeg7:TimeType" minOccurs="0"/>
+							</sequence>
+						</complexType>
+					</element>
+					<element name="CreationTool" type="mpeg7:CreationToolType" minOccurs="0" maxOccurs="unbounded"/>
+					<element name="CopyrightString" type="mpeg7:TextualType" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="CreationCoordinates">
+		<complexType>
+			<sequence>
+				<element name="Location" type="mpeg7:PlaceType" minOccurs="0"/>
+				<element name="Date" type="mpeg7:TimeType" minOccurs="0"/>
+			</sequence>
+		</complexType>
+	</element>
+	<complexType name="TitleType">
+		<simpleContent>
+			<extension base="mpeg7:TextualBaseType">
+				<attribute name="type" use="optional" default="main"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="TitleMediaType">
+		<sequence>
+			<element name="TitleImage" type="mpeg7:ImageLocatorType" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="ImageLocatorType">
+		<complexContent>
+			<extension base="mpeg7:MediaLocatorType"/>
+		</complexContent>
+	</complexType>
+	<complexType name="TimeType">
+		<sequence>
+			<choice>
+				<element name="TimePoint" type="mpeg7:timePointType"/>
+			</choice>
+		</sequence>
+	</complexType>
+	<complexType name="ClassificationType">
+		<complexContent>
+			<extension base="mpeg7:DSType">
+				<sequence>
+					<element name="Genre" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<complexContent>
+								<extension base="mpeg7:ControlledTermUseType">
+									<attribute name="type" use="optional" default="main">
+										<simpleType>
+											<restriction base="NMTOKEN">
+												<enumeration value="main"/>
+												<enumeration value="secondary"/>
+											</restriction>
+										</simpleType>
+									</attribute>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+					<element name="ParentalGuidance" type="mpeg7:ParentalGuidanceType" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="ParentalGuidanceType">
+		<sequence>
+			<choice>
+				<element name="ParentalRating" type="mpeg7:ControlledTermUseType"/>
+			</choice>
+		</sequence>
+	</complexType>
+	<complexType name="RelatedMaterialType">
+		<complexContent>
+			<extension base="mpeg7:DSType">
+				<sequence>
+					<element name="DisseminationFormat" type="mpeg7:ControlledTermUseType" minOccurs="0"/>
+					<element name="MaterialType" type="mpeg7:TermUseType" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="ClassificationSchemeDescriptionType">
+		<complexContent>
+			<extension base="mpeg7:ContentManagementType">
+				<choice>
+					<element name="ClassificationScheme" type="mpeg7:ClassificationSchemeType" maxOccurs="unbounded"/>
+					<element name="ClassificationSchemeBase" type="mpeg7:ClassificationSchemeBaseType" maxOccurs="unbounded"/>
+				</choice>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="ClassificationSchemeType">
+		<complexContent>
+			<extension base="mpeg7:ClassificationSchemeBaseType">
+				<sequence>
+					<element name="Term" type="mpeg7:TermDefinitionType" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="ClassificationSchemeBaseType" abstract="true">
+		<complexContent>
+			<extension base="mpeg7:DSType">
+				<attribute name="uri" type="anyURI" use="required"/>
+				<attribute name="domain" use="optional"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="TermDefinitionType">
+		<complexContent>
+			<extension base="mpeg7:TermDefinitionBaseType">
+				<sequence>
+					<element name="Term" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<complexContent>
+								<extension base="mpeg7:TermDefinitionType">
+									<attribute name="relation" type="mpeg7:termRelationQualifierType" use="optional" default="NT"/>
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="TermDefinitionBaseType" abstract="true">
+		<complexContent>
+			<extension base="mpeg7:DSType">
+				<sequence>
+					<element name="Name" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<simpleContent>
+								<extension base="mpeg7:TextualType">
+									<attribute name="preferred" type="boolean" use="optional"/>
+								</extension>
+							</simpleContent>
+						</complexType>
+					</element>
+				</sequence>
+				<attribute name="termID" type="NMTOKEN"/>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>

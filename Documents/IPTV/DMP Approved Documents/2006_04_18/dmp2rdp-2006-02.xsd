@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:dmp2rdp="urn:dmp:idp2:Represent:DomainProtocols:2006:02" xmlns:sx="urn:mpeg:mpeg21:2003:01-REL-SX-NS" xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:dmp2rd="urn:dmp:idp2:Represent:Domain:2006:02" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" targetNamespace="urn:dmp:idp2:Represent:DomainProtocols:2006:02" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="urn:mpeg:mpeg21:2003:01-REL-R-NS" schemaLocation="rel-r-bpx-v1.xsd"/>
+	<import namespace="urn:mpeg:mpeg21:2003:01-REL-SX-NS" schemaLocation="rel-sx-bpx-v1.xsd"/>
+	<import namespace="urn:dmp:idp2:Represent:Domain:2006:02" schemaLocation="dmp2rd-2006-02.xsd"/>
+	<import namespace="http://www.w3.org/2001/04/xmlenc#" schemaLocation="http://www.w3.org/TR/2002/REC-xmlenc-core-20021210/xenc-schema.xsd"/>
+	<complexType name="DomainProtocolBaseType" abstract="true"/>
+	<complexType name="DomainProtocolType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolBaseType">
+				<sequence>
+					<element name="TransactionID" type="unsignedByte"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="DACredentials" type="dmp2rdp:DomainCredentialType"/>
+	<element name="DMCredentials" type="dmp2rdp:DomainCredentialType"/>
+	<complexType name="DomainCredentialType">
+		<sequence>
+			<element ref="dmp2rd:AccessID"/>
+			<element ref="dmp2rd:AccessPassword"/>
+		</sequence>
+	</complexType>
+	<element name="AuthenticateReq" type="dmp2rdp:AuthenticateReqType"/>
+	<complexType name="AuthenticateReqType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType">
+				<sequence>
+					<element ref="dmp2rd:DomainID" minOccurs="0"/>
+					<choice>
+						<element ref="dmp2rdp:DACredentials"/>
+						<element ref="dmp2rdp:DMCredentials"/>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Ack" type="dmp2rdp:ReqType"/>
+	<complexType name="ReqType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType">
+				<attribute name="Result" type="boolean" use="required"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="LocalDomainIDRequest" type="dmp2rdp:RequestLocalDomainIDType"/>
+	<complexType name="RequestLocalDomainIDType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType"/>
+		</complexContent>
+	</complexType>
+	<element name="LocalDomainIDResponse" type="dmp2rdp:LocalDomainIDResponseType"/>
+	<complexType name="LocalDomainIDResponseType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType">
+				<sequence>
+					<element ref="dmp2rd:LocalDomainID"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>	
+	<element name="RequestKey" type="dmp2rdp:RequestKeyType"/>
+	<complexType name="RequestKeyType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType">
+				<sequence>
+					<element ref="dmp2rd:DomainID"/>
+					<element ref="dmp2rd:ContentGroupID" minOccurs="0" maxOccurs="unbounded"/>
+					<choice minOccurs="0" maxOccurs="unbounded">
+						<element ref="dmp2rd:DeviceID"/>
+						<element ref="dmp2rd:UserID"/>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="RequestKeyResponse" type="dmp2rdp:RequestKeyResponseType"/>
+	<complexType name="RequestKeyResponseType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType">
+				<sequence>
+					<element ref="dmp2rd:DomainKey"/>
+					<element ref="dmp2rd:UserID" minOccurs="0" maxOccurs="unbounded"/>
+					<element ref="dmp2rd:DeviceID" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="AddDevice" type="dmp2rdp:AddDeviceType"/>
+	<complexType name="AddDeviceType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType">
+				<sequence>
+					<element ref="dmp2rd:DeviceID"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="AddUser" type="dmp2rdp:AddUserType"/>
+	<complexType name="AddUserType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType">
+				<sequence>
+					<element ref="dmp2rd:UserID"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="RenewDevice" type="dmp2rdp:RenewDeviceType"/>
+	<complexType name="RenewDeviceType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType">
+				<sequence>
+					<element ref="dmp2rdp:UseData"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="RenewUser" type="dmp2rdp:RenewUserType"/>
+	<complexType name="RenewUserType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType"/>
+		</complexContent>
+	</complexType>
+	<element name="LeaveDevice" type="dmp2rdp:LeaveDeviceType"/>
+	<complexType name="LeaveDeviceType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType">
+				<sequence>
+					<element ref="dmp2rd:DeviceID"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="LeaveUser" type="dmp2rdp:LeaveUser"/>
+	<complexType name="LeaveUser">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType">
+				<sequence>
+					<element ref="dmp2rd:UserID"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="CreateDomain" type="dmp2rdp:CreateDomainType"/>
+	<complexType name="CreateDomainType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType"/>
+		</complexContent>
+	</complexType>
+	<element name="RenewDomain" type="dmp2rdp:RenewDomainType"/>
+	<complexType name="RenewDomainType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType">
+				<sequence>
+					<element ref="dmp2rd:DeviceID"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="DeleteDomain" type="dmp2rdp:DeleteDomainType"/>
+	<complexType name="DeleteDomainType">
+		<complexContent>
+			<extension base="dmp2rdp:DomainProtocolType"/>
+		</complexContent>
+	</complexType>
+	<element name="UnLicensedSimultaneousUseNotice" type="dmp2rdp:UnLicensedSimultaneousUseNoticeType"/>
+	<complexType name="UnLicensedSimultaneousUseNoticeType">
+		<sequence>
+			<element ref="dmp2rdp:UseData" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<element name="UseData" type="dmp2rdp:UseDataType"/>
+	<complexType name="UseDataType">
+		<sequence>
+			<element ref="dmp2rd:DomainID"/>
+			<element ref="dmp2rdp:Record"/>
+		</sequence>
+	</complexType>
+	<element name="Record" type="dmp2rdp:RecordType"/>
+	<complexType name="RecordType">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<element ref="dmp2rd:DeviceID"/>
+			<element name="StartTime" type="dateTime"/>
+			<element name="EndTime" type="dateTime"/>
+			<element name="NumberOfContentGroups" type="integer"/>
+			<element ref="dmp2rd:ContentGroupID" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="NotificationFlag" type="boolean"/>
+		</sequence>
+	</complexType>
+</schema>

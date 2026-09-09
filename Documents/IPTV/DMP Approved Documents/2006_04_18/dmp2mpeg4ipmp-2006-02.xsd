@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:dmp2_mpeg4ipmp="urn:dmp:idp2:mpeg4:IPMPSchema:2002:2006:02" targetNamespace="urn:dmp:idp2:mpeg4:IPMPSchema:2002:2006:02" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<element name="TerminalID" type="dmp2_mpeg4ipmp:TerminalIDType">
+		<annotation>
+			<documentation>Identification of a terminal</documentation>
+		</annotation>
+	</element>
+	<complexType name="TerminalIDType">
+		<sequence>
+			<element name="TerminalType" minOccurs="0">
+				<complexType>
+					<sequence>
+						<element name="Vendor" type="string"/>
+						<element name="Model" type="string"/>
+						<element name="SerialNO" type="string" minOccurs="0"/>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="OperatingSystem" type="dmp2_mpeg4ipmp:OSType" minOccurs="0"/>
+			<element name="CPU" type="dmp2_mpeg4ipmp:CPUType" minOccurs="0"/>
+			<element name="Memory" type="dmp2_mpeg4ipmp:MemoryType" minOccurs="0"/>
+			<element name="AsstHardware" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="SmartCard" minOccurs="0">
+							<complexType>
+								<sequence>
+									<element name="Vendor" type="string"/>
+									<element name="Model" type="string"/>
+								</sequence>
+							</complexType>
+						</element>
+						<element name="HardKey" minOccurs="0">
+							<complexType>
+								<sequence>
+									<element name="Type" type="string"/>
+								</sequence>
+							</complexType>
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="Network" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="Type" type="string"/>
+						<element name="Details" type="string"/>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="Downloading" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<attribute name="Capability" type="boolean" use="required"/>
+				</complexType>
+			</element>
+			<element name="RPCMechanism" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="Type" type="string"/>
+						<element name="Details" type="string"/>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="Firmware" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<attribute name="Vendor" type="string" use="required"/>
+					<attribute name="Name" type="string" use="required"/>
+					<attribute name="Version" type="string" use="required"/>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="OSType">
+		<sequence>
+			<element name="Vendor" type="string"/>
+			<element name="Model" type="string"/>
+			<element name="Version" type="string"/>
+			<element name="SerialNO" type="string" minOccurs="0"/>
+			<element name="VirtualMachine" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="Vendor" type="string"/>
+						<element name="Name" type="string"/>
+						<element name="Version" type="string"/>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="CPUType">
+		<sequence>
+			<element name="Vendor" type="string"/>
+			<element name="Model" type="string"/>
+			<element name="Speed" type="integer"/>
+		</sequence>
+	</complexType>
+	<complexType name="MemoryType">
+		<sequence>
+			<element name="Vendor" type="string"/>
+			<element name="Model" type="string"/>
+			<element name="Size" type="integer"/>
+			<element name="Speed" type="integer"/>
+		</sequence>
+	</complexType>
+</schema>

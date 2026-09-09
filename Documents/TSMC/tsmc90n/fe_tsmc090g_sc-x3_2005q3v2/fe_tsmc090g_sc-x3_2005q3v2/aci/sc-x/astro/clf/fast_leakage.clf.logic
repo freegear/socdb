@@ -1,0 +1,4296 @@
+; ==== Library : fast_leakage ====
+; ========================= Lib Attributes ======================== 
+(defineLibAttributes "fast_leakage"
+'("version" "3.5.1.6.C.INTERNAL_USE_ONLY.40")
+'("bus_naming_style" "%s[%d]")
+'("comment" "Copyright (c) 2005 Artisan Components, Inc.  All Rights Reserved.")
+'("current_unit" 1 "mA")
+'("date" "Wed Jul 27 14:25:45 2005")
+'("default_cell_leakage_power" 0.0)
+'("default_connection_class" "")
+'("default_edge_rate_breakpoint_f0" 0)
+'("default_edge_rate_breakpoint_f1" 0)
+'("default_edge_rate_breakpoint_r0" 0)
+'("default_edge_rate_breakpoint_r1" 0)
+'("default_fall_delay_intercept" 0)
+'("default_fall_pin_resistance" 0.0)
+'("default_fanout_load" 1)
+'("default_hold_coefficient" 0)
+'("default_inout_pin_cap" 0.001165)
+'("default_inout_pin_fall_res" 0.0)
+'("default_inout_pin_rise_res" 0.0)
+'("default_input_pin_cap" 0.001165)
+'("default_intrinsic_fall" 1.0)
+'("default_intrinsic_rise" 1.0)
+'("default_leakage_power_density" 0.0)
+'("default_max_capacitance" 0.0)
+'("default_max_fanout" 0.0)
+'("default_max_transition" 0.0)
+'("default_max_utilization" 0.0)
+'("default_min_porosity" 0)
+'("default_operating_conditions" "fast_leakage")
+'("default_output_pin_cap" 0.0)
+'("default_output_pin_fall_res" 0.0)
+'("default_output_pin_rise_res" 0.0)
+'("default_rc_fall_coefficient" 0)
+'("default_rc_rise_coefficient" 0)
+'("default_reference_capacitance" 0)
+'("default_rise_delay_intercept" 0)
+'("default_rise_pin_resistance" 0.0)
+'("default_setup_coefficient" 0)
+'("default_slope_fall" 0.0)
+'("default_slope_rise" 0.0)
+'("default_wire_load" "")
+'("default_wire_load_area" 0.0)
+'("default_wire_load_capacitance" 0.0)
+'("default_wire_load_mode" "")
+'("default_wire_load_resistance" 0.0)
+'("default_wire_load_selection" "")
+'("delay_model" "table_lookup")
+'("em_temp_degradation_factor" 0.0)
+'("in_place_swap_mode" "")
+'("input_threshold_pct_fall" 50)
+'("input_threshold_pct_rise" 50)
+'("k_process_cell_degradation" 0)
+'("k_process_cell_fall" 1)
+'("k_process_cell_leakage_power" 0)
+'("k_process_cell_rise" 1)
+'("k_process_drive_current" 0)
+'("k_process_drive_fall" 0)
+'("k_process_drive_rise" 0)
+'("k_process_fall_delay_intercept" 0)
+'("k_process_fall_pin_resistance" 0)
+'("k_process_fall_propagation" 0)
+'("k_process_fall_transition" 1)
+'("k_process_hold_fall" 1)
+'("k_process_hold_rise" 1)
+'("k_process_internal_power" 0)
+'("k_process_intrinsic_fall" 0)
+'("k_process_intrinsic_rise" 0)
+'("k_process_min_period" 0)
+'("k_process_min_pulse_width_high" 1)
+'("k_process_min_pulse_width_low" 1)
+'("k_process_nochange_fall" 0)
+'("k_process_nochange_rise" 0)
+'("k_process_pin_cap" 0)
+'("k_process_pin_fall_cap" 0)
+'("k_process_pin_rise_cap" 0)
+'("k_process_recovery_fall" 1)
+'("k_process_recovery_rise" 1)
+'("k_process_removal_fall" 0)
+'("k_process_removal_rise" 0)
+'("k_process_rise_delay_intercept" 0)
+'("k_process_rise_pin_resistance" 0)
+'("k_process_rise_propagation" 0)
+'("k_process_rise_transition" 1)
+'("k_process_setup_fall" 1)
+'("k_process_setup_rise" 1)
+'("k_process_skew_fall" 0)
+'("k_process_skew_rise" 0)
+'("k_process_slope_fall" 0)
+'("k_process_slope_rise" 0)
+'("k_process_wire_cap" 0)
+'("k_process_wire_res" 0)
+'("k_temp_cell_degradation" 0)
+'("k_temp_cell_fall" 0)
+'("k_temp_cell_leakage_power" 0)
+'("k_temp_cell_rise" 0)
+'("k_temp_drive_current" 0)
+'("k_temp_drive_fall" 0)
+'("k_temp_drive_rise" 0)
+'("k_temp_fall_delay_intercept" 0)
+'("k_temp_fall_pin_resistance" 0)
+'("k_temp_fall_propagation" 0)
+'("k_temp_fall_transition" 0)
+'("k_temp_hold_fall" 0)
+'("k_temp_hold_rise" 0)
+'("k_temp_internal_power" 0)
+'("k_temp_intrinsic_fall" 0)
+'("k_temp_intrinsic_rise" 0)
+'("k_temp_min_period" 0)
+'("k_temp_min_pulse_width_high" 0)
+'("k_temp_min_pulse_width_low" 0)
+'("k_temp_nochange_fall" 0)
+'("k_temp_nochange_rise" 0)
+'("k_temp_pin_cap" 0)
+'("k_temp_recovery_fall" 0)
+'("k_temp_recovery_rise" 0)
+'("k_temp_removal_fall" 0)
+'("k_temp_removal_rise" 0)
+'("k_temp_rise_delay_intercept" 0)
+'("k_temp_rise_pin_resistance" 0)
+'("k_temp_rise_propagation" 0)
+'("k_temp_rise_transition" 0)
+'("k_temp_setup_fall" 0)
+'("k_temp_setup_rise" 0)
+'("k_temp_skew_fall" 0)
+'("k_temp_skew_rise" 0)
+'("k_temp_slope_fall" 0)
+'("k_temp_slope_rise" 0)
+'("k_temp_wire_cap" 0)
+'("k_temp_wire_res" 0)
+'("k_volt_cell_degradation" 0)
+'("k_volt_cell_fall" 0)
+'("k_volt_cell_leakage_power" 0)
+'("k_volt_cell_rise" 0)
+'("k_volt_drive_current" 0)
+'("k_volt_drive_fall" 0)
+'("k_volt_drive_rise" 0)
+'("k_volt_fall_delay_intercept" 0)
+'("k_volt_fall_pin_resistance" 0)
+'("k_volt_fall_propagation" 0)
+'("k_volt_fall_transition" 0)
+'("k_volt_hold_fall" 0)
+'("k_volt_hold_rise" 0)
+'("k_volt_internal_power" 0)
+'("k_volt_intrinsic_fall" 0)
+'("k_volt_intrinsic_rise" 0)
+'("k_volt_min_period" 0)
+'("k_volt_min_pulse_width_high" 0)
+'("k_volt_min_pulse_width_low" 0)
+'("k_volt_nochange_fall" 0)
+'("k_volt_nochange_rise" 0)
+'("k_volt_pin_cap" 0)
+'("k_volt_recovery_fall" 0)
+'("k_volt_recovery_rise" 0)
+'("k_volt_removal_fall" 0)
+'("k_volt_removal_rise" 0)
+'("k_volt_rise_delay_intercept" 0)
+'("k_volt_rise_pin_resistance" 0)
+'("k_volt_rise_propagation" 0)
+'("k_volt_rise_transition" 0)
+'("k_volt_setup_fall" 0)
+'("k_volt_setup_rise" 0)
+'("k_volt_skew_fall" 0)
+'("k_volt_skew_rise" 0)
+'("k_volt_slope_fall" 0)
+'("k_volt_slope_rise" 0)
+'("k_volt_wire_cap" 0)
+'("k_volt_wire_res" 0)
+'("key_bit" 0)
+'("key_feature" "")
+'("key_file" "")
+'("key_seed" 0)
+'("key_version" 0)
+'("leakage_power_unit" 1 "pW")
+'("lsi_pad_fall" 0)
+'("lsi_pad_rise" 0)
+'("lsi_rounding_cutoff" 0.0)
+'("lsi_rounding_digit" 0.0)
+'("nom_process" 1)
+'("nom_temperature" 125)
+'("nom_voltage" 1.1)
+'("output_threshold_pct_fall" 50)
+'("output_threshold_pct_rise" 50)
+'("piece_type" "")
+'("preferred_input_pad_voltage" "")
+'("preferred_output_pad_slew_rate_control" "")
+'("preferred_output_pad_voltage" "")
+'("pulling_resistance_unit" 1 "kohm")
+'("revision" "1.3")
+'("simulation" 0)
+'("slew_derate_from_library" 0.5)
+'("slew_lower_threshold_pct_fall" 30)
+'("slew_lower_threshold_pct_rise" 30)
+'("slew_upper_threshold_pct_fall" 70)
+'("slew_upper_threshold_pct_rise" 70)
+'("time_unit" 1 "ns")
+'("timing_report" 0)
+'("voltage_unit" 1 "V")
+'("capacitive_load_unit" 1 "pf")
+'("define_cell_area" "" "")
+'("library_features" "report_delay_calculation")
+'("piece_define" '())
+'("routing_layers" "")
+'("technology" "")
+)
+defineCellFootPrint "XOR3XL" "xor3"
+defineCellFanoutLoad "XOR3XL" "A" 1
+defineCellFanoutLoad "XOR3XL" "B" 1
+defineCellFanoutLoad "XOR3XL" "C" 1
+defineCellFanoutLoad "XOR3XL" "Y" 1
+
+defineCellFootPrint "XOR3X4" "xor3"
+defineCellFanoutLoad "XOR3X4" "A" 1
+defineCellFanoutLoad "XOR3X4" "B" 1
+defineCellFanoutLoad "XOR3X4" "C" 1
+defineCellFanoutLoad "XOR3X4" "Y" 1
+
+defineCellFootPrint "XOR3X2" "xor3"
+defineCellFanoutLoad "XOR3X2" "A" 1
+defineCellFanoutLoad "XOR3X2" "B" 1
+defineCellFanoutLoad "XOR3X2" "C" 1
+defineCellFanoutLoad "XOR3X2" "Y" 1
+
+defineCellFootPrint "XOR3X1" "xor3"
+defineCellFanoutLoad "XOR3X1" "A" 1
+defineCellFanoutLoad "XOR3X1" "B" 1
+defineCellFanoutLoad "XOR3X1" "C" 1
+defineCellFanoutLoad "XOR3X1" "Y" 1
+
+defineCellFootPrint "XOR2XL" "xor2"
+defineCellFanoutLoad "XOR2XL" "A" 1
+defineCellFanoutLoad "XOR2XL" "B" 1
+defineCellFanoutLoad "XOR2XL" "Y" 1
+
+defineCellFootPrint "XOR2X8" "xor2"
+defineCellFanoutLoad "XOR2X8" "A" 1
+defineCellFanoutLoad "XOR2X8" "B" 1
+defineCellFanoutLoad "XOR2X8" "Y" 1
+
+defineCellFootPrint "XOR2X4" "xor2"
+defineCellFanoutLoad "XOR2X4" "A" 1
+defineCellFanoutLoad "XOR2X4" "B" 1
+defineCellFanoutLoad "XOR2X4" "Y" 1
+
+defineCellFootPrint "XOR2X3" "xor2"
+defineCellFanoutLoad "XOR2X3" "A" 1
+defineCellFanoutLoad "XOR2X3" "B" 1
+defineCellFanoutLoad "XOR2X3" "Y" 1
+
+defineCellFootPrint "XOR2X2" "xor2"
+defineCellFanoutLoad "XOR2X2" "A" 1
+defineCellFanoutLoad "XOR2X2" "B" 1
+defineCellFanoutLoad "XOR2X2" "Y" 1
+
+defineCellFootPrint "XOR2X1" "xor2"
+defineCellFanoutLoad "XOR2X1" "A" 1
+defineCellFanoutLoad "XOR2X1" "B" 1
+defineCellFanoutLoad "XOR2X1" "Y" 1
+
+defineCellFootPrint "XNOR3XL" "xnor3"
+defineCellFanoutLoad "XNOR3XL" "A" 1
+defineCellFanoutLoad "XNOR3XL" "B" 1
+defineCellFanoutLoad "XNOR3XL" "C" 1
+defineCellFanoutLoad "XNOR3XL" "Y" 1
+
+defineCellFootPrint "XNOR3X4" "xnor3"
+defineCellFanoutLoad "XNOR3X4" "A" 1
+defineCellFanoutLoad "XNOR3X4" "B" 1
+defineCellFanoutLoad "XNOR3X4" "C" 1
+defineCellFanoutLoad "XNOR3X4" "Y" 1
+
+defineCellFootPrint "XNOR3X2" "xnor3"
+defineCellFanoutLoad "XNOR3X2" "A" 1
+defineCellFanoutLoad "XNOR3X2" "B" 1
+defineCellFanoutLoad "XNOR3X2" "C" 1
+defineCellFanoutLoad "XNOR3X2" "Y" 1
+
+defineCellFootPrint "XNOR3X1" "xnor3"
+defineCellFanoutLoad "XNOR3X1" "A" 1
+defineCellFanoutLoad "XNOR3X1" "B" 1
+defineCellFanoutLoad "XNOR3X1" "C" 1
+defineCellFanoutLoad "XNOR3X1" "Y" 1
+
+defineCellFootPrint "XNOR2XL" "xnor2"
+defineCellFanoutLoad "XNOR2XL" "A" 1
+defineCellFanoutLoad "XNOR2XL" "B" 1
+defineCellFanoutLoad "XNOR2XL" "Y" 1
+
+defineCellFootPrint "XNOR2X4" "xnor2"
+defineCellFanoutLoad "XNOR2X4" "A" 1
+defineCellFanoutLoad "XNOR2X4" "B" 1
+defineCellFanoutLoad "XNOR2X4" "Y" 1
+
+defineCellFootPrint "XNOR2X2" "xnor2"
+defineCellFanoutLoad "XNOR2X2" "A" 1
+defineCellFanoutLoad "XNOR2X2" "B" 1
+defineCellFanoutLoad "XNOR2X2" "Y" 1
+
+defineCellFootPrint "XNOR2X1" "xnor2"
+defineCellFanoutLoad "XNOR2X1" "A" 1
+defineCellFanoutLoad "XNOR2X1" "B" 1
+defineCellFanoutLoad "XNOR2X1" "Y" 1
+
+defineCellFootPrint "TLATSRXL" "tlatsr"
+defineCellFanoutLoad "TLATSRXL" "D" 1
+defineCellFanoutLoad "TLATSRXL" "G" 1
+defineCellFanoutLoad "TLATSRXL" "SN" 1
+defineCellFanoutLoad "TLATSRXL" "RN" 1
+defineCellFanoutLoad "TLATSRXL" "Q" 1
+defineCellFanoutLoad "TLATSRXL" "QN" 1
+
+defineCellFootPrint "TLATSRX4" "tlatsr"
+defineCellFanoutLoad "TLATSRX4" "D" 1
+defineCellFanoutLoad "TLATSRX4" "G" 1
+defineCellFanoutLoad "TLATSRX4" "SN" 1
+defineCellFanoutLoad "TLATSRX4" "RN" 1
+defineCellFanoutLoad "TLATSRX4" "Q" 1
+defineCellFanoutLoad "TLATSRX4" "QN" 1
+
+defineCellFootPrint "TLATSRX2" "tlatsr"
+defineCellFanoutLoad "TLATSRX2" "D" 1
+defineCellFanoutLoad "TLATSRX2" "G" 1
+defineCellFanoutLoad "TLATSRX2" "SN" 1
+defineCellFanoutLoad "TLATSRX2" "RN" 1
+defineCellFanoutLoad "TLATSRX2" "Q" 1
+defineCellFanoutLoad "TLATSRX2" "QN" 1
+
+defineCellFootPrint "TLATSRX1" "tlatsr"
+defineCellFanoutLoad "TLATSRX1" "D" 1
+defineCellFanoutLoad "TLATSRX1" "G" 1
+defineCellFanoutLoad "TLATSRX1" "SN" 1
+defineCellFanoutLoad "TLATSRX1" "RN" 1
+defineCellFanoutLoad "TLATSRX1" "Q" 1
+defineCellFanoutLoad "TLATSRX1" "QN" 1
+
+defineCellFootPrint "TLATNTSCAX8" "tlatntsca"
+defineCellFanoutLoad "TLATNTSCAX8" "E" 1
+defineCellFanoutLoad "TLATNTSCAX8" "SE" 1
+defineCellFanoutLoad "TLATNTSCAX8" "CK" 1
+defineCellFanoutLoad "TLATNTSCAX8" "ECK" 1
+
+defineCellFootPrint "TLATNTSCAX6" "tlatntsca"
+defineCellFanoutLoad "TLATNTSCAX6" "E" 1
+defineCellFanoutLoad "TLATNTSCAX6" "SE" 1
+defineCellFanoutLoad "TLATNTSCAX6" "CK" 1
+defineCellFanoutLoad "TLATNTSCAX6" "ECK" 1
+
+defineCellFootPrint "TLATNTSCAX4" "tlatntsca"
+defineCellFanoutLoad "TLATNTSCAX4" "E" 1
+defineCellFanoutLoad "TLATNTSCAX4" "SE" 1
+defineCellFanoutLoad "TLATNTSCAX4" "CK" 1
+defineCellFanoutLoad "TLATNTSCAX4" "ECK" 1
+
+defineCellFootPrint "TLATNTSCAX3" "tlatntsca"
+defineCellFanoutLoad "TLATNTSCAX3" "E" 1
+defineCellFanoutLoad "TLATNTSCAX3" "SE" 1
+defineCellFanoutLoad "TLATNTSCAX3" "CK" 1
+defineCellFanoutLoad "TLATNTSCAX3" "ECK" 1
+
+defineCellFootPrint "TLATNTSCAX2" "tlatntsca"
+defineCellFanoutLoad "TLATNTSCAX2" "E" 1
+defineCellFanoutLoad "TLATNTSCAX2" "SE" 1
+defineCellFanoutLoad "TLATNTSCAX2" "CK" 1
+defineCellFanoutLoad "TLATNTSCAX2" "ECK" 1
+
+defineCellFootPrint "TLATNTSCAX20" "tlatntsca"
+defineCellFanoutLoad "TLATNTSCAX20" "E" 1
+defineCellFanoutLoad "TLATNTSCAX20" "SE" 1
+defineCellFanoutLoad "TLATNTSCAX20" "CK" 1
+defineCellFanoutLoad "TLATNTSCAX20" "ECK" 1
+
+defineCellFootPrint "TLATNTSCAX16" "tlatntsca"
+defineCellFanoutLoad "TLATNTSCAX16" "E" 1
+defineCellFanoutLoad "TLATNTSCAX16" "SE" 1
+defineCellFanoutLoad "TLATNTSCAX16" "CK" 1
+defineCellFanoutLoad "TLATNTSCAX16" "ECK" 1
+
+defineCellFootPrint "TLATNTSCAX12" "tlatntsca"
+defineCellFanoutLoad "TLATNTSCAX12" "E" 1
+defineCellFanoutLoad "TLATNTSCAX12" "SE" 1
+defineCellFanoutLoad "TLATNTSCAX12" "CK" 1
+defineCellFanoutLoad "TLATNTSCAX12" "ECK" 1
+
+defineCellFootPrint "TLATNSRXL" "tlatnsr"
+defineCellFanoutLoad "TLATNSRXL" "D" 1
+defineCellFanoutLoad "TLATNSRXL" "GN" 1
+defineCellFanoutLoad "TLATNSRXL" "SN" 1
+defineCellFanoutLoad "TLATNSRXL" "RN" 1
+defineCellFanoutLoad "TLATNSRXL" "Q" 1
+defineCellFanoutLoad "TLATNSRXL" "QN" 1
+
+defineCellFootPrint "TLATNSRX4" "tlatnsr"
+defineCellFanoutLoad "TLATNSRX4" "D" 1
+defineCellFanoutLoad "TLATNSRX4" "GN" 1
+defineCellFanoutLoad "TLATNSRX4" "SN" 1
+defineCellFanoutLoad "TLATNSRX4" "RN" 1
+defineCellFanoutLoad "TLATNSRX4" "Q" 1
+defineCellFanoutLoad "TLATNSRX4" "QN" 1
+
+defineCellFootPrint "TLATNSRX2" "tlatnsr"
+defineCellFanoutLoad "TLATNSRX2" "D" 1
+defineCellFanoutLoad "TLATNSRX2" "GN" 1
+defineCellFanoutLoad "TLATNSRX2" "SN" 1
+defineCellFanoutLoad "TLATNSRX2" "RN" 1
+defineCellFanoutLoad "TLATNSRX2" "Q" 1
+defineCellFanoutLoad "TLATNSRX2" "QN" 1
+
+defineCellFootPrint "TLATNSRX1" "tlatnsr"
+defineCellFanoutLoad "TLATNSRX1" "D" 1
+defineCellFanoutLoad "TLATNSRX1" "GN" 1
+defineCellFanoutLoad "TLATNSRX1" "SN" 1
+defineCellFanoutLoad "TLATNSRX1" "RN" 1
+defineCellFanoutLoad "TLATNSRX1" "Q" 1
+defineCellFanoutLoad "TLATNSRX1" "QN" 1
+
+defineCellFootPrint "TLATNCAX8" "tlatnca"
+defineCellFanoutLoad "TLATNCAX8" "E" 1
+defineCellFanoutLoad "TLATNCAX8" "CK" 1
+defineCellFanoutLoad "TLATNCAX8" "ECK" 1
+
+defineCellFootPrint "TLATNCAX6" "tlatnca"
+defineCellFanoutLoad "TLATNCAX6" "E" 1
+defineCellFanoutLoad "TLATNCAX6" "CK" 1
+defineCellFanoutLoad "TLATNCAX6" "ECK" 1
+
+defineCellFootPrint "TLATNCAX4" "tlatnca"
+defineCellFanoutLoad "TLATNCAX4" "E" 1
+defineCellFanoutLoad "TLATNCAX4" "CK" 1
+defineCellFanoutLoad "TLATNCAX4" "ECK" 1
+
+defineCellFootPrint "TLATNCAX3" "tlatnca"
+defineCellFanoutLoad "TLATNCAX3" "E" 1
+defineCellFanoutLoad "TLATNCAX3" "CK" 1
+defineCellFanoutLoad "TLATNCAX3" "ECK" 1
+
+defineCellFootPrint "TLATNCAX2" "tlatnca"
+defineCellFanoutLoad "TLATNCAX2" "E" 1
+defineCellFanoutLoad "TLATNCAX2" "CK" 1
+defineCellFanoutLoad "TLATNCAX2" "ECK" 1
+
+defineCellFootPrint "TLATNCAX20" "tlatnca"
+defineCellFanoutLoad "TLATNCAX20" "E" 1
+defineCellFanoutLoad "TLATNCAX20" "CK" 1
+defineCellFanoutLoad "TLATNCAX20" "ECK" 1
+
+defineCellFootPrint "TLATNCAX16" "tlatnca"
+defineCellFanoutLoad "TLATNCAX16" "E" 1
+defineCellFanoutLoad "TLATNCAX16" "CK" 1
+defineCellFanoutLoad "TLATNCAX16" "ECK" 1
+
+defineCellFootPrint "TLATNCAX12" "tlatnca"
+defineCellFanoutLoad "TLATNCAX12" "E" 1
+defineCellFanoutLoad "TLATNCAX12" "CK" 1
+defineCellFanoutLoad "TLATNCAX12" "ECK" 1
+
+defineCellFootPrint "TLATNXL" "tlatn"
+defineCellFanoutLoad "TLATNXL" "D" 1
+defineCellFanoutLoad "TLATNXL" "GN" 1
+defineCellFanoutLoad "TLATNXL" "Q" 1
+defineCellFanoutLoad "TLATNXL" "QN" 1
+
+defineCellFootPrint "TLATNX4" "tlatn"
+defineCellFanoutLoad "TLATNX4" "D" 1
+defineCellFanoutLoad "TLATNX4" "GN" 1
+defineCellFanoutLoad "TLATNX4" "Q" 1
+defineCellFanoutLoad "TLATNX4" "QN" 1
+
+defineCellFootPrint "TLATNX2" "tlatn"
+defineCellFanoutLoad "TLATNX2" "D" 1
+defineCellFanoutLoad "TLATNX2" "GN" 1
+defineCellFanoutLoad "TLATNX2" "Q" 1
+defineCellFanoutLoad "TLATNX2" "QN" 1
+
+defineCellFootPrint "TLATNX1" "tlatn"
+defineCellFanoutLoad "TLATNX1" "D" 1
+defineCellFanoutLoad "TLATNX1" "GN" 1
+defineCellFanoutLoad "TLATNX1" "Q" 1
+defineCellFanoutLoad "TLATNX1" "QN" 1
+
+defineCellFootPrint "TLATXL" "tlat"
+defineCellFanoutLoad "TLATXL" "D" 1
+defineCellFanoutLoad "TLATXL" "G" 1
+defineCellFanoutLoad "TLATXL" "Q" 1
+defineCellFanoutLoad "TLATXL" "QN" 1
+
+defineCellFootPrint "TLATX4" "tlat"
+defineCellFanoutLoad "TLATX4" "D" 1
+defineCellFanoutLoad "TLATX4" "G" 1
+defineCellFanoutLoad "TLATX4" "Q" 1
+defineCellFanoutLoad "TLATX4" "QN" 1
+
+defineCellFootPrint "TLATX2" "tlat"
+defineCellFanoutLoad "TLATX2" "D" 1
+defineCellFanoutLoad "TLATX2" "G" 1
+defineCellFanoutLoad "TLATX2" "Q" 1
+defineCellFanoutLoad "TLATX2" "QN" 1
+
+defineCellFootPrint "TLATX1" "tlat"
+defineCellFanoutLoad "TLATX1" "D" 1
+defineCellFanoutLoad "TLATX1" "G" 1
+defineCellFanoutLoad "TLATX1" "Q" 1
+defineCellFanoutLoad "TLATX1" "QN" 1
+
+defineCellFootPrint "TIELO" "tielo"
+defineCellFanoutLoad "TIELO" "Y" 1
+
+defineCellFootPrint "TIEHI" "tiehi"
+defineCellFanoutLoad "TIEHI" "Y" 1
+
+defineCellFootPrint "TBUFXL" "tbuf"
+defineCellFanoutLoad "TBUFXL" "A" 1
+defineCellFanoutLoad "TBUFXL" "OE" 1
+defineCellFanoutLoad "TBUFXL" "Y" 1
+
+defineCellFootPrint "TBUFX8" "tbuf"
+defineCellFanoutLoad "TBUFX8" "A" 1
+defineCellFanoutLoad "TBUFX8" "OE" 1
+defineCellFanoutLoad "TBUFX8" "Y" 1
+
+defineCellFootPrint "TBUFX6" "tbuf"
+defineCellFanoutLoad "TBUFX6" "A" 1
+defineCellFanoutLoad "TBUFX6" "OE" 1
+defineCellFanoutLoad "TBUFX6" "Y" 1
+
+defineCellFootPrint "TBUFX4" "tbuf"
+defineCellFanoutLoad "TBUFX4" "A" 1
+defineCellFanoutLoad "TBUFX4" "OE" 1
+defineCellFanoutLoad "TBUFX4" "Y" 1
+
+defineCellFootPrint "TBUFX3" "tbuf"
+defineCellFanoutLoad "TBUFX3" "A" 1
+defineCellFanoutLoad "TBUFX3" "OE" 1
+defineCellFanoutLoad "TBUFX3" "Y" 1
+
+defineCellFootPrint "TBUFX2" "tbuf"
+defineCellFanoutLoad "TBUFX2" "A" 1
+defineCellFanoutLoad "TBUFX2" "OE" 1
+defineCellFanoutLoad "TBUFX2" "Y" 1
+
+defineCellFootPrint "TBUFX20" "tbuf"
+defineCellFanoutLoad "TBUFX20" "A" 1
+defineCellFanoutLoad "TBUFX20" "OE" 1
+defineCellFanoutLoad "TBUFX20" "Y" 1
+
+defineCellFootPrint "TBUFX1" "tbuf"
+defineCellFanoutLoad "TBUFX1" "A" 1
+defineCellFanoutLoad "TBUFX1" "OE" 1
+defineCellFanoutLoad "TBUFX1" "Y" 1
+
+defineCellFootPrint "TBUFX16" "tbuf"
+defineCellFanoutLoad "TBUFX16" "A" 1
+defineCellFanoutLoad "TBUFX16" "OE" 1
+defineCellFanoutLoad "TBUFX16" "Y" 1
+
+defineCellFootPrint "TBUFX12" "tbuf"
+defineCellFanoutLoad "TBUFX12" "A" 1
+defineCellFanoutLoad "TBUFX12" "OE" 1
+defineCellFanoutLoad "TBUFX12" "Y" 1
+
+defineCellFootPrint "SMDFFHQX8" "smdffhq"
+defineCellFanoutLoad "SMDFFHQX8" "SI" 1
+defineCellFanoutLoad "SMDFFHQX8" "SE" 1
+defineCellFanoutLoad "SMDFFHQX8" "D0" 1
+defineCellFanoutLoad "SMDFFHQX8" "D1" 1
+defineCellFanoutLoad "SMDFFHQX8" "S0" 1
+defineCellFanoutLoad "SMDFFHQX8" "CK" 1
+defineCellFanoutLoad "SMDFFHQX8" "Q" 1
+
+defineCellFootPrint "SMDFFHQX4" "smdffhq"
+defineCellFanoutLoad "SMDFFHQX4" "SI" 1
+defineCellFanoutLoad "SMDFFHQX4" "SE" 1
+defineCellFanoutLoad "SMDFFHQX4" "D0" 1
+defineCellFanoutLoad "SMDFFHQX4" "D1" 1
+defineCellFanoutLoad "SMDFFHQX4" "S0" 1
+defineCellFanoutLoad "SMDFFHQX4" "CK" 1
+defineCellFanoutLoad "SMDFFHQX4" "Q" 1
+
+defineCellFootPrint "SMDFFHQX2" "smdffhq"
+defineCellFanoutLoad "SMDFFHQX2" "SI" 1
+defineCellFanoutLoad "SMDFFHQX2" "SE" 1
+defineCellFanoutLoad "SMDFFHQX2" "D0" 1
+defineCellFanoutLoad "SMDFFHQX2" "D1" 1
+defineCellFanoutLoad "SMDFFHQX2" "S0" 1
+defineCellFanoutLoad "SMDFFHQX2" "CK" 1
+defineCellFanoutLoad "SMDFFHQX2" "Q" 1
+
+defineCellFootPrint "SMDFFHQX1" "smdffhq"
+defineCellFanoutLoad "SMDFFHQX1" "SI" 1
+defineCellFanoutLoad "SMDFFHQX1" "SE" 1
+defineCellFanoutLoad "SMDFFHQX1" "D0" 1
+defineCellFanoutLoad "SMDFFHQX1" "D1" 1
+defineCellFanoutLoad "SMDFFHQX1" "S0" 1
+defineCellFanoutLoad "SMDFFHQX1" "CK" 1
+defineCellFanoutLoad "SMDFFHQX1" "Q" 1
+
+defineCellFootPrint "SEDFFTRXL" "sedfftr"
+defineCellFanoutLoad "SEDFFTRXL" "SI" 1
+defineCellFanoutLoad "SEDFFTRXL" "SE" 1
+defineCellFanoutLoad "SEDFFTRXL" "D" 1
+defineCellFanoutLoad "SEDFFTRXL" "CK" 1
+defineCellFanoutLoad "SEDFFTRXL" "E" 1
+defineCellFanoutLoad "SEDFFTRXL" "RN" 1
+defineCellFanoutLoad "SEDFFTRXL" "Q" 1
+defineCellFanoutLoad "SEDFFTRXL" "QN" 1
+
+defineCellFootPrint "SEDFFTRX4" "sedfftr"
+defineCellFanoutLoad "SEDFFTRX4" "SI" 1
+defineCellFanoutLoad "SEDFFTRX4" "SE" 1
+defineCellFanoutLoad "SEDFFTRX4" "D" 1
+defineCellFanoutLoad "SEDFFTRX4" "CK" 1
+defineCellFanoutLoad "SEDFFTRX4" "E" 1
+defineCellFanoutLoad "SEDFFTRX4" "RN" 1
+defineCellFanoutLoad "SEDFFTRX4" "Q" 1
+defineCellFanoutLoad "SEDFFTRX4" "QN" 1
+
+defineCellFootPrint "SEDFFTRX2" "sedfftr"
+defineCellFanoutLoad "SEDFFTRX2" "SI" 1
+defineCellFanoutLoad "SEDFFTRX2" "SE" 1
+defineCellFanoutLoad "SEDFFTRX2" "D" 1
+defineCellFanoutLoad "SEDFFTRX2" "CK" 1
+defineCellFanoutLoad "SEDFFTRX2" "E" 1
+defineCellFanoutLoad "SEDFFTRX2" "RN" 1
+defineCellFanoutLoad "SEDFFTRX2" "Q" 1
+defineCellFanoutLoad "SEDFFTRX2" "QN" 1
+
+defineCellFootPrint "SEDFFTRX1" "sedfftr"
+defineCellFanoutLoad "SEDFFTRX1" "SI" 1
+defineCellFanoutLoad "SEDFFTRX1" "SE" 1
+defineCellFanoutLoad "SEDFFTRX1" "D" 1
+defineCellFanoutLoad "SEDFFTRX1" "CK" 1
+defineCellFanoutLoad "SEDFFTRX1" "E" 1
+defineCellFanoutLoad "SEDFFTRX1" "RN" 1
+defineCellFanoutLoad "SEDFFTRX1" "Q" 1
+defineCellFanoutLoad "SEDFFTRX1" "QN" 1
+
+defineCellFootPrint "SEDFFHQX8" "sedffhq"
+defineCellFanoutLoad "SEDFFHQX8" "SI" 1
+defineCellFanoutLoad "SEDFFHQX8" "SE" 1
+defineCellFanoutLoad "SEDFFHQX8" "D" 1
+defineCellFanoutLoad "SEDFFHQX8" "CK" 1
+defineCellFanoutLoad "SEDFFHQX8" "E" 1
+defineCellFanoutLoad "SEDFFHQX8" "Q" 1
+
+defineCellFootPrint "SEDFFHQX4" "sedffhq"
+defineCellFanoutLoad "SEDFFHQX4" "SI" 1
+defineCellFanoutLoad "SEDFFHQX4" "SE" 1
+defineCellFanoutLoad "SEDFFHQX4" "D" 1
+defineCellFanoutLoad "SEDFFHQX4" "CK" 1
+defineCellFanoutLoad "SEDFFHQX4" "E" 1
+defineCellFanoutLoad "SEDFFHQX4" "Q" 1
+
+defineCellFootPrint "SEDFFHQX2" "sedffhq"
+defineCellFanoutLoad "SEDFFHQX2" "SI" 1
+defineCellFanoutLoad "SEDFFHQX2" "SE" 1
+defineCellFanoutLoad "SEDFFHQX2" "D" 1
+defineCellFanoutLoad "SEDFFHQX2" "CK" 1
+defineCellFanoutLoad "SEDFFHQX2" "E" 1
+defineCellFanoutLoad "SEDFFHQX2" "Q" 1
+
+defineCellFootPrint "SEDFFHQX1" "sedffhq"
+defineCellFanoutLoad "SEDFFHQX1" "SI" 1
+defineCellFanoutLoad "SEDFFHQX1" "SE" 1
+defineCellFanoutLoad "SEDFFHQX1" "D" 1
+defineCellFanoutLoad "SEDFFHQX1" "CK" 1
+defineCellFanoutLoad "SEDFFHQX1" "E" 1
+defineCellFanoutLoad "SEDFFHQX1" "Q" 1
+
+defineCellFootPrint "SEDFFXL" "sedff"
+defineCellFanoutLoad "SEDFFXL" "SI" 1
+defineCellFanoutLoad "SEDFFXL" "SE" 1
+defineCellFanoutLoad "SEDFFXL" "D" 1
+defineCellFanoutLoad "SEDFFXL" "CK" 1
+defineCellFanoutLoad "SEDFFXL" "E" 1
+defineCellFanoutLoad "SEDFFXL" "Q" 1
+defineCellFanoutLoad "SEDFFXL" "QN" 1
+
+defineCellFootPrint "SEDFFX4" "sedff"
+defineCellFanoutLoad "SEDFFX4" "SI" 1
+defineCellFanoutLoad "SEDFFX4" "SE" 1
+defineCellFanoutLoad "SEDFFX4" "D" 1
+defineCellFanoutLoad "SEDFFX4" "CK" 1
+defineCellFanoutLoad "SEDFFX4" "E" 1
+defineCellFanoutLoad "SEDFFX4" "Q" 1
+defineCellFanoutLoad "SEDFFX4" "QN" 1
+
+defineCellFootPrint "SEDFFX2" "sedff"
+defineCellFanoutLoad "SEDFFX2" "SI" 1
+defineCellFanoutLoad "SEDFFX2" "SE" 1
+defineCellFanoutLoad "SEDFFX2" "D" 1
+defineCellFanoutLoad "SEDFFX2" "CK" 1
+defineCellFanoutLoad "SEDFFX2" "E" 1
+defineCellFanoutLoad "SEDFFX2" "Q" 1
+defineCellFanoutLoad "SEDFFX2" "QN" 1
+
+defineCellFootPrint "SEDFFX1" "sedff"
+defineCellFanoutLoad "SEDFFX1" "SI" 1
+defineCellFanoutLoad "SEDFFX1" "SE" 1
+defineCellFanoutLoad "SEDFFX1" "D" 1
+defineCellFanoutLoad "SEDFFX1" "CK" 1
+defineCellFanoutLoad "SEDFFX1" "E" 1
+defineCellFanoutLoad "SEDFFX1" "Q" 1
+defineCellFanoutLoad "SEDFFX1" "QN" 1
+
+defineCellFootPrint "SDFFYQX2" "sdffyq"
+defineCellFanoutLoad "SDFFYQX2" "SI" 1
+defineCellFanoutLoad "SDFFYQX2" "SE" 1
+defineCellFanoutLoad "SDFFYQX2" "D" 1
+defineCellFanoutLoad "SDFFYQX2" "CK" 1
+defineCellFanoutLoad "SDFFYQX2" "Q" 1
+
+defineCellFootPrint "SDFFTRXL" "sdfftr"
+defineCellFanoutLoad "SDFFTRXL" "SI" 1
+defineCellFanoutLoad "SDFFTRXL" "SE" 1
+defineCellFanoutLoad "SDFFTRXL" "D" 1
+defineCellFanoutLoad "SDFFTRXL" "CK" 1
+defineCellFanoutLoad "SDFFTRXL" "RN" 1
+defineCellFanoutLoad "SDFFTRXL" "Q" 1
+defineCellFanoutLoad "SDFFTRXL" "QN" 1
+
+defineCellFootPrint "SDFFTRX4" "sdfftr"
+defineCellFanoutLoad "SDFFTRX4" "SI" 1
+defineCellFanoutLoad "SDFFTRX4" "SE" 1
+defineCellFanoutLoad "SDFFTRX4" "D" 1
+defineCellFanoutLoad "SDFFTRX4" "CK" 1
+defineCellFanoutLoad "SDFFTRX4" "RN" 1
+defineCellFanoutLoad "SDFFTRX4" "Q" 1
+defineCellFanoutLoad "SDFFTRX4" "QN" 1
+
+defineCellFootPrint "SDFFTRX2" "sdfftr"
+defineCellFanoutLoad "SDFFTRX2" "SI" 1
+defineCellFanoutLoad "SDFFTRX2" "SE" 1
+defineCellFanoutLoad "SDFFTRX2" "D" 1
+defineCellFanoutLoad "SDFFTRX2" "CK" 1
+defineCellFanoutLoad "SDFFTRX2" "RN" 1
+defineCellFanoutLoad "SDFFTRX2" "Q" 1
+defineCellFanoutLoad "SDFFTRX2" "QN" 1
+
+defineCellFootPrint "SDFFTRX1" "sdfftr"
+defineCellFanoutLoad "SDFFTRX1" "SI" 1
+defineCellFanoutLoad "SDFFTRX1" "SE" 1
+defineCellFanoutLoad "SDFFTRX1" "D" 1
+defineCellFanoutLoad "SDFFTRX1" "CK" 1
+defineCellFanoutLoad "SDFFTRX1" "RN" 1
+defineCellFanoutLoad "SDFFTRX1" "Q" 1
+defineCellFanoutLoad "SDFFTRX1" "QN" 1
+
+defineCellFootPrint "SDFFSRHQX8" "sdffsrhq"
+defineCellFanoutLoad "SDFFSRHQX8" "SI" 1
+defineCellFanoutLoad "SDFFSRHQX8" "SE" 1
+defineCellFanoutLoad "SDFFSRHQX8" "D" 1
+defineCellFanoutLoad "SDFFSRHQX8" "CK" 1
+defineCellFanoutLoad "SDFFSRHQX8" "SN" 1
+defineCellFanoutLoad "SDFFSRHQX8" "RN" 1
+defineCellFanoutLoad "SDFFSRHQX8" "Q" 1
+
+defineCellFootPrint "SDFFSRHQX4" "sdffsrhq"
+defineCellFanoutLoad "SDFFSRHQX4" "SI" 1
+defineCellFanoutLoad "SDFFSRHQX4" "SE" 1
+defineCellFanoutLoad "SDFFSRHQX4" "D" 1
+defineCellFanoutLoad "SDFFSRHQX4" "CK" 1
+defineCellFanoutLoad "SDFFSRHQX4" "SN" 1
+defineCellFanoutLoad "SDFFSRHQX4" "RN" 1
+defineCellFanoutLoad "SDFFSRHQX4" "Q" 1
+
+defineCellFootPrint "SDFFSRHQX2" "sdffsrhq"
+defineCellFanoutLoad "SDFFSRHQX2" "SI" 1
+defineCellFanoutLoad "SDFFSRHQX2" "SE" 1
+defineCellFanoutLoad "SDFFSRHQX2" "D" 1
+defineCellFanoutLoad "SDFFSRHQX2" "CK" 1
+defineCellFanoutLoad "SDFFSRHQX2" "SN" 1
+defineCellFanoutLoad "SDFFSRHQX2" "RN" 1
+defineCellFanoutLoad "SDFFSRHQX2" "Q" 1
+
+defineCellFootPrint "SDFFSRHQX1" "sdffsrhq"
+defineCellFanoutLoad "SDFFSRHQX1" "SI" 1
+defineCellFanoutLoad "SDFFSRHQX1" "SE" 1
+defineCellFanoutLoad "SDFFSRHQX1" "D" 1
+defineCellFanoutLoad "SDFFSRHQX1" "CK" 1
+defineCellFanoutLoad "SDFFSRHQX1" "SN" 1
+defineCellFanoutLoad "SDFFSRHQX1" "RN" 1
+defineCellFanoutLoad "SDFFSRHQX1" "Q" 1
+
+defineCellFootPrint "SDFFSRXL" "sdffsr"
+defineCellFanoutLoad "SDFFSRXL" "SI" 1
+defineCellFanoutLoad "SDFFSRXL" "SE" 1
+defineCellFanoutLoad "SDFFSRXL" "D" 1
+defineCellFanoutLoad "SDFFSRXL" "CK" 1
+defineCellFanoutLoad "SDFFSRXL" "SN" 1
+defineCellFanoutLoad "SDFFSRXL" "RN" 1
+defineCellFanoutLoad "SDFFSRXL" "Q" 1
+defineCellFanoutLoad "SDFFSRXL" "QN" 1
+
+defineCellFootPrint "SDFFSRX4" "sdffsr"
+defineCellFanoutLoad "SDFFSRX4" "SI" 1
+defineCellFanoutLoad "SDFFSRX4" "SE" 1
+defineCellFanoutLoad "SDFFSRX4" "D" 1
+defineCellFanoutLoad "SDFFSRX4" "CK" 1
+defineCellFanoutLoad "SDFFSRX4" "SN" 1
+defineCellFanoutLoad "SDFFSRX4" "RN" 1
+defineCellFanoutLoad "SDFFSRX4" "Q" 1
+defineCellFanoutLoad "SDFFSRX4" "QN" 1
+
+defineCellFootPrint "SDFFSRX2" "sdffsr"
+defineCellFanoutLoad "SDFFSRX2" "SI" 1
+defineCellFanoutLoad "SDFFSRX2" "SE" 1
+defineCellFanoutLoad "SDFFSRX2" "D" 1
+defineCellFanoutLoad "SDFFSRX2" "CK" 1
+defineCellFanoutLoad "SDFFSRX2" "SN" 1
+defineCellFanoutLoad "SDFFSRX2" "RN" 1
+defineCellFanoutLoad "SDFFSRX2" "Q" 1
+defineCellFanoutLoad "SDFFSRX2" "QN" 1
+
+defineCellFootPrint "SDFFSRX1" "sdffsr"
+defineCellFanoutLoad "SDFFSRX1" "SI" 1
+defineCellFanoutLoad "SDFFSRX1" "SE" 1
+defineCellFanoutLoad "SDFFSRX1" "D" 1
+defineCellFanoutLoad "SDFFSRX1" "CK" 1
+defineCellFanoutLoad "SDFFSRX1" "SN" 1
+defineCellFanoutLoad "SDFFSRX1" "RN" 1
+defineCellFanoutLoad "SDFFSRX1" "Q" 1
+defineCellFanoutLoad "SDFFSRX1" "QN" 1
+
+defineCellFootPrint "SDFFSQXL" "sdffsq"
+defineCellFanoutLoad "SDFFSQXL" "SI" 1
+defineCellFanoutLoad "SDFFSQXL" "SE" 1
+defineCellFanoutLoad "SDFFSQXL" "D" 1
+defineCellFanoutLoad "SDFFSQXL" "CK" 1
+defineCellFanoutLoad "SDFFSQXL" "SN" 1
+defineCellFanoutLoad "SDFFSQXL" "Q" 1
+
+defineCellFootPrint "SDFFSQX4" "sdffsq"
+defineCellFanoutLoad "SDFFSQX4" "SI" 1
+defineCellFanoutLoad "SDFFSQX4" "SE" 1
+defineCellFanoutLoad "SDFFSQX4" "D" 1
+defineCellFanoutLoad "SDFFSQX4" "CK" 1
+defineCellFanoutLoad "SDFFSQX4" "SN" 1
+defineCellFanoutLoad "SDFFSQX4" "Q" 1
+
+defineCellFootPrint "SDFFSQX2" "sdffsq"
+defineCellFanoutLoad "SDFFSQX2" "SI" 1
+defineCellFanoutLoad "SDFFSQX2" "SE" 1
+defineCellFanoutLoad "SDFFSQX2" "D" 1
+defineCellFanoutLoad "SDFFSQX2" "CK" 1
+defineCellFanoutLoad "SDFFSQX2" "SN" 1
+defineCellFanoutLoad "SDFFSQX2" "Q" 1
+
+defineCellFootPrint "SDFFSQX1" "sdffsq"
+defineCellFanoutLoad "SDFFSQX1" "SI" 1
+defineCellFanoutLoad "SDFFSQX1" "SE" 1
+defineCellFanoutLoad "SDFFSQX1" "D" 1
+defineCellFanoutLoad "SDFFSQX1" "CK" 1
+defineCellFanoutLoad "SDFFSQX1" "SN" 1
+defineCellFanoutLoad "SDFFSQX1" "Q" 1
+
+defineCellFootPrint "SDFFSHQX8" "sdffshq"
+defineCellFanoutLoad "SDFFSHQX8" "SI" 1
+defineCellFanoutLoad "SDFFSHQX8" "SE" 1
+defineCellFanoutLoad "SDFFSHQX8" "D" 1
+defineCellFanoutLoad "SDFFSHQX8" "CK" 1
+defineCellFanoutLoad "SDFFSHQX8" "SN" 1
+defineCellFanoutLoad "SDFFSHQX8" "Q" 1
+
+defineCellFootPrint "SDFFSHQX4" "sdffshq"
+defineCellFanoutLoad "SDFFSHQX4" "SI" 1
+defineCellFanoutLoad "SDFFSHQX4" "SE" 1
+defineCellFanoutLoad "SDFFSHQX4" "D" 1
+defineCellFanoutLoad "SDFFSHQX4" "CK" 1
+defineCellFanoutLoad "SDFFSHQX4" "SN" 1
+defineCellFanoutLoad "SDFFSHQX4" "Q" 1
+
+defineCellFootPrint "SDFFSHQX2" "sdffshq"
+defineCellFanoutLoad "SDFFSHQX2" "SI" 1
+defineCellFanoutLoad "SDFFSHQX2" "SE" 1
+defineCellFanoutLoad "SDFFSHQX2" "D" 1
+defineCellFanoutLoad "SDFFSHQX2" "CK" 1
+defineCellFanoutLoad "SDFFSHQX2" "SN" 1
+defineCellFanoutLoad "SDFFSHQX2" "Q" 1
+
+defineCellFootPrint "SDFFSHQX1" "sdffshq"
+defineCellFanoutLoad "SDFFSHQX1" "SI" 1
+defineCellFanoutLoad "SDFFSHQX1" "SE" 1
+defineCellFanoutLoad "SDFFSHQX1" "D" 1
+defineCellFanoutLoad "SDFFSHQX1" "CK" 1
+defineCellFanoutLoad "SDFFSHQX1" "SN" 1
+defineCellFanoutLoad "SDFFSHQX1" "Q" 1
+
+defineCellFootPrint "SDFFSXL" "sdffs"
+defineCellFanoutLoad "SDFFSXL" "SI" 1
+defineCellFanoutLoad "SDFFSXL" "SE" 1
+defineCellFanoutLoad "SDFFSXL" "D" 1
+defineCellFanoutLoad "SDFFSXL" "CK" 1
+defineCellFanoutLoad "SDFFSXL" "SN" 1
+defineCellFanoutLoad "SDFFSXL" "Q" 1
+defineCellFanoutLoad "SDFFSXL" "QN" 1
+
+defineCellFootPrint "SDFFSX4" "sdffs"
+defineCellFanoutLoad "SDFFSX4" "SI" 1
+defineCellFanoutLoad "SDFFSX4" "SE" 1
+defineCellFanoutLoad "SDFFSX4" "D" 1
+defineCellFanoutLoad "SDFFSX4" "CK" 1
+defineCellFanoutLoad "SDFFSX4" "SN" 1
+defineCellFanoutLoad "SDFFSX4" "Q" 1
+defineCellFanoutLoad "SDFFSX4" "QN" 1
+
+defineCellFootPrint "SDFFSX2" "sdffs"
+defineCellFanoutLoad "SDFFSX2" "SI" 1
+defineCellFanoutLoad "SDFFSX2" "SE" 1
+defineCellFanoutLoad "SDFFSX2" "D" 1
+defineCellFanoutLoad "SDFFSX2" "CK" 1
+defineCellFanoutLoad "SDFFSX2" "SN" 1
+defineCellFanoutLoad "SDFFSX2" "Q" 1
+defineCellFanoutLoad "SDFFSX2" "QN" 1
+
+defineCellFootPrint "SDFFSX1" "sdffs"
+defineCellFanoutLoad "SDFFSX1" "SI" 1
+defineCellFanoutLoad "SDFFSX1" "SE" 1
+defineCellFanoutLoad "SDFFSX1" "D" 1
+defineCellFanoutLoad "SDFFSX1" "CK" 1
+defineCellFanoutLoad "SDFFSX1" "SN" 1
+defineCellFanoutLoad "SDFFSX1" "Q" 1
+defineCellFanoutLoad "SDFFSX1" "QN" 1
+
+defineCellFootPrint "SDFFRQXL" "sdffrq"
+defineCellFanoutLoad "SDFFRQXL" "SI" 1
+defineCellFanoutLoad "SDFFRQXL" "SE" 1
+defineCellFanoutLoad "SDFFRQXL" "D" 1
+defineCellFanoutLoad "SDFFRQXL" "CK" 1
+defineCellFanoutLoad "SDFFRQXL" "RN" 1
+defineCellFanoutLoad "SDFFRQXL" "Q" 1
+
+defineCellFootPrint "SDFFRQX4" "sdffrq"
+defineCellFanoutLoad "SDFFRQX4" "SI" 1
+defineCellFanoutLoad "SDFFRQX4" "SE" 1
+defineCellFanoutLoad "SDFFRQX4" "D" 1
+defineCellFanoutLoad "SDFFRQX4" "CK" 1
+defineCellFanoutLoad "SDFFRQX4" "RN" 1
+defineCellFanoutLoad "SDFFRQX4" "Q" 1
+
+defineCellFootPrint "SDFFRQX2" "sdffrq"
+defineCellFanoutLoad "SDFFRQX2" "SI" 1
+defineCellFanoutLoad "SDFFRQX2" "SE" 1
+defineCellFanoutLoad "SDFFRQX2" "D" 1
+defineCellFanoutLoad "SDFFRQX2" "CK" 1
+defineCellFanoutLoad "SDFFRQX2" "RN" 1
+defineCellFanoutLoad "SDFFRQX2" "Q" 1
+
+defineCellFootPrint "SDFFRQX1" "sdffrq"
+defineCellFanoutLoad "SDFFRQX1" "SI" 1
+defineCellFanoutLoad "SDFFRQX1" "SE" 1
+defineCellFanoutLoad "SDFFRQX1" "D" 1
+defineCellFanoutLoad "SDFFRQX1" "CK" 1
+defineCellFanoutLoad "SDFFRQX1" "RN" 1
+defineCellFanoutLoad "SDFFRQX1" "Q" 1
+
+defineCellFootPrint "SDFFRHQX8" "sdffrhq"
+defineCellFanoutLoad "SDFFRHQX8" "SI" 1
+defineCellFanoutLoad "SDFFRHQX8" "SE" 1
+defineCellFanoutLoad "SDFFRHQX8" "D" 1
+defineCellFanoutLoad "SDFFRHQX8" "CK" 1
+defineCellFanoutLoad "SDFFRHQX8" "RN" 1
+defineCellFanoutLoad "SDFFRHQX8" "Q" 1
+
+defineCellFootPrint "SDFFRHQX4" "sdffrhq"
+defineCellFanoutLoad "SDFFRHQX4" "SI" 1
+defineCellFanoutLoad "SDFFRHQX4" "SE" 1
+defineCellFanoutLoad "SDFFRHQX4" "D" 1
+defineCellFanoutLoad "SDFFRHQX4" "CK" 1
+defineCellFanoutLoad "SDFFRHQX4" "RN" 1
+defineCellFanoutLoad "SDFFRHQX4" "Q" 1
+
+defineCellFootPrint "SDFFRHQX2" "sdffrhq"
+defineCellFanoutLoad "SDFFRHQX2" "SI" 1
+defineCellFanoutLoad "SDFFRHQX2" "SE" 1
+defineCellFanoutLoad "SDFFRHQX2" "D" 1
+defineCellFanoutLoad "SDFFRHQX2" "CK" 1
+defineCellFanoutLoad "SDFFRHQX2" "RN" 1
+defineCellFanoutLoad "SDFFRHQX2" "Q" 1
+
+defineCellFootPrint "SDFFRHQX1" "sdffrhq"
+defineCellFanoutLoad "SDFFRHQX1" "SI" 1
+defineCellFanoutLoad "SDFFRHQX1" "SE" 1
+defineCellFanoutLoad "SDFFRHQX1" "D" 1
+defineCellFanoutLoad "SDFFRHQX1" "CK" 1
+defineCellFanoutLoad "SDFFRHQX1" "RN" 1
+defineCellFanoutLoad "SDFFRHQX1" "Q" 1
+
+defineCellFootPrint "SDFFRXL" "sdffr"
+defineCellFanoutLoad "SDFFRXL" "SI" 1
+defineCellFanoutLoad "SDFFRXL" "SE" 1
+defineCellFanoutLoad "SDFFRXL" "D" 1
+defineCellFanoutLoad "SDFFRXL" "CK" 1
+defineCellFanoutLoad "SDFFRXL" "RN" 1
+defineCellFanoutLoad "SDFFRXL" "Q" 1
+defineCellFanoutLoad "SDFFRXL" "QN" 1
+
+defineCellFootPrint "SDFFRX4" "sdffr"
+defineCellFanoutLoad "SDFFRX4" "SI" 1
+defineCellFanoutLoad "SDFFRX4" "SE" 1
+defineCellFanoutLoad "SDFFRX4" "D" 1
+defineCellFanoutLoad "SDFFRX4" "CK" 1
+defineCellFanoutLoad "SDFFRX4" "RN" 1
+defineCellFanoutLoad "SDFFRX4" "Q" 1
+defineCellFanoutLoad "SDFFRX4" "QN" 1
+
+defineCellFootPrint "SDFFRX2" "sdffr"
+defineCellFanoutLoad "SDFFRX2" "SI" 1
+defineCellFanoutLoad "SDFFRX2" "SE" 1
+defineCellFanoutLoad "SDFFRX2" "D" 1
+defineCellFanoutLoad "SDFFRX2" "CK" 1
+defineCellFanoutLoad "SDFFRX2" "RN" 1
+defineCellFanoutLoad "SDFFRX2" "Q" 1
+defineCellFanoutLoad "SDFFRX2" "QN" 1
+
+defineCellFootPrint "SDFFRX1" "sdffr"
+defineCellFanoutLoad "SDFFRX1" "SI" 1
+defineCellFanoutLoad "SDFFRX1" "SE" 1
+defineCellFanoutLoad "SDFFRX1" "D" 1
+defineCellFanoutLoad "SDFFRX1" "CK" 1
+defineCellFanoutLoad "SDFFRX1" "RN" 1
+defineCellFanoutLoad "SDFFRX1" "Q" 1
+defineCellFanoutLoad "SDFFRX1" "QN" 1
+
+defineCellFootPrint "SDFFQXL" "sdffq"
+defineCellFanoutLoad "SDFFQXL" "SI" 1
+defineCellFanoutLoad "SDFFQXL" "SE" 1
+defineCellFanoutLoad "SDFFQXL" "D" 1
+defineCellFanoutLoad "SDFFQXL" "CK" 1
+defineCellFanoutLoad "SDFFQXL" "Q" 1
+
+defineCellFootPrint "SDFFQX4" "sdffq"
+defineCellFanoutLoad "SDFFQX4" "SI" 1
+defineCellFanoutLoad "SDFFQX4" "SE" 1
+defineCellFanoutLoad "SDFFQX4" "D" 1
+defineCellFanoutLoad "SDFFQX4" "CK" 1
+defineCellFanoutLoad "SDFFQX4" "Q" 1
+
+defineCellFootPrint "SDFFQX2" "sdffq"
+defineCellFanoutLoad "SDFFQX2" "SI" 1
+defineCellFanoutLoad "SDFFQX2" "SE" 1
+defineCellFanoutLoad "SDFFQX2" "D" 1
+defineCellFanoutLoad "SDFFQX2" "CK" 1
+defineCellFanoutLoad "SDFFQX2" "Q" 1
+
+defineCellFootPrint "SDFFQX1" "sdffq"
+defineCellFanoutLoad "SDFFQX1" "SI" 1
+defineCellFanoutLoad "SDFFQX1" "SE" 1
+defineCellFanoutLoad "SDFFQX1" "D" 1
+defineCellFanoutLoad "SDFFQX1" "CK" 1
+defineCellFanoutLoad "SDFFQX1" "Q" 1
+
+defineCellFootPrint "SDFFNSRHX8" "sdffnsrh"
+defineCellFanoutLoad "SDFFNSRHX8" "SI" 1
+defineCellFanoutLoad "SDFFNSRHX8" "SE" 1
+defineCellFanoutLoad "SDFFNSRHX8" "D" 1
+defineCellFanoutLoad "SDFFNSRHX8" "CKN" 1
+defineCellFanoutLoad "SDFFNSRHX8" "SN" 1
+defineCellFanoutLoad "SDFFNSRHX8" "RN" 1
+defineCellFanoutLoad "SDFFNSRHX8" "Q" 1
+defineCellFanoutLoad "SDFFNSRHX8" "QN" 1
+
+defineCellFootPrint "SDFFNSRHX4" "sdffnsrh"
+defineCellFanoutLoad "SDFFNSRHX4" "SI" 1
+defineCellFanoutLoad "SDFFNSRHX4" "SE" 1
+defineCellFanoutLoad "SDFFNSRHX4" "D" 1
+defineCellFanoutLoad "SDFFNSRHX4" "CKN" 1
+defineCellFanoutLoad "SDFFNSRHX4" "SN" 1
+defineCellFanoutLoad "SDFFNSRHX4" "RN" 1
+defineCellFanoutLoad "SDFFNSRHX4" "Q" 1
+defineCellFanoutLoad "SDFFNSRHX4" "QN" 1
+
+defineCellFootPrint "SDFFNSRHX2" "sdffnsrh"
+defineCellFanoutLoad "SDFFNSRHX2" "SI" 1
+defineCellFanoutLoad "SDFFNSRHX2" "SE" 1
+defineCellFanoutLoad "SDFFNSRHX2" "D" 1
+defineCellFanoutLoad "SDFFNSRHX2" "CKN" 1
+defineCellFanoutLoad "SDFFNSRHX2" "SN" 1
+defineCellFanoutLoad "SDFFNSRHX2" "RN" 1
+defineCellFanoutLoad "SDFFNSRHX2" "Q" 1
+defineCellFanoutLoad "SDFFNSRHX2" "QN" 1
+
+defineCellFootPrint "SDFFNSRHX1" "sdffnsrh"
+defineCellFanoutLoad "SDFFNSRHX1" "SI" 1
+defineCellFanoutLoad "SDFFNSRHX1" "SE" 1
+defineCellFanoutLoad "SDFFNSRHX1" "D" 1
+defineCellFanoutLoad "SDFFNSRHX1" "CKN" 1
+defineCellFanoutLoad "SDFFNSRHX1" "SN" 1
+defineCellFanoutLoad "SDFFNSRHX1" "RN" 1
+defineCellFanoutLoad "SDFFNSRHX1" "Q" 1
+defineCellFanoutLoad "SDFFNSRHX1" "QN" 1
+
+defineCellFootPrint "SDFFNHX8" "sdffnh"
+defineCellFanoutLoad "SDFFNHX8" "SI" 1
+defineCellFanoutLoad "SDFFNHX8" "SE" 1
+defineCellFanoutLoad "SDFFNHX8" "D" 1
+defineCellFanoutLoad "SDFFNHX8" "CKN" 1
+defineCellFanoutLoad "SDFFNHX8" "Q" 1
+defineCellFanoutLoad "SDFFNHX8" "QN" 1
+
+defineCellFootPrint "SDFFNHX4" "sdffnh"
+defineCellFanoutLoad "SDFFNHX4" "SI" 1
+defineCellFanoutLoad "SDFFNHX4" "SE" 1
+defineCellFanoutLoad "SDFFNHX4" "D" 1
+defineCellFanoutLoad "SDFFNHX4" "CKN" 1
+defineCellFanoutLoad "SDFFNHX4" "Q" 1
+defineCellFanoutLoad "SDFFNHX4" "QN" 1
+
+defineCellFootPrint "SDFFNHX2" "sdffnh"
+defineCellFanoutLoad "SDFFNHX2" "SI" 1
+defineCellFanoutLoad "SDFFNHX2" "SE" 1
+defineCellFanoutLoad "SDFFNHX2" "D" 1
+defineCellFanoutLoad "SDFFNHX2" "CKN" 1
+defineCellFanoutLoad "SDFFNHX2" "Q" 1
+defineCellFanoutLoad "SDFFNHX2" "QN" 1
+
+defineCellFootPrint "SDFFNHX1" "sdffnh"
+defineCellFanoutLoad "SDFFNHX1" "SI" 1
+defineCellFanoutLoad "SDFFNHX1" "SE" 1
+defineCellFanoutLoad "SDFFNHX1" "D" 1
+defineCellFanoutLoad "SDFFNHX1" "CKN" 1
+defineCellFanoutLoad "SDFFNHX1" "Q" 1
+defineCellFanoutLoad "SDFFNHX1" "QN" 1
+
+defineCellFootPrint "SDFFHQX8" "sdffhq"
+defineCellFanoutLoad "SDFFHQX8" "SI" 1
+defineCellFanoutLoad "SDFFHQX8" "SE" 1
+defineCellFanoutLoad "SDFFHQX8" "D" 1
+defineCellFanoutLoad "SDFFHQX8" "CK" 1
+defineCellFanoutLoad "SDFFHQX8" "Q" 1
+
+defineCellFootPrint "SDFFHQX4" "sdffhq"
+defineCellFanoutLoad "SDFFHQX4" "SI" 1
+defineCellFanoutLoad "SDFFHQX4" "SE" 1
+defineCellFanoutLoad "SDFFHQX4" "D" 1
+defineCellFanoutLoad "SDFFHQX4" "CK" 1
+defineCellFanoutLoad "SDFFHQX4" "Q" 1
+
+defineCellFootPrint "SDFFHQX2" "sdffhq"
+defineCellFanoutLoad "SDFFHQX2" "SI" 1
+defineCellFanoutLoad "SDFFHQX2" "SE" 1
+defineCellFanoutLoad "SDFFHQX2" "D" 1
+defineCellFanoutLoad "SDFFHQX2" "CK" 1
+defineCellFanoutLoad "SDFFHQX2" "Q" 1
+
+defineCellFootPrint "SDFFHQX1" "sdffhq"
+defineCellFanoutLoad "SDFFHQX1" "SI" 1
+defineCellFanoutLoad "SDFFHQX1" "SE" 1
+defineCellFanoutLoad "SDFFHQX1" "D" 1
+defineCellFanoutLoad "SDFFHQX1" "CK" 1
+defineCellFanoutLoad "SDFFHQX1" "Q" 1
+
+defineCellFootPrint "SDFFHX8" "sdffh"
+defineCellFanoutLoad "SDFFHX8" "SI" 1
+defineCellFanoutLoad "SDFFHX8" "SE" 1
+defineCellFanoutLoad "SDFFHX8" "D" 1
+defineCellFanoutLoad "SDFFHX8" "CK" 1
+defineCellFanoutLoad "SDFFHX8" "Q" 1
+defineCellFanoutLoad "SDFFHX8" "QN" 1
+
+defineCellFootPrint "SDFFHX4" "sdffh"
+defineCellFanoutLoad "SDFFHX4" "SI" 1
+defineCellFanoutLoad "SDFFHX4" "SE" 1
+defineCellFanoutLoad "SDFFHX4" "D" 1
+defineCellFanoutLoad "SDFFHX4" "CK" 1
+defineCellFanoutLoad "SDFFHX4" "Q" 1
+defineCellFanoutLoad "SDFFHX4" "QN" 1
+
+defineCellFootPrint "SDFFHX2" "sdffh"
+defineCellFanoutLoad "SDFFHX2" "SI" 1
+defineCellFanoutLoad "SDFFHX2" "SE" 1
+defineCellFanoutLoad "SDFFHX2" "D" 1
+defineCellFanoutLoad "SDFFHX2" "CK" 1
+defineCellFanoutLoad "SDFFHX2" "Q" 1
+defineCellFanoutLoad "SDFFHX2" "QN" 1
+
+defineCellFootPrint "SDFFHX1" "sdffh"
+defineCellFanoutLoad "SDFFHX1" "SI" 1
+defineCellFanoutLoad "SDFFHX1" "SE" 1
+defineCellFanoutLoad "SDFFHX1" "D" 1
+defineCellFanoutLoad "SDFFHX1" "CK" 1
+defineCellFanoutLoad "SDFFHX1" "Q" 1
+defineCellFanoutLoad "SDFFHX1" "QN" 1
+
+defineCellFootPrint "SDFFXL" "sdff"
+defineCellFanoutLoad "SDFFXL" "SI" 1
+defineCellFanoutLoad "SDFFXL" "SE" 1
+defineCellFanoutLoad "SDFFXL" "D" 1
+defineCellFanoutLoad "SDFFXL" "CK" 1
+defineCellFanoutLoad "SDFFXL" "Q" 1
+defineCellFanoutLoad "SDFFXL" "QN" 1
+
+defineCellFootPrint "SDFFX4" "sdff"
+defineCellFanoutLoad "SDFFX4" "SI" 1
+defineCellFanoutLoad "SDFFX4" "SE" 1
+defineCellFanoutLoad "SDFFX4" "D" 1
+defineCellFanoutLoad "SDFFX4" "CK" 1
+defineCellFanoutLoad "SDFFX4" "Q" 1
+defineCellFanoutLoad "SDFFX4" "QN" 1
+
+defineCellFootPrint "SDFFX2" "sdff"
+defineCellFanoutLoad "SDFFX2" "SI" 1
+defineCellFanoutLoad "SDFFX2" "SE" 1
+defineCellFanoutLoad "SDFFX2" "D" 1
+defineCellFanoutLoad "SDFFX2" "CK" 1
+defineCellFanoutLoad "SDFFX2" "Q" 1
+defineCellFanoutLoad "SDFFX2" "QN" 1
+
+defineCellFootPrint "SDFFX1" "sdff"
+defineCellFanoutLoad "SDFFX1" "SI" 1
+defineCellFanoutLoad "SDFFX1" "SE" 1
+defineCellFanoutLoad "SDFFX1" "D" 1
+defineCellFanoutLoad "SDFFX1" "CK" 1
+defineCellFanoutLoad "SDFFX1" "Q" 1
+defineCellFanoutLoad "SDFFX1" "QN" 1
+
+defineCellFootPrint "RF1R1WX1" "regcrw"
+defineCellFanoutLoad "RF1R1WX1" "WW" 1
+defineCellFanoutLoad "RF1R1WX1" "WB" 1
+defineCellFanoutLoad "RF1R1WX1" "RW" 1
+defineCellFanoutLoad "RF1R1WX1" "RWN" 1
+defineCellFanoutLoad "RF1R1WX1" "RB" 1
+
+defineCellFootPrint "RF2R1WX1" "regcrrw"
+defineCellFanoutLoad "RF2R1WX1" "WB" 1
+defineCellFanoutLoad "RF2R1WX1" "WW" 1
+defineCellFanoutLoad "RF2R1WX1" "R1W" 1
+defineCellFanoutLoad "RF2R1WX1" "R2W" 1
+defineCellFanoutLoad "RF2R1WX1" "R1B" 1
+defineCellFanoutLoad "RF2R1WX1" "R2B" 1
+
+defineCellFootPrint "BENCX4" "recsel"
+defineCellFanoutLoad "BENCX4" "M2" 1
+defineCellFanoutLoad "BENCX4" "M1" 1
+defineCellFanoutLoad "BENCX4" "M0" 1
+defineCellFanoutLoad "BENCX4" "A" 1
+defineCellFanoutLoad "BENCX4" "S" 1
+defineCellFanoutLoad "BENCX4" "X2" 1
+
+defineCellFootPrint "BENCX2" "recsel"
+defineCellFanoutLoad "BENCX2" "M2" 1
+defineCellFanoutLoad "BENCX2" "M1" 1
+defineCellFanoutLoad "BENCX2" "M0" 1
+defineCellFanoutLoad "BENCX2" "A" 1
+defineCellFanoutLoad "BENCX2" "S" 1
+defineCellFanoutLoad "BENCX2" "X2" 1
+
+defineCellFootPrint "BENCX1" "recsel"
+defineCellFanoutLoad "BENCX1" "M2" 1
+defineCellFanoutLoad "BENCX1" "M1" 1
+defineCellFanoutLoad "BENCX1" "M0" 1
+defineCellFanoutLoad "BENCX1" "A" 1
+defineCellFanoutLoad "BENCX1" "S" 1
+defineCellFanoutLoad "BENCX1" "X2" 1
+
+defineCellFootPrint "BMXIX4" "recmuxi"
+defineCellFanoutLoad "BMXIX4" "X2" 1
+defineCellFanoutLoad "BMXIX4" "M0" 1
+defineCellFanoutLoad "BMXIX4" "A" 1
+defineCellFanoutLoad "BMXIX4" "S" 1
+defineCellFanoutLoad "BMXIX4" "M1" 1
+defineCellFanoutLoad "BMXIX4" "PPN" 1
+
+defineCellFootPrint "BMXIX2" "recmuxi"
+defineCellFanoutLoad "BMXIX2" "X2" 1
+defineCellFanoutLoad "BMXIX2" "M0" 1
+defineCellFanoutLoad "BMXIX2" "A" 1
+defineCellFanoutLoad "BMXIX2" "S" 1
+defineCellFanoutLoad "BMXIX2" "M1" 1
+defineCellFanoutLoad "BMXIX2" "PPN" 1
+
+defineCellFootPrint "BMXX4" "recmux"
+defineCellFanoutLoad "BMXX4" "X2" 1
+defineCellFanoutLoad "BMXX4" "M0" 1
+defineCellFanoutLoad "BMXX4" "A" 1
+defineCellFanoutLoad "BMXX4" "S" 1
+defineCellFanoutLoad "BMXX4" "M1" 1
+defineCellFanoutLoad "BMXX4" "PP" 1
+
+defineCellFootPrint "BMXX2" "recmux"
+defineCellFanoutLoad "BMXX2" "X2" 1
+defineCellFanoutLoad "BMXX2" "M0" 1
+defineCellFanoutLoad "BMXX2" "A" 1
+defineCellFanoutLoad "BMXX2" "S" 1
+defineCellFanoutLoad "BMXX2" "M1" 1
+defineCellFanoutLoad "BMXX2" "PP" 1
+
+defineCellFootPrint "OR4XL" "or4"
+defineCellFanoutLoad "OR4XL" "A" 1
+defineCellFanoutLoad "OR4XL" "B" 1
+defineCellFanoutLoad "OR4XL" "C" 1
+defineCellFanoutLoad "OR4XL" "D" 1
+defineCellFanoutLoad "OR4XL" "Y" 1
+
+defineCellFootPrint "OR4X8" "or4"
+defineCellFanoutLoad "OR4X8" "A" 1
+defineCellFanoutLoad "OR4X8" "B" 1
+defineCellFanoutLoad "OR4X8" "C" 1
+defineCellFanoutLoad "OR4X8" "D" 1
+defineCellFanoutLoad "OR4X8" "Y" 1
+
+defineCellFootPrint "OR4X6" "or4"
+defineCellFanoutLoad "OR4X6" "A" 1
+defineCellFanoutLoad "OR4X6" "B" 1
+defineCellFanoutLoad "OR4X6" "C" 1
+defineCellFanoutLoad "OR4X6" "D" 1
+defineCellFanoutLoad "OR4X6" "Y" 1
+
+defineCellFootPrint "OR4X4" "or4"
+defineCellFanoutLoad "OR4X4" "A" 1
+defineCellFanoutLoad "OR4X4" "B" 1
+defineCellFanoutLoad "OR4X4" "C" 1
+defineCellFanoutLoad "OR4X4" "D" 1
+defineCellFanoutLoad "OR4X4" "Y" 1
+
+defineCellFootPrint "OR4X2" "or4"
+defineCellFanoutLoad "OR4X2" "A" 1
+defineCellFanoutLoad "OR4X2" "B" 1
+defineCellFanoutLoad "OR4X2" "C" 1
+defineCellFanoutLoad "OR4X2" "D" 1
+defineCellFanoutLoad "OR4X2" "Y" 1
+
+defineCellFootPrint "OR4X1" "or4"
+defineCellFanoutLoad "OR4X1" "A" 1
+defineCellFanoutLoad "OR4X1" "B" 1
+defineCellFanoutLoad "OR4X1" "C" 1
+defineCellFanoutLoad "OR4X1" "D" 1
+defineCellFanoutLoad "OR4X1" "Y" 1
+
+defineCellFootPrint "OR3XL" "or3"
+defineCellFanoutLoad "OR3XL" "A" 1
+defineCellFanoutLoad "OR3XL" "B" 1
+defineCellFanoutLoad "OR3XL" "C" 1
+defineCellFanoutLoad "OR3XL" "Y" 1
+
+defineCellFootPrint "OR3X8" "or3"
+defineCellFanoutLoad "OR3X8" "A" 1
+defineCellFanoutLoad "OR3X8" "B" 1
+defineCellFanoutLoad "OR3X8" "C" 1
+defineCellFanoutLoad "OR3X8" "Y" 1
+
+defineCellFootPrint "OR3X6" "or3"
+defineCellFanoutLoad "OR3X6" "A" 1
+defineCellFanoutLoad "OR3X6" "B" 1
+defineCellFanoutLoad "OR3X6" "C" 1
+defineCellFanoutLoad "OR3X6" "Y" 1
+
+defineCellFootPrint "OR3X4" "or3"
+defineCellFanoutLoad "OR3X4" "A" 1
+defineCellFanoutLoad "OR3X4" "B" 1
+defineCellFanoutLoad "OR3X4" "C" 1
+defineCellFanoutLoad "OR3X4" "Y" 1
+
+defineCellFootPrint "OR3X2" "or3"
+defineCellFanoutLoad "OR3X2" "A" 1
+defineCellFanoutLoad "OR3X2" "B" 1
+defineCellFanoutLoad "OR3X2" "C" 1
+defineCellFanoutLoad "OR3X2" "Y" 1
+
+defineCellFootPrint "OR3X1" "or3"
+defineCellFanoutLoad "OR3X1" "A" 1
+defineCellFanoutLoad "OR3X1" "B" 1
+defineCellFanoutLoad "OR3X1" "C" 1
+defineCellFanoutLoad "OR3X1" "Y" 1
+
+defineCellFootPrint "OR2XL" "or2"
+defineCellFanoutLoad "OR2XL" "A" 1
+defineCellFanoutLoad "OR2XL" "B" 1
+defineCellFanoutLoad "OR2XL" "Y" 1
+
+defineCellFootPrint "OR2X8" "or2"
+defineCellFanoutLoad "OR2X8" "A" 1
+defineCellFanoutLoad "OR2X8" "B" 1
+defineCellFanoutLoad "OR2X8" "Y" 1
+
+defineCellFootPrint "OR2X6" "or2"
+defineCellFanoutLoad "OR2X6" "A" 1
+defineCellFanoutLoad "OR2X6" "B" 1
+defineCellFanoutLoad "OR2X6" "Y" 1
+
+defineCellFootPrint "OR2X4" "or2"
+defineCellFanoutLoad "OR2X4" "A" 1
+defineCellFanoutLoad "OR2X4" "B" 1
+defineCellFanoutLoad "OR2X4" "Y" 1
+
+defineCellFootPrint "OR2X2" "or2"
+defineCellFanoutLoad "OR2X2" "A" 1
+defineCellFanoutLoad "OR2X2" "B" 1
+defineCellFanoutLoad "OR2X2" "Y" 1
+
+defineCellFootPrint "OR2X1" "or2"
+defineCellFanoutLoad "OR2X1" "A" 1
+defineCellFanoutLoad "OR2X1" "B" 1
+defineCellFanoutLoad "OR2X1" "Y" 1
+
+defineCellFootPrint "OAI33XL" "oai33"
+defineCellFanoutLoad "OAI33XL" "A0" 1
+defineCellFanoutLoad "OAI33XL" "A1" 1
+defineCellFanoutLoad "OAI33XL" "A2" 1
+defineCellFanoutLoad "OAI33XL" "B0" 1
+defineCellFanoutLoad "OAI33XL" "B1" 1
+defineCellFanoutLoad "OAI33XL" "B2" 1
+defineCellFanoutLoad "OAI33XL" "Y" 1
+
+defineCellFootPrint "OAI33X4" "oai33"
+defineCellFanoutLoad "OAI33X4" "A0" 1
+defineCellFanoutLoad "OAI33X4" "A1" 1
+defineCellFanoutLoad "OAI33X4" "A2" 1
+defineCellFanoutLoad "OAI33X4" "B0" 1
+defineCellFanoutLoad "OAI33X4" "B1" 1
+defineCellFanoutLoad "OAI33X4" "B2" 1
+defineCellFanoutLoad "OAI33X4" "Y" 1
+
+defineCellFootPrint "OAI33X2" "oai33"
+defineCellFanoutLoad "OAI33X2" "A0" 1
+defineCellFanoutLoad "OAI33X2" "A1" 1
+defineCellFanoutLoad "OAI33X2" "A2" 1
+defineCellFanoutLoad "OAI33X2" "B0" 1
+defineCellFanoutLoad "OAI33X2" "B1" 1
+defineCellFanoutLoad "OAI33X2" "B2" 1
+defineCellFanoutLoad "OAI33X2" "Y" 1
+
+defineCellFootPrint "OAI33X1" "oai33"
+defineCellFanoutLoad "OAI33X1" "A0" 1
+defineCellFanoutLoad "OAI33X1" "A1" 1
+defineCellFanoutLoad "OAI33X1" "A2" 1
+defineCellFanoutLoad "OAI33X1" "B0" 1
+defineCellFanoutLoad "OAI33X1" "B1" 1
+defineCellFanoutLoad "OAI33X1" "B2" 1
+defineCellFanoutLoad "OAI33X1" "Y" 1
+
+defineCellFootPrint "OAI32XL" "oai32"
+defineCellFanoutLoad "OAI32XL" "A0" 1
+defineCellFanoutLoad "OAI32XL" "A1" 1
+defineCellFanoutLoad "OAI32XL" "A2" 1
+defineCellFanoutLoad "OAI32XL" "B0" 1
+defineCellFanoutLoad "OAI32XL" "B1" 1
+defineCellFanoutLoad "OAI32XL" "Y" 1
+
+defineCellFootPrint "OAI32X4" "oai32"
+defineCellFanoutLoad "OAI32X4" "A0" 1
+defineCellFanoutLoad "OAI32X4" "A1" 1
+defineCellFanoutLoad "OAI32X4" "A2" 1
+defineCellFanoutLoad "OAI32X4" "B0" 1
+defineCellFanoutLoad "OAI32X4" "B1" 1
+defineCellFanoutLoad "OAI32X4" "Y" 1
+
+defineCellFootPrint "OAI32X2" "oai32"
+defineCellFanoutLoad "OAI32X2" "A0" 1
+defineCellFanoutLoad "OAI32X2" "A1" 1
+defineCellFanoutLoad "OAI32X2" "A2" 1
+defineCellFanoutLoad "OAI32X2" "B0" 1
+defineCellFanoutLoad "OAI32X2" "B1" 1
+defineCellFanoutLoad "OAI32X2" "Y" 1
+
+defineCellFootPrint "OAI32X1" "oai32"
+defineCellFanoutLoad "OAI32X1" "A0" 1
+defineCellFanoutLoad "OAI32X1" "A1" 1
+defineCellFanoutLoad "OAI32X1" "A2" 1
+defineCellFanoutLoad "OAI32X1" "B0" 1
+defineCellFanoutLoad "OAI32X1" "B1" 1
+defineCellFanoutLoad "OAI32X1" "Y" 1
+
+defineCellFootPrint "OAI31XL" "oai31"
+defineCellFanoutLoad "OAI31XL" "A0" 1
+defineCellFanoutLoad "OAI31XL" "A1" 1
+defineCellFanoutLoad "OAI31XL" "A2" 1
+defineCellFanoutLoad "OAI31XL" "B0" 1
+defineCellFanoutLoad "OAI31XL" "Y" 1
+
+defineCellFootPrint "OAI31X4" "oai31"
+defineCellFanoutLoad "OAI31X4" "A0" 1
+defineCellFanoutLoad "OAI31X4" "A1" 1
+defineCellFanoutLoad "OAI31X4" "A2" 1
+defineCellFanoutLoad "OAI31X4" "B0" 1
+defineCellFanoutLoad "OAI31X4" "Y" 1
+
+defineCellFootPrint "OAI31X2" "oai31"
+defineCellFanoutLoad "OAI31X2" "A0" 1
+defineCellFanoutLoad "OAI31X2" "A1" 1
+defineCellFanoutLoad "OAI31X2" "A2" 1
+defineCellFanoutLoad "OAI31X2" "B0" 1
+defineCellFanoutLoad "OAI31X2" "Y" 1
+
+defineCellFootPrint "OAI31X1" "oai31"
+defineCellFanoutLoad "OAI31X1" "A0" 1
+defineCellFanoutLoad "OAI31X1" "A1" 1
+defineCellFanoutLoad "OAI31X1" "A2" 1
+defineCellFanoutLoad "OAI31X1" "B0" 1
+defineCellFanoutLoad "OAI31X1" "Y" 1
+
+defineCellFootPrint "OAI2BB2XL" "oai2bb2"
+defineCellFanoutLoad "OAI2BB2XL" "A0N" 1
+defineCellFanoutLoad "OAI2BB2XL" "A1N" 1
+defineCellFanoutLoad "OAI2BB2XL" "B0" 1
+defineCellFanoutLoad "OAI2BB2XL" "B1" 1
+defineCellFanoutLoad "OAI2BB2XL" "Y" 1
+
+defineCellFootPrint "OAI2BB2X4" "oai2bb2"
+defineCellFanoutLoad "OAI2BB2X4" "A0N" 1
+defineCellFanoutLoad "OAI2BB2X4" "A1N" 1
+defineCellFanoutLoad "OAI2BB2X4" "B0" 1
+defineCellFanoutLoad "OAI2BB2X4" "B1" 1
+defineCellFanoutLoad "OAI2BB2X4" "Y" 1
+
+defineCellFootPrint "OAI2BB2X2" "oai2bb2"
+defineCellFanoutLoad "OAI2BB2X2" "A0N" 1
+defineCellFanoutLoad "OAI2BB2X2" "A1N" 1
+defineCellFanoutLoad "OAI2BB2X2" "B0" 1
+defineCellFanoutLoad "OAI2BB2X2" "B1" 1
+defineCellFanoutLoad "OAI2BB2X2" "Y" 1
+
+defineCellFootPrint "OAI2BB2X1" "oai2bb2"
+defineCellFanoutLoad "OAI2BB2X1" "A0N" 1
+defineCellFanoutLoad "OAI2BB2X1" "A1N" 1
+defineCellFanoutLoad "OAI2BB2X1" "B0" 1
+defineCellFanoutLoad "OAI2BB2X1" "B1" 1
+defineCellFanoutLoad "OAI2BB2X1" "Y" 1
+
+defineCellFootPrint "OAI2BB1XL" "oai2bb1"
+defineCellFanoutLoad "OAI2BB1XL" "A0N" 1
+defineCellFanoutLoad "OAI2BB1XL" "A1N" 1
+defineCellFanoutLoad "OAI2BB1XL" "B0" 1
+defineCellFanoutLoad "OAI2BB1XL" "Y" 1
+
+defineCellFootPrint "OAI2BB1X4" "oai2bb1"
+defineCellFanoutLoad "OAI2BB1X4" "A0N" 1
+defineCellFanoutLoad "OAI2BB1X4" "A1N" 1
+defineCellFanoutLoad "OAI2BB1X4" "B0" 1
+defineCellFanoutLoad "OAI2BB1X4" "Y" 1
+
+defineCellFootPrint "OAI2BB1X2" "oai2bb1"
+defineCellFanoutLoad "OAI2BB1X2" "A0N" 1
+defineCellFanoutLoad "OAI2BB1X2" "A1N" 1
+defineCellFanoutLoad "OAI2BB1X2" "B0" 1
+defineCellFanoutLoad "OAI2BB1X2" "Y" 1
+
+defineCellFootPrint "OAI2BB1X1" "oai2bb1"
+defineCellFanoutLoad "OAI2BB1X1" "A0N" 1
+defineCellFanoutLoad "OAI2BB1X1" "A1N" 1
+defineCellFanoutLoad "OAI2BB1X1" "B0" 1
+defineCellFanoutLoad "OAI2BB1X1" "Y" 1
+
+defineCellFootPrint "OAI2B2XL" "oai2b2"
+defineCellFanoutLoad "OAI2B2XL" "A0" 1
+defineCellFanoutLoad "OAI2B2XL" "A1N" 1
+defineCellFanoutLoad "OAI2B2XL" "B0" 1
+defineCellFanoutLoad "OAI2B2XL" "B1" 1
+defineCellFanoutLoad "OAI2B2XL" "Y" 1
+
+defineCellFootPrint "OAI2B2X4" "oai2b2"
+defineCellFanoutLoad "OAI2B2X4" "A0" 1
+defineCellFanoutLoad "OAI2B2X4" "A1N" 1
+defineCellFanoutLoad "OAI2B2X4" "B0" 1
+defineCellFanoutLoad "OAI2B2X4" "B1" 1
+defineCellFanoutLoad "OAI2B2X4" "Y" 1
+
+defineCellFootPrint "OAI2B2X2" "oai2b2"
+defineCellFanoutLoad "OAI2B2X2" "A0" 1
+defineCellFanoutLoad "OAI2B2X2" "A1N" 1
+defineCellFanoutLoad "OAI2B2X2" "B0" 1
+defineCellFanoutLoad "OAI2B2X2" "B1" 1
+defineCellFanoutLoad "OAI2B2X2" "Y" 1
+
+defineCellFootPrint "OAI2B2X1" "oai2b2"
+defineCellFanoutLoad "OAI2B2X1" "A0" 1
+defineCellFanoutLoad "OAI2B2X1" "A1N" 1
+defineCellFanoutLoad "OAI2B2X1" "B0" 1
+defineCellFanoutLoad "OAI2B2X1" "B1" 1
+defineCellFanoutLoad "OAI2B2X1" "Y" 1
+
+defineCellFootPrint "OAI2B1XL" "oai2b1"
+defineCellFanoutLoad "OAI2B1XL" "A0" 1
+defineCellFanoutLoad "OAI2B1XL" "A1N" 1
+defineCellFanoutLoad "OAI2B1XL" "B0" 1
+defineCellFanoutLoad "OAI2B1XL" "Y" 1
+
+defineCellFootPrint "OAI2B1X4" "oai2b1"
+defineCellFanoutLoad "OAI2B1X4" "A0" 1
+defineCellFanoutLoad "OAI2B1X4" "A1N" 1
+defineCellFanoutLoad "OAI2B1X4" "B0" 1
+defineCellFanoutLoad "OAI2B1X4" "Y" 1
+
+defineCellFootPrint "OAI2B1X2" "oai2b1"
+defineCellFanoutLoad "OAI2B1X2" "A0" 1
+defineCellFanoutLoad "OAI2B1X2" "A1N" 1
+defineCellFanoutLoad "OAI2B1X2" "B0" 1
+defineCellFanoutLoad "OAI2B1X2" "Y" 1
+
+defineCellFootPrint "OAI2B1X1" "oai2b1"
+defineCellFanoutLoad "OAI2B1X1" "A0" 1
+defineCellFanoutLoad "OAI2B1X1" "A1N" 1
+defineCellFanoutLoad "OAI2B1X1" "B0" 1
+defineCellFanoutLoad "OAI2B1X1" "Y" 1
+
+defineCellFootPrint "OAI2B11XL" "oai2b11"
+defineCellFanoutLoad "OAI2B11XL" "A0" 1
+defineCellFanoutLoad "OAI2B11XL" "A1N" 1
+defineCellFanoutLoad "OAI2B11XL" "B0" 1
+defineCellFanoutLoad "OAI2B11XL" "C0" 1
+defineCellFanoutLoad "OAI2B11XL" "Y" 1
+
+defineCellFootPrint "OAI2B11X4" "oai2b11"
+defineCellFanoutLoad "OAI2B11X4" "A0" 1
+defineCellFanoutLoad "OAI2B11X4" "A1N" 1
+defineCellFanoutLoad "OAI2B11X4" "B0" 1
+defineCellFanoutLoad "OAI2B11X4" "C0" 1
+defineCellFanoutLoad "OAI2B11X4" "Y" 1
+
+defineCellFootPrint "OAI2B11X2" "oai2b11"
+defineCellFanoutLoad "OAI2B11X2" "A0" 1
+defineCellFanoutLoad "OAI2B11X2" "A1N" 1
+defineCellFanoutLoad "OAI2B11X2" "B0" 1
+defineCellFanoutLoad "OAI2B11X2" "C0" 1
+defineCellFanoutLoad "OAI2B11X2" "Y" 1
+
+defineCellFootPrint "OAI2B11X1" "oai2b11"
+defineCellFanoutLoad "OAI2B11X1" "A0" 1
+defineCellFanoutLoad "OAI2B11X1" "A1N" 1
+defineCellFanoutLoad "OAI2B11X1" "B0" 1
+defineCellFanoutLoad "OAI2B11X1" "C0" 1
+defineCellFanoutLoad "OAI2B11X1" "Y" 1
+
+defineCellFootPrint "OAI22XL" "oai22"
+defineCellFanoutLoad "OAI22XL" "A0" 1
+defineCellFanoutLoad "OAI22XL" "A1" 1
+defineCellFanoutLoad "OAI22XL" "B0" 1
+defineCellFanoutLoad "OAI22XL" "B1" 1
+defineCellFanoutLoad "OAI22XL" "Y" 1
+
+defineCellFootPrint "OAI22X4" "oai22"
+defineCellFanoutLoad "OAI22X4" "A0" 1
+defineCellFanoutLoad "OAI22X4" "A1" 1
+defineCellFanoutLoad "OAI22X4" "B0" 1
+defineCellFanoutLoad "OAI22X4" "B1" 1
+defineCellFanoutLoad "OAI22X4" "Y" 1
+
+defineCellFootPrint "OAI22X2" "oai22"
+defineCellFanoutLoad "OAI22X2" "A0" 1
+defineCellFanoutLoad "OAI22X2" "A1" 1
+defineCellFanoutLoad "OAI22X2" "B0" 1
+defineCellFanoutLoad "OAI22X2" "B1" 1
+defineCellFanoutLoad "OAI22X2" "Y" 1
+
+defineCellFootPrint "OAI22X1" "oai22"
+defineCellFanoutLoad "OAI22X1" "A0" 1
+defineCellFanoutLoad "OAI22X1" "A1" 1
+defineCellFanoutLoad "OAI22X1" "B0" 1
+defineCellFanoutLoad "OAI22X1" "B1" 1
+defineCellFanoutLoad "OAI22X1" "Y" 1
+
+defineCellFootPrint "OAI222XL" "oai222"
+defineCellFanoutLoad "OAI222XL" "A0" 1
+defineCellFanoutLoad "OAI222XL" "A1" 1
+defineCellFanoutLoad "OAI222XL" "B0" 1
+defineCellFanoutLoad "OAI222XL" "B1" 1
+defineCellFanoutLoad "OAI222XL" "C0" 1
+defineCellFanoutLoad "OAI222XL" "C1" 1
+defineCellFanoutLoad "OAI222XL" "Y" 1
+
+defineCellFootPrint "OAI222X4" "oai222"
+defineCellFanoutLoad "OAI222X4" "A0" 1
+defineCellFanoutLoad "OAI222X4" "A1" 1
+defineCellFanoutLoad "OAI222X4" "B0" 1
+defineCellFanoutLoad "OAI222X4" "B1" 1
+defineCellFanoutLoad "OAI222X4" "C0" 1
+defineCellFanoutLoad "OAI222X4" "C1" 1
+defineCellFanoutLoad "OAI222X4" "Y" 1
+
+defineCellFootPrint "OAI222X2" "oai222"
+defineCellFanoutLoad "OAI222X2" "A0" 1
+defineCellFanoutLoad "OAI222X2" "A1" 1
+defineCellFanoutLoad "OAI222X2" "B0" 1
+defineCellFanoutLoad "OAI222X2" "B1" 1
+defineCellFanoutLoad "OAI222X2" "C0" 1
+defineCellFanoutLoad "OAI222X2" "C1" 1
+defineCellFanoutLoad "OAI222X2" "Y" 1
+
+defineCellFootPrint "OAI222X1" "oai222"
+defineCellFanoutLoad "OAI222X1" "A0" 1
+defineCellFanoutLoad "OAI222X1" "A1" 1
+defineCellFanoutLoad "OAI222X1" "B0" 1
+defineCellFanoutLoad "OAI222X1" "B1" 1
+defineCellFanoutLoad "OAI222X1" "C0" 1
+defineCellFanoutLoad "OAI222X1" "C1" 1
+defineCellFanoutLoad "OAI222X1" "Y" 1
+
+defineCellFootPrint "OAI221XL" "oai221"
+defineCellFanoutLoad "OAI221XL" "A0" 1
+defineCellFanoutLoad "OAI221XL" "A1" 1
+defineCellFanoutLoad "OAI221XL" "B0" 1
+defineCellFanoutLoad "OAI221XL" "B1" 1
+defineCellFanoutLoad "OAI221XL" "C0" 1
+defineCellFanoutLoad "OAI221XL" "Y" 1
+
+defineCellFootPrint "OAI221X4" "oai221"
+defineCellFanoutLoad "OAI221X4" "A0" 1
+defineCellFanoutLoad "OAI221X4" "A1" 1
+defineCellFanoutLoad "OAI221X4" "B0" 1
+defineCellFanoutLoad "OAI221X4" "B1" 1
+defineCellFanoutLoad "OAI221X4" "C0" 1
+defineCellFanoutLoad "OAI221X4" "Y" 1
+
+defineCellFootPrint "OAI221X2" "oai221"
+defineCellFanoutLoad "OAI221X2" "A0" 1
+defineCellFanoutLoad "OAI221X2" "A1" 1
+defineCellFanoutLoad "OAI221X2" "B0" 1
+defineCellFanoutLoad "OAI221X2" "B1" 1
+defineCellFanoutLoad "OAI221X2" "C0" 1
+defineCellFanoutLoad "OAI221X2" "Y" 1
+
+defineCellFootPrint "OAI221X1" "oai221"
+defineCellFanoutLoad "OAI221X1" "A0" 1
+defineCellFanoutLoad "OAI221X1" "A1" 1
+defineCellFanoutLoad "OAI221X1" "B0" 1
+defineCellFanoutLoad "OAI221X1" "B1" 1
+defineCellFanoutLoad "OAI221X1" "C0" 1
+defineCellFanoutLoad "OAI221X1" "Y" 1
+
+defineCellFootPrint "OAI21BXL" "oai21b"
+defineCellFanoutLoad "OAI21BXL" "A0" 1
+defineCellFanoutLoad "OAI21BXL" "A1" 1
+defineCellFanoutLoad "OAI21BXL" "B0N" 1
+defineCellFanoutLoad "OAI21BXL" "Y" 1
+
+defineCellFootPrint "OAI21BX4" "oai21b"
+defineCellFanoutLoad "OAI21BX4" "A0" 1
+defineCellFanoutLoad "OAI21BX4" "A1" 1
+defineCellFanoutLoad "OAI21BX4" "B0N" 1
+defineCellFanoutLoad "OAI21BX4" "Y" 1
+
+defineCellFootPrint "OAI21BX2" "oai21b"
+defineCellFanoutLoad "OAI21BX2" "A0" 1
+defineCellFanoutLoad "OAI21BX2" "A1" 1
+defineCellFanoutLoad "OAI21BX2" "B0N" 1
+defineCellFanoutLoad "OAI21BX2" "Y" 1
+
+defineCellFootPrint "OAI21BX1" "oai21b"
+defineCellFanoutLoad "OAI21BX1" "A0" 1
+defineCellFanoutLoad "OAI21BX1" "A1" 1
+defineCellFanoutLoad "OAI21BX1" "B0N" 1
+defineCellFanoutLoad "OAI21BX1" "Y" 1
+
+defineCellFootPrint "OAI21XL" "oai21"
+defineCellFanoutLoad "OAI21XL" "A0" 1
+defineCellFanoutLoad "OAI21XL" "A1" 1
+defineCellFanoutLoad "OAI21XL" "B0" 1
+defineCellFanoutLoad "OAI21XL" "Y" 1
+
+defineCellFootPrint "OAI21X8" "oai21"
+defineCellFanoutLoad "OAI21X8" "A0" 1
+defineCellFanoutLoad "OAI21X8" "A1" 1
+defineCellFanoutLoad "OAI21X8" "B0" 1
+defineCellFanoutLoad "OAI21X8" "Y" 1
+
+defineCellFootPrint "OAI21X6" "oai21"
+defineCellFanoutLoad "OAI21X6" "A0" 1
+defineCellFanoutLoad "OAI21X6" "A1" 1
+defineCellFanoutLoad "OAI21X6" "B0" 1
+defineCellFanoutLoad "OAI21X6" "Y" 1
+
+defineCellFootPrint "OAI21X4" "oai21"
+defineCellFanoutLoad "OAI21X4" "A0" 1
+defineCellFanoutLoad "OAI21X4" "A1" 1
+defineCellFanoutLoad "OAI21X4" "B0" 1
+defineCellFanoutLoad "OAI21X4" "Y" 1
+
+defineCellFootPrint "OAI21X3" "oai21"
+defineCellFanoutLoad "OAI21X3" "A0" 1
+defineCellFanoutLoad "OAI21X3" "A1" 1
+defineCellFanoutLoad "OAI21X3" "B0" 1
+defineCellFanoutLoad "OAI21X3" "Y" 1
+
+defineCellFootPrint "OAI21X2" "oai21"
+defineCellFanoutLoad "OAI21X2" "A0" 1
+defineCellFanoutLoad "OAI21X2" "A1" 1
+defineCellFanoutLoad "OAI21X2" "B0" 1
+defineCellFanoutLoad "OAI21X2" "Y" 1
+
+defineCellFootPrint "OAI21X1" "oai21"
+defineCellFanoutLoad "OAI21X1" "A0" 1
+defineCellFanoutLoad "OAI21X1" "A1" 1
+defineCellFanoutLoad "OAI21X1" "B0" 1
+defineCellFanoutLoad "OAI21X1" "Y" 1
+
+defineCellFootPrint "OAI211XL" "oai211"
+defineCellFanoutLoad "OAI211XL" "A0" 1
+defineCellFanoutLoad "OAI211XL" "A1" 1
+defineCellFanoutLoad "OAI211XL" "B0" 1
+defineCellFanoutLoad "OAI211XL" "C0" 1
+defineCellFanoutLoad "OAI211XL" "Y" 1
+
+defineCellFootPrint "OAI211X4" "oai211"
+defineCellFanoutLoad "OAI211X4" "A0" 1
+defineCellFanoutLoad "OAI211X4" "A1" 1
+defineCellFanoutLoad "OAI211X4" "B0" 1
+defineCellFanoutLoad "OAI211X4" "C0" 1
+defineCellFanoutLoad "OAI211X4" "Y" 1
+
+defineCellFootPrint "OAI211X2" "oai211"
+defineCellFanoutLoad "OAI211X2" "A0" 1
+defineCellFanoutLoad "OAI211X2" "A1" 1
+defineCellFanoutLoad "OAI211X2" "B0" 1
+defineCellFanoutLoad "OAI211X2" "C0" 1
+defineCellFanoutLoad "OAI211X2" "Y" 1
+
+defineCellFootPrint "OAI211X1" "oai211"
+defineCellFanoutLoad "OAI211X1" "A0" 1
+defineCellFanoutLoad "OAI211X1" "A1" 1
+defineCellFanoutLoad "OAI211X1" "B0" 1
+defineCellFanoutLoad "OAI211X1" "C0" 1
+defineCellFanoutLoad "OAI211X1" "Y" 1
+
+defineCellFootPrint "OA22XL" "oa22"
+defineCellFanoutLoad "OA22XL" "A0" 1
+defineCellFanoutLoad "OA22XL" "A1" 1
+defineCellFanoutLoad "OA22XL" "B0" 1
+defineCellFanoutLoad "OA22XL" "B1" 1
+defineCellFanoutLoad "OA22XL" "Y" 1
+
+defineCellFootPrint "OA22X4" "oa22"
+defineCellFanoutLoad "OA22X4" "A0" 1
+defineCellFanoutLoad "OA22X4" "A1" 1
+defineCellFanoutLoad "OA22X4" "B0" 1
+defineCellFanoutLoad "OA22X4" "B1" 1
+defineCellFanoutLoad "OA22X4" "Y" 1
+
+defineCellFootPrint "OA22X2" "oa22"
+defineCellFanoutLoad "OA22X2" "A0" 1
+defineCellFanoutLoad "OA22X2" "A1" 1
+defineCellFanoutLoad "OA22X2" "B0" 1
+defineCellFanoutLoad "OA22X2" "B1" 1
+defineCellFanoutLoad "OA22X2" "Y" 1
+
+defineCellFootPrint "OA22X1" "oa22"
+defineCellFanoutLoad "OA22X1" "A0" 1
+defineCellFanoutLoad "OA22X1" "A1" 1
+defineCellFanoutLoad "OA22X1" "B0" 1
+defineCellFanoutLoad "OA22X1" "B1" 1
+defineCellFanoutLoad "OA22X1" "Y" 1
+
+defineCellFootPrint "OA21XL" "oa21"
+defineCellFanoutLoad "OA21XL" "A0" 1
+defineCellFanoutLoad "OA21XL" "A1" 1
+defineCellFanoutLoad "OA21XL" "B0" 1
+defineCellFanoutLoad "OA21XL" "Y" 1
+
+defineCellFootPrint "OA21X4" "oa21"
+defineCellFanoutLoad "OA21X4" "A0" 1
+defineCellFanoutLoad "OA21X4" "A1" 1
+defineCellFanoutLoad "OA21X4" "B0" 1
+defineCellFanoutLoad "OA21X4" "Y" 1
+
+defineCellFootPrint "OA21X2" "oa21"
+defineCellFanoutLoad "OA21X2" "A0" 1
+defineCellFanoutLoad "OA21X2" "A1" 1
+defineCellFanoutLoad "OA21X2" "B0" 1
+defineCellFanoutLoad "OA21X2" "Y" 1
+
+defineCellFootPrint "OA21X1" "oa21"
+defineCellFanoutLoad "OA21X1" "A0" 1
+defineCellFanoutLoad "OA21X1" "A1" 1
+defineCellFanoutLoad "OA21X1" "B0" 1
+defineCellFanoutLoad "OA21X1" "Y" 1
+
+defineCellFootPrint "NOR4BBXL" "nor4bb"
+defineCellFanoutLoad "NOR4BBXL" "AN" 1
+defineCellFanoutLoad "NOR4BBXL" "BN" 1
+defineCellFanoutLoad "NOR4BBXL" "C" 1
+defineCellFanoutLoad "NOR4BBXL" "D" 1
+defineCellFanoutLoad "NOR4BBXL" "Y" 1
+
+defineCellFootPrint "NOR4BBX4" "nor4bb"
+defineCellFanoutLoad "NOR4BBX4" "AN" 1
+defineCellFanoutLoad "NOR4BBX4" "BN" 1
+defineCellFanoutLoad "NOR4BBX4" "C" 1
+defineCellFanoutLoad "NOR4BBX4" "D" 1
+defineCellFanoutLoad "NOR4BBX4" "Y" 1
+
+defineCellFootPrint "NOR4BBX2" "nor4bb"
+defineCellFanoutLoad "NOR4BBX2" "AN" 1
+defineCellFanoutLoad "NOR4BBX2" "BN" 1
+defineCellFanoutLoad "NOR4BBX2" "C" 1
+defineCellFanoutLoad "NOR4BBX2" "D" 1
+defineCellFanoutLoad "NOR4BBX2" "Y" 1
+
+defineCellFootPrint "NOR4BBX1" "nor4bb"
+defineCellFanoutLoad "NOR4BBX1" "AN" 1
+defineCellFanoutLoad "NOR4BBX1" "BN" 1
+defineCellFanoutLoad "NOR4BBX1" "C" 1
+defineCellFanoutLoad "NOR4BBX1" "D" 1
+defineCellFanoutLoad "NOR4BBX1" "Y" 1
+
+defineCellFootPrint "NOR4BXL" "nor4b"
+defineCellFanoutLoad "NOR4BXL" "AN" 1
+defineCellFanoutLoad "NOR4BXL" "B" 1
+defineCellFanoutLoad "NOR4BXL" "C" 1
+defineCellFanoutLoad "NOR4BXL" "D" 1
+defineCellFanoutLoad "NOR4BXL" "Y" 1
+
+defineCellFootPrint "NOR4BX4" "nor4b"
+defineCellFanoutLoad "NOR4BX4" "AN" 1
+defineCellFanoutLoad "NOR4BX4" "B" 1
+defineCellFanoutLoad "NOR4BX4" "C" 1
+defineCellFanoutLoad "NOR4BX4" "D" 1
+defineCellFanoutLoad "NOR4BX4" "Y" 1
+
+defineCellFootPrint "NOR4BX2" "nor4b"
+defineCellFanoutLoad "NOR4BX2" "AN" 1
+defineCellFanoutLoad "NOR4BX2" "B" 1
+defineCellFanoutLoad "NOR4BX2" "C" 1
+defineCellFanoutLoad "NOR4BX2" "D" 1
+defineCellFanoutLoad "NOR4BX2" "Y" 1
+
+defineCellFootPrint "NOR4BX1" "nor4b"
+defineCellFanoutLoad "NOR4BX1" "AN" 1
+defineCellFanoutLoad "NOR4BX1" "B" 1
+defineCellFanoutLoad "NOR4BX1" "C" 1
+defineCellFanoutLoad "NOR4BX1" "D" 1
+defineCellFanoutLoad "NOR4BX1" "Y" 1
+
+defineCellFootPrint "NOR4XL" "nor4"
+defineCellFanoutLoad "NOR4XL" "A" 1
+defineCellFanoutLoad "NOR4XL" "B" 1
+defineCellFanoutLoad "NOR4XL" "C" 1
+defineCellFanoutLoad "NOR4XL" "D" 1
+defineCellFanoutLoad "NOR4XL" "Y" 1
+
+defineCellFootPrint "NOR4X8" "nor4"
+defineCellFanoutLoad "NOR4X8" "A" 1
+defineCellFanoutLoad "NOR4X8" "B" 1
+defineCellFanoutLoad "NOR4X8" "C" 1
+defineCellFanoutLoad "NOR4X8" "D" 1
+defineCellFanoutLoad "NOR4X8" "Y" 1
+
+defineCellFootPrint "NOR4X6" "nor4"
+defineCellFanoutLoad "NOR4X6" "A" 1
+defineCellFanoutLoad "NOR4X6" "B" 1
+defineCellFanoutLoad "NOR4X6" "C" 1
+defineCellFanoutLoad "NOR4X6" "D" 1
+defineCellFanoutLoad "NOR4X6" "Y" 1
+
+defineCellFootPrint "NOR4X4" "nor4"
+defineCellFanoutLoad "NOR4X4" "A" 1
+defineCellFanoutLoad "NOR4X4" "B" 1
+defineCellFanoutLoad "NOR4X4" "C" 1
+defineCellFanoutLoad "NOR4X4" "D" 1
+defineCellFanoutLoad "NOR4X4" "Y" 1
+
+defineCellFootPrint "NOR4X2" "nor4"
+defineCellFanoutLoad "NOR4X2" "A" 1
+defineCellFanoutLoad "NOR4X2" "B" 1
+defineCellFanoutLoad "NOR4X2" "C" 1
+defineCellFanoutLoad "NOR4X2" "D" 1
+defineCellFanoutLoad "NOR4X2" "Y" 1
+
+defineCellFootPrint "NOR4X1" "nor4"
+defineCellFanoutLoad "NOR4X1" "A" 1
+defineCellFanoutLoad "NOR4X1" "B" 1
+defineCellFanoutLoad "NOR4X1" "C" 1
+defineCellFanoutLoad "NOR4X1" "D" 1
+defineCellFanoutLoad "NOR4X1" "Y" 1
+
+defineCellFootPrint "NOR3BXL" "nor3b"
+defineCellFanoutLoad "NOR3BXL" "AN" 1
+defineCellFanoutLoad "NOR3BXL" "B" 1
+defineCellFanoutLoad "NOR3BXL" "C" 1
+defineCellFanoutLoad "NOR3BXL" "Y" 1
+
+defineCellFootPrint "NOR3BX4" "nor3b"
+defineCellFanoutLoad "NOR3BX4" "AN" 1
+defineCellFanoutLoad "NOR3BX4" "B" 1
+defineCellFanoutLoad "NOR3BX4" "C" 1
+defineCellFanoutLoad "NOR3BX4" "Y" 1
+
+defineCellFootPrint "NOR3BX2" "nor3b"
+defineCellFanoutLoad "NOR3BX2" "AN" 1
+defineCellFanoutLoad "NOR3BX2" "B" 1
+defineCellFanoutLoad "NOR3BX2" "C" 1
+defineCellFanoutLoad "NOR3BX2" "Y" 1
+
+defineCellFootPrint "NOR3BX1" "nor3b"
+defineCellFanoutLoad "NOR3BX1" "AN" 1
+defineCellFanoutLoad "NOR3BX1" "B" 1
+defineCellFanoutLoad "NOR3BX1" "C" 1
+defineCellFanoutLoad "NOR3BX1" "Y" 1
+
+defineCellFootPrint "NOR3XL" "nor3"
+defineCellFanoutLoad "NOR3XL" "A" 1
+defineCellFanoutLoad "NOR3XL" "B" 1
+defineCellFanoutLoad "NOR3XL" "C" 1
+defineCellFanoutLoad "NOR3XL" "Y" 1
+
+defineCellFootPrint "NOR3X8" "nor3"
+defineCellFanoutLoad "NOR3X8" "A" 1
+defineCellFanoutLoad "NOR3X8" "B" 1
+defineCellFanoutLoad "NOR3X8" "C" 1
+defineCellFanoutLoad "NOR3X8" "Y" 1
+
+defineCellFootPrint "NOR3X6" "nor3"
+defineCellFanoutLoad "NOR3X6" "A" 1
+defineCellFanoutLoad "NOR3X6" "B" 1
+defineCellFanoutLoad "NOR3X6" "C" 1
+defineCellFanoutLoad "NOR3X6" "Y" 1
+
+defineCellFootPrint "NOR3X4" "nor3"
+defineCellFanoutLoad "NOR3X4" "A" 1
+defineCellFanoutLoad "NOR3X4" "B" 1
+defineCellFanoutLoad "NOR3X4" "C" 1
+defineCellFanoutLoad "NOR3X4" "Y" 1
+
+defineCellFootPrint "NOR3X2" "nor3"
+defineCellFanoutLoad "NOR3X2" "A" 1
+defineCellFanoutLoad "NOR3X2" "B" 1
+defineCellFanoutLoad "NOR3X2" "C" 1
+defineCellFanoutLoad "NOR3X2" "Y" 1
+
+defineCellFootPrint "NOR3X1" "nor3"
+defineCellFanoutLoad "NOR3X1" "A" 1
+defineCellFanoutLoad "NOR3X1" "B" 1
+defineCellFanoutLoad "NOR3X1" "C" 1
+defineCellFanoutLoad "NOR3X1" "Y" 1
+
+defineCellFootPrint "NOR2BXL" "nor2b"
+defineCellFanoutLoad "NOR2BXL" "AN" 1
+defineCellFanoutLoad "NOR2BXL" "B" 1
+defineCellFanoutLoad "NOR2BXL" "Y" 1
+
+defineCellFootPrint "NOR2BX8" "nor2b"
+defineCellFanoutLoad "NOR2BX8" "AN" 1
+defineCellFanoutLoad "NOR2BX8" "B" 1
+defineCellFanoutLoad "NOR2BX8" "Y" 1
+
+defineCellFootPrint "NOR2BX4" "nor2b"
+defineCellFanoutLoad "NOR2BX4" "AN" 1
+defineCellFanoutLoad "NOR2BX4" "B" 1
+defineCellFanoutLoad "NOR2BX4" "Y" 1
+
+defineCellFootPrint "NOR2BX2" "nor2b"
+defineCellFanoutLoad "NOR2BX2" "AN" 1
+defineCellFanoutLoad "NOR2BX2" "B" 1
+defineCellFanoutLoad "NOR2BX2" "Y" 1
+
+defineCellFootPrint "NOR2BX1" "nor2b"
+defineCellFanoutLoad "NOR2BX1" "AN" 1
+defineCellFanoutLoad "NOR2BX1" "B" 1
+defineCellFanoutLoad "NOR2BX1" "Y" 1
+
+defineCellFootPrint "NOR2XL" "nor2"
+defineCellFanoutLoad "NOR2XL" "A" 1
+defineCellFanoutLoad "NOR2XL" "B" 1
+defineCellFanoutLoad "NOR2XL" "Y" 1
+
+defineCellFootPrint "NOR2X8" "nor2"
+defineCellFanoutLoad "NOR2X8" "A" 1
+defineCellFanoutLoad "NOR2X8" "B" 1
+defineCellFanoutLoad "NOR2X8" "Y" 1
+
+defineCellFootPrint "NOR2X6" "nor2"
+defineCellFanoutLoad "NOR2X6" "A" 1
+defineCellFanoutLoad "NOR2X6" "B" 1
+defineCellFanoutLoad "NOR2X6" "Y" 1
+
+defineCellFootPrint "NOR2X5" "nor2"
+defineCellFanoutLoad "NOR2X5" "A" 1
+defineCellFanoutLoad "NOR2X5" "B" 1
+defineCellFanoutLoad "NOR2X5" "Y" 1
+
+defineCellFootPrint "NOR2X4" "nor2"
+defineCellFanoutLoad "NOR2X4" "A" 1
+defineCellFanoutLoad "NOR2X4" "B" 1
+defineCellFanoutLoad "NOR2X4" "Y" 1
+
+defineCellFootPrint "NOR2X3" "nor2"
+defineCellFanoutLoad "NOR2X3" "A" 1
+defineCellFanoutLoad "NOR2X3" "B" 1
+defineCellFanoutLoad "NOR2X3" "Y" 1
+
+defineCellFootPrint "NOR2X2" "nor2"
+defineCellFanoutLoad "NOR2X2" "A" 1
+defineCellFanoutLoad "NOR2X2" "B" 1
+defineCellFanoutLoad "NOR2X2" "Y" 1
+
+defineCellFootPrint "NOR2X1" "nor2"
+defineCellFanoutLoad "NOR2X1" "A" 1
+defineCellFanoutLoad "NOR2X1" "B" 1
+defineCellFanoutLoad "NOR2X1" "Y" 1
+
+defineCellFootPrint "NAND4BBXL" "nand4bb"
+defineCellFanoutLoad "NAND4BBXL" "AN" 1
+defineCellFanoutLoad "NAND4BBXL" "BN" 1
+defineCellFanoutLoad "NAND4BBXL" "C" 1
+defineCellFanoutLoad "NAND4BBXL" "D" 1
+defineCellFanoutLoad "NAND4BBXL" "Y" 1
+
+defineCellFootPrint "NAND4BBX4" "nand4bb"
+defineCellFanoutLoad "NAND4BBX4" "AN" 1
+defineCellFanoutLoad "NAND4BBX4" "BN" 1
+defineCellFanoutLoad "NAND4BBX4" "C" 1
+defineCellFanoutLoad "NAND4BBX4" "D" 1
+defineCellFanoutLoad "NAND4BBX4" "Y" 1
+
+defineCellFootPrint "NAND4BBX2" "nand4bb"
+defineCellFanoutLoad "NAND4BBX2" "AN" 1
+defineCellFanoutLoad "NAND4BBX2" "BN" 1
+defineCellFanoutLoad "NAND4BBX2" "C" 1
+defineCellFanoutLoad "NAND4BBX2" "D" 1
+defineCellFanoutLoad "NAND4BBX2" "Y" 1
+
+defineCellFootPrint "NAND4BBX1" "nand4bb"
+defineCellFanoutLoad "NAND4BBX1" "AN" 1
+defineCellFanoutLoad "NAND4BBX1" "BN" 1
+defineCellFanoutLoad "NAND4BBX1" "C" 1
+defineCellFanoutLoad "NAND4BBX1" "D" 1
+defineCellFanoutLoad "NAND4BBX1" "Y" 1
+
+defineCellFootPrint "NAND4BXL" "nand4b"
+defineCellFanoutLoad "NAND4BXL" "AN" 1
+defineCellFanoutLoad "NAND4BXL" "B" 1
+defineCellFanoutLoad "NAND4BXL" "C" 1
+defineCellFanoutLoad "NAND4BXL" "D" 1
+defineCellFanoutLoad "NAND4BXL" "Y" 1
+
+defineCellFootPrint "NAND4BX4" "nand4b"
+defineCellFanoutLoad "NAND4BX4" "AN" 1
+defineCellFanoutLoad "NAND4BX4" "B" 1
+defineCellFanoutLoad "NAND4BX4" "C" 1
+defineCellFanoutLoad "NAND4BX4" "D" 1
+defineCellFanoutLoad "NAND4BX4" "Y" 1
+
+defineCellFootPrint "NAND4BX2" "nand4b"
+defineCellFanoutLoad "NAND4BX2" "AN" 1
+defineCellFanoutLoad "NAND4BX2" "B" 1
+defineCellFanoutLoad "NAND4BX2" "C" 1
+defineCellFanoutLoad "NAND4BX2" "D" 1
+defineCellFanoutLoad "NAND4BX2" "Y" 1
+
+defineCellFootPrint "NAND4BX1" "nand4b"
+defineCellFanoutLoad "NAND4BX1" "AN" 1
+defineCellFanoutLoad "NAND4BX1" "B" 1
+defineCellFanoutLoad "NAND4BX1" "C" 1
+defineCellFanoutLoad "NAND4BX1" "D" 1
+defineCellFanoutLoad "NAND4BX1" "Y" 1
+
+defineCellFootPrint "NAND4XL" "nand4"
+defineCellFanoutLoad "NAND4XL" "A" 1
+defineCellFanoutLoad "NAND4XL" "B" 1
+defineCellFanoutLoad "NAND4XL" "C" 1
+defineCellFanoutLoad "NAND4XL" "D" 1
+defineCellFanoutLoad "NAND4XL" "Y" 1
+
+defineCellFootPrint "NAND4X8" "nand4"
+defineCellFanoutLoad "NAND4X8" "A" 1
+defineCellFanoutLoad "NAND4X8" "B" 1
+defineCellFanoutLoad "NAND4X8" "C" 1
+defineCellFanoutLoad "NAND4X8" "D" 1
+defineCellFanoutLoad "NAND4X8" "Y" 1
+
+defineCellFootPrint "NAND4X6" "nand4"
+defineCellFanoutLoad "NAND4X6" "A" 1
+defineCellFanoutLoad "NAND4X6" "B" 1
+defineCellFanoutLoad "NAND4X6" "C" 1
+defineCellFanoutLoad "NAND4X6" "D" 1
+defineCellFanoutLoad "NAND4X6" "Y" 1
+
+defineCellFootPrint "NAND4X4" "nand4"
+defineCellFanoutLoad "NAND4X4" "A" 1
+defineCellFanoutLoad "NAND4X4" "B" 1
+defineCellFanoutLoad "NAND4X4" "C" 1
+defineCellFanoutLoad "NAND4X4" "D" 1
+defineCellFanoutLoad "NAND4X4" "Y" 1
+
+defineCellFootPrint "NAND4X2" "nand4"
+defineCellFanoutLoad "NAND4X2" "A" 1
+defineCellFanoutLoad "NAND4X2" "B" 1
+defineCellFanoutLoad "NAND4X2" "C" 1
+defineCellFanoutLoad "NAND4X2" "D" 1
+defineCellFanoutLoad "NAND4X2" "Y" 1
+
+defineCellFootPrint "NAND4X1" "nand4"
+defineCellFanoutLoad "NAND4X1" "A" 1
+defineCellFanoutLoad "NAND4X1" "B" 1
+defineCellFanoutLoad "NAND4X1" "C" 1
+defineCellFanoutLoad "NAND4X1" "D" 1
+defineCellFanoutLoad "NAND4X1" "Y" 1
+
+defineCellFootPrint "NAND3BXL" "nand3b"
+defineCellFanoutLoad "NAND3BXL" "AN" 1
+defineCellFanoutLoad "NAND3BXL" "B" 1
+defineCellFanoutLoad "NAND3BXL" "C" 1
+defineCellFanoutLoad "NAND3BXL" "Y" 1
+
+defineCellFootPrint "NAND3BX4" "nand3b"
+defineCellFanoutLoad "NAND3BX4" "AN" 1
+defineCellFanoutLoad "NAND3BX4" "B" 1
+defineCellFanoutLoad "NAND3BX4" "C" 1
+defineCellFanoutLoad "NAND3BX4" "Y" 1
+
+defineCellFootPrint "NAND3BX2" "nand3b"
+defineCellFanoutLoad "NAND3BX2" "AN" 1
+defineCellFanoutLoad "NAND3BX2" "B" 1
+defineCellFanoutLoad "NAND3BX2" "C" 1
+defineCellFanoutLoad "NAND3BX2" "Y" 1
+
+defineCellFootPrint "NAND3BX1" "nand3b"
+defineCellFanoutLoad "NAND3BX1" "AN" 1
+defineCellFanoutLoad "NAND3BX1" "B" 1
+defineCellFanoutLoad "NAND3BX1" "C" 1
+defineCellFanoutLoad "NAND3BX1" "Y" 1
+
+defineCellFootPrint "NAND3XL" "nand3"
+defineCellFanoutLoad "NAND3XL" "A" 1
+defineCellFanoutLoad "NAND3XL" "B" 1
+defineCellFanoutLoad "NAND3XL" "C" 1
+defineCellFanoutLoad "NAND3XL" "Y" 1
+
+defineCellFootPrint "NAND3X8" "nand3"
+defineCellFanoutLoad "NAND3X8" "A" 1
+defineCellFanoutLoad "NAND3X8" "B" 1
+defineCellFanoutLoad "NAND3X8" "C" 1
+defineCellFanoutLoad "NAND3X8" "Y" 1
+
+defineCellFootPrint "NAND3X6" "nand3"
+defineCellFanoutLoad "NAND3X6" "A" 1
+defineCellFanoutLoad "NAND3X6" "B" 1
+defineCellFanoutLoad "NAND3X6" "C" 1
+defineCellFanoutLoad "NAND3X6" "Y" 1
+
+defineCellFootPrint "NAND3X4" "nand3"
+defineCellFanoutLoad "NAND3X4" "A" 1
+defineCellFanoutLoad "NAND3X4" "B" 1
+defineCellFanoutLoad "NAND3X4" "C" 1
+defineCellFanoutLoad "NAND3X4" "Y" 1
+
+defineCellFootPrint "NAND3X3" "nand3"
+defineCellFanoutLoad "NAND3X3" "A" 1
+defineCellFanoutLoad "NAND3X3" "B" 1
+defineCellFanoutLoad "NAND3X3" "C" 1
+defineCellFanoutLoad "NAND3X3" "Y" 1
+
+defineCellFootPrint "NAND3X2" "nand3"
+defineCellFanoutLoad "NAND3X2" "A" 1
+defineCellFanoutLoad "NAND3X2" "B" 1
+defineCellFanoutLoad "NAND3X2" "C" 1
+defineCellFanoutLoad "NAND3X2" "Y" 1
+
+defineCellFootPrint "NAND3X1" "nand3"
+defineCellFanoutLoad "NAND3X1" "A" 1
+defineCellFanoutLoad "NAND3X1" "B" 1
+defineCellFanoutLoad "NAND3X1" "C" 1
+defineCellFanoutLoad "NAND3X1" "Y" 1
+
+defineCellFootPrint "NAND2BXL" "nand2b"
+defineCellFanoutLoad "NAND2BXL" "AN" 1
+defineCellFanoutLoad "NAND2BXL" "B" 1
+defineCellFanoutLoad "NAND2BXL" "Y" 1
+
+defineCellFootPrint "NAND2BX8" "nand2b"
+defineCellFanoutLoad "NAND2BX8" "AN" 1
+defineCellFanoutLoad "NAND2BX8" "B" 1
+defineCellFanoutLoad "NAND2BX8" "Y" 1
+
+defineCellFootPrint "NAND2BX4" "nand2b"
+defineCellFanoutLoad "NAND2BX4" "AN" 1
+defineCellFanoutLoad "NAND2BX4" "B" 1
+defineCellFanoutLoad "NAND2BX4" "Y" 1
+
+defineCellFootPrint "NAND2BX2" "nand2b"
+defineCellFanoutLoad "NAND2BX2" "AN" 1
+defineCellFanoutLoad "NAND2BX2" "B" 1
+defineCellFanoutLoad "NAND2BX2" "Y" 1
+
+defineCellFootPrint "NAND2BX1" "nand2b"
+defineCellFanoutLoad "NAND2BX1" "AN" 1
+defineCellFanoutLoad "NAND2BX1" "B" 1
+defineCellFanoutLoad "NAND2BX1" "Y" 1
+
+defineCellFootPrint "NAND2XL" "nand2"
+defineCellFanoutLoad "NAND2XL" "A" 1
+defineCellFanoutLoad "NAND2XL" "B" 1
+defineCellFanoutLoad "NAND2XL" "Y" 1
+
+defineCellFootPrint "NAND2X8" "nand2"
+defineCellFanoutLoad "NAND2X8" "A" 1
+defineCellFanoutLoad "NAND2X8" "B" 1
+defineCellFanoutLoad "NAND2X8" "Y" 1
+
+defineCellFootPrint "NAND2X6" "nand2"
+defineCellFanoutLoad "NAND2X6" "A" 1
+defineCellFanoutLoad "NAND2X6" "B" 1
+defineCellFanoutLoad "NAND2X6" "Y" 1
+
+defineCellFootPrint "NAND2X5" "nand2"
+defineCellFanoutLoad "NAND2X5" "A" 1
+defineCellFanoutLoad "NAND2X5" "B" 1
+defineCellFanoutLoad "NAND2X5" "Y" 1
+
+defineCellFootPrint "NAND2X4" "nand2"
+defineCellFanoutLoad "NAND2X4" "A" 1
+defineCellFanoutLoad "NAND2X4" "B" 1
+defineCellFanoutLoad "NAND2X4" "Y" 1
+
+defineCellFootPrint "NAND2X3" "nand2"
+defineCellFanoutLoad "NAND2X3" "A" 1
+defineCellFanoutLoad "NAND2X3" "B" 1
+defineCellFanoutLoad "NAND2X3" "Y" 1
+
+defineCellFootPrint "NAND2X2" "nand2"
+defineCellFanoutLoad "NAND2X2" "A" 1
+defineCellFanoutLoad "NAND2X2" "B" 1
+defineCellFanoutLoad "NAND2X2" "Y" 1
+
+defineCellFootPrint "NAND2X1" "nand2"
+defineCellFanoutLoad "NAND2X1" "A" 1
+defineCellFanoutLoad "NAND2X1" "B" 1
+defineCellFanoutLoad "NAND2X1" "Y" 1
+
+defineCellFootPrint "MXI4XL" "muxi4"
+defineCellFanoutLoad "MXI4XL" "S1" 1
+defineCellFanoutLoad "MXI4XL" "S0" 1
+defineCellFanoutLoad "MXI4XL" "D" 1
+defineCellFanoutLoad "MXI4XL" "C" 1
+defineCellFanoutLoad "MXI4XL" "B" 1
+defineCellFanoutLoad "MXI4XL" "A" 1
+defineCellFanoutLoad "MXI4XL" "Y" 1
+
+defineCellFootPrint "MXI4X4" "muxi4"
+defineCellFanoutLoad "MXI4X4" "S1" 1
+defineCellFanoutLoad "MXI4X4" "S0" 1
+defineCellFanoutLoad "MXI4X4" "D" 1
+defineCellFanoutLoad "MXI4X4" "C" 1
+defineCellFanoutLoad "MXI4X4" "B" 1
+defineCellFanoutLoad "MXI4X4" "A" 1
+defineCellFanoutLoad "MXI4X4" "Y" 1
+
+defineCellFootPrint "MXI4X2" "muxi4"
+defineCellFanoutLoad "MXI4X2" "S1" 1
+defineCellFanoutLoad "MXI4X2" "S0" 1
+defineCellFanoutLoad "MXI4X2" "D" 1
+defineCellFanoutLoad "MXI4X2" "C" 1
+defineCellFanoutLoad "MXI4X2" "B" 1
+defineCellFanoutLoad "MXI4X2" "A" 1
+defineCellFanoutLoad "MXI4X2" "Y" 1
+
+defineCellFootPrint "MXI4X1" "muxi4"
+defineCellFanoutLoad "MXI4X1" "S1" 1
+defineCellFanoutLoad "MXI4X1" "S0" 1
+defineCellFanoutLoad "MXI4X1" "D" 1
+defineCellFanoutLoad "MXI4X1" "C" 1
+defineCellFanoutLoad "MXI4X1" "B" 1
+defineCellFanoutLoad "MXI4X1" "A" 1
+defineCellFanoutLoad "MXI4X1" "Y" 1
+
+defineCellFootPrint "MXI3XL" "muxi3"
+defineCellFanoutLoad "MXI3XL" "S1" 1
+defineCellFanoutLoad "MXI3XL" "S0" 1
+defineCellFanoutLoad "MXI3XL" "C" 1
+defineCellFanoutLoad "MXI3XL" "B" 1
+defineCellFanoutLoad "MXI3XL" "A" 1
+defineCellFanoutLoad "MXI3XL" "Y" 1
+
+defineCellFootPrint "MXI3X4" "muxi3"
+defineCellFanoutLoad "MXI3X4" "S1" 1
+defineCellFanoutLoad "MXI3X4" "S0" 1
+defineCellFanoutLoad "MXI3X4" "C" 1
+defineCellFanoutLoad "MXI3X4" "B" 1
+defineCellFanoutLoad "MXI3X4" "A" 1
+defineCellFanoutLoad "MXI3X4" "Y" 1
+
+defineCellFootPrint "MXI3X2" "muxi3"
+defineCellFanoutLoad "MXI3X2" "S1" 1
+defineCellFanoutLoad "MXI3X2" "S0" 1
+defineCellFanoutLoad "MXI3X2" "C" 1
+defineCellFanoutLoad "MXI3X2" "B" 1
+defineCellFanoutLoad "MXI3X2" "A" 1
+defineCellFanoutLoad "MXI3X2" "Y" 1
+
+defineCellFootPrint "MXI3X1" "muxi3"
+defineCellFanoutLoad "MXI3X1" "S1" 1
+defineCellFanoutLoad "MXI3X1" "S0" 1
+defineCellFanoutLoad "MXI3X1" "C" 1
+defineCellFanoutLoad "MXI3X1" "B" 1
+defineCellFanoutLoad "MXI3X1" "A" 1
+defineCellFanoutLoad "MXI3X1" "Y" 1
+
+defineCellFootPrint "MXI2DXL" "muxi2d"
+defineCellFanoutLoad "MXI2DXL" "S0" 1
+defineCellFanoutLoad "MXI2DXL" "B" 1
+defineCellFanoutLoad "MXI2DXL" "A" 1
+defineCellFanoutLoad "MXI2DXL" "Y" 1
+
+defineCellFootPrint "MXI2DX4" "muxi2d"
+defineCellFanoutLoad "MXI2DX4" "S0" 1
+defineCellFanoutLoad "MXI2DX4" "B" 1
+defineCellFanoutLoad "MXI2DX4" "A" 1
+defineCellFanoutLoad "MXI2DX4" "Y" 1
+
+defineCellFootPrint "MXI2DX2" "muxi2d"
+defineCellFanoutLoad "MXI2DX2" "S0" 1
+defineCellFanoutLoad "MXI2DX2" "B" 1
+defineCellFanoutLoad "MXI2DX2" "A" 1
+defineCellFanoutLoad "MXI2DX2" "Y" 1
+
+defineCellFootPrint "MXI2DX1" "muxi2d"
+defineCellFanoutLoad "MXI2DX1" "S0" 1
+defineCellFanoutLoad "MXI2DX1" "B" 1
+defineCellFanoutLoad "MXI2DX1" "A" 1
+defineCellFanoutLoad "MXI2DX1" "Y" 1
+
+defineCellFootPrint "MXI2XL" "muxi2"
+defineCellFanoutLoad "MXI2XL" "S0" 1
+defineCellFanoutLoad "MXI2XL" "B" 1
+defineCellFanoutLoad "MXI2XL" "A" 1
+defineCellFanoutLoad "MXI2XL" "Y" 1
+
+defineCellFootPrint "MXI2X8" "muxi2"
+defineCellFanoutLoad "MXI2X8" "S0" 1
+defineCellFanoutLoad "MXI2X8" "B" 1
+defineCellFanoutLoad "MXI2X8" "A" 1
+defineCellFanoutLoad "MXI2X8" "Y" 1
+
+defineCellFootPrint "MXI2X6" "muxi2"
+defineCellFanoutLoad "MXI2X6" "S0" 1
+defineCellFanoutLoad "MXI2X6" "B" 1
+defineCellFanoutLoad "MXI2X6" "A" 1
+defineCellFanoutLoad "MXI2X6" "Y" 1
+
+defineCellFootPrint "MXI2X4" "muxi2"
+defineCellFanoutLoad "MXI2X4" "S0" 1
+defineCellFanoutLoad "MXI2X4" "B" 1
+defineCellFanoutLoad "MXI2X4" "A" 1
+defineCellFanoutLoad "MXI2X4" "Y" 1
+
+defineCellFootPrint "MXI2X3" "muxi2"
+defineCellFanoutLoad "MXI2X3" "S0" 1
+defineCellFanoutLoad "MXI2X3" "B" 1
+defineCellFanoutLoad "MXI2X3" "A" 1
+defineCellFanoutLoad "MXI2X3" "Y" 1
+
+defineCellFootPrint "MXI2X2" "muxi2"
+defineCellFanoutLoad "MXI2X2" "S0" 1
+defineCellFanoutLoad "MXI2X2" "B" 1
+defineCellFanoutLoad "MXI2X2" "A" 1
+defineCellFanoutLoad "MXI2X2" "Y" 1
+
+defineCellFootPrint "MXI2X1" "muxi2"
+defineCellFanoutLoad "MXI2X1" "S0" 1
+defineCellFanoutLoad "MXI2X1" "B" 1
+defineCellFanoutLoad "MXI2X1" "A" 1
+defineCellFanoutLoad "MXI2X1" "Y" 1
+
+defineCellFootPrint "MX4XL" "mux4"
+defineCellFanoutLoad "MX4XL" "S1" 1
+defineCellFanoutLoad "MX4XL" "S0" 1
+defineCellFanoutLoad "MX4XL" "D" 1
+defineCellFanoutLoad "MX4XL" "C" 1
+defineCellFanoutLoad "MX4XL" "B" 1
+defineCellFanoutLoad "MX4XL" "A" 1
+defineCellFanoutLoad "MX4XL" "Y" 1
+
+defineCellFootPrint "MX4X4" "mux4"
+defineCellFanoutLoad "MX4X4" "S1" 1
+defineCellFanoutLoad "MX4X4" "S0" 1
+defineCellFanoutLoad "MX4X4" "D" 1
+defineCellFanoutLoad "MX4X4" "C" 1
+defineCellFanoutLoad "MX4X4" "B" 1
+defineCellFanoutLoad "MX4X4" "A" 1
+defineCellFanoutLoad "MX4X4" "Y" 1
+
+defineCellFootPrint "MX4X2" "mux4"
+defineCellFanoutLoad "MX4X2" "S1" 1
+defineCellFanoutLoad "MX4X2" "S0" 1
+defineCellFanoutLoad "MX4X2" "D" 1
+defineCellFanoutLoad "MX4X2" "C" 1
+defineCellFanoutLoad "MX4X2" "B" 1
+defineCellFanoutLoad "MX4X2" "A" 1
+defineCellFanoutLoad "MX4X2" "Y" 1
+
+defineCellFootPrint "MX4X1" "mux4"
+defineCellFanoutLoad "MX4X1" "S1" 1
+defineCellFanoutLoad "MX4X1" "S0" 1
+defineCellFanoutLoad "MX4X1" "D" 1
+defineCellFanoutLoad "MX4X1" "C" 1
+defineCellFanoutLoad "MX4X1" "B" 1
+defineCellFanoutLoad "MX4X1" "A" 1
+defineCellFanoutLoad "MX4X1" "Y" 1
+
+defineCellFootPrint "MX3XL" "mux3"
+defineCellFanoutLoad "MX3XL" "S1" 1
+defineCellFanoutLoad "MX3XL" "S0" 1
+defineCellFanoutLoad "MX3XL" "C" 1
+defineCellFanoutLoad "MX3XL" "B" 1
+defineCellFanoutLoad "MX3XL" "A" 1
+defineCellFanoutLoad "MX3XL" "Y" 1
+
+defineCellFootPrint "MX3X4" "mux3"
+defineCellFanoutLoad "MX3X4" "S1" 1
+defineCellFanoutLoad "MX3X4" "S0" 1
+defineCellFanoutLoad "MX3X4" "C" 1
+defineCellFanoutLoad "MX3X4" "B" 1
+defineCellFanoutLoad "MX3X4" "A" 1
+defineCellFanoutLoad "MX3X4" "Y" 1
+
+defineCellFootPrint "MX3X2" "mux3"
+defineCellFanoutLoad "MX3X2" "S1" 1
+defineCellFanoutLoad "MX3X2" "S0" 1
+defineCellFanoutLoad "MX3X2" "C" 1
+defineCellFanoutLoad "MX3X2" "B" 1
+defineCellFanoutLoad "MX3X2" "A" 1
+defineCellFanoutLoad "MX3X2" "Y" 1
+
+defineCellFootPrint "MX3X1" "mux3"
+defineCellFanoutLoad "MX3X1" "S1" 1
+defineCellFanoutLoad "MX3X1" "S0" 1
+defineCellFanoutLoad "MX3X1" "C" 1
+defineCellFanoutLoad "MX3X1" "B" 1
+defineCellFanoutLoad "MX3X1" "A" 1
+defineCellFanoutLoad "MX3X1" "Y" 1
+
+defineCellFootPrint "MX2XL" "mux2"
+defineCellFanoutLoad "MX2XL" "S0" 1
+defineCellFanoutLoad "MX2XL" "B" 1
+defineCellFanoutLoad "MX2XL" "A" 1
+defineCellFanoutLoad "MX2XL" "Y" 1
+
+defineCellFootPrint "MX2X8" "mux2"
+defineCellFanoutLoad "MX2X8" "S0" 1
+defineCellFanoutLoad "MX2X8" "B" 1
+defineCellFanoutLoad "MX2X8" "A" 1
+defineCellFanoutLoad "MX2X8" "Y" 1
+
+defineCellFootPrint "MX2X6" "mux2"
+defineCellFanoutLoad "MX2X6" "S0" 1
+defineCellFanoutLoad "MX2X6" "B" 1
+defineCellFanoutLoad "MX2X6" "A" 1
+defineCellFanoutLoad "MX2X6" "Y" 1
+
+defineCellFootPrint "MX2X4" "mux2"
+defineCellFanoutLoad "MX2X4" "S0" 1
+defineCellFanoutLoad "MX2X4" "B" 1
+defineCellFanoutLoad "MX2X4" "A" 1
+defineCellFanoutLoad "MX2X4" "Y" 1
+
+defineCellFootPrint "MX2X3" "mux2"
+defineCellFanoutLoad "MX2X3" "S0" 1
+defineCellFanoutLoad "MX2X3" "B" 1
+defineCellFanoutLoad "MX2X3" "A" 1
+defineCellFanoutLoad "MX2X3" "Y" 1
+
+defineCellFootPrint "MX2X2" "mux2"
+defineCellFanoutLoad "MX2X2" "S0" 1
+defineCellFanoutLoad "MX2X2" "B" 1
+defineCellFanoutLoad "MX2X2" "A" 1
+defineCellFanoutLoad "MX2X2" "Y" 1
+
+defineCellFootPrint "MX2X1" "mux2"
+defineCellFanoutLoad "MX2X1" "S0" 1
+defineCellFanoutLoad "MX2X1" "B" 1
+defineCellFanoutLoad "MX2X1" "A" 1
+defineCellFanoutLoad "MX2X1" "Y" 1
+
+defineCellFootPrint "MDFFHQX8" "mdffhq"
+defineCellFanoutLoad "MDFFHQX8" "D0" 1
+defineCellFanoutLoad "MDFFHQX8" "D1" 1
+defineCellFanoutLoad "MDFFHQX8" "S0" 1
+defineCellFanoutLoad "MDFFHQX8" "CK" 1
+defineCellFanoutLoad "MDFFHQX8" "Q" 1
+
+defineCellFootPrint "MDFFHQX4" "mdffhq"
+defineCellFanoutLoad "MDFFHQX4" "D0" 1
+defineCellFanoutLoad "MDFFHQX4" "D1" 1
+defineCellFanoutLoad "MDFFHQX4" "S0" 1
+defineCellFanoutLoad "MDFFHQX4" "CK" 1
+defineCellFanoutLoad "MDFFHQX4" "Q" 1
+
+defineCellFootPrint "MDFFHQX2" "mdffhq"
+defineCellFanoutLoad "MDFFHQX2" "D0" 1
+defineCellFanoutLoad "MDFFHQX2" "D1" 1
+defineCellFanoutLoad "MDFFHQX2" "S0" 1
+defineCellFanoutLoad "MDFFHQX2" "CK" 1
+defineCellFanoutLoad "MDFFHQX2" "Q" 1
+
+defineCellFootPrint "MDFFHQX1" "mdffhq"
+defineCellFanoutLoad "MDFFHQX1" "D0" 1
+defineCellFanoutLoad "MDFFHQX1" "D1" 1
+defineCellFanoutLoad "MDFFHQX1" "S0" 1
+defineCellFanoutLoad "MDFFHQX1" "CK" 1
+defineCellFanoutLoad "MDFFHQX1" "Q" 1
+
+defineCellFootPrint "INVXL" "inv"
+defineCellFanoutLoad "INVXL" "A" 1
+defineCellFanoutLoad "INVXL" "Y" 1
+
+defineCellFootPrint "INVX8" "inv"
+defineCellFanoutLoad "INVX8" "A" 1
+defineCellFanoutLoad "INVX8" "Y" 1
+
+defineCellFootPrint "INVX6" "inv"
+defineCellFanoutLoad "INVX6" "A" 1
+defineCellFanoutLoad "INVX6" "Y" 1
+
+defineCellFootPrint "INVX5" "inv"
+defineCellFanoutLoad "INVX5" "A" 1
+defineCellFanoutLoad "INVX5" "Y" 1
+
+defineCellFootPrint "INVX4" "inv"
+defineCellFanoutLoad "INVX4" "A" 1
+defineCellFanoutLoad "INVX4" "Y" 1
+
+defineCellFootPrint "INVX3" "inv"
+defineCellFanoutLoad "INVX3" "A" 1
+defineCellFanoutLoad "INVX3" "Y" 1
+
+defineCellFootPrint "INVX2" "inv"
+defineCellFanoutLoad "INVX2" "A" 1
+defineCellFanoutLoad "INVX2" "Y" 1
+
+defineCellFootPrint "INVX20" "inv"
+defineCellFanoutLoad "INVX20" "A" 1
+defineCellFanoutLoad "INVX20" "Y" 1
+
+defineCellFootPrint "INVX1" "inv"
+defineCellFanoutLoad "INVX1" "A" 1
+defineCellFanoutLoad "INVX1" "Y" 1
+
+defineCellFootPrint "INVX18" "inv"
+defineCellFanoutLoad "INVX18" "A" 1
+defineCellFanoutLoad "INVX18" "Y" 1
+
+defineCellFootPrint "INVX16" "inv"
+defineCellFanoutLoad "INVX16" "A" 1
+defineCellFanoutLoad "INVX16" "Y" 1
+
+defineCellFootPrint "INVX14" "inv"
+defineCellFanoutLoad "INVX14" "A" 1
+defineCellFanoutLoad "INVX14" "Y" 1
+
+defineCellFootPrint "INVX12" "inv"
+defineCellFanoutLoad "INVX12" "A" 1
+defineCellFanoutLoad "INVX12" "Y" 1
+
+defineCellFootPrint "INVX10" "inv"
+defineCellFanoutLoad "INVX10" "A" 1
+defineCellFanoutLoad "INVX10" "Y" 1
+
+defineCellFootPrint "EDFFTRXL" "edfftr"
+defineCellFanoutLoad "EDFFTRXL" "D" 1
+defineCellFanoutLoad "EDFFTRXL" "CK" 1
+defineCellFanoutLoad "EDFFTRXL" "E" 1
+defineCellFanoutLoad "EDFFTRXL" "RN" 1
+defineCellFanoutLoad "EDFFTRXL" "Q" 1
+defineCellFanoutLoad "EDFFTRXL" "QN" 1
+
+defineCellFootPrint "EDFFTRX4" "edfftr"
+defineCellFanoutLoad "EDFFTRX4" "D" 1
+defineCellFanoutLoad "EDFFTRX4" "CK" 1
+defineCellFanoutLoad "EDFFTRX4" "E" 1
+defineCellFanoutLoad "EDFFTRX4" "RN" 1
+defineCellFanoutLoad "EDFFTRX4" "Q" 1
+defineCellFanoutLoad "EDFFTRX4" "QN" 1
+
+defineCellFootPrint "EDFFTRX2" "edfftr"
+defineCellFanoutLoad "EDFFTRX2" "D" 1
+defineCellFanoutLoad "EDFFTRX2" "CK" 1
+defineCellFanoutLoad "EDFFTRX2" "E" 1
+defineCellFanoutLoad "EDFFTRX2" "RN" 1
+defineCellFanoutLoad "EDFFTRX2" "Q" 1
+defineCellFanoutLoad "EDFFTRX2" "QN" 1
+
+defineCellFootPrint "EDFFTRX1" "edfftr"
+defineCellFanoutLoad "EDFFTRX1" "D" 1
+defineCellFanoutLoad "EDFFTRX1" "CK" 1
+defineCellFanoutLoad "EDFFTRX1" "E" 1
+defineCellFanoutLoad "EDFFTRX1" "RN" 1
+defineCellFanoutLoad "EDFFTRX1" "Q" 1
+defineCellFanoutLoad "EDFFTRX1" "QN" 1
+
+defineCellFootPrint "EDFFHQX8" "edffhq"
+defineCellFanoutLoad "EDFFHQX8" "D" 1
+defineCellFanoutLoad "EDFFHQX8" "CK" 1
+defineCellFanoutLoad "EDFFHQX8" "E" 1
+defineCellFanoutLoad "EDFFHQX8" "Q" 1
+
+defineCellFootPrint "EDFFHQX4" "edffhq"
+defineCellFanoutLoad "EDFFHQX4" "D" 1
+defineCellFanoutLoad "EDFFHQX4" "CK" 1
+defineCellFanoutLoad "EDFFHQX4" "E" 1
+defineCellFanoutLoad "EDFFHQX4" "Q" 1
+
+defineCellFootPrint "EDFFHQX2" "edffhq"
+defineCellFanoutLoad "EDFFHQX2" "D" 1
+defineCellFanoutLoad "EDFFHQX2" "CK" 1
+defineCellFanoutLoad "EDFFHQX2" "E" 1
+defineCellFanoutLoad "EDFFHQX2" "Q" 1
+
+defineCellFootPrint "EDFFHQX1" "edffhq"
+defineCellFanoutLoad "EDFFHQX1" "D" 1
+defineCellFanoutLoad "EDFFHQX1" "CK" 1
+defineCellFanoutLoad "EDFFHQX1" "E" 1
+defineCellFanoutLoad "EDFFHQX1" "Q" 1
+
+defineCellFootPrint "EDFFXL" "edff"
+defineCellFanoutLoad "EDFFXL" "D" 1
+defineCellFanoutLoad "EDFFXL" "CK" 1
+defineCellFanoutLoad "EDFFXL" "E" 1
+defineCellFanoutLoad "EDFFXL" "Q" 1
+defineCellFanoutLoad "EDFFXL" "QN" 1
+
+defineCellFootPrint "EDFFX4" "edff"
+defineCellFanoutLoad "EDFFX4" "D" 1
+defineCellFanoutLoad "EDFFX4" "CK" 1
+defineCellFanoutLoad "EDFFX4" "E" 1
+defineCellFanoutLoad "EDFFX4" "Q" 1
+defineCellFanoutLoad "EDFFX4" "QN" 1
+
+defineCellFootPrint "EDFFX2" "edff"
+defineCellFanoutLoad "EDFFX2" "D" 1
+defineCellFanoutLoad "EDFFX2" "CK" 1
+defineCellFanoutLoad "EDFFX2" "E" 1
+defineCellFanoutLoad "EDFFX2" "Q" 1
+defineCellFanoutLoad "EDFFX2" "QN" 1
+
+defineCellFootPrint "EDFFX1" "edff"
+defineCellFanoutLoad "EDFFX1" "D" 1
+defineCellFanoutLoad "EDFFX1" "CK" 1
+defineCellFanoutLoad "EDFFX1" "E" 1
+defineCellFanoutLoad "EDFFX1" "Q" 1
+defineCellFanoutLoad "EDFFX1" "QN" 1
+
+defineCellFootPrint "DLY4X4" "dly4"
+defineCellFanoutLoad "DLY4X4" "A" 1
+defineCellFanoutLoad "DLY4X4" "Y" 1
+
+defineCellFootPrint "DLY4X1" "dly4"
+defineCellFanoutLoad "DLY4X1" "A" 1
+defineCellFanoutLoad "DLY4X1" "Y" 1
+
+defineCellFootPrint "DLY3X4" "dly3"
+defineCellFanoutLoad "DLY3X4" "A" 1
+defineCellFanoutLoad "DLY3X4" "Y" 1
+
+defineCellFootPrint "DLY3X1" "dly3"
+defineCellFanoutLoad "DLY3X1" "A" 1
+defineCellFanoutLoad "DLY3X1" "Y" 1
+
+defineCellFootPrint "DLY2X4" "dly2"
+defineCellFanoutLoad "DLY2X4" "A" 1
+defineCellFanoutLoad "DLY2X4" "Y" 1
+
+defineCellFootPrint "DLY2X1" "dly2"
+defineCellFanoutLoad "DLY2X1" "A" 1
+defineCellFanoutLoad "DLY2X1" "Y" 1
+
+defineCellFootPrint "DLY1X4" "dly1"
+defineCellFanoutLoad "DLY1X4" "A" 1
+defineCellFanoutLoad "DLY1X4" "Y" 1
+
+defineCellFootPrint "DLY1X1" "dly1"
+defineCellFanoutLoad "DLY1X1" "A" 1
+defineCellFanoutLoad "DLY1X1" "Y" 1
+
+defineCellFootPrint "DFFYQX2" "dffyq"
+defineCellFanoutLoad "DFFYQX2" "D" 1
+defineCellFanoutLoad "DFFYQX2" "CK" 1
+defineCellFanoutLoad "DFFYQX2" "Q" 1
+
+defineCellFootPrint "DFFTRXL" "dfftr"
+defineCellFanoutLoad "DFFTRXL" "D" 1
+defineCellFanoutLoad "DFFTRXL" "CK" 1
+defineCellFanoutLoad "DFFTRXL" "RN" 1
+defineCellFanoutLoad "DFFTRXL" "Q" 1
+defineCellFanoutLoad "DFFTRXL" "QN" 1
+
+defineCellFootPrint "DFFTRX4" "dfftr"
+defineCellFanoutLoad "DFFTRX4" "D" 1
+defineCellFanoutLoad "DFFTRX4" "CK" 1
+defineCellFanoutLoad "DFFTRX4" "RN" 1
+defineCellFanoutLoad "DFFTRX4" "Q" 1
+defineCellFanoutLoad "DFFTRX4" "QN" 1
+
+defineCellFootPrint "DFFTRX2" "dfftr"
+defineCellFanoutLoad "DFFTRX2" "D" 1
+defineCellFanoutLoad "DFFTRX2" "CK" 1
+defineCellFanoutLoad "DFFTRX2" "RN" 1
+defineCellFanoutLoad "DFFTRX2" "Q" 1
+defineCellFanoutLoad "DFFTRX2" "QN" 1
+
+defineCellFootPrint "DFFTRX1" "dfftr"
+defineCellFanoutLoad "DFFTRX1" "D" 1
+defineCellFanoutLoad "DFFTRX1" "CK" 1
+defineCellFanoutLoad "DFFTRX1" "RN" 1
+defineCellFanoutLoad "DFFTRX1" "Q" 1
+defineCellFanoutLoad "DFFTRX1" "QN" 1
+
+defineCellFootPrint "DFFSRHQX8" "dffsrhq"
+defineCellFanoutLoad "DFFSRHQX8" "D" 1
+defineCellFanoutLoad "DFFSRHQX8" "CK" 1
+defineCellFanoutLoad "DFFSRHQX8" "SN" 1
+defineCellFanoutLoad "DFFSRHQX8" "RN" 1
+defineCellFanoutLoad "DFFSRHQX8" "Q" 1
+
+defineCellFootPrint "DFFSRHQX4" "dffsrhq"
+defineCellFanoutLoad "DFFSRHQX4" "D" 1
+defineCellFanoutLoad "DFFSRHQX4" "CK" 1
+defineCellFanoutLoad "DFFSRHQX4" "SN" 1
+defineCellFanoutLoad "DFFSRHQX4" "RN" 1
+defineCellFanoutLoad "DFFSRHQX4" "Q" 1
+
+defineCellFootPrint "DFFSRHQX2" "dffsrhq"
+defineCellFanoutLoad "DFFSRHQX2" "D" 1
+defineCellFanoutLoad "DFFSRHQX2" "CK" 1
+defineCellFanoutLoad "DFFSRHQX2" "SN" 1
+defineCellFanoutLoad "DFFSRHQX2" "RN" 1
+defineCellFanoutLoad "DFFSRHQX2" "Q" 1
+
+defineCellFootPrint "DFFSRHQX1" "dffsrhq"
+defineCellFanoutLoad "DFFSRHQX1" "D" 1
+defineCellFanoutLoad "DFFSRHQX1" "CK" 1
+defineCellFanoutLoad "DFFSRHQX1" "SN" 1
+defineCellFanoutLoad "DFFSRHQX1" "RN" 1
+defineCellFanoutLoad "DFFSRHQX1" "Q" 1
+
+defineCellFootPrint "DFFSRXL" "dffsr"
+defineCellFanoutLoad "DFFSRXL" "D" 1
+defineCellFanoutLoad "DFFSRXL" "CK" 1
+defineCellFanoutLoad "DFFSRXL" "SN" 1
+defineCellFanoutLoad "DFFSRXL" "RN" 1
+defineCellFanoutLoad "DFFSRXL" "Q" 1
+defineCellFanoutLoad "DFFSRXL" "QN" 1
+
+defineCellFootPrint "DFFSRX4" "dffsr"
+defineCellFanoutLoad "DFFSRX4" "D" 1
+defineCellFanoutLoad "DFFSRX4" "CK" 1
+defineCellFanoutLoad "DFFSRX4" "SN" 1
+defineCellFanoutLoad "DFFSRX4" "RN" 1
+defineCellFanoutLoad "DFFSRX4" "Q" 1
+defineCellFanoutLoad "DFFSRX4" "QN" 1
+
+defineCellFootPrint "DFFSRX2" "dffsr"
+defineCellFanoutLoad "DFFSRX2" "D" 1
+defineCellFanoutLoad "DFFSRX2" "CK" 1
+defineCellFanoutLoad "DFFSRX2" "SN" 1
+defineCellFanoutLoad "DFFSRX2" "RN" 1
+defineCellFanoutLoad "DFFSRX2" "Q" 1
+defineCellFanoutLoad "DFFSRX2" "QN" 1
+
+defineCellFootPrint "DFFSRX1" "dffsr"
+defineCellFanoutLoad "DFFSRX1" "D" 1
+defineCellFanoutLoad "DFFSRX1" "CK" 1
+defineCellFanoutLoad "DFFSRX1" "SN" 1
+defineCellFanoutLoad "DFFSRX1" "RN" 1
+defineCellFanoutLoad "DFFSRX1" "Q" 1
+defineCellFanoutLoad "DFFSRX1" "QN" 1
+
+defineCellFootPrint "DFFSQXL" "dffsq"
+defineCellFanoutLoad "DFFSQXL" "D" 1
+defineCellFanoutLoad "DFFSQXL" "CK" 1
+defineCellFanoutLoad "DFFSQXL" "SN" 1
+defineCellFanoutLoad "DFFSQXL" "Q" 1
+
+defineCellFootPrint "DFFSQX4" "dffsq"
+defineCellFanoutLoad "DFFSQX4" "D" 1
+defineCellFanoutLoad "DFFSQX4" "CK" 1
+defineCellFanoutLoad "DFFSQX4" "SN" 1
+defineCellFanoutLoad "DFFSQX4" "Q" 1
+
+defineCellFootPrint "DFFSQX2" "dffsq"
+defineCellFanoutLoad "DFFSQX2" "D" 1
+defineCellFanoutLoad "DFFSQX2" "CK" 1
+defineCellFanoutLoad "DFFSQX2" "SN" 1
+defineCellFanoutLoad "DFFSQX2" "Q" 1
+
+defineCellFootPrint "DFFSQX1" "dffsq"
+defineCellFanoutLoad "DFFSQX1" "D" 1
+defineCellFanoutLoad "DFFSQX1" "CK" 1
+defineCellFanoutLoad "DFFSQX1" "SN" 1
+defineCellFanoutLoad "DFFSQX1" "Q" 1
+
+defineCellFootPrint "DFFSHQX8" "dffshq"
+defineCellFanoutLoad "DFFSHQX8" "D" 1
+defineCellFanoutLoad "DFFSHQX8" "CK" 1
+defineCellFanoutLoad "DFFSHQX8" "SN" 1
+defineCellFanoutLoad "DFFSHQX8" "Q" 1
+
+defineCellFootPrint "DFFSHQX4" "dffshq"
+defineCellFanoutLoad "DFFSHQX4" "D" 1
+defineCellFanoutLoad "DFFSHQX4" "CK" 1
+defineCellFanoutLoad "DFFSHQX4" "SN" 1
+defineCellFanoutLoad "DFFSHQX4" "Q" 1
+
+defineCellFootPrint "DFFSHQX2" "dffshq"
+defineCellFanoutLoad "DFFSHQX2" "D" 1
+defineCellFanoutLoad "DFFSHQX2" "CK" 1
+defineCellFanoutLoad "DFFSHQX2" "SN" 1
+defineCellFanoutLoad "DFFSHQX2" "Q" 1
+
+defineCellFootPrint "DFFSHQX1" "dffshq"
+defineCellFanoutLoad "DFFSHQX1" "D" 1
+defineCellFanoutLoad "DFFSHQX1" "CK" 1
+defineCellFanoutLoad "DFFSHQX1" "SN" 1
+defineCellFanoutLoad "DFFSHQX1" "Q" 1
+
+defineCellFootPrint "DFFSXL" "dffs"
+defineCellFanoutLoad "DFFSXL" "D" 1
+defineCellFanoutLoad "DFFSXL" "CK" 1
+defineCellFanoutLoad "DFFSXL" "SN" 1
+defineCellFanoutLoad "DFFSXL" "Q" 1
+defineCellFanoutLoad "DFFSXL" "QN" 1
+
+defineCellFootPrint "DFFSX4" "dffs"
+defineCellFanoutLoad "DFFSX4" "D" 1
+defineCellFanoutLoad "DFFSX4" "CK" 1
+defineCellFanoutLoad "DFFSX4" "SN" 1
+defineCellFanoutLoad "DFFSX4" "Q" 1
+defineCellFanoutLoad "DFFSX4" "QN" 1
+
+defineCellFootPrint "DFFSX2" "dffs"
+defineCellFanoutLoad "DFFSX2" "D" 1
+defineCellFanoutLoad "DFFSX2" "CK" 1
+defineCellFanoutLoad "DFFSX2" "SN" 1
+defineCellFanoutLoad "DFFSX2" "Q" 1
+defineCellFanoutLoad "DFFSX2" "QN" 1
+
+defineCellFootPrint "DFFSX1" "dffs"
+defineCellFanoutLoad "DFFSX1" "D" 1
+defineCellFanoutLoad "DFFSX1" "CK" 1
+defineCellFanoutLoad "DFFSX1" "SN" 1
+defineCellFanoutLoad "DFFSX1" "Q" 1
+defineCellFanoutLoad "DFFSX1" "QN" 1
+
+defineCellFootPrint "DFFRQXL" "dffrq"
+defineCellFanoutLoad "DFFRQXL" "D" 1
+defineCellFanoutLoad "DFFRQXL" "CK" 1
+defineCellFanoutLoad "DFFRQXL" "RN" 1
+defineCellFanoutLoad "DFFRQXL" "Q" 1
+
+defineCellFootPrint "DFFRQX4" "dffrq"
+defineCellFanoutLoad "DFFRQX4" "D" 1
+defineCellFanoutLoad "DFFRQX4" "CK" 1
+defineCellFanoutLoad "DFFRQX4" "RN" 1
+defineCellFanoutLoad "DFFRQX4" "Q" 1
+
+defineCellFootPrint "DFFRQX2" "dffrq"
+defineCellFanoutLoad "DFFRQX2" "D" 1
+defineCellFanoutLoad "DFFRQX2" "CK" 1
+defineCellFanoutLoad "DFFRQX2" "RN" 1
+defineCellFanoutLoad "DFFRQX2" "Q" 1
+
+defineCellFootPrint "DFFRQX1" "dffrq"
+defineCellFanoutLoad "DFFRQX1" "D" 1
+defineCellFanoutLoad "DFFRQX1" "CK" 1
+defineCellFanoutLoad "DFFRQX1" "RN" 1
+defineCellFanoutLoad "DFFRQX1" "Q" 1
+
+defineCellFootPrint "DFFRHQX8" "dffrhq"
+defineCellFanoutLoad "DFFRHQX8" "D" 1
+defineCellFanoutLoad "DFFRHQX8" "CK" 1
+defineCellFanoutLoad "DFFRHQX8" "RN" 1
+defineCellFanoutLoad "DFFRHQX8" "Q" 1
+
+defineCellFootPrint "DFFRHQX4" "dffrhq"
+defineCellFanoutLoad "DFFRHQX4" "D" 1
+defineCellFanoutLoad "DFFRHQX4" "CK" 1
+defineCellFanoutLoad "DFFRHQX4" "RN" 1
+defineCellFanoutLoad "DFFRHQX4" "Q" 1
+
+defineCellFootPrint "DFFRHQX2" "dffrhq"
+defineCellFanoutLoad "DFFRHQX2" "D" 1
+defineCellFanoutLoad "DFFRHQX2" "CK" 1
+defineCellFanoutLoad "DFFRHQX2" "RN" 1
+defineCellFanoutLoad "DFFRHQX2" "Q" 1
+
+defineCellFootPrint "DFFRHQX1" "dffrhq"
+defineCellFanoutLoad "DFFRHQX1" "D" 1
+defineCellFanoutLoad "DFFRHQX1" "CK" 1
+defineCellFanoutLoad "DFFRHQX1" "RN" 1
+defineCellFanoutLoad "DFFRHQX1" "Q" 1
+
+defineCellFootPrint "DFFRXL" "dffr"
+defineCellFanoutLoad "DFFRXL" "D" 1
+defineCellFanoutLoad "DFFRXL" "CK" 1
+defineCellFanoutLoad "DFFRXL" "RN" 1
+defineCellFanoutLoad "DFFRXL" "Q" 1
+defineCellFanoutLoad "DFFRXL" "QN" 1
+
+defineCellFootPrint "DFFRX4" "dffr"
+defineCellFanoutLoad "DFFRX4" "D" 1
+defineCellFanoutLoad "DFFRX4" "CK" 1
+defineCellFanoutLoad "DFFRX4" "RN" 1
+defineCellFanoutLoad "DFFRX4" "Q" 1
+defineCellFanoutLoad "DFFRX4" "QN" 1
+
+defineCellFootPrint "DFFRX2" "dffr"
+defineCellFanoutLoad "DFFRX2" "D" 1
+defineCellFanoutLoad "DFFRX2" "CK" 1
+defineCellFanoutLoad "DFFRX2" "RN" 1
+defineCellFanoutLoad "DFFRX2" "Q" 1
+defineCellFanoutLoad "DFFRX2" "QN" 1
+
+defineCellFootPrint "DFFRX1" "dffr"
+defineCellFanoutLoad "DFFRX1" "D" 1
+defineCellFanoutLoad "DFFRX1" "CK" 1
+defineCellFanoutLoad "DFFRX1" "RN" 1
+defineCellFanoutLoad "DFFRX1" "Q" 1
+defineCellFanoutLoad "DFFRX1" "QN" 1
+
+defineCellFootPrint "DFFQXL" "dffq"
+defineCellFanoutLoad "DFFQXL" "D" 1
+defineCellFanoutLoad "DFFQXL" "CK" 1
+defineCellFanoutLoad "DFFQXL" "Q" 1
+
+defineCellFootPrint "DFFQX4" "dffq"
+defineCellFanoutLoad "DFFQX4" "D" 1
+defineCellFanoutLoad "DFFQX4" "CK" 1
+defineCellFanoutLoad "DFFQX4" "Q" 1
+
+defineCellFootPrint "DFFQX2" "dffq"
+defineCellFanoutLoad "DFFQX2" "D" 1
+defineCellFanoutLoad "DFFQX2" "CK" 1
+defineCellFanoutLoad "DFFQX2" "Q" 1
+
+defineCellFootPrint "DFFQX1" "dffq"
+defineCellFanoutLoad "DFFQX1" "D" 1
+defineCellFanoutLoad "DFFQX1" "CK" 1
+defineCellFanoutLoad "DFFQX1" "Q" 1
+
+defineCellFootPrint "DFFNSRHX8" "dffnsrh"
+defineCellFanoutLoad "DFFNSRHX8" "D" 1
+defineCellFanoutLoad "DFFNSRHX8" "CKN" 1
+defineCellFanoutLoad "DFFNSRHX8" "SN" 1
+defineCellFanoutLoad "DFFNSRHX8" "RN" 1
+defineCellFanoutLoad "DFFNSRHX8" "Q" 1
+defineCellFanoutLoad "DFFNSRHX8" "QN" 1
+
+defineCellFootPrint "DFFNSRHX4" "dffnsrh"
+defineCellFanoutLoad "DFFNSRHX4" "D" 1
+defineCellFanoutLoad "DFFNSRHX4" "CKN" 1
+defineCellFanoutLoad "DFFNSRHX4" "SN" 1
+defineCellFanoutLoad "DFFNSRHX4" "RN" 1
+defineCellFanoutLoad "DFFNSRHX4" "Q" 1
+defineCellFanoutLoad "DFFNSRHX4" "QN" 1
+
+defineCellFootPrint "DFFNSRHX2" "dffnsrh"
+defineCellFanoutLoad "DFFNSRHX2" "D" 1
+defineCellFanoutLoad "DFFNSRHX2" "CKN" 1
+defineCellFanoutLoad "DFFNSRHX2" "SN" 1
+defineCellFanoutLoad "DFFNSRHX2" "RN" 1
+defineCellFanoutLoad "DFFNSRHX2" "Q" 1
+defineCellFanoutLoad "DFFNSRHX2" "QN" 1
+
+defineCellFootPrint "DFFNSRHX1" "dffnsrh"
+defineCellFanoutLoad "DFFNSRHX1" "D" 1
+defineCellFanoutLoad "DFFNSRHX1" "CKN" 1
+defineCellFanoutLoad "DFFNSRHX1" "SN" 1
+defineCellFanoutLoad "DFFNSRHX1" "RN" 1
+defineCellFanoutLoad "DFFNSRHX1" "Q" 1
+defineCellFanoutLoad "DFFNSRHX1" "QN" 1
+
+defineCellFootPrint "DFFNHX8" "dffnh"
+defineCellFanoutLoad "DFFNHX8" "D" 1
+defineCellFanoutLoad "DFFNHX8" "CKN" 1
+defineCellFanoutLoad "DFFNHX8" "Q" 1
+defineCellFanoutLoad "DFFNHX8" "QN" 1
+
+defineCellFootPrint "DFFNHX4" "dffnh"
+defineCellFanoutLoad "DFFNHX4" "D" 1
+defineCellFanoutLoad "DFFNHX4" "CKN" 1
+defineCellFanoutLoad "DFFNHX4" "Q" 1
+defineCellFanoutLoad "DFFNHX4" "QN" 1
+
+defineCellFootPrint "DFFNHX2" "dffnh"
+defineCellFanoutLoad "DFFNHX2" "D" 1
+defineCellFanoutLoad "DFFNHX2" "CKN" 1
+defineCellFanoutLoad "DFFNHX2" "Q" 1
+defineCellFanoutLoad "DFFNHX2" "QN" 1
+
+defineCellFootPrint "DFFNHX1" "dffnh"
+defineCellFanoutLoad "DFFNHX1" "D" 1
+defineCellFanoutLoad "DFFNHX1" "CKN" 1
+defineCellFanoutLoad "DFFNHX1" "Q" 1
+defineCellFanoutLoad "DFFNHX1" "QN" 1
+
+defineCellFootPrint "DFFHQX8" "dffhq"
+defineCellFanoutLoad "DFFHQX8" "D" 1
+defineCellFanoutLoad "DFFHQX8" "CK" 1
+defineCellFanoutLoad "DFFHQX8" "Q" 1
+
+defineCellFootPrint "DFFHQX4" "dffhq"
+defineCellFanoutLoad "DFFHQX4" "D" 1
+defineCellFanoutLoad "DFFHQX4" "CK" 1
+defineCellFanoutLoad "DFFHQX4" "Q" 1
+
+defineCellFootPrint "DFFHQX2" "dffhq"
+defineCellFanoutLoad "DFFHQX2" "D" 1
+defineCellFanoutLoad "DFFHQX2" "CK" 1
+defineCellFanoutLoad "DFFHQX2" "Q" 1
+
+defineCellFootPrint "DFFHQX1" "dffhq"
+defineCellFanoutLoad "DFFHQX1" "D" 1
+defineCellFanoutLoad "DFFHQX1" "CK" 1
+defineCellFanoutLoad "DFFHQX1" "Q" 1
+
+defineCellFootPrint "DFFHX8" "dffh"
+defineCellFanoutLoad "DFFHX8" "D" 1
+defineCellFanoutLoad "DFFHX8" "CK" 1
+defineCellFanoutLoad "DFFHX8" "Q" 1
+defineCellFanoutLoad "DFFHX8" "QN" 1
+
+defineCellFootPrint "DFFHX4" "dffh"
+defineCellFanoutLoad "DFFHX4" "D" 1
+defineCellFanoutLoad "DFFHX4" "CK" 1
+defineCellFanoutLoad "DFFHX4" "Q" 1
+defineCellFanoutLoad "DFFHX4" "QN" 1
+
+defineCellFootPrint "DFFHX2" "dffh"
+defineCellFanoutLoad "DFFHX2" "D" 1
+defineCellFanoutLoad "DFFHX2" "CK" 1
+defineCellFanoutLoad "DFFHX2" "Q" 1
+defineCellFanoutLoad "DFFHX2" "QN" 1
+
+defineCellFootPrint "DFFHX1" "dffh"
+defineCellFanoutLoad "DFFHX1" "D" 1
+defineCellFanoutLoad "DFFHX1" "CK" 1
+defineCellFanoutLoad "DFFHX1" "Q" 1
+defineCellFanoutLoad "DFFHX1" "QN" 1
+
+defineCellFootPrint "DFFXL" "dff"
+defineCellFanoutLoad "DFFXL" "D" 1
+defineCellFanoutLoad "DFFXL" "CK" 1
+defineCellFanoutLoad "DFFXL" "Q" 1
+defineCellFanoutLoad "DFFXL" "QN" 1
+
+defineCellFootPrint "DFFX4" "dff"
+defineCellFanoutLoad "DFFX4" "D" 1
+defineCellFanoutLoad "DFFX4" "CK" 1
+defineCellFanoutLoad "DFFX4" "Q" 1
+defineCellFanoutLoad "DFFX4" "QN" 1
+
+defineCellFootPrint "DFFX2" "dff"
+defineCellFanoutLoad "DFFX2" "D" 1
+defineCellFanoutLoad "DFFX2" "CK" 1
+defineCellFanoutLoad "DFFX2" "Q" 1
+defineCellFanoutLoad "DFFX2" "QN" 1
+
+defineCellFootPrint "DFFX1" "dff"
+defineCellFanoutLoad "DFFX1" "D" 1
+defineCellFanoutLoad "DFFX1" "CK" 1
+defineCellFanoutLoad "DFFX1" "Q" 1
+defineCellFanoutLoad "DFFX1" "QN" 1
+
+defineCellFootPrint "CLKXOR2X8" "clkxor2"
+defineCellFanoutLoad "CLKXOR2X8" "A" 1
+defineCellFanoutLoad "CLKXOR2X8" "B" 1
+defineCellFanoutLoad "CLKXOR2X8" "Y" 1
+
+defineCellFootPrint "CLKXOR2X4" "clkxor2"
+defineCellFanoutLoad "CLKXOR2X4" "A" 1
+defineCellFanoutLoad "CLKXOR2X4" "B" 1
+defineCellFanoutLoad "CLKXOR2X4" "Y" 1
+
+defineCellFootPrint "CLKXOR2X2" "clkxor2"
+defineCellFanoutLoad "CLKXOR2X2" "A" 1
+defineCellFanoutLoad "CLKXOR2X2" "B" 1
+defineCellFanoutLoad "CLKXOR2X2" "Y" 1
+
+defineCellFootPrint "CLKXOR2X1" "clkxor2"
+defineCellFanoutLoad "CLKXOR2X1" "A" 1
+defineCellFanoutLoad "CLKXOR2X1" "B" 1
+defineCellFanoutLoad "CLKXOR2X1" "Y" 1
+
+defineCellFootPrint "CLKXOR2X12" "clkxor2"
+defineCellFanoutLoad "CLKXOR2X12" "A" 1
+defineCellFanoutLoad "CLKXOR2X12" "B" 1
+defineCellFanoutLoad "CLKXOR2X12" "Y" 1
+
+defineCellFootPrint "CLKNAND2X8" "clknand2"
+defineCellFanoutLoad "CLKNAND2X8" "A" 1
+defineCellFanoutLoad "CLKNAND2X8" "B" 1
+defineCellFanoutLoad "CLKNAND2X8" "Y" 1
+
+defineCellFootPrint "CLKNAND2X4" "clknand2"
+defineCellFanoutLoad "CLKNAND2X4" "A" 1
+defineCellFanoutLoad "CLKNAND2X4" "B" 1
+defineCellFanoutLoad "CLKNAND2X4" "Y" 1
+
+defineCellFootPrint "CLKNAND2X2" "clknand2"
+defineCellFanoutLoad "CLKNAND2X2" "A" 1
+defineCellFanoutLoad "CLKNAND2X2" "B" 1
+defineCellFanoutLoad "CLKNAND2X2" "Y" 1
+
+defineCellFootPrint "CLKNAND2X12" "clknand2"
+defineCellFanoutLoad "CLKNAND2X12" "A" 1
+defineCellFanoutLoad "CLKNAND2X12" "B" 1
+defineCellFanoutLoad "CLKNAND2X12" "Y" 1
+
+defineCellFootPrint "CLKMX2X8" "clkmux2"
+defineCellFanoutLoad "CLKMX2X8" "S0" 1
+defineCellFanoutLoad "CLKMX2X8" "B" 1
+defineCellFanoutLoad "CLKMX2X8" "A" 1
+defineCellFanoutLoad "CLKMX2X8" "Y" 1
+
+defineCellFootPrint "CLKMX2X6" "clkmux2"
+defineCellFanoutLoad "CLKMX2X6" "S0" 1
+defineCellFanoutLoad "CLKMX2X6" "B" 1
+defineCellFanoutLoad "CLKMX2X6" "A" 1
+defineCellFanoutLoad "CLKMX2X6" "Y" 1
+
+defineCellFootPrint "CLKMX2X4" "clkmux2"
+defineCellFanoutLoad "CLKMX2X4" "S0" 1
+defineCellFanoutLoad "CLKMX2X4" "B" 1
+defineCellFanoutLoad "CLKMX2X4" "A" 1
+defineCellFanoutLoad "CLKMX2X4" "Y" 1
+
+defineCellFootPrint "CLKMX2X3" "clkmux2"
+defineCellFanoutLoad "CLKMX2X3" "S0" 1
+defineCellFanoutLoad "CLKMX2X3" "B" 1
+defineCellFanoutLoad "CLKMX2X3" "A" 1
+defineCellFanoutLoad "CLKMX2X3" "Y" 1
+
+defineCellFootPrint "CLKMX2X2" "clkmux2"
+defineCellFanoutLoad "CLKMX2X2" "S0" 1
+defineCellFanoutLoad "CLKMX2X2" "B" 1
+defineCellFanoutLoad "CLKMX2X2" "A" 1
+defineCellFanoutLoad "CLKMX2X2" "Y" 1
+
+defineCellFootPrint "CLKMX2X12" "clkmux2"
+defineCellFanoutLoad "CLKMX2X12" "S0" 1
+defineCellFanoutLoad "CLKMX2X12" "B" 1
+defineCellFanoutLoad "CLKMX2X12" "A" 1
+defineCellFanoutLoad "CLKMX2X12" "Y" 1
+
+defineCellFootPrint "CLKINVX8" "clkinv"
+defineCellFanoutLoad "CLKINVX8" "A" 1
+defineCellFanoutLoad "CLKINVX8" "Y" 1
+
+defineCellFootPrint "CLKINVX6" "clkinv"
+defineCellFanoutLoad "CLKINVX6" "A" 1
+defineCellFanoutLoad "CLKINVX6" "Y" 1
+
+defineCellFootPrint "CLKINVX4" "clkinv"
+defineCellFanoutLoad "CLKINVX4" "A" 1
+defineCellFanoutLoad "CLKINVX4" "Y" 1
+
+defineCellFootPrint "CLKINVX40" "clkinv"
+defineCellFanoutLoad "CLKINVX40" "A" 1
+defineCellFanoutLoad "CLKINVX40" "Y" 1
+
+defineCellFootPrint "CLKINVX3" "clkinv"
+defineCellFanoutLoad "CLKINVX3" "A" 1
+defineCellFanoutLoad "CLKINVX3" "Y" 1
+
+defineCellFootPrint "CLKINVX32" "clkinv"
+defineCellFanoutLoad "CLKINVX32" "A" 1
+defineCellFanoutLoad "CLKINVX32" "Y" 1
+
+defineCellFootPrint "CLKINVX2" "clkinv"
+defineCellFanoutLoad "CLKINVX2" "A" 1
+defineCellFanoutLoad "CLKINVX2" "Y" 1
+
+defineCellFootPrint "CLKINVX24" "clkinv"
+defineCellFanoutLoad "CLKINVX24" "A" 1
+defineCellFanoutLoad "CLKINVX24" "Y" 1
+
+defineCellFootPrint "CLKINVX20" "clkinv"
+defineCellFanoutLoad "CLKINVX20" "A" 1
+defineCellFanoutLoad "CLKINVX20" "Y" 1
+
+defineCellFootPrint "CLKINVX1" "clkinv"
+defineCellFanoutLoad "CLKINVX1" "A" 1
+defineCellFanoutLoad "CLKINVX1" "Y" 1
+
+defineCellFootPrint "CLKINVX16" "clkinv"
+defineCellFanoutLoad "CLKINVX16" "A" 1
+defineCellFanoutLoad "CLKINVX16" "Y" 1
+
+defineCellFootPrint "CLKINVX12" "clkinv"
+defineCellFanoutLoad "CLKINVX12" "A" 1
+defineCellFanoutLoad "CLKINVX12" "Y" 1
+
+defineCellFootPrint "CLKBUFX8" "clkbuf"
+defineCellFanoutLoad "CLKBUFX8" "A" 1
+defineCellFanoutLoad "CLKBUFX8" "Y" 1
+
+defineCellFootPrint "CLKBUFX6" "clkbuf"
+defineCellFanoutLoad "CLKBUFX6" "A" 1
+defineCellFanoutLoad "CLKBUFX6" "Y" 1
+
+defineCellFootPrint "CLKBUFX4" "clkbuf"
+defineCellFanoutLoad "CLKBUFX4" "A" 1
+defineCellFanoutLoad "CLKBUFX4" "Y" 1
+
+defineCellFootPrint "CLKBUFX40" "clkbuf"
+defineCellFanoutLoad "CLKBUFX40" "A" 1
+defineCellFanoutLoad "CLKBUFX40" "Y" 1
+
+defineCellFootPrint "CLKBUFX3" "clkbuf"
+defineCellFanoutLoad "CLKBUFX3" "A" 1
+defineCellFanoutLoad "CLKBUFX3" "Y" 1
+
+defineCellFootPrint "CLKBUFX32" "clkbuf"
+defineCellFanoutLoad "CLKBUFX32" "A" 1
+defineCellFanoutLoad "CLKBUFX32" "Y" 1
+
+defineCellFootPrint "CLKBUFX2" "clkbuf"
+defineCellFanoutLoad "CLKBUFX2" "A" 1
+defineCellFanoutLoad "CLKBUFX2" "Y" 1
+
+defineCellFootPrint "CLKBUFX24" "clkbuf"
+defineCellFanoutLoad "CLKBUFX24" "A" 1
+defineCellFanoutLoad "CLKBUFX24" "Y" 1
+
+defineCellFootPrint "CLKBUFX20" "clkbuf"
+defineCellFanoutLoad "CLKBUFX20" "A" 1
+defineCellFanoutLoad "CLKBUFX20" "Y" 1
+
+defineCellFootPrint "CLKBUFX1" "clkbuf"
+defineCellFanoutLoad "CLKBUFX1" "A" 1
+defineCellFanoutLoad "CLKBUFX1" "Y" 1
+
+defineCellFootPrint "CLKBUFX16" "clkbuf"
+defineCellFanoutLoad "CLKBUFX16" "A" 1
+defineCellFanoutLoad "CLKBUFX16" "Y" 1
+
+defineCellFootPrint "CLKBUFX12" "clkbuf"
+defineCellFanoutLoad "CLKBUFX12" "A" 1
+defineCellFanoutLoad "CLKBUFX12" "Y" 1
+
+defineCellFootPrint "CLKAND2X8" "clkand2"
+defineCellFanoutLoad "CLKAND2X8" "A" 1
+defineCellFanoutLoad "CLKAND2X8" "B" 1
+defineCellFanoutLoad "CLKAND2X8" "Y" 1
+
+defineCellFootPrint "CLKAND2X6" "clkand2"
+defineCellFanoutLoad "CLKAND2X6" "A" 1
+defineCellFanoutLoad "CLKAND2X6" "B" 1
+defineCellFanoutLoad "CLKAND2X6" "Y" 1
+
+defineCellFootPrint "CLKAND2X4" "clkand2"
+defineCellFanoutLoad "CLKAND2X4" "A" 1
+defineCellFanoutLoad "CLKAND2X4" "B" 1
+defineCellFanoutLoad "CLKAND2X4" "Y" 1
+
+defineCellFootPrint "CLKAND2X3" "clkand2"
+defineCellFanoutLoad "CLKAND2X3" "A" 1
+defineCellFanoutLoad "CLKAND2X3" "B" 1
+defineCellFanoutLoad "CLKAND2X3" "Y" 1
+
+defineCellFootPrint "CLKAND2X2" "clkand2"
+defineCellFanoutLoad "CLKAND2X2" "A" 1
+defineCellFanoutLoad "CLKAND2X2" "B" 1
+defineCellFanoutLoad "CLKAND2X2" "Y" 1
+
+defineCellFootPrint "CLKAND2X12" "clkand2"
+defineCellFanoutLoad "CLKAND2X12" "A" 1
+defineCellFanoutLoad "CLKAND2X12" "B" 1
+defineCellFanoutLoad "CLKAND2X12" "Y" 1
+
+defineCellFootPrint "BUFX8" "buf"
+defineCellFanoutLoad "BUFX8" "A" 1
+defineCellFanoutLoad "BUFX8" "Y" 1
+
+defineCellFootPrint "BUFX6" "buf"
+defineCellFanoutLoad "BUFX6" "A" 1
+defineCellFanoutLoad "BUFX6" "Y" 1
+
+defineCellFootPrint "BUFX5" "buf"
+defineCellFanoutLoad "BUFX5" "A" 1
+defineCellFanoutLoad "BUFX5" "Y" 1
+
+defineCellFootPrint "BUFX4" "buf"
+defineCellFanoutLoad "BUFX4" "A" 1
+defineCellFanoutLoad "BUFX4" "Y" 1
+
+defineCellFootPrint "BUFX3" "buf"
+defineCellFanoutLoad "BUFX3" "A" 1
+defineCellFanoutLoad "BUFX3" "Y" 1
+
+defineCellFootPrint "BUFX2" "buf"
+defineCellFanoutLoad "BUFX2" "A" 1
+defineCellFanoutLoad "BUFX2" "Y" 1
+
+defineCellFootPrint "BUFX20" "buf"
+defineCellFanoutLoad "BUFX20" "A" 1
+defineCellFanoutLoad "BUFX20" "Y" 1
+
+defineCellFootPrint "BUFX18" "buf"
+defineCellFanoutLoad "BUFX18" "A" 1
+defineCellFanoutLoad "BUFX18" "Y" 1
+
+defineCellFootPrint "BUFX16" "buf"
+defineCellFanoutLoad "BUFX16" "A" 1
+defineCellFanoutLoad "BUFX16" "Y" 1
+
+defineCellFootPrint "BUFX14" "buf"
+defineCellFanoutLoad "BUFX14" "A" 1
+defineCellFanoutLoad "BUFX14" "Y" 1
+
+defineCellFootPrint "BUFX12" "buf"
+defineCellFanoutLoad "BUFX12" "A" 1
+defineCellFanoutLoad "BUFX12" "Y" 1
+
+defineCellFootPrint "BUFX10" "buf"
+defineCellFanoutLoad "BUFX10" "A" 1
+defineCellFanoutLoad "BUFX10" "Y" 1
+
+defineCellFootPrint "AOI33XL" "aoi33"
+defineCellFanoutLoad "AOI33XL" "A0" 1
+defineCellFanoutLoad "AOI33XL" "A1" 1
+defineCellFanoutLoad "AOI33XL" "A2" 1
+defineCellFanoutLoad "AOI33XL" "B0" 1
+defineCellFanoutLoad "AOI33XL" "B1" 1
+defineCellFanoutLoad "AOI33XL" "B2" 1
+defineCellFanoutLoad "AOI33XL" "Y" 1
+
+defineCellFootPrint "AOI33X4" "aoi33"
+defineCellFanoutLoad "AOI33X4" "A0" 1
+defineCellFanoutLoad "AOI33X4" "A1" 1
+defineCellFanoutLoad "AOI33X4" "A2" 1
+defineCellFanoutLoad "AOI33X4" "B0" 1
+defineCellFanoutLoad "AOI33X4" "B1" 1
+defineCellFanoutLoad "AOI33X4" "B2" 1
+defineCellFanoutLoad "AOI33X4" "Y" 1
+
+defineCellFootPrint "AOI33X2" "aoi33"
+defineCellFanoutLoad "AOI33X2" "A0" 1
+defineCellFanoutLoad "AOI33X2" "A1" 1
+defineCellFanoutLoad "AOI33X2" "A2" 1
+defineCellFanoutLoad "AOI33X2" "B0" 1
+defineCellFanoutLoad "AOI33X2" "B1" 1
+defineCellFanoutLoad "AOI33X2" "B2" 1
+defineCellFanoutLoad "AOI33X2" "Y" 1
+
+defineCellFootPrint "AOI33X1" "aoi33"
+defineCellFanoutLoad "AOI33X1" "A0" 1
+defineCellFanoutLoad "AOI33X1" "A1" 1
+defineCellFanoutLoad "AOI33X1" "A2" 1
+defineCellFanoutLoad "AOI33X1" "B0" 1
+defineCellFanoutLoad "AOI33X1" "B1" 1
+defineCellFanoutLoad "AOI33X1" "B2" 1
+defineCellFanoutLoad "AOI33X1" "Y" 1
+
+defineCellFootPrint "AOI32XL" "aoi32"
+defineCellFanoutLoad "AOI32XL" "A0" 1
+defineCellFanoutLoad "AOI32XL" "A1" 1
+defineCellFanoutLoad "AOI32XL" "A2" 1
+defineCellFanoutLoad "AOI32XL" "B0" 1
+defineCellFanoutLoad "AOI32XL" "B1" 1
+defineCellFanoutLoad "AOI32XL" "Y" 1
+
+defineCellFootPrint "AOI32X4" "aoi32"
+defineCellFanoutLoad "AOI32X4" "A0" 1
+defineCellFanoutLoad "AOI32X4" "A1" 1
+defineCellFanoutLoad "AOI32X4" "A2" 1
+defineCellFanoutLoad "AOI32X4" "B0" 1
+defineCellFanoutLoad "AOI32X4" "B1" 1
+defineCellFanoutLoad "AOI32X4" "Y" 1
+
+defineCellFootPrint "AOI32X2" "aoi32"
+defineCellFanoutLoad "AOI32X2" "A0" 1
+defineCellFanoutLoad "AOI32X2" "A1" 1
+defineCellFanoutLoad "AOI32X2" "A2" 1
+defineCellFanoutLoad "AOI32X2" "B0" 1
+defineCellFanoutLoad "AOI32X2" "B1" 1
+defineCellFanoutLoad "AOI32X2" "Y" 1
+
+defineCellFootPrint "AOI32X1" "aoi32"
+defineCellFanoutLoad "AOI32X1" "A0" 1
+defineCellFanoutLoad "AOI32X1" "A1" 1
+defineCellFanoutLoad "AOI32X1" "A2" 1
+defineCellFanoutLoad "AOI32X1" "B0" 1
+defineCellFanoutLoad "AOI32X1" "B1" 1
+defineCellFanoutLoad "AOI32X1" "Y" 1
+
+defineCellFootPrint "AOI31XL" "aoi31"
+defineCellFanoutLoad "AOI31XL" "A0" 1
+defineCellFanoutLoad "AOI31XL" "A1" 1
+defineCellFanoutLoad "AOI31XL" "A2" 1
+defineCellFanoutLoad "AOI31XL" "B0" 1
+defineCellFanoutLoad "AOI31XL" "Y" 1
+
+defineCellFootPrint "AOI31X4" "aoi31"
+defineCellFanoutLoad "AOI31X4" "A0" 1
+defineCellFanoutLoad "AOI31X4" "A1" 1
+defineCellFanoutLoad "AOI31X4" "A2" 1
+defineCellFanoutLoad "AOI31X4" "B0" 1
+defineCellFanoutLoad "AOI31X4" "Y" 1
+
+defineCellFootPrint "AOI31X2" "aoi31"
+defineCellFanoutLoad "AOI31X2" "A0" 1
+defineCellFanoutLoad "AOI31X2" "A1" 1
+defineCellFanoutLoad "AOI31X2" "A2" 1
+defineCellFanoutLoad "AOI31X2" "B0" 1
+defineCellFanoutLoad "AOI31X2" "Y" 1
+
+defineCellFootPrint "AOI31X1" "aoi31"
+defineCellFanoutLoad "AOI31X1" "A0" 1
+defineCellFanoutLoad "AOI31X1" "A1" 1
+defineCellFanoutLoad "AOI31X1" "A2" 1
+defineCellFanoutLoad "AOI31X1" "B0" 1
+defineCellFanoutLoad "AOI31X1" "Y" 1
+
+defineCellFootPrint "AOI2BB2XL" "aoi2bb2"
+defineCellFanoutLoad "AOI2BB2XL" "A0N" 1
+defineCellFanoutLoad "AOI2BB2XL" "A1N" 1
+defineCellFanoutLoad "AOI2BB2XL" "B0" 1
+defineCellFanoutLoad "AOI2BB2XL" "B1" 1
+defineCellFanoutLoad "AOI2BB2XL" "Y" 1
+
+defineCellFootPrint "AOI2BB2X4" "aoi2bb2"
+defineCellFanoutLoad "AOI2BB2X4" "A0N" 1
+defineCellFanoutLoad "AOI2BB2X4" "A1N" 1
+defineCellFanoutLoad "AOI2BB2X4" "B0" 1
+defineCellFanoutLoad "AOI2BB2X4" "B1" 1
+defineCellFanoutLoad "AOI2BB2X4" "Y" 1
+
+defineCellFootPrint "AOI2BB2X2" "aoi2bb2"
+defineCellFanoutLoad "AOI2BB2X2" "A0N" 1
+defineCellFanoutLoad "AOI2BB2X2" "A1N" 1
+defineCellFanoutLoad "AOI2BB2X2" "B0" 1
+defineCellFanoutLoad "AOI2BB2X2" "B1" 1
+defineCellFanoutLoad "AOI2BB2X2" "Y" 1
+
+defineCellFootPrint "AOI2BB2X1" "aoi2bb2"
+defineCellFanoutLoad "AOI2BB2X1" "A0N" 1
+defineCellFanoutLoad "AOI2BB2X1" "A1N" 1
+defineCellFanoutLoad "AOI2BB2X1" "B0" 1
+defineCellFanoutLoad "AOI2BB2X1" "B1" 1
+defineCellFanoutLoad "AOI2BB2X1" "Y" 1
+
+defineCellFootPrint "AOI2BB1XL" "aoi2bb1"
+defineCellFanoutLoad "AOI2BB1XL" "A0N" 1
+defineCellFanoutLoad "AOI2BB1XL" "A1N" 1
+defineCellFanoutLoad "AOI2BB1XL" "B0" 1
+defineCellFanoutLoad "AOI2BB1XL" "Y" 1
+
+defineCellFootPrint "AOI2BB1X4" "aoi2bb1"
+defineCellFanoutLoad "AOI2BB1X4" "A0N" 1
+defineCellFanoutLoad "AOI2BB1X4" "A1N" 1
+defineCellFanoutLoad "AOI2BB1X4" "B0" 1
+defineCellFanoutLoad "AOI2BB1X4" "Y" 1
+
+defineCellFootPrint "AOI2BB1X2" "aoi2bb1"
+defineCellFanoutLoad "AOI2BB1X2" "A0N" 1
+defineCellFanoutLoad "AOI2BB1X2" "A1N" 1
+defineCellFanoutLoad "AOI2BB1X2" "B0" 1
+defineCellFanoutLoad "AOI2BB1X2" "Y" 1
+
+defineCellFootPrint "AOI2BB1X1" "aoi2bb1"
+defineCellFanoutLoad "AOI2BB1X1" "A0N" 1
+defineCellFanoutLoad "AOI2BB1X1" "A1N" 1
+defineCellFanoutLoad "AOI2BB1X1" "B0" 1
+defineCellFanoutLoad "AOI2BB1X1" "Y" 1
+
+defineCellFootPrint "AOI2B1XL" "aoi2b1"
+defineCellFanoutLoad "AOI2B1XL" "A0" 1
+defineCellFanoutLoad "AOI2B1XL" "A1N" 1
+defineCellFanoutLoad "AOI2B1XL" "B0" 1
+defineCellFanoutLoad "AOI2B1XL" "Y" 1
+
+defineCellFootPrint "AOI2B1X4" "aoi2b1"
+defineCellFanoutLoad "AOI2B1X4" "A0" 1
+defineCellFanoutLoad "AOI2B1X4" "A1N" 1
+defineCellFanoutLoad "AOI2B1X4" "B0" 1
+defineCellFanoutLoad "AOI2B1X4" "Y" 1
+
+defineCellFootPrint "AOI2B1X2" "aoi2b1"
+defineCellFanoutLoad "AOI2B1X2" "A0" 1
+defineCellFanoutLoad "AOI2B1X2" "A1N" 1
+defineCellFanoutLoad "AOI2B1X2" "B0" 1
+defineCellFanoutLoad "AOI2B1X2" "Y" 1
+
+defineCellFootPrint "AOI2B1X1" "aoi2b1"
+defineCellFanoutLoad "AOI2B1X1" "A0" 1
+defineCellFanoutLoad "AOI2B1X1" "A1N" 1
+defineCellFanoutLoad "AOI2B1X1" "B0" 1
+defineCellFanoutLoad "AOI2B1X1" "Y" 1
+
+defineCellFootPrint "AOI22XL" "aoi22"
+defineCellFanoutLoad "AOI22XL" "A0" 1
+defineCellFanoutLoad "AOI22XL" "A1" 1
+defineCellFanoutLoad "AOI22XL" "B0" 1
+defineCellFanoutLoad "AOI22XL" "B1" 1
+defineCellFanoutLoad "AOI22XL" "Y" 1
+
+defineCellFootPrint "AOI22X4" "aoi22"
+defineCellFanoutLoad "AOI22X4" "A0" 1
+defineCellFanoutLoad "AOI22X4" "A1" 1
+defineCellFanoutLoad "AOI22X4" "B0" 1
+defineCellFanoutLoad "AOI22X4" "B1" 1
+defineCellFanoutLoad "AOI22X4" "Y" 1
+
+defineCellFootPrint "AOI22X2" "aoi22"
+defineCellFanoutLoad "AOI22X2" "A0" 1
+defineCellFanoutLoad "AOI22X2" "A1" 1
+defineCellFanoutLoad "AOI22X2" "B0" 1
+defineCellFanoutLoad "AOI22X2" "B1" 1
+defineCellFanoutLoad "AOI22X2" "Y" 1
+
+defineCellFootPrint "AOI22X1" "aoi22"
+defineCellFanoutLoad "AOI22X1" "A0" 1
+defineCellFanoutLoad "AOI22X1" "A1" 1
+defineCellFanoutLoad "AOI22X1" "B0" 1
+defineCellFanoutLoad "AOI22X1" "B1" 1
+defineCellFanoutLoad "AOI22X1" "Y" 1
+
+defineCellFootPrint "AOI222XL" "aoi222"
+defineCellFanoutLoad "AOI222XL" "A0" 1
+defineCellFanoutLoad "AOI222XL" "A1" 1
+defineCellFanoutLoad "AOI222XL" "B0" 1
+defineCellFanoutLoad "AOI222XL" "B1" 1
+defineCellFanoutLoad "AOI222XL" "C0" 1
+defineCellFanoutLoad "AOI222XL" "C1" 1
+defineCellFanoutLoad "AOI222XL" "Y" 1
+
+defineCellFootPrint "AOI222X4" "aoi222"
+defineCellFanoutLoad "AOI222X4" "A0" 1
+defineCellFanoutLoad "AOI222X4" "A1" 1
+defineCellFanoutLoad "AOI222X4" "B0" 1
+defineCellFanoutLoad "AOI222X4" "B1" 1
+defineCellFanoutLoad "AOI222X4" "C0" 1
+defineCellFanoutLoad "AOI222X4" "C1" 1
+defineCellFanoutLoad "AOI222X4" "Y" 1
+
+defineCellFootPrint "AOI222X2" "aoi222"
+defineCellFanoutLoad "AOI222X2" "A0" 1
+defineCellFanoutLoad "AOI222X2" "A1" 1
+defineCellFanoutLoad "AOI222X2" "B0" 1
+defineCellFanoutLoad "AOI222X2" "B1" 1
+defineCellFanoutLoad "AOI222X2" "C0" 1
+defineCellFanoutLoad "AOI222X2" "C1" 1
+defineCellFanoutLoad "AOI222X2" "Y" 1
+
+defineCellFootPrint "AOI222X1" "aoi222"
+defineCellFanoutLoad "AOI222X1" "A0" 1
+defineCellFanoutLoad "AOI222X1" "A1" 1
+defineCellFanoutLoad "AOI222X1" "B0" 1
+defineCellFanoutLoad "AOI222X1" "B1" 1
+defineCellFanoutLoad "AOI222X1" "C0" 1
+defineCellFanoutLoad "AOI222X1" "C1" 1
+defineCellFanoutLoad "AOI222X1" "Y" 1
+
+defineCellFootPrint "AOI221XL" "aoi221"
+defineCellFanoutLoad "AOI221XL" "A0" 1
+defineCellFanoutLoad "AOI221XL" "A1" 1
+defineCellFanoutLoad "AOI221XL" "B0" 1
+defineCellFanoutLoad "AOI221XL" "B1" 1
+defineCellFanoutLoad "AOI221XL" "C0" 1
+defineCellFanoutLoad "AOI221XL" "Y" 1
+
+defineCellFootPrint "AOI221X4" "aoi221"
+defineCellFanoutLoad "AOI221X4" "A0" 1
+defineCellFanoutLoad "AOI221X4" "A1" 1
+defineCellFanoutLoad "AOI221X4" "B0" 1
+defineCellFanoutLoad "AOI221X4" "B1" 1
+defineCellFanoutLoad "AOI221X4" "C0" 1
+defineCellFanoutLoad "AOI221X4" "Y" 1
+
+defineCellFootPrint "AOI221X2" "aoi221"
+defineCellFanoutLoad "AOI221X2" "A0" 1
+defineCellFanoutLoad "AOI221X2" "A1" 1
+defineCellFanoutLoad "AOI221X2" "B0" 1
+defineCellFanoutLoad "AOI221X2" "B1" 1
+defineCellFanoutLoad "AOI221X2" "C0" 1
+defineCellFanoutLoad "AOI221X2" "Y" 1
+
+defineCellFootPrint "AOI221X1" "aoi221"
+defineCellFanoutLoad "AOI221X1" "A0" 1
+defineCellFanoutLoad "AOI221X1" "A1" 1
+defineCellFanoutLoad "AOI221X1" "B0" 1
+defineCellFanoutLoad "AOI221X1" "B1" 1
+defineCellFanoutLoad "AOI221X1" "C0" 1
+defineCellFanoutLoad "AOI221X1" "Y" 1
+
+defineCellFootPrint "AOI21BXL" "aoi21b"
+defineCellFanoutLoad "AOI21BXL" "A0" 1
+defineCellFanoutLoad "AOI21BXL" "A1" 1
+defineCellFanoutLoad "AOI21BXL" "B0N" 1
+defineCellFanoutLoad "AOI21BXL" "Y" 1
+
+defineCellFootPrint "AOI21BX4" "aoi21b"
+defineCellFanoutLoad "AOI21BX4" "A0" 1
+defineCellFanoutLoad "AOI21BX4" "A1" 1
+defineCellFanoutLoad "AOI21BX4" "B0N" 1
+defineCellFanoutLoad "AOI21BX4" "Y" 1
+
+defineCellFootPrint "AOI21BX2" "aoi21b"
+defineCellFanoutLoad "AOI21BX2" "A0" 1
+defineCellFanoutLoad "AOI21BX2" "A1" 1
+defineCellFanoutLoad "AOI21BX2" "B0N" 1
+defineCellFanoutLoad "AOI21BX2" "Y" 1
+
+defineCellFootPrint "AOI21BX1" "aoi21b"
+defineCellFanoutLoad "AOI21BX1" "A0" 1
+defineCellFanoutLoad "AOI21BX1" "A1" 1
+defineCellFanoutLoad "AOI21BX1" "B0N" 1
+defineCellFanoutLoad "AOI21BX1" "Y" 1
+
+defineCellFootPrint "AOI21XL" "aoi21"
+defineCellFanoutLoad "AOI21XL" "A0" 1
+defineCellFanoutLoad "AOI21XL" "A1" 1
+defineCellFanoutLoad "AOI21XL" "B0" 1
+defineCellFanoutLoad "AOI21XL" "Y" 1
+
+defineCellFootPrint "AOI21X8" "aoi21"
+defineCellFanoutLoad "AOI21X8" "A0" 1
+defineCellFanoutLoad "AOI21X8" "A1" 1
+defineCellFanoutLoad "AOI21X8" "B0" 1
+defineCellFanoutLoad "AOI21X8" "Y" 1
+
+defineCellFootPrint "AOI21X6" "aoi21"
+defineCellFanoutLoad "AOI21X6" "A0" 1
+defineCellFanoutLoad "AOI21X6" "A1" 1
+defineCellFanoutLoad "AOI21X6" "B0" 1
+defineCellFanoutLoad "AOI21X6" "Y" 1
+
+defineCellFootPrint "AOI21X4" "aoi21"
+defineCellFanoutLoad "AOI21X4" "A0" 1
+defineCellFanoutLoad "AOI21X4" "A1" 1
+defineCellFanoutLoad "AOI21X4" "B0" 1
+defineCellFanoutLoad "AOI21X4" "Y" 1
+
+defineCellFootPrint "AOI21X3" "aoi21"
+defineCellFanoutLoad "AOI21X3" "A0" 1
+defineCellFanoutLoad "AOI21X3" "A1" 1
+defineCellFanoutLoad "AOI21X3" "B0" 1
+defineCellFanoutLoad "AOI21X3" "Y" 1
+
+defineCellFootPrint "AOI21X2" "aoi21"
+defineCellFanoutLoad "AOI21X2" "A0" 1
+defineCellFanoutLoad "AOI21X2" "A1" 1
+defineCellFanoutLoad "AOI21X2" "B0" 1
+defineCellFanoutLoad "AOI21X2" "Y" 1
+
+defineCellFootPrint "AOI21X1" "aoi21"
+defineCellFanoutLoad "AOI21X1" "A0" 1
+defineCellFanoutLoad "AOI21X1" "A1" 1
+defineCellFanoutLoad "AOI21X1" "B0" 1
+defineCellFanoutLoad "AOI21X1" "Y" 1
+
+defineCellFootPrint "AOI211XL" "aoi211"
+defineCellFanoutLoad "AOI211XL" "A0" 1
+defineCellFanoutLoad "AOI211XL" "A1" 1
+defineCellFanoutLoad "AOI211XL" "B0" 1
+defineCellFanoutLoad "AOI211XL" "C0" 1
+defineCellFanoutLoad "AOI211XL" "Y" 1
+
+defineCellFootPrint "AOI211X4" "aoi211"
+defineCellFanoutLoad "AOI211X4" "A0" 1
+defineCellFanoutLoad "AOI211X4" "A1" 1
+defineCellFanoutLoad "AOI211X4" "B0" 1
+defineCellFanoutLoad "AOI211X4" "C0" 1
+defineCellFanoutLoad "AOI211X4" "Y" 1
+
+defineCellFootPrint "AOI211X2" "aoi211"
+defineCellFanoutLoad "AOI211X2" "A0" 1
+defineCellFanoutLoad "AOI211X2" "A1" 1
+defineCellFanoutLoad "AOI211X2" "B0" 1
+defineCellFanoutLoad "AOI211X2" "C0" 1
+defineCellFanoutLoad "AOI211X2" "Y" 1
+
+defineCellFootPrint "AOI211X1" "aoi211"
+defineCellFanoutLoad "AOI211X1" "A0" 1
+defineCellFanoutLoad "AOI211X1" "A1" 1
+defineCellFanoutLoad "AOI211X1" "B0" 1
+defineCellFanoutLoad "AOI211X1" "C0" 1
+defineCellFanoutLoad "AOI211X1" "Y" 1
+
+defineCellFootPrint "AO2B2BXL" "ao2b2b"
+defineCellFanoutLoad "AO2B2BXL" "A0" 1
+defineCellFanoutLoad "AO2B2BXL" "A1N" 1
+defineCellFanoutLoad "AO2B2BXL" "B0" 1
+defineCellFanoutLoad "AO2B2BXL" "B1N" 1
+defineCellFanoutLoad "AO2B2BXL" "Y" 1
+
+defineCellFootPrint "AO2B2BX4" "ao2b2b"
+defineCellFanoutLoad "AO2B2BX4" "A0" 1
+defineCellFanoutLoad "AO2B2BX4" "A1N" 1
+defineCellFanoutLoad "AO2B2BX4" "B0" 1
+defineCellFanoutLoad "AO2B2BX4" "B1N" 1
+defineCellFanoutLoad "AO2B2BX4" "Y" 1
+
+defineCellFootPrint "AO2B2BX2" "ao2b2b"
+defineCellFanoutLoad "AO2B2BX2" "A0" 1
+defineCellFanoutLoad "AO2B2BX2" "A1N" 1
+defineCellFanoutLoad "AO2B2BX2" "B0" 1
+defineCellFanoutLoad "AO2B2BX2" "B1N" 1
+defineCellFanoutLoad "AO2B2BX2" "Y" 1
+
+defineCellFootPrint "AO2B2BX1" "ao2b2b"
+defineCellFanoutLoad "AO2B2BX1" "A0" 1
+defineCellFanoutLoad "AO2B2BX1" "A1N" 1
+defineCellFanoutLoad "AO2B2BX1" "B0" 1
+defineCellFanoutLoad "AO2B2BX1" "B1N" 1
+defineCellFanoutLoad "AO2B2BX1" "Y" 1
+
+defineCellFootPrint "AO2B2XL" "ao2b2"
+defineCellFanoutLoad "AO2B2XL" "A0" 1
+defineCellFanoutLoad "AO2B2XL" "A1N" 1
+defineCellFanoutLoad "AO2B2XL" "B0" 1
+defineCellFanoutLoad "AO2B2XL" "B1" 1
+defineCellFanoutLoad "AO2B2XL" "Y" 1
+
+defineCellFootPrint "AO2B2X4" "ao2b2"
+defineCellFanoutLoad "AO2B2X4" "A0" 1
+defineCellFanoutLoad "AO2B2X4" "A1N" 1
+defineCellFanoutLoad "AO2B2X4" "B0" 1
+defineCellFanoutLoad "AO2B2X4" "B1" 1
+defineCellFanoutLoad "AO2B2X4" "Y" 1
+
+defineCellFootPrint "AO2B2X2" "ao2b2"
+defineCellFanoutLoad "AO2B2X2" "A0" 1
+defineCellFanoutLoad "AO2B2X2" "A1N" 1
+defineCellFanoutLoad "AO2B2X2" "B0" 1
+defineCellFanoutLoad "AO2B2X2" "B1" 1
+defineCellFanoutLoad "AO2B2X2" "Y" 1
+
+defineCellFootPrint "AO2B2X1" "ao2b2"
+defineCellFanoutLoad "AO2B2X1" "A0" 1
+defineCellFanoutLoad "AO2B2X1" "A1N" 1
+defineCellFanoutLoad "AO2B2X1" "B0" 1
+defineCellFanoutLoad "AO2B2X1" "B1" 1
+defineCellFanoutLoad "AO2B2X1" "Y" 1
+
+defineCellFootPrint "AO22XL" "ao22"
+defineCellFanoutLoad "AO22XL" "A0" 1
+defineCellFanoutLoad "AO22XL" "A1" 1
+defineCellFanoutLoad "AO22XL" "B0" 1
+defineCellFanoutLoad "AO22XL" "B1" 1
+defineCellFanoutLoad "AO22XL" "Y" 1
+
+defineCellFootPrint "AO22X4" "ao22"
+defineCellFanoutLoad "AO22X4" "A0" 1
+defineCellFanoutLoad "AO22X4" "A1" 1
+defineCellFanoutLoad "AO22X4" "B0" 1
+defineCellFanoutLoad "AO22X4" "B1" 1
+defineCellFanoutLoad "AO22X4" "Y" 1
+
+defineCellFootPrint "AO22X2" "ao22"
+defineCellFanoutLoad "AO22X2" "A0" 1
+defineCellFanoutLoad "AO22X2" "A1" 1
+defineCellFanoutLoad "AO22X2" "B0" 1
+defineCellFanoutLoad "AO22X2" "B1" 1
+defineCellFanoutLoad "AO22X2" "Y" 1
+
+defineCellFootPrint "AO22X1" "ao22"
+defineCellFanoutLoad "AO22X1" "A0" 1
+defineCellFanoutLoad "AO22X1" "A1" 1
+defineCellFanoutLoad "AO22X1" "B0" 1
+defineCellFanoutLoad "AO22X1" "B1" 1
+defineCellFanoutLoad "AO22X1" "Y" 1
+
+defineCellFootPrint "AO21XL" "ao21"
+defineCellFanoutLoad "AO21XL" "A0" 1
+defineCellFanoutLoad "AO21XL" "A1" 1
+defineCellFanoutLoad "AO21XL" "B0" 1
+defineCellFanoutLoad "AO21XL" "Y" 1
+
+defineCellFootPrint "AO21X4" "ao21"
+defineCellFanoutLoad "AO21X4" "A0" 1
+defineCellFanoutLoad "AO21X4" "A1" 1
+defineCellFanoutLoad "AO21X4" "B0" 1
+defineCellFanoutLoad "AO21X4" "Y" 1
+
+defineCellFootPrint "AO21X2" "ao21"
+defineCellFanoutLoad "AO21X2" "A0" 1
+defineCellFanoutLoad "AO21X2" "A1" 1
+defineCellFanoutLoad "AO21X2" "B0" 1
+defineCellFanoutLoad "AO21X2" "Y" 1
+
+defineCellFootPrint "AO21X1" "ao21"
+defineCellFanoutLoad "AO21X1" "A0" 1
+defineCellFanoutLoad "AO21X1" "A1" 1
+defineCellFanoutLoad "AO21X1" "B0" 1
+defineCellFanoutLoad "AO21X1" "Y" 1
+
+defineCellFootPrint "AND4XL" "and4"
+defineCellFanoutLoad "AND4XL" "A" 1
+defineCellFanoutLoad "AND4XL" "B" 1
+defineCellFanoutLoad "AND4XL" "C" 1
+defineCellFanoutLoad "AND4XL" "D" 1
+defineCellFanoutLoad "AND4XL" "Y" 1
+
+defineCellFootPrint "AND4X8" "and4"
+defineCellFanoutLoad "AND4X8" "A" 1
+defineCellFanoutLoad "AND4X8" "B" 1
+defineCellFanoutLoad "AND4X8" "C" 1
+defineCellFanoutLoad "AND4X8" "D" 1
+defineCellFanoutLoad "AND4X8" "Y" 1
+
+defineCellFootPrint "AND4X6" "and4"
+defineCellFanoutLoad "AND4X6" "A" 1
+defineCellFanoutLoad "AND4X6" "B" 1
+defineCellFanoutLoad "AND4X6" "C" 1
+defineCellFanoutLoad "AND4X6" "D" 1
+defineCellFanoutLoad "AND4X6" "Y" 1
+
+defineCellFootPrint "AND4X4" "and4"
+defineCellFanoutLoad "AND4X4" "A" 1
+defineCellFanoutLoad "AND4X4" "B" 1
+defineCellFanoutLoad "AND4X4" "C" 1
+defineCellFanoutLoad "AND4X4" "D" 1
+defineCellFanoutLoad "AND4X4" "Y" 1
+
+defineCellFootPrint "AND4X2" "and4"
+defineCellFanoutLoad "AND4X2" "A" 1
+defineCellFanoutLoad "AND4X2" "B" 1
+defineCellFanoutLoad "AND4X2" "C" 1
+defineCellFanoutLoad "AND4X2" "D" 1
+defineCellFanoutLoad "AND4X2" "Y" 1
+
+defineCellFootPrint "AND4X1" "and4"
+defineCellFanoutLoad "AND4X1" "A" 1
+defineCellFanoutLoad "AND4X1" "B" 1
+defineCellFanoutLoad "AND4X1" "C" 1
+defineCellFanoutLoad "AND4X1" "D" 1
+defineCellFanoutLoad "AND4X1" "Y" 1
+
+defineCellFootPrint "AND3XL" "and3"
+defineCellFanoutLoad "AND3XL" "A" 1
+defineCellFanoutLoad "AND3XL" "B" 1
+defineCellFanoutLoad "AND3XL" "C" 1
+defineCellFanoutLoad "AND3XL" "Y" 1
+
+defineCellFootPrint "AND3X8" "and3"
+defineCellFanoutLoad "AND3X8" "A" 1
+defineCellFanoutLoad "AND3X8" "B" 1
+defineCellFanoutLoad "AND3X8" "C" 1
+defineCellFanoutLoad "AND3X8" "Y" 1
+
+defineCellFootPrint "AND3X6" "and3"
+defineCellFanoutLoad "AND3X6" "A" 1
+defineCellFanoutLoad "AND3X6" "B" 1
+defineCellFanoutLoad "AND3X6" "C" 1
+defineCellFanoutLoad "AND3X6" "Y" 1
+
+defineCellFootPrint "AND3X4" "and3"
+defineCellFanoutLoad "AND3X4" "A" 1
+defineCellFanoutLoad "AND3X4" "B" 1
+defineCellFanoutLoad "AND3X4" "C" 1
+defineCellFanoutLoad "AND3X4" "Y" 1
+
+defineCellFootPrint "AND3X2" "and3"
+defineCellFanoutLoad "AND3X2" "A" 1
+defineCellFanoutLoad "AND3X2" "B" 1
+defineCellFanoutLoad "AND3X2" "C" 1
+defineCellFanoutLoad "AND3X2" "Y" 1
+
+defineCellFootPrint "AND3X1" "and3"
+defineCellFanoutLoad "AND3X1" "A" 1
+defineCellFanoutLoad "AND3X1" "B" 1
+defineCellFanoutLoad "AND3X1" "C" 1
+defineCellFanoutLoad "AND3X1" "Y" 1
+
+defineCellFootPrint "AND2XL" "and2"
+defineCellFanoutLoad "AND2XL" "A" 1
+defineCellFanoutLoad "AND2XL" "B" 1
+defineCellFanoutLoad "AND2XL" "Y" 1
+
+defineCellFootPrint "AND2X8" "and2"
+defineCellFanoutLoad "AND2X8" "A" 1
+defineCellFanoutLoad "AND2X8" "B" 1
+defineCellFanoutLoad "AND2X8" "Y" 1
+
+defineCellFootPrint "AND2X6" "and2"
+defineCellFanoutLoad "AND2X6" "A" 1
+defineCellFanoutLoad "AND2X6" "B" 1
+defineCellFanoutLoad "AND2X6" "Y" 1
+
+defineCellFootPrint "AND2X4" "and2"
+defineCellFanoutLoad "AND2X4" "A" 1
+defineCellFanoutLoad "AND2X4" "B" 1
+defineCellFanoutLoad "AND2X4" "Y" 1
+
+defineCellFootPrint "AND2X2" "and2"
+defineCellFanoutLoad "AND2X2" "A" 1
+defineCellFanoutLoad "AND2X2" "B" 1
+defineCellFanoutLoad "AND2X2" "Y" 1
+
+defineCellFootPrint "AND2X1" "and2"
+defineCellFanoutLoad "AND2X1" "A" 1
+defineCellFanoutLoad "AND2X1" "B" 1
+defineCellFanoutLoad "AND2X1" "Y" 1
+
+defineCellFootPrint "AHHCONX4" "ahhcon"
+defineCellFanoutLoad "AHHCONX4" "A" 1
+defineCellFanoutLoad "AHHCONX4" "CI" 1
+defineCellFanoutLoad "AHHCONX4" "S" 1
+defineCellFanoutLoad "AHHCONX4" "CON" 1
+
+defineCellFootPrint "AHHCONX2" "ahhcon"
+defineCellFanoutLoad "AHHCONX2" "A" 1
+defineCellFanoutLoad "AHHCONX2" "CI" 1
+defineCellFanoutLoad "AHHCONX2" "S" 1
+defineCellFanoutLoad "AHHCONX2" "CON" 1
+
+defineCellFootPrint "AHHCINX4" "ahhcin"
+defineCellFanoutLoad "AHHCINX4" "A" 1
+defineCellFanoutLoad "AHHCINX4" "CIN" 1
+defineCellFanoutLoad "AHHCINX4" "S" 1
+defineCellFanoutLoad "AHHCINX4" "CO" 1
+
+defineCellFootPrint "AHHCINX2" "ahhcin"
+defineCellFanoutLoad "AHHCINX2" "A" 1
+defineCellFanoutLoad "AHHCINX2" "CIN" 1
+defineCellFanoutLoad "AHHCINX2" "S" 1
+defineCellFanoutLoad "AHHCINX2" "CO" 1
+
+defineCellFootPrint "AHCSHCONX4" "ahcshcon"
+defineCellFanoutLoad "AHCSHCONX4" "CS" 1
+defineCellFanoutLoad "AHCSHCONX4" "A" 1
+defineCellFanoutLoad "AHCSHCONX4" "CI" 1
+defineCellFanoutLoad "AHCSHCONX4" "S" 1
+defineCellFanoutLoad "AHCSHCONX4" "CON" 1
+
+defineCellFootPrint "AHCSHCONX2" "ahcshcon"
+defineCellFanoutLoad "AHCSHCONX2" "CS" 1
+defineCellFanoutLoad "AHCSHCONX2" "A" 1
+defineCellFanoutLoad "AHCSHCONX2" "CI" 1
+defineCellFanoutLoad "AHCSHCONX2" "S" 1
+defineCellFanoutLoad "AHCSHCONX2" "CON" 1
+
+defineCellFootPrint "AHCSHCINX4" "ahcshcin"
+defineCellFanoutLoad "AHCSHCINX4" "CS" 1
+defineCellFanoutLoad "AHCSHCINX4" "A" 1
+defineCellFanoutLoad "AHCSHCINX4" "CIN" 1
+defineCellFanoutLoad "AHCSHCINX4" "S" 1
+defineCellFanoutLoad "AHCSHCINX4" "CO" 1
+
+defineCellFootPrint "AHCSHCINX2" "ahcshcin"
+defineCellFanoutLoad "AHCSHCINX2" "CS" 1
+defineCellFanoutLoad "AHCSHCINX2" "A" 1
+defineCellFanoutLoad "AHCSHCINX2" "CIN" 1
+defineCellFanoutLoad "AHCSHCINX2" "S" 1
+defineCellFanoutLoad "AHCSHCINX2" "CO" 1
+
+defineCellFootPrint "AFHCONX4" "afhcon"
+defineCellFanoutLoad "AFHCONX4" "A" 1
+defineCellFanoutLoad "AFHCONX4" "B" 1
+defineCellFanoutLoad "AFHCONX4" "CI" 1
+defineCellFanoutLoad "AFHCONX4" "S" 1
+defineCellFanoutLoad "AFHCONX4" "CON" 1
+
+defineCellFootPrint "AFHCONX2" "afhcon"
+defineCellFanoutLoad "AFHCONX2" "A" 1
+defineCellFanoutLoad "AFHCONX2" "B" 1
+defineCellFanoutLoad "AFHCONX2" "CI" 1
+defineCellFanoutLoad "AFHCONX2" "S" 1
+defineCellFanoutLoad "AFHCONX2" "CON" 1
+
+defineCellFootPrint "AFHCINX4" "afhcin"
+defineCellFanoutLoad "AFHCINX4" "A" 1
+defineCellFanoutLoad "AFHCINX4" "B" 1
+defineCellFanoutLoad "AFHCINX4" "CIN" 1
+defineCellFanoutLoad "AFHCINX4" "S" 1
+defineCellFanoutLoad "AFHCINX4" "CO" 1
+
+defineCellFootPrint "AFHCINX2" "afhcin"
+defineCellFanoutLoad "AFHCINX2" "A" 1
+defineCellFanoutLoad "AFHCINX2" "B" 1
+defineCellFanoutLoad "AFHCINX2" "CIN" 1
+defineCellFanoutLoad "AFHCINX2" "S" 1
+defineCellFanoutLoad "AFHCINX2" "CO" 1
+
+defineCellFootPrint "AFCSIHCONX4" "afcsihcon"
+defineCellFanoutLoad "AFCSIHCONX4" "A" 1
+defineCellFanoutLoad "AFCSIHCONX4" "B" 1
+defineCellFanoutLoad "AFCSIHCONX4" "CS" 1
+defineCellFanoutLoad "AFCSIHCONX4" "S" 1
+defineCellFanoutLoad "AFCSIHCONX4" "CO0N" 1
+defineCellFanoutLoad "AFCSIHCONX4" "CO1N" 1
+
+defineCellFootPrint "AFCSIHCONX2" "afcsihcon"
+defineCellFanoutLoad "AFCSIHCONX2" "A" 1
+defineCellFanoutLoad "AFCSIHCONX2" "B" 1
+defineCellFanoutLoad "AFCSIHCONX2" "CS" 1
+defineCellFanoutLoad "AFCSIHCONX2" "S" 1
+defineCellFanoutLoad "AFCSIHCONX2" "CO0N" 1
+defineCellFanoutLoad "AFCSIHCONX2" "CO1N" 1
+
+defineCellFootPrint "AFCSHCONX4" "afcshcon"
+defineCellFanoutLoad "AFCSHCONX4" "CS" 1
+defineCellFanoutLoad "AFCSHCONX4" "A" 1
+defineCellFanoutLoad "AFCSHCONX4" "B" 1
+defineCellFanoutLoad "AFCSHCONX4" "CI0" 1
+defineCellFanoutLoad "AFCSHCONX4" "CI1" 1
+defineCellFanoutLoad "AFCSHCONX4" "S" 1
+defineCellFanoutLoad "AFCSHCONX4" "CO0N" 1
+defineCellFanoutLoad "AFCSHCONX4" "CO1N" 1
+
+defineCellFootPrint "AFCSHCONX2" "afcshcon"
+defineCellFanoutLoad "AFCSHCONX2" "CS" 1
+defineCellFanoutLoad "AFCSHCONX2" "A" 1
+defineCellFanoutLoad "AFCSHCONX2" "B" 1
+defineCellFanoutLoad "AFCSHCONX2" "CI0" 1
+defineCellFanoutLoad "AFCSHCONX2" "CI1" 1
+defineCellFanoutLoad "AFCSHCONX2" "S" 1
+defineCellFanoutLoad "AFCSHCONX2" "CO0N" 1
+defineCellFanoutLoad "AFCSHCONX2" "CO1N" 1
+
+defineCellFootPrint "AFCSHCINX4" "afcshcin"
+defineCellFanoutLoad "AFCSHCINX4" "CS" 1
+defineCellFanoutLoad "AFCSHCINX4" "A" 1
+defineCellFanoutLoad "AFCSHCINX4" "B" 1
+defineCellFanoutLoad "AFCSHCINX4" "CI0N" 1
+defineCellFanoutLoad "AFCSHCINX4" "CI1N" 1
+defineCellFanoutLoad "AFCSHCINX4" "S" 1
+defineCellFanoutLoad "AFCSHCINX4" "CO0" 1
+defineCellFanoutLoad "AFCSHCINX4" "CO1" 1
+
+defineCellFootPrint "AFCSHCINX2" "afcshcin"
+defineCellFanoutLoad "AFCSHCINX2" "CS" 1
+defineCellFanoutLoad "AFCSHCINX2" "A" 1
+defineCellFanoutLoad "AFCSHCINX2" "B" 1
+defineCellFanoutLoad "AFCSHCINX2" "CI0N" 1
+defineCellFanoutLoad "AFCSHCINX2" "CI1N" 1
+defineCellFanoutLoad "AFCSHCINX2" "S" 1
+defineCellFanoutLoad "AFCSHCINX2" "CO0" 1
+defineCellFanoutLoad "AFCSHCINX2" "CO1" 1
+
+defineCellFootPrint "ADDHXL" "addh"
+defineCellFanoutLoad "ADDHXL" "A" 1
+defineCellFanoutLoad "ADDHXL" "B" 1
+defineCellFanoutLoad "ADDHXL" "S" 1
+defineCellFanoutLoad "ADDHXL" "CO" 1
+
+defineCellFootPrint "ADDHX4" "addh"
+defineCellFanoutLoad "ADDHX4" "A" 1
+defineCellFanoutLoad "ADDHX4" "B" 1
+defineCellFanoutLoad "ADDHX4" "S" 1
+defineCellFanoutLoad "ADDHX4" "CO" 1
+
+defineCellFootPrint "ADDHX2" "addh"
+defineCellFanoutLoad "ADDHX2" "A" 1
+defineCellFanoutLoad "ADDHX2" "B" 1
+defineCellFanoutLoad "ADDHX2" "S" 1
+defineCellFanoutLoad "ADDHX2" "CO" 1
+
+defineCellFootPrint "ADDHX1" "addh"
+defineCellFanoutLoad "ADDHX1" "A" 1
+defineCellFanoutLoad "ADDHX1" "B" 1
+defineCellFanoutLoad "ADDHX1" "S" 1
+defineCellFanoutLoad "ADDHX1" "CO" 1
+
+defineCellFootPrint "ADDFHXL" "addfh"
+defineCellFanoutLoad "ADDFHXL" "A" 1
+defineCellFanoutLoad "ADDFHXL" "B" 1
+defineCellFanoutLoad "ADDFHXL" "CI" 1
+defineCellFanoutLoad "ADDFHXL" "S" 1
+defineCellFanoutLoad "ADDFHXL" "CO" 1
+
+defineCellFootPrint "ADDFHX4" "addfh"
+defineCellFanoutLoad "ADDFHX4" "A" 1
+defineCellFanoutLoad "ADDFHX4" "B" 1
+defineCellFanoutLoad "ADDFHX4" "CI" 1
+defineCellFanoutLoad "ADDFHX4" "S" 1
+defineCellFanoutLoad "ADDFHX4" "CO" 1
+
+defineCellFootPrint "ADDFHX2" "addfh"
+defineCellFanoutLoad "ADDFHX2" "A" 1
+defineCellFanoutLoad "ADDFHX2" "B" 1
+defineCellFanoutLoad "ADDFHX2" "CI" 1
+defineCellFanoutLoad "ADDFHX2" "S" 1
+defineCellFanoutLoad "ADDFHX2" "CO" 1
+
+defineCellFootPrint "ADDFHX1" "addfh"
+defineCellFanoutLoad "ADDFHX1" "A" 1
+defineCellFanoutLoad "ADDFHX1" "B" 1
+defineCellFanoutLoad "ADDFHX1" "CI" 1
+defineCellFanoutLoad "ADDFHX1" "S" 1
+defineCellFanoutLoad "ADDFHX1" "CO" 1
+
+defineCellFootPrint "ADDFXL" "addf"
+defineCellFanoutLoad "ADDFXL" "A" 1
+defineCellFanoutLoad "ADDFXL" "B" 1
+defineCellFanoutLoad "ADDFXL" "CI" 1
+defineCellFanoutLoad "ADDFXL" "S" 1
+defineCellFanoutLoad "ADDFXL" "CO" 1
+
+defineCellFootPrint "ADDFX4" "addf"
+defineCellFanoutLoad "ADDFX4" "A" 1
+defineCellFanoutLoad "ADDFX4" "B" 1
+defineCellFanoutLoad "ADDFX4" "CI" 1
+defineCellFanoutLoad "ADDFX4" "S" 1
+defineCellFanoutLoad "ADDFX4" "CO" 1
+
+defineCellFootPrint "ADDFX2" "addf"
+defineCellFanoutLoad "ADDFX2" "A" 1
+defineCellFanoutLoad "ADDFX2" "B" 1
+defineCellFanoutLoad "ADDFX2" "CI" 1
+defineCellFanoutLoad "ADDFX2" "S" 1
+defineCellFanoutLoad "ADDFX2" "CO" 1
+
+defineCellFootPrint "ADDFX1" "addf"
+defineCellFanoutLoad "ADDFX1" "A" 1
+defineCellFanoutLoad "ADDFX1" "B" 1
+defineCellFanoutLoad "ADDFX1" "CI" 1
+defineCellFanoutLoad "ADDFX1" "S" 1
+defineCellFanoutLoad "ADDFX1" "CO" 1
+
+defineCellFootPrint "CMPR42X4" "add42"
+defineCellFanoutLoad "CMPR42X4" "A" 1
+defineCellFanoutLoad "CMPR42X4" "B" 1
+defineCellFanoutLoad "CMPR42X4" "C" 1
+defineCellFanoutLoad "CMPR42X4" "D" 1
+defineCellFanoutLoad "CMPR42X4" "ICI" 1
+defineCellFanoutLoad "CMPR42X4" "S" 1
+defineCellFanoutLoad "CMPR42X4" "ICO" 1
+defineCellFanoutLoad "CMPR42X4" "CO" 1
+
+defineCellFootPrint "CMPR42X2" "add42"
+defineCellFanoutLoad "CMPR42X2" "A" 1
+defineCellFanoutLoad "CMPR42X2" "B" 1
+defineCellFanoutLoad "CMPR42X2" "C" 1
+defineCellFanoutLoad "CMPR42X2" "D" 1
+defineCellFanoutLoad "CMPR42X2" "ICI" 1
+defineCellFanoutLoad "CMPR42X2" "S" 1
+defineCellFanoutLoad "CMPR42X2" "ICO" 1
+defineCellFanoutLoad "CMPR42X2" "CO" 1
+
+defineCellFootPrint "CMPR42X1" "add42"
+defineCellFanoutLoad "CMPR42X1" "A" 1
+defineCellFanoutLoad "CMPR42X1" "B" 1
+defineCellFanoutLoad "CMPR42X1" "C" 1
+defineCellFanoutLoad "CMPR42X1" "D" 1
+defineCellFanoutLoad "CMPR42X1" "ICI" 1
+defineCellFanoutLoad "CMPR42X1" "S" 1
+defineCellFanoutLoad "CMPR42X1" "ICO" 1
+defineCellFanoutLoad "CMPR42X1" "CO" 1
+
+defineCellFootPrint "ACHCONX4" "achcon"
+defineCellFanoutLoad "ACHCONX4" "A" 1
+defineCellFanoutLoad "ACHCONX4" "B" 1
+defineCellFanoutLoad "ACHCONX4" "CI" 1
+defineCellFanoutLoad "ACHCONX4" "CON" 1
+
+defineCellFootPrint "ACHCONX2" "achcon"
+defineCellFanoutLoad "ACHCONX2" "A" 1
+defineCellFanoutLoad "ACHCONX2" "B" 1
+defineCellFanoutLoad "ACHCONX2" "CI" 1
+defineCellFanoutLoad "ACHCONX2" "CON" 1
+
+defineCellFootPrint "ACHCINX4" "achcin"
+defineCellFanoutLoad "ACHCINX4" "A" 1
+defineCellFanoutLoad "ACHCINX4" "B" 1
+defineCellFanoutLoad "ACHCINX4" "CIN" 1
+defineCellFanoutLoad "ACHCINX4" "CO" 1
+
+defineCellFootPrint "ACHCINX2" "achcin"
+defineCellFanoutLoad "ACHCINX2" "A" 1
+defineCellFanoutLoad "ACHCINX2" "B" 1
+defineCellFanoutLoad "ACHCINX2" "CIN" 1
+defineCellFanoutLoad "ACHCINX2" "CO" 1
+
+defineCellFootPrint "ACCSIHCONX4" "accsihcon"
+defineCellFanoutLoad "ACCSIHCONX4" "A" 1
+defineCellFanoutLoad "ACCSIHCONX4" "B" 1
+defineCellFanoutLoad "ACCSIHCONX4" "CO0N" 1
+defineCellFanoutLoad "ACCSIHCONX4" "CO1N" 1
+
+defineCellFootPrint "ACCSIHCONX2" "accsihcon"
+defineCellFanoutLoad "ACCSIHCONX2" "A" 1
+defineCellFanoutLoad "ACCSIHCONX2" "B" 1
+defineCellFanoutLoad "ACCSIHCONX2" "CO0N" 1
+defineCellFanoutLoad "ACCSIHCONX2" "CO1N" 1
+
+defineCellFootPrint "ACCSHCONX4" "accshcon"
+defineCellFanoutLoad "ACCSHCONX4" "A" 1
+defineCellFanoutLoad "ACCSHCONX4" "B" 1
+defineCellFanoutLoad "ACCSHCONX4" "CI0" 1
+defineCellFanoutLoad "ACCSHCONX4" "CI1" 1
+defineCellFanoutLoad "ACCSHCONX4" "CO0N" 1
+defineCellFanoutLoad "ACCSHCONX4" "CO1N" 1
+
+defineCellFootPrint "ACCSHCONX2" "accshcon"
+defineCellFanoutLoad "ACCSHCONX2" "A" 1
+defineCellFanoutLoad "ACCSHCONX2" "B" 1
+defineCellFanoutLoad "ACCSHCONX2" "CI0" 1
+defineCellFanoutLoad "ACCSHCONX2" "CI1" 1
+defineCellFanoutLoad "ACCSHCONX2" "CO0N" 1
+defineCellFanoutLoad "ACCSHCONX2" "CO1N" 1
+
+defineCellFootPrint "ACCSHCINX4" "accshcin"
+defineCellFanoutLoad "ACCSHCINX4" "A" 1
+defineCellFanoutLoad "ACCSHCINX4" "B" 1
+defineCellFanoutLoad "ACCSHCINX4" "CI0N" 1
+defineCellFanoutLoad "ACCSHCINX4" "CI1N" 1
+defineCellFanoutLoad "ACCSHCINX4" "CO0" 1
+defineCellFanoutLoad "ACCSHCINX4" "CO1" 1
+
+defineCellFootPrint "ACCSHCINX2" "accshcin"
+defineCellFanoutLoad "ACCSHCINX2" "A" 1
+defineCellFanoutLoad "ACCSHCINX2" "B" 1
+defineCellFanoutLoad "ACCSHCINX2" "CI0N" 1
+defineCellFanoutLoad "ACCSHCINX2" "CI1N" 1
+defineCellFanoutLoad "ACCSHCINX2" "CO0" 1
+defineCellFanoutLoad "ACCSHCINX2" "CO1" 1
+

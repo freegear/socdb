@@ -1,0 +1,72 @@
+# remove_design -all
+
+set link_library { * slow.db tpd973g_usb2wc.db }
+
+read_verilog ../1_presim/TOP.v
+read_verilog ../1_presim/USB_DC.v
+
+current_design TOP
+
+link
+check_design
+
+#create_clock -name FREF -period 166.4 -waveform {0 83.2} [get_ports FREF]
+create_clock -name PLL480 -period 2.08 -waveform {0 1.04} [get_pins X1/PLL480]
+create_clock -name CLKP -period 16.64 -waveform {0 8.32} [get_pins X1/CLKP]
+create_generated_clock -name CLK -source X1/CLKP -div 1 -invert [get_pins X1/CLK]
+
+set_clock_uncertainty 0.3 [all_clocks]
+
+set_auto_disable_drc_nets -clock true -constant true
+set_dont_touch_network CLK
+
+set_clock_latency -source 0.5 CLK
+set_clock_latency 0.3 CLK
+
+set_dont_use "slow/ADD*"
+set_dont_use "slow/CMPR*"
+set_dont_use "slow/AF*"
+set_dont_use "slow/AH*"
+set_dont_use "slow/S*"
+set_dont_use "slow/*XL"
+set_dont_use "slow/DLY*"
+
+# Next variable is needed to be set for completing timing check
+# This variable is available after Version 2002.05
+set timing_disable_internal_inout_cell_paths false
+
+set auto_wire_load_selection false
+set timing_self_loops_no_skew true
+
+set_min_library slow.db -min_version fast.db
+set_operating_conditions -max "slow" -max_library "slow" -min "fast" -min_library "fast"
+set_wire_load_model -name "tsmc18_wl10" -lib "slow"
+
+set_driving_cell -lib_cell INVX4 [all_inputs]
+set_max_transition 0.2 [current_design]
+set_load 0.5 END
+set_input_delay 5 -clock CLK Reset_IN
+set_output_delay 5 -clock CLK END
+
+compile
+set_fix_hold [all_clocks]
+compile -only_hold_time
+
+redirect timing_input.rpt { report_timing -thro X1/TXVALID -path full_clock -net -cap -tran }
+redirect timing_output.rpt { report_timing -thro X1/TXREADY -path full_clock -net -cap -tran }
+
+#set verilogout_show_unconnected_pins true
+
+write -f verilog -hier -o TOP_syn.v
+write -f db -hier -o TOP.db
+write_sdc TOP.sdc
+
+# Next variable is needed to be set for completing timing check
+# This variable is available after Version 2003.03
+set sdfout_no_edge true
+
+write_sdf -context verilog -version 2.1 TOP.sdf
+
+redirect TOP_violators_syn.rpt { report_constraint -all_violators -max_delay -min_delay }
+
+quit

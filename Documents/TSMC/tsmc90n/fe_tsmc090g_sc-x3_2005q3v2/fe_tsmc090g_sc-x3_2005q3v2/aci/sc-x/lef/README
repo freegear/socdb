@@ -1,0 +1,24 @@
+
+Dummy metal fill and Density check
+----------------------------------
+This version of LEF does not support dummy metal fill rules and density check
+rules. You can use the following constructs to do the job.
+
+LAYER M1
+MINIMUMDENSITY 20 ;
+MAXIMUMDENSITY 70 ;
+DENSITYCHECKWINDOW 100 100 ;
+DENSITYCHECKSTEP 50 ;
+FILLACTIVESPACING 2.0 ;
+END M1
+
+
+Encounter Routing Issues
+------------------------
+NanoRoute may not implement the M1.S.2 rule properly. Furthermore,
+the DRC command "verify geometry" may not recognize these violations. You can
+eliminate some of the violations by using the following option in the Encounter
+shell before detail route.
+
+setNanoRouteMode drouteAllowMergedWireAtPin false
+

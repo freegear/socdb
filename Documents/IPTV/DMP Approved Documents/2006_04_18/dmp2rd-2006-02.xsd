@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:sx="urn:mpeg:mpeg21:2003:01-REL-SX-NS" xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:dmp2rd="urn:dmp:idp2:Represent:Domain:2006:02" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" targetNamespace="urn:dmp:idp2:Represent:Domain:2006:02" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<import namespace="urn:mpeg:mpeg21:2003:01-REL-R-NS" schemaLocation="rel-r-bpx-v1.xsd"/>
+	<import namespace="urn:mpeg:mpeg21:2003:01-REL-SX-NS" schemaLocation="rel-sx-bpx-v1.xsd"/>
+	<import namespace="http://www.w3.org/2001/04/xmlenc#" schemaLocation="http://www.w3.org/TR/2002/REC-xmlenc-core-20021210/xenc-schema.xsd"/>
+	<complexType name="DomainBaseType" abstract="true"/>
+	<complexType name="IDType">
+		<sequence>
+			<choice>
+				<element name="id" type="anyURI"/>
+				<element ref="dsig:X509Data" minOccurs="0"/>
+			</choice>
+		</sequence>
+	</complexType>
+	<element name="LocalDomainID" type="dmp2rd:IDType"/>
+	<element name="DomainID" type="dmp2rd:DomainIDType"/>
+	<complexType name="DomainIDType">
+		<complexContent>
+			<extension base="dmp2rd:IDType">
+				<sequence>
+					<element ref="dmp2rd:DomainManagerID"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="DomainManageInfo" type="dmp2rd:DomainManageInfoType"/>
+	<complexType name="DomainManageInfoType">
+		<complexContent>
+			<extension base="dmp2rd:DomainBaseType">
+				<sequence>
+					<element ref="dmp2rd:DomainID"/>
+					<element ref="dmp2rd:AccessID"/>
+					<element ref="dmp2rd:AccessPassword"/>
+					<choice minOccurs="0" maxOccurs="2">
+						<element ref="dmp2rd:User"/>
+						<element ref="dmp2rd:Device"/>
+					</choice>
+					<element ref="dmp2rd:DomainKey"/>
+					<element name="Registration" type="dateTime"/>
+					<element name="Expiration" type="sx:ValidityTimeMetered"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="User" type="dmp2rd:UserType"/>
+	<complexType name="UserType">
+		<complexContent>
+			<extension base="dmp2rd:DomainBaseType">
+				<sequence>
+					<element ref="dmp2rd:UserIDList"/>
+					<element name="MaximumNumberOfUsers" type="unsignedInt" minOccurs="0"/>
+					<element name="MaximumFrequencyOfUpdateUser" type="duration" minOccurs="0"/>
+					<element ref="dmp2rd:UserRevocationList" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Device" type="dmp2rd:DeviceType"/>
+	<complexType name="DeviceType">
+		<complexContent>
+			<extension base="dmp2rd:DomainBaseType">
+				<sequence>
+					<element ref="dmp2rd:DeviceIDList"/>
+					<element name="MaximumNumberOfDevices" type="integer"/>
+					<element name="MaximumFrequencyOfUpdateDevice" type="integer"/>
+					<element ref="dmp2rd:DeviceRevocationList"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="UserRevocationList">
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="dmp2rd:UserID"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="DeviceIDList">
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="dmp2rd:DeviceID"/>
+				<element name="Expiration" type="sx:ValidityTimeMetered"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="UserIDList">
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="dmp2rd:UserID"/>
+				<element name="Expiration" type="sx:ValidityTimeMetered"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="DeviceRevocationList">
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="dmp2rd:DeviceID"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="DomainManagerID" type="r:KeyHolder"/>
+	<element name="AccessPassword" type="string"/>
+	<element name="AccessID" type="r:KeyHolder"/>
+	<element name="DomainKey" type="xenc:EncryptedKeyType"/>
+	<element name="UserID" type="dmp2rd:IDType"/>
+	<element name="DeviceID" type="dmp2rd:IDType"/>
+	<element name="ContentGroupID" type="anyURI"/>
+</schema>

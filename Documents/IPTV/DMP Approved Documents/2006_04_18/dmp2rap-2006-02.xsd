@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:dmp2rl="urn:dmp:idp2:Represent:License:2006:02" xmlns:dmp1_dii="urn:dmp:idp1:mpeg21:2002:01-DII-NS:2005:04" xmlns:dmp2rap="urn:dmp:idp2:Represent:AccessProtocols:2006:02" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:dmp2rc="urn:dmp:idp2:Represent:Content:2006:02" xmlns:dmp2rtb="urn:dmp:idp2:Represent:ToolBody:2006:02" xmlns:dmp2_ipmpinfo="urn:dmp:idp2:mpeg21:2004:01-IPMPINFO-NS:2006:02" xmlns:dmp2rdi="urn:dmp:idp2:Represent:DeviceInformation:2006:02" targetNamespace="urn:dmp:idp2:Represent:AccessProtocols:2006:02" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="urn:dmp:idp2:Represent:License:2006:02" schemaLocation="dmp2rl-2006-02.xsd"/>
+	<import namespace="urn:dmp:idp2:Represent:Content:2006:02" schemaLocation="dmp2rc-2006-02.xsd"/>
+	<import namespace="urn:dmp:idp1:mpeg21:2002:01-DII-NS:2005:04" schemaLocation="dmp1dii-2005-04.xsd"/>
+	<import namespace="urn:dmp:idp2:Represent:DeviceInformation:2006:02" schemaLocation="dmp2rdi-2006-02.xsd"/>
+	<import namespace="urn:dmp:idp2:Represent:ToolBody:2006:02" schemaLocation="dmp2rtb-2006-02.xsd"/>
+	<import namespace="urn:dmp:idp2:mpeg21:2004:01-IPMPINFO-NS:2006:02" schemaLocation="dmp2ipmpinfo-2006-02.xsd"/>
+	 <import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<complexType name="AccessProtocolBaseType" abstract="true"/>
+	<complexType name="AccessProtocolType">
+		<complexContent>
+			<extension base="dmp2rap:AccessProtocolBaseType">
+				<sequence>
+					<element name="TransactionID" type="unsignedByte"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Ack" type="dmp2rap:ReqType"/>
+	<complexType name="ReqType">
+		<complexContent>
+			<extension base="dmp2rap:AccessProtocolType">
+				<attribute name="Result" type="boolean" use="required"/>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="RequestContent" type="dmp2rap:RequestContentType"/>
+	<complexType name="RequestContentType">
+		<complexContent>
+			<extension base="dmp2rap:AccessProtocolType">
+				<sequence>
+					<element ref="dmp1_dii:Identifier"/>
+					<element ref="dmp2rl:License" minOccurs="0"/>
+					<element ref="dsig:Signature" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="RequestLicense" type="dmp2rap:RequestLicenseType"/>
+	<complexType name="RequestLicenseType">
+		<complexContent>
+			<extension base="dmp2rap:AccessProtocolType">
+				<sequence>
+					<element ref="dmp1_dii:Identifier"/>
+					<element ref="dmp2rl:License" minOccurs="0"/>
+					<element ref="dmp2rc:DCIHash" minOccurs="0"/>
+					<element ref="dsig:Signature" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="RequesLicenseResult" type="dmp2rap:RequestLicenseResultType"/>
+	<complexType name="RequestLicenseResultType">
+		<complexContent>
+			<extension base="dmp2rap:AccessProtocolType">
+				<sequence>
+					<element ref="dmp2rl:License"/>
+					<element ref="dsig:Signature" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="RequestContentResult" type="dmp2rap:RequestContentResultType"/>
+	<complexType name="RequestContentResultType">
+		<complexContent>
+			<extension base="dmp2rap:AccessProtocolType">
+				<sequence>
+					<element name="ContentServerURI" type="anyURI"/>
+					<element ref="dsig:Signature" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="RequestDRMToolBody" type="dmp2rap:RequestDRMToolBodyType"/>
+	<complexType name="RequestDRMToolBodyType">
+		<complexContent>
+			<extension base="dmp2rap:AccessProtocolType">
+				<sequence>
+					<element ref="dmp2_ipmpinfo:IPMPToolID"/>
+					<element ref="dmp2rdi:DeviceInformation"/>
+					<element name="LicenseSignature" type="dsig:SignatureType" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="RequestDRMToolBodyResponse" type="dmp2rap:RequestDRMToolBodyResponseType"/>
+	<complexType name="RequestDRMToolBodyResponseType">
+		<complexContent>
+			<extension base="dmp2rap:AccessProtocolType">
+				<sequence>
+					<element ref="dmp2rtb:ToolBody" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:dmp1_rel_sx="urn:dmp:idp1:mpeg21:2003:01-REL-SX-NS:2005:04" xmlns:dmp1_rel_r="urn:dmp:idp1:mpeg21:2003:01-REL-R-NS:2005:04" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:dmp1md="urn:dmp:idp1:Manage:Domain:2005:04" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:dmp:idp1:Manage:Domain:2005:04" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<import namespace="urn:dmp:idp1:mpeg21:2003:01-REL-R-NS:2005:04" schemaLocation="dmp1-rel-r-2005-04.xsd"/>
+	<import namespace="urn:dmp:idp1:mpeg21:2003:01-REL-SX-NS:2005:04" schemaLocation="dmp1-rel-sx-2005-04.xsd"/>
+	<import namespace="http://www.w3.org/2001/04/xmlenc#" schemaLocation="http://www.w3.org/TR/2002/REC-xmlenc-core-20021210/xenc-schema.xsd"/>
+	<element name="DomainManageInfo" type="dmp1md:DomainManageInfoType"/>
+	<complexType name="DomainManageInfoType">
+		<sequence>
+			<element ref="dmp1md:Domain_ID"/>
+			<element ref="dmp1md:AccessID"/>
+			<element ref="dmp1md:Domain_Key"/>
+			<element ref="dmp1md:DeviceIDList"/>
+			<element name="MaximumNumberOfDevice" type="integer"/>
+			<element name="MaximumFrequencyOfUpdate" type="integer"/>
+			<element ref="dmp1md:RevocationList"/>
+		</sequence>
+	</complexType>
+	<element name="DeviceIDList">
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="dmp1md:DeviceID"/>
+				<element name="Expiration" type="dmp1_rel_sx:ValidityTimeMetered"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="RevocationList">
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="dmp1md:DeviceID"/>
+			</sequence>
+		</complexType>
+	</element>
+	<!-- Domain Context -->
+	<element name="DomainResource" type="dmp1md:DomainResource" substitutionGroup="dmp1_rel_r:resource"/>
+	<complexType name="DomainResource">
+		<complexContent>
+			<extension base="dmp1_rel_r:Resource">
+				<sequence>
+					<element ref="dmp1md:DomainManager_ID"/>
+					<element ref="dmp1md:Domain_ID"/>
+					<element name="DomainKey" type="dsig:KeyInfoType"/>
+					<element name="Expiration" type="dmp1_rel_sx:ValidityTimeMetered" minOccurs="0"/>
+					<element name="TransactionID" type="unsignedByte" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--Protected Resource is defined in C4 -->
+	<!--Domain Resource is defined in C4 -->
+	<!--Section 6.1.4.1 Creating a Domain -->
+	<!--Section 6.1.4.1 Creating a Domain -->
+	<element name="DACredentials" type="dmp1md:DomainCredentialType"/>
+	<complexType name="DomainCredentialType">
+		<sequence>
+			<element name="AccountID" type="string"/>
+			<element name="Password" type="string"/>
+		</sequence>
+	</complexType>
+	<element name="AuthenticateReq">
+		<complexType>
+			<sequence>
+				<element ref="dmp1md:DACredentials"/>
+				<element name="TransactionID" type="unsignedByte"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="Ack">
+		<complexType>
+			<sequence>
+				<element name="TransactionID" type="unsignedByte"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="CreateDomain">
+		<complexType>
+			<sequence>
+				<element ref="dmp1md:DeviceID"/>
+				<element name="TransactionID" type="unsignedByte"/>
+			</sequence>
+		</complexType>
+	</element>
+	<!--Section 6.1.4.2 Adding a Device -->
+	<element name="AddDevice" type="dmp1md:AddDeviceType"/>
+	<complexType name="AddDeviceType">
+		<sequence>
+			<element ref="dmp1md:DeviceID"/>
+			<element name="TransactionID" type="unsignedByte"/>
+		</sequence>
+	</complexType>
+	<!--Section 6.1.4.3 Leaving a Domain -->
+	<element name="LeaveDomain" type="dmp1md:LeaveDomainType"/>
+	<complexType name="LeaveDomainType">
+		<sequence>
+			<element ref="dmp1md:DeviceID"/>
+			<element name="TransactionID" type="unsignedByte"/>
+		</sequence>
+	</complexType>
+	<!--Section 6.1.4.4 Renewing a Domain -->
+	<element name="RenewDomain" type="dmp1md:RenewDomainType"/>
+	<complexType name="RenewDomainType">
+		<sequence>
+			<element ref="dmp1md:DeviceID"/>
+			<element name="TransactionID" type="unsignedByte"/>
+		</sequence>
+	</complexType>
+	<!--Section 6.1.5 Domain Manager and License Provider -->
+	<element name="RequestDomain" type="dmp1md:RequestDomainType"/>
+	<complexType name="RequestDomainType">
+		<sequence>
+			<element name="TransactionID" type="unsignedByte"/>
+		</sequence>
+	</complexType>
+	<element name="DeleteDomain">
+		<complexType>
+			<sequence>
+				<element name="TransactionID" type="unsignedByte"/>
+			</sequence>
+		</complexType>
+	</element>
+	<!--Section 6.1.6.1 Use Log -->
+	<element name="UseLog" type="dmp1md:UseLogType"/>
+	<complexType name="UseLogType">
+		<sequence>
+			<element ref="dmp1md:Domain_ID"/>
+			<element ref="dmp1md:DomainManager_ID"/>
+			<element ref="dmp1md:Record"/>
+		</sequence>
+	</complexType>
+	<element name="Record">
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="dmp1md:DeviceID"/>
+				<element name="StartTime" type="dateTime"/>
+				<element name="EndTime" type="dateTime"/>
+				<element name="NumberOfContentGroups" type="integer"/>
+				<element ref="dmp1md:ContentGroup_ID" minOccurs="0" maxOccurs="unbounded"/>
+				<element name="NotificationFlag" type="boolean"/>
+			</sequence>
+		</complexType>
+	</element>
+	<!--Section 6.1.6.4 Notification to Domain Manager -->
+	<element name="Un-LicensedSimultaneousUseNotice" type="dmp1md:Un-LicensedSimultaneousUseNoticeType"/>
+	<complexType name="Un-LicensedSimultaneousUseNoticeType">
+		<sequence maxOccurs="unbounded">
+			<element ref="dmp1md:Domain_ID"/>
+			<element ref="dmp1md:UnLicensedUseDevices"/>
+			<element ref="dmp1md:OverlapTime"/>
+		</sequence>
+	</complexType>
+	<element name="UnLicensedUseDevices">
+		<complexType>
+			<sequence maxOccurs="unbounded">
+				<element ref="dmp1md:DeviceID"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="OverlapTime">
+		<complexType>
+			<sequence>
+				<element name="StartTime" type="dateTime"/>
+				<element name="EndTime" type="dateTime"/>
+			</sequence>
+		</complexType>
+	</element>
+	<!-- Domain-related ID Definition -->
+	<element name="Domain_ID" type="dmp1_rel_r:KeyHolder"/>
+	<element name="SubDomain_ID" type="anyURI"/>
+	<element name="DomainManager_ID" type="anyURI"/>
+	<element name="ContentGroup_ID" type="anyURI"/>
+	<element name="Domain_Key" type="xenc:EncryptedKeyType"/>
+	<element name="DeviceID" type="dmp1_rel_r:KeyHolder"/>
+	<element name="AccessID" type="dmp1_rel_r:KeyHolder"/>
+	<element name="AccessPassword" type="string"/>
+</schema>

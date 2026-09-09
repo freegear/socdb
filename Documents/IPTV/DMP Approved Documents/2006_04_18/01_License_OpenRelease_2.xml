@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<license xmlns="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:bpx="urn:mpeg:mpeg21:2005:01-REL-BPX-NS" xmlns:sx="urn:mpeg:mpeg21:2003:01-REL-SX-NS" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:mx="urn:mpeg:mpeg21:2003:01-REL-MX-NS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:mpeg:mpeg21:2005:01-REL-BPX-NS rel-bpx-v1.xsd">
+	<!-- All participant to the Conference can play until the end of the Conference -->
+	<grant>
+		<forAll varName="conferenceParticipants">
+			<propertyPossessor>
+				<sx:propertyUri definition="urn:MyConference:participant"/>
+			</propertyPossessor>
+		</forAll>
+		<principal varRef="subscriber"/>
+		<mx:play/>
+		<digitalResource>
+			<nonSecureIndirect URI="urn:myPresentations:presentation:444"/>		
+		</digitalResource>
+		<validityInterval>
+			<notAfter>2006-07-29T18:00:00</notAfter>
+		</validityInterval>
+	</grant>
+	<!-- Every Device in Italy can play after the end of the Conference -->	
+	<grant>
+		<mx:play/>
+		<digitalResource>
+			<nonSecureIndirect URI="urn:myPresentations:presentation:444"/>		
+		</digitalResource>
+		<allConditions>
+			<validityInterval>
+				<notBefore>2006-07-29T18:00:00</notBefore>
+			</validityInterval>
+			<sx:territory>
+				<sx:location>
+					<sx:country>ITALY</sx:country>
+				</sx:location>
+			</sx:territory>
+		</allConditions>
+	</grant>
+	<!-- Every Device can Print the presentation -->
+	<grant>
+		<mx:print/>
+		<digitalResource>
+			<nonSecureIndirect URI="urn:myPresentations:presentation:444"/>		
+		</digitalResource>
+	</grant>
+	<!-- Every Device can Copy the presentation-->
+	<grant>
+		<bpx:governedCopy/>
+		<digitalResource>
+			<nonSecureIndirect URI="urn:myPresentations:presentation:444"/>		
+		</digitalResource>
+	</grant>
+	<!-- Every Device can Move the presentation-->
+	<grant>
+		<bpx:governedMove/>
+		<digitalResource>
+			<nonSecureIndirect URI="urn:myPresentations:presentation:444"/>		
+		</digitalResource>
+	</grant>
+	<issuer>
+		<keyHolder>
+			<info>
+				<dsig:KeyName>Leonardo_s Certificate</dsig:KeyName>
+			</info>
+		</keyHolder>
+	</issuer>
+</license>

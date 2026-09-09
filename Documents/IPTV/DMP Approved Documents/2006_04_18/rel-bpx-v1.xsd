@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:mpeg:mpeg21:2005:01-REL-BPX-NS" xmlns:bpx="urn:mpeg:mpeg21:2005:01-REL-BPX-NS" xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:sx="urn:mpeg:mpeg21:2003:01-REL-SX-NS" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+	<xsd:import namespace="urn:mpeg:mpeg21:2003:01-REL-R-NS" schemaLocation="rel-r-bpx-v1.xsd"/>
+	<xsd:import namespace="urn:mpeg:mpeg21:2003:01-REL-SX-NS" schemaLocation="rel-sx-bpx-v1.xsd"/>
+	<xsd:import namespace="urn:mpeg:mpeg21:2003:01-REL-MX-NS" schemaLocation="rel-mx-bpx-v1.xsd"/>
+	<xsd:import namespace="http://www.w3.org/2001/04/xmlenc#" schemaLocation="http://www.w3.org/TR/2002/REC-xmlenc-core-20021210/xenc-schema.xsd"/>
+	<!-- Elements -->
+	<xsd:element name="drmSystem" type="bpx:DrmSystem" substitutionGroup="r:condition"/>
+	<xsd:element name="derivationConstraint" type="bpx:DerivationConstraint" substitutionGroup="r:condition"/>
+	<xsd:element name="governedCopy" type="bpx:GovernedCopy" substitutionGroup="r:right"/>
+	<xsd:element name="governedMove" type="bpx:GovernedMove" substitutionGroup="r:right"/>
+	<xsd:element name="identityHolder" type="bpx:IdentityHolder" substitutionGroup="r:principal"/>
+	<xsd:element name="outputRegulation" type="bpx:OutputRegulation" substitutionGroup="r:condition"/>
+	<xsd:element name="protectedResource" type="bpx:ProtectedResource" substitutionGroup="r:resource"/>
+	<xsd:element name="seekPermission" type="bpx:SeekPermission" substitutionGroup="r:condition"/>
+	<xsd:element name="serviceLocation" type="bpx:ServiceLocation" substitutionGroup="r:serviceDescription"/>
+	<xsd:element name="startCondition" type="bpx:StartCondition" substitutionGroup="r:condition"/>
+	<!--Complex Types-->
+	<xsd:complexType name="DrmSystem">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence minOccurs="0">
+					<xsd:element name="identifier" type="xsd:anyURI"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DerivationConstraint">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence>
+					<xsd:element name="isPartOf" minOccurs="0" maxOccurs="unbounded">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element ref="r:digitalResource" maxOccurs="unbounded"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resourceInclusionList" minOccurs="0" maxOccurs="unbounded">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element ref="r:digitalResource" maxOccurs="unbounded"/>
+							</xsd:sequence>
+							<xsd:attribute name="temporalRelation" type="xsd:QName" use="optional"/>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resourceExclusionList" minOccurs="0" maxOccurs="unbounded">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element ref="r:digitalResource" maxOccurs="unbounded"/>
+							</xsd:sequence>
+							<xsd:attribute name="temporalRelation" type="xsd:QName" use="optional"/>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resourceReplacementList" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element ref="r:digitalResource" maxOccurs="unbounded"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GovernedCopy">
+		<xsd:complexContent>
+			<xsd:extension base="r:Right">
+				<xsd:attribute name="governanceRule" type="xsd:QName"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GovernedMove">
+		<xsd:complexContent>
+			<xsd:extension base="r:Right">
+				<xsd:attribute name="governanceRule" type="xsd:QName"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="IdentityHolder">
+		<xsd:complexContent>
+			<xsd:extension base="r:Principal">
+				<xsd:sequence minOccurs="0">
+					<xsd:element name="idSystem" type="xsd:anyURI" minOccurs="0"/>
+					<xsd:element name="idValue">
+						<xsd:complexType mixed="true">
+							<xsd:sequence>
+								<xsd:any namespace="##any" minOccurs="0"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="OutputRegulation">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+					<xsd:element name="regulation">
+						<xsd:complexType mixed="true">
+							<xsd:attribute name="typeOfSignal" type="xsd:QName" use="optional"/>
+							<xsd:attribute name="qualityOfSignal" type="xsd:QName" use="optional"/>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ProtectedResource">
+		<xsd:complexContent>
+			<xsd:extension base="r:Resource">
+				<xsd:sequence minOccurs="0">
+					<xsd:element ref="r:digitalResource"/>
+					<xsd:choice minOccurs="0" maxOccurs="unbounded">
+						<xsd:element ref="xenc:EncryptedData"/>
+						<xsd:element ref="xenc:EncryptedKey"/>
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SeekPermission">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence minOccurs="0">
+					<xsd:element ref="r:serviceReference"/>
+					<xsd:element name="cacheable" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="period" type="xsd:duration" minOccurs="0"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceLocation">
+		<xsd:complexContent>
+			<xsd:extension base="r:ServiceDescription">
+				<xsd:sequence minOccurs="0">
+					<xsd:element name="url" type="xsd:anyURI"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="StartCondition">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence minOccurs="0">
+					<xsd:element ref="r:condition"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Simple Types -->
+	<xsd:simpleType name="LicenseType">
+		<xsd:list itemType="xsd:QName"/>
+	</xsd:simpleType>
+	<!-- Attributes -->
+	<xsd:attribute name="licenseType" type="bpx:LicenseType"/>
+</xsd:schema>

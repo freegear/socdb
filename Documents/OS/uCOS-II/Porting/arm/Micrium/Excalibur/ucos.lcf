@@ -1,0 +1,30 @@
+LOAD_ITCM 0x1000 0x1F000
+{
+  RESET +0
+  {
+    exc_init.o ( +RO )
+  }  
+
+  CODE +0
+  {
+    *( +RO )    
+  }
+
+  DATA +0
+  {
+    *( +RW, +ZI )
+  }
+
+  FIQ_STACK 0x1F800 EMPTY -0x200
+  {
+  }
+  IRQ_STACK 0x1FA00 EMPTY -0x200
+  {
+  }
+  SYS_STACK 0x1FC00 EMPTY -0x200
+  {
+  }
+  SVC_STACK 0x20000 EMPTY -0x400
+  {
+  }
+}

@@ -1,0 +1,24 @@
+;;
+;; $Id: antenna_4lm.clf,v 1.2 2004-09-14 19:12:36-07 prakash Exp $
+;;
+define                 _libId (dbGetCurrentLibId)
+dbClearLibAntennaRules _libId
+
+dbDefineAntennaRule    _libId 3 2 0 0
+dbAddAntennaLayerRule  _libId 3 "M1"         1000 '(0.059 0  450  43000)
+dbAddAntennaLayerRule  _libId 3 "M2"         1000 '(0.059 0  450  43000)
+dbAddAntennaLayerRule  _libId 3 "M3"         1000 '(0.059 0  450  43000)
+dbAddAntennaLayerRule  _libId 3 "M4"         1000 '(0.059 0 7900  50000)
+dbAddAntennaLayerRule  _libId 3 "VIA1" 1000000000 '(0.059 0  200    900)
+dbAddAntennaLayerRule  _libId 3 "VIA2" 1000000000 '(0.059 0  200    900)
+dbAddAntennaLayerRule  _libId 3 "VIA3" 1000000000 '(0.059 0  200    900)
+
+dbDefineAntennaRule    _libId 1 1 0 0
+dbAddAntennaLayerRule  _libId 1 "M1"   500 '(0 0 0 1000000000)
+dbAddAntennaLayerRule  _libId 1 "M2"   500 '(0 0 0 1000000000)
+dbAddAntennaLayerRule  _libId 1 "M3"   500 '(0 0 0 1000000000)
+dbAddAntennaLayerRule  _libId 1 "M4"   500 '(0 0 0 1000000000)
+dbAddAntennaLayerRule  _libId 1 "VIA1"  20 '(0 0 0 1000000000)
+dbAddAntennaLayerRule  _libId 1 "VIA2"  20 '(0 0 0 1000000000)
+dbAddAntennaLayerRule  _libId 1 "VIA3"  20 '(0 0 0 1000000000)
+

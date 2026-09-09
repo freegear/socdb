@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:dmp2rk="urn:dmp:idp2:Represent:Key:2006:02" xmlns:dmp2_ipmpinfo="urn:dmp:idp2:mpeg21:2004:01-IPMPINFO-NS:2006:02" xmlns:dmp2rdm="urn:dmp:idp2:Represent:DRMMessages:2006:02" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:dmp:idp2:Represent:DRMMessages:2006:02" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="urn:dmp:idp2:mpeg21:2004:01-IPMPINFO-NS:2006:02" schemaLocation="dmp2ipmpinfo-2006-02.xsd"/>
+	<import namespace="urn:dmp:idp2:Represent:Key:2006:02" schemaLocation="dmp2rk-2006-02.xsd"/>
+	<import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<!-- Abstract Base Type from which both DRM Message Containers and DRM Messages inherit -->
+	<complexType name="IPMPBaseType" abstract="true"/>
+	<!--ToolMessageBase-->
+	<element name="ToolMessageBase" type="dmp2rdm:ToolMessageBaseType" abstract="true"/>
+	<complexType name="ToolMessageBaseType" abstract="true">
+		<complexContent>
+			<extension base="dmp2rdm:IPMPBaseType">
+				<sequence>
+					<element name="Sender" type="unsignedInt"/>
+					<element name="Recipient" type="unsignedInt"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--Data_BaseClass-->
+	<element name="Data_BaseClass" type="dmp2rdm:Data_BaseClassType" abstract="true"/>
+	<complexType name="Data_BaseClassType" abstract="true">
+		<annotation>
+			<documentation>alternates</documentation>
+		</annotation>
+		<complexContent>
+			<extension base="dmp2rdm:IPMPBaseType">
+				<sequence>
+					<element name="dataID" type="unsignedInt"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!-- **************************************************************** -->
+	<!--  DRM Message Containers  -->
+	<!-- **************************************************************** -->
+	<!-- MessageFromDCI-->
+	<element name="MessageFromDCI" type="dmp2rdm:MessageFromDCIType" substitutionGroup="dmp2rdm:ToolMessageBase"/>
+	<complexType name="MessageFromDCIType">
+		<complexContent>
+			<extension base="dmp2rdm:ToolMessageBaseType">
+				<sequence>
+					<element ref="dmp2rdm:Data_BaseClass" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--MessageFromTool-->
+	<element name="MessageFromTool" type="dmp2rdm:MessageFromToolType" substitutionGroup="dmp2rdm:ToolMessageBase"/>
+	<complexType name="MessageFromToolType">
+		<complexContent>
+			<extension base="dmp2rdm:ToolMessageBaseType">
+				<sequence>
+					<element ref="dmp2rdm:Data_BaseClass" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!-- **************************************************************** -->
+	<!-- DRM Messages -->
+	<!-- **************************************************************** -->
+	<!-- DRM TOOL CONNECTION AND DISCONNECTION MESSAGES -->
+	<!--GetTools-->
+	<element name="GetTools" type="dmp2rdm:GetToolsType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="GetToolsType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType"/>
+		</complexContent>
+	</complexType>
+	<!--GetToolsResponse-->
+	<element name="GetToolsResponse" type="dmp2rdm:GetToolsResponseType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="GetToolsResponseType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element ref="dmp2rdm:Tool" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Tool" type="dmp2rdm:toolType"/>
+	<!--It represents a DRM Tool, an extension of ipmpinfo:Tool-->
+	<complexType name="toolType">
+		<complexContent>
+			<extension base="dmp2_ipmpinfo:ToolType">
+				<sequence>
+					<element name="alternates" type="dmp2_ipmpinfo:ToolType" minOccurs="0"/>
+					<element ref="dmp2rdm:ParametricDescription" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--GetToolContext-->
+	<element name="GetToolContext" type="dmp2rdm:GetToolContextType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="GetToolContextType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType"/>
+		</complexContent>
+	</complexType>
+	<!--GetToolContextResponse-->
+	<element name="GetToolContextResponse" type="dmp2rdm:GetToolContextResponseType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="GetToolContextResponseType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="ToolContextID" type="unsignedInt" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--ConnectTool-->
+	<element name="ConnectTool" type="dmp2rdm:ConnectToolType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="ConnectToolType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element ref="dmp2_ipmpinfo:Tool"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--DisconnectTool-->
+	<element name="DisconnectTool" type="dmp2rdm:DisconnectToolType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="DisconnectToolType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="ToolContextID" type="unsignedInt"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--ParamtericDescription-->
+	<element name="ParametricDescription" type="dmp2rdm:ParametricDescriptionType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="ParametricDescriptionType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="descriptionComment" type="string" minOccurs="0"/>
+					<element name="majorVersion" type="byte"/>
+					<element name="minorVersion" type="byte"/>
+					<element name="paramToolDescription" type="dmp2rdm:paramToolDescriptionType" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="paramToolDescriptionType">
+		<sequence>
+			<element name="class" type="string"/>
+			<element name="subClass" type="string"/>
+			<element name="typeData" type="string" minOccurs="0"/>
+			<element name="type" type="string" minOccurs="0"/>
+			<element name="addedData" type="string" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<!--ToolParamCapabilitiesQuery-->
+	<element name="ToolParamCapabilitiesQuery" type="dmp2rdm:ToolParamCapabilitiesQueryType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="ToolParamCapabilitiesQueryType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="toolParamDesc" type="dmp2rdm:ParametricDescriptionType"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--ToolParamCapabilitiesResponse-->
+	<element name="ToolParamCapabilitiesResponse" type="dmp2rdm:ToolParamCapabilitiesResponseType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="ToolParamCapabilitiesResponseType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="capabilitiesSupported" type="boolean"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!-- DRM TOOL NOTIFICATION -->
+	<!--NotifyToolEvent-->
+	<element name="NotifyToolEvent" type="dmp2rdm:NotifyToolEventType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="NotifyToolEventType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<sequence minOccurs="0">
+						<element name="OD_ID" type="unsignedInt"/>
+						<element name="ESD_ID" type="unsignedInt"/>
+					</sequence>
+					<element ref="dmp2rdm:EventType" maxOccurs="unbounded"/>
+					<element name="toolContextID" type="unsignedInt"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="EventType" type="dmp2rdm:EvType"/>
+	<simpleType name="EvType">
+		<annotation>
+			<documentation>
+			"00" - CONNECTED
+			"01" - CONNECTION_FAILED
+			"02" - DISCONNECTED
+			"03" - DISCONNECTION_FAILED	
+			"04" - WATERMARKDETECTED
+			"05" - PARSE_TOOLPACKDATA_SUCCESS
+			"06" - PARSE_TOOLPACKDATA_FAILED
+			"07" - UNABLE_TO_PROCESS
+			"08" - TOOL_GROUP_NOT_FOUND
+			</documentation>
+		</annotation>
+		<restriction base="integer">
+			<enumeration value="00"/>
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+			<enumeration value="04"/>
+			<enumeration value="05"/>
+			<enumeration value="06"/>
+			<enumeration value="07"/>
+		</restriction>
+	</simpleType>
+	<!--AddToolNotificationListener-->
+	<element name="AddToolNotificationListener" type="dmp2rdm:AddToolNotificationListenerType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="AddToolNotificationListenerType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="scope" type="string"/>
+					<element ref="dmp2rdm:EventType" maxOccurs="unbounded"/>
+					<!--see scope list in MPEG IPMPX spec-->
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--RemoveToolNotificationListener-->
+	<element name="RemoveToolNotificationListener" type="dmp2rdm:RemoveToolNotificationListenerType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="RemoveToolNotificationListenerType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element ref="dmp2rdm:EventType" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!-- DRM PROCESSING -->
+	<!--KeyData-->
+	<element name="KeyData" type="dmp2rdm:KeyDataType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="KeyDataType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<choice>
+						<element ref="dsig:KeyInfo"/>
+						<element ref="dmp2rk:Key"/>
+					</choice>
+					<element ref="dmp2rdm:opaqueData" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--RightsData-->
+	<element name="RightsData" type="dmp2rdm:RightsDataType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="RightsDataType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="rightsInfo" type="string"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--CanProcess-->
+	<element name="CanProcess" type="dmp2rdm:CanProcessType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="CanProcessType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="canProcess" type="boolean"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--OpaqueData-->
+	<element name="OpaqueData" type="dmp2rdm:OpaqueDataType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="OpaqueDataType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element ref="dmp2rdm:opaqueData"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="opaqueData" type="base64Binary"/>
+	<!--AudioWatermarkingInit-->
+	<element name="AudioWatermarkingInit" type="dmp2rdm:AudioWatermarkingInitType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="AudioWatermarkingInitType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="inputFormat" type="dmp2rdm:AudioFormatType"/>
+					<element name="requiredOp" type="dmp2rdm:requiredOpType"/>
+					<element name="wmPayload" type="string" minOccurs="0"/>
+					<element name="wmRecipientID" type="anyURI" minOccurs="0"/>
+					<element ref="dmp2rdm:opaqueData" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="AudioFormatType">
+		<sequence minOccurs="0">
+			<element name="nChannels" type="byte"/>
+			<element name="bitPerSample" type="byte"/>
+			<element name="frequency" type="decimal"/>
+		</sequence>
+		<attribute name="mimeType" type="string" use="required"/>
+	</complexType>
+	<simpleType name="requiredOpType">
+		<annotation>
+			<documentation>
+			"00" - INSERT_WM 
+			"01" - EXTRACT_WM 
+			"02" - REMARK_WM 
+			"03" - DETECT_COMPRESSION
+			</documentation>
+		</annotation>
+		<restriction base="integer">
+			<enumeration value="00"/>
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+		</restriction>
+		<!--see type list in MPEG IPMPX spec-->
+	</simpleType>
+	<!--VideoWatermarkingInit-->
+	<element name="VideoWatermarkingInit" type="dmp2rdm:VideoWatermarkingInitType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="VideoWatermarkingInitType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="inputFormat" type="dmp2rdm:VideoFormatType"/>
+					<element name="requiredOp" type="dmp2rdm:requiredOpType"/>
+					<element name="wmPayload" type="string" minOccurs="0"/>
+					<element name="wmRecipientID" type="anyURI" minOccurs="0"/>
+					<element ref="dmp2rdm:opaqueData" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="VideoFormatType">
+		<sequence minOccurs="0">
+			<element name="frame_horizontal_size" type="unsignedShort"/>
+			<element name="frame_vertical_size" type="unsignedShort"/>
+			<element name="chroma_format" type="byte"/>
+		</sequence>
+		<attribute name="mimeType" type="string" use="required"/>
+	</complexType>
+	<!--SendAudioWatermark-->
+	<element name="SendAudioWatermark" type="dmp2rdm:SendAudioWatermarkType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="SendAudioWatermarkType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="wm_status" type="dmp2rdm:wm_statusType"/>
+					<element name="compression_status" type="dmp2rdm:compression_statusType"/>
+					<element name="payload" type="string" minOccurs="0"/>
+					<element ref="dmp2rdm:opaqueData" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<simpleType name="wm_statusType">
+		<annotation>
+			<documentation>
+				"00" - WM_PAYLOAD
+				"01" - WM_NOPAYLOAD
+				"02" - NO_WM
+				"03" - WM_UNKNOWN 			
+			</documentation>
+		</annotation>
+		<restriction base="integer">
+			<enumeration value="00"/>
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+			<enumeration value="03"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="compression_statusType">
+		<annotation>
+			<documentation>
+				"00" - COMPRESSION
+				"01" - NO_COMPRESSION
+				"02" - COMP_UNKNOWN
+			</documentation>
+		</annotation>
+		<restriction base="integer">
+			<enumeration value="00"/>
+			<enumeration value="01"/>
+			<enumeration value="02"/>
+		</restriction>
+	</simpleType>
+	<!--SendVideoWatermark-->
+	<element name="SendVideoWatermark" type="dmp2rdm:SendVideoWatermarkType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="SendVideoWatermarkType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="wm_status" type="dmp2rdm:wm_statusType"/>
+					<element name="compression_status" type="dmp2rdm:compression_statusType"/>
+					<element name="payload" type="string" minOccurs="0"/>
+					<element ref="dmp2rdm:opaqueData" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--SelectiveDecryptionInit-->
+	<element name="SelectiveDecryptionInit" type="dmp2rdm:SelectiveDecryptionInitType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="SelectiveDecryptionInitType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="mimeType" type="string"/>
+					<element name="profileLevelIndication" type="string"/>
+					<element name="compliance" type="string"/>
+					<element name="bufInfoStruct" type="dmp2rdm:bufInfoStructType" minOccurs="0" maxOccurs="unbounded"/>
+					<choice>
+						<element name="contentSpecific" type="dmp2rdm:contentSpecificType" minOccurs="0"/>
+						<sequence>
+							<element name="nSegments" type="short"/>
+							<element name="RLE_Data" type="short" maxOccurs="unbounded"/>
+						</sequence>
+					</choice>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="bufInfoStructType">
+		<sequence>
+			<element name="cipher_Id" type="anyURI"/>
+			<element name="syncBoundary" type="string"/>
+			<choice>
+				<sequence>
+					<element name="mode" type="anyURI" minOccurs="0"/>
+					<element name="blockSize" type="short"/>
+					<element name="keySize" type="short"/>
+				</sequence>
+				<element name="Stream_Cipher_Specific_Init_Info" type="hexBinary"/>
+			</choice>
+		</sequence>
+	</complexType>
+	<complexType name="contentSpecificType">
+		<sequence>
+			<element name="numFields" type="short"/>
+			<element name="fieldStruct" type="dmp2rdm:fieldStructType" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<complexType name="fieldStructType">
+		<sequence>
+			<element name="field_id" type="anyURI"/>
+			<element name="fieldScope" type="short"/>
+			<element name="buf" type="short"/>
+			<element name="map" type="dmp2rdm:mapType" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="mapType">
+		<sequence>
+			<element name="sizeMapTable" type="short" minOccurs="0"/>
+			<element name="mappingTable" type="short" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="shuffleSpecificInfo" type="hexBinary" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<!-- USER INTERACTION MESSAGES -->
+	<!--UserQuery-->
+	<element name="UserQuery" type="dmp2rdm:UserQueryType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="UserQueryType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="altText" type="dmp2rdm:altTextType" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="altTextType">
+		<sequence>
+			<element name="languageCode" type="language"/>
+			<element name="titleText" type="string" minOccurs="0"/>
+			<element name="displayText" type="dmp2rdm:displayTextType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="needReplyText" type="dmp2rdm:replyTextType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="inclOptionSelect" type="dmp2rdm:inclOptionSelectType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="SMIL_URL" type="string" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="SMIL" type="hexBinary" minOccurs="0"/>
+			<!-- ISO 639-2:1998 bibliographic three character language code-->
+		</sequence>
+	</complexType>
+	<complexType name="displayTextType">
+		<sequence>
+			<element name="text" type="string"/>
+		</sequence>
+		<attribute name="ID" type="unsignedShort" use="required"/>
+	</complexType>
+	<complexType name="replyTextType">
+		<sequence>
+			<element name="text" type="string"/>
+		</sequence>
+		<attribute name="ID" type="unsignedShort" use="required"/>
+		<attribute name="subID" type="unsignedShort" use="required"/>
+		<attribute name="isHidden" type="boolean"/>
+	</complexType>
+	<complexType name="inclOptionSelectType">
+		<sequence>
+			<element name="promptText" type="string"/>
+		</sequence>
+		<attribute name="ID" type="unsignedShort" use="required"/>
+		<attribute name="subID" type="unsignedShort" use="required"/>
+		<attribute name="isExclusive" type="boolean"/>
+	</complexType>
+	<!--UserQueryResponse-->
+	<element name="UserQueryResponse" type="dmp2rdm:UserQueryResponseType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="UserQueryResponseType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="replyText" type="dmp2rdm:responseReplyTextType" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="responseReplyTextType">
+		<sequence>
+			<element name="languageCode" type="language"/>
+			<element name="replyText" type="dmp2rdm:replyTextType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="optionResult" type="dmp2rdm:optionResultType" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- ISO 639-2:1998 bibliographic three character language code-->
+		</sequence>
+	</complexType>
+	<complexType name="optionResultType">
+		<sequence>
+			<element name="result" type="boolean"/>
+		</sequence>
+		<attribute name="ID" type="unsignedShort" use="optional"/>
+		<attribute name="subID" type="unsignedShort" use="optional"/>
+	</complexType>
+	<!--SecureContainer-->
+	<element name="SecureContainer" type="dmp2rdm:SecureContainerType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<annotation>
+		<documentation>To fill the protectedMsgTag field below, use values from Table 1 in doc ISO/IEC 14496-13:2004</documentation>
+	</annotation>
+	<complexType name="SecureContainerType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<choice>
+					<sequence>
+						<element name="encryptedData" type="hexBinary"/>
+						<element name="MAC" type="hexBinary" minOccurs="0"/>
+					</sequence>
+					<sequence>
+						<element name="protectedMsgTag" type="short"/>
+						<element name="protectedMsg" type="hexBinary"/>
+						<element name="MAC" type="hexBinary" minOccurs="0"/>
+					</sequence>
+				</choice>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!-- DMP SPECIFIC MESSAGES -->
+	<!-- InitialiseTool -->
+	<element name="InitialiseTool" type="dmp2rdm:InitialiseToolType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="InitialiseToolType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="DRMProcessorInstance" type="base64Binary"/>
+					<sequence minOccurs="0" maxOccurs="unbounded">
+						<element ref="dmp2rdm:ControlPointID"/>
+						<element ref="dmp2rdm:ControlPointAddress" minOccurs="0"/>
+					</sequence>
+					<element ref="dmp2rdm:SequenceCode" minOccurs="0"/>
+					<element ref="dmp2rdm:Data_BaseClass" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="ControlPointID" type="dmp2rdm:ControlPointType"/>
+	<complexType name="ControlPointType">
+		<annotation>
+			<documentation>
+			The Control Point ID is an identifier given by a DMP-appointed Registration Authority with the purpose of indicating a position in the media resource processing chain, as defined in the DMP Terminology. A few examples:
+				"00" - NO_CONTROL_POINT
+				"01" - CONTROL_POINT_BEFORE_DEMULTIPLEXING
+				"02" - CONTROL_POINT_BEFORE_AUDIO_DECODING
+				"03" - CONTROL_POINT_AFTER_AUDIO_DECODING			
+				"04" - CONTROL_POINT_BEFORE_VIDEO_DECODING
+				"05" - CONTROL_POINT_AFTER_VIDEO_DECODING
+				"06" - CONTROL_POINT_BEFORE_STORING
+				"07" - CONTROL_POINT_BEFORE_PLAYBACK
+				"08" - CONTROL_POINT_BEFORE_TRANSFERRING
+				</documentation>
+		</annotation>
+		<sequence>
+			<element name="ID" type="integer"/>
+		</sequence>
+	</complexType>
+	<element name="SequenceCode" type="short"/>
+	<element name="ControlPointAddress" type="base64Binary"/>
+	<!--ToolPack Extensions-->
+	<!--GetToolGroupReference-->
+	<element name="GetToolGroupReference" type="dmp2rdm:GetToolGroupReferenceType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="GetToolGroupReferenceType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType"/>
+		</complexContent>
+	</complexType>
+	<!--GetToolGroupReferenceResponse-->
+	<element name="GetToolGroupReferenceResponse" type="dmp2rdm:GetToolGroupReferenceResponseType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="GetToolGroupReferenceResponseType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element name="ToolGroupReference" type="base64Binary"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--GetToolReference-->
+	<element name="GetToolReference" type="dmp2rdm:GetToolReferenceType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="GetToolReferenceType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element ref="dmp2_ipmpinfo:IPMPToolID" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--GetToolReferenceResponse-->
+	<element name="GetToolReferenceResponse" type="dmp2rdm:GetToolReferenceResponseType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="GetToolReferenceResponseType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<sequence maxOccurs="unbounded">
+						<element ref="dmp2_ipmpinfo:IPMPToolID"/>
+						<element name="ToolReference" type="base64Binary"/>
+					</sequence>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!--ToolPackDataRequest-->
+	<element name="GetToolPackData" type="dmp2rdm:GetToolPackDataType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="GetToolPackDataType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType"/>
+		</complexContent>
+	</complexType>
+	<!--ToolPackData-->
+	<element name="ToolPackData" type="dmp2rdm:ToolPackDataType" substitutionGroup="dmp2rdm:Data_BaseClass"/>
+	<complexType name="ToolPackDataType">
+		<complexContent>
+			<extension base="dmp2rdm:Data_BaseClassType">
+				<sequence>
+					<element ref="dmp2rdm:OpaqueData"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>

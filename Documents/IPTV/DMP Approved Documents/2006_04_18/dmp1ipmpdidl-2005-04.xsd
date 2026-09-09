@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<schema xmlns:idp1_ipmpinfo="urn:dmp:idp1:mpeg21:2004:01-IPMPINFO-NS:2005:04" xmlns:idp1_ipmpdidl="urn:dmp:idp1:mpeg21:2004:01-IPMPDIDL-NS:2005:04" xmlns:didmodel="urn:mpeg:mpeg21:2002:02-DIDMODEL-NS" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:dmp:idp1:mpeg21:2004:01-IPMPDIDL-NS:2005:04" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.01">
+	<import namespace="urn:mpeg:mpeg21:2002:02-DIDMODEL-NS" schemaLocation="didmodel.xsd"/>
+	<import namespace="urn:dmp:idp1:mpeg21:2004:01-IPMPINFO-NS:2005:04" schemaLocation="dmp1ipmpinfo-2005-04.xsd"/>
+	<element name="Container" type="idp1_ipmpdidl:ContainerType" substitutionGroup="didmodel:Container"/>
+	<complexType name="ContainerType">
+		<complexContent>
+			<extension base="didmodel:ContainerType">
+				<sequence>
+					<group ref="idp1_ipmpdidl:IPMPDIDLChildGroup"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Item" type="idp1_ipmpdidl:ItemType" substitutionGroup="didmodel:Item"/>
+	<complexType name="ItemType">
+		<complexContent>
+			<extension base="didmodel:ItemType">
+				<sequence>
+					<group ref="idp1_ipmpdidl:IPMPDIDLChildGroup"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Descriptor" type="idp1_ipmpdidl:DescriptorType" substitutionGroup="didmodel:Descriptor"/>
+	<complexType name="DescriptorType">
+		<complexContent>
+			<extension base="didmodel:DescriptorType">
+				<sequence>
+					<group ref="idp1_ipmpdidl:IPMPDIDLChildGroup"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Statement" type="idp1_ipmpdidl:StatementType" substitutionGroup="didmodel:Statement"/>
+	<complexType name="StatementType" mixed="true">
+		<complexContent mixed="true">
+			<extension base="didmodel:StatementType">
+				<sequence>
+					<group ref="idp1_ipmpdidl:IPMPDIDLChildGroup"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Component" type="idp1_ipmpdidl:ComponentType" substitutionGroup="didmodel:Component"/>
+	<complexType name="ComponentType">
+		<complexContent>
+			<extension base="didmodel:ComponentType">
+				<sequence>
+					<group ref="idp1_ipmpdidl:IPMPDIDLChildGroup"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Resource" type="idp1_ipmpdidl:ResourceType" substitutionGroup="didmodel:Resource"/>
+	<complexType name="ResourceType" mixed="true">
+		<complexContent mixed="true">
+			<extension base="didmodel:ResourceType">
+				<sequence>
+					<group ref="idp1_ipmpdidl:IPMPDIDLChildGroup"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!-- elements from here onward are unique to the IPMP DIDL Representation-->
+	<group name="IPMPDIDLChildGroup">
+		<sequence>
+			<element ref="idp1_ipmpdidl:Identifier" minOccurs="0"/>
+			<element ref="idp1_ipmpdidl:Info"/>
+			<element ref="idp1_ipmpdidl:Contents"/>
+		</sequence>
+	</group>
+	<element name="Contents">
+		<complexType mixed="true">
+			<sequence>
+				<any namespace="##any" processContents="lax" minOccurs="0"/>
+			</sequence>
+			<attribute name="ref" type="anyURI"/>
+		</complexType>
+	</element>
+	<element name="Info">
+		<complexType mixed="true">
+			<sequence>
+				<element ref="idp1_ipmpinfo:IPMPInfoDescriptor" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="Identifier">
+		<complexType mixed="true">
+			<sequence>
+				<any namespace="##any" processContents="lax" minOccurs="0"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="ProtectedAsset" type="idp1_ipmpdidl:ProtectedAssetType"/>
+	<complexType name="ProtectedAssetType">
+		<sequence>
+			<group ref="idp1_ipmpdidl:IPMPDIDLChildGroup"/>
+		</sequence>
+		<attribute name="mimeType" type="string" use="required"/>
+	</complexType>
+</schema>

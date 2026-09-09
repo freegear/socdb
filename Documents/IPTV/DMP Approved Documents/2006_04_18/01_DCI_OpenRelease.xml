@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DIDL xmlns="urn:dmp:idp2:mpeg21:2002:02-DIDL-NS:2006:02" xmlns:dmp2rc="urn:dmp:idp2:Represent:Content:2006:02" xmlns:dmp2rl="urn:dmp:idp2:Represent:License:2006:02" xmlns:dmp1_dii="urn:dmp:idp1:mpeg21:2002:01-DII-NS:2005:04" xmlns:dmp2_ipmpdidl="urn:dmp:idp2:mpeg21:2004:01-IPMPDIDL-NS:2006:02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dmp2_ipmpinfo="urn:dmp:idp2:mpeg21:2004:01-IPMPINFO-NS:2006:02" xmlns:dmp2rdm="urn:dmp:idp2:Represent:DRMMessages:2006:02" xmlns:dmp2ram="urn:dmp:idp2:Represent:AuthenticationMessages:2006:02" xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:bpx="urn:mpeg:mpeg21:2005:01-REL-BPX-NS" xmlns:sx="urn:mpeg:mpeg21:2003:01-REL-SX-NS" xmlns:mx="urn:mpeg:mpeg21:2003:01-REL-MX-NS" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:mpeg7="urn:mpeg:mpeg7:smp:schema:2001" xsi:schemaLocation="urn:dmp:idp2:mpeg21:2002:02-DIDL-NS:2006:02 dmp2didl-2006-02.xsd">
+	<Container>
+		<Item>
+			<Descriptor>
+				<Statement mimeType="text/plain">
+					<dmp1_dii:Identifier>urn:myPresentations:presentation:444</dmp1_dii:Identifier>
+				</Statement>
+			</Descriptor>
+			<Descriptor>
+				<Statement mimeType="text/xml">
+					<dmp2rc:DMPInformation>
+						<dmp2rc:Metadata>
+							<dmp2rc:StructuredData ref="urn:mpeg:mpeg7:smp:schema:2001">
+								<mpeg7:Mpeg7>
+									<mpeg7:Description xsi:type="mpeg7:CreationDescriptionType">
+										<mpeg7:CreationInformation>
+											<mpeg7:Creation>
+												<mpeg7:Title type="ContentTitle">Slide presentation with Audio and Video</mpeg7:Title>
+												<mpeg7:Creator>
+													<mpeg7:Role href="urn:mpeg:mpeg7:RoleCS:2001:AUTHOR"/>
+													<mpeg7:Agent xsi:type="mpeg7:PersonType">
+														<mpeg7:Name>
+															<mpeg7:GivenName>Leonardo</mpeg7:GivenName>
+														</mpeg7:Name>
+													</mpeg7:Agent>
+												</mpeg7:Creator>
+												<mpeg7:CreationCoordinates>
+													<mpeg7:Date>
+														<mpeg7:TimePoint>2006-04-18T09:00:00</mpeg7:TimePoint>
+													</mpeg7:Date>
+												</mpeg7:CreationCoordinates>
+											</mpeg7:Creation>
+										</mpeg7:CreationInformation>
+									</mpeg7:Description>
+								</mpeg7:Mpeg7>
+							</dmp2rc:StructuredData>
+						</dmp2rc:Metadata>
+					</dmp2rc:DMPInformation>
+				</Statement>
+			</Descriptor>
+			<Descriptor>
+				<Statement mimeType="text/xml">
+					<dmp2_ipmpinfo:IPMPGeneralInfoDescriptor>
+						<dmp2_ipmpinfo:LicenseCollection>
+							<dmp2_ipmpinfo:RightsDescriptor>
+								<dmp2_ipmpinfo:License>
+									<dmp2rl:License>
+										<r:license licenseId="urn:myLicenses:6789A">
+											<!-- All participant to the Conference can play until the end of the Conference -->
+											<r:grant>
+												<r:forAll varName="conferenceParticipants">
+													<r:propertyPossessor>
+														<sx:propertyUri definition="urn:MyConference:participant"/>
+													</r:propertyPossessor>
+												</r:forAll>
+												<r:principal varRef="subscriber"/>
+												<mx:play/>
+												<r:digitalResource>
+													<r:nonSecureIndirect URI="urn:myPresentations:presentation:444"/>		
+												</r:digitalResource>
+												<r:validityInterval>
+													<r:notAfter>2006-07-29T18:00:00</r:notAfter>
+												</r:validityInterval>
+											</r:grant>
+											<!-- Every Device in Italy can play after the end of the Conference -->	
+											<r:grant>
+												<mx:play/>
+												<r:digitalResource>
+													<r:nonSecureIndirect URI="urn:myPresentations:presentation:444"/>		
+												</r:digitalResource>
+												<r:allConditions>
+													<r:validityInterval>
+														<r:notBefore>2006-07-29T18:00:00</r:notBefore>
+													</r:validityInterval>
+													<sx:territory>
+														<sx:location>
+															<sx:country>ITALY</sx:country>
+														</sx:location>
+													</sx:territory>
+												</r:allConditions>
+											</r:grant>
+											<!-- Every Device can Print the presentation -->
+											<r:grant>
+												<mx:print/>
+												<r:digitalResource>
+													<r:nonSecureIndirect URI="urn:myPresentations:presentation:444"/>		
+												</r:digitalResource>
+											</r:grant>
+											<!-- Every Device can Copy the presentation-->
+											<r:grant>
+												<bpx:governedCopy/>
+												<r:digitalResource>
+													<r:nonSecureIndirect URI="urn:myPresentations:presentation:444"/>		
+												</r:digitalResource>
+											</r:grant>
+											<!-- Every Device can Move the presentation-->
+											<r:grant>
+												<bpx:governedMove/>
+												<r:digitalResource>
+													<r:nonSecureIndirect URI="urn:myPresentations:presentation:444"/>		
+												</r:digitalResource>
+											</r:grant>
+											<r:issuer>
+												<r:keyHolder>
+													<r:info>
+														<dsig:KeyName>Leonardo_s Certificate</dsig:KeyName>
+													</r:info>
+												</r:keyHolder>
+											</r:issuer>
+										</r:license>									
+									</dmp2rl:License>
+								</dmp2_ipmpinfo:License>
+							</dmp2_ipmpinfo:RightsDescriptor>
+						</dmp2_ipmpinfo:LicenseCollection>
+					</dmp2_ipmpinfo:IPMPGeneralInfoDescriptor>
+				</Statement>
+			</Descriptor>
+			<Item>
+				<Descriptor>
+					<Statement mimeType="text/xml">
+						<dmp1_dii:Identifier>urn:Leonardo:Licenses:HumanReadableLicense:12</dmp1_dii:Identifier>
+					</Statement>
+				</Descriptor>
+				<Component>
+					<Resource mimeType="text/plain">
+						This License allows you to:
+							1.	Play 
+								a.	Time of Use: 
+									i.	until conference ends (Users who are conference participants)
+									ii.	after conference ends (all Users in Italy)
+								b.	# of times: unlimited 
+							2.	Store: unrestricted 
+							3.	Print PowerPoint file: unrestricted
+							4.	Move: unrestricted 
+							5.	Copy: unrestricted
+					</Resource>
+				</Component>
+			</Item>
+			<Item>
+				<Descriptor>
+					<Statement mimeType="text/xml">
+						<dmp1_dii:Identifier>urn:Leonardo:AudioRecording:1234</dmp1_dii:Identifier>
+					</Statement>
+				</Descriptor>
+				<Descriptor>
+					<Statement mimeType="text/xml">
+						<dmp2rc:DMPInformation>
+							<dmp2rc:Metadata>
+								<dmp2rc:StructuredData ref="urn:mpeg:mpeg7:schema:2001">
+									<!-- Metadata for audio track-->
+								</dmp2rc:StructuredData>
+							</dmp2rc:Metadata>
+						</dmp2rc:DMPInformation>
+					</Statement>
+				</Descriptor>
+				<Component>
+					<Resource mimeType="application/mp21-ipmp">
+						<dmp2_ipmpdidl:ProtectedAsset mimeType="audio/mpeg">
+							<dmp2_ipmpdidl:Info>
+								<dmp2_ipmpinfo:IPMPInfoDescriptor>
+									<dmp2_ipmpinfo:RightsDescriptor>
+										<dmp2_ipmpinfo:LicenseReference>urn:myLicenses:6789A</dmp2_ipmpinfo:LicenseReference>
+									</dmp2_ipmpinfo:RightsDescriptor>
+								</dmp2_ipmpinfo:IPMPInfoDescriptor>
+							</dmp2_ipmpdidl:Info>
+							<dmp2_ipmpdidl:Contents ref="AudioRecording1234.mp3"/>
+						</dmp2_ipmpdidl:ProtectedAsset>
+					</Resource>
+				</Component>
+			</Item>
+			<Item>
+				<Descriptor>
+					<Statement mimeType="text/xml">
+						<dmp1_dii:Identifier>urn:Leonardo:VideoRecording:5678</dmp1_dii:Identifier>
+					</Statement>
+				</Descriptor>
+				<Descriptor>
+					<Statement mimeType="text/xml">
+						<dmp2rc:DMPInformation>
+							<dmp2rc:Metadata>
+								<dmp2rc:StructuredData ref="urn:mpeg:mpeg7:schema:2001">
+									<!-- Metadata for video track-->
+								</dmp2rc:StructuredData>
+							</dmp2rc:Metadata>
+						</dmp2rc:DMPInformation>
+					</Statement>
+				</Descriptor>
+				<Component>
+					<Resource mimeType="application/mp21-ipmp">
+						<dmp2_ipmpdidl:ProtectedAsset mimeType="video/mpeg">
+							<dmp2_ipmpdidl:Info>
+								<dmp2_ipmpinfo:IPMPInfoDescriptor>
+									<dmp2_ipmpinfo:RightsDescriptor>
+										<dmp2_ipmpinfo:LicenseReference>urn:myLicenses:6789A</dmp2_ipmpinfo:LicenseReference>
+									</dmp2_ipmpinfo:RightsDescriptor>
+								</dmp2_ipmpinfo:IPMPInfoDescriptor>
+							</dmp2_ipmpdidl:Info>
+							<dmp2_ipmpdidl:Contents ref="VideoRecording5678.mpg"/>
+						</dmp2_ipmpdidl:ProtectedAsset>
+					</Resource>
+				</Component>
+			</Item>
+			<Item>
+				<Descriptor>
+					<Statement mimeType="text/xml">
+						<dmp1_dii:Identifier>urn:Leonardo:Presentations:2222</dmp1_dii:Identifier>
+					</Statement>
+				</Descriptor>
+				<Descriptor>
+					<Statement mimeType="text/xml">
+						<dmp2rc:DMPInformation>
+							<dmp2rc:Metadata>
+								<dmp2rc:StructuredData ref="urn:mpeg:mpeg7:schema:2001">
+									<!-- Metadata for the slide presentation-->
+								</dmp2rc:StructuredData>
+							</dmp2rc:Metadata>
+						</dmp2rc:DMPInformation>
+					</Statement>
+				</Descriptor>
+				<Component>
+					<Resource mimeType="application/mp21-ipmp">
+						<dmp2_ipmpdidl:ProtectedAsset mimeType="application/vnd.ms-powerpoint">
+							<dmp2_ipmpdidl:Info>
+								<dmp2_ipmpinfo:IPMPInfoDescriptor>
+									<dmp2_ipmpinfo:RightsDescriptor>
+										<dmp2_ipmpinfo:LicenseReference>urn:myLicenses:6789A</dmp2_ipmpinfo:LicenseReference>
+									</dmp2_ipmpinfo:RightsDescriptor>
+								</dmp2_ipmpinfo:IPMPInfoDescriptor>
+							</dmp2_ipmpdidl:Info>
+							<dmp2_ipmpdidl:Contents ref="conferencePresentation33.ppt"/>
+						</dmp2_ipmpdidl:ProtectedAsset>
+					</Resource>
+				</Component>
+			</Item>
+		</Item>
+	</Container>
+</DIDL>

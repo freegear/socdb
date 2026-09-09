@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:sx="urn:mpeg:mpeg21:2003:01-REL-SX-NS" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:mx="urn:mpeg:mpeg21:2003:01-REL-MX-NS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:mpeg:mpeg21:2005:01-REL-BPX-NS rel-bpx-v1.xsd">
+<r:grant>
+	<r:forAll varName="subscriber">
+		<r:propertyPossessor>
+			<sx:propertyUri definition="urn:acme:subscription:member:premier"/>
+		</r:propertyPossessor>
+	</r:forAll>
+	<!-- A pattern that matches any content whose URI starts with "http://acme.com/premier" -->
+	<r:forAll varName="subscriptionContent">
+		<r:anXmlExpression>r:nonSecureIndirect/@URI[starts-with(., "http://acme.com/premier")]</r:anXmlExpression>
+	</r:forAll>
+	<r:principal varRef="subscriber"/>
+	<mx:play/>
+	<r:digitalResource varRef="subscriptionContent"/>
+	</r:grant>
+</r:license>

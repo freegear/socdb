@@ -1,0 +1,158 @@
+######
+I.[ Directory Hierarchy ]
+
+- board		Board dependent files
+- common	Misc architecture independent functions
+- cpu		CPU specific files
+  - 74xx_7xx	Files specific to Freescale MPC74xx and 7xx CPUs
+  - arm720t	Files specific to ARM 720 CPUs
+  - arm920t	Files specific to ARM 920 CPUs
+    - imx	Files specific to Freescale MC9328 i.MX CPUs
+    - s3c24x0	Files specific to Samsung S3C24X0 CPUs
+  - arm925t	Files specific to ARM 925 CPUs
+  - arm926ejs	Files specific to ARM 926 CPUs
+  - at91rm9200	Files specific to Atmel AT91RM9200 CPUs
+  - i386	Files specific to i386 CPUs
+  - ixp		Files specific to Intel XScale IXP CPUs
+  - mcf52x2	Files specific to Freescale ColdFire MCF52x2 CPUs
+  - mips	Files specific to MIPS CPUs
+  - mpc5xx	Files specific to Freescale MPC5xx  CPUs
+  - mpc5xxx	Files specific to Freescale MPC5xxx CPUs
+  - mpc8xx	Files specific to Freescale MPC8xx  CPUs
+  - mpc8220	Files specific to Freescale MPC8220 CPUs
+  - mpc824x	Files specific to Freescale MPC824x CPUs
+  - mpc8260	Files specific to Freescale MPC8260 CPUs
+  - mpc85xx	Files specific to Freescale MPC85xx CPUs
+  - nios	Files specific to Altera NIOS CPUs
+  - nios2	Files specific to Altera Nios-II CPUs
+  - ppc4xx	Files specific to IBM PowerPC 4xx CPUs
+  - pxa		Files specific to Intel XScale PXA CPUs
+  - s3c44b0	Files specific to Samsung S3C44B0 CPUs
+  - sa1100	Files specific to Intel StrongARM SA1100 CPUs
+- disk		Code for disk drive partition handling
+- doc		Documentation (don't expect too much)
+- drivers	Commonly used device drivers
+- dtt		Digital Thermometer and Thermostat drivers
+- examples	Example code for standalone applications, etc.
+- include	Header Files
+- lib_arm	Files generic to ARM	 architecture
+- lib_generic	Files generic to all	 architectures
+- lib_i386	Files generic to i386	 architecture
+- lib_m68k	Files generic to m68k	 architecture
+- lib_mips	Files generic to MIPS	 architecture
+- lib_nios	Files generic to NIOS	 architecture
+- lib_ppc	Files generic to PowerPC architecture
+- net		Networking code
+- post		Power On Self Test
+- rtc		Real Time Clock drivers
+- tools		Tools to build S-Record or U-Boot images, etc.
+
+
+######
+II.[ Porting Point ]
+	1. When just board level is. (CPU is already ported. ex s3c44b0x)
+	- Add a new configuration option for your board to the toplevel "Makefile"
+	- Create a new directory to hold your board specific code.
+	  you will need at least the "Makefile", a "<board>.c", "flash.c" and "u-boot.lds".
+	- Create a new configuration file "include/configs/<board>.h" for your board
+
+    
+    Makefile
+	board/target_board
+	include
+		/configs/target.h
+
+	2. When new cpu type is.
+	- Create a new directory to hold your CPU specific code.
+	- Add any files you need.
+
+    Makefile
+	board/target_board
+	cpu/target_cpu
+	lib_target/
+	include
+		/asm-target/
+		/configs/target.h
+	etc.. Needs to H/W dependent file porting
+
+
+######
+III.[ Building ]
+	1. Run "make <board>_config" with your new name.
+	2. Type "make"
+
+
+######
+IV.[ Bootloader 과정 function call hierarchy ]
+
+1. Startup code
+: Bootloader copy flash to ram area and
+	real bootloader function call
+
+	WDT / interrupt disable
+	clk control
+	
+	cpu_init_crit()	: SRAM initialize
+	boot code copy flassh to ram area
+	stack setup
+	clear bss section
+	
+	start_armboot() call
+
+2. C-routine
+	start_armboot()
+		// Environment setting & board initialize
+		cpu_init()			:	cpu/xxx/cpu.c
+			- basic cpu dependent setup (#ifdef STACKDEFINE 스택 start 설정)
+		board_init()		:	board/xxx/xxx.c
+			- basic board dependent setup
+			* pll setting
+			* gpio setting
+			* arch number & boot parameter setting
+			* i/d cache enable
+		interrupt_init()	: cpu/xxx/interrupts.c
+			- interrupt setting
+		env_init()			: tools/env/fw_env.c
+			- initialize environment
+			- 설정에 따라서 호출 함수(파일) 달라짐
+		init_bardrate()		: lib_arm/board.c
+			- initialize baudrate setting
+		serial_init()		: cpu/armxxx/xxx/serial.c
+			- serial comm setup
+		console_init_f()	: common/console.c
+			- stage 1 init of console
+		display_banner()	: lib_arm/board.c
+		dram_init()			: board/xxx/xxx.c
+			- configure available RAM banks
+		display_dram_config(): lib_arm/board.c
+
+
+		flash_init()		: board/xxx/flash.c
+			- flash setting
+		env_relocate()		: common/env_common.c
+			- default_environment[] copy to env area
+		ipaddr / mac address board specific structure에 저장
+		devices_init()		: common/devices.c
+			-
+		jumptable_init()	: lib_arm/board.c
+		console_init_r()	: common/console.c
+			- device out/in/err device & function setting
+		enable_interrupts()	: cpu/armxxx/interrupts.c
+
+
+		// Kernel download & booting
+		main_loop()			: common/main.c
+			readline()		: common/main.c
+				- read command from console
+
+			run_command()	: common/main.c
+				- run command (bootm or tftp)
+
+				do_tftpb()	: common/cmd_net.c
+					netboot_common()				
+				do_bootm()	: common/cmd_bootm.c
+					- memmove() : image header read
+					do_bootm_linux()	: lib_arm/armlinux.c
+						- parameter store
+						- theKernel() -> kernel start
+

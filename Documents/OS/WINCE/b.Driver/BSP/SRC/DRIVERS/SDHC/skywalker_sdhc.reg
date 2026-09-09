@@ -1,0 +1,47 @@
+;
+; Copyright (c) Microsoft Corporation.  All rights reserved.
+;
+;
+; Use of this source code is subject to the terms of the Microsoft end-user
+; license agreement (EULA) under which you licensed this SOFTWARE PRODUCT.
+; If you did not accept the terms of the EULA, you are not authorized to use
+; this source code. For a copy of the EULA, please see the LICENSE.RTF on your
+; install media.
+;
+; This file is to be included in platform.reg if required.
+;
+[HKEY_LOCAL_MACHINE\Drivers\BuiltIn\SKYWALKER_SDHC]
+    "Order"=dword:21
+    "Dll"="skywalker_sdhc.dll"
+    "Prefix"="SDH"
+    
+    "DMAChannel"=dword:0            ; DMA channel to use.  Set to 0xffffffff to disable DMA
+    "DMAIrq"=dword:11
+    "DMA_IST_Priority"=dword:96
+
+    "SDIOIrq"=dword:15
+    "SDIO_IST_Priority"=dword:97
+    
+    "PollingTimeout"=dword:100      ; 100 ms
+    "CardDetect_Thread_Priority"=dword:98
+    
+    "CardDetectGPIO"="G"            ; card detect on GPG10
+    "CardDetectMask"=dword:400
+    "CardDetectFlag"=dword:0
+    "CardDetectControlMask"=dword:fffcffff
+    "CardDetectControlFlag"=dword:0
+    "CardDetectPullupMask"=dword:ffffffef
+    "CardDetectPullupFlag"=dword:10
+    
+    "CardReadWriteGPIO"="H"         ; card R/W on GPH8
+    "CardReadWriteMask"=dword:100
+    "CardReadWriteFlag"=dword:100
+    "CardReadWriteControlMask"=dword:ffcfffff
+    "CardReadWriteControlFlag"=dword:0
+    "CardReadWritePullupMask"=dword:ffffffbf
+    "CardReadWritePullupFlag"=dword:40
+
+    "HandleBusyFinishOnCommand38"=dword:1
+    "DmaTransferTimeoutFactor"=dword:8
+    "DmaTransferTimeoutConstant"=dword:3000
+

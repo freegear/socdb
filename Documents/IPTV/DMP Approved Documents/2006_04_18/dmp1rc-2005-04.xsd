@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:dmp1rc="urn:dmp:idp1:Represent:Content:2005:04" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"  targetNamespace="urn:dmp:idp1:Represent:Content:2005:04" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<element name="DMPInformation">
+		<complexType>
+			<sequence>
+				<element ref="dmp1rc:StructuredData"/>
+				<element ref="dsig:DigestMethod" minOccurs="0"/>
+				<element ref="dsig:DigestValue" minOccurs="0"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="StructuredData" type="dmp1rc:StructuredDataType"/>
+	<complexType name="StructuredDataType">
+		<sequence>
+			<any namespace="##any" processContents="lax" minOccurs="0"/>
+		</sequence>
+		<attribute name="ref" type="anyURI" use="required"/>
+	</complexType>
+	<element name="License" type="dmp1rc:LicenseType">
+		<annotation>
+			<documentation>IDP-1 Licenses are of type r:license and are denoted by the attribute 'ref ' value of "urn:mpeg:mpeg21:2003:01-REL-R-NS" which refers to the DMP REL profile</documentation>
+		</annotation>
+	</element>
+	<complexType name="LicenseType">
+		<sequence>
+			<any namespace="##any" processContents="lax" minOccurs="0"/>
+		</sequence>
+		<attribute name="ref" type="anyURI" default="urn:dmp:idp1:mpeg21:2003:01-REL-R-NS:2005:04"/>
+	</complexType>
+</schema>

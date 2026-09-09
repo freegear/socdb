@@ -1,0 +1,85 @@
+***** Source research
+http:www.uclinux.org/
+Toolchain src
+	www.uclinux.org/pub/uClinux/arm-elf-tools/
+	-> 20030314 Ver source
+
+uClinux src
+	www.uclinux.org/pub/uClinux/dist/
+	-> 20040408 Ver source
+
+
+***** Cross Compiling
+1. Toolchain List
+	binutils-2.10.tar.bz2
+	binutils-2.10-full.patch
+
+	gcc-2.95.3.tar.gz
+	gcc-2.95.3-arm-mlib.patch
+	gcc-2.95.3-arm-pic.patch
+	gcc-2.95.3-arm-pic.patch2
+	gcc-2.95.3-cygwin-020611.patch
+	gcc-2.95.3-full.patch
+	gcc-2.95.3-m68k-zext.patch
+	gcc-2.95.3-sigset.patch
+
+	uClibc-20030314.tar.gz
+	uClibc-0.9.19.patch
+
+	genromfs-0.5.1.tar.gz
+	genromfs-0.5.1-cygwin-020605.patch
+
+	elf2flt-20030314.tar.gz
+	elf2flt-cygwin-020612.patch
+
+	uClinux-dist-20040408.tar.gz
+
+	build-uclinux-tools.sh
+
+2. Install
+
+	1) Install toolchain
+		uClinux make config & make dep
+		- tar zxvf uClinux-dist-20040408.tar.gz
+		- cd uClinux-dist
+		- make config
+		ex) vendor/product -> Samsung/4510B
+		    kernal version = linux-2.4.x
+		    libc version = uClibc
+		    default all settings = y
+		    customize kernel settings = n
+		    customize vendor/user settings = n
+		    update default vendor settings = n
+		- make dep	
+
+	2) Edit build-uclinux-tools.sh script
+		KERNEL macro	-> modify
+		 ex) $BASEDIR/uClinux-dist/linux-2.4.x
+
+		PREFIX macro	-> valid and modify
+		 ex) /home/tjsruddl/local
+
+		PATH macro -> valid
+
+		stage8()	-> Add the line
+	         rm -rf elf2flt
+	         extract elf2flt-*
+
+	3) Edit toolchain source
+		gcc-2.95.3
+		- gcc-2.95.3/gcc/config/arm/arm.h
+			#define arm_prog_mode ((enum attr_prog_mode) arm_prg_mode)
+		     ->	#define arm_prog_mode (arm_prg_mode)
+
+		uClibc
+		- uClibc/libc/sysdeps/linux/arm/ioperm.c
+			init_iosys()
+			+#if LINUX_VERSION_CODE > 131328
+				static int ...
+				...
+				io.initdone = 1;
+				return 0;
+				}
+			+#endif
+
+	4) ./build-uclinux-tools.sh

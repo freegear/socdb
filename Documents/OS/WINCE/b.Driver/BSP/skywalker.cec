@@ -1,0 +1,477 @@
+CECInfo
+(
+	Name ( "SKYWALKER" )
+	CECVersion ( 5.00 )
+	Description ( "A BSP for SKYWALKER Development Platform." )
+	GUID ( {D5647F2D-2ABE-4CFB-8FB9-9C63257900A7} )
+	Vendor ( "SHMT" )
+)
+ComponentType
+(
+	Name ( "Display" )
+	GUID ( {6563AD21-E71C-11D4-B892-0050FC049781} )
+	Description ( "Display" )
+	Group ( "\Device Drivers" )
+	Vendor ( "Microsoft" )
+	HelpID ( 479 )
+	MaxResolvedImpsAllowed( 999 )
+	RequiredCEModules( ALL, "display device" )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SKYWALKER Display Driver" )
+			GUID ( {ABA1868B-10D6-4D4E-B1B9-178951A9C8ED} )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "1.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Variable( "module_name", "skywalker_lcd.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {457C9FC8-19BA-4386-96E6-6023258E657C} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\DRIVERS\DISPLAY", "SKYWALKER DISPLAY DRIVER")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Keyboard/Mouse" )
+	GUID ( {6563AD41-E71C-11D4-B892-0050FC049781} )
+	Description ( "Import Device Drivers" )
+	Group ( "\Device Drivers\Input Devices" )
+	Vendor ( "Microsoft" )
+	HelpID ( 481 )
+	MaxResolvedImpsAllowed( 1 )
+	RequiredCEModules( ANY, "keybd pointer" )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "S32410 Matrix Keyboard/Mouse English" )
+			GUID ( {640B54DF-8711-44FD-A36D-5FA12A5E1CAA} )
+			Description ( "Samsung S32410 Matrix Keyboard/Mouse English" )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "skywalkerkbdus.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {3C7E141F-7197-4682-916B-FFABF2FF7642} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\DRIVERS\KEYBD\skywalkerkbdus")' )
+				)
+			)
+		)
+		Implementation
+		(
+			Name ( "S32410 Matrix Keyboard/Mouse Korean" )
+			GUID ( {FAF6D04A-0406-4EB8-81B8-2F0A4DBC3899} )
+			Description ( "Samsung S32410 Keyboard/Mouse Korean" )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "skywalkerkbdkor.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {86F6F7FC-FA8F-42CB-948F-E390DAA53DF0} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\DRIVERS\KEYBD\skywalkerkbdkor")' )
+				)
+			)
+		)
+		Implementation
+		(
+			Name ( "S32410 Matrix Keyboard/Mouse Common" )
+			GUID ( {E1C73D64-9E80-4AA1-B833-60FDAE43FA9A} )
+			Description ( "Samsung S32410 Matrix Keyboard/Mouse Common" )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "kbdmouse.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {64EA0376-6F9E-4D9A-B927-ED080543D74A} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\DRIVERS\KEYBD\KBDCOMMON")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Local Area Networking (LAN) devices" )
+	GUID ( {591933E4-F657-11D4-98BF-00105AC7334D} )
+	Description ( "Network" )
+	Group ( "\Device Drivers\Networking" )
+	Vendor ( "Microsoft" )
+	HelpID ( 482 )
+	MaxResolvedImpsAllowed( 999 )
+	RequiredCEModules( ALL, "device ndis" )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SKYWALKER LAN91C111 Driver" )
+			GUID ( {8E387373-8E5F-4F08-8B02-D6476EDFD034} )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "1.0.0.0" )
+			Vendor ( "SHMT" )
+			Variable( "module_name", "LAN91C111.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {9BABE3D2-BB7F-4977-8FD3-2E0467D7EC68} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\DRIVERS\ETHERNET\LAN91C111", "SKYWALKER LAN91C111 Driver")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Serial" )
+	GUID ( {6563AD6C-E71C-11D4-B892-0050FC049781} )
+	Description ( "Serial" )
+	Group ( "\Device Drivers" )
+	Vendor ( "Microsoft" )
+	HelpID ( 487 )
+	MaxResolvedImpsAllowed( 999 )
+	RequiredCEModules( ANY, "pcmcia serial" )
+	RequiredCEModules( ALL, "device" )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SkyWalker Serial Driver" )
+			GUID ( {FCEA6B09-8529-438B-943E-BD2D04BF1BC2} )
+			Description ( "SkyWalker Serial Driver." )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "skywalker_ser.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {41723A69-2791-498D-BF33-DD04A7CD4C4D} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\DRIVERS\SERIAL")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "USB Function Bus Drivers" )
+	GUID ( {2C359054-1F2B-4CF3-8D3E-07B7EB279962} )
+	Description ( "USB Function Bus Drivers" )
+	Group ( "\Device Drivers\USB Function" )
+	Vendor ( "Microsoft" )
+	HelpID ( 489 )
+	MaxResolvedImpsAllowed( 999 )
+	RequiredCEModules( ANY, "net2280" )
+	RequiredCEModules( ALL, "device" )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "Samsung 2410 CSP" )
+			GUID ( {E67C80F9-0B07-4243-8A48-EC53E82DBE4A} )
+			Description ( "Samsung 2410 CSP USB Function Driver (SYSGEN_USBFN)" )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2004-03-28" )
+			Variable( "MODULE_NAME", "skywalker_usbfn.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {DA478736-9B07-4592-AD4C-9074E6F6F748} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\DRIVERS\USB")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "BSPs" )
+	GUID ( {3CABD6DA-B577-4A87-9490-9432E80DC2F1} )
+	Description ( "Board Support Packages" )
+	MaxResolvedImpsAllowed( 999 )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SKYWALKER: ARMV4I" )
+			GUID ( {95791895-E062-4410-896C-527A0C1DF7CA} )
+			Description ( "A BSP for the SKYWALKER Development Platform." )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2004-04-15" )
+			Children ( "{526969DB-5CC4-40EE-86FA-3DAB07728CD0}" )
+			SizeIsCPUDependent( 1 )
+			CPUSizeMultiplier( 1.0 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {3DDBDD15-F95F-461C-A859-35A4F2502D85} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Touch" )
+	GUID ( {1CCF42FA-FBAB-11D4-98CB-00105AC7334D} )
+	Description ( "Touch Driver" )
+	Group ( "\Device Drivers" )
+	Vendor ( "Microsoft" )
+	MaxResolvedImpsAllowed( 1 )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SKYWALKER Touch Driver" )
+			GUID ( {8104BAEC-7D24-4988-8E01-BC68E41D332F} )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "skywalker_touch.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {F0660E02-DCE2-4FAD-8DB5-AFEB56F53175} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\DRIVERS\TOUCH", "SKYWALKER Touch Driver")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "MSFlash Drivers" )
+	GUID ( {63987856-180B-4882-95C0-B5E72FD2F8FC} )
+	Description ( "MSFlash Drivers" )
+	Group ( "\Storage Drivers" )
+	Vendor ( "Microsoft" )
+	MaxResolvedImpsAllowed( 1 )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SmartMedia NAND Flash Driver (SMFLASH)" )
+			GUID ( {57947625-54B7-40E7-BA3B-61B4C9AE005B} )
+			Description ( "SmartMedia NAND Flash Driver (SMFLASH)" )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2003-01-14" )
+			FeatureVariable( "SYSGEN_MSFLASH", "1" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {634AD445-0549-4390-AED4-18C2BF2B4CBD} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(DIRS,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\COMMON\SMARTMEDIA")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Secure Digital Controller Driver" )
+	GUID ( {952E2A36-3A3E-415D-93BC-8FA78FE91F4A} )
+	Description ( "Secure Digital Controller Driver" )
+	Group ( "\Device Drivers" )
+	Vendor ( "Microsoft" )
+	MaxResolvedImpsAllowed( 999 )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SKYWALKER SDHC Driver" )
+			GUID ( {E1BC5777-191C-45E9-8C9E-87E9FD8ED68F} )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "skywalker_sdhc.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {F03753FA-4672-4EF8-9013-973EAFF2BF60} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\DRIVERS\SDHC", "SKYWALKER SDHC Driver")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Power Button" )
+	GUID ( {1CCF42F2-FBAB-11D4-98CB-00105AC7334D} )
+	Description ( "Power button driver" )
+	Group ( "\Device Drivers" )
+	Vendor ( "Microsoft" )
+	MaxResolvedImpsAllowed( 999 )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SKYWALKER Power Button" )
+			GUID ( {E522E46F-CD86-4E2C-AF3B-BBD697052566} )
+			Description ( "SKYWALKER power button." )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "skywalker_pbtn.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {A323FB20-92F3-44C3-8750-57D42D20478A} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\DRIVERS\PWRBUTTON")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Audio" )
+	GUID ( {4A25A750-B641-4AF3-9FDF-7CC044108418} )
+	Description ( "Audio" )
+	Group ( "\Device Drivers" )
+	Vendor ( "Microsoft" )
+	HelpID ( 477 )
+	MaxResolvedImpsAllowed( 999 )
+	RequiredCEModules( ALL, "waveapi device" )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SKYWALKER Waveform Audio Driver" )
+			GUID ( {6F20F8AD-FD8B-4510-AC5D-7A29A73CBF51} )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "skywalker_wavedev.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {03EFE193-67E4-41A0-A83D-941AB1B8AEE5} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\DRIVERS\WAVEDEV", "KYWALKER Waveform Audio Driver")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Ethernet Bootloader (eboot)" )
+	GUID ( {526969DB-5CC4-40EE-86FA-3DAB07728CD0} )
+	Description ( "Microsoft Windows CE Ethernet bootloader." )
+	Group ( "Bootloaders" )
+	Vendor ( "Microsoft" )
+	MaxResolvedImpsAllowed( 1 )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "Ethernet Bootloader (eboot)" )
+			GUID ( {66872158-4299-4D32-ABA4-03D122BDAFD1} )
+			Description ( "Microsoft Windows CE Ethernet bootloader." )
+			BSPPlatformDir ( "SKYWALKER" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SHMT" )
+			Date ( "2004-04-15" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {C83D56DB-E8AA-45CE-B257-7F0232780C79} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER\SRC\BOOTLOADER\EBOOT")' )
+				)
+			)
+		)
+	)
+)

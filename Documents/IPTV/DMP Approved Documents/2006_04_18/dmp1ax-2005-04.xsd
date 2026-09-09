@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:dmp1rc="urn:dmp:idp1:Represent:Content:2005:04" xmlns:dmp1md="urn:dmp:idp1:Manage:Domain:2005:04" xmlns:dmp1ax="urn:dmp:idp1:Access:2005:04" targetNamespace="urn:dmp:idp1:Access:2005:04" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="urn:dmp:idp1:Manage:Domain:2005:04" schemaLocation="dmp1md-2005-04.xsd"/>
+	<import namespace="urn:dmp:idp1:Represent:Content:2005:04" schemaLocation="dmp1rc-2005-04.xsd"/>
+	<element name="TransactionID" type="unsignedByte"/>
+	<element name="ContentRequest" type="dmp1ax:RequestType"/>
+	<complexType name="RequestType">
+		<sequence>
+			<element name="ContentIdentifier" type="anyURI"/>
+			<element name="DCIhash" type="unsignedByte" minOccurs="0"/>
+			<element ref="dmp1md:DomainResource" minOccurs="0"/>
+			<element ref="dmp1ax:TransactionID"/>
+		</sequence>
+	</complexType>
+	<element name="LicenseRequesResult" type="dmp1ax:LicenseRequestResultType"/>
+	<complexType name="LicenseRequestResultType">
+		<sequence>
+			<element ref="dmp1rc:License" minOccurs="0"/>
+			<element ref="dmp1ax:TransactionID"/>
+			<element name="Status" type="string"/>
+		</sequence>
+		<!-- between the CP and the LP -->
+	</complexType>
+	<element name="ContentRequestResult" type="dmp1ax:ContentRequestResultType"/>
+	<complexType name="ContentRequestResultType">
+		<sequence>
+			<element name="ContentServerURI" type="anyURI"/>
+			<element ref="dmp1ax:TransactionID"/>
+			<element name="Status" type="string"/>
+		</sequence>
+	</complexType>
+	<element name="LicenseRequestAcknowledgement" type="dmp1ax:AcknowledgementType"/>
+	<element name="ContentRequestAcknowledgement" type="dmp1ax:AcknowledgementType"/>
+	<complexType name="AcknowledgementType">
+		<sequence>
+			<element name="Message" type="string" fixed="ACK"/>
+			<element ref="dmp1ax:TransactionID"/>
+		</sequence>
+	</complexType>
+</schema>

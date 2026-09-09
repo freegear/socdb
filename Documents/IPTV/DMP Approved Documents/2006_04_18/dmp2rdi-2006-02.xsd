@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by Leonardo Chiariglione (CEDEO SAS di Chiariglione Leonardo e C) -->
+<schema xmlns:dmp2_mpeg4ipmp="urn:dmp:idp2:mpeg4:IPMPSchema:2002:2006:02" xmlns:dmp2rdi="urn:dmp:idp2:Represent:DeviceInformation:2006:02" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:dmp:idp2:Represent:DeviceInformation:2006:02" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="urn:dmp:idp2:mpeg4:IPMPSchema:2002:2006:02" schemaLocation="dmp2mpeg4ipmp-2006-02.xsd"/>
+	<element name="DeviceInformation" type="dmp2rdi:DeviceType"/>
+	<complexType name="DeviceType">
+		<complexContent>
+			<extension base="dmp2_mpeg4ipmp:TerminalIDType">
+				<sequence>
+					<element ref="dmp2rdi:ToolAPI_Config" minOccurs="0" maxOccurs="unbounded"/>
+					<element ref="dmp2rdi:Others" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<element name="Others" type="dmp2rdi:OtherTypes"/>
+	<complexType name="OtherTypes">
+		<sequence>
+			<any namespace="##any" processContents="lax"/>
+		</sequence>
+		<attribute name="ref" type="anyURI" use="required"/>
+	</complexType>
+	<element name="ToolAPI_Config" type="dmp2rdi:ToolAPI_ConfigType"/>
+	<complexType name="ToolAPI_ConfigType">
+		<sequence>
+			<element name="Instantiation_API_ID" type="anyURI" minOccurs="0"/>
+			<element name="Messaging_API_ID" type="anyURI" minOccurs="0"/>
+			<element name="OpaqueData" type="hexBinary" minOccurs="0"/>
+		</sequence>
+	</complexType>
+</schema>

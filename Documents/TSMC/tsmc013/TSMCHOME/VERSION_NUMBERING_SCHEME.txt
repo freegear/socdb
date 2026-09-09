@@ -1,0 +1,192 @@
+*****************************************************************
+* PRODUCT ID AND VERSION NUMBERING FOR TSMC LIBRARY/IP PRODUCTS *
+*****************************************************************
+
+======================
+Product identification
+======================
+Every TSMC product (library/IP) is delivered as a set of design
+kits (library views). Each design kit is delivered as a tar
+file containing the design kit files. The tar file is named
+according to: <ID>.tar, where the ID states the identity of
+the design kit. This ID consists of three parts:
+
+  1) The name of the library/IP (see TSMC product information)
+  2) The version number which consists of 3 digits + 1 character
+  3) The design kit initials
+
+Format: <name>_###$_<kit> (# = digit 0-9, $ = character a-z)
+Ex:     tpz873_100a_apf   (Apollo kit for IO lib tpz873 ver 100a)
+        pd22a1_200b_syn   (Synopsys kit for macro pd22a1 ver 200b)
+
+The <kit> initials are mapped according to following table:
+
+  rln = release note
+  gds = GDSII layout view
+  gdf = GDSII phantom view
+  spi = Spice/lvs netlist
+  apf = Apollo FRAM (phantom) view
+  apt = Apollo FRAM and CEL (layout) view
+  sef = Silicon Ensemble LEF (phantom) view
+  syn = Synopsys
+  vlg = Verilog simulation models
+  vit = Vital (VHDL) simulaion models
+  sdc = Star-DC delay calculator timing views
+  mdt = Mentor DFT (Fastscan, DFT advisor)
+  doc = Documents (Data sheets)
+  ibs = IBIS models
+
+For some libraries (0.18u technologies and below), different
+layout is required for applications taped-out with different
+numbers of metal layers. These kits are identified with following
+initials:
+
+  gds%lm = GDS for applications with % metal layers
+  apf%lm = Apollo FRAM view for applications with % metal layers
+  apt%lm = Apollo FRAM and CEL view for % metal layers
+
+=================
+Version numbering
+=================
+The first 3 digits of the version number is the PRODUCT VERSION
+NUMBER, which is same for all design kits belonging to a certain
+product release. The character (a-z) following the digits is the
+KIT VERSION NUMBER which can be different for each design kit.
+
+The versions are numbered according to following rules:
+
+- The first two digits of product version numbers follow the
+  related DRM (Design Rule Manual) version number. For example:
+
+    DRM version   Product (library) version
+    0.1           01X (010,011,012...019)
+    1.0           10X (100,101,102...109)
+    2.2           22X (220,221,222...229)
+
+  Note ! Exception for some older product which do not follow
+         this convention. In those cases, the version number
+         do not have any relationship to DRM version number.
+
+- If modifications are made which affect only one or more kits,
+  but not all kits, then the product version number is
+  unchanged and the kit version number is increased.
+
+- If modifications are made which affect all kits belonging to a
+  certain product, then the 3rd digit of product version number
+  is increased and all kit version numbers start from 'a'.
+
+Following table shows some thumb rules for version increments:
+
+  Incr   Example     Reason
+  -----------------------------------------------------------
+  +100   100 ->200   DRM version change: 1.0 -> 2.0
+  +10    100 ->110   DRM version change: 1.0 -> 1.1
+  +1     100 ->101   Modifications that affect all kits
+  +0     100a->100b  Modifications that only affect some kits
+
+======================
+Design kits dependency
+======================
+For each new release of any design kit, a 'rln' (release note)
+is released showing a table with the valid combinations of kit
+versions for each release:
+
+  rln  gds  spi  apf  apt  sef  syn  vlg  vit  sdc  mdt  doc  
+  -----------------------------------------------------------
+  100a 100a 100a 100a 100a 100a 100a 100a 100a 100a 100a 100a
+  100b 100b 100a 100b 100b 100b 100a 100a 100a 100a 100a 100a
+  100c 100b 100a 100b 100b 100b 100c 100a 100a 100c 100a 100a
+  110a 110a 110a 110a 110a 110a 110a 110a 110a 110a 110a 110a
+
+The above example shows 4 releases of a certain product. Each
+column represents a design kit. For each release, a 'rln' is
+included and the 'rln' version number is increased. In this
+example, the first release (rln ver 100a) contains all design
+kits. In the 2nd release (100b), only the kits gds, apf, apt,
+sef are updated and increased to 100b. For the other kits,
+100a can still be used. In the 3rd release (100c) only the
+kits syn, sdc are updated. The 2nd and 3rd release are due to
+modifications that only affect some, but not all kits. In the
+4th release (110a), all kits are affected and increased to 110a.
+
+===================
+Preliminary release
+===================
+Normally a product must fulfill some certain requirements and
+pass QA (Quality Approval) before it is formally released.
+A preliminary release is simply a snapshot of current working
+copy of design kit data which is not yet released and do not
+necessary fulfill all requirements and has not yet pass
+internal QA. A preliminary release is only for temporary use
+and must be replaced by a formally released design kit before
+use in any formal verification procedure.
+
+Following is the version numbering for preliminary releases:
+
+Format: <name>_###$0$ (3 digits + 1 char + zero + 1 char)
+Ex:     tpz873_100a0a_apf (1st snapshot of 100a working copy)
+        tpz873_100a0b_apf (2nd snapshot of 100a working copy)
+        pd22a1_110b0a_syn (1st snapshot of 110b working copy)
+
+Preliminary release version number always have a zero following
+the ###$ number. As the example shows, the ###$ part points out
+which version (of a coming standard release) this preliminary
+release is a snapshot of. The last character is increased for
+every new snapshot that is created.
+
+=============
+Patch release
+=============
+A patch is a complement/modification to an already released
+design kit and is used to fix a found limitation or bug.
+
+Following is the version numbering for patch releases:
+
+Format: <name>_###$%$ ( 3 digits + 1 char + 1 digit>0 + 1 char
+Ex:     tpz873_100a1a_apf (patch nr 1 ver a for 100a)
+        tpz873_100a1b_apf (patch nr 1 ver b for 100a)
+        tpz873_100a2a_apf (patch nr 2 ver a for 100a)
+
+As the above example shows, several patches can be issued to
+complement a released design kit. Patch 1 and patch 2 are
+two different patches with different methods and/or targeted
+to fix different bugs. The last character is increased for
+each new release of a certain patch.
+
+==================================
+Preliminary/Formal/Patch relations
+==================================
+Following figure shows how preliminary, formal and patch
+releases are related to each other in time. Of course
+preliminary and patch releases are issued only when
+required.
+
+  |
+  |  100a0a                   1st prel release of 100a
+  |  100a0b                   2nd prel release of 100a
+  |    .
+  |  100a0z                   26th prel release of 100a
+  |
+  |  100a                     * 1st formal release *
+  |
+  |  100a1a 100a2a . 100a9a   patch N ver a to fix 100a
+  |  100a1b 100a2b . 100a9b   patch N ver b to fix 100a
+  |    .       .
+  |  100a1z 100a2z . 100a9z   patch N ver z to fix 100a
+  |
+  |  100b0a                   1st prel release of 100b
+  |  100b0b                   2nd prel release of 100b
+  |    .
+  |  100b0z                   26th prel release of 100b
+  |
+  |  100b                     * 2nd formal release *
+  |
+  |  110a                     * N:th formal release *
+  |
+  |  200a                     * Next generation release *
+  |
+  V
+ Time
+
+
+

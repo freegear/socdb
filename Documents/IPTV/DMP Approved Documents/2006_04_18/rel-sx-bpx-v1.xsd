@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:mpeg:mpeg21:2003:01-REL-SX-NS" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:sx="urn:mpeg:mpeg21:2003:01-REL-SX-NS" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="urn:mpeg:mpeg21:2003:01-REL-R-NS" schemaLocation="rel-r-bpx-v1.xsd"/>
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<!-- Elements -->
+	<xsd:element name="exerciseLimit" type="sx:ExerciseLimit" substitutionGroup="r:condition"/>
+	<xsd:element name="propertyUri" type="sx:PropertyUri" substitutionGroup="r:propertyAbstract"/>
+	<xsd:element name="territory" type="sx:Territory" substitutionGroup="r:condition"/>
+	<xsd:element name="validityIntervalFloating" type="sx:ValidityIntervalFloating" substitutionGroup="r:condition"/>
+	<xsd:element name="validityTimeMetered" type="sx:ValidityTimeMetered" substitutionGroup="r:condition"/>
+	<!--Complex Types-->
+	<xsd:complexType name="ExerciseLimit">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence>
+					<xsd:element name="count" type="xsd:integer" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PropertyUri">
+		<xsd:complexContent>
+			<xsd:extension base="r:PropertyAbstract">
+				<xsd:attribute name="definition" type="xsd:anyURI"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Territory">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:choice minOccurs="0" maxOccurs="unbounded">
+					<xsd:element name="location">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="country" type="xsd:QName" minOccurs="0"/>
+								<xsd:element name="region" type="xsd:QName" minOccurs="0"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="domain">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="uri" type="xsd:anyURI"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ValidityIntervalFloating">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence>
+					<xsd:element name="duration" type="xsd:duration" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ValidityTimeMetered">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence>
+					<xsd:element name="duration" type="xsd:duration" minOccurs="0"/>
+					<xsd:element name="quantum" type="xsd:duration" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Simple Types -->
+	<xsd:simpleType name="ProfileCompliance">
+		<xsd:list itemType="xsd:QName"/>
+	</xsd:simpleType>
+	<!-- Attributes -->
+	<xsd:attribute name="profileCompliance" type="sx:ProfileCompliance"/>
+</xsd:schema>

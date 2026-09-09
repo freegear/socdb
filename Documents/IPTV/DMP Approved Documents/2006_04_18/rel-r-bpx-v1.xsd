@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sccns="urn:uddi-org:schemaCentricC14N:2002-07-10" xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<!-- Elements -->
+	<xsd:element name="allConditions" type="r:AllConditions" substitutionGroup="r:condition"/>
+	<xsd:element name="anXmlExpression" type="r:AnXmlExpression"/>
+	<xsd:element name="condition" type="r:Condition" substitutionGroup="r:licensePart"/>
+	<xsd:element name="digitalResource" type="r:DigitalResource" substitutionGroup="r:resource"/>
+	<xsd:element name="forAll" block="#all" substitutionGroup="r:licensePart" final="#all">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="r:LicensePart">
+					<xsd:choice minOccurs="0">
+						<xsd:element name="anXmlExpression" type="r:AnXmlExpression"/>
+						<xsd:element name="propertyPossessor" type="r:PropertyPossessor"/>
+					</xsd:choice>
+					<xsd:attribute name="varName" type="r:VariableName"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="grant" type="r:Grant" substitutionGroup="r:resource"/>
+	<xsd:element name="keyHolder" type="r:KeyHolder" substitutionGroup="r:principal"/>
+	<xsd:element name="issuer" type="r:Issuer"/>
+	<xsd:element name="license" type="r:License"/>
+	<xsd:element name="licensePart" type="r:LicensePart"/>
+	<xsd:element name="possessProperty" type="r:PossessProperty" substitutionGroup="r:right"/>
+	<xsd:element name="propertyAbstract" type="r:PropertyAbstract" substitutionGroup="r:resource"/>
+	<xsd:element name="principal" type="r:Principal" substitutionGroup="r:resource"/>
+	<xsd:element name="propertyPossessor" type="r:PropertyPossessor"/>
+	<xsd:element name="resource" type="r:Resource" substitutionGroup="r:licensePart"/>
+	<xsd:element name="right" type="r:Right" substitutionGroup="r:licensePart"/>
+	<xsd:element name="serviceDescription" type="r:ServiceDescription" substitutionGroup="r:licensePart"/>
+	<xsd:element name="serviceReference" type="r:ServiceReference" substitutionGroup="r:resource"/>
+	<xsd:element name="trustedRootIssuers" type="r:TrustedRootIssuers"/>
+	<xsd:element name="validityInterval" type="r:ValidityInterval" substitutionGroup="r:condition"/>
+	<!--Complex Types-->
+	<xsd:complexType name="AllConditions">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence>
+					<xsd:element ref="r:condition" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="AnXmlExpression" mixed="true" sccns:embeddedLangAttribute="r:lang">
+		<xsd:complexContent mixed="true">
+			<xsd:extension base="r:Resource">
+				<xsd:attribute name="lang" type="xsd:anyURI" default="http://www.w3.org/TR/1999/REC-xpath-19991116"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Condition">
+		<xsd:complexContent>
+			<xsd:extension base="r:LicensePart"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DigitalResource">
+		<xsd:complexContent>
+			<xsd:extension base="r:Resource">
+				<xsd:choice minOccurs="0">
+					<xsd:element name="secureIndirect" type="dsig:ReferenceType"/>
+					<xsd:element name="nonSecureIndirect" type="r:NonSecureReference"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Grant">
+		<xsd:complexContent>
+			<xsd:extension base="r:Resource">
+				<xsd:choice minOccurs="0">
+					<xsd:sequence>
+						<xsd:element ref="r:forAll" minOccurs="0" maxOccurs="unbounded"/>
+						<xsd:element ref="r:principal" minOccurs="0"/>
+						<xsd:element ref="r:right"/>
+						<xsd:element ref="r:resource" minOccurs="0"/>
+						<xsd:element ref="r:condition" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Issuer">
+		<xsd:sequence>
+			<xsd:choice minOccurs="0">
+				<xsd:element ref="dsig:Signature"/>
+				<xsd:element ref="r:principal"/>
+			</xsd:choice>
+			<xsd:element name="details" type="r:IssuerDetails" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IssuerDetails">
+		<xsd:sequence>
+			<xsd:element name="timeOfIssue" type="xsd:dateTime" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="KeyHolder">
+		<xsd:complexContent>
+			<xsd:extension base="r:Principal">
+				<xsd:sequence minOccurs="0">
+					<xsd:element name="info" type="dsig:KeyInfoType"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="License">
+		<xsd:choice>
+			<xsd:sequence>
+				<xsd:choice minOccurs="0" maxOccurs="unbounded">
+					<xsd:element ref="r:grant"/>
+				</xsd:choice>
+				<xsd:element ref="r:issuer" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:choice>
+		<xsd:attribute name="licenseId" type="xsd:anyURI" use="optional"/>
+		<xsd:anyAttribute namespace="##other" processContents="lax"/>
+	</xsd:complexType>
+	<xsd:complexType name="LicensePart">
+		<xsd:attribute name="licensePartId" type="r:LicensePartId" use="optional"/>
+		<xsd:attribute name="licensePartIdRef" type="r:LicensePartId" use="optional"/>
+		<xsd:attribute name="varRef" type="r:VariableName" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="NonSecureReference">
+		<xsd:attribute name="URI" type="xsd:anyURI"/>
+	</xsd:complexType>
+	<xsd:complexType name="PossessProperty">
+		<xsd:complexContent>
+			<xsd:extension base="r:Right"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Principal">
+		<xsd:complexContent>
+			<xsd:extension base="r:Resource"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PropertyAbstract">
+		<xsd:complexContent>
+			<xsd:extension base="r:Resource"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PropertyPossessor">
+		<xsd:complexContent>
+			<xsd:extension base="r:Resource">
+				<xsd:sequence minOccurs="0">
+					<xsd:element ref="r:propertyAbstract"/>
+					<xsd:element ref="r:trustedRootIssuers" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Right">
+		<xsd:complexContent>
+			<xsd:extension base="r:LicensePart"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Resource">
+		<xsd:complexContent>
+			<xsd:extension base="r:LicensePart"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceDescription">
+		<xsd:complexContent>
+			<xsd:extension base="r:LicensePart"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceReference">
+		<xsd:complexContent>
+			<xsd:extension base="r:Resource">
+				<xsd:sequence minOccurs="0">
+					<xsd:element ref="r:serviceDescription"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="TrustRoot">
+		<xsd:complexContent>
+			<xsd:extension base="r:LicensePart"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="TrustedRootIssuers">
+		<xsd:complexContent>
+			<xsd:extension base="r:TrustRoot">
+				<xsd:sequence minOccurs="0">
+					<xsd:element ref="r:principal" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ValidityInterval">
+		<xsd:complexContent>
+			<xsd:extension base="r:Condition">
+				<xsd:sequence>
+					<xsd:element name="notBefore" type="xsd:dateTime" minOccurs="0"/>
+					<xsd:element name="notAfter" type="xsd:dateTime" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- Simple Types-->
+	<xsd:simpleType name="LicensePartId">
+		<xsd:restriction base="xsd:NCName"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="VariableName">
+		<xsd:restriction base="xsd:NCName"/>
+	</xsd:simpleType>
+</xsd:schema>

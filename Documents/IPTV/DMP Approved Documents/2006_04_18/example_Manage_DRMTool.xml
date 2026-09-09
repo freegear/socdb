@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MessageFromTool xmlns="urn:dmp:idp2:Represent:DRMMessages:2006:02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:dmp2_ipmpinfo="urn:dmp:idp2:mpeg21:2004:01-IPMPINFO-NS:2006:02" xmlns:dmp2rk="urn:dmp:idp2:Represent:Key:2006:02" xmlns:dmp2ram="urn:dmp:idp2:Represent:AuthenticationMessages:2006:02" xsi:schemaLocation="urn:dmp:idp2:Represent:AuthenticationMessages:2006:02 dmp2ram-2006-02.xsd">
+	<Sender>0</Sender>
+	<!-- The Terminal Device is the Sender of this message -->
+	<Recipient>3</Recipient>
+	<!-- IPMP Tool #3 is the Addressee of this message -->
+	<OpaqueData>
+		<dataID>98765</dataID>
+		<opaqueData>0AFFAEEFFFCD</opaqueData>
+	</OpaqueData>
+	<AudioWatermarkingInit>
+		<dataID>98765</dataID>
+		<inputFormat mimeType="audio/mpeg">
+			<nChannels>2</nChannels>
+			<bitPerSample>24</bitPerSample>
+			<frequency>44.1</frequency>
+		</inputFormat>
+		<requiredOp>00</requiredOp><!--INSERT_WM-->
+		<wmPayload>034567888610</wmPayload>
+	</AudioWatermarkingInit>	
+	<VideoWatermarkingInit>
+		<dataID>98765</dataID>
+		<inputFormat mimeType="video/mpeg"></inputFormat>
+		<requiredOp>01</requiredOp><!--EXTRACT_WM-->
+		<wmRecipientID>123</wmRecipientID>
+	</VideoWatermarkingInit>
+	<SendAudioWatermark>
+		<dataID>98765</dataID>
+		<wm_status>00</wm_status>
+		<compression_status>02</compression_status>
+		<payload>UserID:ABCDEF</payload>
+	</SendAudioWatermark>
+	<SendVideoWatermark>
+		<dataID>98765</dataID>
+		<wm_status>01</wm_status>
+		<compression_status>00</compression_status>
+		<opaqueData>0ABCDE33</opaqueData>
+	</SendVideoWatermark>
+	<KeyData>
+		<dataID>98765</dataID>
+		<dmp2rk:Key>
+			<dsig:KeyInfo>
+				<dsig:KeyName>Another key</dsig:KeyName>
+				<dsig:KeyValue>
+				<dsig:RSAKeyValue>
+					<dsig:Modulus>0x1234567890</dsig:Modulus>
+					<dsig:Exponent>AQAB</dsig:Exponent>
+				</dsig:RSAKeyValue>
+				</dsig:KeyValue>
+			</dsig:KeyInfo>
+			<dmp2rk:startDTS>11111111</dmp2rk:startDTS>
+			<dmp2rk:startPacketID>88888</dmp2rk:startPacketID>
+			<dmp2rk:expireDTS>12121212</dmp2rk:expireDTS>
+			<dmp2rk:expirePacketID>99999</dmp2rk:expirePacketID>
+		</dmp2rk:Key>
+	</KeyData>
+	<RightsData>
+		<dataID>98765</dataID>
+		<rightsInfo>Insert your license here</rightsInfo>
+	</RightsData>
+	<SelectiveDecryptionInit>
+		<dataID>98765</dataID>
+		<mimeType>video/MP4V-ES</mimeType>
+		<profileLevelIndication>0x7F</profileLevelIndication>
+		<!--"Advanced Video Coding" (from Table 4 in ISO/IEC 14496-1:2004)-->
+		<compliance>0x00</compliance>
+		<!--"Fully compliant", from Section A.2.2 in ISO/IEC 14496-13:2004-->
+		<bufInfoStruct>
+			<cipher_Id>http://www.w3.org/2001/04/xmlenc#tripledes-cbc</cipher_Id>
+			<syncBoundary>Video packet for video</syncBoundary>
+			<blockSize>2</blockSize>
+			<keySize>8</keySize>
+		</bufInfoStruct>
+		<nSegments>3</nSegments>
+		<RLE_Data>1111</RLE_Data>
+		<RLE_Data>2222</RLE_Data>
+		<RLE_Data>3333</RLE_Data>
+	</SelectiveDecryptionInit>
+	<SecureContainer>
+		<dataID>98765</dataID>
+		<protectedMsgTag>08</protectedMsgTag>
+		<!-- RightsData_tag -->
+		<protectedMsg>012546738ABACC3215436DDD87218E5FF42E</protectedMsg>
+	</SecureContainer>
+	<AddToolNotificationListener>
+		<dataID>98765</dataID>
+		<scope>SCOPE_LOCAL</scope>
+		<EventType>01</EventType>
+	</AddToolNotificationListener>
+	<RemoveToolNotificationListener>
+		<dataID>98765</dataID>
+		<EventType>01</EventType>
+	</RemoveToolNotificationListener>
+	<dmp2ram:InitAuthentication>
+		<dataID>98765</dataID>
+		<dmp2ram:ContextID>0</dmp2ram:ContextID>
+		<!-- The sender of this message is requesting mutual authentication with the Terminal -->
+		<dmp2ram:AuthType>03</dmp2ram:AuthType>
+		<!-- Do ID verify, No secure channel -->
+	</dmp2ram:InitAuthentication>
+	<dmp2ram:MutualAuthentication>
+		<dataID>98765</dataID>
+		<dmp2ram:requestNegotiation>
+			<dmp2ram:candidateAlgorithms>
+				<dmp2ram:algoID>http://www.w3.org/2001/04/xmlenc#DHKeyValue</dmp2ram:algoID>
+				<!-- Diffie-Hellman Key Value algorithm-->
+				<dmp2ram:algoID>http://www.w3.org/2001/04/xmlenc#dh</dmp2ram:algoID>
+				<!-- Diffie-Hellman Key Agreement algorithm-->
+			</dmp2ram:candidateAlgorithms>
+		</dmp2ram:requestNegotiation>
+	</dmp2ram:MutualAuthentication>
+	<UserQuery>
+		<dataID>98765</dataID>
+		<altText>
+			<languageCode>EN</languageCode>
+			<titleText>This is the title</titleText>
+			<displayText ID="0">
+				<text>This is the first text to be displayed</text>
+			</displayText>
+			<displayText ID="1">
+				<text>This is the second text to be displayed</text>
+			</displayText>
+			<needReplyText subID="0" ID="0">
+				<text>This is the first option to be prompted to user</text>
+			</needReplyText>
+			<needReplyText subID="1" ID="0">
+				<text>This is the second option to be prompted to user</text>
+			</needReplyText>
+		</altText>
+	</UserQuery>
+	<UserQueryResponse>
+		<dataID>98765</dataID>
+		<replyText>
+			<languageCode>EN</languageCode>
+			<replyText subID="0" ID="0">
+				<text>This text is sent in reply from the User</text>
+			</replyText>
+			<replyText subID="1" ID="0">
+				<text>This text too is sent in reply from the User</text>
+			</replyText>
+			<optionResult ID="0" subID="0">
+				<result>true</result>
+			</optionResult>
+			<optionResult ID="0" subID="1">
+				<result>true</result>
+			</optionResult>
+		</replyText>
+	</UserQueryResponse>
+	<ParametricDescription>
+		<dataID>98765</dataID>
+		<descriptionComment>This field contains a comment useful to describe the Parametric Tool</descriptionComment>
+		<majorVersion>2</majorVersion>
+		<minorVersion>0</minorVersion>
+		<paramToolDescription>
+			<class>Audio Watermark</class>
+			<subClass>Differential Energy Watermark</subClass>
+			<typeData>XXX</typeData>
+			<type>11111</type>
+		</paramToolDescription>
+	</ParametricDescription>
+	<ToolParamCapabilitiesQuery>
+		<dataID>98765</dataID>
+		<toolParamDesc>
+			<dataID>98765</dataID>
+			<majorVersion>3</majorVersion>
+			<minorVersion>5</minorVersion>
+			<paramToolDescription>
+				<class>Decryption</class>
+				<subClass>DES</subClass>
+				<typeData>128</typeData>
+			</paramToolDescription>
+		</toolParamDesc>
+	</ToolParamCapabilitiesQuery>
+	<ToolParamCapabilitiesResponse>
+		<dataID>98765</dataID>
+		<capabilitiesSupported>true</capabilitiesSupported>
+	</ToolParamCapabilitiesResponse>
+	<GetTools>
+		<dataID>98765</dataID>
+	</GetTools>
+	<GetToolsResponse>
+		<dataID>98765</dataID>
+		<Tool>
+			<dmp2_ipmpinfo:ToolBaseDescription>
+				<dmp2_ipmpinfo:IPMPToolID>urn:vendorX:Tools:0123456789</dmp2_ipmpinfo:IPMPToolID>
+			</dmp2_ipmpinfo:ToolBaseDescription>
+			<alternates>
+				<dmp2_ipmpinfo:ToolBaseDescription>
+					<dmp2_ipmpinfo:IPMPToolID>urn:vendorY:Tools:9876543210</dmp2_ipmpinfo:IPMPToolID>
+				</dmp2_ipmpinfo:ToolBaseDescription>
+			</alternates>
+		</Tool>
+	</GetToolsResponse>
+	<GetToolContext>
+		<dataID>98765</dataID>
+	</GetToolContext>
+	<GetToolContextResponse>
+		<dataID>98765</dataID>
+		<ToolContextID>3</ToolContextID>
+	</GetToolContextResponse>
+	<ConnectTool>
+		<dataID>98765</dataID>
+		<dmp2_ipmpinfo:Tool>
+			<dmp2_ipmpinfo:ToolBaseDescription>
+				<dmp2_ipmpinfo:IPMPToolID>urn:myfavoritetoolVendor:ToolID:0123456789</dmp2_ipmpinfo:IPMPToolID>
+			</dmp2_ipmpinfo:ToolBaseDescription>
+			<dmp2_ipmpinfo:InitializationSettings>
+				<dmp2_ipmpinfo:InitializationData>
+					<ControlPointID>
+						<ID>01</ID>
+					</ControlPointID>
+					<SequenceCode>0</SequenceCode>
+					<ControlPointAddress>0A8B0021</ControlPointAddress>
+					<KeyData>
+						<dataID>98765</dataID>
+						<dsig:KeyInfo>
+							<dsig:KeyValue>
+								<dsig:DSAKeyValue>
+									<dsig:Y>39655420365028765280534F</dsig:Y>
+								</dsig:DSAKeyValue>
+							</dsig:KeyValue>
+						</dsig:KeyInfo>
+					</KeyData>
+				</dmp2_ipmpinfo:InitializationData>
+			</dmp2_ipmpinfo:InitializationSettings>
+		</dmp2_ipmpinfo:Tool>
+	</ConnectTool>
+	<DisconnectTool>
+		<dataID>98765</dataID>
+		<ToolContextID>3</ToolContextID>
+	</DisconnectTool>
+	<NotifyToolEvent>
+		<dataID>98765</dataID>
+		<EventType>03</EventType>
+		<toolContextID>4</toolContextID>
+	</NotifyToolEvent>
+	<CanProcess>
+		<dataID>98765</dataID>
+		<canProcess>false</canProcess>
+	</CanProcess>
+</MessageFromTool>

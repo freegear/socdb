@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:dmp1_rel_r="urn:dmp:idp1:mpeg21:2003:01-REL-R-NS:2005:04" targetNamespace="urn:dmp:idp1:mpeg21:2003:01-REL-R-NS:2005:04" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<!-- Elements -->
+	<element name="allConditions" type="dmp1_rel_r:AllConditions" substitutionGroup="dmp1_rel_r:condition"/>
+	<element name="condition" type="dmp1_rel_r:Condition" substitutionGroup="dmp1_rel_r:licensePart"/>
+	<element name="possessProperty" type="dmp1_rel_r:PossessProperty" substitutionGroup="dmp1_rel_r:right"/>
+	<element name="digitalResource" type="dmp1_rel_r:DigitalResource" substitutionGroup="dmp1_rel_r:resource"/>
+	<element name="propertyAbstract" type="dmp1_rel_r:PropertyAbstract" substitutionGroup="dmp1_rel_r:resource"/>
+	<element name="grant" type="dmp1_rel_r:Grant"/>
+	<element name="keyHolder" type="dmp1_rel_r:KeyHolder" substitutionGroup="dmp1_rel_r:principal"/>
+	<element name="issuer" type="dmp1_rel_r:Issuer"/>
+	<element name="license" type="dmp1_rel_r:License"/>
+	<element name="licensePart" type="dmp1_rel_r:LicensePart"/>
+	<element name="principal" type="dmp1_rel_r:Principal"/>
+	<element name="resource" type="dmp1_rel_r:Resource"/>
+	<element name="right" type="dmp1_rel_r:Right" substitutionGroup="dmp1_rel_r:licensePart"/>
+	<element name="validityInterval" type="dmp1_rel_r:ValidityInterval" substitutionGroup="dmp1_rel_r:condition"/>
+	<!--Complex Types-->
+	<complexType name="AllConditions">
+		<complexContent>
+			<extension base="dmp1_rel_r:Condition">
+				<sequence>
+					<element ref="dmp1_rel_r:condition" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="Condition">
+		<complexContent>
+			<extension base="dmp1_rel_r:LicensePart"/>
+		</complexContent>
+	</complexType>
+	<complexType name="DigitalResource">
+		<complexContent>
+			<extension base="dmp1_rel_r:Resource">
+				<choice minOccurs="0">
+					<element name="secureIndirect" type="dsig:ReferenceType"/>
+					<element name="nonSecureIndirect" type="dmp1_rel_r:NonSecureReference"/>
+				</choice>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="Grant">
+		<complexContent>
+			<extension base="dmp1_rel_r:Resource">
+				<choice minOccurs="0">
+					<sequence>
+						<element ref="dmp1_rel_r:principal" minOccurs="0"/>
+						<element ref="dmp1_rel_r:right"/>
+						<element ref="dmp1_rel_r:resource" minOccurs="0"/>
+						<element ref="dmp1_rel_r:condition" minOccurs="0"/>
+					</sequence>
+				</choice>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="Issuer">
+		<sequence>
+			<choice minOccurs="0">
+				<element ref="dsig:Signature"/>
+				<element ref="dmp1_rel_r:principal"/>
+			</choice>
+			<element name="details" type="dmp1_rel_r:IssuerDetails" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="IssuerDetails">
+		<sequence>
+			<element name="timeOfIssue" type="dateTime" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<complexType name="KeyHolder">
+		<complexContent>
+			<extension base="dmp1_rel_r:Principal">
+				<sequence minOccurs="0">
+					<element name="info" type="dsig:KeyInfoType"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="PossessProperty">
+		<complexContent>
+			<extension base="dmp1_rel_r:Right"/>
+		</complexContent>
+	</complexType>
+	<complexType name="License">
+		<choice>
+			<sequence>
+				<choice minOccurs="0" maxOccurs="unbounded">
+					<element ref="dmp1_rel_r:grant"/>
+				</choice>
+				<element ref="dmp1_rel_r:issuer" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+		</choice>
+		<attribute name="licenseId" type="anyURI" use="optional"/>
+		<anyAttribute namespace="##other" processContents="lax"/>
+	</complexType>
+	<complexType name="LicensePart">
+		<attribute name="licensePartId" type="dmp1_rel_r:LicensePartId" use="optional"/>
+		<attribute name="licensePartIdRef" type="dmp1_rel_r:LicensePartId" use="optional"/>
+		<attribute name="varRef" type="dmp1_rel_r:VariableName" use="optional"/>
+	</complexType>
+	<complexType name="PropertyAbstract">
+		<complexContent>
+			<extension base="dmp1_rel_r:Resource"/>
+		</complexContent>
+	</complexType>
+	<complexType name="NonSecureReference">
+		<attribute name="URI" type="anyURI"/>
+	</complexType>
+	<complexType name="Principal">
+		<complexContent>
+			<extension base="dmp1_rel_r:Resource"/>
+		</complexContent>
+	</complexType>
+	<complexType name="Right">
+		<complexContent>
+			<extension base="dmp1_rel_r:LicensePart"/>
+		</complexContent>
+	</complexType>
+	<complexType name="Resource">
+		<complexContent>
+			<extension base="dmp1_rel_r:LicensePart"/>
+		</complexContent>
+	</complexType>
+	<complexType name="ValidityInterval">
+		<complexContent>
+			<extension base="dmp1_rel_r:Condition">
+				<sequence>
+					<element name="notBefore" type="dateTime" minOccurs="0"/>
+					<element name="notAfter" type="dateTime" minOccurs="0"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	<!-- Simple Types-->
+	<simpleType name="LicensePartId">
+		<restriction base="NCName"/>
+	</simpleType>
+	<simpleType name="VariableName">
+		<restriction base="NCName"/>
+	</simpleType>
+</schema>

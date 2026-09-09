@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:dmp2rtb="urn:dmp:idp2:Represent:ToolBody:2006:02" xmlns:dmp2rdi="urn:dmp:idp2:Represent:DeviceInformation:2006:02" xmlns:dmp2rl="urn:dmp:idp2:Represent:License:2006:02" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:dmp2rdm="urn:dmp:idp2:Represent:DRMMessages:2006:02" xmlns:dmp2_ipmpinfo="urn:dmp:idp2:mpeg21:2004:01-IPMPINFO-NS:2006:02" targetNamespace="urn:dmp:idp2:mpeg21:2004:01-IPMPINFO-NS:2006:02" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.01">
+	<import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+	<import namespace="urn:dmp:idp2:Represent:License:2006:02" schemaLocation="dmp2rl-2006-02.xsd"/>
+	<import namespace="urn:dmp:idp2:Represent:DRMMessages:2006:02" schemaLocation="dmp2rdm-2006-02.xsd"/>
+	<import namespace="urn:dmp:idp2:Represent:ToolBody:2006:02" schemaLocation="dmp2rtb-2006-02.xsd"/>
+	<import namespace="urn:dmp:idp2:Represent:DeviceInformation:2006:02" schemaLocation="dmp2rdi-2006-02.xsd"/>
+	<!-- elements-->
+	<element name="IPMPInfoDescriptor" type="dmp2_ipmpinfo:IPMPInfoDescriptorType"/>
+	<complexType name="IPMPInfoDescriptorType">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:Tool" minOccurs="0" maxOccurs="unbounded"/>
+			<element ref="dmp2_ipmpinfo:RightsDescriptor" minOccurs="0" maxOccurs="unbounded"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="Tool" type="dmp2_ipmpinfo:ToolType"/>
+	<complexType name="ToolType">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:ToolBaseDescription"/>
+			<element ref="dmp2_ipmpinfo:InitializationSettings" minOccurs="0"/>
+			<element ref="dmp2_ipmpinfo:RightsDescriptor" minOccurs="0"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+		<attribute name="order" type="positiveInteger"/>
+	</complexType>
+	<element name="ToolBaseDescription" type="dmp2_ipmpinfo:ToolBaseDescriptionType"/>
+	<complexType name="ToolBaseDescriptionType">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:IPMPToolID"/>
+			<choice minOccurs="0">
+				<element ref="dmp2_ipmpinfo:Inline"/>
+				<element ref="dmp2_ipmpinfo:Remote"/>
+			</choice>
+			<element ref="dmp2_ipmpinfo:ConfigurationSettings" minOccurs="0" maxOccurs="unbounded"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="IPMPToolID" type="anyURI"/>
+	<element name="ToolRef" type="dmp2_ipmpinfo:ToolRef"/>
+	<complexType name="ToolRef">
+		<attribute name="localidref" type="IDREF" use="required"/>
+	</complexType>
+	<element name="Inline" type="dmp2_ipmpinfo:InlineType"/>
+	<complexType name="InlineType">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:Binary"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="Binary">
+		<complexType>
+			<sequence>
+				<element ref="dmp2rtb:ToolBody"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="Remote" type="dmp2_ipmpinfo:RemoteType"/>
+	<complexType name="RemoteType">
+		<sequence>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+		<attribute name="ref" type="anyURI"/>
+	</complexType>
+	<element name="ConfigurationSettings" type="dmp2_ipmpinfo:ConfigurationSettingsType"/>
+	<complexType name="ConfigurationSettingsType" mixed="true">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:Update" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="Update" type="dmp2_ipmpinfo:UpdateType"/>
+	<complexType name="UpdateType">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:Location" maxOccurs="unbounded"/>
+			<element ref="dmp2_ipmpinfo:Condition" minOccurs="0"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="Location" type="dmp2_ipmpinfo:RemoteType"/>
+	<element name="Condition" type="dmp2_ipmpinfo:ConditionType"/>
+	<complexType name="ConditionType">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:ScheduledUpdateTime" minOccurs="0"/>
+			<element ref="dmp2_ipmpinfo:SupportedPlatform" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<element name="ScheduledUpdateTime" type="dmp2_ipmpinfo:ScheduledUpdateTimeType"/>
+	<complexType name="ScheduledUpdateTimeType">
+		<simpleContent>
+			<extension base="dateTime">
+				<attribute name="periodic" type="duration" use="optional"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<element name="SupportedPlatform" type="dmp2_ipmpinfo:SupportedPlatformType"/>
+	<complexType name="SupportedPlatformType">
+		<sequence>
+			<element ref="dmp2rdi:DeviceInformation"/>
+		</sequence>
+	</complexType>
+	<element name="InitializationSettings" type="dmp2_ipmpinfo:InitializationSettingsType"/>
+	<complexType name="InitializationSettingsType" mixed="true">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:InitializationData"/>
+		</sequence>
+	</complexType>
+	<element name="InitializationData" type="dmp2_ipmpinfo:InitializationDataType"/>
+	<complexType name="InitializationDataType" mixed="true">
+		<sequence>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="dmp2rdm:ControlPointID" minOccurs="0"/>
+				<element ref="dmp2rdm:SequenceCode" minOccurs="0"/>
+				<element ref="dmp2rdm:ControlPointAddress" minOccurs="0"/>
+			</sequence>
+			<element ref="dmp2rdm:Data_BaseClass" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<element name="RightsDescriptor" type="dmp2_ipmpinfo:RightsDescriptorType"/>
+	<complexType name="RightsDescriptorType">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:License" minOccurs="0"/>
+			<element ref="dmp2_ipmpinfo:LicenseReference" minOccurs="0"/>
+			<element ref="dmp2_ipmpinfo:LicenseService" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="License" type="dmp2_ipmpinfo:LicenseType"/>
+	<complexType name="LicenseType" mixed="true">
+		<sequence>
+			<element ref="dmp2rl:License" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<element name="LicenseService" type="dmp2_ipmpinfo:LicenseServiceType"/>
+	<complexType name="LicenseServiceType" mixed="true">
+		<sequence>
+			<any namespace="##any" processContents="lax" minOccurs="0"/>
+		</sequence>
+	</complexType>
+	<element name="LicenseReference" type="dmp2_ipmpinfo:LicenseReferenceType"/>
+	<complexType name="LicenseReferenceType">
+		<simpleContent>
+			<extension base="anyURI"/>
+		</simpleContent>
+	</complexType>
+	<!--********************************* -->
+	<!-- IPMPGeneralInfoDescriptor -->
+	<!--********************************* -->
+	<element name="IPMPGeneralInfoDescriptor" type="dmp2_ipmpinfo:IPMPGeneralInfoDescriptorType"/>
+	<complexType name="IPMPGeneralInfoDescriptorType">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:ToolList" minOccurs="0"/>
+			<element ref="dmp2_ipmpinfo:LicenseCollection" minOccurs="0"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+			<!--Signature for the IPMPGeneralInfoDescriptor element and children -->
+		</sequence>
+	</complexType>
+	<element name="ToolList" type="dmp2_ipmpinfo:ToolListType"/>
+	<complexType name="ToolListType">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:ToolDescription" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<element name="ToolDescription" type="dmp2_ipmpinfo:ToolDescriptionType"/>
+	<complexType name="ToolDescriptionType">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:IPMPToolID"/>
+			<element ref="dmp2_ipmpinfo:MemberOf" minOccurs="0"/>
+			<choice minOccurs="0">
+				<element ref="dmp2_ipmpinfo:Inline"/>
+				<element ref="dmp2_ipmpinfo:Remote"/>
+			</choice>
+			<element ref="dmp2_ipmpinfo:RightsDescriptor" minOccurs="0"/>
+			<element ref="dsig:Signature" minOccurs="0"/>
+		</sequence>
+		<attribute name="localID" type="ID" use="required"/>
+	</complexType>
+	<element name="MemberOf" type="dmp2_ipmpinfo:MemberOfType"/>
+	<complexType name="MemberOfType">
+		<sequence maxOccurs="unbounded">
+			<element ref="dmp2_ipmpinfo:AlternateGroup"/>
+		</sequence>
+	</complexType>
+	<element name="AlternateGroup" type="dmp2_ipmpinfo:AlternateGroupType"/>
+	<complexType name="AlternateGroupType">
+		<attribute name="groupID" type="positiveInteger" use="required"/>
+	</complexType>
+	<element name="LicenseCollection" type="dmp2_ipmpinfo:LicenseCollectionType"/>
+	<complexType name="LicenseCollectionType" mixed="true">
+		<sequence>
+			<element ref="dmp2_ipmpinfo:RightsDescriptor" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+</schema>
