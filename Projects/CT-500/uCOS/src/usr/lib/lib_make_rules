@@ -1,0 +1,403 @@
+#
+# MODULE NAME:    lib_make_rules 
+# PROJECT CODE:   F/W
+# DESCRIPTION:    This makefile provides sources
+# AUTHOR:         SHMT SOC 2Team
+# DATE:           04 December, 2006
+#
+# SOURCE CONTROL: $Id: core_make_rules,v 1.65 2001/10/16 11:55:24 griffini Exp $
+#
+# LICENSE:
+#    This source code is copyright (c) 2006 shmt Limited.
+#    All rights reserved.
+#
+# REVISION HISTORY:
+#
+# SOURCE:
+#
+# ISSUES:
+#
+
+
+
+#-------------------------------------------------------------------------------
+# library directory
+#-------------------------------------------------------------------------------
+
+#
+# base direcotry
+#
+LIB_BASE_DIR 			= lib
+
+#
+# drivers direcotry
+#
+LIB_DRIVER_COMMON_DIR		= lib/drivers/comm
+LIB_DRIVER_PERI_DIR			= lib/drivers/peri
+LIB_DRIVER_DISPLAY_DIR		= lib/drivers/display
+LIB_DRIVER_FILESYSTEM_DIR	= lib/drivers/filesystem
+LIB_DRIVER_PERI_DIR			= lib/drivers/peri
+LIB_DRIVER_MEDIA_DIR		= lib/drivers/media
+LIB_DRIVER_STORAGE_DIR		= lib/drivers/storage
+
+
+#
+# api direcotry
+#
+LIB_API_DIR 			= lib/api
+LIB_API_COMMON_DIR 		= lib/api/common
+LIB_API_DISPLAY_DIR 	= lib/api/display
+LIB_API_MEDIA_DIR 		= lib/api/media
+LIB_API_AUDIO_DIR		= lib/api/media/audio
+LIB_API_FILESYSTEM_DIR	= lib/api/filesystem
+
+
+#-------------------------------------------------------------------------------
+# library source
+#-------------------------------------------------------------------------------
+
+# When top
+LIB_COMMON_SOURCES = \
+     $(LIB_BASE_DIR)/irq.c	\
+     $(LIB_BASE_DIR)/lib.c	\
+#     $(LIB_BASE_DIR)/dmac.c
+#     $(LIB_BASE_DIR)/library.c
+
+# When lib directory
+#LIB_COMMON_SOURCES = \
+#	irq.c \
+#	lib.c	\
+# dmac.c
+
+## Further work : Need to modified by DJKIM 2006/11/28
+#
+# driver (fat/partition/ata)
+#
+
+#-------------------------------------------------------------------------------
+# Base driver
+#-------------------------------------------------------------------------------
+LIB_DRIVERS_SOURCES =\
+	$(LIB_DRIVER_STORAGE_DIR)/smc_pre_drv.c				\
+	$(LIB_DRIVER_STORAGE_DIR)/dmc_pre_drv.c				\
+	$(LIB_DRIVER_STORAGE_DIR)/sdmmc/sdmmc_pre_drv.c		\
+	$(LIB_DRIVER_STORAGE_DIR)/sdmmc/sdmmc_post_drv.c	\
+	$(LIB_DRIVER_STORAGE_DIR)/nand/nand_pre_drv.c		\
+	$(LIB_DRIVER_DISPLAY_DIR)/lcd/lcd_post_drv.c		\
+	$(LIB_DRIVER_DISPLAY_DIR)/lcd/lcd_pre_drv.c			\
+	$(LIB_DRIVER_DISPLAY_DIR)/lcd/lcdh300.c				\
+	$(LIB_DRIVER_DISPLAY_DIR)/videoencoder/videoenc_post_drv.c	\
+	$(LIB_DRIVER_DISPLAY_DIR)/videoencoder/videoenc_pre_drv.c	\
+	$(LIB_DRIVER_MEDIA_DIR)/audio/audio_post_drv.c		\
+	$(LIB_DRIVER_COMMON_DIR)/uart/uart_pre_drv.c		\
+	$(LIB_DRIVER_COMMON_DIR)/uart/uart_post_drv.c		\
+	$(LIB_DRIVER_COMMON_DIR)/i2c/i2c_pre_drv.c			\
+	$(LIB_DRIVER_COMMON_DIR)/i2s/i2s_pre_drv.c			
+#-------------------------------------------------------------------------------
+# Filesystem driver
+#-------------------------------------------------------------------------------	
+LIB_DRIVERS_FS_SOURCES =\
+    $(LIB_DRIVER_FILESYSTEM_DIR)/sw_fs_driver/fat32/sw_fs_drv_fat.c	\
+    $(LIB_DRIVER_FILESYSTEM_DIR)/sw_fs_driver/part/sw_fs_drv_part.c	\
+    $(LIB_DRIVER_FILESYSTEM_DIR)/sw_fs_dir.c						\
+    $(LIB_DRIVER_FILESYSTEM_DIR)/sw_fs_file.c						\
+    $(LIB_DRIVER_FILESYSTEM_DIR)/sw_fs_sprintf.c					\
+    $(LIB_DRIVER_FILESYSTEM_DIR)/sw_fs_strcasecmp.c					\
+    $(LIB_DRIVER_FILESYSTEM_DIR)/sw_fs_unicode.c
+#-------------------------------------------------------------------------------
+# MP3 encoder driver (lame)
+#-------------------------------------------------------------------------------		
+LIB_DRIVERS_MP3ENC_SOURCES	=\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/bitstream.c        	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/encoder.c          	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/fft.c              	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/gain_analysis.c    	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/id3tag.c           	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/lame.c             	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/mpglib_interface.c 	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/newmdct.c          	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/presets.c          	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/psymodel.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/quantize.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/quantize_pvt.c     	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/reservoir.c        	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/set_get.c          	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/tables.c           	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/takehiro.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/util.c             	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/vbrquantize.c      	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/VbrTag.c           	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder/version.c          	
+#-------------------------------------------------------------------------------
+# MP3 decoder driver (mad)
+#-------------------------------------------------------------------------------			
+LIB_DRIVERS_MP3DEC_SOURCES	=\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder/bit.c    			\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder/decoder.c			\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder/fixed.c  			\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder/frame.c  			\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder/huffman.c			\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder/layer12.c			\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder/layer3.c 			\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder/stream.c 			\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder/synth.c  			\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder/timer.c  			\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder/version.c	
+#-------------------------------------------------------------------------------
+# ogg 
+#-------------------------------------------------------------------------------		
+LIB_DRIVERS_OGG_SOURCES	=\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/ogg/src/bitwise.c	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/ogg/src/framing.c
+	
+#-------------------------------------------------------------------------------
+# vorbis 
+#-------------------------------------------------------------------------------	
+LIB_DRIVERS_VORBIS_SOURCES =\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/analysis.c        \
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/bitrate.c         \
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/block.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/codebook.c        \
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/envelope.c        \
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/floor0.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/floor1.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/info.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/lookup.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/lpc.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/lsp.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/mapping0.c        \
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/mdct.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/psy.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/registry.c        \
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/res0.c         	\
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/sharedbook.c      \
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/smallft.c         \
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/synthesis.c       \
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/vorbisenc.c       \
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/vorbisfile.c      \
+	$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/window.c         	
+
+#-------------------------------------------------------------------------------
+# API
+#-------------------------------------------------------------------------------			
+LIB_API_SOURCES = \
+     $(LIB_API_COMMON_DIR)/memchr.c			\
+     $(LIB_API_COMMON_DIR)/memcmp.c			\
+     $(LIB_API_COMMON_DIR)/memcpy.c			\
+     $(LIB_API_COMMON_DIR)/memset.c			\
+     $(LIB_API_COMMON_DIR)/memset16.c		\
+     $(LIB_API_COMMON_DIR)/qsort.c			\
+     $(LIB_API_COMMON_DIR)/random.c			\
+     $(LIB_API_COMMON_DIR)/sprintf.c		\
+     $(LIB_API_COMMON_DIR)/strcasecmp.c		\
+     $(LIB_API_COMMON_DIR)/strcasestr.c		\
+     $(LIB_API_COMMON_DIR)/strcat.c			\
+     $(LIB_API_COMMON_DIR)/strchr.c			\
+     $(LIB_API_COMMON_DIR)/strcmp.c			\
+     $(LIB_API_COMMON_DIR)/strcpy.c			\
+     $(LIB_API_COMMON_DIR)/strlen.c			\
+     $(LIB_API_COMMON_DIR)/strncmp.c		\
+     $(LIB_API_COMMON_DIR)/strncpy.c		\
+     $(LIB_API_COMMON_DIR)/strrchr.c		\
+     $(LIB_API_COMMON_DIR)/strtok.c			\
+     										\
+     $(LIB_API_DISPLAY_DIR)/lcd/lcd16bit.c	\
+       										\
+     $(LIB_API_AUDIO_DIR)/sound_api.c
+     
+LIB_SOURCES	=\
+	$(LIB_DRIVERS_SOURCES)\
+	$(LIB_DRIVERS_FS_SOURCES)\
+	$(LIB_DRIVERS_MP3ENC_SOURCES)\
+	$(LIB_DRIVERS_MP3DEC_SOURCES)\
+	$(LIB_DRIVERS_OGG_SOURCES)\
+	$(LIB_DRIVERS_VORBIS_SOURCES)\
+	$(LIB_API_SOURCES)
+
+#-------------------------------------------------------------------------------
+# library object
+#-------------------------------------------------------------------------------
+LIB_COMMON_OBJS				= $(LIB_COMMON_SOURCES:.c=.o)
+LIB_DRIVERS_OBJS 			= $(LIB_DRIVERS_SOURCES:.c=.o)
+LIB_API_OBJS 				= $(LIB_API_SOURCES:.c=.o)
+LIB_DRIVERS_FS_OBJS			= $(LIB_DRIVERS_FS_SOURCES:.c=.o)
+LIB_DRIVERS_MP3ENC_OBJS		= $(LIB_DRIVERS_MP3ENC_SOURCES:.c=.o)
+LIB_DRIVERS_MP3DEC_OBJS		= $(LIB_DRIVERS_MP3DEC_SOURCES:.c=.o)
+LIB_DRIVERS_OGG_OBJS		= $(LIB_DRIVERS_OGG_SOURCES:.c=.o)
+LIB_DRIVERS_VORBIS_OBJS		= $(LIB_DRIVERS_VORBIS_SOURCES:.c=.o)
+
+LIB_OBJS	=\
+	$(LIB_COMMON_OBJS)			\
+	$(LIB_DRIVERS_OBJS)			\
+	$(LIB_API_OBJS)				\
+	$(LIB_DRIVERS_FS_OBJS)		\
+	$(LIB_DRIVERS_MP3ENC_OBJS)	\
+	$(LIB_DRIVERS_MP3DEC_OBJS)	\
+	$(LIB_DRIVERS_OGG_OBJS)		\
+	$(LIB_DRIVERS_VORBIS_OBJS)
+	
+#-------------------------------------------------------------------------------
+# Include Directories
+#-------------------------------------------------------------------------------
+
+#
+# base incluse
+#
+INCLUDE_BASE_DIR 	= inc
+SYS_BASE_DIR 		= sys
+PERI_BASE_DIR 		= peri
+
+LIB_COMMON_INCLUDES =\
+     -I./$(INCLUDE_BASE_DIR)\
+     -I./$(SYS_BASE_DIR)\
+     -I./$(PERI_BASE_DIR)
+
+
+## Further work : Need to modified by DJKIM 2006/11/28
+LIB_DRIVERS_INCLUDES = \
+     -I./$(INCLUDE_BASE_DIR)/drivers/comm/i2c		\
+     -I./$(INCLUDE_BASE_DIR)/drivers/comm/i2s		\
+     -I./$(INCLUDE_BASE_DIR)/drivers/comm/spi		\
+     -I./$(INCLUDE_BASE_DIR)/drivers/comm/uart		\
+     												\
+     -I./$(INCLUDE_BASE_DIR)/api/common/expert		\
+     -I./$(INCLUDE_BASE_DIR)/drivers/display/lcd	\
+     -I./$(INCLUDE_BASE_DIR)/drivers/display/videoencoder	\
+     												\
+     -I./$(INCLUDE_BASE_DIR)/drivers/filesystem						\
+     -I./$(INCLUDE_BASE_DIR)/drivers/filesystem/sw_fs_driver/fat32	\
+     -I./$(INCLUDE_BASE_DIR)/drivers/filesystem/sw_fs_driver/part	\
+     																\
+     -I./$(INCLUDE_BASE_DIR)/drivers/media/audio	\
+     -I./$(INCLUDE_BASE_DIR)/drivers/media/video	\
+     -I./$(INCLUDE_BASE_DIR)/drivers/media/sw_audio_driver	\
+     -I./$(INCLUDE_BASE_DIR)/drivers/media/sw_video_driver	\
+     												\
+     -I./$(INCLUDE_BASE_DIR)/drivers/peri			\
+     												\
+ 	 -I./$(INCLUDE_BASE_DIR)/drivers/storage/     	\
+     -I./$(INCLUDE_BASE_DIR)/drivers/storage/nand	\
+     -I./$(INCLUDE_BASE_DIR)/drivers/storage/sdmmc
+
+
+## Further work : Need to modified by DJKIM 2006/11/28
+LIB_API_INCLUDES = \
+     -I./$(INCLUDE_BASE_DIR)/api/common/expert			\
+     -I./$(INCLUDE_BASE_DIR)/api/common/include			\
+     													\
+     -I./$(INCLUDE_BASE_DIR)/api/display/lcd			\
+     -I./$(INCLUDE_BASE_DIR)/api/display/videoencoder	\
+     													\
+     -I./$(INCLUDE_BASE_DIR)/api/filesystem				\
+     													\
+     -I./$(INCLUDE_BASE_DIR)/api/media/audio			\
+     -I./$(INCLUDE_BASE_DIR)/api/media/video			\
+
+#     -I./$(LIB_BASE_DIR)/api/expert					\
+#     -I./$(LIB_BASE_DIR)/api/include
+
+LIB_MP3ENC_INCLUDES	=\
+	-I./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder
+	
+LIB_MP3DEC_INCLUDES	=\
+	-I./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder	
+
+LIB_OGG_INCLUDES	=\
+	-I./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/ogg/include/ogg
+
+LIB_VORBIS_INCLUDES	=\
+	-I./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/include/vorbis 	\
+	-I./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib				\
+	-I./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/books/coupled		\
+	-I./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/books/floor		\
+	-I./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/books/uncoupled	\
+	-I./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/ogg_vorbis/vorbis/lib/modes				
+
+LIB_INCLUDES =\
+	$(LIB_COMMON_INCLUDES)	\
+	$(LIB_DRIVERS_INCLUDES)	\
+	$(LIB_API_INCLUDES)		\
+	$(LIB_MP3DEC_INCLUDES)	\
+	$(LIB_MP3ENC_INCLUDES)	\
+	$(LIB_OGG_INCLUDES)		\
+	$(LIB_VORBIS_INCLUDES)
+	
+
+
+#-------------------------------------------------------------------------------
+# building
+#-------------------------------------------------------------------------------
+# LIB_TARGET = lib.a defined int the top directory makefile
+
+
+lib: $(LIB_TARGET)
+$(LIB_TARGET): $(LIB_OBJS)
+	$(AR) $(ARFLAGS) $(LIB_TARGET) $(LIB_OBJS) 
+	mv $(LIB_TARGET) $(LIB_BASE_DIR)
+
+$(LIB_DRIVERS_MP3ENC_OBJS):$(LIB_DRIVERS_MP3ENC_SOURCES)
+	@echo "Building mp3 encoder lib >"
+	$(CC) -march=armv4 -c \
+	$(COMPILER_FLAGS) \
+	$(CONFIG_FLAGS) \
+	-DHAVE_CONFIG_H \
+	$(OPTIMIZATIONS) \
+	$(LIB_INCLUDES) -I ./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/encoder \
+	$< -o $@ 2>>error.log
+	
+$(LIB_DRIVERS_MP3DEC_OBJS):$(LIB_DRIVERS_MP3DEC_SOURCES)
+	@echo "Building mp3 decoder lib >"
+	$(CC) -march=armv4 -c \
+	$(COMPILER_FLAGS) \
+	$(CONFIG_FLAGS) \
+	-DFPM_DEFAULT,-D_LIB,HAVE_CONFIG_H,-DASO_ZEROCHECK\
+	$(OPTIMIZATIONS) \
+	$(LIB_INCLUDES) -I ./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder \
+	$< -o $@ 2>>error.log
+	
+$(LIB_DRIVERS_OGG_OBJS):$(LIB_DRIVERS_MP3DEC_SOURCES)
+	@echo "Building mp3 decoder lib >"
+	$(CC) -march=armv4 -c \
+	$(COMPILER_FLAGS) \
+	$(CONFIG_FLAGS) \
+	$(OPTIMIZATIONS) \
+	$(LIB_INCLUDES) -I ./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder \
+	$< -o $@ 2>>error.log
+	
+$(LIB_DRIVERS_VORBIS_OBJS):$(LIB_DRIVERS_MP3DEC_SOURCES)
+	@echo "Building mp3 decoder lib >"
+	$(CC) -march=armv4 -c \
+	$(COMPILER_FLAGS) \
+	$(CONFIG_FLAGS) \
+	$(OPTIMIZATIONS) \
+	$(LIB_INCLUDES) -I ./$(LIB_DRIVER_MEDIA_DIR)/sw_audio_driver/mp3/decoder \
+	$< -o $@ 2>>error.log		
+	
+$(LIB_DRIVERS_FS_OBJS):$(LIB_DRIVERS_FS_SOURCES)
+	@echo "Building Filesystem lib >"
+	$(CC) -march=armv4 -c $(COMPILER_FLAGS) $(CONFIG_FLAGS) $(OPTIMIZATIONS) $(LIB_INCLUDES)  $< -o $@ 2>>error.log
+	
+lib_dep:
+
+	@echo "#test library dependency" > lib_make_rules.dep
+	
+	@for i in $(LIB_OBJS:.o=); do 						\
+		echo "#$$i ##################" >> lib_make_rules.dep;	\
+		$(CC) -M $(LIB_INCLUDE)							\
+		-DFPM_DEFAULT,-D_LIB,HAVE_CONFIG_H,-DASO_ZEROCHECK	\
+		 $$i.c | sed "s!\([^.]*\)\.o[ :]*!$$i.o: !g" >> lib_make_rules.dep;	\
+        done;
+
+#When current directory building
+#%.o:%.c
+#	@echo "Building LIB: $(LIB_TARGET)"
+#	$(CC) -march=armv4 -c $(COMPILER_FLAGS) $(CONFIG_FLAGS) $(OPTIMIZATIONS) $(LIB_INCLUDES) $< -o $@ 2>>error.log
+
+
+.phony: lib_clean
+
+lib_clean:
+	-$(RM) $(LIB_BASE_DIR)/$(LIB_TARGET) 	
+	-$(RM) $(LIB_OBJS)
+	
+-include lib_make_rules.dep
