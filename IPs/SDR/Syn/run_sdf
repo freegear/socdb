@@ -1,0 +1,11 @@
+#!/bin/csh -fx
+
+\rm db/*.*
+ 
+dc_shell-t -f Sdf.tcl | tee /dev/tty >&! ./Log/sdf.log
+
+./pt_postprocessor.pl -s ./Sdf/temp.sdf -o ./Sdf/SDRTop.noscan.sdf
+
+\rm -rf *.log ./Sdf/temp.sdf
+
+exit

@@ -1,0 +1,62 @@
+ 
+****************************************
+Report : constraint
+        -all_violators
+        -verbose
+Design : SDRTop
+Version: V-2004.06
+Date   : Fri Jun 30 17:46:03 2006
+****************************************
+
+
+  Startpoint: ACLK (clock source 'ACLK')
+  Endpoint: SDRAi/RDatBuf/RQL
+            (rising edge-triggered flip-flop clocked by nACLK)
+  Path Group: nACLK
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock ACLK (rise edge)                                  0.00       0.00
+  ACLK (in)                                               2.90       2.90 r
+  SDRAi/RDatBuf/RQL/CLKB (RF2SH256x32)                    0.00       2.90 r
+  data arrival time                                                  2.90
+
+  clock nACLK (rise edge)                                 3.75       3.75
+  clock network delay (ideal)                             0.00       3.75
+  SDRAi/RDatBuf/RQL/CLKA (RF2SH256x32)                    0.00       3.75 r
+  library setup time                                     -1.14       2.61
+  data required time                                                 2.61
+  --------------------------------------------------------------------------
+  data required time                                                 2.61
+  data arrival time                                                 -2.90
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -0.29
+
+
+  Startpoint: ACLK (clock source 'ACLK')
+  Endpoint: SDRAi/RDatBuf/RQH
+            (rising edge-triggered flip-flop clocked by nACLK)
+  Path Group: nACLK
+  Path Type: max
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock ACLK (rise edge)                   0.00       0.00
+  ACLK (in)                                2.90       2.90 r
+  SDRAi/RDatBuf/RQH/CLKB (RF2SH256x4)      0.00       2.90 r
+  data arrival time                                   2.90
+
+  clock nACLK (rise edge)                  3.75       3.75
+  clock network delay (ideal)              0.00       3.75
+  SDRAi/RDatBuf/RQH/CLKA (RF2SH256x4)      0.00       3.75 r
+  library setup time                      -1.03       2.72
+  data required time                                  2.72
+  -----------------------------------------------------------
+  data required time                                  2.72
+  data arrival time                                  -2.90
+  -----------------------------------------------------------
+  slack (VIOLATED)                                   -0.18
+
+
+1
