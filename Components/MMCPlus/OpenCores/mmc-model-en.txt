@@ -1,0 +1,115 @@
+
+
+ MMC Controller Programming Model
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Note: this is all advance information.
+
+ Memory map
+ ~~~~~~~~~~
+All accesses 32bit (for the processor). Actual access width (in bytes) in
+W field.
+
+RW AAA-AAA W Description
+--------------------
+ W 000-07f 4 transmit data buffer (512 bytes)
+R  000-07f 4 receive data buffer (512 bytes)
+ W 080-09f 1 command buffer (32 bytes)
+R  080-09f 1 response buffer (32 bytes)
+ W 100     3 command transmit control
+              .7:0 packet length (in bits)
+              .15:8 CRC start position (in bits)
+              .23:16 CRC data valid start (in bits)
+R  100     2 command transmit status
+              .7:0 bits left to be transmitted
+              .14:8 last calculated CRC
+ W 101     3 response receive control
+              .7:0 packet length (in bits)
+              .15:8 CRC start position (in bits)
+              .23:16 CRC data valid start (in bits)
+R  101     2 response receive status
+              .7:0 bits left to be received
+              .14:8 last calculated CRC (should be zero)
+ W 102     2 data transmit control
+              .7:0 packet length (in 32-bit words)
+              .8 width control (1 - 4-bit, 0 - 1-bit)
+              .9 enable CRC
+R  102     2 data transmit status
+              .7:0 words (32-bit) left to be transmitted
+	      .12:8 received CRC status from card
+	      .13 card is busy (DAT0 line negated by card)
+ W 103     2 data receive control
+              .7:0 packet length (in 32-bit words)
+              .8 width control (1 - 4-bit, 0 - 1-bit)
+R  103     2 data receive status
+              .7:0 words (32-bit) left to be received
+	      .8 CRC check status (0 - OK, 1 - failed)
+	      .9 receive done
+ W 1ff     4 system control
+              .4:0 clock divide factor (1-31; 0 means stopped)
+	      .7:5 clock prescale (0-7; divide by 2^n)
+	      .8 card power (chip output)
+	      .9 load clock settings enable
+	      .24 command transmitted (enable intr)
+	      .25 response received (enable intr)
+	      .26 data block transmitted (enable intr)
+	      .27 data block received (enable intr)
+	      .28 CRC status received (enable intr)
+	      .29 busy state finished (enable intr)
+	      .30 SDIO card interrupt (enable intr)
+	      .31 card detect change (enable intr)
+	     NOTE: write to this register acknowledges interrupts and loads
+	      interrupt status flags with current information to prevent races
+R  1ff     4 system status
+              .8 card detect (chip input)
+	      .9 write protect (chip input)
+	      .24 command transmitted (intr status)
+	      .25 response received (intr status)
+	      .26 data block transmitted (intr status)
+	      .27 data block received (intr status)
+	      .28 CRC status received (intr status)
+	      .29 busy state finished (intr status)
+	      .30 SDIO card interrupt (intr status)
+	      .31 card detect change (intr status)
+
+ CRC
+ ~~~
+If the command should have CRC-7 calculated automatically, CRC field bits must
+be zero.
+
+If the controller should refrain from filling the CRC in, the CRC start field
+has to be set to higher value than the total length field. This way the
+transmission will be over before the CRC gets to run.
+
+Sample command transmit control register settings (in hex):
+ * standard 48-bit command:
+    MSB  LSB
+    00 28 30
+
+Sample response receive control register settings (in hex):
+ * standard 48-bit response (R1, R1b, R3):
+    MSB  LSB
+    00 28 30
+ * long 136-bit response (R2):
+    MSB  LSB
+    08 80 88
+
+ Interrupts
+ ~~~~~~~~~~
+The interrupts are serviced in the correct way to avoid races. The first thing
+the processor should do after receiving an interrupt is to write to the system
+control register. Unless the clock rate needs to be changed, the .9 bit should
+be set to zero. This makes clock settings irrelevant, so they may be set to
+zero, too. The rest of bits (card power bit and interrupt masks) should be
+correct.
+
+This operation does two things simultaneously:
+
+  * it copies the internal interrupt pending register to corresponding fields
+    in the system status
+  * it clears all pending bits except those that arrived in current cycle
+
+This way no interrupts are lost and no spurious or double interrupts appear.
+
+Next, the service routine can read the status register to determine cause(s)
+of interrupts. All valid sources should be serviced, because the interrupts
+are already acknowledged and won't be reissued.
