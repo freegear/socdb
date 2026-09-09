@@ -1,0 +1,73 @@
+diff --unified --recursive -N gcc-3.4.4/config.sub ../oce-3.14/p_root/gcc-3.4.4/config.sub
+--- gcc-3.4.4/config.sub	2004-02-22 15:44:23.000000000 +0100
++++ ../oce-3.14/p_root/gcc-3.4.4/config.sub	2005-09-25 00:58:55.000000000 +0200
+@@ -256,7 +256,7 @@
+ 	| mn10200 | mn10300 \
+ 	| msp430 \
+ 	| ns16k | ns32k \
+-	| openrisc | or32 \
++	| or32 \
+ 	| pdp10 | pdp11 | pj | pjl \
+ 	| powerpc | powerpc64 | powerpc64le | powerpcle | ppcbe \
+ 	| pyramid \
+@@ -750,9 +750,8 @@
+ 		basic_machine=hppa1.1-oki
+ 		os=-proelf
+ 		;;
+-	or32 | or32-*)
+-		basic_machine=or32-unknown
+-		os=-coff
++ 	or32 | or32-*)
++		basic_machine=or32-`echo $basic_machine | sed 's/^[^-]*-//'`
+ 		;;
+ 	os400)
+ 		basic_machine=powerpc-ibm
+@@ -1355,8 +1354,8 @@
+ 	mips*-*)
+ 		os=-elf
+ 		;;
+-	or32-*)
+-		os=-coff
++ 	or32-*)
++		os=-elf
+ 		;;
+ 	*-tti)	# must be before sparc entry or we get the wrong os.
+ 		os=-sysv3
+diff --unified --recursive -N gcc-3.4.4/configure.in ../oce-3.14/p_root/gcc-3.4.4/configure.in
+--- gcc-3.4.4/configure.in	2005-03-08 18:31:40.000000000 +0100
++++ ../oce-3.14/p_root/gcc-3.4.4/configure.in	2005-11-13 20:28:25.000000000 +0100
+@@ -608,6 +608,9 @@
+   mn10300-*-*)
+     noconfigdirs="$noconfigdirs ${libgcj}"
+     ;;
++  or32-*-*)
++    noconfigdirs="$noconfigdirs target-libgloss ${libgcj}"
++    ;;
+   powerpc-*-aix*)
+     # copied from rs6000-*-* entry
+     noconfigdirs="$noconfigdirs gprof target-libgloss ${libgcj}"
+diff --unified --recursive -N gcc-3.4.4/gcc/config.gcc ../oce-3.14/p_root/gcc-3.4.4/gcc/config.gcc
+--- gcc-3.4.4/gcc/config.gcc	2005-04-25 06:47:59.000000000 +0200
++++ ../oce-3.14/p_root/gcc-3.4.4/gcc/config.gcc	2005-11-13 20:28:32.000000000 +0100
+@@ -1681,6 +1681,21 @@
+ 	extra_parts=""
+ 	use_collect2=yes
+ 	;;
++or32-*-coff*)
++	tm_file="${tm_file} or32/or32.h"
++	tmake_file=or32/t-default
++	;;
++or32-*-elf*)
++	tm_file="${tm_file} dbxelf.h elfos.h or32/or32.h or32/elf.h"
++	tmake_file=or32/t-default
++	if test x$enable_threads = xyes; then
++	  thread_file='rtems'
++	fi
++	;;
++or32-*linux*)
++	tm_file="${tm_file} dbxelf.h elfos.h or32/or32.h or32/elf.h or32/linux-gas.h or32/linux-elf.h"
++	tmake_file=or32/t-default
++	;;
+ pdp11-*-bsd)
+ 	tm_file="${tm_file} pdp11/2bsd.h"
+ 	use_fixproto=yes

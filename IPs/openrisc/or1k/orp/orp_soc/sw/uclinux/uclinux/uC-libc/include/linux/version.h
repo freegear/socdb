@@ -1,0 +1,2 @@
+#define UTS_RELEASE "2.0.38.1pre3"
+#define LINUX_VERSION_CODE 131110

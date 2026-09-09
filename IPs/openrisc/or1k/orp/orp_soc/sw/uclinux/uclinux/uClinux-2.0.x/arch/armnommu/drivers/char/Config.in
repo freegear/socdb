@@ -1,0 +1,37 @@
+#
+# Character device configuration
+#
+mainmenu_option next_comment
+comment 'Character devices'
+
+bool 'Echo console messages on /dev/ttyS0' CONFIG_SERIAL_ECHO
+tristate 'TRIO serial support' CONFIG_SERIAL_TRIO
+tristate 'Parallel printer support' CONFIG_PRINTER
+tristate 'Standard/generic serial support' CONFIG_SERIAL
+if [ "$CONFIG_ARCH_EBSA110" != "y" ]; then
+  if [ "$CONFIG_SERIAL" != "n" ]; then
+    tristate '   Atomwide serial port support' CONFIG_ATOMWIDE_SERIAL
+    tristate '   Dual serial port support' CONFIG_DUALSP_SERIAL
+  fi
+
+  bool 'Mouse support' CONFIG_MOUSE
+fi
+
+bool 'Support for user misc device modules' CONFIG_UMISC
+
+bool 'Watchdog Timer Support'   CONFIG_WATCHDOG
+if [ "$CONFIG_WATCHDOG" != "n" ]; then
+  bool '   Disable watchdog shutdown on close' CONFIG_WATCHDOG_NOWAYOUT
+  define_bool CONFIG_SOFT_WATCHDOG y
+fi
+
+if [ "$CONFIG_MOUSE" = "y" ]; then
+  if [ "$CONFIG_ARCH_ARC" = "y" -o "$CONFIG_ARCH_A5K" = "y" ]; then
+    define_bool CONFIG_KBDMOUSE y
+  fi
+  if [ "$CONFIG_ARCH_RPC" = "y" ]; then
+    define_bool CONFIG_RPCMOUSE y
+  fi
+fi
+endmenu
+

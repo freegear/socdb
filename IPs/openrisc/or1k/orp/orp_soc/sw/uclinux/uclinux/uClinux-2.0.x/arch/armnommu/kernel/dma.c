@@ -1,0 +1,210 @@
+/*
+ * linux/arch/arm/kernel/dma.c
+ *
+ * Copyright (C) 1995-1998 Russell King
+ *
+ * Front-end to the DMA handling.  You must provide the following
+ * architecture-specific routines:
+ *
+ *  int arch_request_dma(dmach_t channel, dma_t *dma, const char *dev_id);
+ *  void arch_free_dma(dmach_t channel, dma_t *dma);
+ *  void arch_enable_dma(dmach_t channel, dma_t *dma);
+ *  void arch_disable_dma(dmach_t channel, dma_t *dma);
+ *  int arch_get_dma_residue(dmach_t channel, dma_t *dma);
+ *
+ * Moved DMA resource allocation here...
+ */
+#include <linux/sched.h>
+#include <linux/malloc.h>
+#include <linux/mman.h>
+
+#include <asm/page.h>
+#include <asm/pgtable.h>
+#include <asm/irq.h>
+#include <asm/hardware.h>
+#include <asm/io.h>
+#include <asm/dma.h>
+
+#include "dma.h"
+
+static dma_t dma_chan[MAX_DMA_CHANNELS];
+
+/* Get dma list
+ * for /proc/dma
+ */
+int get_dma_list(char *buf)
+{
+	int i, len = 0;
+
+	for (i = 0; i < MAX_DMA_CHANNELS; i++) {
+		if (dma_chan[i].lock)
+			len += sprintf(buf + len, "%2d: %s\n",
+				       i, dma_chan[i].device_id);
+	}
+	return len;
+}
+
+/* Request DMA channel
+ *
+ * On certain platforms, we have to allocate an interrupt as well...
+ */
+int request_dma(dmach_t channel, const char *device_id)
+{
+	if (channel < MAX_DMA_CHANNELS) {
+		int ret;
+
+		if (xchg(&dma_chan[channel].lock, 1) != 0)
+			return -EBUSY;
+
+		ret = arch_request_dma(channel, &dma_chan[channel], device_id);
+		if (!ret) {
+			dma_chan[channel].device_id = device_id;
+			dma_chan[channel].active    = 0;
+			dma_chan[channel].invalid   = 1;
+		} else
+			xchg(&dma_chan[channel].lock, 0);
+
+		return ret;
+	} else {
+		printk(KERN_ERR "Trying to allocate DMA%d\n", channel);
+		return -EINVAL;
+	}
+}
+
+/* Free DMA channel
+ *
+ * On certain platforms, we have to free interrupt as well...
+ */
+void free_dma(dmach_t channel)
+{
+	if (channel >= MAX_DMA_CHANNELS) {
+		printk(KERN_ERR "Trying to free DMA%d\n", channel);
+		return;
+	}
+
+	if (xchg(&dma_chan[channel].lock, 0) == 0) {
+		if (dma_chan[channel].active) {
+			printk(KERN_ERR "Freeing active DMA%d\n", channel);
+			arch_disable_dma(channel, &dma_chan[channel]);
+			dma_chan[channel].active = 0;
+		}
+
+		printk(KERN_ERR "Trying to free free DMA%d\n", channel);
+		return;
+	}
+	arch_free_dma(channel, &dma_chan[channel]);
+}
+
+/* Set DMA Scatter-Gather list
+ */
+void set_dma_sg(dmach_t channel, dmasg_t *sg, int nr_sg)
+{
+	if (channel < MAX_DMA_CHANNELS) {
+		dma_chan[channel].sg = sg;
+		dma_chan[channel].sgcount = nr_sg;
+		dma_chan[channel].invalid = 1;
+	} else
+		printk(KERN_ERR "Trying to set_dma_sg DMA%d\n",
+			channel);
+}
+
+/* Set DMA address
+ *
+ * Copy address to the structure, and set the invalid bit
+ */
+void set_dma_addr(dmach_t channel, unsigned long physaddr)
+{
+	if (channel < MAX_DMA_CHANNELS) {
+		if (dma_chan[channel].active)
+			printk(KERN_ERR "set_dma_addr: altering DMA%d"
+			       " address while DMA active\n",
+			       channel);
+
+		dma_chan[channel].sg = &dma_chan[channel].buf;
+		dma_chan[channel].sgcount = 1;
+		dma_chan[channel].buf.address = physaddr;
+		dma_chan[channel].invalid = 1;
+	} else
+		printk(KERN_ERR "Trying to set_dma_addr DMA%d\n",
+			channel);
+}
+
+/* Set DMA byte count
+ *
+ * Copy address to the structure, and set the invalid bit
+ */
+void set_dma_count(dmach_t channel, unsigned long count)
+{
+	if (channel < MAX_DMA_CHANNELS) {
+		if (dma_chan[channel].active)
+			printk(KERN_ERR "set_dma_count: altering DMA%d"
+			       " count while DMA active\n",
+			       channel);
+
+		dma_chan[channel].sg = &dma_chan[channel].buf;
+		dma_chan[channel].sgcount = 1;
+		dma_chan[channel].buf.length = count;
+		dma_chan[channel].invalid = 1;
+	} else
+		printk(KERN_ERR "Trying to set_dma_count DMA%d\n",
+			channel);
+}
+
+/* Set DMA direction mode
+ */
+void set_dma_mode(dmach_t channel, dmamode_t mode)
+{
+	if (channel < MAX_DMA_CHANNELS) {
+		if (dma_chan[channel].active)
+			printk(KERN_ERR "set_dma_mode: altering DMA%d"
+			       " mode while DMA active\n",
+			       channel);
+
+		dma_chan[channel].dma_mode = mode;
+		dma_chan[channel].invalid = 1;
+	} else
+		printk(KERN_ERR "Trying to set_dma_mode DMA%d\n",
+			channel);
+}
+
+/* Enable DMA channel
+ */
+void enable_dma(dmach_t channel)
+{
+	if (channel < MAX_DMA_CHANNELS && dma_chan[channel].lock) {
+		if (dma_chan[channel].active == 0) {
+			dma_chan[channel].active = 1;
+			arch_enable_dma(channel, &dma_chan[channel]);
+		}
+	} else
+		printk(KERN_ERR "Trying to enable%s DMA%d\n",
+			channel < MAX_DMA_CHANNELS ? " free" : "", channel);
+}
+
+/* Disable DMA channel
+ */
+void disable_dma(dmach_t channel)
+{
+	if (channel < MAX_DMA_CHANNELS && dma_chan[channel].lock) {
+		if (dma_chan[channel].active == 1) {
+			dma_chan[channel].active = 0;
+			arch_disable_dma(channel, &dma_chan[channel]);
+		}
+	} else
+		printk(KERN_ERR "Trying to disable%s DMA%d\n",
+			channel < MAX_DMA_CHANNELS ? " free" : "", channel);
+}
+
+int get_dma_residue(dmach_t channel)
+{
+	if (channel < MAX_DMA_CHANNELS)
+		return arch_get_dma_residue(channel, &dma_chan[channel]);
+	else
+		printk(KERN_ERR "Trying to get_dma_residue DMA%d\n",
+			channel);
+}
+
+void init_dma(void)
+{
+	arch_dma_init(dma_chan);
+}

@@ -1,0 +1,190 @@
+#!/bin/csh -f
+
+set iter = 1;
+set failed = 0;
+set all_tests = 0;
+# List all test cases
+#set simpletests=(buserr-nocache immu-nocache dmmu-nocache basic-nocache mul-nocache-O2 syscall-nocache cbasic-nocache-O2 ints1-nocache ints2-nocache \
+#		buserr-icdc immu-icdc dmmu-icdc basic-icdc mul-icdc-O2 syscall-icdc cbasic-icdc-O2 ints1-icdc ints2-icdc)
+
+#set simpletests=(basic-nocache mul-nocache-O2 cbasic-nocache-O2 ints1-nocache ints2-nocache \
+#		basic-icdc mul-icdc-O2 cbasic-icdc-O2 ints1-icdc ints2-icdc)
+
+#set simpletests=(icm-icdc icm-nocache dhry-nocache-O2 dhry-icdc-O2 mmu-nocache mmu-icdc basic-icdc basic-nocache mul-nocache-O2 mul-icdc-O2 basic-ic basic-dc)
+#set simpletests=(crc32-icdc-O0 minimad dhry-nocache-O2 dhry-icdc-O2 mmu-nocache mmu-icdc basic-icdc basic-nocache mul-nocache-O2 mul-icdc-O2 basic-ic basic-dc)
+#set complextests=(buserr-ic immu-ic dmmu-ic basic-ic mul-ic-O2 syscall-ic cbasic-ic-O2 ints1-ic ints2-ic \
+#		buserr-dc immu-dc dmmu-dc basic-dc mul-dc-O2 syscall-dc cbasic-dc-O2 ints1-dc ints2-dc \
+#		mul-nocache-O0 cbasic-nocache-O0 \
+#		mul-icdc-O0 cbasic-icdc-O0 \
+#		mul-ic-O0 cbasic-ic-O0 \
+#		mul-dc-O0 cbasic-dc-O0)
+
+#set complextests=(except-nocache except-icdc cbasic-nocache-O2 cbasic-icdc-O0 tick-nocache tick-icdc \
+#		syscall-nocache syscall-icdc uart-nocache uart-icdc debug-nocache debug-dc )
+
+set simpletests=`cat ../bin/tests`
+set complextests=()
+
+set simpletimes=(500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 )
+set complextimes=(40 40 \
+		 400 140 \
+		  100 40 \
+		  40 40 \
+		  40 40 )
+set iterations=( \
+		"DBG_IF_MODEL+SRAM_GENERIC_REGISTERED+OR1200_CLMODE_1TO2" \
+		"DBG_IF_MODEL+OR1200_CLMODE_1TO2" \
+		"DBG_IF_MODEL+FLASH_GENERIC" \
+		"DBG_IF_MODEL" \
+		"DBG_IF_MODEL+FLASH_GENERIC+FLASH_GENERIC_REGISTERED" \
+		"DBG_IF_MODEL+FLASH_GENERIC+FLASH_GENERIC_REGISTERED+SRAM_GENERIC_REGISTERED" \
+		"DBG_IF_MODEL+FLASH_GENERIC+FLASH_GENERIC_REGISTERED+OR1200_CLMODE_1TO2" \
+		"DBG_IF_MODEL+FLASH_GENERIC+FLASH_GENERIC_REGISTERED+SRAM_GENERIC_REGISTERED+OR1200_CLMODE_1TO2" \
+		"DBG_IF_MODEL+SRAM_GENERIC_REGISTERED" \
+		"")
+
+# Process arguments
+if ($1 == "simple") then
+	set tests=(${simpletests})
+	set maxtimes=(${simpletimes})
+else
+	set tests=(${simpletests} ${complextests})
+	set maxtimes=(${simpletimes} ${complextimes})
+endif
+if ($1 == "single") then
+	set tests=(${simpletests} ${complextests})
+	set maxtimes=(${simpletimes} ${complextimes})
+	set tests=${tests[$2]}
+	set maxtimes=${maxtimes[$2]}
+endif
+if ($1 == "clean") then
+	rm -rf ../log/*
+	rm -rf ../out/wave/*
+	exit 0;
+else if ($1 == "sim") then
+	goto sim;
+endif
+
+# Print HW clock
+/sbin/hwclock
+
+# List all selected tests
+set i = 0;
+foreach test ($tests)
+	@ i += 1;
+	/bin/echo -n -e " Test ${i}: ${test}, $maxtimes[$i] ms\t"
+	if ((${i} % 2) == 0) then
+		/bin/echo -e ""
+	endif
+end
+
+/bin/echo -e ""
+
+set i = 1;
+while ($iterations[$i] != "")
+	/bin/echo -e " Iteration ${i}: ${iterations[$i]}\t"
+	@ i += 1;
+end
+
+# Prepare all .args files
+iteration:
+/bin/echo -e ""
+/bin/echo -e "<<<"
+/bin/echo -e "<<< Iteration ${iter}: ${iterations[$iter]}"
+/bin/echo -e "<<<"
+if (${iterations[$iter]} != "") then
+	ncprep +define+${iterations[$iter]} -f ../bin/nc.scr > ncprep.out
+else
+	ncprep -f ../bin/nc.scr > ncprep.out
+endif
+if (`tail -1 ncprep.out | grep Failed` != "") then
+  /bin/echo -e ""
+  cat ncprep.out
+  exit
+endif
+
+# Run NC-Verilog compiler
+/bin/echo -e ""
+/bin/echo -e "\t@@@"
+/bin/echo -e "\t@@@ Compiling sources"
+/bin/echo -e "\t@@@"
+ncvlog -NOCOPYRIGHT -f ncvlog.args > ncvlog.out
+if ($status != 0) then
+  /bin/echo -e "\t@@@ FAILED"
+  /bin/echo -e ""
+  cat ncvlog.out
+  exit
+else
+  /bin/echo -e "\t@@@ Passed"
+endif
+
+# Run the NC-Verilog elaborator (build the design hierarchy)
+/bin/echo -e ""
+/bin/echo -e "\t@@@"
+/bin/echo -e "\t@@@ Building design hierarchy (elaboration)"
+/bin/echo -e "\t@@@"
+ncelab -NOTIMINGCHECKS -NOCOPYRIGHT -f ncelab.args > ncelab.out
+if ($status != 0) then
+  /bin/echo -e "\t@@@ FAILED"
+  /bin/echo -e ""
+  cat ncelab.out
+  exit
+else
+  /bin/echo -e "\t@@@ Passed"
+endif
+
+# Run the NC-Verilog simulator (simulate the design)
+sim:
+set i = 0;
+foreach test ($tests)
+	@ i += 1;
+	/bin/echo -e ""
+	/bin/echo -e "\t###"
+	/bin/echo -e "\t### Running test ${i}: ${test}, $maxtimes[$i] ms"
+	/bin/echo -e "\t###"
+
+	/bin/echo -e "database -open waves -into ../out/wave/i${iter}-${test} -default" > sim.tcl
+	/bin/echo -e "probe -create -shm xess_top -all -variables -depth all" >> sim.tcl
+	/bin/echo -e "probe -create -shm or1200_monitor -all -variables -depth all" >> sim.tcl
+	/bin/echo -e "stop -create -time $maxtimes[$i]ms -relative" >> sim.tcl
+	/bin/echo -e "run" >> sim.tcl
+	/bin/echo -e "quit" >> sim.tcl
+
+	cp ../src/${test}.hex ../src/flash.in
+	ncsim -NOCOPYRIGHT -f ncsim.args > ncsim.out
+	if ($status != 0) then
+	  cat ncsim.out
+	  exit
+	else
+	  set magic=`grep report general.log | tail -1 | cut -d'(' -f2 | cut -d')' -f1 | cut -d' ' -f1`
+	  set magictime=`tail -1 general.log | cut -d'n' -f1`
+	  if ($magic == "deaddead") then
+		/bin/echo -e "\t### Passed (@time $magictime)"
+		@ all_tests += 1;
+	  else
+		/bin/echo -e "\t### FAILED (@time $magictime, magic# 0x$magic)"
+		/bin/echo ../log/i${iter}-${test}-general.log:
+		cat general.log
+		@ failed += 1;
+		@ all_tests += 1;
+	  endif
+  	  mv flash.log ../log/i${iter}-${test}-flash.log
+	  mv executed.log ../log/i${iter}-${test}-executed.log
+	  mv sram.log ../log/i${iter}-${test}-sram.log
+	  mv sprs.log ../log/i${iter}-${test}-sprs.log
+	  mv general.log ../log/i${iter}-${test}-general.log
+	  mv lookup.log ../log/i${iter}-${test}-lookup.log
+	endif
+end
+
+@ iter += 1;
+if ($iterations[$iter] != "") then
+	goto iteration
+else
+	/bin/echo -e ""
+	/bin/echo -e "<<<"
+	/bin/echo -e "<<< End of Regression Iterations"
+	/bin/echo -e "<<<"
+	/bin/echo -e "<<< Failed $failed out of $all_tests"
+	/bin/echo -e "<<<"
+endif

@@ -1,0 +1,24 @@
+This is MP3 decoder for OpenRISC configured for the xess board.
+
+Make the mp3 player with:
+
+    ./makes2 songs/Beethoven-fuer_elise-16.mp3 songs/Moonlight-16.mp3
+ 
+This should build mp3 decoder for or32 and also put these two
+songs in the memory image.
+ 
+You get three outputs:
+ 
+- minimad : this is executable in COFF binary format that you can use
+on the simulator (type "sim  minimad", uncomment the OR1K_SIM define 
+in config.h to get PCM output in a file audiosim.pcm, which you can hear
+using command "play -t raw -r 22050 -s w -f s -c 2 audiosim.pcm")
+ 
+- minimad.s2 : this is srecord siutable to be merged with bitstream (*.exo)
+that is burned into flash memory in xess board
+(type "../utils/merge2srec xfpga_top.exo minimad.s2" to get out.exo and then
+load this to xess board)
+ 
+- minimad.mem : this file is used to initialize flash model for the RTL
+simulation (sim/ncsim/run/run_sim is expecting this file so you have to
+build this decoder before you run the simulation).

@@ -1,0 +1,37 @@
+#
+# Scsi driver configuration
+#
+comment 'SCSI support type (disk, tape, CD-ROM)'
+
+dep_tristate 'SCSI disk support' CONFIG_BLK_DEV_SD $CONFIG_SCSI
+dep_tristate 'SCSI tape support' CONFIG_CHR_DEV_ST $CONFIG_SCSI
+dep_tristate 'SCSI CD-ROM support' CONFIG_BLK_DEV_SR $CONFIG_SCSI
+dep_tristate 'SCSI generic support' CONFIG_CHR_DEV_SG $CONFIG_SCSI
+
+comment 'Some SCSI devices (e.g. CD jukebox) support multiple LUNs'
+
+bool 'Probe all LUNs on each SCSI device' CONFIG_SCSI_MULTI_LUN
+
+bool 'Verbose SCSI error reporting (kernel size +=12K)' CONFIG_SCSI_CONSTANTS
+
+mainmenu_option next_comment
+comment 'SCSI low-level drivers'
+
+dep_tristate 'Acorn SCSI card (aka30) support' CONFIG_SCSI_ACORNSCSI_3 $CONFIG_SCSI
+if [ "$CONFIG_EXPERIMENTAL" = "y" ]; then
+  dep_tristate 'CumanaSCSI II support' CONFIG_SCSI_CUMANA_2 $CONFIG_SCSI
+  dep_tristate 'PowerTec support' CONFIG_SCSI_POWERTECSCSI $CONFIG_SCSI
+  dep_tristate 'EESOX support' CONFIG_SCSI_EESOXSCSI $CONFIG_SCSI
+fi
+dep_tristate 'IOMEGA Parallel Port ZIP drive SCSI support' CONFIG_SCSI_PPA $CONFIG_SCSI
+if [ "$CONFIG_SCSI_PPA" != "n" ]; then
+    bool '  Buggy EPP chipset support' CONFIG_SCSI_PPA_HAVE_PEDANTIC
+fi
+
+comment 'The following drives are not fully supported'
+
+dep_tristate 'CumanaSCSI I support' CONFIG_SCSI_CUMANA_1 $CONFIG_SCSI
+dep_tristate 'EcoScsi support' CONFIG_SCSI_ECOSCSI $CONFIG_SCSI
+dep_tristate 'Oak SCSI support' CONFIG_SCSI_OAK1 $CONFIG_SCSI
+#dep_tristate 'SCSI debugging host adapter' CONFIG_SCSI_DEBUG $CONFIG_SCSI
+endmenu

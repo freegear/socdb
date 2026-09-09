@@ -1,0 +1,7 @@
+bool 'VIDCsound' CONFIG_VIDC
+bool '/dev/dsp and /dev/audio support' CONFIG_AUDIO
+
+if [ "$CONFIG_AUDIO" = "y" ]; then
+int 'Audio DMA buffer size 4096, 16384, 32768 or 65536' DSP_BUFFSIZE 65536
+fi
+$MAKE -C arch/arm/drivers/sound kernelconfig || exit 1

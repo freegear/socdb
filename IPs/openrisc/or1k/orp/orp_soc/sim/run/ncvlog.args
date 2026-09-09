@@ -1,0 +1,177 @@
+//
+// ncvlog.args: Arguments passed to the NC-Verilog parser.
+// Created by ncprep on Tue Aug 22 14:20:25 2006
+
+// Include Directories.
+-INCDIR ../../bench/verilog
+-INCDIR ../../bench/models/28f016s3
+-INCDIR ../../rtl/verilog
+-INCDIR ../../rtl/verilog/audio
+-INCDIR ../../rtl/verilog/mem_if
+-INCDIR ../../rtl/verilog/dbg_interface
+-INCDIR ../../rtl/verilog/ssvga
+-INCDIR ../../rtl/verilog/ethernet
+-INCDIR ../../rtl/verilog/uart16550
+-INCDIR ../../rtl/verilog/ps2
+-INCDIR ../../rtl/verilog/or1200
+-INCDIR ../../lib/xilinx/coregen
+-INCDIR ../../lib/xilinx/unisims
+-INCDIR ../../lib/altera
+
+
+
+// Defines.
+-DEFINE DBG_IF_MODEL
+-DEFINE SRAM_GENERIC_REGISTERED
+
+
+-ERRORMAX 2
+
+// Turn on informative messages.
+-MESSAGES
+// -NOCOPYRIGHT
+
+// Uncomment the following line to generate a named log file
+// -LOGFILE ncvlog.log
+
+// Comment the following line to force recompilation.
+-UPDATE
+
+// Source Files
+../../bench/verilog/xess_top.v
+../../bench/verilog/or1200_monitor.v
+../../bench/verilog/xcv_glbl.v
+../../bench/models/512Kx8.v
+../../bench/models/vga_model.v
+../../bench/models/codec_model.v
+../../bench/models/28f016s3/bwsvff.v
+../../bench/verilog/dbg_if_model.v
+../../bench/verilog/wb_master.v
+../../rtl/verilog/xsv_fpga_top.v
+../../rtl/verilog/tc_top.v
+../../rtl/verilog/tdm_slave_if.v
+../../rtl/verilog/audio/audio_codec_if.v
+../../rtl/verilog/audio/audio_top.v
+../../rtl/verilog/audio/audio_wb_if.v
+../../rtl/verilog/audio/fifo_4095_16.v
+../../rtl/verilog/audio/fifo_empty_16.v
+../../rtl/verilog/mem_if/flash_top.v
+../../rtl/verilog/mem_if/sram_top.v
+../../rtl/verilog/dbg_interface/dbg_crc8_d1.v
+../../rtl/verilog/dbg_interface/dbg_defines.v
+../../rtl/verilog/dbg_interface/dbg_register.v
+../../rtl/verilog/dbg_interface/dbg_registers.v
+../../rtl/verilog/dbg_interface/dbg_sync_clk1_clk2.v
+../../rtl/verilog/dbg_interface/dbg_top.v
+../../rtl/verilog/dbg_interface/dbg_trace.v
+../../rtl/verilog/ssvga/crtc_iob.v
+../../rtl/verilog/ssvga/ssvga_crtc.v
+../../rtl/verilog/ssvga/ssvga_defines.v
+../../rtl/verilog/ssvga/ssvga_fifo.v
+../../rtl/verilog/ssvga/ssvga_top.v
+../../rtl/verilog/ssvga/ssvga_wbm_if.v
+../../rtl/verilog/ssvga/ssvga_wbs_if.v
+../../rtl/verilog/ethernet/eth_clockgen.v
+../../rtl/verilog/ethernet/eth_crc.v
+../../rtl/verilog/ethernet/eth_fifo.v
+../../rtl/verilog/ethernet/eth_maccontrol.v
+../../rtl/verilog/ethernet/eth_macstatus.v
+../../rtl/verilog/ethernet/eth_miim.v
+../../rtl/verilog/ethernet/eth_outputcontrol.v
+../../rtl/verilog/ethernet/eth_random.v
+../../rtl/verilog/ethernet/eth_receivecontrol.v
+../../rtl/verilog/ethernet/eth_register.v
+../../rtl/verilog/ethernet/eth_registers.v
+../../rtl/verilog/ethernet/eth_rxaddrcheck.v
+../../rtl/verilog/ethernet/eth_rxcounters.v
+../../rtl/verilog/ethernet/eth_rxethmac.v
+../../rtl/verilog/ethernet/eth_rxstatem.v
+../../rtl/verilog/ethernet/eth_shiftreg.v
+../../rtl/verilog/ethernet/eth_transmitcontrol.v
+../../rtl/verilog/ethernet/eth_txcounters.v
+../../rtl/verilog/ethernet/eth_txethmac.v
+../../rtl/verilog/ethernet/eth_txstatem.v
+../../rtl/verilog/ethernet/eth_wishbone.v
+../../rtl/verilog/ethernet/eth_spram_256x32.v
+../../rtl/verilog/ethernet/eth_top.v
+../../rtl/verilog/uart16550/raminfr.v
+../../rtl/verilog/uart16550/uart_debug_if.v
+../../rtl/verilog/uart16550/uart_tfifo.v
+../../rtl/verilog/uart16550/uart_rfifo.v
+../../rtl/verilog/uart16550/uart_receiver.v
+../../rtl/verilog/uart16550/uart_regs.v
+../../rtl/verilog/uart16550/uart_sync_flops.v
+../../rtl/verilog/uart16550/uart_transmitter.v
+../../rtl/verilog/uart16550/uart_wb.v
+../../rtl/verilog/uart16550/uart_top.v
+../../rtl/verilog/ps2/ps2_io_ctrl.v
+../../rtl/verilog/ps2/ps2_keyboard.v
+../../rtl/verilog/ps2/ps2_translation_table.v
+../../rtl/verilog/ps2/ps2_wb_if.v
+../../rtl/verilog/ps2/ps2_top.v
+../../rtl/verilog/or1200/or1200_iwb_biu.v
+../../rtl/verilog/or1200/or1200_wb_biu.v
+../../rtl/verilog/or1200/or1200_ctrl.v
+../../rtl/verilog/or1200/or1200_cpu.v
+../../rtl/verilog/or1200/or1200_rf.v
+../../rtl/verilog/or1200/or1200_rfram_generic.v
+../../rtl/verilog/or1200/or1200_alu.v
+../../rtl/verilog/or1200/or1200_lsu.v
+../../rtl/verilog/or1200/or1200_operandmuxes.v
+../../rtl/verilog/or1200/or1200_wbmux.v
+../../rtl/verilog/or1200/or1200_genpc.v
+../../rtl/verilog/or1200/or1200_if.v
+../../rtl/verilog/or1200/or1200_freeze.v
+../../rtl/verilog/or1200/or1200_sprs.v
+../../rtl/verilog/or1200/or1200_top.v
+../../rtl/verilog/or1200/or1200_pic.v
+../../rtl/verilog/or1200/or1200_pm.v
+../../rtl/verilog/or1200/or1200_tt.v
+../../rtl/verilog/or1200/or1200_except.v
+../../rtl/verilog/or1200/or1200_dc_top.v
+../../rtl/verilog/or1200/or1200_dc_fsm.v
+../../rtl/verilog/or1200/or1200_reg2mem.v
+../../rtl/verilog/or1200/or1200_mem2reg.v
+../../rtl/verilog/or1200/or1200_dc_tag.v
+../../rtl/verilog/or1200/or1200_dc_ram.v
+../../rtl/verilog/or1200/or1200_ic_top.v
+../../rtl/verilog/or1200/or1200_ic_fsm.v
+../../rtl/verilog/or1200/or1200_ic_tag.v
+../../rtl/verilog/or1200/or1200_ic_ram.v
+../../rtl/verilog/or1200/or1200_immu_top.v
+../../rtl/verilog/or1200/or1200_immu_tlb.v
+../../rtl/verilog/or1200/or1200_dmmu_top.v
+../../rtl/verilog/or1200/or1200_dmmu_tlb.v
+../../rtl/verilog/or1200/or1200_amultp2_32x32.v
+../../rtl/verilog/or1200/or1200_gmultp2_32x32.v
+../../rtl/verilog/or1200/or1200_cfgr.v
+../../rtl/verilog/or1200/or1200_du.v
+../../rtl/verilog/or1200/or1200_sb.v
+../../rtl/verilog/or1200/or1200_sb_fifo.v
+../../rtl/verilog/or1200/or1200_mult_mac.v
+../../rtl/verilog/or1200/or1200_qmem_top.v
+../../rtl/verilog/or1200/or1200_dpram_32x32.v
+../../rtl/verilog/or1200/or1200_spram_2048x32.v
+../../rtl/verilog/or1200/or1200_spram_2048x32_bw.v
+../../rtl/verilog/or1200/or1200_spram_2048x8.v
+../../rtl/verilog/or1200/or1200_spram_512x20.v
+../../rtl/verilog/or1200/or1200_spram_256x21.v
+../../rtl/verilog/or1200/or1200_spram_1024x8.v
+../../rtl/verilog/or1200/or1200_spram_1024x32.v
+../../rtl/verilog/or1200/or1200_spram_1024x32_bw.v
+../../rtl/verilog/or1200/or1200_spram_64x14.v
+../../rtl/verilog/or1200/or1200_spram_64x22.v
+../../rtl/verilog/or1200/or1200_spram_64x24.v
+../../rtl/verilog/or1200/or1200_xcv_ram32x8d.v
+../../lib/xilinx/coregen/XilinxCoreLib/async_fifo_v3_0.v
+../../lib/xilinx/unisims/RAMB4_S16.v
+../../lib/xilinx/unisims/RAMB4_S8.v
+../../lib/xilinx/unisims/RAMB4_S4.v
+../../lib/xilinx/unisims/RAMB4_S2.v
+../../lib/xilinx/unisims/RAMB4_S16_S16.v
+../../lib/xilinx/unisims/RAM32X1D.v
+../../lib/xilinx/unisims/RAMB4_S8_S16.v
+../../lib/xilinx/unisims/IBUFG.v
+../../lib/xilinx/unisims/BUFG.v
+../../lib/xilinx/unisims/CLKDLL.v
+../../lib/altera/220model.v

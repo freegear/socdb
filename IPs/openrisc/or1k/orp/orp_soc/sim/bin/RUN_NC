@@ -1,0 +1,21 @@
+#!/bin/csh -f
+#
+# RUN_NC: Script to run all of NC-Verilog (the first time).
+# Created by ncprep on Tue Aug 22 11:23:32 2006
+#
+
+# Run the NC-Verilog parser (compile the source)
+ncvlog -f ncvlog.args
+if ($status != 0) then
+  exit
+endif
+
+# Run the NC-Verilog elaborator (build the design hierarchy)
+ncelab -f ncelab.args
+if ($status != 0) then
+  exit
+endif
+
+# Run the NC-Verilog simulator (simulate the design)
+ncsim -f ncsim.args
+

@@ -1,0 +1,72 @@
+/*
+ * User defines for synthesizing RTC IP core
+ *
+ */
+TOPLEVEL = or1200_top
+include ../bin/select_tech.inc
+CLK = clk_i
+RST = rst_i
+CLK_PERIOD = 4		/* 200 MHz */
+WB_CLK_PERIOD = 8	/* WB clock */
+MAX_AREA = 0		/* Push hard */
+DO_UNGROUP = yes	/* yes, no */
+DO_VERIFY = no		/* yes, no */
+
+get_license DC-Ultra-Features
+get_license DC-Ultra-Opt
+get_license BOA-BRT
+set_ultra_optimization -f
+
+/* Starting timestamp */
+sh date
+
+/* Set some basic variables related to environment */
+include ../bin/set_env.inc
+STAGE = final
+
+/* Load libraries */
+include ../bin/tech_ + TECH + .inc
+
+/* Load HDL source files */
+include ../bin/read_design.inc		> LOG_PATH + read_design_ + TOPLEVEL + .log
+
+/* Set design top */
+current_design TOPLEVEL
+
+/* Link all blocks and uniquify them */
+link
+uniquify
+check_design			> LOG_PATH + check_design_ + TOPLEVEL + .log
+
+/* Apply constraints */
+if (TECH == "vs_umc18") {
+	include ../bin/cons_vs_umc18.inc
+} else if (TECH == "art_umc18") {
+	include ../bin/cons_art_umc18.inc
+} else {
+	echo "Error: Unsupported technology"
+	exit
+}
+
+/* Lets do basic synthesis */
+if (DO_UNGROUP == "yes") {
+	ungroup -all
+	compile -boundary_optimization -map_effort high -ungroup_all
+} else {
+	compile -map_effort low
+}
+
+/* Dump gate-level from incremental synthesis */
+include ../bin/save_design.inc
+
+/* Generate reports for incremental synthesis */
+include ../bin/reports.inc
+
+/* Verify design */
+if (DO_VERIFY == "yes") {
+	compile -no_map -verify		> LOG_PATH + verify_ + TOPLEVEL + .log
+}
+
+/* Finish */
+sh date
+exit

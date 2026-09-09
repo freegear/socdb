@@ -1,0 +1,27 @@
+Loading snapshot worklib.xess_top:v .................... Done
+ncsim> source /tools/LDV5.1.lnx/tools/inca/files/ncsimrc
+ncsim> database -open waves -into ../out/wave/i9-uart-icdc -default
+SST2 Database Write API -- DWAPI Version 05.10-s006 -- 01/20/2004
+Copyright 1997-2003 Cadence Design Systems, Inc.
+ 
+Created default SHM database waves
+ncsim> probe -create -shm xess_top -all -variables -depth all
+Created probe 1
+ncsim> probe -create -shm or1200_monitor -all -variables -depth all
+Created probe 2
+ncsim> stop -create -time 500ms -relative
+Created stop 1
+ncsim> run
+(xess_top.i_xess_fpga.uart_top) UART INFO: Data bus width is 32. Debug Interface present.
+
+(xess_top.i_xess_fpga.uart_top) UART INFO: Doesn't have baudrate output
+
+Loading from file ../src/flash.in
+Warning:  LPM_ROM must have data file for initialization.
+
+    76.00 ns Error: illegal readmode
+Vcc is in operating range for 5 volt mode
+Vcc is in operating range for 5 volt mode
+Simulation complete via $finish(1) at time 17632277 NS + 0
+/home/holelee/openrisc/or1k/orp/orp_soc/bench/verilog/or1200_monitor.v:372 			$finish;
+ncsim> quit

@@ -1,0 +1,8 @@
+#!/bin/sh
+../utils/loader tmp.mfs $@
+../utils/bin2c < tmp.mfs > flash.c
+make
+or32-rtems-objcopy -O binary minimad minimad.bin
+../utils/bin2srec minimad.bin > minimad.s2
+../utils/bin2flimg 1 minimad.bin > minimad.mem
+

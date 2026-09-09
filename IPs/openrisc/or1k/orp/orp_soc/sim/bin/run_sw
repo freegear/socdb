@@ -1,0 +1,116 @@
+#!/bin/csh -f
+
+set iter = 1;
+set failed = 0;
+set all_tests = 0;
+
+# List all test cases
+set alldirs=( ../../sw/dhry ../../sw/mmu ../../sw/basic ../../sw/mul ../../sw/except \
+		../../sw/cbasic ../../sw/tick ../../sw/syscall ../../sw/uart )
+set alltests=`cat ../bin/tests`
+
+# Process arguments
+if ($1 == "single") then
+	set tests=(${alltests})
+	set tests=${tests[$2]}
+else
+	set tests=(${alltests})
+endif
+if ($1 == "clean") then
+	rm -rf ../log/s-*
+	foreach dir ($alldirs)
+		@ i += 1;
+		/bin/echo -e ""
+		/bin/echo -e "\t###"
+		/bin/echo -e "\t### Clean: $dir"
+		/bin/echo -e "\t###"
+		cd $dir
+		make clean
+	end
+	/bin/echo -e ""
+	/bin/echo -e "\t###"
+	/bin/echo -e "\t### Clean: ../../sw/support"
+	/bin/echo -e "\t###"
+	cd ../../sw/support
+	make clean
+	/bin/echo -e ""
+	/bin/echo -e "\t###"
+	/bin/echo -e "\t### Clean: ../../sw/utils"
+	/bin/echo -e "\t###"
+	cd ../../sw/utils
+	make clean
+	exit 0;
+else if ($1 == "build") then
+	/bin/echo -e ""
+	/bin/echo -e "\t###"
+	/bin/echo -e "\t### Build: ../../sw/utils"
+	/bin/echo -e "\t###"
+	cd ../../sw/utils
+	make
+	/bin/echo -e ""
+	/bin/echo -e "\t###"
+	/bin/echo -e "\t### Build: ../../sw/support"
+	/bin/echo -e "\t###"
+	cd ../../sw/support
+	make
+	foreach dir ($alldirs)
+		@ i += 1;
+		/bin/echo -e ""
+		/bin/echo -e "\t###"
+		/bin/echo -e "\t### Build: $dir"
+		/bin/echo -e "\t###"
+		cd $dir
+		make
+	end
+	exit 0;
+endif
+
+# Print HW clock
+/sbin/hwclock
+
+# List all selected tests
+set i = 0;
+foreach test ($tests)
+	@ i += 1;
+	/bin/echo -n -e " Test ${i}: ${test}\t"
+	if ((${i} % 2) == 0) then
+		/bin/echo -e ""
+	endif
+end
+
+/bin/echo -e ""
+
+# Run or1ksim
+sim:
+set i = 0;
+foreach test ($tests)
+	@ i += 1;
+	/bin/echo -e ""
+	/bin/echo -e "\t###"
+	/bin/echo -e "\t### Running test ${i}: ${test}"
+	/bin/echo -e "\t###"
+
+	set test_binary=`find $alldirs -name $test.or32`
+	/bin/echo -e "run 10000000 hush\nq\n" | or32-uclinux-sim -i -f ../../sw/support/orp.cfg $test_binary >& or1ksim.log
+	set magic=`grep report or1ksim.log | tail -1 | sed -e "s/(sim) //" | cut -d'(' -f2 | cut -d')' -f1 | cut -d' ' -f1`
+	if ($magic == "0xdeaddead") then
+		/bin/echo -e "\t### Passed"
+		@ all_tests += 1;
+	else
+		/bin/echo -e "\t### FAILED (magic# $magic)"
+		/bin/echo ../log/s-${test}-or1ksim.log:
+		cat or1ksim.log
+		@ failed += 1;
+		@ all_tests += 1;
+	endif
+	  mv executed.log ../log/s-${test}-executed.log
+#	  mv sram.log ../log/s-${test}-sram.log
+#	  mv sprs.log ../log/s-${test}-sprs.log
+	  mv or1ksim.log ../log/s-${test}-or1ksim.log
+	endif
+end
+
+	/bin/echo -e ""
+	/bin/echo -e "<<<"
+	/bin/echo -e "<<< Failed $failed out of $all_tests"
+	/bin/echo -e "<<<"

@@ -1,0 +1,5841 @@
+diff --unified -N -r ../binutils-2.16.1/bfd/bfd-in2.h binutils-2.16.1/bfd/bfd-in2.h
+--- ../binutils-2.16.1/bfd/bfd-in2.h	2005-03-02 22:23:20.000000000 +0100
++++ binutils-2.16.1/bfd/bfd-in2.h	2005-12-13 15:51:29.000000000 +0100
+@@ -2145,11 +2145,13 @@
+ i.e., byte displacements shifted right two bits.  The 30-bit word
+ displacement (<<32_PCREL_S2>> -- 32 bits, shifted 2) is used on the
+ SPARC.  (SPARC tools generally refer to this as <<WDISP30>>.)  The
+-signed 16-bit displacement is used on the MIPS, and the 23-bit
+-displacement is used on the Alpha.  */
++signed 16-bit displacement is used on the MIPS, the 23-bit
++displacement is used on the Alpha and the 26-bit displacement is used
++on openrisc.  */
+   BFD_RELOC_32_PCREL_S2,
+   BFD_RELOC_16_PCREL_S2,
+   BFD_RELOC_23_PCREL_S2,
++  BFD_RELOC_28_PCREL_S2,
+ 
+ /* High 22 bits and low 10 bits of 32-bit value, placed into lower bits of
+ the target word.  These are used on the SPARC.  */
+diff --unified -N -r ../binutils-2.16.1/bfd/config.bfd binutils-2.16.1/bfd/config.bfd
+--- ../binutils-2.16.1/bfd/config.bfd	2005-01-31 18:18:47.000000000 +0100
++++ binutils-2.16.1/bfd/config.bfd	2005-12-13 15:51:29.000000000 +0100
+@@ -924,16 +924,13 @@
+     targ_underscore=yes
+     ;;
+ 
+-  openrisc-*-elf)
+-    targ_defvec=bfd_elf32_openrisc_vec
+-    ;;
+ 
+   or32-*-coff)
+     targ_defvec=or32coff_big_vec
+     targ_underscore=yes
+     ;;
+ 
+-  or32-*-elf | or32-*-rtems*)
++  or32-*-rtems | or32-*-elf | or32-*-*linux*)
+     targ_defvec=bfd_elf32_or32_big_vec
+     ;;
+ 
+diff --unified -N -r ../binutils-2.16.1/bfd/configure binutils-2.16.1/bfd/configure
+--- ../binutils-2.16.1/bfd/configure	2005-06-12 20:58:46.000000000 +0200
++++ binutils-2.16.1/bfd/configure	2005-12-13 15:51:29.000000000 +0100
+@@ -11588,7 +11588,6 @@
+     bfd_elf32_nlittlemips_vec)	tb="$tb elfn32-mips.lo elfxx-mips.lo elf32.lo $elf ecofflink.lo"; target_size=64 ;;
+     bfd_elf32_ntradbigmips_vec)	tb="$tb elfn32-mips.lo elfxx-mips.lo elf32.lo $elf ecofflink.lo"; target_size=64 ;;
+     bfd_elf32_ntradlittlemips_vec) tb="$tb elfn32-mips.lo elfxx-mips.lo elf32.lo $elf ecofflink.lo"; target_size=64 ;;
+-    bfd_elf32_openrisc_vec)	tb="$tb elf32-openrisc.lo elf32.lo $elf" ;;
+     bfd_elf32_or32_big_vec)	tb="$tb elf32-or32.lo elf32.lo $elf" ;;
+     bfd_elf32_pj_vec)           tb="$tb elf32-pj.lo elf32.lo $elf";;
+     bfd_elf32_pjl_vec)          tb="$tb elf32-pj.lo elf32.lo $elf";;
+diff --unified -N -r ../binutils-2.16.1/bfd/configure.in binutils-2.16.1/bfd/configure.in
+--- ../binutils-2.16.1/bfd/configure.in	2005-06-12 20:58:40.000000000 +0200
++++ binutils-2.16.1/bfd/configure.in	2005-12-13 15:51:29.000000000 +0100
+@@ -635,7 +635,6 @@
+     bfd_elf32_nlittlemips_vec)	tb="$tb elfn32-mips.lo elfxx-mips.lo elf32.lo $elf ecofflink.lo"; target_size=64 ;;
+     bfd_elf32_ntradbigmips_vec)	tb="$tb elfn32-mips.lo elfxx-mips.lo elf32.lo $elf ecofflink.lo"; target_size=64 ;;
+     bfd_elf32_ntradlittlemips_vec) tb="$tb elfn32-mips.lo elfxx-mips.lo elf32.lo $elf ecofflink.lo"; target_size=64 ;;
+-    bfd_elf32_openrisc_vec)	tb="$tb elf32-openrisc.lo elf32.lo $elf" ;;
+     bfd_elf32_or32_big_vec)	tb="$tb elf32-or32.lo elf32.lo $elf" ;;
+     bfd_elf32_pj_vec)           tb="$tb elf32-pj.lo elf32.lo $elf";;
+     bfd_elf32_pjl_vec)          tb="$tb elf32-pj.lo elf32.lo $elf";;
+diff --unified -N -r ../binutils-2.16.1/bfd/cpu-openrisc.c binutils-2.16.1/bfd/cpu-openrisc.c
+--- ../binutils-2.16.1/bfd/cpu-openrisc.c	2002-11-30 09:39:36.000000000 +0100
++++ binutils-2.16.1/bfd/cpu-openrisc.c	1970-01-01 01:00:00.000000000 +0100
+@@ -1,42 +0,0 @@
+-/* BFD support for the OpenRISC architecture.
+-   Copyright 2001, 2002 Free Software Foundation, Inc.
+-   Contributed by Johan Rydberg, jrydberg@opencores.org
+-
+-This file is part of BFD, the Binary File Descriptor library.
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License as published by
+-the Free Software Foundation; either version 2 of the License, or
+-(at your option) any later version.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License
+-along with this program; if not, write to the Free Software
+-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
+-
+-#include "bfd.h"
+-#include "sysdep.h"
+-#include "libbfd.h"
+-
+-#define N(BITS_WORD, BITS_ADDR, NUMBER, PRINT, DEFAULT, NEXT) \
+-  {                                                           \
+-    BITS_WORD,           /* bits in a word */                 \
+-    BITS_ADDR,           /* bits in an address */             \
+-    8,                   /* 8 bits in a byte */               \
+-    bfd_arch_openrisc,                                        \
+-    NUMBER,                                                   \
+-    "openrisc",                                               \
+-    PRINT,                                                    \
+-    2,                                                        \
+-    DEFAULT,                                                  \
+-    bfd_default_compatible,                                   \
+-    bfd_default_scan,                                         \
+-    NEXT,                                                     \
+-  }
+-
+-const bfd_arch_info_type bfd_openrisc_arch =
+-  N (32, 32, 0, "openrisc", TRUE, 0);
+Binary files ../binutils-2.16.1/bfd/doc/bfd.info-2 and binutils-2.16.1/bfd/doc/bfd.info-2 differ
+diff --unified -N -r ../binutils-2.16.1/bfd/elf32-openrisc.c binutils-2.16.1/bfd/elf32-openrisc.c
+--- ../binutils-2.16.1/bfd/elf32-openrisc.c	2004-10-21 17:28:23.000000000 +0200
++++ binutils-2.16.1/bfd/elf32-openrisc.c	1970-01-01 01:00:00.000000000 +0100
+@@ -1,613 +0,0 @@
+-/* OpenRISC-specific support for 32-bit ELF.
+-   Copyright 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
+-   Contributed by Johan Rydberg, jrydberg@opencores.org
+-
+-This file is part of BFD, the Binary File Descriptor library.
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License as published by
+-the Free Software Foundation; either version 2 of the License, or
+-(at your option) any later version.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License
+-along with this program; if not, write to the Free Software
+-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
+-
+-#include "bfd.h"
+-#include "sysdep.h"
+-#include "libbfd.h"
+-#include "elf-bfd.h"
+-#include "elf/openrisc.h"
+-#include "libiberty.h"
+-
+-/* Forward declarations.  */
+-
+-static reloc_howto_type *openrisc_reloc_type_lookup
+-  PARAMS ((bfd * , bfd_reloc_code_real_type));
+-static void openrisc_info_to_howto_rela
+-  PARAMS ((bfd *, arelent *, Elf_Internal_Rela *));
+-static bfd_boolean openrisc_elf_relocate_section
+-  PARAMS ((bfd *, struct bfd_link_info *, bfd *, asection *, bfd_byte *,
+-	   Elf_Internal_Rela *, Elf_Internal_Sym *, asection **));
+-static bfd_reloc_status_type openrisc_final_link_relocate
+-  PARAMS ((reloc_howto_type *, bfd *, asection *, bfd_byte *,
+-           Elf_Internal_Rela *, bfd_vma));
+-static bfd_boolean openrisc_elf_gc_sweep_hook
+-  PARAMS ((bfd *, struct bfd_link_info *, asection *,
+-           const Elf_Internal_Rela *));
+-static asection * openrisc_elf_gc_mark_hook
+-  PARAMS ((asection *, struct bfd_link_info *, Elf_Internal_Rela *,
+-	   struct elf_link_hash_entry *, Elf_Internal_Sym *));
+-static bfd_boolean openrisc_elf_check_relocs
+-  PARAMS ((bfd *, struct bfd_link_info *, asection *,
+-	   const Elf_Internal_Rela *));
+-static bfd_boolean openrisc_elf_object_p
+-  PARAMS ((bfd *));
+-static void openrisc_elf_final_write_processing
+-  PARAMS ((bfd *, bfd_boolean));
+-
+-
+-static reloc_howto_type openrisc_elf_howto_table[] =
+-  {
+-  /* This reloc does nothing.  */
+-  HOWTO (R_OPENRISC_NONE,	/* type */
+-	 0,			/* rightshift */
+-	 2,			/* size (0 = byte, 1 = short, 2 = long) */
+-	 32,			/* bitsize */
+-	 FALSE,			/* pc_relative */
+-	 0,			/* bitpos */
+-	 complain_overflow_bitfield, /* complain_on_overflow */
+-	 bfd_elf_generic_reloc,	/* special_function */
+-	 "R_OPENRISC_NONE",	/* name */
+-	 FALSE,			/* partial_inplace */
+-	 0,			/* src_mask */
+-	 0,			/* dst_mask */
+-	 FALSE),		/* pcrel_offset */
+-
+-  /* A PC relative 26 bit relocation, right shifted by 2.  */
+-  HOWTO (R_OPENRISC_INSN_REL_26, /* type */
+-	 2,			/* rightshift */
+-	 2,			/* size (0 = byte, 1 = short, 2 = long) */
+-	 26,			/* bitsize */
+-	 TRUE,			/* pc_relative */
+-	 0,			/* bitpos */
+-	 complain_overflow_signed, /* complain_on_overflow */
+-	 bfd_elf_generic_reloc,	/* special_function */
+-	 "R_OPENRISC_INSN_REL_26", /* name */
+-	 FALSE,			/* partial_inplace */
+-	 0x00000000,		/* src_mask */
+-	 0x03ffffff,		/* dst_mask */
+-	 FALSE),		/* pcrel_offset */
+-
+-  /* A absolute 26 bit relocation, right shifted by 2.  */
+-  HOWTO (R_OPENRISC_INSN_ABS_26, /* type */
+-	 2,			/* rightshift */
+-	 2,			/* size (0 = byte, 1 = short, 2 = long) */
+-	 26,			/* bitsize */
+-	 FALSE,			/* pc_relative */
+-	 0,			/* bitpos */
+-	 complain_overflow_signed, /* complain_on_overflow */
+-	 bfd_elf_generic_reloc,	/* special_function */
+-	 "R_OPENRISC_INSN_ABS_26", /* name */
+-	 FALSE,			/* partial_inplace */
+-	 0x00000000,		/* src_mask */
+-	 0x03ffffff,		/* dst_mask */
+-	 FALSE),		/* pcrel_offset */
+-
+-  HOWTO (R_OPENRISC_LO_16_IN_INSN, /* type */
+-	 0,			/* rightshift */
+-	 1,			/* size (0 = byte, 1 = short, 2 = long) */
+-	 16,			/* bitsize */
+-	 FALSE,			/* pc_relative */
+-	 0,			/* bitpos */
+-	 complain_overflow_dont, /* complain_on_overflow */
+-	 bfd_elf_generic_reloc,	/* special_function */
+-	 "R_OPENRISC_LO_16_IN_INSN", /* name */
+-	 FALSE,			/* partial_inplace */
+-	 0,			/* src_mask */
+-	 0x0000ffff,		/* dst_mask */
+-	 FALSE),		/* pcrel_offset */
+-
+-  HOWTO (R_OPENRISC_HI_16_IN_INSN, /* type */
+-	 16,			/* rightshift */
+-	 1,			/* size (0 = byte, 1 = short, 2 = long) */
+-	 16,			/* bitsize */
+-	 FALSE,			/* pc_relative */
+-	 0,			/* bitpos */
+-	 complain_overflow_dont,	/* complain_on_overflow */
+-	 bfd_elf_generic_reloc,	/* special_function */
+-	 "R_OPENRISC_HI_16_IN_INSN",	/* name */
+-	 FALSE,			/* partial_inplace */
+-	 0,			/* src_mask */
+-	 0x0000ffff,		/* dst_mask */
+-	 FALSE),		/* pcrel_offset */
+-
+-  /* An 8 bit absolute relocation.  */
+-  HOWTO (R_OPENRISC_8,		/* type */
+-	 0,			/* rightshift */
+-	 0,			/* size (0 = byte, 1 = short, 2 = long) */
+-	 8,			/* bitsize */
+-	 FALSE,			/* pc_relative */
+-	 0,			/* bitpos */
+-	 complain_overflow_bitfield, /* complain_on_overflow */
+-	 bfd_elf_generic_reloc,	/* special_function */
+-	 "R_OPENRISC_8",	/* name */
+-	 TRUE,			/* partial_inplace */
+-	 0x0000,		/* src_mask */
+-	 0x00ff,		/* dst_mask */
+-	 FALSE),		/* pcrel_offset */
+-
+-  /* A 16 bit absolute relocation.  */
+-  HOWTO (R_OPENRISC_16,		/* type */
+-	 0,			/* rightshift */
+-	 1,			/* size (0 = byte, 1 = short, 2 = long) */
+-	 16,			/* bitsize */
+-	 FALSE,			/* pc_relative */
+-	 0,			/* bitpos */
+-	 complain_overflow_bitfield, /* complain_on_overflow */
+-	 bfd_elf_generic_reloc,	/* special_function */
+-	 "R_OPENRISC_16",	/* name */
+-	 TRUE,			/* partial_inplace */
+-	 0x00000000,		/* src_mask */
+-	 0x0000ffff,		/* dst_mask */
+-	 FALSE),		/* pcrel_offset */
+-
+-  /* A 32 bit absolute relocation.  */
+-  HOWTO (R_OPENRISC_32,		/* type */
+-	 0,			/* rightshift */
+-	 2,			/* size (0 = byte, 1 = short, 2 = long) */
+-	 32,			/* bitsize */
+-	 FALSE,			/* pc_relative */
+-	 0,			/* bitpos */
+-	 complain_overflow_bitfield, /* complain_on_overflow */
+-	 bfd_elf_generic_reloc,	/* special_function */
+-	 "R_OPENRISC_32",	/* name */
+-	 TRUE,			/* partial_inplace */
+-	 0x00000000,		/* src_mask */
+-	 0xffffffff,		/* dst_mask */
+-	 FALSE),		/* pcrel_offset */
+-
+-  /* GNU extension to record C++ vtable hierarchy */
+-  HOWTO (R_OPENRISC_GNU_VTINHERIT, /* type */
+-	 0,			/* rightshift */
+-	 2,			/* size (0 = byte, 1 = short, 2 = long) */
+-	 0,			/* bitsize */
+-	 FALSE,			/* pc_relative */
+-	 0,			/* bitpos */
+-	 complain_overflow_dont, /* complain_on_overflow */
+-	 NULL,			/* special_function */
+-	 "R_OPENRISC_GNU_VTINHERIT", /* name */
+-	 FALSE,			/* partial_inplace */
+-	 0,			/* src_mask */
+-	 0,			/* dst_mask */
+-	 FALSE),		/* pcrel_offset */
+-
+-  /* GNU extension to record C++ vtable member usage */
+-  HOWTO (R_OPENRISC_GNU_VTENTRY, /* type */
+-	 0,			/* rightshift */
+-	 2,			/* size (0 = byte, 1 = short, 2 = long) */
+-	 0,			/* bitsize */
+-	 FALSE,			/* pc_relative */
+-	 0,			/* bitpos */
+-	 complain_overflow_dont, /* complain_on_overflow */
+-	 _bfd_elf_rel_vtable_reloc_fn, /* special_function */
+-	 "R_OPENRISC_GNU_VTENTRY", /* name */
+-	 FALSE,			/* partial_inplace */
+-	 0,			/* src_mask */
+-	 0,			/* dst_mask */
+-	 FALSE),		/* pcrel_offset */
+-};
+-
+-/* Map BFD reloc types to OpenRISC ELF reloc types.  */
+-
+-struct openrisc_reloc_map
+-  {
+-    bfd_reloc_code_real_type bfd_reloc_val;
+-    unsigned int openrisc_reloc_val;
+-  };
+-
+-static const struct openrisc_reloc_map openrisc_reloc_map[] =
+-  {
+-    { BFD_RELOC_NONE, 		R_OPENRISC_NONE },
+-    { BFD_RELOC_32, 		R_OPENRISC_32 },
+-    { BFD_RELOC_16, 		R_OPENRISC_16 },
+-    { BFD_RELOC_8, 		R_OPENRISC_8 },
+-    { BFD_RELOC_OPENRISC_REL_26,R_OPENRISC_INSN_REL_26 },
+-    { BFD_RELOC_OPENRISC_ABS_26,R_OPENRISC_INSN_ABS_26 },
+-    { BFD_RELOC_HI16, 		R_OPENRISC_HI_16_IN_INSN },
+-    { BFD_RELOC_LO16, 		R_OPENRISC_LO_16_IN_INSN },
+-    { BFD_RELOC_VTABLE_INHERIT,	R_OPENRISC_GNU_VTINHERIT },
+-    { BFD_RELOC_VTABLE_ENTRY, 	R_OPENRISC_GNU_VTENTRY }
+-  };
+-
+-static reloc_howto_type *
+-openrisc_reloc_type_lookup (abfd, code)
+-     bfd * abfd ATTRIBUTE_UNUSED;
+-     bfd_reloc_code_real_type code;
+-{
+-  unsigned int i;
+-
+-  for (i = ARRAY_SIZE (openrisc_reloc_map); --i;)
+-    if (openrisc_reloc_map[i].bfd_reloc_val == code)
+-      return & openrisc_elf_howto_table[openrisc_reloc_map[i].
+-				       openrisc_reloc_val];
+-
+-  return NULL;
+-}
+-
+-/* Set the howto pointer for an OpenRISC ELF reloc.  */
+-
+-static void
+-openrisc_info_to_howto_rela (abfd, cache_ptr, dst)
+-     bfd * abfd ATTRIBUTE_UNUSED;
+-     arelent * cache_ptr;
+-     Elf_Internal_Rela * dst;
+-{
+-  unsigned int r_type;
+-
+-  r_type = ELF32_R_TYPE (dst->r_info);
+-  BFD_ASSERT (r_type < (unsigned int) R_OPENRISC_max);
+-  cache_ptr->howto = & openrisc_elf_howto_table[r_type];
+-}
+-
+-/* Perform a single relocation.  By default we use the standard BFD
+-   routines, but a few relocs, we have to do them ourselves.  */
+-
+-static bfd_reloc_status_type
+-openrisc_final_link_relocate (howto, input_bfd, input_section, contents, rel,
+-			      relocation)
+-     reloc_howto_type *howto;
+-     bfd *input_bfd;
+-     asection *input_section;
+-     bfd_byte *contents;
+-     Elf_Internal_Rela *rel;
+-     bfd_vma relocation;
+-{
+-  bfd_reloc_status_type r = bfd_reloc_ok;
+-
+-  switch (howto->type)
+-    {
+-    case R_OPENRISC_LO_16_IN_INSN:
+-      relocation &= 0xffff;
+-      r = _bfd_final_link_relocate (howto, input_bfd, input_section,
+-				    contents, rel->r_offset,
+-				    relocation, rel->r_addend);
+-      break;
+-
+-    default:
+-      r = _bfd_final_link_relocate (howto, input_bfd, input_section,
+-				    contents, rel->r_offset,
+-				    relocation, rel->r_addend);
+-    }
+-
+-  return r;
+-}
+-
+-/* Relocate an OpenRISC ELF section.
+-
+-   The RELOCATE_SECTION function is called by the new ELF backend linker
+-   to handle the relocations for a section.
+-
+-   The relocs are always passed as Rela structures; if the section
+-   actually uses Rel structures, the r_addend field will always be
+-   zero.
+-
+-   This function is responsible for adjusting the section contents as
+-   necessary, and (if using Rela relocs and generating a relocatable
+-   output file) adjusting the reloc addend as necessary.
+-
+-   This function does not have to worry about setting the reloc
+-   address or the reloc symbol index.
+-
+-   LOCAL_SYMS is a pointer to the swapped in local symbols.
+-
+-   LOCAL_SECTIONS is an array giving the section in the input file
+-   corresponding to the st_shndx field of each local symbol.
+-
+-   The global hash table entry for the global symbols can be found
+-   via elf_sym_hashes (input_bfd).
+-
+-   When generating relocatable output, this function must handle
+-   STB_LOCAL/STT_SECTION symbols specially.  The output symbol is
+-   going to be the section symbol corresponding to the output
+-   section, which means that the addend must be adjusted
+-   accordingly.  */
+-
+-static bfd_boolean
+-openrisc_elf_relocate_section (output_bfd, info, input_bfd, input_section,
+-			       contents, relocs, local_syms, local_sections)
+-     bfd *output_bfd;
+-     struct bfd_link_info *info;
+-     bfd *input_bfd;
+-     asection *input_section;
+-     bfd_byte *contents;
+-     Elf_Internal_Rela *relocs;
+-     Elf_Internal_Sym *local_syms;
+-     asection **local_sections;
+-{
+-  Elf_Internal_Shdr *symtab_hdr;
+-  struct elf_link_hash_entry **sym_hashes;
+-  Elf_Internal_Rela *rel;
+-  Elf_Internal_Rela *relend;
+-
+-  if (info->relocatable)
+-    return TRUE;
+-
+-  symtab_hdr = &elf_tdata (input_bfd)->symtab_hdr;
+-  sym_hashes = elf_sym_hashes (input_bfd);
+-  relend = relocs + input_section->reloc_count;
+-
+-  for (rel = relocs; rel < relend; rel++)
+-    {
+-      reloc_howto_type *howto;
+-      unsigned long r_symndx;
+-      Elf_Internal_Sym *sym;
+-      asection *sec;
+-      struct elf_link_hash_entry *h;
+-      bfd_vma relocation;
+-      bfd_reloc_status_type r;
+-      const char *name = NULL;
+-      int r_type;
+-
+-      r_type = ELF32_R_TYPE (rel->r_info);
+-      r_symndx = ELF32_R_SYM (rel->r_info);
+-
+-      if (r_type == R_OPENRISC_GNU_VTINHERIT
+-	  || r_type == R_OPENRISC_GNU_VTENTRY)
+-	continue;
+-
+-      if ((unsigned int) r_type >
+-	  (sizeof openrisc_elf_howto_table / sizeof (reloc_howto_type)))
+-	abort ();
+-
+-      /* This is a final link.  */
+-      howto = openrisc_elf_howto_table + ELF32_R_TYPE (rel->r_info);
+-      h = NULL;
+-      sym = NULL;
+-      sec = NULL;
+-
+-      if (r_symndx < symtab_hdr->sh_info)
+-	{
+-	  sym = local_syms + r_symndx;
+-	  sec = local_sections[r_symndx];
+-	  relocation = _bfd_elf_rela_local_sym (output_bfd, sym, &sec, rel);
+-
+-	  name = bfd_elf_string_from_elf_section
+-	    (input_bfd, symtab_hdr->sh_link, sym->st_name);
+-	  name = (name == NULL) ? bfd_section_name (input_bfd, sec) : name;
+-	}
+-      else
+-	{
+-	  bfd_boolean unresolved_reloc, warned;
+-
+-	  RELOC_FOR_GLOBAL_SYMBOL (info, input_bfd, input_section, rel,
+-				   r_symndx, symtab_hdr, sym_hashes,
+-				   h, sec, relocation,
+-				   unresolved_reloc, warned);
+-	}
+-
+-      r = openrisc_final_link_relocate (howto, input_bfd, input_section,
+-					contents, rel, relocation);
+-
+-      if (r != bfd_reloc_ok)
+-	{
+-	  const char *msg = (const char *) NULL;
+-
+-	  switch (r)
+-	    {
+-	    case bfd_reloc_overflow:
+-	      r = info->callbacks->reloc_overflow
+-		(info, (h ? &h->root : NULL), name, howto->name,
+-		 (bfd_vma) 0, input_bfd, input_section, rel->r_offset);
+-	      break;
+-
+-	    case bfd_reloc_undefined:
+-	      r = info->callbacks->undefined_symbol
+-		(info, name, input_bfd, input_section, rel->r_offset, TRUE);
+-	      break;
+-
+-	    case bfd_reloc_outofrange:
+-	      msg = _("internal error: out of range error");
+-	      break;
+-
+-	    case bfd_reloc_notsupported:
+-	      msg = _("internal error: unsupported relocation error");
+-	      break;
+-
+-	    case bfd_reloc_dangerous:
+-	      msg = _("internal error: dangerous relocation");
+-	      break;
+-
+-	    default:
+-	      msg = _("internal error: unknown error");
+-	      break;
+-	    }
+-
+-	  if (msg)
+-	    r = info->callbacks->warning
+-	      (info, msg, name, input_bfd, input_section, rel->r_offset);
+-
+-	  if (!r)
+-	    return FALSE;
+-	}
+-    }
+-
+-  return TRUE;
+-}
+-
+-/* Return the section that should be marked against GC for a given
+-   relocation.  */
+-
+-static asection *
+-openrisc_elf_gc_mark_hook (sec, info, rel, h, sym)
+-     asection *sec;
+-     struct bfd_link_info *info ATTRIBUTE_UNUSED;
+-     Elf_Internal_Rela *rel;
+-     struct elf_link_hash_entry *h;
+-     Elf_Internal_Sym *sym;
+-{
+-  if (h != NULL)
+-    {
+-      switch (ELF32_R_TYPE (rel->r_info))
+-	{
+-	case R_OPENRISC_GNU_VTINHERIT:
+-	case R_OPENRISC_GNU_VTENTRY:
+-	  break;
+-
+-	default:
+-	  switch (h->root.type)
+-	    {
+-	    case bfd_link_hash_defined:
+-	    case bfd_link_hash_defweak:
+-	      return h->root.u.def.section;
+-
+-	    case bfd_link_hash_common:
+-	      return h->root.u.c.p->section;
+-
+-	    default:
+-	      break;
+-	    }
+-	}
+-    }
+-  else
+-    return bfd_section_from_elf_index (sec->owner, sym->st_shndx);
+-
+-  return NULL;
+-}
+-
+-/* Update the got entry reference counts for the section being removed.  */
+-
+-static bfd_boolean
+-openrisc_elf_gc_sweep_hook (abfd, info, sec, relocs)
+-     bfd *abfd ATTRIBUTE_UNUSED;
+-     struct bfd_link_info *info ATTRIBUTE_UNUSED;
+-     asection *sec ATTRIBUTE_UNUSED;
+-     const Elf_Internal_Rela *relocs ATTRIBUTE_UNUSED;
+-{
+-  return TRUE;
+-}
+-
+-/* Look through the relocs for a section during the first phase.
+-   Since we don't do .gots or .plts, we just need to consider the
+-   virtual table relocs for gc.  */
+-
+-static bfd_boolean
+-openrisc_elf_check_relocs (abfd, info, sec, relocs)
+-     bfd *abfd;
+-     struct bfd_link_info *info;
+-     asection *sec;
+-     const Elf_Internal_Rela *relocs;
+-{
+-  Elf_Internal_Shdr *symtab_hdr;
+-  struct elf_link_hash_entry **sym_hashes, **sym_hashes_end;
+-  const Elf_Internal_Rela *rel;
+-  const Elf_Internal_Rela *rel_end;
+-
+-  if (info->relocatable)
+-    return TRUE;
+-
+-  symtab_hdr = &elf_tdata (abfd)->symtab_hdr;
+-  sym_hashes = elf_sym_hashes (abfd);
+-  sym_hashes_end =
+-    sym_hashes + symtab_hdr->sh_size / sizeof (Elf32_External_Sym);
+-  if (!elf_bad_symtab (abfd))
+-    sym_hashes_end -= symtab_hdr->sh_info;
+-
+-  rel_end = relocs + sec->reloc_count;
+-  for (rel = relocs; rel < rel_end; rel++)
+-    {
+-      struct elf_link_hash_entry *h;
+-      unsigned long r_symndx;
+-
+-      r_symndx = ELF32_R_SYM (rel->r_info);
+-      if (r_symndx < symtab_hdr->sh_info)
+-	h = NULL;
+-      else
+-	h = sym_hashes[r_symndx - symtab_hdr->sh_info];
+-
+-      switch (ELF32_R_TYPE (rel->r_info))
+-	{
+-	  /* This relocation describes the C++ object vtable hierarchy.
+-	     Reconstruct it for later use during GC.  */
+-	case R_OPENRISC_GNU_VTINHERIT:
+-	  if (!bfd_elf_gc_record_vtinherit (abfd, sec, h, rel->r_offset))
+-	    return FALSE;
+-	  break;
+-
+-	  /* This relocation describes which C++ vtable entries are actually
+-	     used.  Record for later use during GC.  */
+-	case R_OPENRISC_GNU_VTENTRY:
+-	  if (!bfd_elf_gc_record_vtentry (abfd, sec, h, rel->r_addend))
+-	    return FALSE;
+-	  break;
+-	}
+-    }
+-
+-  return TRUE;
+-}
+-
+-/* Set the right machine number.  */
+-
+-static bfd_boolean
+-openrisc_elf_object_p (abfd)
+-     bfd *abfd;
+-{
+-  switch (elf_elfheader (abfd)->e_flags & 0xf)
+-    {
+-    default:
+-      (void) bfd_default_set_arch_mach (abfd, bfd_arch_openrisc, 0);
+-      break;
+-    }
+-  return TRUE;
+-}
+-
+-/* Store the machine number in the flags field.  */
+-
+-static void
+-openrisc_elf_final_write_processing (abfd, linker)
+-     bfd *abfd;
+-     bfd_boolean linker ATTRIBUTE_UNUSED;
+-{
+-  unsigned long val;
+-
+-  switch (bfd_get_mach (abfd))
+-    {
+-    default:
+-      val = 0;
+-      break;
+-    }
+-
+-  elf_elfheader (abfd)->e_flags &= ~0xf;
+-  elf_elfheader (abfd)->e_flags |= val;
+-}
+-
+-
+-#define ELF_ARCH			bfd_arch_openrisc
+-#define ELF_MACHINE_CODE		EM_OPENRISC
+-#define ELF_MACHINE_ALT1		EM_OPENRISC_OLD
+-#define ELF_MAXPAGESIZE			0x1000
+-
+-#define TARGET_BIG_SYM			bfd_elf32_openrisc_vec
+-#define TARGET_BIG_NAME			"elf32-openrisc"
+-
+-#define elf_info_to_howto_rel		NULL
+-#define elf_info_to_howto		openrisc_info_to_howto_rela
+-#define elf_backend_relocate_section	openrisc_elf_relocate_section
+-#define elf_backend_gc_mark_hook	openrisc_elf_gc_mark_hook
+-#define elf_backend_gc_sweep_hook	openrisc_elf_gc_sweep_hook
+-#define elf_backend_check_relocs	openrisc_elf_check_relocs
+-
+-#define elf_backend_can_gc_sections	1
+-#define elf_backend_rela_normal		1
+-
+-#define bfd_elf32_bfd_reloc_type_lookup openrisc_reloc_type_lookup
+-
+-#define elf_backend_object_p                openrisc_elf_object_p
+-#define elf_backend_final_write_processing  openrisc_elf_final_write_processing
+-
+-#include "elf32-target.h"
+diff --unified -N -r ../binutils-2.16.1/bfd/libbfd.h binutils-2.16.1/bfd/libbfd.h
+--- ../binutils-2.16.1/bfd/libbfd.h	2005-03-02 22:23:21.000000000 +0100
++++ binutils-2.16.1/bfd/libbfd.h	2005-12-13 15:51:29.000000000 +0100
+@@ -801,6 +801,7 @@
+   "BFD_RELOC_32_PCREL_S2",
+   "BFD_RELOC_16_PCREL_S2",
+   "BFD_RELOC_23_PCREL_S2",
++  "BFD_RELOC_28_PCREL_S2",
+   "BFD_RELOC_HI22",
+   "BFD_RELOC_LO10",
+   "BFD_RELOC_GPREL16",
+diff --unified -N -r ../binutils-2.16.1/bfd/reloc.c binutils-2.16.1/bfd/reloc.c
+--- ../binutils-2.16.1/bfd/reloc.c	2005-03-02 22:23:21.000000000 +0100
++++ binutils-2.16.1/bfd/reloc.c	2005-12-13 15:51:29.000000000 +0100
+@@ -1728,13 +1728,17 @@
+   BFD_RELOC_16_PCREL_S2
+ ENUMX
+   BFD_RELOC_23_PCREL_S2
++ENUMX
++  BFD_RELOC_28_PCREL_S2
+ ENUMDOC
+   These PC-relative relocations are stored as word displacements --
+ i.e., byte displacements shifted right two bits.  The 30-bit word
+ displacement (<<32_PCREL_S2>> -- 32 bits, shifted 2) is used on the
+ SPARC.  (SPARC tools generally refer to this as <<WDISP30>>.)  The
+-signed 16-bit displacement is used on the MIPS, and the 23-bit
+-displacement is used on the Alpha.
++signed 16-bit displacement is used on the MIPS, the 23-bit
++displacement is used on the Alpha and the 26-bit displacement is used
++on openrisc.
++
+ 
+ ENUM
+   BFD_RELOC_HI22
+diff --unified -N -r ../binutils-2.16.1/gas/configure.tgt binutils-2.16.1/gas/configure.tgt
+--- ../binutils-2.16.1/gas/configure.tgt	2005-01-31 18:18:51.000000000 +0100
++++ binutils-2.16.1/gas/configure.tgt	2005-12-13 15:51:29.000000000 +0100
+@@ -316,7 +316,7 @@
+   ns32k-pc532-lites*)			fmt=aout em=nbsd532 ;;
+   ns32k-*-*n*bsd*)			fmt=aout em=nbsd532 ;;
+ 
+-  openrisc-*-*)				fmt=elf ;;
++  or32-*-*linux*)				fmt=elf ;;
+ 
+   or32-*-rtems*)			fmt=elf ;;
+   or32-*-coff)				fmt=coff ;;
+Binary files ../binutils-2.16.1/gas/doc/as.info-3 and binutils-2.16.1/gas/doc/as.info-3 differ
+diff --unified -N -r ../binutils-2.16.1/gas/testsuite/gas/openrisc/addi.d binutils-2.16.1/gas/testsuite/gas/openrisc/addi.d
+--- ../binutils-2.16.1/gas/testsuite/gas/openrisc/addi.d	2001-05-02 20:14:30.000000000 +0200
++++ binutils-2.16.1/gas/testsuite/gas/openrisc/addi.d	1970-01-01 01:00:00.000000000 +0100
+@@ -1,10 +0,0 @@
+-#as:
+-#objdump: -dr
+-#name: addi
+-
+-.*: +file format .*
+-
+-Disassembly of section .text:
+-
+-00000000 <l_addi>:
+-   0:	94 22 ff ff 	l.addi r1,r2,-1
+diff --unified -N -r ../binutils-2.16.1/gas/testsuite/gas/openrisc/addi.s binutils-2.16.1/gas/testsuite/gas/openrisc/addi.s
+--- ../binutils-2.16.1/gas/testsuite/gas/openrisc/addi.s	2001-05-02 20:14:30.000000000 +0200
++++ binutils-2.16.1/gas/testsuite/gas/openrisc/addi.s	1970-01-01 01:00:00.000000000 +0100
+@@ -1,4 +0,0 @@
+-	.text
+-	.global l_addi
+-l_addi:
+-	l.addi r1, r2, -1
+diff --unified -N -r ../binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.d binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.d
+--- ../binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.d	2001-05-02 20:14:30.000000000 +0200
++++ binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.d	1970-01-01 01:00:00.000000000 +0100
+@@ -1,201 +0,0 @@
+-#as:
+-#objdump: -dr
+-#name: allinsn
+-
+-.*: +file format .*
+-
+-Disassembly of section .text:
+-
+-00000000 <l_j>:
+-   0:	00 00 00 00 	l.j 0 <l_j>
+-			0: R_OPENRISC_INSN_ABS_26	.text
+-
+-00000004 <l_jal>:
+-   4:	04 00 00 00 	l.jal 0 <l_j>
+-			4: R_OPENRISC_INSN_ABS_26	.text
+-
+-00000008 <l_jr>:
+-   8:	14 00 00 00 	l.jr r0
+-
+-0000000c <l_jalr>:
+-   c:	14 20 00 00 	l.jalr r0
+-
+-00000010 <l_bal>:
+-  10:	0b ff ff fc 	l.bal 0 <l_j>
+-
+-00000014 <l_bnf>:
+-  14:	0f ff ff fb 	l.bnf 0 <l_j>
+-
+-00000018 <l_bf>:
+-  18:	13 ff ff fa 	l.bf 0 <l_j>
+-
+-0000001c <l_brk>:
+-  1c:	17 00 00 00 	l.brk 0x0
+-
+-00000020 <l_rfe>:
+-  20:	14 40 00 00 	l.rfe r0
+-
+-00000024 <l_sys>:
+-  24:	16 00 00 00 	l.sys 0x0
+-
+-00000028 <l_nop>:
+-  28:	15 00 00 00 	l.nop
+-
+-0000002c <l_movhi>:
+-  2c:	18 00 00 00 	l.movhi r0,0
+-
+-00000030 <l_mfsr>:
+-  30:	1c 00 00 00 	l.mfsr r0,r0
+-
+-00000034 <l_mtsr>:
+-  34:	40 00 00 00 	l.mtsr r0,r0
+-
+-00000038 <l_lw>:
+-  38:	80 00 00 00 	l.lw r0,0\(r0\)
+-
+-0000003c <l_lbz>:
+-  3c:	84 00 00 00 	l.lbz r0,0\(r0\)
+-
+-00000040 <l_lbs>:
+-  40:	88 00 00 00 	l.lbs r0,0\(r0\)
+-
+-00000044 <l_lhz>:
+-  44:	8c 00 00 00 	l.lhz r0,0\(r0\)
+-
+-00000048 <l_lhs>:
+-  48:	90 00 00 00 	l.lhs r0,0\(r0\)
+-
+-0000004c <l_sw>:
+-  4c:	d4 00 00 00 	l.sw 0\(r0\),r0
+-
+-00000050 <l_sb>:
+-  50:	d8 00 00 00 	l.sb 0\(r0\),r0
+-
+-00000054 <l_sh>:
+-  54:	dc 00 00 00 	l.sh 0\(r0\),r0
+-
+-00000058 <l_sll>:
+-  58:	e0 00 00 08 	l.sll r0,r0,r0
+-
+-0000005c <l_slli>:
+-  5c:	b4 00 00 00 	l.slli r0,r0,0x0
+-
+-00000060 <l_srl>:
+-  60:	e0 00 00 28 	l.srl r0,r0,r0
+-
+-00000064 <l_srli>:
+-  64:	b4 00 00 20 	l.srli r0,r0,0x0
+-
+-00000068 <l_sra>:
+-  68:	e0 00 00 48 	l.sra r0,r0,r0
+-
+-0000006c <l_srai>:
+-  6c:	b4 00 00 40 	l.srai r0,r0,0x0
+-
+-00000070 <l_ror>:
+-  70:	e0 00 00 88 	l.ror r0,r0,r0
+-
+-00000074 <l_rori>:
+-  74:	b4 00 00 80 	l.rori r0,r0,0x0
+-
+-00000078 <l_add>:
+-  78:	e0 00 00 00 	l.add r0,r0,r0
+-
+-0000007c <l_addi>:
+-  7c:	94 00 00 00 	l.addi r0,r0,0
+-
+-00000080 <l_sub>:
+-  80:	e0 00 00 02 	l.sub r0,r0,r0
+-
+-00000084 <l_subi>:
+-  84:	9c 00 00 00 	l.subi r0,r0,0
+-
+-00000088 <l_and>:
+-  88:	e0 00 00 03 	l.and r0,r0,r0
+-
+-0000008c <l_andi>:
+-  8c:	a0 00 00 00 	l.andi r0,r0,0
+-
+-00000090 <l_or>:
+-  90:	e0 00 00 04 	l.or r0,r0,r0
+-
+-00000094 <l_ori>:
+-  94:	a4 00 00 00 	l.ori r0,r0,0
+-
+-00000098 <l_xor>:
+-  98:	e0 00 00 05 	l.xor r0,r0,r0
+-
+-0000009c <l_xori>:
+-  9c:	a8 00 00 00 	l.xori r0,r0,0
+-
+-000000a0 <l_mul>:
+-  a0:	e0 00 00 06 	l.mul r0,r0,r0
+-
+-000000a4 <l_muli>:
+-  a4:	ac 00 00 00 	l.muli r0,r0,0
+-
+-000000a8 <l_div>:
+-  a8:	e0 00 00 09 	l.div r0,r0,r0
+-
+-000000ac <l_divu>:
+-  ac:	e0 00 00 0a 	l.divu r0,r0,r0
+-
+-000000b0 <l_sfgts>:
+-  b0:	e4 c0 00 00 	l.sfgts r0,r0
+-
+-000000b4 <l_sfgtu>:
+-  b4:	e4 40 00 00 	l.sfgtu r0,r0
+-
+-000000b8 <l_sfges>:
+-  b8:	e4 e0 00 00 	l.sfges r0,r0
+-
+-000000bc <l_sfgeu>:
+-  bc:	e4 60 00 00 	l.sfgeu r0,r0
+-
+-000000c0 <l_sflts>:
+-  c0:	e5 00 00 00 	l.sflts r0,r0
+-
+-000000c4 <l_sfltu>:
+-  c4:	e4 80 00 00 	l.sfltu r0,r0
+-
+-000000c8 <l_sfles>:
+-  c8:	e5 20 00 00 	l.sfles r0,r0
+-
+-000000cc <l_sfleu>:
+-  cc:	e4 a0 00 00 	l.sfleu r0,r0
+-
+-000000d0 <l_sfgtsi>:
+-  d0:	b8 c0 00 00 	l.sfgtsi r0,0
+-
+-000000d4 <l_sfgtui>:
+-  d4:	b8 40 00 00 	l.sfgtui r0,0x0
+-
+-000000d8 <l_sfgesi>:
+-  d8:	b8 e0 00 00 	l.sfgesi r0,0
+-
+-000000dc <l_sfgeui>:
+-  dc:	b8 60 00 00 	l.sfgeui r0,0x0
+-
+-000000e0 <l_sfltsi>:
+-  e0:	b9 00 00 00 	l.sfltsi r0,0
+-
+-000000e4 <l_sfltui>:
+-  e4:	b8 80 00 00 	l.sfltui r0,0x0
+-
+-000000e8 <l_sflesi>:
+-  e8:	b9 20 00 00 	l.sflesi r0,0
+-
+-000000ec <l_sfleui>:
+-  ec:	b8 a0 00 00 	l.sfleui r0,0x0
+-
+-000000f0 <l_sfeq>:
+-  f0:	e4 00 00 00 	l.sfeq r0,r0
+-
+-000000f4 <l_sfeqi>:
+-  f4:	b8 00 00 00 	l.sfeqi r0,0
+-
+-000000f8 <l_sfne>:
+-  f8:	e4 20 00 00 	l.sfne r0,r0
+-
+-000000fc <l_sfnei>:
+-  fc:	b8 20 00 00 	l.sfnei r0,0
+diff --unified -N -r ../binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.exp binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.exp
+--- ../binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.exp	2001-05-02 20:14:30.000000000 +0200
++++ binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.exp	1970-01-01 01:00:00.000000000 +0100
+@@ -1,8 +0,0 @@
+-# OpenRISC assembler testsuite.
+-
+-if [istarget openrisc*-*-*] {
+-    run_dump_test "allinsn"
+-    run_dump_test "addi"
+-    run_dump_test "lohi"
+-    run_dump_test "store"
+-}
+diff --unified -N -r ../binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.s binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.s
+--- ../binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.s	2001-05-02 20:14:30.000000000 +0200
++++ binutils-2.16.1/gas/testsuite/gas/openrisc/allinsn.s	1970-01-01 01:00:00.000000000 +0100
+@@ -1,260 +0,0 @@
+- .data
+-foodata: .word 42
+- .text
+-footext:
+-	.text
+-	.global l_j
+-l_j:
+-	l.j footext
+-	.text
+-	.global l_jal
+-l_jal:
+-	l.jal footext
+-	.text
+-	.global l_jr
+-l_jr:
+-	l.jr r0
+-	.text
+-	.global l_jalr
+-l_jalr:
+-	l.jalr r0
+-	.text
+-	.global l_bal
+-l_bal:
+-	l.bal footext
+-	.text
+-	.global l_bnf
+-l_bnf:
+-	l.bnf footext
+-	.text
+-	.global l_bf
+-l_bf:
+-	l.bf footext
+-	.text
+-	.global l_brk
+-l_brk:
+-	l.brk 0
+-	.text
+-	.global l_rfe
+-l_rfe:
+-	l.rfe r0
+-	.text
+-	.global l_sys
+-l_sys:
+-	l.sys 0
+-	.text
+-	.global l_nop
+-l_nop:
+-	l.nop
+-	.text
+-	.global l_movhi
+-l_movhi:
+-	l.movhi r0,0
+-	.text
+-	.global l_mfsr
+-l_mfsr:
+-	l.mfsr r0,r0
+-	.text
+-	.global l_mtsr
+-l_mtsr:
+-	l.mtsr r0,r0
+-	.text
+-	.global l_lw
+-l_lw:
+-	l.lw r0,0(r0)
+-	.text
+-	.global l_lbz
+-l_lbz:
+-	l.lbz r0,0(r0)
+-	.text
+-	.global l_lbs
+-l_lbs:
+-	l.lbs r0,0(r0)
+-	.text
+-	.global l_lhz
+-l_lhz:
+-	l.lhz r0,0(r0)
+-	.text
+-	.global l_lhs
+-l_lhs:
+-	l.lhs r0,0(r0)
+-	.text
+-	.global l_sw
+-l_sw:
+-	l.sw 0(r0),r0
+-	.text
+-	.global l_sb
+-l_sb:
+-	l.sb 0(r0),r0
+-	.text
+-	.global l_sh
+-l_sh:
+-	l.sh 0(r0),r0
+-	.text
+-	.global l_sll
+-l_sll:
+-	l.sll r0,r0,r0
+-	.text
+-	.global l_slli
+-l_slli:
+-	l.slli r0,r0,0
+-	.text
+-	.global l_srl
+-l_srl:
+-	l.srl r0,r0,r0
+-	.text
+-	.global l_srli
+-l_srli:
+-	l.srli r0,r0,0
+-	.text
+-	.global l_sra
+-l_sra:
+-	l.sra r0,r0,r0
+-	.text
+-	.global l_srai
+-l_srai:
+-	l.srai r0,r0,0
+-	.text
+-	.global l_ror
+-l_ror:
+-	l.ror r0,r0,r0
+-	.text
+-	.global l_rori
+-l_rori:
+-	l.rori r0,r0,0
+-	.text
+-	.global l_add
+-l_add:
+-	l.add r0,r0,r0
+-	.text
+-	.global l_addi
+-l_addi:
+-	l.addi r0,r0,0
+-	.text
+-	.global l_sub
+-l_sub:
+-	l.sub r0,r0,r0
+-	.text
+-	.global l_subi
+-l_subi:
+-	l.subi r0,r0,0
+-	.text
+-	.global l_and
+-l_and:
+-	l.and r0,r0,r0
+-	.text
+-	.global l_andi
+-l_andi:
+-	l.andi r0,r0,0
+-	.text
+-	.global l_or
+-l_or:
+-	l.or r0,r0,r0
+-	.text
+-	.global l_ori
+-l_ori:
+-	l.ori r0,r0,0
+-	.text
+-	.global l_xor
+-l_xor:
+-	l.xor r0,r0,r0
+-	.text
+-	.global l_xori
+-l_xori:
+-	l.xori r0,r0,0
+-	.text
+-	.global l_mul
+-l_mul:
+-	l.mul r0,r0,r0
+-	.text
+-	.global l_muli
+-l_muli:
+-	l.muli r0,r0,0
+-	.text
+-	.global l_div
+-l_div:
+-	l.div r0,r0,r0
+-	.text
+-	.global l_divu
+-l_divu:
+-	l.divu r0,r0,r0
+-	.text
+-	.global l_sfgts
+-l_sfgts:
+-	l.sfgts r0,r0
+-	.text
+-	.global l_sfgtu
+-l_sfgtu:
+-	l.sfgtu r0,r0
+-	.text
+-	.global l_sfges
+-l_sfges:
+-	l.sfges r0,r0
+-	.text
+-	.global l_sfgeu
+-l_sfgeu:
+-	l.sfgeu r0,r0
+-	.text
+-	.global l_sflts
+-l_sflts:
+-	l.sflts r0,r0
+-	.text
+-	.global l_sfltu
+-l_sfltu:
+-	l.sfltu r0,r0
+-	.text
+-	.global l_sfles
+-l_sfles:
+-	l.sfles r0,r0
+-	.text
+-	.global l_sfleu
+-l_sfleu:
+-	l.sfleu r0,r0
+-	.text
+-	.global l_sfgtsi
+-l_sfgtsi:
+-	l.sfgtsi r0,0
+-	.text
+-	.global l_sfgtui
+-l_sfgtui:
+-	l.sfgtui r0,0
+-	.text
+-	.global l_sfgesi
+-l_sfgesi:
+-	l.sfgesi r0,0
+-	.text
+-	.global l_sfgeui
+-l_sfgeui:
+-	l.sfgeui r0,0
+-	.text
+-	.global l_sfltsi
+-l_sfltsi:
+-	l.sfltsi r0,0
+-	.text
+-	.global l_sfltui
+-l_sfltui:
+-	l.sfltui r0,0
+-	.text
+-	.global l_sflesi
+-l_sflesi:
+-	l.sflesi r0,0
+-	.text
+-	.global l_sfleui
+-l_sfleui:
+-	l.sfleui r0,0
+-	.text
+-	.global l_sfeq
+-l_sfeq:
+-	l.sfeq r0,r0
+-	.text
+-	.global l_sfeqi
+-l_sfeqi:
+-	l.sfeqi r0,0
+-	.text
+-	.global l_sfne
+-l_sfne:
+-	l.sfne r0,r0
+-	.text
+-	.global l_sfnei
+-l_sfnei:
+-	l.sfnei r0,0
+diff --unified -N -r ../binutils-2.16.1/gas/testsuite/gas/openrisc/lohi.d binutils-2.16.1/gas/testsuite/gas/openrisc/lohi.d
+--- ../binutils-2.16.1/gas/testsuite/gas/openrisc/lohi.d	2001-05-02 20:14:30.000000000 +0200
++++ binutils-2.16.1/gas/testsuite/gas/openrisc/lohi.d	1970-01-01 01:00:00.000000000 +0100
+@@ -1,13 +0,0 @@
+-#as:
+-#objdump: -dr
+-#name: lohi
+-
+-.*: +file format .*
+-
+-Disassembly of section .text:
+-
+-00000000 <l_lo>:
+-   0:	94 21 be ef 	l.addi r1,r1,-16657
+-
+-00000004 <l_hi>:
+-   4:	18 20 de ad 	l.movhi r1,-8531
+diff --unified -N -r ../binutils-2.16.1/gas/testsuite/gas/openrisc/lohi.s binutils-2.16.1/gas/testsuite/gas/openrisc/lohi.s
+--- ../binutils-2.16.1/gas/testsuite/gas/openrisc/lohi.s	2001-05-02 20:14:30.000000000 +0200
++++ binutils-2.16.1/gas/testsuite/gas/openrisc/lohi.s	1970-01-01 01:00:00.000000000 +0100
+@@ -1,7 +0,0 @@
+-	.text
+-	.global l_lo
+-l_lo:
+-	l.addi	r1, r1, lo(0xdeadbeef)
+-	.global	l_hi
+-l_hi:	
+-	l.movhi	r1, hi(0xdeadbeef)
+diff --unified -N -r ../binutils-2.16.1/gas/testsuite/gas/openrisc/store.d binutils-2.16.1/gas/testsuite/gas/openrisc/store.d
+--- ../binutils-2.16.1/gas/testsuite/gas/openrisc/store.d	2001-05-02 20:14:30.000000000 +0200
++++ binutils-2.16.1/gas/testsuite/gas/openrisc/store.d	1970-01-01 01:00:00.000000000 +0100
+@@ -1,13 +0,0 @@
+-#as:
+-#objdump: -dr
+-#name: store
+-
+-.*: +file format .*
+-
+-Disassembly of section .text:
+-
+-00000000 <l_sw>:
+-   0:	d7 e1 0f fc 	l.sw -4\(r1\),r1
+-
+-00000004 <l_lw>:
+-   4:	80 21 ff 9c 	l.lw r1,-100\(r1\)
+diff --unified -N -r ../binutils-2.16.1/gas/testsuite/gas/openrisc/store.s binutils-2.16.1/gas/testsuite/gas/openrisc/store.s
+--- ../binutils-2.16.1/gas/testsuite/gas/openrisc/store.s	2001-05-02 20:14:30.000000000 +0200
++++ binutils-2.16.1/gas/testsuite/gas/openrisc/store.s	1970-01-01 01:00:00.000000000 +0100
+@@ -1,7 +0,0 @@
+-	.text
+-	.global l_sw
+-l_sw:
+-	l.sw	-4(r1), r1
+-	.global	l_lw
+-l_lw:	
+-	l.lw	r1, -100(r1)
+diff --unified -N -r ../binutils-2.16.1/include/elf/openrisc.h binutils-2.16.1/include/elf/openrisc.h
+--- ../binutils-2.16.1/include/elf/openrisc.h	2001-04-24 17:08:16.000000000 +0200
++++ binutils-2.16.1/include/elf/openrisc.h	1970-01-01 01:00:00.000000000 +0100
+@@ -1,39 +0,0 @@
+-/* OpenRISC ELF support for BFD.
+-   Copyright 2001 Free Software Foundation, Inc.
+-
+-This file is part of BFD, the Binary File Descriptor library.
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License as published by
+-the Free Software Foundation; either version 2 of the License, or
+-(at your option) any later version.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License
+-along with this program; if not, write to the Free Software Foundation, Inc.,
+-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
+-
+-#ifndef _ELF_OPENRISC_H
+-#define _ELF_OPENRISC_H
+-
+-#include "elf/reloc-macros.h"
+-
+-/* Relocations.  */
+-START_RELOC_NUMBERS (elf_openrisc_reloc_type)
+-  RELOC_NUMBER (R_OPENRISC_NONE, 0)
+-  RELOC_NUMBER (R_OPENRISC_INSN_REL_26, 1)
+-  RELOC_NUMBER (R_OPENRISC_INSN_ABS_26, 2)
+-  RELOC_NUMBER (R_OPENRISC_LO_16_IN_INSN, 3)
+-  RELOC_NUMBER (R_OPENRISC_HI_16_IN_INSN, 4)
+-  RELOC_NUMBER (R_OPENRISC_8, 5)
+-  RELOC_NUMBER (R_OPENRISC_16, 6)
+-  RELOC_NUMBER (R_OPENRISC_32, 7)
+-  RELOC_NUMBER (R_OPENRISC_GNU_VTINHERIT, 8)
+-  RELOC_NUMBER (R_OPENRISC_GNU_VTENTRY, 9)
+-END_RELOC_NUMBERS (R_OPENRISC_max)
+-
+-#endif /* _ELF_OPENRISC_H */
+diff --unified -N -r ../binutils-2.16.1/ld/configure.tgt binutils-2.16.1/ld/configure.tgt
+--- ../binutils-2.16.1/ld/configure.tgt	2005-02-08 20:54:27.000000000 +0100
++++ binutils-2.16.1/ld/configure.tgt	2005-12-13 15:51:29.000000000 +0100
+@@ -478,7 +478,7 @@
+ z8k-*-coff) 		targ_emul=z8002; targ_extra_emuls=z8001 ;;
+ ns32k-pc532-mach* | ns32k-pc532-ux*)	targ_emul=pc532macha ;;
+ ns32k-*-netbsd* | ns32k-pc532-lites*) targ_emul=ns32knbsd ;;
+-openrisc-*-*)		targ_emul=elf32openrisc ;;
++or32-*-*linux*)		targ_emul=or32elf ;;
+ or32-*-coff)		targ_emul=or32 ;;
+ or32-*-elf)		targ_emul=or32elf ;;
+ or32-*-rtems*)          targ_emul=or32elf ;;
+diff --unified -N -r ../binutils-2.16.1/ld/emulparams/elf32openrisc.sh binutils-2.16.1/ld/emulparams/elf32openrisc.sh
+--- ../binutils-2.16.1/ld/emulparams/elf32openrisc.sh	2001-05-02 20:14:30.000000000 +0200
++++ binutils-2.16.1/ld/emulparams/elf32openrisc.sh	1970-01-01 01:00:00.000000000 +0100
+@@ -1,10 +0,0 @@
+-MACHINE=
+-SCRIPT_NAME=elf
+-OUTPUT_FORMAT="elf32-openrisc"
+-TEXT_START_ADDR=0x10000
+-ARCH=openrisc
+-MAXPAGESIZE=0x1000
+-ENTRY=_start
+-EMBEDDED=yes
+-NOP=0x15000000
+-
+diff --unified -N -r ../binutils-2.16.1/opcodes/configure binutils-2.16.1/opcodes/configure
+--- ../binutils-2.16.1/opcodes/configure	2005-01-31 21:30:37.000000000 +0100
++++ binutils-2.16.1/opcodes/configure	2005-12-13 15:51:29.000000000 +0100
+@@ -8629,7 +8629,6 @@
+ 	bfd_mn10300_arch)	ta="$ta m10300-dis.lo m10300-opc.lo" ;;
+ 	bfd_msp430_arch)	ta="$ta msp430-dis.lo" ;;
+ 	bfd_ns32k_arch)		ta="$ta ns32k-dis.lo" ;;
+-	bfd_openrisc_arch)	ta="$ta openrisc-asm.lo openrisc-desc.lo openrisc-dis.lo openrisc-ibld.lo openrisc-opc.lo" using_cgen=yes ;;
+ 	bfd_or32_arch)		ta="$ta or32-dis.lo or32-opc.lo" using_cgen=yes ;;
+ 	bfd_pdp11_arch)		ta="$ta pdp11-dis.lo pdp11-opc.lo" ;;
+ 	bfd_pj_arch)	        ta="$ta pj-dis.lo pj-opc.lo" ;;
+diff --unified -N -r ../binutils-2.16.1/opcodes/configure.in binutils-2.16.1/opcodes/configure.in
+--- ../binutils-2.16.1/opcodes/configure.in	2004-11-08 14:17:37.000000000 +0100
++++ binutils-2.16.1/opcodes/configure.in	2005-12-13 15:51:29.000000000 +0100
+@@ -206,7 +206,6 @@
+ 	bfd_mn10300_arch)	ta="$ta m10300-dis.lo m10300-opc.lo" ;;
+ 	bfd_msp430_arch)	ta="$ta msp430-dis.lo" ;;
+ 	bfd_ns32k_arch)		ta="$ta ns32k-dis.lo" ;;
+-	bfd_openrisc_arch)	ta="$ta openrisc-asm.lo openrisc-desc.lo openrisc-dis.lo openrisc-ibld.lo openrisc-opc.lo" using_cgen=yes ;;
+ 	bfd_or32_arch)		ta="$ta or32-dis.lo or32-opc.lo" using_cgen=yes ;;
+ 	bfd_pdp11_arch)		ta="$ta pdp11-dis.lo pdp11-opc.lo" ;;
+ 	bfd_pj_arch)	        ta="$ta pj-dis.lo pj-opc.lo" ;;
+diff --unified -N -r ../binutils-2.16.1/opcodes/openrisc-asm.c binutils-2.16.1/opcodes/openrisc-asm.c
+--- ../binutils-2.16.1/opcodes/openrisc-asm.c	2005-02-23 17:04:39.000000000 +0100
++++ binutils-2.16.1/opcodes/openrisc-asm.c	1970-01-01 01:00:00.000000000 +0100
+@@ -1,675 +0,0 @@
+-/* Assembler interface for targets using CGEN. -*- C -*-
+-   CGEN: Cpu tools GENerator
+-
+-THIS FILE IS MACHINE GENERATED WITH CGEN.
+-- the resultant file is machine generated, cgen-asm.in isn't
+-
+-Copyright 1996, 1997, 1998, 1999, 2000, 2001 Free Software Foundation, Inc.
+-
+-This file is part of the GNU Binutils and GDB, the GNU debugger.
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License as published by
+-the Free Software Foundation; either version 2, or (at your option)
+-any later version.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License
+-along with this program; if not, write to the Free Software Foundation, Inc.,
+-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
+-
+-/* ??? Eventually more and more of this stuff can go to cpu-independent files.
+-   Keep that in mind.  */
+-
+-#include "sysdep.h"
+-#include <stdio.h>
+-#include "ansidecl.h"
+-#include "bfd.h"
+-#include "symcat.h"
+-#include "openrisc-desc.h"
+-#include "openrisc-opc.h"
+-#include "opintl.h"
+-#include "xregex.h"
+-#include "libiberty.h"
+-#include "safe-ctype.h"
+-
+-#undef  min
+-#define min(a,b) ((a) < (b) ? (a) : (b))
+-#undef  max
+-#define max(a,b) ((a) > (b) ? (a) : (b))
+-
+-static const char * parse_insn_normal
+-  (CGEN_CPU_DESC, const CGEN_INSN *, const char **, CGEN_FIELDS *);
+-
+-/* -- assembler routines inserted here.  */
+-
+-/* -- asm.c */
+-
+-#define CGEN_VERBOSE_ASSEMBLER_ERRORS
+-
+-static const char * parse_hi16
+-  PARAMS ((CGEN_CPU_DESC, const char **, int, long *));
+-static const char * parse_lo16
+-  PARAMS ((CGEN_CPU_DESC, const char **, int, long *));
+-
+-long
+-openrisc_sign_extend_16bit (value)
+-     long value;
+-{
+-  return ((value & 0xffff) ^ 0x8000) - 0x8000;
+-}
+-
+-/* Handle hi().  */
+-
+-static const char *
+-parse_hi16 (cd, strp, opindex, valuep)
+-     CGEN_CPU_DESC cd;
+-     const char **strp;
+-     int opindex;
+-     long *valuep;
+-{
+-  const char *errmsg;
+-  enum cgen_parse_operand_result result_type;
+-  unsigned long ret;
+-
+-  if (**strp == '#')
+-    ++*strp;
+-
+-  if (strncasecmp (*strp, "hi(", 3) == 0)
+-    {
+-      bfd_vma value;
+-
+-      *strp += 3;
+-      errmsg = cgen_parse_address (cd, strp, opindex, BFD_RELOC_HI16,
+-                                     &result_type, &value);
+-      if (**strp != ')')
+-        return _("missing `)'");
+-
+-      ++*strp;
+-      if (errmsg == NULL
+-          && result_type == CGEN_PARSE_OPERAND_RESULT_NUMBER)
+-        value >>= 16;
+-      ret = value;
+-    }
+-  else
+-    {
+-      if (**strp == '-')
+-	{
+-	  long value;
+-
+-	  errmsg = cgen_parse_signed_integer (cd, strp, opindex, &value);
+-	  ret = value;
+-	}
+-      else
+-	{
+-	  unsigned long value;
+-
+-	  errmsg = cgen_parse_unsigned_integer (cd, strp, opindex, &value);
+-	  ret = value;
+-	}
+-    }
+-
+-  *valuep = ((ret & 0xffff) ^ 0x8000) - 0x8000;
+-  return errmsg;
+-}
+-
+-/* Handle lo().  */
+-
+-static const char *
+-parse_lo16 (cd, strp, opindex, valuep)
+-     CGEN_CPU_DESC cd;
+-     const char **strp;
+-     int opindex;
+-     long *valuep;
+-{
+-  const char *errmsg;
+-  enum cgen_parse_operand_result result_type;
+-  unsigned long ret;
+-
+-  if (**strp == '#')
+-    ++*strp;
+-
+-  if (strncasecmp (*strp, "lo(", 3) == 0)
+-    {
+-      bfd_vma value;
+-
+-      *strp += 3;
+-      errmsg = cgen_parse_address (cd, strp, opindex, BFD_RELOC_LO16,
+-				   &result_type, &value);
+-      if (**strp != ')')
+-        return _("missing `)'");
+-
+-      ++*strp;
+-      ret = value;
+-    }
+-  else
+-    {
+-      if (**strp == '-')
+-	{
+-	  long value;
+-
+-	  errmsg = cgen_parse_signed_integer (cd, strp, opindex, &value);
+-	  ret = value;
+-	}
+-      else
+-	{
+-	  unsigned long value;
+-
+-	  errmsg = cgen_parse_unsigned_integer (cd, strp, opindex, &value);
+-	  ret = value;
+-	}
+-    }
+-
+-  *valuep = ((ret & 0xffff) ^ 0x8000) - 0x8000;
+-  return errmsg;
+-}
+-
+-/* -- */
+-
+-const char * openrisc_cgen_parse_operand
+-  PARAMS ((CGEN_CPU_DESC, int, const char **, CGEN_FIELDS *));
+-
+-/* Main entry point for operand parsing.
+-
+-   This function is basically just a big switch statement.  Earlier versions
+-   used tables to look up the function to use, but
+-   - if the table contains both assembler and disassembler functions then
+-     the disassembler contains much of the assembler and vice-versa,
+-   - there's a lot of inlining possibilities as things grow,
+-   - using a switch statement avoids the function call overhead.
+-
+-   This function could be moved into `parse_insn_normal', but keeping it
+-   separate makes clear the interface between `parse_insn_normal' and each of
+-   the handlers.  */
+-
+-const char *
+-openrisc_cgen_parse_operand (cd, opindex, strp, fields)
+-     CGEN_CPU_DESC cd;
+-     int opindex;
+-     const char ** strp;
+-     CGEN_FIELDS * fields;
+-{
+-  const char * errmsg = NULL;
+-  /* Used by scalar operands that still need to be parsed.  */
+-  long junk ATTRIBUTE_UNUSED;
+-
+-  switch (opindex)
+-    {
+-    case OPENRISC_OPERAND_ABS_26 :
+-      {
+-        bfd_vma value;
+-        errmsg = cgen_parse_address (cd, strp, OPENRISC_OPERAND_ABS_26, 0, NULL,  & value);
+-        fields->f_abs26 = value;
+-      }
+-      break;
+-    case OPENRISC_OPERAND_DISP_26 :
+-      {
+-        bfd_vma value;
+-        errmsg = cgen_parse_address (cd, strp, OPENRISC_OPERAND_DISP_26, 0, NULL,  & value);
+-        fields->f_disp26 = value;
+-      }
+-      break;
+-    case OPENRISC_OPERAND_HI16 :
+-      errmsg = parse_hi16 (cd, strp, OPENRISC_OPERAND_HI16, (long *) (& fields->f_simm16));
+-      break;
+-    case OPENRISC_OPERAND_LO16 :
+-      errmsg = parse_lo16 (cd, strp, OPENRISC_OPERAND_LO16, (long *) (& fields->f_lo16));
+-      break;
+-    case OPENRISC_OPERAND_OP_F_23 :
+-      errmsg = cgen_parse_unsigned_integer (cd, strp, OPENRISC_OPERAND_OP_F_23, (unsigned long *) (& fields->f_op4));
+-      break;
+-    case OPENRISC_OPERAND_OP_F_3 :
+-      errmsg = cgen_parse_unsigned_integer (cd, strp, OPENRISC_OPERAND_OP_F_3, (unsigned long *) (& fields->f_op5));
+-      break;
+-    case OPENRISC_OPERAND_RA :
+-      errmsg = cgen_parse_keyword (cd, strp, & openrisc_cgen_opval_h_gr, & fields->f_r2);
+-      break;
+-    case OPENRISC_OPERAND_RB :
+-      errmsg = cgen_parse_keyword (cd, strp, & openrisc_cgen_opval_h_gr, & fields->f_r3);
+-      break;
+-    case OPENRISC_OPERAND_RD :
+-      errmsg = cgen_parse_keyword (cd, strp, & openrisc_cgen_opval_h_gr, & fields->f_r1);
+-      break;
+-    case OPENRISC_OPERAND_SIMM_16 :
+-      errmsg = cgen_parse_signed_integer (cd, strp, OPENRISC_OPERAND_SIMM_16, (long *) (& fields->f_simm16));
+-      break;
+-    case OPENRISC_OPERAND_UI16NC :
+-      errmsg = parse_lo16 (cd, strp, OPENRISC_OPERAND_UI16NC, (long *) (& fields->f_i16nc));
+-      break;
+-    case OPENRISC_OPERAND_UIMM_16 :
+-      errmsg = cgen_parse_unsigned_integer (cd, strp, OPENRISC_OPERAND_UIMM_16, (unsigned long *) (& fields->f_uimm16));
+-      break;
+-    case OPENRISC_OPERAND_UIMM_5 :
+-      errmsg = cgen_parse_unsigned_integer (cd, strp, OPENRISC_OPERAND_UIMM_5, (unsigned long *) (& fields->f_uimm5));
+-      break;
+-
+-    default :
+-      /* xgettext:c-format */
+-      fprintf (stderr, _("Unrecognized field %d while parsing.\n"), opindex);
+-      abort ();
+-  }
+-
+-  return errmsg;
+-}
+-
+-cgen_parse_fn * const openrisc_cgen_parse_handlers[] = 
+-{
+-  parse_insn_normal,
+-};
+-
+-void
+-openrisc_cgen_init_asm (cd)
+-     CGEN_CPU_DESC cd;
+-{
+-  openrisc_cgen_init_opcode_table (cd);
+-  openrisc_cgen_init_ibld_table (cd);
+-  cd->parse_handlers = & openrisc_cgen_parse_handlers[0];
+-  cd->parse_operand = openrisc_cgen_parse_operand;
+-}
+-
+-
+-
+-/* Regex construction routine.
+-
+-   This translates an opcode syntax string into a regex string,
+-   by replacing any non-character syntax element (such as an
+-   opcode) with the pattern '.*'
+-
+-   It then compiles the regex and stores it in the opcode, for
+-   later use by openrisc_cgen_assemble_insn
+-
+-   Returns NULL for success, an error message for failure.  */
+-
+-char * 
+-openrisc_cgen_build_insn_regex (CGEN_INSN *insn)
+-{  
+-  CGEN_OPCODE *opc = (CGEN_OPCODE *) CGEN_INSN_OPCODE (insn);
+-  const char *mnem = CGEN_INSN_MNEMONIC (insn);
+-  char rxbuf[CGEN_MAX_RX_ELEMENTS];
+-  char *rx = rxbuf;
+-  const CGEN_SYNTAX_CHAR_TYPE *syn;
+-  int reg_err;
+-
+-  syn = CGEN_SYNTAX_STRING (CGEN_OPCODE_SYNTAX (opc));
+-
+-  /* Mnemonics come first in the syntax string.  */
+-  if (! CGEN_SYNTAX_MNEMONIC_P (* syn))
+-    return _("missing mnemonic in syntax string");
+-  ++syn;
+-
+-  /* Generate a case sensitive regular expression that emulates case
+-     insensitive matching in the "C" locale.  We cannot generate a case
+-     insensitive regular expression because in Turkish locales, 'i' and 'I'
+-     are not equal modulo case conversion.  */
+-
+-  /* Copy the literal mnemonic out of the insn.  */
+-  for (; *mnem; mnem++)
+-    {
+-      char c = *mnem;
+-
+-      if (ISALPHA (c))
+-	{
+-	  *rx++ = '[';
+-	  *rx++ = TOLOWER (c);
+-	  *rx++ = TOUPPER (c);
+-	  *rx++ = ']';
+-	}
+-      else
+-	*rx++ = c;
+-    }
+-
+-  /* Copy any remaining literals from the syntax string into the rx.  */
+-  for(; * syn != 0 && rx <= rxbuf + (CGEN_MAX_RX_ELEMENTS - 7 - 4); ++syn)
+-    {
+-      if (CGEN_SYNTAX_CHAR_P (* syn)) 
+-	{
+-	  char c = CGEN_SYNTAX_CHAR (* syn);
+-
+-	  switch (c) 
+-	    {
+-	      /* Escape any regex metacharacters in the syntax.  */
+-	    case '.': case '[': case '\\': 
+-	    case '*': case '^': case '$': 
+-
+-#ifdef CGEN_ESCAPE_EXTENDED_REGEX
+-	    case '?': case '{': case '}': 
+-	    case '(': case ')': case '*':
+-	    case '|': case '+': case ']':
+-#endif
+-	      *rx++ = '\\';
+-	      *rx++ = c;
+-	      break;
+-
+-	    default:
+-	      if (ISALPHA (c))
+-		{
+-		  *rx++ = '[';
+-		  *rx++ = TOLOWER (c);
+-		  *rx++ = TOUPPER (c);
+-		  *rx++ = ']';
+-		}
+-	      else
+-		*rx++ = c;
+-	      break;
+-	    }
+-	}
+-      else
+-	{
+-	  /* Replace non-syntax fields with globs.  */
+-	  *rx++ = '.';
+-	  *rx++ = '*';
+-	}
+-    }
+-
+-  /* Trailing whitespace ok.  */
+-  * rx++ = '['; 
+-  * rx++ = ' '; 
+-  * rx++ = '\t'; 
+-  * rx++ = ']'; 
+-  * rx++ = '*'; 
+-
+-  /* But anchor it after that.  */
+-  * rx++ = '$'; 
+-  * rx = '\0';
+-
+-  CGEN_INSN_RX (insn) = xmalloc (sizeof (regex_t));
+-  reg_err = regcomp ((regex_t *) CGEN_INSN_RX (insn), rxbuf, REG_NOSUB);
+-
+-  if (reg_err == 0) 
+-    return NULL;
+-  else
+-    {
+-      static char msg[80];
+-
+-      regerror (reg_err, (regex_t *) CGEN_INSN_RX (insn), msg, 80);
+-      regfree ((regex_t *) CGEN_INSN_RX (insn));
+-      free (CGEN_INSN_RX (insn));
+-      (CGEN_INSN_RX (insn)) = NULL;
+-      return msg;
+-    }
+-}
+-
+-
+-/* Default insn parser.
+-
+-   The syntax string is scanned and operands are parsed and stored in FIELDS.
+-   Relocs are queued as we go via other callbacks.
+-
+-   ??? Note that this is currently an all-or-nothing parser.  If we fail to
+-   parse the instruction, we return 0 and the caller will start over from
+-   the beginning.  Backtracking will be necessary in parsing subexpressions,
+-   but that can be handled there.  Not handling backtracking here may get
+-   expensive in the case of the m68k.  Deal with later.
+-
+-   Returns NULL for success, an error message for failure.  */
+-
+-static const char *
+-parse_insn_normal (CGEN_CPU_DESC cd,
+-		   const CGEN_INSN *insn,
+-		   const char **strp,
+-		   CGEN_FIELDS *fields)
+-{
+-  /* ??? Runtime added insns not handled yet.  */
+-  const CGEN_SYNTAX *syntax = CGEN_INSN_SYNTAX (insn);
+-  const char *str = *strp;
+-  const char *errmsg;
+-  const char *p;
+-  const CGEN_SYNTAX_CHAR_TYPE * syn;
+-#ifdef CGEN_MNEMONIC_OPERANDS
+-  /* FIXME: wip */
+-  int past_opcode_p;
+-#endif
+-
+-  /* For now we assume the mnemonic is first (there are no leading operands).
+-     We can parse it without needing to set up operand parsing.
+-     GAS's input scrubber will ensure mnemonics are lowercase, but we may
+-     not be called from GAS.  */
+-  p = CGEN_INSN_MNEMONIC (insn);
+-  while (*p && TOLOWER (*p) == TOLOWER (*str))
+-    ++p, ++str;
+-
+-  if (* p)
+-    return _("unrecognized instruction");
+-
+-#ifndef CGEN_MNEMONIC_OPERANDS
+-  if (* str && ! ISSPACE (* str))
+-    return _("unrecognized instruction");
+-#endif
+-
+-  CGEN_INIT_PARSE (cd);
+-  cgen_init_parse_operand (cd);
+-#ifdef CGEN_MNEMONIC_OPERANDS
+-  past_opcode_p = 0;
+-#endif
+-
+-  /* We don't check for (*str != '\0') here because we want to parse
+-     any trailing fake arguments in the syntax string.  */
+-  syn = CGEN_SYNTAX_STRING (syntax);
+-
+-  /* Mnemonics come first for now, ensure valid string.  */
+-  if (! CGEN_SYNTAX_MNEMONIC_P (* syn))
+-    abort ();
+-
+-  ++syn;
+-
+-  while (* syn != 0)
+-    {
+-      /* Non operand chars must match exactly.  */
+-      if (CGEN_SYNTAX_CHAR_P (* syn))
+-	{
+-	  /* FIXME: While we allow for non-GAS callers above, we assume the
+-	     first char after the mnemonic part is a space.  */
+-	  /* FIXME: We also take inappropriate advantage of the fact that
+-	     GAS's input scrubber will remove extraneous blanks.  */
+-	  if (TOLOWER (*str) == TOLOWER (CGEN_SYNTAX_CHAR (* syn)))
+-	    {
+-#ifdef CGEN_MNEMONIC_OPERANDS
+-	      if (CGEN_SYNTAX_CHAR(* syn) == ' ')
+-		past_opcode_p = 1;
+-#endif
+-	      ++ syn;
+-	      ++ str;
+-	    }
+-	  else if (*str)
+-	    {
+-	      /* Syntax char didn't match.  Can't be this insn.  */
+-	      static char msg [80];
+-
+-	      /* xgettext:c-format */
+-	      sprintf (msg, _("syntax error (expected char `%c', found `%c')"),
+-		       CGEN_SYNTAX_CHAR(*syn), *str);
+-	      return msg;
+-	    }
+-	  else
+-	    {
+-	      /* Ran out of input.  */
+-	      static char msg [80];
+-
+-	      /* xgettext:c-format */
+-	      sprintf (msg, _("syntax error (expected char `%c', found end of instruction)"),
+-		       CGEN_SYNTAX_CHAR(*syn));
+-	      return msg;
+-	    }
+-	  continue;
+-	}
+-
+-      /* We have an operand of some sort.  */
+-      errmsg = cd->parse_operand (cd, CGEN_SYNTAX_FIELD (*syn),
+-					  &str, fields);
+-      if (errmsg)
+-	return errmsg;
+-
+-      /* Done with this operand, continue with next one.  */
+-      ++ syn;
+-    }
+-
+-  /* If we're at the end of the syntax string, we're done.  */
+-  if (* syn == 0)
+-    {
+-      /* FIXME: For the moment we assume a valid `str' can only contain
+-	 blanks now.  IE: We needn't try again with a longer version of
+-	 the insn and it is assumed that longer versions of insns appear
+-	 before shorter ones (eg: lsr r2,r3,1 vs lsr r2,r3).  */
+-      while (ISSPACE (* str))
+-	++ str;
+-
+-      if (* str != '\0')
+-	return _("junk at end of line"); /* FIXME: would like to include `str' */
+-
+-      return NULL;
+-    }
+-
+-  /* We couldn't parse it.  */
+-  return _("unrecognized instruction");
+-}
+-
+-/* Main entry point.
+-   This routine is called for each instruction to be assembled.
+-   STR points to the insn to be assembled.
+-   We assume all necessary tables have been initialized.
+-   The assembled instruction, less any fixups, is stored in BUF.
+-   Remember that if CGEN_INT_INSN_P then BUF is an int and thus the value
+-   still needs to be converted to target byte order, otherwise BUF is an array
+-   of bytes in target byte order.
+-   The result is a pointer to the insn's entry in the opcode table,
+-   or NULL if an error occured (an error message will have already been
+-   printed).
+-
+-   Note that when processing (non-alias) macro-insns,
+-   this function recurses.
+-
+-   ??? It's possible to make this cpu-independent.
+-   One would have to deal with a few minor things.
+-   At this point in time doing so would be more of a curiosity than useful
+-   [for example this file isn't _that_ big], but keeping the possibility in
+-   mind helps keep the design clean.  */
+-
+-const CGEN_INSN *
+-openrisc_cgen_assemble_insn (CGEN_CPU_DESC cd,
+-			   const char *str,
+-			   CGEN_FIELDS *fields,
+-			   CGEN_INSN_BYTES_PTR buf,
+-			   char **errmsg)
+-{
+-  const char *start;
+-  CGEN_INSN_LIST *ilist;
+-  const char *parse_errmsg = NULL;
+-  const char *insert_errmsg = NULL;
+-  int recognized_mnemonic = 0;
+-
+-  /* Skip leading white space.  */
+-  while (ISSPACE (* str))
+-    ++ str;
+-
+-  /* The instructions are stored in hashed lists.
+-     Get the first in the list.  */
+-  ilist = CGEN_ASM_LOOKUP_INSN (cd, str);
+-
+-  /* Keep looking until we find a match.  */
+-  start = str;
+-  for ( ; ilist != NULL ; ilist = CGEN_ASM_NEXT_INSN (ilist))
+-    {
+-      const CGEN_INSN *insn = ilist->insn;
+-      recognized_mnemonic = 1;
+-
+-#ifdef CGEN_VALIDATE_INSN_SUPPORTED 
+-      /* Not usually needed as unsupported opcodes
+-	 shouldn't be in the hash lists.  */
+-      /* Is this insn supported by the selected cpu?  */
+-      if (! openrisc_cgen_insn_supported (cd, insn))
+-	continue;
+-#endif
+-      /* If the RELAXED attribute is set, this is an insn that shouldn't be
+-	 chosen immediately.  Instead, it is used during assembler/linker
+-	 relaxation if possible.  */
+-      if (CGEN_INSN_ATTR_VALUE (insn, CGEN_INSN_RELAXED) != 0)
+-	continue;
+-
+-      str = start;
+-
+-      /* Skip this insn if str doesn't look right lexically.  */
+-      if (CGEN_INSN_RX (insn) != NULL &&
+-	  regexec ((regex_t *) CGEN_INSN_RX (insn), str, 0, NULL, 0) == REG_NOMATCH)
+-	continue;
+-
+-      /* Allow parse/insert handlers to obtain length of insn.  */
+-      CGEN_FIELDS_BITSIZE (fields) = CGEN_INSN_BITSIZE (insn);
+-
+-      parse_errmsg = CGEN_PARSE_FN (cd, insn) (cd, insn, & str, fields);
+-      if (parse_errmsg != NULL)
+-	continue;
+-
+-      /* ??? 0 is passed for `pc'.  */
+-      insert_errmsg = CGEN_INSERT_FN (cd, insn) (cd, insn, fields, buf,
+-						 (bfd_vma) 0);
+-      if (insert_errmsg != NULL)
+-        continue;
+-
+-      /* It is up to the caller to actually output the insn and any
+-         queued relocs.  */
+-      return insn;
+-    }
+-
+-  {
+-    static char errbuf[150];
+-#ifdef CGEN_VERBOSE_ASSEMBLER_ERRORS
+-    const char *tmp_errmsg;
+-
+-    /* If requesting verbose error messages, use insert_errmsg.
+-       Failing that, use parse_errmsg.  */
+-    tmp_errmsg = (insert_errmsg ? insert_errmsg :
+-		  parse_errmsg ? parse_errmsg :
+-		  recognized_mnemonic ?
+-		  _("unrecognized form of instruction") :
+-		  _("unrecognized instruction"));
+-
+-    if (strlen (start) > 50)
+-      /* xgettext:c-format */
+-      sprintf (errbuf, "%s `%.50s...'", tmp_errmsg, start);
+-    else 
+-      /* xgettext:c-format */
+-      sprintf (errbuf, "%s `%.50s'", tmp_errmsg, start);
+-#else
+-    if (strlen (start) > 50)
+-      /* xgettext:c-format */
+-      sprintf (errbuf, _("bad instruction `%.50s...'"), start);
+-    else 
+-      /* xgettext:c-format */
+-      sprintf (errbuf, _("bad instruction `%.50s'"), start);
+-#endif
+-      
+-    *errmsg = errbuf;
+-    return NULL;
+-  }
+-}
+-
+-#if 0 /* This calls back to GAS which we can't do without care.  */
+-
+-/* Record each member of OPVALS in the assembler's symbol table.
+-   This lets GAS parse registers for us.
+-   ??? Interesting idea but not currently used.  */
+-
+-/* Record each member of OPVALS in the assembler's symbol table.
+-   FIXME: Not currently used.  */
+-
+-void
+-openrisc_cgen_asm_hash_keywords (CGEN_CPU_DESC cd, CGEN_KEYWORD *opvals)
+-{
+-  CGEN_KEYWORD_SEARCH search = cgen_keyword_search_init (opvals, NULL);
+-  const CGEN_KEYWORD_ENTRY * ke;
+-
+-  while ((ke = cgen_keyword_search_next (& search)) != NULL)
+-    {
+-#if 0 /* Unnecessary, should be done in the search routine.  */
+-      if (! openrisc_cgen_opval_supported (ke))
+-	continue;
+-#endif
+-      cgen_asm_record_register (cd, ke->name, ke->value);
+-    }
+-}
+-
+-#endif /* 0 */
+diff --unified -N -r ../binutils-2.16.1/opcodes/openrisc-desc.c binutils-2.16.1/opcodes/openrisc-desc.c
+--- ../binutils-2.16.1/opcodes/openrisc-desc.c	2005-02-22 01:33:20.000000000 +0100
++++ binutils-2.16.1/opcodes/openrisc-desc.c	1970-01-01 01:00:00.000000000 +0100
+@@ -1,1064 +0,0 @@
+-/* CPU data for openrisc.
+-
+-THIS FILE IS MACHINE GENERATED WITH CGEN.
+-
+-Copyright 1996-2005 Free Software Foundation, Inc.
+-
+-This file is part of the GNU Binutils and/or GDB, the GNU debugger.
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License as published by
+-the Free Software Foundation; either version 2, or (at your option)
+-any later version.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License along
+-with this program; if not, write to the Free Software Foundation, Inc.,
+-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+-
+-*/
+-
+-#include "sysdep.h"
+-#include <stdio.h>
+-#include <stdarg.h>
+-#include "ansidecl.h"
+-#include "bfd.h"
+-#include "symcat.h"
+-#include "openrisc-desc.h"
+-#include "openrisc-opc.h"
+-#include "opintl.h"
+-#include "libiberty.h"
+-#include "xregex.h"
+-
+-/* Attributes.  */
+-
+-static const CGEN_ATTR_ENTRY bool_attr[] =
+-{
+-  { "#f", 0 },
+-  { "#t", 1 },
+-  { 0, 0 }
+-};
+-
+-static const CGEN_ATTR_ENTRY MACH_attr[] ATTRIBUTE_UNUSED =
+-{
+-  { "base", MACH_BASE },
+-  { "openrisc", MACH_OPENRISC },
+-  { "or1300", MACH_OR1300 },
+-  { "max", MACH_MAX },
+-  { 0, 0 }
+-};
+-
+-static const CGEN_ATTR_ENTRY ISA_attr[] ATTRIBUTE_UNUSED =
+-{
+-  { "or32", ISA_OR32 },
+-  { "max", ISA_MAX },
+-  { 0, 0 }
+-};
+-
+-static const CGEN_ATTR_ENTRY HAS_CACHE_attr[] ATTRIBUTE_UNUSED =
+-{
+-  { "DATA_CACHE", HAS_CACHE_DATA_CACHE },
+-  { "INSN_CACHE", HAS_CACHE_INSN_CACHE },
+-  { 0, 0 }
+-};
+-
+-const CGEN_ATTR_TABLE openrisc_cgen_ifield_attr_table[] =
+-{
+-  { "MACH", & MACH_attr[0], & MACH_attr[0] },
+-  { "VIRTUAL", &bool_attr[0], &bool_attr[0] },
+-  { "PCREL-ADDR", &bool_attr[0], &bool_attr[0] },
+-  { "ABS-ADDR", &bool_attr[0], &bool_attr[0] },
+-  { "RESERVED", &bool_attr[0], &bool_attr[0] },
+-  { "SIGN-OPT", &bool_attr[0], &bool_attr[0] },
+-  { "SIGNED", &bool_attr[0], &bool_attr[0] },
+-  { 0, 0, 0 }
+-};
+-
+-const CGEN_ATTR_TABLE openrisc_cgen_hardware_attr_table[] =
+-{
+-  { "MACH", & MACH_attr[0], & MACH_attr[0] },
+-  { "VIRTUAL", &bool_attr[0], &bool_attr[0] },
+-  { "CACHE-ADDR", &bool_attr[0], &bool_attr[0] },
+-  { "PC", &bool_attr[0], &bool_attr[0] },
+-  { "PROFILE", &bool_attr[0], &bool_attr[0] },
+-  { 0, 0, 0 }
+-};
+-
+-const CGEN_ATTR_TABLE openrisc_cgen_operand_attr_table[] =
+-{
+-  { "MACH", & MACH_attr[0], & MACH_attr[0] },
+-  { "VIRTUAL", &bool_attr[0], &bool_attr[0] },
+-  { "PCREL-ADDR", &bool_attr[0], &bool_attr[0] },
+-  { "ABS-ADDR", &bool_attr[0], &bool_attr[0] },
+-  { "SIGN-OPT", &bool_attr[0], &bool_attr[0] },
+-  { "SIGNED", &bool_attr[0], &bool_attr[0] },
+-  { "NEGATIVE", &bool_attr[0], &bool_attr[0] },
+-  { "RELAX", &bool_attr[0], &bool_attr[0] },
+-  { "SEM-ONLY", &bool_attr[0], &bool_attr[0] },
+-  { 0, 0, 0 }
+-};
+-
+-const CGEN_ATTR_TABLE openrisc_cgen_insn_attr_table[] =
+-{
+-  { "MACH", & MACH_attr[0], & MACH_attr[0] },
+-  { "ALIAS", &bool_attr[0], &bool_attr[0] },
+-  { "VIRTUAL", &bool_attr[0], &bool_attr[0] },
+-  { "UNCOND-CTI", &bool_attr[0], &bool_attr[0] },
+-  { "COND-CTI", &bool_attr[0], &bool_attr[0] },
+-  { "SKIP-CTI", &bool_attr[0], &bool_attr[0] },
+-  { "DELAY-SLOT", &bool_attr[0], &bool_attr[0] },
+-  { "RELAXABLE", &bool_attr[0], &bool_attr[0] },
+-  { "RELAXED", &bool_attr[0], &bool_attr[0] },
+-  { "NO-DIS", &bool_attr[0], &bool_attr[0] },
+-  { "PBB", &bool_attr[0], &bool_attr[0] },
+-  { "NOT-IN-DELAY-SLOT", &bool_attr[0], &bool_attr[0] },
+-  { 0, 0, 0 }
+-};
+-
+-/* Instruction set variants.  */
+-
+-static const CGEN_ISA openrisc_cgen_isa_table[] = {
+-  { "or32", 32, 32, 32, 32 },
+-  { 0, 0, 0, 0, 0 }
+-};
+-
+-/* Machine variants.  */
+-
+-static const CGEN_MACH openrisc_cgen_mach_table[] = {
+-  { "openrisc", "openrisc", MACH_OPENRISC, 0 },
+-  { "or1300", "openrisc:1300", MACH_OR1300, 0 },
+-  { 0, 0, 0, 0 }
+-};
+-
+-static CGEN_KEYWORD_ENTRY openrisc_cgen_opval_h_gr_entries[] =
+-{
+-  { "r0", 0, {0, {0}}, 0, 0 },
+-  { "r1", 1, {0, {0}}, 0, 0 },
+-  { "r2", 2, {0, {0}}, 0, 0 },
+-  { "r3", 3, {0, {0}}, 0, 0 },
+-  { "r4", 4, {0, {0}}, 0, 0 },
+-  { "r5", 5, {0, {0}}, 0, 0 },
+-  { "r6", 6, {0, {0}}, 0, 0 },
+-  { "r7", 7, {0, {0}}, 0, 0 },
+-  { "r8", 8, {0, {0}}, 0, 0 },
+-  { "r9", 9, {0, {0}}, 0, 0 },
+-  { "r10", 10, {0, {0}}, 0, 0 },
+-  { "r11", 11, {0, {0}}, 0, 0 },
+-  { "r12", 12, {0, {0}}, 0, 0 },
+-  { "r13", 13, {0, {0}}, 0, 0 },
+-  { "r14", 14, {0, {0}}, 0, 0 },
+-  { "r15", 15, {0, {0}}, 0, 0 },
+-  { "r16", 16, {0, {0}}, 0, 0 },
+-  { "r17", 17, {0, {0}}, 0, 0 },
+-  { "r18", 18, {0, {0}}, 0, 0 },
+-  { "r19", 19, {0, {0}}, 0, 0 },
+-  { "r20", 20, {0, {0}}, 0, 0 },
+-  { "r21", 21, {0, {0}}, 0, 0 },
+-  { "r22", 22, {0, {0}}, 0, 0 },
+-  { "r23", 23, {0, {0}}, 0, 0 },
+-  { "r24", 24, {0, {0}}, 0, 0 },
+-  { "r25", 25, {0, {0}}, 0, 0 },
+-  { "r26", 26, {0, {0}}, 0, 0 },
+-  { "r27", 27, {0, {0}}, 0, 0 },
+-  { "r28", 28, {0, {0}}, 0, 0 },
+-  { "r29", 29, {0, {0}}, 0, 0 },
+-  { "r30", 30, {0, {0}}, 0, 0 },
+-  { "r31", 31, {0, {0}}, 0, 0 },
+-  { "lr", 11, {0, {0}}, 0, 0 },
+-  { "sp", 1, {0, {0}}, 0, 0 },
+-  { "fp", 2, {0, {0}}, 0, 0 }
+-};
+-
+-CGEN_KEYWORD openrisc_cgen_opval_h_gr =
+-{
+-  & openrisc_cgen_opval_h_gr_entries[0],
+-  35,
+-  0, 0, 0, 0, ""
+-};
+-
+-
+-/* The hardware table.  */
+-
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define A(a) (1 << CGEN_HW_##a)
+-#else
+-#define A(a) (1 << CGEN_HW_/**/a)
+-#endif
+-
+-const CGEN_HW_ENTRY openrisc_cgen_hw_table[] =
+-{
+-  { "h-memory", HW_H_MEMORY, CGEN_ASM_NONE, 0, { 0, { (1<<MACH_BASE) } } },
+-  { "h-sint", HW_H_SINT, CGEN_ASM_NONE, 0, { 0, { (1<<MACH_BASE) } } },
+-  { "h-uint", HW_H_UINT, CGEN_ASM_NONE, 0, { 0, { (1<<MACH_BASE) } } },
+-  { "h-addr", HW_H_ADDR, CGEN_ASM_NONE, 0, { 0, { (1<<MACH_BASE) } } },
+-  { "h-iaddr", HW_H_IADDR, CGEN_ASM_NONE, 0, { 0, { (1<<MACH_BASE) } } },
+-  { "h-pc", HW_H_PC, CGEN_ASM_NONE, 0, { 0|A(PROFILE)|A(PC), { (1<<MACH_BASE) } } },
+-  { "h-gr", HW_H_GR, CGEN_ASM_KEYWORD, (PTR) & openrisc_cgen_opval_h_gr, { 0|A(PROFILE), { (1<<MACH_BASE) } } },
+-  { "h-sr", HW_H_SR, CGEN_ASM_NONE, 0, { 0, { (1<<MACH_BASE) } } },
+-  { "h-hi16", HW_H_HI16, CGEN_ASM_NONE, 0, { 0, { (1<<MACH_BASE) } } },
+-  { "h-lo16", HW_H_LO16, CGEN_ASM_NONE, 0, { 0, { (1<<MACH_BASE) } } },
+-  { "h-cbit", HW_H_CBIT, CGEN_ASM_NONE, 0, { 0, { (1<<MACH_BASE) } } },
+-  { "h-delay-insn", HW_H_DELAY_INSN, CGEN_ASM_NONE, 0, { 0, { (1<<MACH_BASE) } } },
+-  { 0, 0, CGEN_ASM_NONE, 0, {0, {0}} }
+-};
+-
+-#undef A
+-
+-
+-/* The instruction field table.  */
+-
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define A(a) (1 << CGEN_IFLD_##a)
+-#else
+-#define A(a) (1 << CGEN_IFLD_/**/a)
+-#endif
+-
+-const CGEN_IFLD openrisc_cgen_ifld_table[] =
+-{
+-  { OPENRISC_F_NIL, "f-nil", 0, 0, 0, 0, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_ANYOF, "f-anyof", 0, 0, 0, 0, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_CLASS, "f-class", 0, 32, 31, 2, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_SUB, "f-sub", 0, 32, 29, 4, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_R1, "f-r1", 0, 32, 25, 5, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_R2, "f-r2", 0, 32, 20, 5, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_R3, "f-r3", 0, 32, 15, 5, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_SIMM16, "f-simm16", 0, 32, 15, 16, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_UIMM16, "f-uimm16", 0, 32, 15, 16, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_UIMM5, "f-uimm5", 0, 32, 4, 5, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_HI16, "f-hi16", 0, 32, 15, 16, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_LO16, "f-lo16", 0, 32, 15, 16, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_OP1, "f-op1", 0, 32, 31, 2, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_OP2, "f-op2", 0, 32, 29, 4, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_OP3, "f-op3", 0, 32, 25, 2, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_OP4, "f-op4", 0, 32, 23, 3, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_OP5, "f-op5", 0, 32, 25, 5, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_OP6, "f-op6", 0, 32, 7, 3, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_OP7, "f-op7", 0, 32, 3, 4, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_I16_1, "f-i16-1", 0, 32, 10, 11, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_I16_2, "f-i16-2", 0, 32, 25, 5, { 0, { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_DISP26, "f-disp26", 0, 32, 25, 26, { 0|A(PCREL_ADDR), { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_ABS26, "f-abs26", 0, 32, 25, 26, { 0|A(ABS_ADDR), { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_I16NC, "f-i16nc", 0, 0, 0, 0,{ 0|A(SIGN_OPT)|A(VIRTUAL), { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_F_15_8, "f-f-15-8", 0, 32, 15, 8, { 0|A(RESERVED), { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_F_10_3, "f-f-10-3", 0, 32, 10, 3, { 0|A(RESERVED), { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_F_4_1, "f-f-4-1", 0, 32, 4, 1, { 0|A(RESERVED), { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_F_7_3, "f-f-7-3", 0, 32, 7, 3, { 0|A(RESERVED), { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_F_10_7, "f-f-10-7", 0, 32, 10, 7, { 0|A(RESERVED), { (1<<MACH_BASE) } }  },
+-  { OPENRISC_F_F_10_11, "f-f-10-11", 0, 32, 10, 11, { 0|A(RESERVED), { (1<<MACH_BASE) } }  },
+-  { 0, 0, 0, 0, 0, 0, {0, {0}} }
+-};
+-
+-#undef A
+-
+-
+-
+-/* multi ifield declarations */
+-
+-const CGEN_MAYBE_MULTI_IFLD OPENRISC_F_I16NC_MULTI_IFIELD [];
+-
+-
+-/* multi ifield definitions */
+-
+-const CGEN_MAYBE_MULTI_IFLD OPENRISC_F_I16NC_MULTI_IFIELD [] =
+-{
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_I16_1] } },
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_I16_2] } },
+-    { 0, { (const PTR) 0 } }
+-};
+-
+-/* The operand table.  */
+-
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define A(a) (1 << CGEN_OPERAND_##a)
+-#else
+-#define A(a) (1 << CGEN_OPERAND_/**/a)
+-#endif
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define OPERAND(op) OPENRISC_OPERAND_##op
+-#else
+-#define OPERAND(op) OPENRISC_OPERAND_/**/op
+-#endif
+-
+-const CGEN_OPERAND openrisc_cgen_operand_table[] =
+-{
+-/* pc: program counter */
+-  { "pc", OPENRISC_OPERAND_PC, HW_H_PC, 0, 0,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_NIL] } }, 
+-    { 0|A(SEM_ONLY), { (1<<MACH_BASE) } }  },
+-/* sr: special register */
+-  { "sr", OPENRISC_OPERAND_SR, HW_H_SR, 0, 0,
+-    { 0, { (const PTR) 0 } }, 
+-    { 0|A(SEM_ONLY), { (1<<MACH_BASE) } }  },
+-/* cbit: condition bit */
+-  { "cbit", OPENRISC_OPERAND_CBIT, HW_H_CBIT, 0, 0,
+-    { 0, { (const PTR) 0 } }, 
+-    { 0|A(SEM_ONLY), { (1<<MACH_BASE) } }  },
+-/* simm-16: 16 bit signed immediate */
+-  { "simm-16", OPENRISC_OPERAND_SIMM_16, HW_H_SINT, 15, 16,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_SIMM16] } }, 
+-    { 0, { (1<<MACH_BASE) } }  },
+-/* uimm-16: 16 bit unsigned immediate */
+-  { "uimm-16", OPENRISC_OPERAND_UIMM_16, HW_H_UINT, 15, 16,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_UIMM16] } }, 
+-    { 0, { (1<<MACH_BASE) } }  },
+-/* disp-26: pc-rel 26 bit */
+-  { "disp-26", OPENRISC_OPERAND_DISP_26, HW_H_IADDR, 25, 26,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_DISP26] } }, 
+-    { 0|A(PCREL_ADDR), { (1<<MACH_BASE) } }  },
+-/* abs-26: abs 26 bit */
+-  { "abs-26", OPENRISC_OPERAND_ABS_26, HW_H_IADDR, 25, 26,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_ABS26] } }, 
+-    { 0|A(ABS_ADDR), { (1<<MACH_BASE) } }  },
+-/* uimm-5: imm5 */
+-  { "uimm-5", OPENRISC_OPERAND_UIMM_5, HW_H_UINT, 4, 5,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_UIMM5] } }, 
+-    { 0, { (1<<MACH_BASE) } }  },
+-/* rD: destination register */
+-  { "rD", OPENRISC_OPERAND_RD, HW_H_GR, 25, 5,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_R1] } }, 
+-    { 0, { (1<<MACH_BASE) } }  },
+-/* rA: source register A */
+-  { "rA", OPENRISC_OPERAND_RA, HW_H_GR, 20, 5,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_R2] } }, 
+-    { 0, { (1<<MACH_BASE) } }  },
+-/* rB: source register B */
+-  { "rB", OPENRISC_OPERAND_RB, HW_H_GR, 15, 5,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_R3] } }, 
+-    { 0, { (1<<MACH_BASE) } }  },
+-/* op-f-23: f-op23 */
+-  { "op-f-23", OPENRISC_OPERAND_OP_F_23, HW_H_UINT, 23, 3,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_OP4] } }, 
+-    { 0, { (1<<MACH_BASE) } }  },
+-/* op-f-3: f-op3 */
+-  { "op-f-3", OPENRISC_OPERAND_OP_F_3, HW_H_UINT, 25, 5,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_OP5] } }, 
+-    { 0, { (1<<MACH_BASE) } }  },
+-/* hi16: high 16 bit immediate, sign optional */
+-  { "hi16", OPENRISC_OPERAND_HI16, HW_H_HI16, 15, 16,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_SIMM16] } }, 
+-    { 0|A(SIGN_OPT), { (1<<MACH_BASE) } }  },
+-/* lo16: low 16 bit immediate, sign optional */
+-  { "lo16", OPENRISC_OPERAND_LO16, HW_H_LO16, 15, 16,
+-    { 0, { (const PTR) &openrisc_cgen_ifld_table[OPENRISC_F_LO16] } }, 
+-    { 0|A(SIGN_OPT), { (1<<MACH_BASE) } }  },
+-/* ui16nc: 16 bit immediate, sign optional */
+-  { "ui16nc", OPENRISC_OPERAND_UI16NC, HW_H_LO16, 10, 16,
+-    { 2, { (const PTR) &OPENRISC_F_I16NC_MULTI_IFIELD[0] } }, 
+-    { 0|A(SIGN_OPT)|A(VIRTUAL), { (1<<MACH_BASE) } }  },
+-/* sentinel */
+-  { 0, 0, 0, 0, 0,
+-    { 0, { (const PTR) 0 } },
+-    { 0, { 0 } } }
+-};
+-
+-#undef A
+-
+-
+-/* The instruction table.  */
+-
+-#define OP(field) CGEN_SYNTAX_MAKE_FIELD (OPERAND (field))
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define A(a) (1 << CGEN_INSN_##a)
+-#else
+-#define A(a) (1 << CGEN_INSN_/**/a)
+-#endif
+-
+-static const CGEN_IBASE openrisc_cgen_insn_table[MAX_INSNS] =
+-{
+-  /* Special null first entry.
+-     A `num' value of zero is thus invalid.
+-     Also, the special `invalid' insn resides here.  */
+-  { 0, 0, 0, 0, {0, {0}} },
+-/* l.j ${abs-26} */
+-  {
+-    OPENRISC_INSN_L_J, "l-j", "l.j", 32,
+-    { 0|A(NOT_IN_DELAY_SLOT)|A(UNCOND_CTI)|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.jal ${abs-26} */
+-  {
+-    OPENRISC_INSN_L_JAL, "l-jal", "l.jal", 32,
+-    { 0|A(NOT_IN_DELAY_SLOT)|A(UNCOND_CTI)|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.jr $rA */
+-  {
+-    OPENRISC_INSN_L_JR, "l-jr", "l.jr", 32,
+-    { 0|A(NOT_IN_DELAY_SLOT)|A(UNCOND_CTI)|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.jalr $rA */
+-  {
+-    OPENRISC_INSN_L_JALR, "l-jalr", "l.jalr", 32,
+-    { 0|A(NOT_IN_DELAY_SLOT)|A(UNCOND_CTI)|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.bal ${disp-26} */
+-  {
+-    OPENRISC_INSN_L_BAL, "l-bal", "l.bal", 32,
+-    { 0|A(NOT_IN_DELAY_SLOT)|A(UNCOND_CTI)|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.bnf ${disp-26} */
+-  {
+-    OPENRISC_INSN_L_BNF, "l-bnf", "l.bnf", 32,
+-    { 0|A(NOT_IN_DELAY_SLOT)|A(COND_CTI)|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.bf ${disp-26} */
+-  {
+-    OPENRISC_INSN_L_BF, "l-bf", "l.bf", 32,
+-    { 0|A(NOT_IN_DELAY_SLOT)|A(COND_CTI)|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.brk ${uimm-16} */
+-  {
+-    OPENRISC_INSN_L_BRK, "l-brk", "l.brk", 32,
+-    { 0|A(NOT_IN_DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.rfe $rA */
+-  {
+-    OPENRISC_INSN_L_RFE, "l-rfe", "l.rfe", 32,
+-    { 0|A(NOT_IN_DELAY_SLOT)|A(UNCOND_CTI)|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sys ${uimm-16} */
+-  {
+-    OPENRISC_INSN_L_SYS, "l-sys", "l.sys", 32,
+-    { 0|A(NOT_IN_DELAY_SLOT)|A(UNCOND_CTI)|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.nop */
+-  {
+-    OPENRISC_INSN_L_NOP, "l-nop", "l.nop", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.movhi $rD,$hi16 */
+-  {
+-    OPENRISC_INSN_L_MOVHI, "l-movhi", "l.movhi", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.mfsr $rD,$rA */
+-  {
+-    OPENRISC_INSN_L_MFSR, "l-mfsr", "l.mfsr", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.mtsr $rA,$rB */
+-  {
+-    OPENRISC_INSN_L_MTSR, "l-mtsr", "l.mtsr", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.lw $rD,${simm-16}($rA) */
+-  {
+-    OPENRISC_INSN_L_LW, "l-lw", "l.lw", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.lbz $rD,${simm-16}($rA) */
+-  {
+-    OPENRISC_INSN_L_LBZ, "l-lbz", "l.lbz", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.lbs $rD,${simm-16}($rA) */
+-  {
+-    OPENRISC_INSN_L_LBS, "l-lbs", "l.lbs", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.lhz $rD,${simm-16}($rA) */
+-  {
+-    OPENRISC_INSN_L_LHZ, "l-lhz", "l.lhz", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.lhs $rD,${simm-16}($rA) */
+-  {
+-    OPENRISC_INSN_L_LHS, "l-lhs", "l.lhs", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sw ${ui16nc}($rA),$rB */
+-  {
+-    OPENRISC_INSN_L_SW, "l-sw", "l.sw", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sb ${ui16nc}($rA),$rB */
+-  {
+-    OPENRISC_INSN_L_SB, "l-sb", "l.sb", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sh ${ui16nc}($rA),$rB */
+-  {
+-    OPENRISC_INSN_L_SH, "l-sh", "l.sh", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sll $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SLL, "l-sll", "l.sll", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.slli $rD,$rA,${uimm-5} */
+-  {
+-    OPENRISC_INSN_L_SLLI, "l-slli", "l.slli", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.srl $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SRL, "l-srl", "l.srl", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.srli $rD,$rA,${uimm-5} */
+-  {
+-    OPENRISC_INSN_L_SRLI, "l-srli", "l.srli", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.sra $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SRA, "l-sra", "l.sra", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.srai $rD,$rA,${uimm-5} */
+-  {
+-    OPENRISC_INSN_L_SRAI, "l-srai", "l.srai", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.ror $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_ROR, "l-ror", "l.ror", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.rori $rD,$rA,${uimm-5} */
+-  {
+-    OPENRISC_INSN_L_RORI, "l-rori", "l.rori", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.add $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_ADD, "l-add", "l.add", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.addi $rD,$rA,$lo16 */
+-  {
+-    OPENRISC_INSN_L_ADDI, "l-addi", "l.addi", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.sub $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SUB, "l-sub", "l.sub", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.subi $rD,$rA,$lo16 */
+-  {
+-    OPENRISC_INSN_L_SUBI, "l-subi", "l.subi", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.and $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_AND, "l-and", "l.and", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.andi $rD,$rA,$lo16 */
+-  {
+-    OPENRISC_INSN_L_ANDI, "l-andi", "l.andi", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.or $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_OR, "l-or", "l.or", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.ori $rD,$rA,$lo16 */
+-  {
+-    OPENRISC_INSN_L_ORI, "l-ori", "l.ori", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.xor $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_XOR, "l-xor", "l.xor", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.xori $rD,$rA,$lo16 */
+-  {
+-    OPENRISC_INSN_L_XORI, "l-xori", "l.xori", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.mul $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_MUL, "l-mul", "l.mul", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.muli $rD,$rA,$lo16 */
+-  {
+-    OPENRISC_INSN_L_MULI, "l-muli", "l.muli", 32,
+-    { 0, { (1<<MACH_BASE) } }
+-  },
+-/* l.div $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_DIV, "l-div", "l.div", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.divu $rD,$rA,$rB */
+-  {
+-    OPENRISC_INSN_L_DIVU, "l-divu", "l.divu", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfgts $rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SFGTS, "l-sfgts", "l.sfgts", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfgtu $rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SFGTU, "l-sfgtu", "l.sfgtu", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfges $rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SFGES, "l-sfges", "l.sfges", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfgeu $rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SFGEU, "l-sfgeu", "l.sfgeu", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sflts $rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SFLTS, "l-sflts", "l.sflts", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfltu $rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SFLTU, "l-sfltu", "l.sfltu", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfles $rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SFLES, "l-sfles", "l.sfles", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfleu $rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SFLEU, "l-sfleu", "l.sfleu", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfgtsi $rA,${simm-16} */
+-  {
+-    OPENRISC_INSN_L_SFGTSI, "l-sfgtsi", "l.sfgtsi", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfgtui $rA,${uimm-16} */
+-  {
+-    OPENRISC_INSN_L_SFGTUI, "l-sfgtui", "l.sfgtui", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfgesi $rA,${simm-16} */
+-  {
+-    OPENRISC_INSN_L_SFGESI, "l-sfgesi", "l.sfgesi", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfgeui $rA,${uimm-16} */
+-  {
+-    OPENRISC_INSN_L_SFGEUI, "l-sfgeui", "l.sfgeui", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfltsi $rA,${simm-16} */
+-  {
+-    OPENRISC_INSN_L_SFLTSI, "l-sfltsi", "l.sfltsi", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfltui $rA,${uimm-16} */
+-  {
+-    OPENRISC_INSN_L_SFLTUI, "l-sfltui", "l.sfltui", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sflesi $rA,${simm-16} */
+-  {
+-    OPENRISC_INSN_L_SFLESI, "l-sflesi", "l.sflesi", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfleui $rA,${uimm-16} */
+-  {
+-    OPENRISC_INSN_L_SFLEUI, "l-sfleui", "l.sfleui", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfeq $rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SFEQ, "l-sfeq", "l.sfeq", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfeqi $rA,${simm-16} */
+-  {
+-    OPENRISC_INSN_L_SFEQI, "l-sfeqi", "l.sfeqi", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfne $rA,$rB */
+-  {
+-    OPENRISC_INSN_L_SFNE, "l-sfne", "l.sfne", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-/* l.sfnei $rA,${simm-16} */
+-  {
+-    OPENRISC_INSN_L_SFNEI, "l-sfnei", "l.sfnei", 32,
+-    { 0|A(DELAY_SLOT), { (1<<MACH_BASE) } }
+-  },
+-};
+-
+-#undef OP
+-#undef A
+-
+-/* Initialize anything needed to be done once, before any cpu_open call.  */
+-static void init_tables PARAMS ((void));
+-
+-static void
+-init_tables ()
+-{
+-}
+-
+-static const CGEN_MACH * lookup_mach_via_bfd_name
+-  PARAMS ((const CGEN_MACH *, const char *));
+-static void build_hw_table  PARAMS ((CGEN_CPU_TABLE *));
+-static void build_ifield_table  PARAMS ((CGEN_CPU_TABLE *));
+-static void build_operand_table PARAMS ((CGEN_CPU_TABLE *));
+-static void build_insn_table    PARAMS ((CGEN_CPU_TABLE *));
+-static void openrisc_cgen_rebuild_tables PARAMS ((CGEN_CPU_TABLE *));
+-
+-/* Subroutine of openrisc_cgen_cpu_open to look up a mach via its bfd name.  */
+-
+-static const CGEN_MACH *
+-lookup_mach_via_bfd_name (table, name)
+-     const CGEN_MACH *table;
+-     const char *name;
+-{
+-  while (table->name)
+-    {
+-      if (strcmp (name, table->bfd_name) == 0)
+-	return table;
+-      ++table;
+-    }
+-  abort ();
+-}
+-
+-/* Subroutine of openrisc_cgen_cpu_open to build the hardware table.  */
+-
+-static void
+-build_hw_table (cd)
+-     CGEN_CPU_TABLE *cd;
+-{
+-  int i;
+-  int machs = cd->machs;
+-  const CGEN_HW_ENTRY *init = & openrisc_cgen_hw_table[0];
+-  /* MAX_HW is only an upper bound on the number of selected entries.
+-     However each entry is indexed by it's enum so there can be holes in
+-     the table.  */
+-  const CGEN_HW_ENTRY **selected =
+-    (const CGEN_HW_ENTRY **) xmalloc (MAX_HW * sizeof (CGEN_HW_ENTRY *));
+-
+-  cd->hw_table.init_entries = init;
+-  cd->hw_table.entry_size = sizeof (CGEN_HW_ENTRY);
+-  memset (selected, 0, MAX_HW * sizeof (CGEN_HW_ENTRY *));
+-  /* ??? For now we just use machs to determine which ones we want.  */
+-  for (i = 0; init[i].name != NULL; ++i)
+-    if (CGEN_HW_ATTR_VALUE (&init[i], CGEN_HW_MACH)
+-	& machs)
+-      selected[init[i].type] = &init[i];
+-  cd->hw_table.entries = selected;
+-  cd->hw_table.num_entries = MAX_HW;
+-}
+-
+-/* Subroutine of openrisc_cgen_cpu_open to build the hardware table.  */
+-
+-static void
+-build_ifield_table (cd)
+-     CGEN_CPU_TABLE *cd;
+-{
+-  cd->ifld_table = & openrisc_cgen_ifld_table[0];
+-}
+-
+-/* Subroutine of openrisc_cgen_cpu_open to build the hardware table.  */
+-
+-static void
+-build_operand_table (cd)
+-     CGEN_CPU_TABLE *cd;
+-{
+-  int i;
+-  int machs = cd->machs;
+-  const CGEN_OPERAND *init = & openrisc_cgen_operand_table[0];
+-  /* MAX_OPERANDS is only an upper bound on the number of selected entries.
+-     However each entry is indexed by it's enum so there can be holes in
+-     the table.  */
+-  const CGEN_OPERAND **selected =
+-    (const CGEN_OPERAND **) xmalloc (MAX_OPERANDS * sizeof (CGEN_OPERAND *));
+-
+-  cd->operand_table.init_entries = init;
+-  cd->operand_table.entry_size = sizeof (CGEN_OPERAND);
+-  memset (selected, 0, MAX_OPERANDS * sizeof (CGEN_OPERAND *));
+-  /* ??? For now we just use mach to determine which ones we want.  */
+-  for (i = 0; init[i].name != NULL; ++i)
+-    if (CGEN_OPERAND_ATTR_VALUE (&init[i], CGEN_OPERAND_MACH)
+-	& machs)
+-      selected[init[i].type] = &init[i];
+-  cd->operand_table.entries = selected;
+-  cd->operand_table.num_entries = MAX_OPERANDS;
+-}
+-
+-/* Subroutine of openrisc_cgen_cpu_open to build the hardware table.
+-   ??? This could leave out insns not supported by the specified mach/isa,
+-   but that would cause errors like "foo only supported by bar" to become
+-   "unknown insn", so for now we include all insns and require the app to
+-   do the checking later.
+-   ??? On the other hand, parsing of such insns may require their hardware or
+-   operand elements to be in the table [which they mightn't be].  */
+-
+-static void
+-build_insn_table (cd)
+-     CGEN_CPU_TABLE *cd;
+-{
+-  int i;
+-  const CGEN_IBASE *ib = & openrisc_cgen_insn_table[0];
+-  CGEN_INSN *insns = (CGEN_INSN *) xmalloc (MAX_INSNS * sizeof (CGEN_INSN));
+-
+-  memset (insns, 0, MAX_INSNS * sizeof (CGEN_INSN));
+-  for (i = 0; i < MAX_INSNS; ++i)
+-    insns[i].base = &ib[i];
+-  cd->insn_table.init_entries = insns;
+-  cd->insn_table.entry_size = sizeof (CGEN_IBASE);
+-  cd->insn_table.num_init_entries = MAX_INSNS;
+-}
+-
+-/* Subroutine of openrisc_cgen_cpu_open to rebuild the tables.  */
+-
+-static void
+-openrisc_cgen_rebuild_tables (cd)
+-     CGEN_CPU_TABLE *cd;
+-{
+-  int i;
+-  unsigned int isas = cd->isas;
+-  unsigned int machs = cd->machs;
+-
+-  cd->int_insn_p = CGEN_INT_INSN_P;
+-
+-  /* Data derived from the isa spec.  */
+-#define UNSET (CGEN_SIZE_UNKNOWN + 1)
+-  cd->default_insn_bitsize = UNSET;
+-  cd->base_insn_bitsize = UNSET;
+-  cd->min_insn_bitsize = 65535; /* some ridiculously big number */
+-  cd->max_insn_bitsize = 0;
+-  for (i = 0; i < MAX_ISAS; ++i)
+-    if (((1 << i) & isas) != 0)
+-      {
+-	const CGEN_ISA *isa = & openrisc_cgen_isa_table[i];
+-
+-	/* Default insn sizes of all selected isas must be
+-	   equal or we set the result to 0, meaning "unknown".  */
+-	if (cd->default_insn_bitsize == UNSET)
+-	  cd->default_insn_bitsize = isa->default_insn_bitsize;
+-	else if (isa->default_insn_bitsize == cd->default_insn_bitsize)
+-	  ; /* this is ok */
+-	else
+-	  cd->default_insn_bitsize = CGEN_SIZE_UNKNOWN;
+-
+-	/* Base insn sizes of all selected isas must be equal
+-	   or we set the result to 0, meaning "unknown".  */
+-	if (cd->base_insn_bitsize == UNSET)
+-	  cd->base_insn_bitsize = isa->base_insn_bitsize;
+-	else if (isa->base_insn_bitsize == cd->base_insn_bitsize)
+-	  ; /* this is ok */
+-	else
+-	  cd->base_insn_bitsize = CGEN_SIZE_UNKNOWN;
+-
+-	/* Set min,max insn sizes.  */
+-	if (isa->min_insn_bitsize < cd->min_insn_bitsize)
+-	  cd->min_insn_bitsize = isa->min_insn_bitsize;
+-	if (isa->max_insn_bitsize > cd->max_insn_bitsize)
+-	  cd->max_insn_bitsize = isa->max_insn_bitsize;
+-      }
+-
+-  /* Data derived from the mach spec.  */
+-  for (i = 0; i < MAX_MACHS; ++i)
+-    if (((1 << i) & machs) != 0)
+-      {
+-	const CGEN_MACH *mach = & openrisc_cgen_mach_table[i];
+-
+-	if (mach->insn_chunk_bitsize != 0)
+-	{
+-	  if (cd->insn_chunk_bitsize != 0 && cd->insn_chunk_bitsize != mach->insn_chunk_bitsize)
+-	    {
+-	      fprintf (stderr, "openrisc_cgen_rebuild_tables: conflicting insn-chunk-bitsize values: `%d' vs. `%d'\n",
+-		       cd->insn_chunk_bitsize, mach->insn_chunk_bitsize);
+-	      abort ();
+-	    }
+-
+- 	  cd->insn_chunk_bitsize = mach->insn_chunk_bitsize;
+-	}
+-      }
+-
+-  /* Determine which hw elements are used by MACH.  */
+-  build_hw_table (cd);
+-
+-  /* Build the ifield table.  */
+-  build_ifield_table (cd);
+-
+-  /* Determine which operands are used by MACH/ISA.  */
+-  build_operand_table (cd);
+-
+-  /* Build the instruction table.  */
+-  build_insn_table (cd);
+-}
+-
+-/* Initialize a cpu table and return a descriptor.
+-   It's much like opening a file, and must be the first function called.
+-   The arguments are a set of (type/value) pairs, terminated with
+-   CGEN_CPU_OPEN_END.
+-
+-   Currently supported values:
+-   CGEN_CPU_OPEN_ISAS:    bitmap of values in enum isa_attr
+-   CGEN_CPU_OPEN_MACHS:   bitmap of values in enum mach_attr
+-   CGEN_CPU_OPEN_BFDMACH: specify 1 mach using bfd name
+-   CGEN_CPU_OPEN_ENDIAN:  specify endian choice
+-   CGEN_CPU_OPEN_END:     terminates arguments
+-
+-   ??? Simultaneous multiple isas might not make sense, but it's not (yet)
+-   precluded.
+-
+-   ??? We only support ISO C stdargs here, not K&R.
+-   Laziness, plus experiment to see if anything requires K&R - eventually
+-   K&R will no longer be supported - e.g. GDB is currently trying this.  */
+-
+-CGEN_CPU_DESC
+-openrisc_cgen_cpu_open (enum cgen_cpu_open_arg arg_type, ...)
+-{
+-  CGEN_CPU_TABLE *cd = (CGEN_CPU_TABLE *) xmalloc (sizeof (CGEN_CPU_TABLE));
+-  static int init_p;
+-  unsigned int isas = 0;  /* 0 = "unspecified" */
+-  unsigned int machs = 0; /* 0 = "unspecified" */
+-  enum cgen_endian endian = CGEN_ENDIAN_UNKNOWN;
+-  va_list ap;
+-
+-  if (! init_p)
+-    {
+-      init_tables ();
+-      init_p = 1;
+-    }
+-
+-  memset (cd, 0, sizeof (*cd));
+-
+-  va_start (ap, arg_type);
+-  while (arg_type != CGEN_CPU_OPEN_END)
+-    {
+-      switch (arg_type)
+-	{
+-	case CGEN_CPU_OPEN_ISAS :
+-	  isas = va_arg (ap, unsigned int);
+-	  break;
+-	case CGEN_CPU_OPEN_MACHS :
+-	  machs = va_arg (ap, unsigned int);
+-	  break;
+-	case CGEN_CPU_OPEN_BFDMACH :
+-	  {
+-	    const char *name = va_arg (ap, const char *);
+-	    const CGEN_MACH *mach =
+-	      lookup_mach_via_bfd_name (openrisc_cgen_mach_table, name);
+-
+-	    machs |= 1 << mach->num;
+-	    break;
+-	  }
+-	case CGEN_CPU_OPEN_ENDIAN :
+-	  endian = va_arg (ap, enum cgen_endian);
+-	  break;
+-	default :
+-	  fprintf (stderr, "openrisc_cgen_cpu_open: unsupported argument `%d'\n",
+-		   arg_type);
+-	  abort (); /* ??? return NULL? */
+-	}
+-      arg_type = va_arg (ap, enum cgen_cpu_open_arg);
+-    }
+-  va_end (ap);
+-
+-  /* mach unspecified means "all" */
+-  if (machs == 0)
+-    machs = (1 << MAX_MACHS) - 1;
+-  /* base mach is always selected */
+-  machs |= 1;
+-  /* isa unspecified means "all" */
+-  if (isas == 0)
+-    isas = (1 << MAX_ISAS) - 1;
+-  if (endian == CGEN_ENDIAN_UNKNOWN)
+-    {
+-      /* ??? If target has only one, could have a default.  */
+-      fprintf (stderr, "openrisc_cgen_cpu_open: no endianness specified\n");
+-      abort ();
+-    }
+-
+-  cd->isas = isas;
+-  cd->machs = machs;
+-  cd->endian = endian;
+-  /* FIXME: for the sparc case we can determine insn-endianness statically.
+-     The worry here is where both data and insn endian can be independently
+-     chosen, in which case this function will need another argument.
+-     Actually, will want to allow for more arguments in the future anyway.  */
+-  cd->insn_endian = endian;
+-
+-  /* Table (re)builder.  */
+-  cd->rebuild_tables = openrisc_cgen_rebuild_tables;
+-  openrisc_cgen_rebuild_tables (cd);
+-
+-  /* Default to not allowing signed overflow.  */
+-  cd->signed_overflow_ok_p = 0;
+-  
+-  return (CGEN_CPU_DESC) cd;
+-}
+-
+-/* Cover fn to openrisc_cgen_cpu_open to handle the simple case of 1 isa, 1 mach.
+-   MACH_NAME is the bfd name of the mach.  */
+-
+-CGEN_CPU_DESC
+-openrisc_cgen_cpu_open_1 (mach_name, endian)
+-     const char *mach_name;
+-     enum cgen_endian endian;
+-{
+-  return openrisc_cgen_cpu_open (CGEN_CPU_OPEN_BFDMACH, mach_name,
+-			       CGEN_CPU_OPEN_ENDIAN, endian,
+-			       CGEN_CPU_OPEN_END);
+-}
+-
+-/* Close a cpu table.
+-   ??? This can live in a machine independent file, but there's currently
+-   no place to put this file (there's no libcgen).  libopcodes is the wrong
+-   place as some simulator ports use this but they don't use libopcodes.  */
+-
+-void
+-openrisc_cgen_cpu_close (cd)
+-     CGEN_CPU_DESC cd;
+-{
+-  unsigned int i;
+-  const CGEN_INSN *insns;
+-
+-  if (cd->macro_insn_table.init_entries)
+-    {
+-      insns = cd->macro_insn_table.init_entries;
+-      for (i = 0; i < cd->macro_insn_table.num_init_entries; ++i, ++insns)
+-	{
+-	  if (CGEN_INSN_RX ((insns)))
+-	    regfree (CGEN_INSN_RX (insns));
+-	}
+-    }
+-
+-  if (cd->insn_table.init_entries)
+-    {
+-      insns = cd->insn_table.init_entries;
+-      for (i = 0; i < cd->insn_table.num_init_entries; ++i, ++insns)
+-	{
+-	  if (CGEN_INSN_RX (insns))
+-	    regfree (CGEN_INSN_RX (insns));
+-	}
+-    }
+-
+-  
+-
+-  if (cd->macro_insn_table.init_entries)
+-    free ((CGEN_INSN *) cd->macro_insn_table.init_entries);
+-
+-  if (cd->insn_table.init_entries)
+-    free ((CGEN_INSN *) cd->insn_table.init_entries);
+-
+-  if (cd->hw_table.entries)
+-    free ((CGEN_HW_ENTRY *) cd->hw_table.entries);
+-
+-  if (cd->operand_table.entries)
+-    free ((CGEN_HW_ENTRY *) cd->operand_table.entries);
+-
+-  free (cd);
+-}
+-
+diff --unified -N -r ../binutils-2.16.1/opcodes/openrisc-desc.h binutils-2.16.1/opcodes/openrisc-desc.h
+--- ../binutils-2.16.1/opcodes/openrisc-desc.h	2005-02-22 01:33:20.000000000 +0100
++++ binutils-2.16.1/opcodes/openrisc-desc.h	1970-01-01 01:00:00.000000000 +0100
+@@ -1,251 +0,0 @@
+-/* CPU data header for openrisc.
+-
+-THIS FILE IS MACHINE GENERATED WITH CGEN.
+-
+-Copyright 1996-2005 Free Software Foundation, Inc.
+-
+-This file is part of the GNU Binutils and/or GDB, the GNU debugger.
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License as published by
+-the Free Software Foundation; either version 2, or (at your option)
+-any later version.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License along
+-with this program; if not, write to the Free Software Foundation, Inc.,
+-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+-
+-*/
+-
+-#ifndef OPENRISC_CPU_H
+-#define OPENRISC_CPU_H
+-
+-#define CGEN_ARCH openrisc
+-
+-/* Given symbol S, return openrisc_cgen_<S>.  */
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define CGEN_SYM(s) openrisc##_cgen_##s
+-#else
+-#define CGEN_SYM(s) openrisc/**/_cgen_/**/s
+-#endif
+-
+-
+-/* Selected cpu families.  */
+-#define HAVE_CPU_OPENRISCBF
+-
+-#define CGEN_INSN_LSB0_P 1
+-
+-/* Minimum size of any insn (in bytes).  */
+-#define CGEN_MIN_INSN_SIZE 4
+-
+-/* Maximum size of any insn (in bytes).  */
+-#define CGEN_MAX_INSN_SIZE 4
+-
+-#define CGEN_INT_INSN_P 1
+-
+-/* Maximum number of syntax elements in an instruction.  */
+-#define CGEN_ACTUAL_MAX_SYNTAX_ELEMENTS 14
+-
+-/* CGEN_MNEMONIC_OPERANDS is defined if mnemonics have operands.
+-   e.g. In "b,a foo" the ",a" is an operand.  If mnemonics have operands
+-   we can't hash on everything up to the space.  */
+-#define CGEN_MNEMONIC_OPERANDS
+-
+-/* Maximum number of fields in an instruction.  */
+-#define CGEN_ACTUAL_MAX_IFMT_OPERANDS 9
+-
+-/* Enums.  */
+-
+-/* Enum declaration for exception vectors.  */
+-typedef enum e_exception {
+-  E_RESET, E_BUSERR, E_DPF, E_IPF
+- , E_EXTINT, E_ALIGN, E_ILLEGAL, E_PEINT
+- , E_DTLBMISS, E_ITLBMISS, E_RRANGE, E_SYSCALL
+- , E_BREAK, E_RESERVED
+-} E_EXCEPTION;
+-
+-/* Enum declaration for FIXME.  */
+-typedef enum insn_class {
+-  OP1_0, OP1_1, OP1_2, OP1_3
+-} INSN_CLASS;
+-
+-/* Enum declaration for FIXME.  */
+-typedef enum insn_sub {
+-  OP2_0, OP2_1, OP2_2, OP2_3
+- , OP2_4, OP2_5, OP2_6, OP2_7
+- , OP2_8, OP2_9, OP2_10, OP2_11
+- , OP2_12, OP2_13, OP2_14, OP2_15
+-} INSN_SUB;
+-
+-/* Enum declaration for FIXME.  */
+-typedef enum insn_op3 {
+-  OP3_0, OP3_1, OP3_2, OP3_3
+-} INSN_OP3;
+-
+-/* Enum declaration for FIXME.  */
+-typedef enum insn_op4 {
+-  OP4_0, OP4_1, OP4_2, OP4_3
+- , OP4_4, OP4_5, OP4_6, OP4_7
+-} INSN_OP4;
+-
+-/* Enum declaration for FIXME.  */
+-typedef enum insn_op5 {
+-  OP5_0, OP5_1, OP5_2, OP5_3
+- , OP5_4, OP5_5, OP5_6, OP5_7
+- , OP5_8, OP5_9, OP5_10, OP5_11
+- , OP5_12, OP5_13, OP5_14, OP5_15
+- , OP5_16, OP5_17, OP5_18, OP5_19
+- , OP5_20, OP5_21, OP5_22, OP5_23
+- , OP5_24, OP5_25, OP5_26, OP5_27
+- , OP5_28, OP5_29, OP5_30, OP5_31
+-} INSN_OP5;
+-
+-/* Enum declaration for FIXME.  */
+-typedef enum insn_op6 {
+-  OP6_0, OP6_1, OP6_2, OP6_3
+- , OP6_4, OP6_5, OP6_6, OP6_7
+-} INSN_OP6;
+-
+-/* Enum declaration for FIXME.  */
+-typedef enum insn_op7 {
+-  OP7_0, OP7_1, OP7_2, OP7_3
+- , OP7_4, OP7_5, OP7_6, OP7_7
+- , OP7_8, OP7_9, OP7_10, OP7_11
+- , OP7_12, OP7_13, OP7_14, OP7_15
+-} INSN_OP7;
+-
+-/* Attributes.  */
+-
+-/* Enum declaration for machine type selection.  */
+-typedef enum mach_attr {
+-  MACH_BASE, MACH_OPENRISC, MACH_OR1300, MACH_MAX
+-} MACH_ATTR;
+-
+-/* Enum declaration for instruction set selection.  */
+-typedef enum isa_attr {
+-  ISA_OR32, ISA_MAX
+-} ISA_ATTR;
+-
+-/* Enum declaration for if this model has caches.  */
+-typedef enum has_cache_attr {
+-  HAS_CACHE_DATA_CACHE, HAS_CACHE_INSN_CACHE
+-} HAS_CACHE_ATTR;
+-
+-/* Number of architecture variants.  */
+-#define MAX_ISAS  1
+-#define MAX_MACHS ((int) MACH_MAX)
+-
+-/* Ifield support.  */
+-
+-/* Ifield attribute indices.  */
+-
+-/* Enum declaration for cgen_ifld attrs.  */
+-typedef enum cgen_ifld_attr {
+-  CGEN_IFLD_VIRTUAL, CGEN_IFLD_PCREL_ADDR, CGEN_IFLD_ABS_ADDR, CGEN_IFLD_RESERVED
+- , CGEN_IFLD_SIGN_OPT, CGEN_IFLD_SIGNED, CGEN_IFLD_END_BOOLS, CGEN_IFLD_START_NBOOLS = 31
+- , CGEN_IFLD_MACH, CGEN_IFLD_END_NBOOLS
+-} CGEN_IFLD_ATTR;
+-
+-/* Number of non-boolean elements in cgen_ifld_attr.  */
+-#define CGEN_IFLD_NBOOL_ATTRS (CGEN_IFLD_END_NBOOLS - CGEN_IFLD_START_NBOOLS - 1)
+-
+-/* Enum declaration for openrisc ifield types.  */
+-typedef enum ifield_type {
+-  OPENRISC_F_NIL, OPENRISC_F_ANYOF, OPENRISC_F_CLASS, OPENRISC_F_SUB
+- , OPENRISC_F_R1, OPENRISC_F_R2, OPENRISC_F_R3, OPENRISC_F_SIMM16
+- , OPENRISC_F_UIMM16, OPENRISC_F_UIMM5, OPENRISC_F_HI16, OPENRISC_F_LO16
+- , OPENRISC_F_OP1, OPENRISC_F_OP2, OPENRISC_F_OP3, OPENRISC_F_OP4
+- , OPENRISC_F_OP5, OPENRISC_F_OP6, OPENRISC_F_OP7, OPENRISC_F_I16_1
+- , OPENRISC_F_I16_2, OPENRISC_F_DISP26, OPENRISC_F_ABS26, OPENRISC_F_I16NC
+- , OPENRISC_F_F_15_8, OPENRISC_F_F_10_3, OPENRISC_F_F_4_1, OPENRISC_F_F_7_3
+- , OPENRISC_F_F_10_7, OPENRISC_F_F_10_11, OPENRISC_F_MAX
+-} IFIELD_TYPE;
+-
+-#define MAX_IFLD ((int) OPENRISC_F_MAX)
+-
+-/* Hardware attribute indices.  */
+-
+-/* Enum declaration for cgen_hw attrs.  */
+-typedef enum cgen_hw_attr {
+-  CGEN_HW_VIRTUAL, CGEN_HW_CACHE_ADDR, CGEN_HW_PC, CGEN_HW_PROFILE
+- , CGEN_HW_END_BOOLS, CGEN_HW_START_NBOOLS = 31, CGEN_HW_MACH, CGEN_HW_END_NBOOLS
+-} CGEN_HW_ATTR;
+-
+-/* Number of non-boolean elements in cgen_hw_attr.  */
+-#define CGEN_HW_NBOOL_ATTRS (CGEN_HW_END_NBOOLS - CGEN_HW_START_NBOOLS - 1)
+-
+-/* Enum declaration for openrisc hardware types.  */
+-typedef enum cgen_hw_type {
+-  HW_H_MEMORY, HW_H_SINT, HW_H_UINT, HW_H_ADDR
+- , HW_H_IADDR, HW_H_PC, HW_H_GR, HW_H_SR
+- , HW_H_HI16, HW_H_LO16, HW_H_CBIT, HW_H_DELAY_INSN
+- , HW_MAX
+-} CGEN_HW_TYPE;
+-
+-#define MAX_HW ((int) HW_MAX)
+-
+-/* Operand attribute indices.  */
+-
+-/* Enum declaration for cgen_operand attrs.  */
+-typedef enum cgen_operand_attr {
+-  CGEN_OPERAND_VIRTUAL, CGEN_OPERAND_PCREL_ADDR, CGEN_OPERAND_ABS_ADDR, CGEN_OPERAND_SIGN_OPT
+- , CGEN_OPERAND_SIGNED, CGEN_OPERAND_NEGATIVE, CGEN_OPERAND_RELAX, CGEN_OPERAND_SEM_ONLY
+- , CGEN_OPERAND_END_BOOLS, CGEN_OPERAND_START_NBOOLS = 31, CGEN_OPERAND_MACH, CGEN_OPERAND_END_NBOOLS
+-} CGEN_OPERAND_ATTR;
+-
+-/* Number of non-boolean elements in cgen_operand_attr.  */
+-#define CGEN_OPERAND_NBOOL_ATTRS (CGEN_OPERAND_END_NBOOLS - CGEN_OPERAND_START_NBOOLS - 1)
+-
+-/* Enum declaration for openrisc operand types.  */
+-typedef enum cgen_operand_type {
+-  OPENRISC_OPERAND_PC, OPENRISC_OPERAND_SR, OPENRISC_OPERAND_CBIT, OPENRISC_OPERAND_SIMM_16
+- , OPENRISC_OPERAND_UIMM_16, OPENRISC_OPERAND_DISP_26, OPENRISC_OPERAND_ABS_26, OPENRISC_OPERAND_UIMM_5
+- , OPENRISC_OPERAND_RD, OPENRISC_OPERAND_RA, OPENRISC_OPERAND_RB, OPENRISC_OPERAND_OP_F_23
+- , OPENRISC_OPERAND_OP_F_3, OPENRISC_OPERAND_HI16, OPENRISC_OPERAND_LO16, OPENRISC_OPERAND_UI16NC
+- , OPENRISC_OPERAND_MAX
+-} CGEN_OPERAND_TYPE;
+-
+-/* Number of operands types.  */
+-#define MAX_OPERANDS 16
+-
+-/* Maximum number of operands referenced by any insn.  */
+-#define MAX_OPERAND_INSTANCES 8
+-
+-/* Insn attribute indices.  */
+-
+-/* Enum declaration for cgen_insn attrs.  */
+-typedef enum cgen_insn_attr {
+-  CGEN_INSN_ALIAS, CGEN_INSN_VIRTUAL, CGEN_INSN_UNCOND_CTI, CGEN_INSN_COND_CTI
+- , CGEN_INSN_SKIP_CTI, CGEN_INSN_DELAY_SLOT, CGEN_INSN_RELAXABLE, CGEN_INSN_RELAXED
+- , CGEN_INSN_NO_DIS, CGEN_INSN_PBB, CGEN_INSN_NOT_IN_DELAY_SLOT, CGEN_INSN_END_BOOLS
+- , CGEN_INSN_START_NBOOLS = 31, CGEN_INSN_MACH, CGEN_INSN_END_NBOOLS
+-} CGEN_INSN_ATTR;
+-
+-/* Number of non-boolean elements in cgen_insn_attr.  */
+-#define CGEN_INSN_NBOOL_ATTRS (CGEN_INSN_END_NBOOLS - CGEN_INSN_START_NBOOLS - 1)
+-
+-/* cgen.h uses things we just defined.  */
+-#include "opcode/cgen.h"
+-
+-extern const struct cgen_ifld openrisc_cgen_ifld_table[];
+-
+-/* Attributes.  */
+-extern const CGEN_ATTR_TABLE openrisc_cgen_hardware_attr_table[];
+-extern const CGEN_ATTR_TABLE openrisc_cgen_ifield_attr_table[];
+-extern const CGEN_ATTR_TABLE openrisc_cgen_operand_attr_table[];
+-extern const CGEN_ATTR_TABLE openrisc_cgen_insn_attr_table[];
+-
+-/* Hardware decls.  */
+-
+-extern CGEN_KEYWORD openrisc_cgen_opval_h_gr;
+-
+-extern const CGEN_HW_ENTRY openrisc_cgen_hw_table[];
+-
+-
+-
+-#endif /* OPENRISC_CPU_H */
+diff --unified -N -r ../binutils-2.16.1/opcodes/openrisc-dis.c binutils-2.16.1/opcodes/openrisc-dis.c
+--- ../binutils-2.16.1/opcodes/openrisc-dis.c	2005-02-23 17:04:39.000000000 +0100
++++ binutils-2.16.1/opcodes/openrisc-dis.c	1970-01-01 01:00:00.000000000 +0100
+@@ -1,555 +0,0 @@
+-/* Disassembler interface for targets using CGEN. -*- C -*-
+-   CGEN: Cpu tools GENerator
+-
+-THIS FILE IS MACHINE GENERATED WITH CGEN.
+-- the resultant file is machine generated, cgen-dis.in isn't
+-
+-Copyright 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2005
+-Free Software Foundation, Inc.
+-
+-This file is part of the GNU Binutils and GDB, the GNU debugger.
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License as published by
+-the Free Software Foundation; either version 2, or (at your option)
+-any later version.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License
+-along with this program; if not, write to the Free Software Foundation, Inc.,
+-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
+-
+-/* ??? Eventually more and more of this stuff can go to cpu-independent files.
+-   Keep that in mind.  */
+-
+-#include "sysdep.h"
+-#include <stdio.h>
+-#include "ansidecl.h"
+-#include "dis-asm.h"
+-#include "bfd.h"
+-#include "symcat.h"
+-#include "libiberty.h"
+-#include "openrisc-desc.h"
+-#include "openrisc-opc.h"
+-#include "opintl.h"
+-
+-/* Default text to print if an instruction isn't recognized.  */
+-#define UNKNOWN_INSN_MSG _("*unknown*")
+-
+-static void print_normal
+-  (CGEN_CPU_DESC, void *, long, unsigned int, bfd_vma, int);
+-static void print_address
+-  (CGEN_CPU_DESC, void *, bfd_vma, unsigned int, bfd_vma, int) ATTRIBUTE_UNUSED;
+-static void print_keyword
+-  (CGEN_CPU_DESC, void *, CGEN_KEYWORD *, long, unsigned int) ATTRIBUTE_UNUSED;
+-static void print_insn_normal
+-  (CGEN_CPU_DESC, void *, const CGEN_INSN *, CGEN_FIELDS *, bfd_vma, int);
+-static int print_insn
+-  (CGEN_CPU_DESC, bfd_vma,  disassemble_info *, bfd_byte *, unsigned);
+-static int default_print_insn
+-  (CGEN_CPU_DESC, bfd_vma, disassemble_info *) ATTRIBUTE_UNUSED;
+-static int read_insn
+-  (CGEN_CPU_DESC, bfd_vma, disassemble_info *, bfd_byte *, int, CGEN_EXTRACT_INFO *,
+-   unsigned long *);
+-
+-/* -- disassembler routines inserted here */
+-
+-
+-void openrisc_cgen_print_operand
+-  PARAMS ((CGEN_CPU_DESC, int, PTR, CGEN_FIELDS *,
+-           void const *, bfd_vma, int));
+-
+-/* Main entry point for printing operands.
+-   XINFO is a `void *' and not a `disassemble_info *' to not put a requirement
+-   of dis-asm.h on cgen.h.
+-
+-   This function is basically just a big switch statement.  Earlier versions
+-   used tables to look up the function to use, but
+-   - if the table contains both assembler and disassembler functions then
+-     the disassembler contains much of the assembler and vice-versa,
+-   - there's a lot of inlining possibilities as things grow,
+-   - using a switch statement avoids the function call overhead.
+-
+-   This function could be moved into `print_insn_normal', but keeping it
+-   separate makes clear the interface between `print_insn_normal' and each of
+-   the handlers.  */
+-
+-void
+-openrisc_cgen_print_operand (cd, opindex, xinfo, fields, attrs, pc, length)
+-     CGEN_CPU_DESC cd;
+-     int opindex;
+-     PTR xinfo;
+-     CGEN_FIELDS *fields;
+-     void const *attrs ATTRIBUTE_UNUSED;
+-     bfd_vma pc;
+-     int length;
+-{
+- disassemble_info *info = (disassemble_info *) xinfo;
+-
+-  switch (opindex)
+-    {
+-    case OPENRISC_OPERAND_ABS_26 :
+-      print_address (cd, info, fields->f_abs26, 0|(1<<CGEN_OPERAND_ABS_ADDR), pc, length);
+-      break;
+-    case OPENRISC_OPERAND_DISP_26 :
+-      print_address (cd, info, fields->f_disp26, 0|(1<<CGEN_OPERAND_PCREL_ADDR), pc, length);
+-      break;
+-    case OPENRISC_OPERAND_HI16 :
+-      print_normal (cd, info, fields->f_simm16, 0|(1<<CGEN_OPERAND_SIGNED)|(1<<CGEN_OPERAND_SIGN_OPT), pc, length);
+-      break;
+-    case OPENRISC_OPERAND_LO16 :
+-      print_normal (cd, info, fields->f_lo16, 0|(1<<CGEN_OPERAND_SIGNED)|(1<<CGEN_OPERAND_SIGN_OPT), pc, length);
+-      break;
+-    case OPENRISC_OPERAND_OP_F_23 :
+-      print_normal (cd, info, fields->f_op4, 0, pc, length);
+-      break;
+-    case OPENRISC_OPERAND_OP_F_3 :
+-      print_normal (cd, info, fields->f_op5, 0, pc, length);
+-      break;
+-    case OPENRISC_OPERAND_RA :
+-      print_keyword (cd, info, & openrisc_cgen_opval_h_gr, fields->f_r2, 0);
+-      break;
+-    case OPENRISC_OPERAND_RB :
+-      print_keyword (cd, info, & openrisc_cgen_opval_h_gr, fields->f_r3, 0);
+-      break;
+-    case OPENRISC_OPERAND_RD :
+-      print_keyword (cd, info, & openrisc_cgen_opval_h_gr, fields->f_r1, 0);
+-      break;
+-    case OPENRISC_OPERAND_SIMM_16 :
+-      print_normal (cd, info, fields->f_simm16, 0|(1<<CGEN_OPERAND_SIGNED), pc, length);
+-      break;
+-    case OPENRISC_OPERAND_UI16NC :
+-      print_normal (cd, info, fields->f_i16nc, 0|(1<<CGEN_OPERAND_SIGNED)|(1<<CGEN_OPERAND_SIGN_OPT)|(1<<CGEN_OPERAND_VIRTUAL), pc, length);
+-      break;
+-    case OPENRISC_OPERAND_UIMM_16 :
+-      print_normal (cd, info, fields->f_uimm16, 0, pc, length);
+-      break;
+-    case OPENRISC_OPERAND_UIMM_5 :
+-      print_normal (cd, info, fields->f_uimm5, 0, pc, length);
+-      break;
+-
+-    default :
+-      /* xgettext:c-format */
+-      fprintf (stderr, _("Unrecognized field %d while printing insn.\n"),
+-	       opindex);
+-    abort ();
+-  }
+-}
+-
+-cgen_print_fn * const openrisc_cgen_print_handlers[] = 
+-{
+-  print_insn_normal,
+-};
+-
+-
+-void
+-openrisc_cgen_init_dis (cd)
+-     CGEN_CPU_DESC cd;
+-{
+-  openrisc_cgen_init_opcode_table (cd);
+-  openrisc_cgen_init_ibld_table (cd);
+-  cd->print_handlers = & openrisc_cgen_print_handlers[0];
+-  cd->print_operand = openrisc_cgen_print_operand;
+-}
+-
+-
+-/* Default print handler.  */
+-
+-static void
+-print_normal (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
+-	      void *dis_info,
+-	      long value,
+-	      unsigned int attrs,
+-	      bfd_vma pc ATTRIBUTE_UNUSED,
+-	      int length ATTRIBUTE_UNUSED)
+-{
+-  disassemble_info *info = (disassemble_info *) dis_info;
+-
+-#ifdef CGEN_PRINT_NORMAL
+-  CGEN_PRINT_NORMAL (cd, info, value, attrs, pc, length);
+-#endif
+-
+-  /* Print the operand as directed by the attributes.  */
+-  if (CGEN_BOOL_ATTR (attrs, CGEN_OPERAND_SEM_ONLY))
+-    ; /* nothing to do */
+-  else if (CGEN_BOOL_ATTR (attrs, CGEN_OPERAND_SIGNED))
+-    (*info->fprintf_func) (info->stream, "%ld", value);
+-  else
+-    (*info->fprintf_func) (info->stream, "0x%lx", value);
+-}
+-
+-/* Default address handler.  */
+-
+-static void
+-print_address (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
+-	       void *dis_info,
+-	       bfd_vma value,
+-	       unsigned int attrs,
+-	       bfd_vma pc ATTRIBUTE_UNUSED,
+-	       int length ATTRIBUTE_UNUSED)
+-{
+-  disassemble_info *info = (disassemble_info *) dis_info;
+-
+-#ifdef CGEN_PRINT_ADDRESS
+-  CGEN_PRINT_ADDRESS (cd, info, value, attrs, pc, length);
+-#endif
+-
+-  /* Print the operand as directed by the attributes.  */
+-  if (CGEN_BOOL_ATTR (attrs, CGEN_OPERAND_SEM_ONLY))
+-    ; /* nothing to do */
+-  else if (CGEN_BOOL_ATTR (attrs, CGEN_OPERAND_PCREL_ADDR))
+-    (*info->print_address_func) (value, info);
+-  else if (CGEN_BOOL_ATTR (attrs, CGEN_OPERAND_ABS_ADDR))
+-    (*info->print_address_func) (value, info);
+-  else if (CGEN_BOOL_ATTR (attrs, CGEN_OPERAND_SIGNED))
+-    (*info->fprintf_func) (info->stream, "%ld", (long) value);
+-  else
+-    (*info->fprintf_func) (info->stream, "0x%lx", (long) value);
+-}
+-
+-/* Keyword print handler.  */
+-
+-static void
+-print_keyword (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
+-	       void *dis_info,
+-	       CGEN_KEYWORD *keyword_table,
+-	       long value,
+-	       unsigned int attrs ATTRIBUTE_UNUSED)
+-{
+-  disassemble_info *info = (disassemble_info *) dis_info;
+-  const CGEN_KEYWORD_ENTRY *ke;
+-
+-  ke = cgen_keyword_lookup_value (keyword_table, value);
+-  if (ke != NULL)
+-    (*info->fprintf_func) (info->stream, "%s", ke->name);
+-  else
+-    (*info->fprintf_func) (info->stream, "???");
+-}
+-
+-/* Default insn printer.
+-
+-   DIS_INFO is defined as `void *' so the disassembler needn't know anything
+-   about disassemble_info.  */
+-
+-static void
+-print_insn_normal (CGEN_CPU_DESC cd,
+-		   void *dis_info,
+-		   const CGEN_INSN *insn,
+-		   CGEN_FIELDS *fields,
+-		   bfd_vma pc,
+-		   int length)
+-{
+-  const CGEN_SYNTAX *syntax = CGEN_INSN_SYNTAX (insn);
+-  disassemble_info *info = (disassemble_info *) dis_info;
+-  const CGEN_SYNTAX_CHAR_TYPE *syn;
+-
+-  CGEN_INIT_PRINT (cd);
+-
+-  for (syn = CGEN_SYNTAX_STRING (syntax); *syn; ++syn)
+-    {
+-      if (CGEN_SYNTAX_MNEMONIC_P (*syn))
+-	{
+-	  (*info->fprintf_func) (info->stream, "%s", CGEN_INSN_MNEMONIC (insn));
+-	  continue;
+-	}
+-      if (CGEN_SYNTAX_CHAR_P (*syn))
+-	{
+-	  (*info->fprintf_func) (info->stream, "%c", CGEN_SYNTAX_CHAR (*syn));
+-	  continue;
+-	}
+-
+-      /* We have an operand.  */
+-      openrisc_cgen_print_operand (cd, CGEN_SYNTAX_FIELD (*syn), info,
+-				 fields, CGEN_INSN_ATTRS (insn), pc, length);
+-    }
+-}
+-
+-/* Subroutine of print_insn. Reads an insn into the given buffers and updates
+-   the extract info.
+-   Returns 0 if all is well, non-zero otherwise.  */
+-
+-static int
+-read_insn (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
+-	   bfd_vma pc,
+-	   disassemble_info *info,
+-	   bfd_byte *buf,
+-	   int buflen,
+-	   CGEN_EXTRACT_INFO *ex_info,
+-	   unsigned long *insn_value)
+-{
+-  int status = (*info->read_memory_func) (pc, buf, buflen, info);
+-  if (status != 0)
+-    {
+-      (*info->memory_error_func) (status, pc, info);
+-      return -1;
+-    }
+-
+-  ex_info->dis_info = info;
+-  ex_info->valid = (1 << buflen) - 1;
+-  ex_info->insn_bytes = buf;
+-
+-  *insn_value = bfd_get_bits (buf, buflen * 8, info->endian == BFD_ENDIAN_BIG);
+-  return 0;
+-}
+-
+-/* Utility to print an insn.
+-   BUF is the base part of the insn, target byte order, BUFLEN bytes long.
+-   The result is the size of the insn in bytes or zero for an unknown insn
+-   or -1 if an error occurs fetching data (memory_error_func will have
+-   been called).  */
+-
+-static int
+-print_insn (CGEN_CPU_DESC cd,
+-	    bfd_vma pc,
+-	    disassemble_info *info,
+-	    bfd_byte *buf,
+-	    unsigned int buflen)
+-{
+-  CGEN_INSN_INT insn_value;
+-  const CGEN_INSN_LIST *insn_list;
+-  CGEN_EXTRACT_INFO ex_info;
+-  int basesize;
+-
+-  /* Extract base part of instruction, just in case CGEN_DIS_* uses it. */
+-  basesize = cd->base_insn_bitsize < buflen * 8 ?
+-                                     cd->base_insn_bitsize : buflen * 8;
+-  insn_value = cgen_get_insn_value (cd, buf, basesize);
+-
+-
+-  /* Fill in ex_info fields like read_insn would.  Don't actually call
+-     read_insn, since the incoming buffer is already read (and possibly
+-     modified a la m32r).  */
+-  ex_info.valid = (1 << buflen) - 1;
+-  ex_info.dis_info = info;
+-  ex_info.insn_bytes = buf;
+-
+-  /* The instructions are stored in hash lists.
+-     Pick the first one and keep trying until we find the right one.  */
+-
+-  insn_list = CGEN_DIS_LOOKUP_INSN (cd, (char *) buf, insn_value);
+-  while (insn_list != NULL)
+-    {
+-      const CGEN_INSN *insn = insn_list->insn;
+-      CGEN_FIELDS fields;
+-      int length;
+-      unsigned long insn_value_cropped;
+-
+-#ifdef CGEN_VALIDATE_INSN_SUPPORTED 
+-      /* Not needed as insn shouldn't be in hash lists if not supported.  */
+-      /* Supported by this cpu?  */
+-      if (! openrisc_cgen_insn_supported (cd, insn))
+-        {
+-          insn_list = CGEN_DIS_NEXT_INSN (insn_list);
+-	  continue;
+-        }
+-#endif
+-
+-      /* Basic bit mask must be correct.  */
+-      /* ??? May wish to allow target to defer this check until the extract
+-	 handler.  */
+-
+-      /* Base size may exceed this instruction's size.  Extract the
+-         relevant part from the buffer. */
+-      if ((unsigned) (CGEN_INSN_BITSIZE (insn) / 8) < buflen &&
+-	  (unsigned) (CGEN_INSN_BITSIZE (insn) / 8) <= sizeof (unsigned long))
+-	insn_value_cropped = bfd_get_bits (buf, CGEN_INSN_BITSIZE (insn), 
+-					   info->endian == BFD_ENDIAN_BIG);
+-      else
+-	insn_value_cropped = insn_value;
+-
+-      if ((insn_value_cropped & CGEN_INSN_BASE_MASK (insn))
+-	  == CGEN_INSN_BASE_VALUE (insn))
+-	{
+-	  /* Printing is handled in two passes.  The first pass parses the
+-	     machine insn and extracts the fields.  The second pass prints
+-	     them.  */
+-
+-	  /* Make sure the entire insn is loaded into insn_value, if it
+-	     can fit.  */
+-	  if (((unsigned) CGEN_INSN_BITSIZE (insn) > cd->base_insn_bitsize) &&
+-	      (unsigned) (CGEN_INSN_BITSIZE (insn) / 8) <= sizeof (unsigned long))
+-	    {
+-	      unsigned long full_insn_value;
+-	      int rc = read_insn (cd, pc, info, buf,
+-				  CGEN_INSN_BITSIZE (insn) / 8,
+-				  & ex_info, & full_insn_value);
+-	      if (rc != 0)
+-		return rc;
+-	      length = CGEN_EXTRACT_FN (cd, insn)
+-		(cd, insn, &ex_info, full_insn_value, &fields, pc);
+-	    }
+-	  else
+-	    length = CGEN_EXTRACT_FN (cd, insn)
+-	      (cd, insn, &ex_info, insn_value_cropped, &fields, pc);
+-
+-	  /* length < 0 -> error */
+-	  if (length < 0)
+-	    return length;
+-	  if (length > 0)
+-	    {
+-	      CGEN_PRINT_FN (cd, insn) (cd, info, insn, &fields, pc, length);
+-	      /* length is in bits, result is in bytes */
+-	      return length / 8;
+-	    }
+-	}
+-
+-      insn_list = CGEN_DIS_NEXT_INSN (insn_list);
+-    }
+-
+-  return 0;
+-}
+-
+-/* Default value for CGEN_PRINT_INSN.
+-   The result is the size of the insn in bytes or zero for an unknown insn
+-   or -1 if an error occured fetching bytes.  */
+-
+-#ifndef CGEN_PRINT_INSN
+-#define CGEN_PRINT_INSN default_print_insn
+-#endif
+-
+-static int
+-default_print_insn (CGEN_CPU_DESC cd, bfd_vma pc, disassemble_info *info)
+-{
+-  bfd_byte buf[CGEN_MAX_INSN_SIZE];
+-  int buflen;
+-  int status;
+-
+-  /* Attempt to read the base part of the insn.  */
+-  buflen = cd->base_insn_bitsize / 8;
+-  status = (*info->read_memory_func) (pc, buf, buflen, info);
+-
+-  /* Try again with the minimum part, if min < base.  */
+-  if (status != 0 && (cd->min_insn_bitsize < cd->base_insn_bitsize))
+-    {
+-      buflen = cd->min_insn_bitsize / 8;
+-      status = (*info->read_memory_func) (pc, buf, buflen, info);
+-    }
+-
+-  if (status != 0)
+-    {
+-      (*info->memory_error_func) (status, pc, info);
+-      return -1;
+-    }
+-
+-  return print_insn (cd, pc, info, buf, buflen);
+-}
+-
+-/* Main entry point.
+-   Print one instruction from PC on INFO->STREAM.
+-   Return the size of the instruction (in bytes).  */
+-
+-typedef struct cpu_desc_list {
+-  struct cpu_desc_list *next;
+-  int isa;
+-  int mach;
+-  int endian;
+-  CGEN_CPU_DESC cd;
+-} cpu_desc_list;
+-
+-int
+-print_insn_openrisc (bfd_vma pc, disassemble_info *info)
+-{
+-  static cpu_desc_list *cd_list = 0;
+-  cpu_desc_list *cl = 0;
+-  static CGEN_CPU_DESC cd = 0;
+-  static int prev_isa;
+-  static int prev_mach;
+-  static int prev_endian;
+-  int length;
+-  int isa,mach;
+-  int endian = (info->endian == BFD_ENDIAN_BIG
+-		? CGEN_ENDIAN_BIG
+-		: CGEN_ENDIAN_LITTLE);
+-  enum bfd_architecture arch;
+-
+-  /* ??? gdb will set mach but leave the architecture as "unknown" */
+-#ifndef CGEN_BFD_ARCH
+-#define CGEN_BFD_ARCH bfd_arch_openrisc
+-#endif
+-  arch = info->arch;
+-  if (arch == bfd_arch_unknown)
+-    arch = CGEN_BFD_ARCH;
+-   
+-  /* There's no standard way to compute the machine or isa number
+-     so we leave it to the target.  */
+-#ifdef CGEN_COMPUTE_MACH
+-  mach = CGEN_COMPUTE_MACH (info);
+-#else
+-  mach = info->mach;
+-#endif
+-
+-#ifdef CGEN_COMPUTE_ISA
+-  isa = CGEN_COMPUTE_ISA (info);
+-#else
+-  isa = info->insn_sets;
+-#endif
+-
+-  /* If we've switched cpu's, try to find a handle we've used before */
+-  if (cd
+-      && (isa != prev_isa
+-	  || mach != prev_mach
+-	  || endian != prev_endian))
+-    {
+-      cd = 0;
+-      for (cl = cd_list; cl; cl = cl->next)
+-	{
+-	  if (cl->isa == isa &&
+-	      cl->mach == mach &&
+-	      cl->endian == endian)
+-	    {
+-	      cd = cl->cd;
+-	      break;
+-	    }
+-	}
+-    } 
+-
+-  /* If we haven't initialized yet, initialize the opcode table.  */
+-  if (! cd)
+-    {
+-      const bfd_arch_info_type *arch_type = bfd_lookup_arch (arch, mach);
+-      const char *mach_name;
+-
+-      if (!arch_type)
+-	abort ();
+-      mach_name = arch_type->printable_name;
+-
+-      prev_isa = isa;
+-      prev_mach = mach;
+-      prev_endian = endian;
+-      cd = openrisc_cgen_cpu_open (CGEN_CPU_OPEN_ISAS, prev_isa,
+-				 CGEN_CPU_OPEN_BFDMACH, mach_name,
+-				 CGEN_CPU_OPEN_ENDIAN, prev_endian,
+-				 CGEN_CPU_OPEN_END);
+-      if (!cd)
+-	abort ();
+-
+-      /* save this away for future reference */
+-      cl = xmalloc (sizeof (struct cpu_desc_list));
+-      cl->cd = cd;
+-      cl->isa = isa;
+-      cl->mach = mach;
+-      cl->endian = endian;
+-      cl->next = cd_list;
+-      cd_list = cl;
+-
+-      openrisc_cgen_init_dis (cd);
+-    }
+-
+-  /* We try to have as much common code as possible.
+-     But at this point some targets need to take over.  */
+-  /* ??? Some targets may need a hook elsewhere.  Try to avoid this,
+-     but if not possible try to move this hook elsewhere rather than
+-     have two hooks.  */
+-  length = CGEN_PRINT_INSN (cd, pc, info);
+-  if (length > 0)
+-    return length;
+-  if (length < 0)
+-    return -1;
+-
+-  (*info->fprintf_func) (info->stream, UNKNOWN_INSN_MSG);
+-  return cd->default_insn_bitsize / 8;
+-}
+diff --unified -N -r ../binutils-2.16.1/opcodes/openrisc-ibld.c binutils-2.16.1/opcodes/openrisc-ibld.c
+--- ../binutils-2.16.1/opcodes/openrisc-ibld.c	2003-08-09 02:39:21.000000000 +0200
++++ binutils-2.16.1/opcodes/openrisc-ibld.c	1970-01-01 01:00:00.000000000 +0100
+@@ -1,1025 +0,0 @@
+-/* Instruction building/extraction support for openrisc. -*- C -*-
+-
+-THIS FILE IS MACHINE GENERATED WITH CGEN: Cpu tools GENerator.
+-- the resultant file is machine generated, cgen-ibld.in isn't
+-
+-Copyright 1996, 1997, 1998, 1999, 2000, 2001 Free Software Foundation, Inc.
+-
+-This file is part of the GNU Binutils and GDB, the GNU debugger.
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License as published by
+-the Free Software Foundation; either version 2, or (at your option)
+-any later version.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License
+-along with this program; if not, write to the Free Software Foundation, Inc.,
+-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
+-
+-/* ??? Eventually more and more of this stuff can go to cpu-independent files.
+-   Keep that in mind.  */
+-
+-#include "sysdep.h"
+-#include <stdio.h>
+-#include "ansidecl.h"
+-#include "dis-asm.h"
+-#include "bfd.h"
+-#include "symcat.h"
+-#include "openrisc-desc.h"
+-#include "openrisc-opc.h"
+-#include "opintl.h"
+-#include "safe-ctype.h"
+-
+-#undef min
+-#define min(a,b) ((a) < (b) ? (a) : (b))
+-#undef max
+-#define max(a,b) ((a) > (b) ? (a) : (b))
+-
+-/* Used by the ifield rtx function.  */
+-#define FLD(f) (fields->f)
+-
+-static const char * insert_normal
+-  (CGEN_CPU_DESC, long, unsigned int, unsigned int, unsigned int,
+-   unsigned int, unsigned int, unsigned int, CGEN_INSN_BYTES_PTR);
+-static const char * insert_insn_normal
+-  (CGEN_CPU_DESC, const CGEN_INSN *,
+-   CGEN_FIELDS *, CGEN_INSN_BYTES_PTR, bfd_vma);
+-static int extract_normal
+-  (CGEN_CPU_DESC, CGEN_EXTRACT_INFO *, CGEN_INSN_INT,
+-   unsigned int, unsigned int, unsigned int, unsigned int,
+-   unsigned int, unsigned int, bfd_vma, long *);
+-static int extract_insn_normal
+-  (CGEN_CPU_DESC, const CGEN_INSN *, CGEN_EXTRACT_INFO *,
+-   CGEN_INSN_INT, CGEN_FIELDS *, bfd_vma);
+-#if CGEN_INT_INSN_P
+-static void put_insn_int_value
+-  (CGEN_CPU_DESC, CGEN_INSN_BYTES_PTR, int, int, CGEN_INSN_INT);
+-#endif
+-#if ! CGEN_INT_INSN_P
+-static CGEN_INLINE void insert_1
+-  (CGEN_CPU_DESC, unsigned long, int, int, int, unsigned char *);
+-static CGEN_INLINE int fill_cache
+-  (CGEN_CPU_DESC, CGEN_EXTRACT_INFO *,  int, int, bfd_vma);
+-static CGEN_INLINE long extract_1
+-  (CGEN_CPU_DESC, CGEN_EXTRACT_INFO *, int, int, int, unsigned char *, bfd_vma);
+-#endif
+-
+-/* Operand insertion.  */
+-
+-#if ! CGEN_INT_INSN_P
+-
+-/* Subroutine of insert_normal.  */
+-
+-static CGEN_INLINE void
+-insert_1 (CGEN_CPU_DESC cd,
+-	  unsigned long value,
+-	  int start,
+-	  int length,
+-	  int word_length,
+-	  unsigned char *bufp)
+-{
+-  unsigned long x,mask;
+-  int shift;
+-
+-  x = cgen_get_insn_value (cd, bufp, word_length);
+-
+-  /* Written this way to avoid undefined behaviour.  */
+-  mask = (((1L << (length - 1)) - 1) << 1) | 1;
+-  if (CGEN_INSN_LSB0_P)
+-    shift = (start + 1) - length;
+-  else
+-    shift = (word_length - (start + length));
+-  x = (x & ~(mask << shift)) | ((value & mask) << shift);
+-
+-  cgen_put_insn_value (cd, bufp, word_length, (bfd_vma) x);
+-}
+-
+-#endif /* ! CGEN_INT_INSN_P */
+-
+-/* Default insertion routine.
+-
+-   ATTRS is a mask of the boolean attributes.
+-   WORD_OFFSET is the offset in bits from the start of the insn of the value.
+-   WORD_LENGTH is the length of the word in bits in which the value resides.
+-   START is the starting bit number in the word, architecture origin.
+-   LENGTH is the length of VALUE in bits.
+-   TOTAL_LENGTH is the total length of the insn in bits.
+-
+-   The result is an error message or NULL if success.  */
+-
+-/* ??? This duplicates functionality with bfd's howto table and
+-   bfd_install_relocation.  */
+-/* ??? This doesn't handle bfd_vma's.  Create another function when
+-   necessary.  */
+-
+-static const char *
+-insert_normal (CGEN_CPU_DESC cd,
+-	       long value,
+-	       unsigned int attrs,
+-	       unsigned int word_offset,
+-	       unsigned int start,
+-	       unsigned int length,
+-	       unsigned int word_length,
+-	       unsigned int total_length,
+-	       CGEN_INSN_BYTES_PTR buffer)
+-{
+-  static char errbuf[100];
+-  /* Written this way to avoid undefined behaviour.  */
+-  unsigned long mask = (((1L << (length - 1)) - 1) << 1) | 1;
+-
+-  /* If LENGTH is zero, this operand doesn't contribute to the value.  */
+-  if (length == 0)
+-    return NULL;
+-
+-#if 0
+-  if (CGEN_INT_INSN_P
+-      && word_offset != 0)
+-    abort ();
+-#endif
+-
+-  if (word_length > 32)
+-    abort ();
+-
+-  /* For architectures with insns smaller than the base-insn-bitsize,
+-     word_length may be too big.  */
+-  if (cd->min_insn_bitsize < cd->base_insn_bitsize)
+-    {
+-      if (word_offset == 0
+-	  && word_length > total_length)
+-	word_length = total_length;
+-    }
+-
+-  /* Ensure VALUE will fit.  */
+-  if (CGEN_BOOL_ATTR (attrs, CGEN_IFLD_SIGN_OPT))
+-    {
+-      long minval = - (1L << (length - 1));
+-      unsigned long maxval = mask;
+-      
+-      if ((value > 0 && (unsigned long) value > maxval)
+-	  || value < minval)
+-	{
+-	  /* xgettext:c-format */
+-	  sprintf (errbuf,
+-		   _("operand out of range (%ld not between %ld and %lu)"),
+-		   value, minval, maxval);
+-	  return errbuf;
+-	}
+-    }
+-  else if (! CGEN_BOOL_ATTR (attrs, CGEN_IFLD_SIGNED))
+-    {
+-      unsigned long maxval = mask;
+-      
+-      if ((unsigned long) value > maxval)
+-	{
+-	  /* xgettext:c-format */
+-	  sprintf (errbuf,
+-		   _("operand out of range (%lu not between 0 and %lu)"),
+-		   value, maxval);
+-	  return errbuf;
+-	}
+-    }
+-  else
+-    {
+-      if (! cgen_signed_overflow_ok_p (cd))
+-	{
+-	  long minval = - (1L << (length - 1));
+-	  long maxval =   (1L << (length - 1)) - 1;
+-	  
+-	  if (value < minval || value > maxval)
+-	    {
+-	      sprintf
+-		/* xgettext:c-format */
+-		(errbuf, _("operand out of range (%ld not between %ld and %ld)"),
+-		 value, minval, maxval);
+-	      return errbuf;
+-	    }
+-	}
+-    }
+-
+-#if CGEN_INT_INSN_P
+-
+-  {
+-    int shift;
+-
+-    if (CGEN_INSN_LSB0_P)
+-      shift = (word_offset + start + 1) - length;
+-    else
+-      shift = total_length - (word_offset + start + length);
+-    *buffer = (*buffer & ~(mask << shift)) | ((value & mask) << shift);
+-  }
+-
+-#else /* ! CGEN_INT_INSN_P */
+-
+-  {
+-    unsigned char *bufp = (unsigned char *) buffer + word_offset / 8;
+-
+-    insert_1 (cd, value, start, length, word_length, bufp);
+-  }
+-
+-#endif /* ! CGEN_INT_INSN_P */
+-
+-  return NULL;
+-}
+-
+-/* Default insn builder (insert handler).
+-   The instruction is recorded in CGEN_INT_INSN_P byte order (meaning
+-   that if CGEN_INSN_BYTES_PTR is an int * and thus, the value is
+-   recorded in host byte order, otherwise BUFFER is an array of bytes
+-   and the value is recorded in target byte order).
+-   The result is an error message or NULL if success.  */
+-
+-static const char *
+-insert_insn_normal (CGEN_CPU_DESC cd,
+-		    const CGEN_INSN * insn,
+-		    CGEN_FIELDS * fields,
+-		    CGEN_INSN_BYTES_PTR buffer,
+-		    bfd_vma pc)
+-{
+-  const CGEN_SYNTAX *syntax = CGEN_INSN_SYNTAX (insn);
+-  unsigned long value;
+-  const CGEN_SYNTAX_CHAR_TYPE * syn;
+-
+-  CGEN_INIT_INSERT (cd);
+-  value = CGEN_INSN_BASE_VALUE (insn);
+-
+-  /* If we're recording insns as numbers (rather than a string of bytes),
+-     target byte order handling is deferred until later.  */
+-
+-#if CGEN_INT_INSN_P
+-
+-  put_insn_int_value (cd, buffer, cd->base_insn_bitsize,
+-		      CGEN_FIELDS_BITSIZE (fields), value);
+-
+-#else
+-
+-  cgen_put_insn_value (cd, buffer, min ((unsigned) cd->base_insn_bitsize,
+-					(unsigned) CGEN_FIELDS_BITSIZE (fields)),
+-		       value);
+-
+-#endif /* ! CGEN_INT_INSN_P */
+-
+-  /* ??? It would be better to scan the format's fields.
+-     Still need to be able to insert a value based on the operand though;
+-     e.g. storing a branch displacement that got resolved later.
+-     Needs more thought first.  */
+-
+-  for (syn = CGEN_SYNTAX_STRING (syntax); * syn; ++ syn)
+-    {
+-      const char *errmsg;
+-
+-      if (CGEN_SYNTAX_CHAR_P (* syn))
+-	continue;
+-
+-      errmsg = (* cd->insert_operand) (cd, CGEN_SYNTAX_FIELD (*syn),
+-				       fields, buffer, pc);
+-      if (errmsg)
+-	return errmsg;
+-    }
+-
+-  return NULL;
+-}
+-
+-#if CGEN_INT_INSN_P
+-/* Cover function to store an insn value into an integral insn.  Must go here
+- because it needs <prefix>-desc.h for CGEN_INT_INSN_P.  */
+-
+-static void
+-put_insn_int_value (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
+-		    CGEN_INSN_BYTES_PTR buf,
+-		    int length,
+-		    int insn_length,
+-		    CGEN_INSN_INT value)
+-{
+-  /* For architectures with insns smaller than the base-insn-bitsize,
+-     length may be too big.  */
+-  if (length > insn_length)
+-    *buf = value;
+-  else
+-    {
+-      int shift = insn_length - length;
+-      /* Written this way to avoid undefined behaviour.  */
+-      CGEN_INSN_INT mask = (((1L << (length - 1)) - 1) << 1) | 1;
+-      *buf = (*buf & ~(mask << shift)) | ((value & mask) << shift);
+-    }
+-}
+-#endif
+-
+-/* Operand extraction.  */
+-
+-#if ! CGEN_INT_INSN_P
+-
+-/* Subroutine of extract_normal.
+-   Ensure sufficient bytes are cached in EX_INFO.
+-   OFFSET is the offset in bytes from the start of the insn of the value.
+-   BYTES is the length of the needed value.
+-   Returns 1 for success, 0 for failure.  */
+-
+-static CGEN_INLINE int
+-fill_cache (CGEN_CPU_DESC cd ATTRIBUTE_UNUSED,
+-	    CGEN_EXTRACT_INFO *ex_info,
+-	    int offset,
+-	    int bytes,
+-	    bfd_vma pc)
+-{
+-  /* It's doubtful that the middle part has already been fetched so
+-     we don't optimize that case.  kiss.  */
+-  unsigned int mask;
+-  disassemble_info *info = (disassemble_info *) ex_info->dis_info;
+-
+-  /* First do a quick check.  */
+-  mask = (1 << bytes) - 1;
+-  if (((ex_info->valid >> offset) & mask) == mask)
+-    return 1;
+-
+-  /* Search for the first byte we need to read.  */
+-  for (mask = 1 << offset; bytes > 0; --bytes, ++offset, mask <<= 1)
+-    if (! (mask & ex_info->valid))
+-      break;
+-
+-  if (bytes)
+-    {
+-      int status;
+-
+-      pc += offset;
+-      status = (*info->read_memory_func)
+-	(pc, ex_info->insn_bytes + offset, bytes, info);
+-
+-      if (status != 0)
+-	{
+-	  (*info->memory_error_func) (status, pc, info);
+-	  return 0;
+-	}
+-
+-      ex_info->valid |= ((1 << bytes) - 1) << offset;
+-    }
+-
+-  return 1;
+-}
+-
+-/* Subroutine of extract_normal.  */
+-
+-static CGEN_INLINE long
+-extract_1 (CGEN_CPU_DESC cd,
+-	   CGEN_EXTRACT_INFO *ex_info ATTRIBUTE_UNUSED,
+-	   int start,
+-	   int length,
+-	   int word_length,
+-	   unsigned char *bufp,
+-	   bfd_vma pc ATTRIBUTE_UNUSED)
+-{
+-  unsigned long x;
+-  int shift;
+-#if 0
+-  int big_p = CGEN_CPU_INSN_ENDIAN (cd) == CGEN_ENDIAN_BIG;
+-#endif
+-  x = cgen_get_insn_value (cd, bufp, word_length);
+-
+-  if (CGEN_INSN_LSB0_P)
+-    shift = (start + 1) - length;
+-  else
+-    shift = (word_length - (start + length));
+-  return x >> shift;
+-}
+-
+-#endif /* ! CGEN_INT_INSN_P */
+-
+-/* Default extraction routine.
+-
+-   INSN_VALUE is the first base_insn_bitsize bits of the insn in host order,
+-   or sometimes less for cases like the m32r where the base insn size is 32
+-   but some insns are 16 bits.
+-   ATTRS is a mask of the boolean attributes.  We only need `SIGNED',
+-   but for generality we take a bitmask of all of them.
+-   WORD_OFFSET is the offset in bits from the start of the insn of the value.
+-   WORD_LENGTH is the length of the word in bits in which the value resides.
+-   START is the starting bit number in the word, architecture origin.
+-   LENGTH is the length of VALUE in bits.
+-   TOTAL_LENGTH is the total length of the insn in bits.
+-
+-   Returns 1 for success, 0 for failure.  */
+-
+-/* ??? The return code isn't properly used.  wip.  */
+-
+-/* ??? This doesn't handle bfd_vma's.  Create another function when
+-   necessary.  */
+-
+-static int
+-extract_normal (CGEN_CPU_DESC cd,
+-#if ! CGEN_INT_INSN_P
+-		CGEN_EXTRACT_INFO *ex_info,
+-#else
+-		CGEN_EXTRACT_INFO *ex_info ATTRIBUTE_UNUSED,
+-#endif
+-		CGEN_INSN_INT insn_value,
+-		unsigned int attrs,
+-		unsigned int word_offset,
+-		unsigned int start,
+-		unsigned int length,
+-		unsigned int word_length,
+-		unsigned int total_length,
+-#if ! CGEN_INT_INSN_P
+-		bfd_vma pc,
+-#else
+-		bfd_vma pc ATTRIBUTE_UNUSED,
+-#endif
+-		long *valuep)
+-{
+-  long value, mask;
+-
+-  /* If LENGTH is zero, this operand doesn't contribute to the value
+-     so give it a standard value of zero.  */
+-  if (length == 0)
+-    {
+-      *valuep = 0;
+-      return 1;
+-    }
+-
+-#if 0
+-  if (CGEN_INT_INSN_P
+-      && word_offset != 0)
+-    abort ();
+-#endif
+-
+-  if (word_length > 32)
+-    abort ();
+-
+-  /* For architectures with insns smaller than the insn-base-bitsize,
+-     word_length may be too big.  */
+-  if (cd->min_insn_bitsize < cd->base_insn_bitsize)
+-    {
+-      if (word_offset == 0
+-	  && word_length > total_length)
+-	word_length = total_length;
+-    }
+-
+-  /* Does the value reside in INSN_VALUE, and at the right alignment?  */
+-
+-  if (CGEN_INT_INSN_P || (word_offset == 0 && word_length == total_length))
+-    {
+-      if (CGEN_INSN_LSB0_P)
+-	value = insn_value >> ((word_offset + start + 1) - length);
+-      else
+-	value = insn_value >> (total_length - ( word_offset + start + length));
+-    }
+-
+-#if ! CGEN_INT_INSN_P
+-
+-  else
+-    {
+-      unsigned char *bufp = ex_info->insn_bytes + word_offset / 8;
+-
+-      if (word_length > 32)
+-	abort ();
+-
+-      if (fill_cache (cd, ex_info, word_offset / 8, word_length / 8, pc) == 0)
+-	return 0;
+-
+-      value = extract_1 (cd, ex_info, start, length, word_length, bufp, pc);
+-    }
+-
+-#endif /* ! CGEN_INT_INSN_P */
+-
+-  /* Written this way to avoid undefined behaviour.  */
+-  mask = (((1L << (length - 1)) - 1) << 1) | 1;
+-
+-  value &= mask;
+-  /* sign extend? */
+-  if (CGEN_BOOL_ATTR (attrs, CGEN_IFLD_SIGNED)
+-      && (value & (1L << (length - 1))))
+-    value |= ~mask;
+-
+-  *valuep = value;
+-
+-  return 1;
+-}
+-
+-/* Default insn extractor.
+-
+-   INSN_VALUE is the first base_insn_bitsize bits, translated to host order.
+-   The extracted fields are stored in FIELDS.
+-   EX_INFO is used to handle reading variable length insns.
+-   Return the length of the insn in bits, or 0 if no match,
+-   or -1 if an error occurs fetching data (memory_error_func will have
+-   been called).  */
+-
+-static int
+-extract_insn_normal (CGEN_CPU_DESC cd,
+-		     const CGEN_INSN *insn,
+-		     CGEN_EXTRACT_INFO *ex_info,
+-		     CGEN_INSN_INT insn_value,
+-		     CGEN_FIELDS *fields,
+-		     bfd_vma pc)
+-{
+-  const CGEN_SYNTAX *syntax = CGEN_INSN_SYNTAX (insn);
+-  const CGEN_SYNTAX_CHAR_TYPE *syn;
+-
+-  CGEN_FIELDS_BITSIZE (fields) = CGEN_INSN_BITSIZE (insn);
+-
+-  CGEN_INIT_EXTRACT (cd);
+-
+-  for (syn = CGEN_SYNTAX_STRING (syntax); *syn; ++syn)
+-    {
+-      int length;
+-
+-      if (CGEN_SYNTAX_CHAR_P (*syn))
+-	continue;
+-
+-      length = (* cd->extract_operand) (cd, CGEN_SYNTAX_FIELD (*syn),
+-					ex_info, insn_value, fields, pc);
+-      if (length <= 0)
+-	return length;
+-    }
+-
+-  /* We recognized and successfully extracted this insn.  */
+-  return CGEN_INSN_BITSIZE (insn);
+-}
+-
+-/* machine generated code added here */
+-
+-const char * openrisc_cgen_insert_operand
+-  PARAMS ((CGEN_CPU_DESC, int, CGEN_FIELDS *, CGEN_INSN_BYTES_PTR, bfd_vma));
+-
+-/* Main entry point for operand insertion.
+-
+-   This function is basically just a big switch statement.  Earlier versions
+-   used tables to look up the function to use, but
+-   - if the table contains both assembler and disassembler functions then
+-     the disassembler contains much of the assembler and vice-versa,
+-   - there's a lot of inlining possibilities as things grow,
+-   - using a switch statement avoids the function call overhead.
+-
+-   This function could be moved into `parse_insn_normal', but keeping it
+-   separate makes clear the interface between `parse_insn_normal' and each of
+-   the handlers.  It's also needed by GAS to insert operands that couldn't be
+-   resolved during parsing.  */
+-
+-const char *
+-openrisc_cgen_insert_operand (cd, opindex, fields, buffer, pc)
+-     CGEN_CPU_DESC cd;
+-     int opindex;
+-     CGEN_FIELDS * fields;
+-     CGEN_INSN_BYTES_PTR buffer;
+-     bfd_vma pc ATTRIBUTE_UNUSED;
+-{
+-  const char * errmsg = NULL;
+-  unsigned int total_length = CGEN_FIELDS_BITSIZE (fields);
+-
+-  switch (opindex)
+-    {
+-    case OPENRISC_OPERAND_ABS_26 :
+-      {
+-        long value = fields->f_abs26;
+-        value = ((unsigned int) (pc) >> (2));
+-        errmsg = insert_normal (cd, value, 0|(1<<CGEN_IFLD_SIGNED)|(1<<CGEN_IFLD_ABS_ADDR), 0, 25, 26, 32, total_length, buffer);
+-      }
+-      break;
+-    case OPENRISC_OPERAND_DISP_26 :
+-      {
+-        long value = fields->f_disp26;
+-        value = ((int) (((value) - (pc))) >> (2));
+-        errmsg = insert_normal (cd, value, 0|(1<<CGEN_IFLD_SIGNED)|(1<<CGEN_IFLD_PCREL_ADDR), 0, 25, 26, 32, total_length, buffer);
+-      }
+-      break;
+-    case OPENRISC_OPERAND_HI16 :
+-      errmsg = insert_normal (cd, fields->f_simm16, 0|(1<<CGEN_IFLD_SIGNED), 0, 15, 16, 32, total_length, buffer);
+-      break;
+-    case OPENRISC_OPERAND_LO16 :
+-      errmsg = insert_normal (cd, fields->f_lo16, 0|(1<<CGEN_IFLD_SIGNED), 0, 15, 16, 32, total_length, buffer);
+-      break;
+-    case OPENRISC_OPERAND_OP_F_23 :
+-      errmsg = insert_normal (cd, fields->f_op4, 0, 0, 23, 3, 32, total_length, buffer);
+-      break;
+-    case OPENRISC_OPERAND_OP_F_3 :
+-      errmsg = insert_normal (cd, fields->f_op5, 0, 0, 25, 5, 32, total_length, buffer);
+-      break;
+-    case OPENRISC_OPERAND_RA :
+-      errmsg = insert_normal (cd, fields->f_r2, 0, 0, 20, 5, 32, total_length, buffer);
+-      break;
+-    case OPENRISC_OPERAND_RB :
+-      errmsg = insert_normal (cd, fields->f_r3, 0, 0, 15, 5, 32, total_length, buffer);
+-      break;
+-    case OPENRISC_OPERAND_RD :
+-      errmsg = insert_normal (cd, fields->f_r1, 0, 0, 25, 5, 32, total_length, buffer);
+-      break;
+-    case OPENRISC_OPERAND_SIMM_16 :
+-      errmsg = insert_normal (cd, fields->f_simm16, 0|(1<<CGEN_IFLD_SIGNED), 0, 15, 16, 32, total_length, buffer);
+-      break;
+-    case OPENRISC_OPERAND_UI16NC :
+-      {
+-{
+-  FLD (f_i16_2) = ((((unsigned int) (FLD (f_i16nc)) >> (11))) & (31));
+-  FLD (f_i16_1) = ((FLD (f_i16nc)) & (2047));
+-}
+-        errmsg = insert_normal (cd, fields->f_i16_1, 0, 0, 10, 11, 32, total_length, buffer);
+-        if (errmsg)
+-          break;
+-        errmsg = insert_normal (cd, fields->f_i16_2, 0, 0, 25, 5, 32, total_length, buffer);
+-        if (errmsg)
+-          break;
+-      }
+-      break;
+-    case OPENRISC_OPERAND_UIMM_16 :
+-      errmsg = insert_normal (cd, fields->f_uimm16, 0, 0, 15, 16, 32, total_length, buffer);
+-      break;
+-    case OPENRISC_OPERAND_UIMM_5 :
+-      errmsg = insert_normal (cd, fields->f_uimm5, 0, 0, 4, 5, 32, total_length, buffer);
+-      break;
+-
+-    default :
+-      /* xgettext:c-format */
+-      fprintf (stderr, _("Unrecognized field %d while building insn.\n"),
+-	       opindex);
+-      abort ();
+-  }
+-
+-  return errmsg;
+-}
+-
+-int openrisc_cgen_extract_operand
+-  PARAMS ((CGEN_CPU_DESC, int, CGEN_EXTRACT_INFO *, CGEN_INSN_INT,
+-           CGEN_FIELDS *, bfd_vma));
+-
+-/* Main entry point for operand extraction.
+-   The result is <= 0 for error, >0 for success.
+-   ??? Actual values aren't well defined right now.
+-
+-   This function is basically just a big switch statement.  Earlier versions
+-   used tables to look up the function to use, but
+-   - if the table contains both assembler and disassembler functions then
+-     the disassembler contains much of the assembler and vice-versa,
+-   - there's a lot of inlining possibilities as things grow,
+-   - using a switch statement avoids the function call overhead.
+-
+-   This function could be moved into `print_insn_normal', but keeping it
+-   separate makes clear the interface between `print_insn_normal' and each of
+-   the handlers.  */
+-
+-int
+-openrisc_cgen_extract_operand (cd, opindex, ex_info, insn_value, fields, pc)
+-     CGEN_CPU_DESC cd;
+-     int opindex;
+-     CGEN_EXTRACT_INFO *ex_info;
+-     CGEN_INSN_INT insn_value;
+-     CGEN_FIELDS * fields;
+-     bfd_vma pc;
+-{
+-  /* Assume success (for those operands that are nops).  */
+-  int length = 1;
+-  unsigned int total_length = CGEN_FIELDS_BITSIZE (fields);
+-
+-  switch (opindex)
+-    {
+-    case OPENRISC_OPERAND_ABS_26 :
+-      {
+-        long value;
+-        length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED)|(1<<CGEN_IFLD_ABS_ADDR), 0, 25, 26, 32, total_length, pc, & value);
+-        value = ((value) << (2));
+-        fields->f_abs26 = value;
+-      }
+-      break;
+-    case OPENRISC_OPERAND_DISP_26 :
+-      {
+-        long value;
+-        length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED)|(1<<CGEN_IFLD_PCREL_ADDR), 0, 25, 26, 32, total_length, pc, & value);
+-        value = ((((value) << (2))) + (pc));
+-        fields->f_disp26 = value;
+-      }
+-      break;
+-    case OPENRISC_OPERAND_HI16 :
+-      length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 15, 16, 32, total_length, pc, & fields->f_simm16);
+-      break;
+-    case OPENRISC_OPERAND_LO16 :
+-      length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 15, 16, 32, total_length, pc, & fields->f_lo16);
+-      break;
+-    case OPENRISC_OPERAND_OP_F_23 :
+-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 23, 3, 32, total_length, pc, & fields->f_op4);
+-      break;
+-    case OPENRISC_OPERAND_OP_F_3 :
+-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 25, 5, 32, total_length, pc, & fields->f_op5);
+-      break;
+-    case OPENRISC_OPERAND_RA :
+-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 20, 5, 32, total_length, pc, & fields->f_r2);
+-      break;
+-    case OPENRISC_OPERAND_RB :
+-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 15, 5, 32, total_length, pc, & fields->f_r3);
+-      break;
+-    case OPENRISC_OPERAND_RD :
+-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 25, 5, 32, total_length, pc, & fields->f_r1);
+-      break;
+-    case OPENRISC_OPERAND_SIMM_16 :
+-      length = extract_normal (cd, ex_info, insn_value, 0|(1<<CGEN_IFLD_SIGNED), 0, 15, 16, 32, total_length, pc, & fields->f_simm16);
+-      break;
+-    case OPENRISC_OPERAND_UI16NC :
+-      {
+-        length = extract_normal (cd, ex_info, insn_value, 0, 0, 10, 11, 32, total_length, pc, & fields->f_i16_1);
+-        if (length <= 0) break;
+-        length = extract_normal (cd, ex_info, insn_value, 0, 0, 25, 5, 32, total_length, pc, & fields->f_i16_2);
+-        if (length <= 0) break;
+-{
+-  FLD (f_i16nc) = openrisc_sign_extend_16bit (((((FLD (f_i16_2)) << (11))) | (FLD (f_i16_1))));
+-}
+-      }
+-      break;
+-    case OPENRISC_OPERAND_UIMM_16 :
+-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 15, 16, 32, total_length, pc, & fields->f_uimm16);
+-      break;
+-    case OPENRISC_OPERAND_UIMM_5 :
+-      length = extract_normal (cd, ex_info, insn_value, 0, 0, 4, 5, 32, total_length, pc, & fields->f_uimm5);
+-      break;
+-
+-    default :
+-      /* xgettext:c-format */
+-      fprintf (stderr, _("Unrecognized field %d while decoding insn.\n"),
+-	       opindex);
+-      abort ();
+-    }
+-
+-  return length;
+-}
+-
+-cgen_insert_fn * const openrisc_cgen_insert_handlers[] = 
+-{
+-  insert_insn_normal,
+-};
+-
+-cgen_extract_fn * const openrisc_cgen_extract_handlers[] = 
+-{
+-  extract_insn_normal,
+-};
+-
+-int openrisc_cgen_get_int_operand
+-  PARAMS ((CGEN_CPU_DESC, int, const CGEN_FIELDS *));
+-bfd_vma openrisc_cgen_get_vma_operand
+-  PARAMS ((CGEN_CPU_DESC, int, const CGEN_FIELDS *));
+-
+-/* Getting values from cgen_fields is handled by a collection of functions.
+-   They are distinguished by the type of the VALUE argument they return.
+-   TODO: floating point, inlining support, remove cases where result type
+-   not appropriate.  */
+-
+-int
+-openrisc_cgen_get_int_operand (cd, opindex, fields)
+-     CGEN_CPU_DESC cd ATTRIBUTE_UNUSED;
+-     int opindex;
+-     const CGEN_FIELDS * fields;
+-{
+-  int value;
+-
+-  switch (opindex)
+-    {
+-    case OPENRISC_OPERAND_ABS_26 :
+-      value = fields->f_abs26;
+-      break;
+-    case OPENRISC_OPERAND_DISP_26 :
+-      value = fields->f_disp26;
+-      break;
+-    case OPENRISC_OPERAND_HI16 :
+-      value = fields->f_simm16;
+-      break;
+-    case OPENRISC_OPERAND_LO16 :
+-      value = fields->f_lo16;
+-      break;
+-    case OPENRISC_OPERAND_OP_F_23 :
+-      value = fields->f_op4;
+-      break;
+-    case OPENRISC_OPERAND_OP_F_3 :
+-      value = fields->f_op5;
+-      break;
+-    case OPENRISC_OPERAND_RA :
+-      value = fields->f_r2;
+-      break;
+-    case OPENRISC_OPERAND_RB :
+-      value = fields->f_r3;
+-      break;
+-    case OPENRISC_OPERAND_RD :
+-      value = fields->f_r1;
+-      break;
+-    case OPENRISC_OPERAND_SIMM_16 :
+-      value = fields->f_simm16;
+-      break;
+-    case OPENRISC_OPERAND_UI16NC :
+-      value = fields->f_i16nc;
+-      break;
+-    case OPENRISC_OPERAND_UIMM_16 :
+-      value = fields->f_uimm16;
+-      break;
+-    case OPENRISC_OPERAND_UIMM_5 :
+-      value = fields->f_uimm5;
+-      break;
+-
+-    default :
+-      /* xgettext:c-format */
+-      fprintf (stderr, _("Unrecognized field %d while getting int operand.\n"),
+-		       opindex);
+-      abort ();
+-  }
+-
+-  return value;
+-}
+-
+-bfd_vma
+-openrisc_cgen_get_vma_operand (cd, opindex, fields)
+-     CGEN_CPU_DESC cd ATTRIBUTE_UNUSED;
+-     int opindex;
+-     const CGEN_FIELDS * fields;
+-{
+-  bfd_vma value;
+-
+-  switch (opindex)
+-    {
+-    case OPENRISC_OPERAND_ABS_26 :
+-      value = fields->f_abs26;
+-      break;
+-    case OPENRISC_OPERAND_DISP_26 :
+-      value = fields->f_disp26;
+-      break;
+-    case OPENRISC_OPERAND_HI16 :
+-      value = fields->f_simm16;
+-      break;
+-    case OPENRISC_OPERAND_LO16 :
+-      value = fields->f_lo16;
+-      break;
+-    case OPENRISC_OPERAND_OP_F_23 :
+-      value = fields->f_op4;
+-      break;
+-    case OPENRISC_OPERAND_OP_F_3 :
+-      value = fields->f_op5;
+-      break;
+-    case OPENRISC_OPERAND_RA :
+-      value = fields->f_r2;
+-      break;
+-    case OPENRISC_OPERAND_RB :
+-      value = fields->f_r3;
+-      break;
+-    case OPENRISC_OPERAND_RD :
+-      value = fields->f_r1;
+-      break;
+-    case OPENRISC_OPERAND_SIMM_16 :
+-      value = fields->f_simm16;
+-      break;
+-    case OPENRISC_OPERAND_UI16NC :
+-      value = fields->f_i16nc;
+-      break;
+-    case OPENRISC_OPERAND_UIMM_16 :
+-      value = fields->f_uimm16;
+-      break;
+-    case OPENRISC_OPERAND_UIMM_5 :
+-      value = fields->f_uimm5;
+-      break;
+-
+-    default :
+-      /* xgettext:c-format */
+-      fprintf (stderr, _("Unrecognized field %d while getting vma operand.\n"),
+-		       opindex);
+-      abort ();
+-  }
+-
+-  return value;
+-}
+-
+-void openrisc_cgen_set_int_operand
+-  PARAMS ((CGEN_CPU_DESC, int, CGEN_FIELDS *, int));
+-void openrisc_cgen_set_vma_operand
+-  PARAMS ((CGEN_CPU_DESC, int, CGEN_FIELDS *, bfd_vma));
+-
+-/* Stuffing values in cgen_fields is handled by a collection of functions.
+-   They are distinguished by the type of the VALUE argument they accept.
+-   TODO: floating point, inlining support, remove cases where argument type
+-   not appropriate.  */
+-
+-void
+-openrisc_cgen_set_int_operand (cd, opindex, fields, value)
+-     CGEN_CPU_DESC cd ATTRIBUTE_UNUSED;
+-     int opindex;
+-     CGEN_FIELDS * fields;
+-     int value;
+-{
+-  switch (opindex)
+-    {
+-    case OPENRISC_OPERAND_ABS_26 :
+-      fields->f_abs26 = value;
+-      break;
+-    case OPENRISC_OPERAND_DISP_26 :
+-      fields->f_disp26 = value;
+-      break;
+-    case OPENRISC_OPERAND_HI16 :
+-      fields->f_simm16 = value;
+-      break;
+-    case OPENRISC_OPERAND_LO16 :
+-      fields->f_lo16 = value;
+-      break;
+-    case OPENRISC_OPERAND_OP_F_23 :
+-      fields->f_op4 = value;
+-      break;
+-    case OPENRISC_OPERAND_OP_F_3 :
+-      fields->f_op5 = value;
+-      break;
+-    case OPENRISC_OPERAND_RA :
+-      fields->f_r2 = value;
+-      break;
+-    case OPENRISC_OPERAND_RB :
+-      fields->f_r3 = value;
+-      break;
+-    case OPENRISC_OPERAND_RD :
+-      fields->f_r1 = value;
+-      break;
+-    case OPENRISC_OPERAND_SIMM_16 :
+-      fields->f_simm16 = value;
+-      break;
+-    case OPENRISC_OPERAND_UI16NC :
+-      fields->f_i16nc = value;
+-      break;
+-    case OPENRISC_OPERAND_UIMM_16 :
+-      fields->f_uimm16 = value;
+-      break;
+-    case OPENRISC_OPERAND_UIMM_5 :
+-      fields->f_uimm5 = value;
+-      break;
+-
+-    default :
+-      /* xgettext:c-format */
+-      fprintf (stderr, _("Unrecognized field %d while setting int operand.\n"),
+-		       opindex);
+-      abort ();
+-  }
+-}
+-
+-void
+-openrisc_cgen_set_vma_operand (cd, opindex, fields, value)
+-     CGEN_CPU_DESC cd ATTRIBUTE_UNUSED;
+-     int opindex;
+-     CGEN_FIELDS * fields;
+-     bfd_vma value;
+-{
+-  switch (opindex)
+-    {
+-    case OPENRISC_OPERAND_ABS_26 :
+-      fields->f_abs26 = value;
+-      break;
+-    case OPENRISC_OPERAND_DISP_26 :
+-      fields->f_disp26 = value;
+-      break;
+-    case OPENRISC_OPERAND_HI16 :
+-      fields->f_simm16 = value;
+-      break;
+-    case OPENRISC_OPERAND_LO16 :
+-      fields->f_lo16 = value;
+-      break;
+-    case OPENRISC_OPERAND_OP_F_23 :
+-      fields->f_op4 = value;
+-      break;
+-    case OPENRISC_OPERAND_OP_F_3 :
+-      fields->f_op5 = value;
+-      break;
+-    case OPENRISC_OPERAND_RA :
+-      fields->f_r2 = value;
+-      break;
+-    case OPENRISC_OPERAND_RB :
+-      fields->f_r3 = value;
+-      break;
+-    case OPENRISC_OPERAND_RD :
+-      fields->f_r1 = value;
+-      break;
+-    case OPENRISC_OPERAND_SIMM_16 :
+-      fields->f_simm16 = value;
+-      break;
+-    case OPENRISC_OPERAND_UI16NC :
+-      fields->f_i16nc = value;
+-      break;
+-    case OPENRISC_OPERAND_UIMM_16 :
+-      fields->f_uimm16 = value;
+-      break;
+-    case OPENRISC_OPERAND_UIMM_5 :
+-      fields->f_uimm5 = value;
+-      break;
+-
+-    default :
+-      /* xgettext:c-format */
+-      fprintf (stderr, _("Unrecognized field %d while setting vma operand.\n"),
+-		       opindex);
+-      abort ();
+-  }
+-}
+-
+-/* Function to call before using the instruction builder tables.  */
+-
+-void
+-openrisc_cgen_init_ibld_table (cd)
+-     CGEN_CPU_DESC cd;
+-{
+-  cd->insert_handlers = & openrisc_cgen_insert_handlers[0];
+-  cd->extract_handlers = & openrisc_cgen_extract_handlers[0];
+-
+-  cd->insert_operand = openrisc_cgen_insert_operand;
+-  cd->extract_operand = openrisc_cgen_extract_operand;
+-
+-  cd->get_int_operand = openrisc_cgen_get_int_operand;
+-  cd->set_int_operand = openrisc_cgen_set_int_operand;
+-  cd->get_vma_operand = openrisc_cgen_get_vma_operand;
+-  cd->set_vma_operand = openrisc_cgen_set_vma_operand;
+-}
+diff --unified -N -r ../binutils-2.16.1/opcodes/openrisc-opc.c binutils-2.16.1/opcodes/openrisc-opc.c
+--- ../binutils-2.16.1/opcodes/openrisc-opc.c	2005-02-22 01:33:20.000000000 +0100
++++ binutils-2.16.1/opcodes/openrisc-opc.c	1970-01-01 01:00:00.000000000 +0100
+@@ -1,707 +0,0 @@
+-/* Instruction opcode table for openrisc.
+-
+-THIS FILE IS MACHINE GENERATED WITH CGEN.
+-
+-Copyright 1996-2005 Free Software Foundation, Inc.
+-
+-This file is part of the GNU Binutils and/or GDB, the GNU debugger.
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License as published by
+-the Free Software Foundation; either version 2, or (at your option)
+-any later version.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License along
+-with this program; if not, write to the Free Software Foundation, Inc.,
+-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+-
+-*/
+-
+-#include "sysdep.h"
+-#include "ansidecl.h"
+-#include "bfd.h"
+-#include "symcat.h"
+-#include "openrisc-desc.h"
+-#include "openrisc-opc.h"
+-#include "libiberty.h"
+-
+-/* -- opc.c */
+-/* -- */
+-/* The hash functions are recorded here to help keep assembler code out of
+-   the disassembler and vice versa.  */
+-
+-static int asm_hash_insn_p PARAMS ((const CGEN_INSN *));
+-static unsigned int asm_hash_insn PARAMS ((const char *));
+-static int dis_hash_insn_p PARAMS ((const CGEN_INSN *));
+-static unsigned int dis_hash_insn PARAMS ((const char *, CGEN_INSN_INT));
+-
+-/* Instruction formats.  */
+-
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define F(f) & openrisc_cgen_ifld_table[OPENRISC_##f]
+-#else
+-#define F(f) & openrisc_cgen_ifld_table[OPENRISC_/**/f]
+-#endif
+-static const CGEN_IFMT ifmt_empty ATTRIBUTE_UNUSED = {
+-  0, 0, 0x0, { { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_j ATTRIBUTE_UNUSED = {
+-  32, 32, 0xfc000000, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_ABS26) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_jr ATTRIBUTE_UNUSED = {
+-  32, 32, 0xffe00000, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_OP3) }, { F (F_OP4) }, { F (F_R2) }, { F (F_UIMM16) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_bal ATTRIBUTE_UNUSED = {
+-  32, 32, 0xfc000000, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_DISP26) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_movhi ATTRIBUTE_UNUSED = {
+-  32, 32, 0xfc000000, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_R1) }, { F (F_R2) }, { F (F_SIMM16) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_mfsr ATTRIBUTE_UNUSED = {
+-  32, 32, 0xfc000000, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_R1) }, { F (F_R2) }, { F (F_UIMM16) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_mtsr ATTRIBUTE_UNUSED = {
+-  32, 32, 0xfc0007ff, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_R1) }, { F (F_R2) }, { F (F_R3) }, { F (F_I16_1) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_lw ATTRIBUTE_UNUSED = {
+-  32, 32, 0xfc000000, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_R1) }, { F (F_R2) }, { F (F_SIMM16) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_sw ATTRIBUTE_UNUSED = {
+-  32, 32, 0xfc000000, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_R1) }, { F (F_R3) }, { F (F_I16NC) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_sll ATTRIBUTE_UNUSED = {
+-  32, 32, 0xfc0007ff, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_R1) }, { F (F_R2) }, { F (F_R3) }, { F (F_F_10_3) }, { F (F_OP6) }, { F (F_F_4_1) }, { F (F_OP7) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_slli ATTRIBUTE_UNUSED = {
+-  32, 32, 0xfc00ffe0, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_R1) }, { F (F_R2) }, { F (F_F_15_8) }, { F (F_OP6) }, { F (F_UIMM5) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_add ATTRIBUTE_UNUSED = {
+-  32, 32, 0xfc0007ff, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_R1) }, { F (F_R2) }, { F (F_R3) }, { F (F_F_10_7) }, { F (F_OP7) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_addi ATTRIBUTE_UNUSED = {
+-  32, 32, 0xfc000000, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_R1) }, { F (F_R2) }, { F (F_LO16) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_sfgts ATTRIBUTE_UNUSED = {
+-  32, 32, 0xffe007ff, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_OP5) }, { F (F_R2) }, { F (F_R3) }, { F (F_F_10_11) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_sfgtsi ATTRIBUTE_UNUSED = {
+-  32, 32, 0xffe00000, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_OP5) }, { F (F_R2) }, { F (F_SIMM16) }, { 0 } }
+-};
+-
+-static const CGEN_IFMT ifmt_l_sfgtui ATTRIBUTE_UNUSED = {
+-  32, 32, 0xffe00000, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_OP5) }, { F (F_R2) }, { F (F_UIMM16) }, { 0 } }
+-};
+-
+-#undef F
+-
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define A(a) (1 << CGEN_INSN_##a)
+-#else
+-#define A(a) (1 << CGEN_INSN_/**/a)
+-#endif
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define OPERAND(op) OPENRISC_OPERAND_##op
+-#else
+-#define OPERAND(op) OPENRISC_OPERAND_/**/op
+-#endif
+-#define MNEM CGEN_SYNTAX_MNEMONIC /* syntax value for mnemonic */
+-#define OP(field) CGEN_SYNTAX_MAKE_FIELD (OPERAND (field))
+-
+-/* The instruction table.  */
+-
+-static const CGEN_OPCODE openrisc_cgen_insn_opcode_table[MAX_INSNS] =
+-{
+-  /* Special null first entry.
+-     A `num' value of zero is thus invalid.
+-     Also, the special `invalid' insn resides here.  */
+-  { { 0, 0, 0, 0 }, {{0}}, 0, {0}},
+-/* l.j ${abs-26} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (ABS_26), 0 } },
+-    & ifmt_l_j, { 0x0 }
+-  },
+-/* l.jal ${abs-26} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (ABS_26), 0 } },
+-    & ifmt_l_j, { 0x4000000 }
+-  },
+-/* l.jr $rA */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), 0 } },
+-    & ifmt_l_jr, { 0x14000000 }
+-  },
+-/* l.jalr $rA */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), 0 } },
+-    & ifmt_l_jr, { 0x14200000 }
+-  },
+-/* l.bal ${disp-26} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (DISP_26), 0 } },
+-    & ifmt_l_bal, { 0x8000000 }
+-  },
+-/* l.bnf ${disp-26} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (DISP_26), 0 } },
+-    & ifmt_l_bal, { 0xc000000 }
+-  },
+-/* l.bf ${disp-26} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (DISP_26), 0 } },
+-    & ifmt_l_bal, { 0x10000000 }
+-  },
+-/* l.brk ${uimm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (UIMM_16), 0 } },
+-    & ifmt_l_jr, { 0x17000000 }
+-  },
+-/* l.rfe $rA */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), 0 } },
+-    & ifmt_l_jr, { 0x14400000 }
+-  },
+-/* l.sys ${uimm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (UIMM_16), 0 } },
+-    & ifmt_l_jr, { 0x16000000 }
+-  },
+-/* l.nop */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, 0 } },
+-    & ifmt_l_jr, { 0x15000000 }
+-  },
+-/* l.movhi $rD,$hi16 */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (HI16), 0 } },
+-    & ifmt_l_movhi, { 0x18000000 }
+-  },
+-/* l.mfsr $rD,$rA */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), 0 } },
+-    & ifmt_l_mfsr, { 0x1c000000 }
+-  },
+-/* l.mtsr $rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_mtsr, { 0x40000000 }
+-  },
+-/* l.lw $rD,${simm-16}($rA) */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (SIMM_16), '(', OP (RA), ')', 0 } },
+-    & ifmt_l_lw, { 0x80000000 }
+-  },
+-/* l.lbz $rD,${simm-16}($rA) */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (SIMM_16), '(', OP (RA), ')', 0 } },
+-    & ifmt_l_lw, { 0x84000000 }
+-  },
+-/* l.lbs $rD,${simm-16}($rA) */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (SIMM_16), '(', OP (RA), ')', 0 } },
+-    & ifmt_l_lw, { 0x88000000 }
+-  },
+-/* l.lhz $rD,${simm-16}($rA) */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (SIMM_16), '(', OP (RA), ')', 0 } },
+-    & ifmt_l_lw, { 0x8c000000 }
+-  },
+-/* l.lhs $rD,${simm-16}($rA) */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (SIMM_16), '(', OP (RA), ')', 0 } },
+-    & ifmt_l_lw, { 0x90000000 }
+-  },
+-/* l.sw ${ui16nc}($rA),$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (UI16NC), '(', OP (RA), ')', ',', OP (RB), 0 } },
+-    & ifmt_l_sw, { 0xd4000000 }
+-  },
+-/* l.sb ${ui16nc}($rA),$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (UI16NC), '(', OP (RA), ')', ',', OP (RB), 0 } },
+-    & ifmt_l_sw, { 0xd8000000 }
+-  },
+-/* l.sh ${ui16nc}($rA),$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (UI16NC), '(', OP (RA), ')', ',', OP (RB), 0 } },
+-    & ifmt_l_sw, { 0xdc000000 }
+-  },
+-/* l.sll $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sll, { 0xe0000008 }
+-  },
+-/* l.slli $rD,$rA,${uimm-5} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (UIMM_5), 0 } },
+-    & ifmt_l_slli, { 0xb4000000 }
+-  },
+-/* l.srl $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sll, { 0xe0000028 }
+-  },
+-/* l.srli $rD,$rA,${uimm-5} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (UIMM_5), 0 } },
+-    & ifmt_l_slli, { 0xb4000020 }
+-  },
+-/* l.sra $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sll, { 0xe0000048 }
+-  },
+-/* l.srai $rD,$rA,${uimm-5} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (UIMM_5), 0 } },
+-    & ifmt_l_slli, { 0xb4000040 }
+-  },
+-/* l.ror $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sll, { 0xe0000088 }
+-  },
+-/* l.rori $rD,$rA,${uimm-5} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (UIMM_5), 0 } },
+-    & ifmt_l_slli, { 0xb4000080 }
+-  },
+-/* l.add $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_add, { 0xe0000000 }
+-  },
+-/* l.addi $rD,$rA,$lo16 */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (LO16), 0 } },
+-    & ifmt_l_addi, { 0x94000000 }
+-  },
+-/* l.sub $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_add, { 0xe0000002 }
+-  },
+-/* l.subi $rD,$rA,$lo16 */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (LO16), 0 } },
+-    & ifmt_l_addi, { 0x9c000000 }
+-  },
+-/* l.and $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_add, { 0xe0000003 }
+-  },
+-/* l.andi $rD,$rA,$lo16 */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (LO16), 0 } },
+-    & ifmt_l_addi, { 0xa0000000 }
+-  },
+-/* l.or $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_add, { 0xe0000004 }
+-  },
+-/* l.ori $rD,$rA,$lo16 */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (LO16), 0 } },
+-    & ifmt_l_addi, { 0xa4000000 }
+-  },
+-/* l.xor $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_add, { 0xe0000005 }
+-  },
+-/* l.xori $rD,$rA,$lo16 */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (LO16), 0 } },
+-    & ifmt_l_addi, { 0xa8000000 }
+-  },
+-/* l.mul $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_add, { 0xe0000006 }
+-  },
+-/* l.muli $rD,$rA,$lo16 */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (LO16), 0 } },
+-    & ifmt_l_addi, { 0xac000000 }
+-  },
+-/* l.div $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_add, { 0xe0000009 }
+-  },
+-/* l.divu $rD,$rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RD), ',', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_add, { 0xe000000a }
+-  },
+-/* l.sfgts $rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sfgts, { 0xe4c00000 }
+-  },
+-/* l.sfgtu $rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sfgts, { 0xe4400000 }
+-  },
+-/* l.sfges $rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sfgts, { 0xe4e00000 }
+-  },
+-/* l.sfgeu $rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sfgts, { 0xe4600000 }
+-  },
+-/* l.sflts $rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sfgts, { 0xe5000000 }
+-  },
+-/* l.sfltu $rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sfgts, { 0xe4800000 }
+-  },
+-/* l.sfles $rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sfgts, { 0xe5200000 }
+-  },
+-/* l.sfleu $rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sfgts, { 0xe4a00000 }
+-  },
+-/* l.sfgtsi $rA,${simm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (SIMM_16), 0 } },
+-    & ifmt_l_sfgtsi, { 0xb8c00000 }
+-  },
+-/* l.sfgtui $rA,${uimm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (UIMM_16), 0 } },
+-    & ifmt_l_sfgtui, { 0xb8400000 }
+-  },
+-/* l.sfgesi $rA,${simm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (SIMM_16), 0 } },
+-    & ifmt_l_sfgtsi, { 0xb8e00000 }
+-  },
+-/* l.sfgeui $rA,${uimm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (UIMM_16), 0 } },
+-    & ifmt_l_sfgtui, { 0xb8600000 }
+-  },
+-/* l.sfltsi $rA,${simm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (SIMM_16), 0 } },
+-    & ifmt_l_sfgtsi, { 0xb9000000 }
+-  },
+-/* l.sfltui $rA,${uimm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (UIMM_16), 0 } },
+-    & ifmt_l_sfgtui, { 0xb8800000 }
+-  },
+-/* l.sflesi $rA,${simm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (SIMM_16), 0 } },
+-    & ifmt_l_sfgtsi, { 0xb9200000 }
+-  },
+-/* l.sfleui $rA,${uimm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (UIMM_16), 0 } },
+-    & ifmt_l_sfgtui, { 0xb8a00000 }
+-  },
+-/* l.sfeq $rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sfgts, { 0xe4000000 }
+-  },
+-/* l.sfeqi $rA,${simm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (SIMM_16), 0 } },
+-    & ifmt_l_sfgtsi, { 0xb8000000 }
+-  },
+-/* l.sfne $rA,$rB */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (RB), 0 } },
+-    & ifmt_l_sfgts, { 0xe4200000 }
+-  },
+-/* l.sfnei $rA,${simm-16} */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, ' ', OP (RA), ',', OP (SIMM_16), 0 } },
+-    & ifmt_l_sfgtsi, { 0xb8200000 }
+-  },
+-};
+-
+-#undef A
+-#undef OPERAND
+-#undef MNEM
+-#undef OP
+-
+-/* Formats for ALIAS macro-insns.  */
+-
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define F(f) & openrisc_cgen_ifld_table[OPENRISC_##f]
+-#else
+-#define F(f) & openrisc_cgen_ifld_table[OPENRISC_/**/f]
+-#endif
+-static const CGEN_IFMT ifmt_l_ret ATTRIBUTE_UNUSED = {
+-  32, 32, 0xffffffff, { { F (F_CLASS) }, { F (F_SUB) }, { F (F_OP3) }, { F (F_OP4) }, { F (F_R2) }, { F (F_UIMM16) }, { 0 } }
+-};
+-
+-#undef F
+-
+-/* Each non-simple macro entry points to an array of expansion possibilities.  */
+-
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define A(a) (1 << CGEN_INSN_##a)
+-#else
+-#define A(a) (1 << CGEN_INSN_/**/a)
+-#endif
+-#if defined (__STDC__) || defined (ALMOST_STDC) || defined (HAVE_STRINGIZE)
+-#define OPERAND(op) OPENRISC_OPERAND_##op
+-#else
+-#define OPERAND(op) OPENRISC_OPERAND_/**/op
+-#endif
+-#define MNEM CGEN_SYNTAX_MNEMONIC /* syntax value for mnemonic */
+-#define OP(field) CGEN_SYNTAX_MAKE_FIELD (OPERAND (field))
+-
+-/* The macro instruction table.  */
+-
+-static const CGEN_IBASE openrisc_cgen_macro_insn_table[] =
+-{
+-/* l.ret */
+-  {
+-    -1, "l-ret", "l.ret", 32,
+-    { 0|A(ALIAS), { (1<<MACH_BASE) } }
+-  },
+-};
+-
+-/* The macro instruction opcode table.  */
+-
+-static const CGEN_OPCODE openrisc_cgen_macro_insn_opcode_table[] =
+-{
+-/* l.ret */
+-  {
+-    { 0, 0, 0, 0 },
+-    { { MNEM, 0 } },
+-    & ifmt_l_ret, { 0x140b0000 }
+-  },
+-};
+-
+-#undef A
+-#undef OPERAND
+-#undef MNEM
+-#undef OP
+-
+-#ifndef CGEN_ASM_HASH_P
+-#define CGEN_ASM_HASH_P(insn) 1
+-#endif
+-
+-#ifndef CGEN_DIS_HASH_P
+-#define CGEN_DIS_HASH_P(insn) 1
+-#endif
+-
+-/* Return non-zero if INSN is to be added to the hash table.
+-   Targets are free to override CGEN_{ASM,DIS}_HASH_P in the .opc file.  */
+-
+-static int
+-asm_hash_insn_p (insn)
+-     const CGEN_INSN *insn ATTRIBUTE_UNUSED;
+-{
+-  return CGEN_ASM_HASH_P (insn);
+-}
+-
+-static int
+-dis_hash_insn_p (insn)
+-     const CGEN_INSN *insn;
+-{
+-  /* If building the hash table and the NO-DIS attribute is present,
+-     ignore.  */
+-  if (CGEN_INSN_ATTR_VALUE (insn, CGEN_INSN_NO_DIS))
+-    return 0;
+-  return CGEN_DIS_HASH_P (insn);
+-}
+-
+-#ifndef CGEN_ASM_HASH
+-#define CGEN_ASM_HASH_SIZE 127
+-#ifdef CGEN_MNEMONIC_OPERANDS
+-#define CGEN_ASM_HASH(mnem) (*(unsigned char *) (mnem) % CGEN_ASM_HASH_SIZE)
+-#else
+-#define CGEN_ASM_HASH(mnem) (*(unsigned char *) (mnem) % CGEN_ASM_HASH_SIZE) /*FIXME*/
+-#endif
+-#endif
+-
+-/* It doesn't make much sense to provide a default here,
+-   but while this is under development we do.
+-   BUFFER is a pointer to the bytes of the insn, target order.
+-   VALUE is the first base_insn_bitsize bits as an int in host order.  */
+-
+-#ifndef CGEN_DIS_HASH
+-#define CGEN_DIS_HASH_SIZE 256
+-#define CGEN_DIS_HASH(buf, value) (*(unsigned char *) (buf))
+-#endif
+-
+-/* The result is the hash value of the insn.
+-   Targets are free to override CGEN_{ASM,DIS}_HASH in the .opc file.  */
+-
+-static unsigned int
+-asm_hash_insn (mnem)
+-     const char * mnem;
+-{
+-  return CGEN_ASM_HASH (mnem);
+-}
+-
+-/* BUF is a pointer to the bytes of the insn, target order.
+-   VALUE is the first base_insn_bitsize bits as an int in host order.  */
+-
+-static unsigned int
+-dis_hash_insn (buf, value)
+-     const char * buf ATTRIBUTE_UNUSED;
+-     CGEN_INSN_INT value ATTRIBUTE_UNUSED;
+-{
+-  return CGEN_DIS_HASH (buf, value);
+-}
+-
+-static void set_fields_bitsize PARAMS ((CGEN_FIELDS *, int));
+-
+-/* Set the recorded length of the insn in the CGEN_FIELDS struct.  */
+-
+-static void
+-set_fields_bitsize (fields, size)
+-     CGEN_FIELDS *fields;
+-     int size;
+-{
+-  CGEN_FIELDS_BITSIZE (fields) = size;
+-}
+-
+-/* Function to call before using the operand instance table.
+-   This plugs the opcode entries and macro instructions into the cpu table.  */
+-
+-void
+-openrisc_cgen_init_opcode_table (cd)
+-     CGEN_CPU_DESC cd;
+-{
+-  int i;
+-  int num_macros = (sizeof (openrisc_cgen_macro_insn_table) /
+-		    sizeof (openrisc_cgen_macro_insn_table[0]));
+-  const CGEN_IBASE *ib = & openrisc_cgen_macro_insn_table[0];
+-  const CGEN_OPCODE *oc = & openrisc_cgen_macro_insn_opcode_table[0];
+-  CGEN_INSN *insns = (CGEN_INSN *) xmalloc (num_macros * sizeof (CGEN_INSN));
+-  memset (insns, 0, num_macros * sizeof (CGEN_INSN));
+-  for (i = 0; i < num_macros; ++i)
+-    {
+-      insns[i].base = &ib[i];
+-      insns[i].opcode = &oc[i];
+-      openrisc_cgen_build_insn_regex (& insns[i]);
+-    }
+-  cd->macro_insn_table.init_entries = insns;
+-  cd->macro_insn_table.entry_size = sizeof (CGEN_IBASE);
+-  cd->macro_insn_table.num_init_entries = num_macros;
+-
+-  oc = & openrisc_cgen_insn_opcode_table[0];
+-  insns = (CGEN_INSN *) cd->insn_table.init_entries;
+-  for (i = 0; i < MAX_INSNS; ++i)
+-    {
+-      insns[i].opcode = &oc[i];
+-      openrisc_cgen_build_insn_regex (& insns[i]);
+-    }
+-
+-  cd->sizeof_fields = sizeof (CGEN_FIELDS);
+-  cd->set_fields_bitsize = set_fields_bitsize;
+-
+-  cd->asm_hash_p = asm_hash_insn_p;
+-  cd->asm_hash = asm_hash_insn;
+-  cd->asm_hash_size = CGEN_ASM_HASH_SIZE;
+-
+-  cd->dis_hash_p = dis_hash_insn_p;
+-  cd->dis_hash = dis_hash_insn;
+-  cd->dis_hash_size = CGEN_DIS_HASH_SIZE;
+-}
+diff --unified -N -r ../binutils-2.16.1/opcodes/openrisc-opc.h binutils-2.16.1/opcodes/openrisc-opc.h
+--- ../binutils-2.16.1/opcodes/openrisc-opc.h	2005-02-22 01:33:20.000000000 +0100
++++ binutils-2.16.1/opcodes/openrisc-opc.h	1970-01-01 01:00:00.000000000 +0100
+@@ -1,113 +0,0 @@
+-/* Instruction opcode header for openrisc.
+-
+-THIS FILE IS MACHINE GENERATED WITH CGEN.
+-
+-Copyright 1996-2005 Free Software Foundation, Inc.
+-
+-This file is part of the GNU Binutils and/or GDB, the GNU debugger.
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License as published by
+-the Free Software Foundation; either version 2, or (at your option)
+-any later version.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License along
+-with this program; if not, write to the Free Software Foundation, Inc.,
+-59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+-
+-*/
+-
+-#ifndef OPENRISC_OPC_H
+-#define OPENRISC_OPC_H
+-
+-/* -- opc.h */
+-#undef  CGEN_DIS_HASH_SIZE
+-#define CGEN_DIS_HASH_SIZE 64
+-#undef  CGEN_DIS_HASH
+-#define CGEN_DIS_HASH(buffer, value) (((unsigned char *) (buffer))[0] >> 2)
+-
+-extern long openrisc_sign_extend_16bit PARAMS ((long));
+-/* -- */
+-/* Enum declaration for openrisc instruction types.  */
+-typedef enum cgen_insn_type {
+-  OPENRISC_INSN_INVALID, OPENRISC_INSN_L_J, OPENRISC_INSN_L_JAL, OPENRISC_INSN_L_JR
+- , OPENRISC_INSN_L_JALR, OPENRISC_INSN_L_BAL, OPENRISC_INSN_L_BNF, OPENRISC_INSN_L_BF
+- , OPENRISC_INSN_L_BRK, OPENRISC_INSN_L_RFE, OPENRISC_INSN_L_SYS, OPENRISC_INSN_L_NOP
+- , OPENRISC_INSN_L_MOVHI, OPENRISC_INSN_L_MFSR, OPENRISC_INSN_L_MTSR, OPENRISC_INSN_L_LW
+- , OPENRISC_INSN_L_LBZ, OPENRISC_INSN_L_LBS, OPENRISC_INSN_L_LHZ, OPENRISC_INSN_L_LHS
+- , OPENRISC_INSN_L_SW, OPENRISC_INSN_L_SB, OPENRISC_INSN_L_SH, OPENRISC_INSN_L_SLL
+- , OPENRISC_INSN_L_SLLI, OPENRISC_INSN_L_SRL, OPENRISC_INSN_L_SRLI, OPENRISC_INSN_L_SRA
+- , OPENRISC_INSN_L_SRAI, OPENRISC_INSN_L_ROR, OPENRISC_INSN_L_RORI, OPENRISC_INSN_L_ADD
+- , OPENRISC_INSN_L_ADDI, OPENRISC_INSN_L_SUB, OPENRISC_INSN_L_SUBI, OPENRISC_INSN_L_AND
+- , OPENRISC_INSN_L_ANDI, OPENRISC_INSN_L_OR, OPENRISC_INSN_L_ORI, OPENRISC_INSN_L_XOR
+- , OPENRISC_INSN_L_XORI, OPENRISC_INSN_L_MUL, OPENRISC_INSN_L_MULI, OPENRISC_INSN_L_DIV
+- , OPENRISC_INSN_L_DIVU, OPENRISC_INSN_L_SFGTS, OPENRISC_INSN_L_SFGTU, OPENRISC_INSN_L_SFGES
+- , OPENRISC_INSN_L_SFGEU, OPENRISC_INSN_L_SFLTS, OPENRISC_INSN_L_SFLTU, OPENRISC_INSN_L_SFLES
+- , OPENRISC_INSN_L_SFLEU, OPENRISC_INSN_L_SFGTSI, OPENRISC_INSN_L_SFGTUI, OPENRISC_INSN_L_SFGESI
+- , OPENRISC_INSN_L_SFGEUI, OPENRISC_INSN_L_SFLTSI, OPENRISC_INSN_L_SFLTUI, OPENRISC_INSN_L_SFLESI
+- , OPENRISC_INSN_L_SFLEUI, OPENRISC_INSN_L_SFEQ, OPENRISC_INSN_L_SFEQI, OPENRISC_INSN_L_SFNE
+- , OPENRISC_INSN_L_SFNEI
+-} CGEN_INSN_TYPE;
+-
+-/* Index of `invalid' insn place holder.  */
+-#define CGEN_INSN_INVALID OPENRISC_INSN_INVALID
+-
+-/* Total number of insns in table.  */
+-#define MAX_INSNS ((int) OPENRISC_INSN_L_SFNEI + 1)
+-
+-/* This struct records data prior to insertion or after extraction.  */
+-struct cgen_fields
+-{
+-  int length;
+-  long f_nil;
+-  long f_anyof;
+-  long f_class;
+-  long f_sub;
+-  long f_r1;
+-  long f_r2;
+-  long f_r3;
+-  long f_simm16;
+-  long f_uimm16;
+-  long f_uimm5;
+-  long f_hi16;
+-  long f_lo16;
+-  long f_op1;
+-  long f_op2;
+-  long f_op3;
+-  long f_op4;
+-  long f_op5;
+-  long f_op6;
+-  long f_op7;
+-  long f_i16_1;
+-  long f_i16_2;
+-  long f_disp26;
+-  long f_abs26;
+-  long f_i16nc;
+-  long f_f_15_8;
+-  long f_f_10_3;
+-  long f_f_4_1;
+-  long f_f_7_3;
+-  long f_f_10_7;
+-  long f_f_10_11;
+-};
+-
+-#define CGEN_INIT_PARSE(od) \
+-{\
+-}
+-#define CGEN_INIT_INSERT(od) \
+-{\
+-}
+-#define CGEN_INIT_EXTRACT(od) \
+-{\
+-}
+-#define CGEN_INIT_PRINT(od) \
+-{\
+-}
+-
+-
+-#endif /* OPENRISC_OPC_H */

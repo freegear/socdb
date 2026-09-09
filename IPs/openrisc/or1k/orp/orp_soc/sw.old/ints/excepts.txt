@@ -1,0 +1,31 @@
+Original in the or1k arch manual:
+EXCEPTION	EPCR	NORMAL RESTART	EPCR ESR[DSX]=1		RESTART ESR[DSX]=1	EEAR 
+Reset 		X 	X 		X 			X			- 
+Bus Error 	PC 	EPCR 		PC-4 			EPCR 			YES 
+Data Page Fault	PC 	EPCR 		PC-4 			EPCR 			YES
+IPFault 	PC 	EPCR 		PC-4 			EPCR 			YES
+Low Priority EI	PC 	EPCR+4 		N/A 			N/A 			-
+Alignment 	PC 	EPCR+4 		PC-4 			EPCR 			YES
+Illegal Insn	PC 	EPCR+4 		PC-4 			EPCR 			-
+High Prio EI	PC 	EPCR+4 		N/A 			N/A 			-
+D-TLB Miss 	PC 	EPCR 		PC-4 			EPCR 			YES
+I-TLB Miss 	PC 	EPCR 		PC-4 			EPCR 			YES
+Range 		PC 	EPCR+4 		PC-4 			EPCR 			-
+System Call 	PC 	EPCR+4 		N/A 			N/A 			-
+Breakpoint 	PC 	EPCR+4 		PC-4 			EPCR 			-
+
+New (how or1ksim and or1200 work/whould work):
+EXCEPTION	EPCR	NORMAL RESTART	EPCR ESR[DSX]=1		RESTART ESR[DSX]=1	EEAR 
+Reset 		X 	X 		X 			X			- 
+Bus Error 	PC 	EPCR 		PC-4 			EPCR 			YES 
+Data Page Fault	PC 	EPCR 		PC-4 			EPCR 			YES
+IPFault 	PC 	EPCR 		PC-4 			EPCR 			YES
+Low Priority EI	PC+4 	EPCR 		N/A 			N/A 			-
+Alignment 	PC+4 	EPCR 		PC-4 			EPCR 			YES
+Illegal Insn	PC+4 	EPCR 		PC-4 			EPCR 			-
+High Prio EI	PC+4 	EPCR 		N/A 			N/A 			-
+D-TLB Miss 	PC 	EPCR 		PC-4 			EPCR 			YES
+I-TLB Miss 	PC 	EPCR 		PC-4 			EPCR 			YES
+Range 		PC 	EPCR 		PC-4 			EPCR 			-
+System Call 	PC+4 	EPCR 		N/A 			N/A 			-
+Trap 		PC+4 	EPCR-4 		PC-4 			EPCR 			-

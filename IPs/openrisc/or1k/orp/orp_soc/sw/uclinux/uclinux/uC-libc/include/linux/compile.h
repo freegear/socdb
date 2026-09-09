@@ -1,0 +1,6 @@
+#define UTS_VERSION "#60 Fri Sep 7 16:48:19 CEST 2001"
+#define LINUX_COMPILE_TIME "16:48:19"
+#define LINUX_COMPILE_BY "simons"
+#define LINUX_COMPILE_HOST "odin"
+#define LINUX_COMPILE_DOMAIN ""
+#define LINUX_COMPILER "gcc version 2.95.2 19991024 (release)"

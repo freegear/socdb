@@ -1,0 +1,153 @@
+
+# To build toochain follow these steps
+
+mkdir /tmp/tools
+cd /tmp/tools
+mkdir or32-uclinux
+export PATH=/tmp/tools/or32-uclinux/bin:$PATH
+
+#
+# Binutils:
+#
+
+cvs -z9 co or1k/binutils
+cd or1k
+mkdir binutils-ucl
+cd binutils-ucl
+../binutils/configure --target=or32-uclinux --prefix=/tmp/tools/or32-uclinux
+make all install
+cd ../../
+
+#
+# Gcc
+#
+
+cvs -z9 co or1k/gcc-3.1
+cd or1k
+mkdir gcc-ucl
+cd gcc-ucl
+../gcc-3.1/configure --target=or32-uclinux --prefix=/tmp/tools/or32-uclinux/ --local-prefix=/tmp/tools/or32-uclinux/or32-uclinux/ --with-gnu-as --with-gnu-ld --verbose --enable-languages=c
+make all install
+cd ../../
+
+#
+# Building uClinux
+#
+
+cvs -z9 co or1k/uclinux/uClinux-2.0.x/
+cd or1k/uclinux/uClinux-2.0.x/
+# Edit arch/or32/Rules.make file:
+#   LIBGCC = /tmp/tools/or32-uclinux/lib/gcc-lib/or32-uclinux/3.1/libgcc.a
+make oldconfig
+make dep
+make
+cd ../../../
+
+#
+# uClibc
+#
+
+cvs -z9 co or1k/uclibc
+cd or1k/uclibc
+ln -s ./extra/Configs/Config.cross.or32.uclinux Config
+# Edit Config file:
+#   TARGET_ARCH=or32
+#   CROSS = $(TARGET_ARCH)-uclinux- 
+#   KERNEL_SOURCE=/tmp/tools/or1k/uclinux/uClinux-2.0.x/
+#   DEVEL_PREFIX = /tmp/tools/$(TARGET_ARCH)-uclinux
+make all install
+cd ../../or32-uclinux/bin
+rm -f addr2line ar as cc cpp gasp gcc ld nm objcopy objdump ranlib size strings strip jar grepjar
+cd ../../
+
+#
+# Rebuild Gcc
+#
+cd or1k/gcc-ucl
+../gcc-3.1/configure --target=or32-uclinux --prefix=/tmp/tools/or32-uclinux/ --local-prefix=/tmp/tools/or32-uclinux/or32-uclinux/ --with-gnu-as --with-gnu-ld --verbose --enable-languages=c
+make all install
+cd ../../
+
+#
+# Applications
+#
+cvs -z9 co or1k/uclinux/userland/sash
+cvs -z9 co or1k/uclinux/userland/init
+cvs -z9 co or1k/uclinux/userland/route
+cvs -z9 co or1k/uclinux/userland/ping
+cd or1k/uclinux/userland/sash
+make
+cd ../init
+make
+cd ../route
+make
+cd ../ping
+make
+cd ../../../../
+
+#
+# Generating romfs ramdisk image
+#
+mkdir romfs
+mkdir romfs/bin
+cp  or1k/uclinux/userland/init/init romfs/bin/
+cp  or1k/uclinux/userland/sash/sh romfs/bin/
+cp  or1k/uclinux/userland/route/ifconfig romfs/bin/
+cp  or1k/uclinux/userland/route/route romfs/bin/
+cp  or1k/uclinux/userland/ping/ping romfs/bin/
+chmod 777 romfs/bin/*
+mkdir romfs/etc
+cp  or1k/uclinux/userland/init/rc romfs/etc/
+mkdir romfs/dev
+cd romfs/dev
+mknod ram0 b 1 0
+mknod tty c 4 0
+mknod tty1 c 4 1
+mknod ttyS0 c 4 64
+cd ..
+genromfs -f ../or1k/uclinux/uClinux-2.0.x/arch/or32/board/initrd
+cd ..
+
+#
+# Generating ext2 ramdisk image
+#
+mkdir ext2fs
+mke2fs -m0 -r0 -O none /dev/ram0 512
+mount /dev/ram0 ext2fs
+mkdir ext2fs/bin
+cp  or1k/uclinux/userland/init/init ext2fs/bin/
+cp  or1k/uclinux/userland/sash/sh ext2fs/bin/
+cp  or1k/uclinux/userland/route/ifconfig ext2fs/bin/
+cp  or1k/uclinux/userland/route/route ext2fs/bin/
+cp  or1k/uclinux/userland/ping/ping ext2fs/bin/
+chmod 777 ext2fs/bin/*
+mkdir ext2fs/etc
+cp  or1k/uclinux/userland/init/rc ext2fs/etc/
+mkdir ext2fs/dev
+cd ext2fs/dev
+mknod ram0 b 1 0
+mknod tty c 4 0
+mknod tty1 c 4 1
+mknod ttyS0 c 4 64
+cd ../../
+umount ext2fs
+dd if=/dev/ram0 of=or1k/uclinux/uClinux-2.0.x/arch/or32/board/initrd
+
+#
+# Build or32 simulator
+#
+
+cvs -z9 co or1k/or1ksim
+cd or1k/or1ksim
+configure --target=or32-uclinux --prefix=/tmp/tools/or32-uclinux/
+make all install
+cd ../../
+
+#
+# Run uClinux on simulator
+#
+cd or1k/uclinux/uClinux-2.0.x/
+# Open another two terminals in this folder. Type "less uart0.tx" with "F" option
+# to monitor outoput from uart in first terminal and "cat > uart0.rx" to send
+# chars to uart in the second.
+or32-uclinux-sim -f sim.cfg linux

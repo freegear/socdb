@@ -1,0 +1,30 @@
+// $Header: /cvsroot/anonymous/or1k/orp/orp_soc/lib/xilinx/unisims/CY4_36.v,v 1.1 2002/03/28 20:15:26 lampret Exp $
+
+/*
+
+FUNCTION	: Carry modes functions
+
+*/
+
+`timescale  100 ps / 10 ps
+
+`celldefine
+
+module CY4_36 (C0, C1, C2, C3, C4, C5, C6, C7);
+
+    parameter cds_action = "ignore";
+
+    output C0, C1, C2, C3, C4, C5, C6, C7;
+
+	supply0 C7;
+	supply1 C6;
+	supply0 C5;
+	supply0 C4;
+	supply0 C3;
+	supply1 C2;
+	supply0 C1;
+	supply1 C0;
+
+endmodule
+
+`endcelldefine
