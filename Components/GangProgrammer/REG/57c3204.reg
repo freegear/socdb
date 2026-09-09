@@ -1,0 +1,196 @@
+; 57C3204.REG  Copyright (c) 1996 SAMSUNG ELECTRONICS CO.
+ 
+       .list       off
+
+;       57c3204 system register
+;	Test version : 10/08/98 by C.J. LEE
+;       11/25/98 by C.J.LEE Rev.1 : WDTCF bit Added              
+;;;
+;;;	THE REG FILE FOR BIT OPERATION DEFINITION
+;;;				Hyung Tae Kim 98.12.09
+;;;				
+
+
+		.include "sasmopd.prd"		; **** NEW: include bit operateion def
+
+        .romsize        1000h
+
+        .ram_range      00h, 100h
+
+;       SYSTEM REGISTERS
+SP:	.reg    0f80h, _op8
+BMOD:   .reg    0f85h,w, _op14&_bit3
+BCNT:   .reg    0f86h,r, _op8
+WMOD:   .reg    0f88h,w, _op18&_bit3
+		.bit	0f88h.3,r
+LMOD:   .reg    0f8ch,w, _op18&_bit3
+LCON:   .reg    0f8eh,w, _op4
+
+TMOD0:  .reg    0f90h,w, _op18&_bit3
+TCNT0:  .reg    0f94h,r, _op8
+TREF0:  .reg    0f96h,w, _op8
+WDMOD:  .reg    0f98h,w, _op8
+WDFLAG: .reg    0f9ah,w, _op14&_bit3
+WDTCF:	.bit    0f9ah.3,w
+
+FCNT0:  .reg    0fa0h,r, _op8
+FCNT1:  .reg    0fa2h,r, _op8
+FCNT2:  .reg    0fa4h,r, _op8
+FCMOD:  .reg    0fa6h,w, _op4&_bit0
+FCCON:  .reg    0fa7h,w, _op14
+APCON:  .reg    0faeh,w, _op4
+
+PSW:    .reg    0fb0h
+ERB:    .bit    0fb0h.0
+EMB:    .bit    0fb0h.1
+IS0:    .bit    0fb0h.2
+IS1:    .bit    0fb0h.3
+C:      .bit    0fb1h.3
+
+IPR:    .reg    0fb2h,w, _op14&_bit3
+IME:    .bit    0fb2h.3,w
+
+PCON:   .reg    0fb3h,w, _op4
+IMOD0:  .reg    0fb4h,w, _op4
+IMOD1:  .reg    0fb5h,w, _op4
+IMOD2:  .reg    0fb6h,w, _op4
+SCMOD:  .reg    0fb7h,w, _op1&_bit023
+
+	.reg	0fb8h, _op14
+IRQB:   .bit    0fb8h.0
+IEB:    .bit    0fb8h.1
+IRQ4:   .bit    0fb8h.2
+IE4:    .bit    0fb8h.3
+
+	.reg	0fbah, _op14&_bit01
+IRQW:   .bit    0fbah.0
+IEW:   .bit    0fbah.1
+
+	.reg	0fbch, _op14&_bit01
+IRQT0:  .bit    0fbch.0
+IET0:   .bit    0fbch.1
+
+	.reg	0fbeh, _op14
+IRQ0:   .bit    0fbeh.0
+IE0:    .bit    0fbeh.1
+IRQ1:   .bit    0fbeh.2
+IE1:    .bit    0fbeh.3
+
+	.reg	0fbfh, _op14&_bit01
+IRQ2:   .bit    0fbfh.0
+IE2:    .bit    0fbfh.1
+
+BSC0:   .reg    0fc0h
+BSC1:   .reg    0fc1h, _op14
+BSC2:   .reg    0fc2h
+BSC3:   .reg    0fc3h, _op14
+
+PNE:    .reg    0fd6h,w, _op8
+ADATA:  .reg    0fd8h,r, _op8
+ADMOD:  .reg    0fdah, _op14&_bit012
+AFLAG:  .reg    0fdbh, _op14&_bit023
+ADCLK:  .bit    0fdbh.0,w
+EOC:    .bit    0fdbh.2,r
+ADSTR:  .bit    0fdbh.3,w 
+
+PUMOD:  .reg    0fdch,w, _op8
+PMG0:   .reg    0fe6h,w, _op8
+PMG1:   .reg    0fe8h,w, _op8
+
+P1:     .reg    0ff1h, _op14
+P2:     .reg    0ff2h,r, _op14
+P3:     .reg    0ff3h,r, _op14
+P4:     .reg    0ff4h
+P5:     .reg    0ff5h, _op14
+P6:     .reg    0ff6h, _op14
+P8:     .reg    0ff8h,w
+P9:     .reg    0ff9h,w, _op14
+
+;       system registers
+sp:	.reg    0f80h, _op8
+bmod:   .reg    0f85h,w, _op14&_bit3
+bcnt:   .reg    0f86h,r, _op8
+wmod:   .reg    0f88h,w, _op18&_bit3
+lmod:   .reg    0f8ch,w, _op18&_bit3
+lcon:   .reg    0f8eh,w, _op4
+
+tmod0:  .reg    0f90h,w, _op18&_bit3
+tcnt0:  .reg    0f94h,r, _op8
+tref0:  .reg    0f96h,w, _op8
+wdmod:  .reg    0f98h,w, _op8
+wdflag: .reg    0f9ah,w, _op14&_bit3
+wdtcf:	.bit    0f9ah.3,w
+
+fcnt0:  .reg    0fa0h,r, _op8
+fcnt1:  .reg    0fa2h,r, _op8
+fcnt2:  .reg    0fa4h,r, _op8
+fcmod:  .reg    0fa6h,w, _op4&_bit0
+fccon:  .reg    0fa7h,w, _op14
+apcon:  .reg    0faeh,w, _op4
+
+psw:    .reg    0fb0h, _op14
+erb:    .bit    0fb0h.0
+emb:    .bit    0fb0h.1
+is0:    .bit    0fb0h.2
+is1:    .bit    0fb0h.3
+c:      .bit    0fb1h.3
+
+ipr:    .reg    0fb2h,w, _op14&_bit3
+ime:    .bit    0fb2h.3,w
+
+pcon:   .reg    0fb3h,w, _op4
+imod0:  .reg    0fb4h,w, _op4
+imod1:  .reg    0fb5h,w, _op4
+imod2:  .reg    0fb6h,w, _op4
+scmod:  .reg    0fb7h,w, _op1&_bit023
+
+irqb:   .bit    0fb8h.0
+ieb:    .bit    0fb8h.1
+irq4:   .bit    0fb8h.2
+ie4:    .bit    0fb8h.3
+
+irqw:   .bit    0fbah.0
+iew:   .bit    0fbah.1
+
+irqt0:  .bit    0fbch.0
+iet0:   .bit    0fbch.1
+
+irq0:   .bit    0fbeh.0
+ie0:    .bit    0fbeh.1
+irq1:   .bit    0fbeh.2
+ie1:    .bit    0fbeh.3
+
+irq2:   .bit    0fbfh.0
+ie2:    .bit    0fbfh.1
+
+bsc0:   .reg    0fc0h
+bsc1:   .reg    0fc1h, _op14
+bsc2:   .reg    0fc2h
+bsc3:   .reg    0fc3h, _op14
+
+pne:    .reg    0fd6h,w, _op8
+adata:  .reg    0fd8h,r, _op8
+admod:  .reg    0fdah, _op14&_bit012
+aflag:  .reg    0fdbh, _op14&_bit023
+adclk:  .bit    0fdbh.0,w
+eoc:    .bit    0fdbh.2,r
+adstr:  .bit    0fdbh.3,w 
+
+pumod:  .reg    0fdch,w, _op8
+pmg0:   .reg    0fe6h,w, _op8
+pmg1:   .reg    0fe8h,w, _op8
+
+p1:     .reg    0ff1h, _op14
+p2:     .reg    0ff2h,r, _op14
+p3:     .reg    0ff3h,r, _op14
+p4:     .reg    0ff4h
+p5:     .reg    0ff5h, _op14
+p6:     .reg    0ff6h, _op14
+p8:     .reg    0ff8h,w
+p9:     .reg    0ff9h,w, _op14
+
+;
+; END OF 57C3204.REG
+       .list       on
+
+

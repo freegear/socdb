@@ -1,0 +1,163 @@
+; KS88C6232.REG  Copyright (c) 1996 Samsung Electronic Co.
+
+	.list   off
+
+;       KS88C6348 system register
+;       99/09/30 by j.k.lee Revision 0
+
+	.romsize        0C000h
+
+	.ram_range      00h, 0C0h
+
+;       System Registers
+TM0CNT:         .reg    0d0h,r
+TM0DATA:        .reg    0d1h,r
+TM0CON:         .reg    0d2h
+BTCON:          .reg    0d3h
+CLKCON:         .reg    0d4h
+FLAGS:          .reg    0d5h
+RP0:            .reg    0d6h
+RP1:            .reg    0d7h
+SPH:            .reg    0d8h
+SPL:            .reg    0d9h
+IPH:            .reg    0dah
+IPL:            .reg    0dbh
+IRQ:            .reg    0dch,r
+IMR:            .reg    0ddh
+SYM:            .reg    0deh
+PP:             .reg    0dfh
+
+P0:             .reg    0e0h
+P1:             .reg    0e1h
+P2:             .reg    0e2h
+P3:             .reg    0e3h
+P0CONH:         .reg    0e4h
+P0CONL:         .reg    0e5h
+P1CON:          .reg    0e6h
+P2CONH:         .reg    0e7h
+P2CONL:         .reg    0e8h
+P3CONH:         .reg    0e9h
+P3CONL:         .reg    0eAh
+P0INT:          .reg    0eBh
+WDTCON:         .reg    0eCh
+SYNCON0:        .reg    0edh
+SYNCON1:        .reg    0eeh
+SYNCON2:        .reg    0efh
+SYNCRD:         .reg    0f0h,r
+TM1CNTH:        .reg    0f1h,r
+TM1CNTL:        .reg    0f2h,r
+TM1DATAH:       .reg    0f3h,r
+TM1DATAL:       .reg    0f4h,r
+TM1CON:         .reg    0f5h
+TM2CON:         .reg    0f6h
+ADCON:          .reg    0f7h
+ADDATA:         .reg    0f8h,r
+PHGEN:          .reg    0f9h
+PVGEN:          .reg    0fah
+STOPCON:        .reg    0fbh
+BTCNT:          .reg    0fdh,r
+EMT:            .reg    0feh
+IPR:            .reg    0ffh
+
+PWM0:           .reg    0e0h
+PWM1:           .reg    0e1h
+PWM2:           .reg    0e2h
+PWM3:           .reg    0e3h
+PWM4:           .reg    0e4h
+PWM5:           .reg    0e5h
+PWM6:           .reg    0e6h
+PWMCON:         .reg    0e7h
+PWMCNT:         .reg    0e8h,r
+DCON:           .reg    0e9h
+DAR0:           .reg    0eah
+DCCR:           .reg    0ebh
+DCSR0:          .reg    0ech
+DCSR1:          .reg    0edh
+DAR1:           .reg    0eeh
+TBDR:           .reg    0efh
+RBDR:           .reg    0f0h,r
+DDSR:           .reg    0f1h
+SICSR:          .reg    0f2h
+SIAR:           .reg    0f3h
+SIDSR:          .reg    0f4h
+ 
+ 
+;       System Registers
+tm0cnt:         .reg    0d0h,r
+tm0data:        .reg    0d1h,r
+tm0con:         .reg    0d2h
+btcon:          .reg    0d3h
+clkcon:         .reg    0d4h
+flags:          .reg    0d5h
+rp0:            .reg    0d6h
+rp1:            .reg    0d7h
+sph:            .reg    0d8h
+spl:            .reg    0d9h
+iph:            .reg    0dah
+ipl:            .reg    0dbh
+irq:            .reg    0dch,r
+imr:            .reg    0ddh
+sym:            .reg    0deh
+pp:             .reg    0dfh
+
+p0:             .reg    0e0h
+p1:             .reg    0e1h
+p2:             .reg    0e2h
+p3:             .reg    0e3h
+p0conh:         .reg    0e4h
+p0conl:         .reg    0e5h
+p1con:          .reg    0e6h
+p2conh:         .reg    0e7h
+p2conl:         .reg    0e8h
+p3conh:         .reg    0e9h
+p3conl:         .reg    0eah
+p0int:          .reg    0ebh
+wdtcon:         .reg    0ech
+syncon0:        .reg    0edh
+syncon1:        .reg    0eeh
+syncon2:        .reg    0efh
+syncrd:         .reg    0f0h,r
+tm1cnth:        .reg    0f1h,r
+tm1cntl:        .reg    0f2h,r
+tm1datah:       .reg    0f3h,r
+tm1datal:       .reg    0f4h,r
+tm1con:         .reg    0f5h
+tm2con:         .reg    0f6h
+adcon:          .reg    0f7h
+addata:         .reg    0f8h,r
+phgen:          .reg    0f9h
+pvgen:          .reg    0fah
+stopcon:        .reg    0fbh
+btcnt:          .reg    0fdh,r
+emt:            .reg    0feh
+ipr:            .reg    0ffh
+
+pwm0:           .reg    0e0h
+pwm1:           .reg    0e1h
+pwm2:           .reg    0e2h
+pwm3:           .reg    0e3h
+pwm4:           .reg    0e4h
+pwm5:           .reg    0e5h
+pwm6:           .reg    0e6h
+pwmcon:         .reg    0e7h
+pwmcnt:         .reg    0e8h,r
+dcon:           .reg    0e9h
+dar0:           .reg    0eah
+dccr:           .reg    0ebh
+dcsr0:          .reg    0ech
+dcsr1:          .reg    0edh
+dar1:           .reg    0eeh
+tbdr:           .reg    0efh
+rbdr:           .reg    0f0h,r
+ddsr:           .reg    0f1h
+sicsr:          .reg    0f2h
+siar:           .reg    0f3h
+sidsr:          .reg    0f4h
+
+
+;
+; END OF 88C6348.REG
+	.list   on
+
+
+

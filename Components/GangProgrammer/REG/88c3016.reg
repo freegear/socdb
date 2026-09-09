@@ -1,0 +1,352 @@
+; 88C3016.REG  Copyright (c) 1996 SAMSUNG ELECTRONICS CO.
+
+	.list   off
+
+;       88c3016 system register
+;       96/11/01 by h.j.cho Revision 0
+
+	.romsize        4000h
+
+	.ram_range      00h, 0C0h
+
+;       System Registers
+FLAGS:          .reg    0D5h
+RP0:            .reg    0D6h
+RP1:            .reg    0D7h
+SPH:            .reg    0D8h
+SPL:            .reg    0D9h
+IPH:            .reg    0DAh
+IPL:            .reg    0DBh
+IRQ:            .reg    0DCh,r
+IMR:            .reg    0DDh
+SYM:            .reg    0DEh
+PP:             .reg    0DFh
+;
+;       Set 1, Bank 0
+P0:             .reg    0E0h
+P1:             .reg    0E1h
+P2:             .reg    0E2h
+P0CON:          .reg    0E3h
+P1CON:          .reg    0E4h
+P2CONH:         .reg    0E5h
+P2CONL:         .reg    0E6h
+P2PND:          .reg    0E7h
+P2INT:          .reg    0E8h
+SIO:            .reg    0E9h
+SIOCON:         .reg    0EAh,w
+SIOPS:          .reg    0EBh,w
+TADATA:         .reg    0ECh,w
+TBDATA:         .reg    0EDh,w
+T0CON:          .reg    0EEh
+TBINT:          .reg    0EFh,w
+BTCON:          .reg    0F0h
+;
+EMT:            .reg    0FEh
+IPR:            .reg    0FFh
+;
+;       Set 1, Bank 1
+P3:             .reg    0E0h
+;
+P3CON:          .reg    0E3h
+;
+;       Page 0 (prime area)
+ADCON:          .reg    02Bh
+PWM0:           .reg    02Ch,w
+PWM0EX:         .reg    02Dh,w
+PWM10:          .reg    030h,w
+PWM11:          .reg    031h,w
+PWM12:          .reg    032h,w
+PWM13:          .reg    033h,w
+PWM14:          .reg    034h,w
+PWM15:          .reg    035h,w
+PWM16:          .reg    036h,w
+PWM17:          .reg    037h,w
+PWM18:          .reg    038h,w
+PWM19:          .reg    039h,w
+PWM110:         .reg    03Ah,w
+PWM111:         .reg    03Bh,w
+PWMCON:         .reg    03Ch,w
+CAPA:           .reg    03Dh,r
+CAPBH:          .reg    03Eh,r
+CAPBL:          .reg    03Fh,r
+;
+;       Page 1 (prime area)
+; VRAM:         .reg    00Fh
+CHACON:         .reg    0F0h
+FADECON:        .reg    0F1h
+ROWCON:         .reg    0F2h
+CLMCON:         .reg    0F3h
+COLCON:         .reg    0F4h
+DSPCON:         .reg    0F5h
+COLBUF:         .reg    0F6h
+;
+;       Bit equates
+;       flags
+;C:             .bit    FLAGS.7
+;Z:             .bit    FLAGS.6
+;S:             .bit    FLAGS.5
+;V:             .bit    FLAGS.4
+;D:             .bit    FLAGS.3
+;H:             .bit    FLAGS.2
+;FIS:           .bit    FLAGS.1
+;BA:            .bit    FLAGS.0
+;       t0con
+;TPS3:          .bit    T0CON.7,w
+;TPS2:          .bit    T0CON.6,w
+;TPS1:          .bit    T0CON.5,w
+;TPS0:          .bit    T0CON.4,w
+;TCS:           .bit    T0CON.3,w
+;ETAI:          .bit    T0CON.2,w
+;TAIP:          .bit    T0CON.1
+;EAPWM:         .bit    T0CON.0,w
+;       pwmcon
+;ECTR:          .bit    PWMCON.5
+;ECTRI:         .bit    PWMCON.4
+;ECAPAI:        .bit    PWMCON.3
+;ECAPBI:        .bit    PWMCON.2
+;EGS1:          .bit    PWMCON.1
+;EGS0:          .bit    PWMCON.0
+;       dspcon
+;TOSD1:         .bit    DSPCON.5
+;TOSD0:         .bit    DSPCON.4
+;SYNC:          .bit    DSPCON.3
+;EBLNK:         .bit    DSPCON.2
+;EFRNG:         .bit    DSPCON.1
+;EDSP:          .bit    DSPCON.0
+;;      chacon
+;VCS1:          .bit    CHACON.7
+;VCS0:          .bit    CHACON.6
+;HSC1:          .bit    CHACON.5
+;HSC0:          .bit    CHACON.4
+;FRA3:          .bit    CHACON.3
+;FRA2:          .bit    CHACON.2
+;FRA1:          .bit    CHACON.1
+;FRA0:          .bit    CHACON.0
+;;      fadecon
+;FEN:           .bit    FADECON.6
+;FDS:           .bit    FADECON.5
+;FLA4:          .bit    FADECON.4
+;FLA3:          .bit    FADECON.3
+;FLA2:          .bit    FADECON.2
+;FLA1:          .bit    FADECON.1
+;FLA0:          .bit    FADECON.0
+;;      rowcon
+;TMG4:          .bit    ROWCON.7
+;TMG3:          .bit    ROWCON.6
+;TMG2:          .bit    ROWCON.5
+;TMG1:          .bit    ROWCON.4
+;TMG0:          .bit    ROWCON.3
+;RSP2:          .bit    ROWCON.2
+;RSP1:          .bit    ROWCON.1
+;RSP0:          .bit    ROWCON.0
+;;      clmcon
+;LMG4:          .bit    CLMCON.7
+;LMG3:          .bit    CLMCON.6
+;LMG2:          .bit    CLMCON.5
+;LMG1:          .bit    CLMCON.4
+;LMG0:          .bit    CLMCON.3
+;CSP2:          .bit    CLMCON.2
+;CSP1:          .bit    CLMCON.1
+;CSP0:          .bit    CLMCON.0
+;;      colbuf
+;R:             .bit    COLBUF.2
+;G:             .bit    COLBUF.1
+;B:             .bit    COLBUF.0
+;;      colcon
+;EFBG:          .bit    COLCON.7
+;FR:            .bit    COLCON.6
+;FG:            .bit    COLCON.5
+;FB:            .bit    COLCON.4
+;ECBG:          .bit    COLCON.3
+;CR:            .bit    COLCON.2
+;CG:            .bit    COLCON.1
+;CB:            .bit    COLCON.0
+;;      adcon
+;TAD:           .bit    ADCON.7
+;SCH:           .bit    ADCON.5
+;OUT3:          .bit    ADCON.3
+;OUT2:          .bit    ADCON.2
+;OUT1:          .bit    ADCON.1
+;OUT0:          .bit    ADCON.0
+;;      siops
+;SCIO:          .bit    SIOPS.6,w
+;SIAK:          .bit    SIOPS.5,w
+;;      siocon
+;EGS:           .bit    SIOCON.4
+;SOP1:          .bit    SIOCON.3
+;SOP0:          .bit    SIOCON.2
+;SDIO:          .bit    SIOCON.1
+;ESIOI:         .bit    SIOCON.0
+;;
+
+;      System Registers
+flags:          .reg    0d5h
+rp0:            .reg    0d6h
+rp1:            .reg    0d7h
+sph:            .reg    0d8h
+spl:            .reg    0d9h
+iph:            .reg    0dah
+ipl:            .reg    0dbh
+irq:            .reg    0dch,r
+imr:            .reg    0ddh
+sym:            .reg    0deh
+pp:             .reg    0dfh
+;
+;       Set 1, Bank 0
+p0:             .reg    0e0h
+p1:             .reg    0e1h
+p2:             .reg    0e2h
+p0con:          .reg    0e3h
+p1con:          .reg    0e4h
+p2conh:         .reg    0e5h
+p2conl:         .reg    0e6h
+p2pnd:          .reg    0e7h
+p2int:          .reg    0e8h
+sio:            .reg    0e9h
+siocon:         .reg    0eah,w
+siops:          .reg    0ebh,w
+tadata:         .reg    0ech,w
+tbdata:         .reg    0edh,w
+t0con:          .reg    0eeh
+tbint:          .reg    0efh,w
+btcon:          .reg    0f0h
+;
+emt:            .reg    0feh
+ipr:            .reg    0ffh
+;
+;       Set 1, Bank 1
+p3:             .reg    0e0h
+;
+p3con:          .reg    0e3h
+;
+;       Page 0 (prime area)
+adcon:          .reg    02bh
+pwm0:           .reg    02ch,w
+pwm0ex:         .reg    02dh,w
+pwm10:          .reg    030h,w
+pwm11:          .reg    031h,w
+pwm12:          .reg    032h,w
+pwm13:          .reg    033h,w
+pwm14:          .reg    034h,w
+pwm15:          .reg    035h,w
+pwm16:          .reg    036h,w
+pwm17:          .reg    037h,w
+pwm18:          .reg    038h,w
+pwm19:          .reg    039h,w
+pwm110:         .reg    03ah,w
+pwm111:         .reg    03bh,w
+pwmcon:         .reg    03ch,w
+capa:           .reg    03dh,r
+capbh:          .reg    03eh,r
+capbl:          .reg    03fh,r
+;
+;       Page 1 (prime area)
+; VRAM:         .reg    00Fh
+chacon:         .reg    0f0h
+fadecon:                .reg    0f1h
+rowcon:         .reg    0f2h
+clmcon:         .reg    0f3h
+colcon:         .reg    0f4h
+dspcon:         .reg    0f5h
+colbuf:         .reg    0f6h
+;
+;       Bit equates
+;       flags
+;c:             .bit    flags.7
+;z:             .bit    flags.6
+;s:             .bit    flags.5
+;v:             .bit    flags.4
+;d:             .bit    flags.3
+;h:             .bit    flags.2
+;fis:           .bit    flags.1
+;ba:            .bit    flags.0
+;;      t0con
+;tps3:          .bit    t0con.7,w
+;tps2:          .bit    t0con.6,w
+;tps1:          .bit    t0con.5,w
+;tps0:          .bit    t0con.4,w
+;tcs:           .bit    t0con.3,w
+;etai:          .bit    t0con.2,w
+;taip:          .bit    t0con.1
+;eapwm:         .bit    t0con.0,w
+;;      pwmcon
+;ectr:          .bit    pwmcon.5
+;ectri:         .bit    pwmcon.4
+;ecapai:        .bit    pwmcon.3
+;ecapbi:        .bit    pwmcon.2
+;egs1:          .bit    pwmcon.1
+;egs0:          .bit    pwmcon.0
+;;      dspcon
+;tosd1:         .bit    dspcon.5
+;tosd0:         .bit    dspcon.4
+;sync:          .bit    dspcon.3
+;eblnk:         .bit    dspcon.2
+;efrng:         .bit    dspcon.1
+;edsp:          .bit    dspcon.0
+;;      chacon
+;vcs1:          .bit    chacon.7
+;vcs0:          .bit    chacon.6
+;hsc1:          .bit    chacon.5
+;hsc0:          .bit    chacon.4
+;fra3:          .bit    chacon.3
+;fra2:          .bit    chacon.2
+;fra1:          .bit    chacon.1
+;fra0:          .bit    chacon.0
+;;      fadecon
+;fen:           .bit    fadecon.6
+;fds:           .bit    fadecon.5
+;fla4:          .bit    fadecon.4
+;fla3:          .bit    fadecon.3
+;fla2:          .bit    fadecon.2
+;fla1:          .bit    fadecon.1
+;fla0:          .bit    fadecon.0
+;;      rowcon
+;tmg4:          .bit    rowcon.7
+;tmg3:          .bit    rowcon.6
+;tmg2:          .bit    rowcon.5
+;tmg1:          .bit    rowcon.4
+;tmg0:          .bit    rowcon.3
+;rsp2:          .bit    rowcon.2
+;rsp1:          .bit    rowcon.1
+;rsp0:          .bit    rowcon.0
+;;      clmcon
+;lmg4:          .bit    clmcon.7
+;lmg3:          .bit    clmcon.6
+;lmg2:          .bit    clmcon.5
+;lmg1:          .bit    clmcon.4
+;lmg0:          .bit    clmcon.3
+;csp2:          .bit    clmcon.2
+;csp1:          .bit    clmcon.1
+;csp0:          .bit    clmcon.0
+;;      colbuf
+;r:             .bit    colbuf.2
+;g:             .bit    colbuf.1
+;b:             .bit    colbuf.0
+;;      colcon
+;efbg:          .bit    colcon.7
+;fr:            .bit    colcon.6
+;fg:            .bit    colcon.5
+;fb:            .bit    colcon.4
+;ecbg:          .bit    colcon.3
+;cr:            .bit    colcon.2
+;cg:            .bit    colcon.1
+;cb:            .bit    colcon.0
+;;      adcon
+;tad:           .bit    adcon.7
+;sch:           .bit    adcon.5
+;out3:          .bit    adcon.3
+;out2:          .bit    adcon.2
+;out1:          .bit    adcon.1
+;out0:          .bit    adcon.0
+;;      siops
+;scio:          .bit    siops.6,w
+;siak:          .bit    siops.5,w
+;;      siocon
+;egs:           .bit    siocon.4
+;sop1:          .bit    siocon.3
+;sop0:          .bit    siocon.2
+;sdio:          .bit    siocon.1
+;esioi:         .bit    siocon.0
+;
+; END OF 88C3016.REG
+	.list   on

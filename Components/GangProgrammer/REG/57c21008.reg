@@ -1,0 +1,164 @@
+; 57C21008.REG Copyright (c) 1996 Samsung Electrionis Co.
+
+        .list   off
+
+;       56c21008 system register
+;	96/11/01 by h.j.cho Revision 0
+;       97/09/20 by K.M.Yi Revision 1 : Edit address
+;       97/09/25  by K.M.Yi Revision 2: Edit PSW area bit
+;       98/06/05 by YKM Rev3 : ram_range 00h, 0ffh  --> 00h, 100h
+
+        .romsize        2000h
+
+        .ram_range      00h, 100h
+
+
+;       System Registers
+SP:		.reg    0f80h
+BMOD:		.reg    0f85h,w
+BCNT:		.reg    0f86h,r
+WMOD:		.reg    0f88h,w
+LMOD0:		.reg    0f8ch,w
+LMOD1:		.reg    0f8dh,w
+TMOD0:		.reg    0f90h,w
+					 
+TOE0:           .bit    0f92h.2
+
+TCNT0:		.reg    0f94h,r
+TREF0:		.reg    0f96h,w
+PASR:		.reg    0fa0h,w
+KSR0:		.reg    0fa2h,w
+KSR1:		.reg    0fa3h,w
+KSR2:		.reg    0fa4h,w
+KSR3:		.reg    0fa5h,w
+
+PSW:		.reg    0fb0h
+ERB:		.bit    0fb0h.0
+EMB:		.bit    0fb0h.1
+IS0:		.bit    0fb0h.2
+IS1:		.bit    0fb0h.3
+
+C:          .bit    0fb1h.3
+
+IPR:		.reg    0fb2h,w
+IME:            .bit    0fb2h.3,w
+
+PCON:		.reg    0fb3h,w
+IMOD0:		.reg    0fb4h,w
+IMOD1:		.reg    0fb5h,w
+IMOD2:		.reg    0fb6h,w
+SCMOD:		.reg    0fb7h,w
+
+IRQB:		.bit    0fb8h.0
+IEB:		.bit    0fb8h.1
+
+IRQW:		.bit    0fbah.0
+IEW:		.bit    0fbah.1
+
+IRQT0:		.bit    0fbch.0
+IET0:		.bit    0fbch.1
+
+IRQP0:		.bit    0fbdh.0
+IEP0:		.bit    0fbdh.1
+
+IRQ0:		.bit    0fbeh.0
+IE0:		.bit    0fbeh.1
+
+IRQ1:		.bit    0fbeh.2
+IE1:		.bit    0fbeh.3
+
+IRQ2:		.bit    0fbfh.0
+IE2:		.bit    0fbfh.1
+
+BSC0:		.reg    0fc0h
+BSC1:		.reg    0fc1h
+BSC2:		.reg    0fc2h
+BSC3:		.reg    0fc3h
+CLMOD:		.reg    0fd0h,w
+PUMOD0:		.reg    0fdch,w
+PMG1:		.reg    0fe8h,w
+PMG2:		.reg    0feah,w
+
+P0:		.reg    0ff0h,r
+P1:		.reg    0ff1h,r
+P2:		.reg    0ff2h
+P4:		.reg    0ff4h
+P5:		.reg    0ff5h
+P6:		.reg    0ff6h
+P7:		.reg    0ff7h
+
+;       System Registers
+sp:		.reg    0f80h
+bmod:		.reg    0f85h,w
+bcnt:		.reg    0f86h,r
+wmod:		.reg    0f88h,w
+lmod0:		.reg    0f8ch,w
+lmod1:		.reg    0f8dh,w
+tmod0:		.reg    0f90h,w
+toe0:           .bit    0f92h.2
+tcnt0:		.reg    0f94h,r
+tref0:		.reg    0f96h,w
+pasr:		.reg    0fa0h,w
+ksr0:		.reg    0fa2h,w
+ksr1:		.reg    0fa3h,w
+ksr2:		.reg    0fa4h,w
+ksr3:		.reg    0fa5h,w
+
+psw:		.reg    0fb0h
+erb:		.bit    0fb0h.0
+emb:		.bit    0fb0h.1
+is0:		.bit    0fb0h.2
+is1:		.bit    0fb0h.3
+
+c:          .bit    0fb1h.3
+
+ipr:		.reg    0fb2h,w
+ime:            .bit    0fb2h.3,w
+
+pcon:		.reg    0fb3h,w
+imod0:		.reg    0fb4h,w
+imod1:		.reg    0fb5h,w
+imod2:		.reg    0fb6h,w
+scmod:		.reg    0fb7h,w
+
+irqb:		.bit    0fb8h.0
+ieb:		.bit    0fb8h.1
+
+irqw:		.bit    0fbah.0
+iew:		.bit    0fbah.1
+
+irqt0:		.bit    0fbch.0
+iet0:		.bit    0fbch.1
+
+irqp0:		.bit    0fbdh.0
+iep0:		.bit    0fbdh.1
+
+irq0:		.bit    0fbeh.0
+ie0:		.bit    0fbeh.1
+
+irq1:		.bit    0fbeh.2
+ie1:		.bit    0fbeh.3
+
+irq2:		.bit    0fbfh.0
+ie2:		.bit    0fbfh.1
+
+bsc0:		.reg    0fc0h
+bsc1:		.reg    0fc1h
+bsc2:		.reg    0fc2h
+bsc3:		.reg    0fc3h
+clmod:		.reg    0fd0h,w
+pumod0:		.reg    0fdch,w
+pmg1:		.reg    0fe8h,w
+pmg2:		.reg    0feah,w
+
+p0:		.reg    0ff0h,r
+p1:		.reg    0ff1h,r
+p2:		.reg    0ff2h
+p4:		.reg    0ff4h
+p5:		.reg    0ff5h
+p6:		.reg    0ff6h
+p7:		.reg    0ff7h
+
+;
+; END OF 57C21008.REG
+        .list   on

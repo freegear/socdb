@@ -1,0 +1,253 @@
+; 88C40912.REG  Copyright (c) 1998 SAMSUNG ELECTRONICS CO.
+
+	.list    off
+
+;       88c40912 system register
+;       99/10/04 by j.k.Lee Revision 0
+
+	.romsize        3000h
+
+	.ram_range      00h, 0C0h
+
+;       System Registers
+BTCON:         .reg    0D3h
+CLKCON:        .reg    0D4h
+FLAGS:         .reg    0D5h
+RP0:           .reg    0D6h
+RP1:           .reg    0D7h
+SPH:           .reg    0D8h
+SPL:           .reg    0D9h
+IPH:           .reg    0DAh
+IPL:           .reg    0DBh
+IRQ:           .reg    0DCh,r
+IMR:           .reg    0DDh
+SYM:           .reg    0DEh
+PP:            .reg    0DFh
+;
+;       Set 1, Bank 0
+P0:            .reg    0E0h
+P1:            .reg    0E1h
+P2:            .reg    0E2h
+P3:            .reg    0E3h
+P4:            .reg    0E4h
+P5:            .reg    0E5h
+P6:            .reg    0E6h
+P0CONH:        .reg    0E8h
+P0CONL:        .reg    0E9h
+P1CONH:        .reg    0EAh
+P1CONL:        .reg    0EBh
+P2CONH:        .reg    0ECh
+P2CONL:        .reg    0EDh
+P3CONH:        .reg    0EEh
+P3CONL:        .reg    0EFh
+P4CONH:        .reg    0F0h
+P4CONL:        .reg    0F1h
+P5CONH:        .reg    0F2h
+P5CONL:        .reg    0F3h
+P6CON:         .reg    0F4h
+STPCON:        .reg    0F5h
+P0INT:         .reg    0F6h
+P0PND:         .reg    0F7h
+TACON:         .reg    0F8h
+TADATA:        .reg    0F9h
+TACNT:         .reg    0FAh
+BSCON:         .reg    0FBh
+BTCNT:         .reg    0FDh,r
+EMT:           .reg    0FEh
+IPR:           .reg    0FFh
+
+;       Set 1, Bank 1
+PWMCON:          .reg   0E0h
+PWM:            .reg   0E1h
+UBRGD:           .reg   0E2h
+TCCON:           .reg   0E3h
+TCCNTH:          .reg   0E4h
+TCCNTL:          .reg   0E5h
+TCDATAH:         .reg   0E6h
+TCDATAL:         .reg   0E7h
+BRGD0:           .reg   0E8h
+BRGD1:           .reg   0E9h
+BRGD2:           .reg   0EAh
+UCON:            .reg   0EBh
+UDATA:           .reg   0ECh
+UPND:            .reg   0EDh
+SCON:            .reg   0EEh
+SDATA:           .reg   0EFh
+SPND:            .reg   0F0h
+SWDATA:          .reg   0F1h
+ADDATA:          .reg   0F4h
+ADCON:           .reg   0F7h
+ERWCON:          .reg   0F8h
+EXTCON:          .reg   0FAh
+TCPND:           .reg   0FEh
+       
+; PAGE 8 REGISTER (00 ~ 38)
+
+HCON0:           .reg    00h
+HCON1:           .reg    01h
+HCON2:           .reg    02h
+HST0:            .reg    03h,r
+HST1:            .reg    04h,r
+HST2:            .reg    05h,r
+HIE0:            .reg    06h
+HIE1:            .reg    07h
+HIE2:            .reg    08h
+RXFIFO:          .reg    09h,r
+TXFIFOC:         .reg    0Ah,w
+TXFIFOT:         .reg    0Bh,w
+HSAR0:           .reg    0Ch
+HSAR1:           .reg    0Dh
+HSAR2:           .reg    0Eh
+HSAR3:           .reg    0Fh
+HBRGTC0:         .reg    10h
+HBRGTC1:         .reg    11h
+HPRMB:           .reg    12h
+PSKCON:          .reg    15h
+DESK10:          .reg    20h,w
+DESK11:          .reg    21h,w
+DESK12:          .reg    22h,w
+DESK13:          .reg    23h,w
+DESK14:          .reg    24h,w
+DESK15:          .reg    25h,w
+DESK16:          .reg    26h,w
+DESK17:          .reg    27h,w
+DESK20:          .reg    28h,w
+DESK21:          .reg    29h,w
+DESK22:          .reg    2Ah,w
+DESK23:          .reg    2Bh,w
+DESK24:          .reg    2Ch,w
+DESK25:          .reg    2Dh,w
+DESK26:          .reg    2Eh,w
+DESK27:          .reg    2Fh,w
+DESDATA0:        .reg    30h
+DESDATA1:        .reg    31h
+DESDATA2:        .reg    32h
+DESDATA3:        .reg    33h
+DESDATA4:        .reg    34h
+DESDATA5:        .reg    35h
+DESDATA6:        .reg    36h
+DESDATA7:        .reg    37h
+DESCON:          .reg    38h
+                
+;       system registers
+btcon:         .reg    0d3h
+clkcon:        .reg    0d4h
+flags:         .reg    0d5h
+rp0:           .reg    0d6h
+rp1:           .reg    0d7h
+sph:           .reg    0d8h
+spl:           .reg    0d9h
+iph:           .reg    0dah
+ipl:           .reg    0dbh
+irq:           .reg    0dch,r
+imr:           .reg    0ddh
+sym:           .reg    0deh
+pp:            .reg    0dfh
+;
+;       set 1, bank 0
+p0:            .reg    0e0h
+p1:            .reg    0e1h
+p2:            .reg    0e2h
+p3:            .reg    0e3h
+p4:            .reg    0e4h
+p5:            .reg    0e5h
+p6:            .reg    0e6h
+p0conh:        .reg    0e8h
+p0conl:        .reg    0e9h
+p1conh:        .reg    0eah
+p1conl:        .reg    0ebh
+p2conh:        .reg    0ech
+p2conl:        .reg    0edh
+p3conh:        .reg    0eeh
+p3conl:        .reg    0efh
+p4conh:        .reg    0f0h
+p4conl:        .reg    0f1h
+p5conh:        .reg    0f2h
+p5conl:        .reg    0f3h
+p6con:         .reg    0f4h
+stpcon:        .reg    0f5h
+p0int:         .reg    0f6h
+p0pnd:         .reg    0f7h
+tacon:         .reg    0f8h
+tadata:        .reg    0f9h
+tacnt:         .reg    0fah
+bscon:         .reg    0fbh
+btcnt:         .reg    0fdh,r
+emt:           .reg    0feh
+ipr:           .reg    0ffh
+
+;       set 1, bank 1
+pwmcon:          .reg   0e0h
+pwm:             .reg   0e1h
+ubrgd:           .reg   0e2h
+tccon:           .reg   0e3h
+tccnth:          .reg   0e4h
+tccntl:          .reg   0e5h
+tcdatah:         .reg   0e6h
+tcdatal:         .reg   0e7h
+brgd0:           .reg   0e8h
+brgd1:           .reg   0e9h
+brgd2:           .reg   0eah
+ucon:            .reg   0ebh
+udata:           .reg   0ech
+upnd:            .reg   0edh
+scon:            .reg   0eeh
+sdata:           .reg   0efh
+spnd:            .reg   0f0h
+swdata:          .reg   0f1h
+addata:          .reg   0f4h
+adcon:           .reg   0f7h
+erwcon:          .reg   0f8h
+extcon:          .reg   0fah
+tcpnd:           .reg   0feh
+       
+; page 8 register (00 ~ 38)
+
+hcon0:           .reg    00h
+hcon1:           .reg    01h
+hcon2:           .reg    02h
+hst0:            .reg    03h,r
+hst1:            .reg    04h,r
+hst2:            .reg    05h,r
+hie0:            .reg    06h
+hie1:            .reg    07h
+hie2:            .reg    08h
+rxfifo:          .reg    09h,r
+txfifoc:         .reg    0ah,w
+txfifot:         .reg    0bh,w
+hsar0:           .reg    0ch
+hsar1:           .reg    0dh
+hsar2:           .reg    0eh
+hsar3:           .reg    0fh
+hbrgtc0:         .reg    10h
+hbrgtc1:         .reg    11h
+hprmb:           .reg    12h
+pskcon:          .reg    15h
+desk10:          .reg    20h,w
+desk11:          .reg    21h,w
+desk12:          .reg    22h,w
+desk13:          .reg    23h,w
+desk14:          .reg    24h,w
+desk15:          .reg    25h,w
+desk16:          .reg    26h,w
+desk17:          .reg    27h,w
+desk20:          .reg    28h,w
+desk21:          .reg    29h,w
+desk22:          .reg    2ah,w
+desk23:          .reg    2bh,w
+desk24:          .reg    2ch,w
+desk25:          .reg    2dh,w
+desk26:          .reg    2eh,w
+desk27:          .reg    2fh,w
+desdata0:        .reg    30h
+desdata1:        .reg    31h
+desdata2:        .reg    32h
+desdata3:        .reg    33h
+desdata4:        .reg    34h
+desdata5:        .reg    35h
+desdata6:        .reg    36h
+desdata7:        .reg    37h
+descon:          .reg    38h
+                
+; END OF 88C40912.REG
+	.list   on

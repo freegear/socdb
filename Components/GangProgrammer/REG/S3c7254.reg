@@ -1,0 +1,193 @@
+; 57C2504.REG Copyright (c) 1996 Samsung Electronics Co.
+ 
+        .list   off
+
+;       57c2504 system register
+;	96/11/01 by h.j.cho Revision 0
+;	97/09/20 by K.M.Yi Revision 1 : Edit address
+;	97/09/25 by K.M.Yi Revision 2 : Insert PSW area "0fb1h"
+;;;
+;;;	THE REG FILE FOR BIT OPERATION DEFINITION
+;;;				Hyung Tae Kim 98.11.19
+;;;				
+
+
+		.include "sasmopd.prd"		; **** NEW: include bit operateion def
+
+        .romsize        1000h
+
+        .ram_range      00h, 100h
+
+;       System Registers
+SP:		.reg    0f80h, _op8
+BMOD:		.reg    0f85h,w, _op14&_bit3
+BCNT:		.reg    0f86h,r, _op8
+WMOD:		.reg    0f88h,w, _op18&_bit3
+		.bit	0f88h.3, r		; *** NEW: bit 3 of WMOD is read only
+LMOD:		.reg    0f8ch,w, _op8
+LCON:		.reg    0f8eh,w, _op4
+TMOD0:		.reg    0f90h,w, _op18&_bit3
+
+		.reg	0f92h, _op14&_bit2	; *** NEW: register 0f92h should be defined	 
+TOE0:           .bit    0f92h.2
+TCNT0:		.reg    0f94h,r, _op8
+TREF0:		.reg    0f96h,w, _op8
+PNE1:		.reg    0fa6h,w, _op4
+PNE2:		.reg    0fa8h,w, _op8
+PNE3:		.reg    0faah,w, _op4
+
+PSW:		.reg    0fb0h
+ERB:		.bit    0fb0h.0
+EMB:		.bit    0fb0h.1
+IS0:		.bit    0fb0h.2
+IS1:		.bit    0fb0h.3
+
+C:        	.bit    0fb1h.3
+
+IPR:		.reg    0fb2h,w, _op14&_bit3
+IME:		.bit    0fb2h.3,w
+
+PCON:		.reg    0fb3h,w, _op4
+IMOD0:		.reg    0fb4h,w, _op4
+IMOD1:		.reg    0fb5h,w, _op4
+IMODK:		.reg    0fb6h,w, _op4
+SCMOD:		.reg    0fb7h,w, _op1
+
+		.reg	0fb8h, _op14		; ***NEW: not defined in old reg file
+IRQB:		.bit    0fb8h.0
+IEB:		.bit    0fb8h.1
+IRQ4:		.bit    0fb8h.2
+IE4:		.bit    0fb8h.3
+
+		.reg	0fbah, _op14&_bit01	; ***NEW: not defined in old reg file
+IRQW:		.bit    0fbah.0
+IEW:		.bit    0fbah.1
+
+		.reg	0fbbh, _op14&_bit01	; ***NEW: not defined in old reg file
+IRQK:		.bit    0fbbh.0
+IEK:		.bit    0fbbh.1
+
+		.reg	0fbch, _op14&_bit01	; ***NEW: not defined in old reg file
+IRQT0:		.bit    0fbch.0
+IET0:		.bit    0fbch.1
+
+		.reg	0fbdh, _op14&_bit01	; ***NEW: not defined in old reg file
+IRQS:		.bit    0fbdh.0
+IES:		.bit    0fbdh.1
+
+		.reg	0fbeh, _op14		; ***NEW: not defined in old reg file
+IRQ0:		.bit    0fbeh.0
+IE0:		.bit    0fbeh.1
+IRQ1:		.bit    0fbeh.2
+IE1:		.bit    0fbeh.3
+
+		.reg	0fbfh, _op14&_bit01	; ***NEW: not defined in old reg file
+IRQ2:		.bit    0fbfh.0
+IE2:		.bit    0fbfh.1
+
+BSC0:		.reg    0fc0h
+BSC1:		.reg    0fc1h
+BSC2:		.reg    0fc2h
+BSC3:		.reg    0fc3h
+
+CLMOD:		.reg    0fd0h,w, _op4
+CMPREG:		.reg    0fd4h,r, _op4
+CMOD:		.reg    0fd6h, _op8
+IMOD2:		.reg    0fdah,w, _op4
+PUMOD1:		.reg    0fdch,w, _op8
+PUMOD2:		.reg    0fdeh,w, _op4
+SMOD:		.reg    0fe0h,w, _op18&_bit3
+P1MOD:		.reg    0fe2h,w, _op4
+SBUF:		.reg    0fe4h, _op8
+PMG1:		.reg    0fe6h,w, _op8
+PMG2:		.reg    0fe8h,w, _op8
+
+P0:		.reg    0ff0h, _op14
+P1:		.reg    0ff1h,r, _op14
+P2:		.reg    0ff2h
+P3:		.reg    0ff3h
+P4:		.reg    0ff4h, _op14&_bit012
+
+;       System Registers
+sp:		.reg    0f80h, _op8
+bmod:		.reg    0f85h,w, _op14&_bit3
+bcnt:		.reg    0f86h,r, _op8
+wmod:		.reg    0f88h,w, _op18&_bit3
+lmod:		.reg    0f8ch,w, _op8
+lcon:		.reg    0f8eh,w, _op4
+tmod0:		.reg    0f90h,w, _op18&_bit3
+toe0:           .bit    0f92h.2
+tcnt0:		.reg    0f94h,r, _op8
+tref0:		.reg    0f96h,w, _op8
+pne1:		.reg    0fa6h,w, _op4
+pne2:		.reg    0fa8h,w, _op8
+pne3:		.reg    0faah,w, _op4
+
+psw:		.reg    0fb0h
+erb:		.bit    0fb0h.0
+emb:		.bit    0fb0h.1
+is0:		.bit    0fb0h.2
+is1:		.bit    0fb0h.3
+
+c:          .bit    0fb1h.3
+
+ipr:		.reg    0fb2h,w, _op14&_bit3
+ime:		.bit    0fb2h.3,w
+
+pcon:		.reg    0fb3h,w, _op4
+imod0:		.reg    0fb4h,w, _op4
+imod1:		.reg    0fb5h,w, _op4
+imodk:		.reg    0fb6h,w, _op4
+scmod:		.reg    0fb7h,w, _op1
+
+irqb:		.bit    0fb8h.0
+ieb:		.bit    0fb8h.1
+irq4:		.bit    0fb8h.2
+ie4:		.bit    0fb8h.3
+
+irqw:		.bit    0fbah.0
+iew:		.bit    0fbah.1
+
+irqk:		.bit    0fbbh.0
+iek:		.bit    0fbbh.1
+
+irqt0:		.bit    0fbch.0
+iet0:		.bit    0fbch.1
+
+irqs:		.bit    0fbdh.0
+ies:		.bit    0fbdh.1
+
+irq0:		.bit    0fbeh.0
+ie0:		.bit    0fbeh.1
+irq1:		.bit    0fbeh.2
+ie1:		.bit    0fbeh.3
+
+irq2:		.bit    0fbfh.0
+ie2:		.bit    0fbfh.1
+bsc0:		.reg    0fc0h
+bsc1:		.reg    0fc1h
+bsc2:		.reg    0fc2h
+bsc3:		.reg    0fc3h
+
+clmod:		.reg    0fd0h,w, _op4
+cmpreg:		.reg    0fd4h,r, _op4
+cmod:		.reg    0fd6h, _op8
+imod2:		.reg    0fdah,w, _op4
+pumod1:		.reg    0fdch,w, _op8
+pumod2:		.reg    0fdeh,w, _op4
+smod:		.reg    0fe0h,w, _op18&_bit3
+p1mod:		.reg    0fe2h,w, _op4
+sbuf:		.reg    0fe4h, _op8
+pmg1:		.reg    0fe6h,w, _op8
+pmg2:		.reg    0fe8h,w, _op8
+
+p0:		.reg    0ff0h, _op14
+p1:		.reg    0ff1h,r, _op14
+p2:		.reg    0ff2h
+p3:		.reg    0ff3h
+p4:		.reg    0ff4h, _op14&_bit012
+
+;
+; END OF 57C2504.REG
+        .list on
+

@@ -1,0 +1,123 @@
+\ 86C4204.DEF    Copyright SAMSUNG SEMICONDUCTOR INC. 1996-1998, 01/14/98
+\
+\ Initial     : 12/02/98  by J.K.Lee
+\ 1'st Rev : 08/25/99 by J.K.Lee
+\    E4 P1CON -> T1CON, E5 P1DATA -> T1DATA register name change
+
+1000 ROMSIZE
+00 0BF RAMRANGE
+
+
+0D0 EQUATE T0CNT   0D1 EQUATE T0DATA 0D2 EQUATE T0CONH  0D3 EQUATE T0CONL   
+0D4 EQUATE CLKCON  0D5 EQUATE FLAGS  
+0D9 EQUATE SP      0DB EQUATE MDSREG
+0DC EQUATE BTCON   0DD EQUATE BTCNT  0DE EQUATE FTSTCON 0DF EQUATE SYM
+0E0 EQUATE P0      0E1 EQUATE P1     0E2 EQUATE P2      0E3 EQUATE P3
+0E4 EQUATE T1CON   0E5 EQUATE T1DATA
+0E6 EQUATE P0CONH  0E7 EQUATE P0CONL
+0E8 EQUATE P0PUR   0E9 EQUATE P1CON  0EA EQUATE P1PND   0EB EQUATE P2CONH
+0EC EQUATE P2CONL  0ED EQUATE P2PUR  0EE EQUATE P3CON   0EF EQUATE SIODATA  
+0F0 EQUATE SIOCON  0F1 EQUATE SIOPS 
+0F2 EQUATE ICCR    0F3 EQUATE ICSR   0F4 EQUATE IAR     0F5 EQUATE IDSR 
+0F6 EQUATE BUZPS   0F7 EQUATE ADCON
+0F8 EQUATE ADDATAH 0F9 EQUATE ADDATAL 0FA EQUATE PWM0   0FB EQUATE PWM0EX
+0FC EQUATE PWM1    0FD EQUATE PWM1EX  0FE EQUATE PWMCON 0FF EQUATE ZCMOD
+
+
+END-EQUATES \ 44 EQUATES
+\ READ ONLY     4
+\ WRITE ONLY    1
+\ READ/WRITE    39
+\ UNKNOWN       0
+
+WORD-LIST SYSREG_R
+
+        T0CNT   W,  T0DATA  W,  T0CONH  W, T0CONL   W,
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  BTCNT   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P3      W,  T1CON   W,  T1DATA  W,
+        P0CONH  W,  P0CONL  W,  P0PUR   W,
+        P1CON   W,  P1PND   W,  P2CONH  W,  P2CONL  W,  P2PUR   W,
+        P3CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  ICCR    W,
+        ICSR    W,  IAR     W,  IDSR    W,  BUZPS   W,  ADCON   W,  
+        ADDATAH W,  ADDATAL W,  PWM0    W,  PWM0EX  W,  PWM1    W,  
+        PWM1EX  W,  PWMCON  W,  ZCMOD   W,  
+        $; \ 43 REGISTERS
+
+WORD-LIST SYSREG_W
+        T0DATA  W,  T0CONH  W, T0CONL   W,
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  FTSTCON W,   SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P3      W,  T1CON   W,  T1DATA  W,
+        P0CONH  W,  P0CONL  W,  P0PUR   W,
+        P1CON   W,  P1PND   W,  P2CONH  W,  P2CONL  W,  P2PUR   W,
+        P3CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  ICCR    W,
+        ICSR    W,  IAR     W,  IDSR    W,  BUZPS   W,  ADCON   W,  
+        PWM0    W,  PWM0EX  W,  PWM1    W,  
+        PWM1EX  W,  PWMCON  W,  ZCMOD   W,  
+        $; \ 40 REGISTERS
+
+WORD-LIST SYSREG_RW
+        T0DATA  W,  T0CONH  W, T0CONL   W,
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P3      W,  T1CON   W,  T1DATA  W,
+        P0CONH  W,  P0CONL  W,  P0PUR   W,
+        P1CON   W,  P1PND   W,  P2CONH  W,  P2CONL  W,  P2PUR   W,
+        P3CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  ICCR    W,
+        ICSR    W,  IAR     W,  IDSR    W,  BUZPS   W,  ADCON   W,  
+        PWM0    W,  PWM0EX  W,  PWM1    W,  
+        PWM1EX  W,  PWMCON  W,  ZCMOD   W,  
+        $; \ 39 REGISTERS
+
+
+WORD-LIST BIT_R
+        T0CNT   W,  T0DATA  W,  T0CONH  W, T0CONL   W,
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  BTCNT   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P3      W,  T1CON   W,  T1DATA  W,
+        P0CONH  W,  P0CONL  W,  P0PUR   W,
+        P1CON   W,  P1PND   W,  P2CONH  W,  P2CONL  W,  P2PUR   W,
+        P3CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  ICCR    W,
+        ICSR    W,  IAR     W,  IDSR    W,  BUZPS   W,  ADCON   W,  
+        ADDATAH W,  ADDATAL W,  PWM0    W,  PWM0EX  W,  PWM1    W,  
+        PWM1EX  W,  PWMCON  W,  ZCMOD   W,  
+        $; \ 43 REGISTERS
+
+
+
+WORD-LIST BIT_W
+        T0DATA  W,  T0CONH  W, T0CONL   W,
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  FTSTCON W,   SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P3      W,  T1CON   W,  T1DATA  W,
+        P0CONH  W,  P0CONL  W,  P0PUR   W,
+        P1CON   W,  P1PND   W,  P2CONH  W,  P2CONL  W,  P2PUR   W,
+        P3CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  ICCR    W,
+        ICSR    W,  IAR     W,  IDSR    W,  BUZPS   W,  ADCON   W,  
+        PWM0    W,  PWM0EX  W,  PWM1    W,  
+        PWM1EX  W,  PWMCON  W,  ZCMOD   W,  
+        $; \ 40 REGISTERS
+
+
+WORD-LIST BIT_RW
+         T0DATA  W,  T0CONH  W, T0CONL   W,
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P3      W,  T1CON   W,  T1DATA  W,
+        P0CONH  W,  P0CONL  W,  P0PUR   W,
+        P1CON   W,  P1PND   W,  P2CONH  W,  P2CONL  W,  P2PUR   W,
+        P3CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  ICCR    W,
+        ICSR    W,  IAR     W,  IDSR    W,  BUZPS   W,  ADCON   W,  
+        PWM0    W,  PWM0EX  W,  PWM1    W,  
+        PWM1EX  W,  PWMCON  W,  ZCMOD   W,  
+        $; \ 39 REGISTERS
+
+
+INCLUDE 86INST.DEF

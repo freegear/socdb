@@ -1,0 +1,189 @@
+; 57C22532.REG  Copyright (c) 1996 SAMSUNG ELECTRONICS CO.
+
+        .list   off
+
+;       99/10/28 by J.K.Lee
+
+        .romsize        8000h
+
+        .ram_range      00h, 100h
+
+;       System Registers
+SP:		.reg    0f80h
+BMOD:		.reg    0f85h,w
+BCNT:		.reg    0f86h,r
+WMOD:		.reg    0f88h,w
+LCNST:          .reg    0f8ah,w
+LMOD:		.reg    0f8ch,w
+LCON:		.reg    0f8eh,w
+TMOD0:		.reg    0f90h,w
+TOE1:		.bit    0f92h.3
+TOE0:		.bit    0f92h.2
+TCNT0:		.reg    0f94h,r
+TREF0:		.reg    0f96h,w
+WDMOD:		.reg	0f98h,w
+WDFLAG:		.reg	0f9ah,w
+WDTCF:		.bit	0f9ah.3,w	
+TMOD1:		.reg    0fa0h,w
+TCNT1A:		.reg    0fa4h,r
+TCNT1B:		.reg    0fa6h,r
+TREF1A:		.reg    0fa8h,w
+TREF1B:		.reg    0faah,w
+PSW:		.reg    0fb0h
+IS1:		.bit    0fb0h.3
+IS0:		.bit    0fb0h.2
+EMB:		.bit    0fb0h.1
+ERB:		.bit    0fb0h.0
+C:		.bit    0fb1h.3
+SC2:		.bit    0fb1h.2,r
+SC1:		.bit    0fb1h.1,r
+SC0:		.bit    0fb1h.0,r
+
+IPR:		.reg    0fb2h,w
+IME:            .bit    0fb8h.3,w
+
+PCON:		.reg    0fb3h,w
+IMOD0:		.reg    0fb4h,w
+IMOD1:		.reg    0fb5h,w
+IMODK:		.reg    0fb6h,w
+SCMOD:		.reg    0fb7h,w
+IE4:		.bit    0fb8h.3
+IRQ4:		.bit    0fb8h.2
+IEB:		.bit    0fb8h.1
+IRQB:		.bit    0fb8h.0
+IEW:		.bit    0fbah.1
+IRQW:		.bit    0fbah.0
+IEK:		.bit    0fbbh.3
+IRQK:		.bit    0fbbh.2
+IET1:		.bit    0fbbh.1
+IRQT1:		.bit    0fbbh.0
+IET0:		.bit    0fbch.1
+IRQT0:		.bit    0fbch.0
+IES:		.bit    0fbdh.1
+IRQS:		.bit    0fbdh.0
+IE1:		.bit    0fbeh.3
+IRQ1:		.bit    0fbeh.2
+IE0:		.bit    0fbeh.1
+IRQ0:		.bit    0fbeh.0
+IE2:		.bit    0fbfh.1
+IRQ2:		.bit    0fbfh.0
+BSC0:		.reg    0fc0h
+BSC1:		.reg    0fc1h
+BSC2:		.reg    0fc2h
+BSC3:		.reg    0fc3h
+CLMOD:		.reg    0fd0h,w
+PNE1:		.reg    0fd6h,w
+PNE2:		.reg    0fd8h,w
+IMOD2:		.reg    0fdah,w
+PUMOD1:		.reg    0fdch,w
+PUMOD2:		.reg    0fdeh,w
+SMOD:		.reg    0fe0h,w
+SBUF:		.reg    0fe4h
+PMG1:		.reg    0fe6h,w
+PMG2:		.reg    0fe8h,w
+PMG3:		.reg    0feah,w
+PMG4:		.reg    0fech,w
+PMG5:		.reg    0feeh,w
+P0:		.reg    0ff0h
+P1:		.reg    0ff1h,r
+P2:		.reg    0ff2h
+P3:		.reg    0ff3h
+P4:		.reg    0ff4h
+P5:		.reg    0ff5h
+P6:		.reg    0ff6h
+P7:		.reg    0ff7h
+P8:		.reg    0ff8h
+P9:		.reg    0ff9h
+
+;       System Registers
+sp:		.reg    0f80h
+bmod:		.reg    0f85h,w
+bcnt:		.reg    0f86h,r
+wmod:		.reg    0f88h,w
+lcnst:          .reg    0f8ah,w
+lmod:		.reg    0f8ch,w
+lcon:		.reg    0f8eh,w
+tmod0:		.reg    0f90h,w
+toe1:		.bit    0f92h.3
+toe0:		.bit    0f92h.2
+tcnt0:		.reg    0f94h,r
+tref0:		.reg    0f96h,w
+wdmod:		.reg	0f98h,w
+wdflag:		.reg	0f9ah,w
+wdtcf:		.bit	0f9ah.3,w
+tmod1:		.reg    0fa0h,w
+tcnt1a:		.reg    0fa4h,r
+tcnt1b:		.reg    0fa6h,r
+tref1a:		.reg    0fa8h,w
+tref1b:		.reg    0faah,w
+psw:		.reg    0fb0h
+is1:		.bit    0fb0h.3
+is0:		.bit    0fb0h.2
+emb:		.bit    0fb0h.1
+erb:		.bit    0fb0h.0
+c:		.bit    0fb1h.3
+sc2:		.bit    0fb1h.2,r
+sc1:		.bit    0fb1h.1,r
+sc0:		.bit    0fb1h.0,r
+
+ipr:		.reg    0fb2h,w
+ime:        .bit    0fb2h.3,w
+
+pcon:		.reg    0fb3h,w
+imod0:		.reg    0fb4h,w
+imod1:		.reg    0fb5h,w
+imodk:		.reg    0fb6h,w
+scmod:		.reg    0fb7h,w
+ie4:		.bit    0fb8h.3
+irq4:		.bit    0fb8h.2
+ieb:		.bit    0fb8h.1
+irqb:		.bit    0fb8h.0
+iew:		.bit    0fbah.1
+irqw:		.bit    0fbah.0
+iek:		.bit    0fbbh.3
+irqk:		.bit    0fbbh.2
+iet1:		.bit    0fbbh.1
+irqt1:		.bit    0fbbh.0
+iet0:		.bit    0fbch.1
+irqt0:		.bit    0fbch.0
+ies:		.bit    0fbdh.1
+irqs:		.bit    0fbdh.0
+ie1:		.bit    0fbeh.3
+irq1:		.bit    0fbeh.2
+ie0:		.bit    0fbeh.1
+irq0:		.bit    0fbeh.0
+ie2:		.bit    0fbfh.1
+irq2:		.bit    0fbfh.0
+bsc0:		.reg    0fc0h
+bsc1:		.reg    0fc1h
+bsc2:		.reg    0fc2h
+bsc3:		.reg    0fc3h
+clmod:		.reg    0fd0h,w
+pne1:		.reg    0fd6h,w
+pne2:		.reg    0fd8h,w
+imod2:		.reg    0fdah,w
+pumod1:		.reg    0fdch,w
+pumod2:		.reg    0fdeh,w
+smod:		.reg    0fe0h,w
+sbuf:		.reg    0fe4h
+pmg1:		.reg    0fe6h,w
+pmg2:		.reg    0fe8h,w
+pmg3:		.reg    0feah,w
+pmg4:		.reg    0fech,w
+pmg5:		.reg    0feeh,w
+p0:		.reg    0ff0h
+p1:		.reg    0ff1h,r
+p2:		.reg    0ff2h
+p3:		.reg    0ff3h
+p4:		.reg    0ff4h
+p5:		.reg    0ff5h
+p6:		.reg    0ff6h
+p7:		.reg    0ff7h
+p8:		.reg    0ff8h
+p9:		.reg    0ff9h
+
+;
+; END OF 57C22532.REG
+        .list   on
+
+

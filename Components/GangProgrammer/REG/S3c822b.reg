@@ -1,0 +1,164 @@
+; 88C2264.REG  Copyright (c) 1996 SAMSUNG ELECTRONICS CO.
+
+	.list   off
+
+;       88c2264 system register
+;       99/08/17 by J.K.LEE Revision 0
+
+	.romsize        10000h
+
+	.ram_range      00h, 0C0h
+
+;       System Registers
+T0CNT:          .reg    0D0h,r
+T0DATA:         .reg    0D1h
+T0CON:          .reg    0D2h
+BTCON:          .reg    0D3h
+CLKCON:         .reg    0D4h
+FLAGS:          .reg    0D5h
+RP0:            .reg    0D6h
+RP1:            .reg    0D7h
+SPH:            .reg    0D8h
+SPL:            .reg    0D9h
+IPH:            .reg    0DAh
+IPL:            .reg    0DBh
+IRQ:            .reg    0DCh,r
+IMR:            .reg    0DDh
+SYM:            .reg    0DEh
+PP:             .reg    0DFh
+
+;       Set 1, Bank 0
+P0:             .reg    0E0h
+P1:             .reg    0E1h
+P2:             .reg    0E2h
+P3:             .reg    0E3h
+P4:             .reg    0E4h
+P5:             .reg    0E5h
+P6:             .reg    0E6h
+P0INT:          .reg    0E7h
+P0PND:          .reg    0E8h
+P0STA:          .reg    0E9h
+P0CONH:         .reg    0EAh
+P0CONL:         .reg    0EBh
+P1CONH:         .reg    0ECh
+P1CONL:         .reg    0EDh
+P1AFS:          .reg    0EEh
+P2CON:          .reg    0EFh
+P2AFS:          .reg    0F0h
+P3CON:          .reg    0F1h
+P3AFS:          .reg    0F2h
+P4CON:          .reg    0F3h
+P5CON:          .reg    0F4h
+P6CON:          .reg    0F5h
+CLKMOD:         .reg    0F8h
+INTPND:         .reg    0F9h
+OSCCON:         .reg    0FAh
+STPCON:         .reg    0FBh
+BTCNT:          .reg    0FDh,r
+EMT:            .reg    0FEh
+IPR:            .reg    0FFh
+
+;	Set 1, Bank 1
+TACNT:          .reg    0E0h,r
+TBCNT:          .reg    0E1h,r
+TADATA:         .reg    0E2h
+TBDATA:         .reg    0E3h
+TACON:          .reg    0E4h
+TBCON:          .reg    0E5h
+WTCON:          .reg    0E6h
+ELDCON:         .reg    0E7h
+LCON:           .reg    0E8h
+LMOD:           .reg    0E9h
+SIODATA:        .reg    0EAh
+SIOCON:         .reg    0EBh
+SIOPS:          .reg    0ECh
+SUSR:           .reg    0EDh
+UDATA:          .reg    0EEh
+UARTCON:        .reg    0EFh
+UARTPND:        .reg    0F0h
+BRDATA:         .reg    0F1h
+ADDATAH:        .reg    0F2h,r
+ADDATAL:        .reg    0F3h,r
+ADCON:          .reg    0F4h
+VLDCON:         .reg    0F5h
+
+
+
+
+;       system registers
+t0cnt:          .reg    0d0h,r
+t0data:         .reg    0d1h
+t0con:          .reg    0d2h
+btcon:          .reg    0d3h
+clkcon:         .reg    0d4h
+flags:          .reg    0d5h
+rp0:            .reg    0d6h
+rp1:            .reg    0d7h
+sph:            .reg    0d8h
+spl:            .reg    0d9h
+iph:            .reg    0dah
+ipl:            .reg    0dbh
+irq:            .reg    0dch,r
+imr:            .reg    0ddh
+sym:            .reg    0deh
+pp:             .reg    0dfh
+
+;       set 1, bank 0
+p0:             .reg    0e0h
+p1:             .reg    0e1h
+p2:             .reg    0e2h
+p3:             .reg    0e3h
+p4:             .reg    0e4h
+p5:             .reg    0e5h
+p6:             .reg    0e6h
+p0int:          .reg    0e7h
+p0pnd:          .reg    0e8h
+p0sta:          .reg    0e9h
+p0conh:         .reg    0eah
+p0conl:         .reg    0ebh
+p1conh:         .reg    0ech
+p1conl:         .reg    0edh
+p1afs:          .reg    0eeh
+p2con:          .reg    0efh
+p2afs:          .reg    0f0h
+p3con:          .reg    0f1h
+p3afs:          .reg    0f2h
+p4con:          .reg    0f3h
+p5con:          .reg    0f4h
+p6con:          .reg    0f5h
+clkmod:         .reg    0f8h
+intpnd:         .reg    0f9h
+osccon:         .reg    0fah
+stpcon:         .reg    0fbh
+btcnt:          .reg    0fdh,r
+emt:            .reg    0feh
+ipr:            .reg    0ffh
+
+;	set 1, bank 1
+tacnt:          .reg    0e0h,r
+tbcnt:          .reg    0e1h,r
+tadata:         .reg    0e2h
+tbdata:         .reg    0e3h
+tacon:          .reg    0e4h
+tbcon:          .reg    0e5h
+wtcon:          .reg    0e6h
+eldcon:         .reg    0e7h
+lcon:           .reg    0e8h
+lmod:           .reg    0e9h
+siodata:        .reg    0eah
+siocon:         .reg    0ebh
+siops:          .reg    0ech
+susr:           .reg    0edh
+udata:          .reg    0eeh
+uartcon:        .reg    0efh
+uartpnd:        .reg    0f0h
+brdata:         .reg    0f1h
+addatah:        .reg    0f2h,r
+addatal:        .reg    0f3h,r
+adcon:          .reg    0f4h
+vldcon:         .reg    0f5h
+
+
+;
+; END OF 88C2264.REG
+	.list   on

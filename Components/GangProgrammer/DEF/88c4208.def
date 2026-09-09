@@ -1,0 +1,92 @@
+\
+\
+\  88c4208.DEF Copyright SAMSUNG ELECTRONICS CO. 1990-1994,
+\
+\  Initial     : 08/18/94  sjlee
+\
+
+2000 ROMSIZE
+00 0BF RAMRANGE
+
+\  set1 register
+0D0 EQUATE T0CNT     0D1 EQUATE T0DATA    0D2 EQUATE T0CON     0D3 EQUATE BTCON
+0D4 EQUATE CLKCON    0D5 EQUATE FLAGS     0D6 EQUATE RP0       0D7 EQUATE RP1
+0D8 EQUATE SPH       0D9 EQUATE SPL       0DA EQUATE IPH       0DB EQUATE IPL
+0DC EQUATE IRQ       0DD EQUATE IMR       0DE EQUATE SYM       0DF EQUATE PP
+0E0 EQUATE P0        0E1 EQUATE P1        0E2 EQUATE P2        0E3 EQUATE P3
+0E4 EQUATE P4        0E9 EQUATE SIO       0EA EQUATE SIOCON    0EB EQUATE SIOPND
+0EC EQUATE TCH       0ED EQUATE TCL       0EE EQUATE TDH       0EF EQUATE TDL
+0F0 EQUATE P0CON     0F1 EQUATE P1CON     0F2 EQUATE P2CONH    0F3 EQUATE P2CONL
+0F4 EQUATE P3CONH    0F5 EQUATE P3CONL    0F6 EQUATE P4CON     0F8 EQUATE T1CON
+0F9 EQUATE T1MOD     0FA EQUATE ADCON     0FB EQUATE ADOUT     0FD EQUATE BTCNT
+0FE EQUATE EMT       0FF EQUATE IPR
+
+END-EQUATES \ 42 equates
+\ Read  only   3
+\ Write only   0
+\ Read/Write  39
+\ Unknown      0
+WORD-LIST SYSREG_R
+T0CNT       W,  T0DATA      W,  T0CON       W,  BTCON       W,  CLKCON      W,
+FLAGS       W,  RP0         W,  RP1         W,  SPH         W,  SPL         W,
+IPH         W,  IPL         W,  IRQ         W,  IMR         W,  SYM         W,
+PP          W,  P0          W,  P1          W,  P2          W,  P3          W,
+P4          W,  SIO         W,  SIOCON      W,  SIOPND      W,  TCH         W,
+TCL         W,  TDH         W,  TDL         W,  P0CON       W,  P1CON       W,
+P2CONH      W,  P2CONL      W,  P3CONH      W,  P3CONL      W,  P4CON       W,
+T1CON       W,  T1MOD       W,  ADCON       W,  ADOUT       W,  BTCNT       W,
+EMT         W,  IPR         W,
+    $; \ 42 registers
+WORD-LIST SYSREG_W
+T0DATA      W,  T0CON       W,  BTCON       W,  CLKCON      W,  FLAGS       W,
+RP0         W,  RP1         W,  SPH         W,  SPL         W,  IPH         W,
+IPL         W,  IMR         W,  SYM         W,  PP          W,  P0          W,
+P1          W,  P2          W,  P3          W,  P4          W,  SIO         W,
+SIOCON      W,  SIOPND      W,  TCH         W,  TCL         W,  TDH         W,
+TDL         W,  P0CON       W,  P1CON       W,  P2CONH      W,  P2CONL      W,
+P3CONH      W,  P3CONL      W,  P4CON       W,  T1CON       W,  T1MOD       W,
+ADCON       W,  ADOUT       W,  EMT         W,  IPR         W,
+    $; \ 39 registers
+WORD-LIST SYSREG_RW
+T0DATA      W,  T0CON       W,  BTCON       W,  CLKCON      W,  FLAGS       W,
+RP0         W,  RP1         W,  SPH         W,  SPL         W,  IPH         W,
+IPL         W,  IMR         W,  SYM         W,  PP          W,  P0          W,
+P1          W,  P2          W,  P3          W,  P4          W,  SIO         W,
+SIOCON      W,  SIOPND      W,  TCH         W,  TCL         W,  TDH         W,
+TDL         W,  P0CON       W,  P1CON       W,  P2CONH      W,  P2CONL      W,
+P3CONH      W,  P3CONL      W,  P4CON       W,  T1CON       W,  T1MOD       W,
+ADCON       W,  ADOUT       W,  EMT         W,  IPR         W,
+    $; \ 39 registers
+WORD-LIST BIT_R
+T0CNT       W,  T0DATA      W,  T0CON       W,  BTCON       W,  CLKCON      W,
+FLAGS       W,  RP0         W,  RP1         W,  SPH         W,  SPL         W,
+IPH         W,  IPL         W,  IRQ         W,  IMR         W,  SYM         W,
+PP          W,  P0          W,  P1          W,  P2          W,  P3          W,
+P4          W,  SIO         W,  SIOCON      W,  SIOPND      W,  TCH         W,
+TCL         W,  TDH         W,  TDL         W,  P0CON       W,  P1CON       W,
+P2CONH      W,  P2CONL      W,  P3CONH      W,  P3CONL      W,  P4CON       W,
+T1CON       W,  T1MOD       W,  ADCON       W,  ADOUT       W,  BTCNT       W,
+EMT         W,  IPR         W,
+    $; \ 42 registers
+WORD-LIST BIT_W
+T0DATA      W,  T0CON       W,  BTCON       W,  CLKCON      W,  FLAGS       W,
+RP0         W,  RP1         W,  SPH         W,  SPL         W,  IPH         W,
+IPL         W,  IMR         W,  SYM         W,  PP          W,  P0          W,
+P1          W,  P2          W,  P3          W,  P4          W,  SIO         W,
+SIOCON      W,  SIOPND      W,  TCH         W,  TCL         W,  TDH         W,
+TDL         W,  P0CON       W,  P1CON       W,  P2CONH      W,  P2CONL      W,
+P3CONH      W,  P3CONL      W,  P4CON       W,  T1CON       W,  T1MOD       W,
+ADCON       W,  ADOUT       W,  EMT         W,  IPR         W,
+    $; \ 39 registers
+WORD-LIST BIT_RW
+T0DATA      W,  T0CON       W,  BTCON       W,  CLKCON      W,  FLAGS       W,
+RP0         W,  RP1         W,  SPH         W,  SPL         W,  IPH         W,
+IPL         W,  IMR         W,  SYM         W,  PP          W,  P0          W,
+P1          W,  P2          W,  P3          W,  P4          W,  SIO         W,
+SIOCON      W,  SIOPND      W,  TCH         W,  TCL         W,  TDH         W,
+TDL         W,  P0CON       W,  P1CON       W,  P2CONH      W,  P2CONL      W,
+P3CONH      W,  P3CONL      W,  P4CON       W,  T1CON       W,  T1MOD       W,
+ADCON       W,  ADOUT       W,  EMT         W,  IPR         W,
+    $; \ 39 registers
+
+include 88inst.def

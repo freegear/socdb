@@ -1,0 +1,180 @@
+; 88C0216.REG  Copyright (c) 1996 Samsung Electronic Co.
+
+	.list   off
+
+;       88c0216 system register
+;       96/11/01 by h.j.cho Revision 0
+
+	.romsize        4000h
+
+	.ram_range      00h, 0C0h
+
+;       System Registers
+T0CNT:          .reg    0d0h
+T0DATA:         .reg    0d1h
+T0CON:          .reg    0d2h
+BTCON:          .reg    0d3h
+CLKCON:         .reg    0d4h
+FLAGS:          .reg    0d5h
+RP0:            .reg    0d6h
+RP1:            .reg    0d7h
+SPH:            .reg    0d8h
+SPL:            .reg    0d9h
+IPH:            .reg    0dah
+IPL:            .reg    0dbh
+IRQ:            .reg    0dch
+IMR:            .reg    0ddh
+SYM:            .reg    0deh
+PP:             .reg    0dfh
+
+P0:             .reg    0e0h
+P1:             .reg    0e1h
+P2:             .reg    0e2h
+P3:             .reg    0e3h
+P4:             .reg    0e4h
+P5:             .reg    0e5h
+
+P0CONH:         .reg    0e6h
+P0CONL:         .reg    0e7h
+P1CONH:         .reg    0e8h
+P1CONL:         .reg    0e9h
+P2CON:          .reg    0eah
+DDCCON:         .reg    0ebh
+P3CONH:         .reg    0ech
+P3CONL:         .reg    0edh
+P4CONH:         .reg    0eeh
+P4CONL:         .reg    0efh
+P5CONH:         .reg    0f0h
+P5CONL:         .reg    0f1h
+SYNCON0:        .reg    0f2h
+SYNCON1:        .reg    0f3h
+SYNCON2:        .reg    0f4h
+T2CON:          .reg    0f5h
+T2DATA:         .reg    0f6h
+T1CON:          .reg    0f7h
+T1CNT:          .reg    0f8h
+
+BTCNT:          .reg    0fdh
+EMT:            .reg    0feh
+IPR:            .reg    0ffh
+
+PWM0:           .reg    0e0h
+PWM1:           .reg    0e1h
+PWM2:           .reg    0e2h
+PWM3:           .reg    0e3h
+PWM4:           .reg    0e4h
+PWM5:           .reg    0e5h
+PWM6:           .reg    0e6h
+PWM7:           .reg    0e7h
+PWM8:           .reg    0e8h
+PWM9:           .reg    0e9h
+PWM10:          .reg    0eah
+PWM11:          .reg    0ebh
+PWM12:          .reg    0ech
+PWM13:          .reg    0edh
+PWM14:          .reg    0eeh
+PWM15:          .reg    0efh
+
+PWM16:          .reg    0f0h
+PWM16EX:        .reg    0f1h
+PWMCH:          .reg    0f2h
+PWMCL:          .reg    0f3h
+PWMCON:         .reg    0f4h
+ICCR0:          .reg    0f5h
+ICSR0:          .reg    0f6h
+IAR0:           .reg    0f7h
+IDSR0:          .reg    0f8h
+ADCON:          .reg    0f9h
+ADDATA:         .reg    0fah
+POINT:          .reg    0fbh
+ICCR1:          .reg    0fch
+ICSR1:          .reg    0fdh
+IAR1:           .reg    0feh
+IDSR1:          .reg    0ffh
+
+;       System Registers
+t0cnt:          .reg    0d0h
+t0data:         .reg    0d1h
+t0con:          .reg    0d2h
+btcon:          .reg    0d3h
+clkcon:         .reg    0d4h
+flags:          .reg    0d5h
+rp0:            .reg    0d6h
+rp1:            .reg    0d7h
+sph:            .reg    0d8h
+spl:            .reg    0d9h
+iph:            .reg    0dah
+ipl:            .reg    0dbh
+irq:            .reg    0dch
+imr:            .reg    0ddh
+sym:            .reg    0deh
+pp:             .reg    0dfh
+
+p0:             .reg    0e0h
+p1:             .reg    0e1h
+p2:             .reg    0e2h
+p3:             .reg    0e3h
+p4:             .reg    0e4h
+p5:             .reg    0e5h
+
+p0conh:         .reg    0e6h
+p0conl:         .reg    0e7h
+p1conh:         .reg    0e8h
+p1conl:         .reg    0e9h
+p2con:          .reg    0eah
+ddccon:         .reg    0ebh
+p3conh:         .reg    0ech
+p3conl:         .reg    0edh
+p4conh:         .reg    0eeh
+p4conl:         .reg    0efh
+p5conh:         .reg    0f0h
+p5conl:         .reg    0f1h
+syncon0:        .reg    0f2h
+syncon1:        .reg    0f3h
+syncon2:        .reg    0f4h
+t2con:          .reg    0f5h
+t2data:         .reg    0f6h
+t1con:          .reg    0f7h
+t1cnt:          .reg    0f8h
+
+btcnt:          .reg    0fdh
+emt:            .reg    0feh
+ipr:            .reg    0ffh
+
+pwm0:           .reg    0e0h
+pwm1:           .reg    0e1h
+pwm2:           .reg    0e2h
+pwm3:           .reg    0e3h
+pwm4:           .reg    0e4h
+pwm5:           .reg    0e5h
+pwm6:           .reg    0e6h
+pwm7:           .reg    0e7h
+pwm8:           .reg    0e8h
+pwm9:           .reg    0e9h
+pwm10:          .reg    0eah
+pwm11:          .reg    0ebh
+pwm12:          .reg    0ech
+pwm13:          .reg    0edh
+pwm14:          .reg    0eeh
+pwm15:          .reg    0efh
+
+pwm16:          .reg    0f0h
+pwm16ex:        .reg    0f1h
+pwmch:          .reg    0f2h
+pwmcl:          .reg    0f3h
+pwmcon:         .reg    0f4h
+iccr0:          .reg    0f5h
+icsr0:          .reg    0f6h
+iar0:           .reg    0f7h
+idsr0:          .reg    0f8h
+adcon:          .reg    0f9h
+addata:         .reg    0fah
+p0int:          .reg    0fbh
+iccr1:          .reg    0fch
+icsr1:          .reg    0fdh
+iar1:           .reg    0feh
+idsr1:          .reg    0ffh
+;
+; END OF 88C0216.REG
+	.list   on
+

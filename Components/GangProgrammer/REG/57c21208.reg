@@ -1,0 +1,220 @@
+; 57C21208.REG Copyright (c) 1996 Samsung Electrionis Co.
+
+        .list   off
+
+;       57c21208 system register
+;	07/28/98 by Yi,K.M. Test version 0
+
+        .romsize        2000h
+
+        .ram_range      00h, 100h
+
+;       SYSTEM REGISTERS
+SP:		.reg    0f80h
+BMOD:		.reg    0f85h,w
+BCNT:		.reg    0f86h,r
+WMOD:		.reg    0f88h,w
+LPOT:		.reg	0f8ah,w
+LMOD:		.reg	0f8ch,w
+LCON:		.reg	0f8eh,w
+
+TOL2:		.bit	0f92h.0
+BOE:       	.bit    0f92h.1
+TOE1:		.bit	0f92h.3
+
+WDMOD:		.reg	0f98h,w
+
+WDFLAG:		.reg	0f9ah,w
+WDTCF:		.bit	0f9ah.3,w
+
+TMOD1A:		.reg	0fa0h,w
+TMOD1B:		.reg	0fa2h,w
+TCNT1A:		.reg	0fa4h,r
+TCNT1B:		.reg	0fa6h,r
+TREF1A:		.reg	0fa8h,w
+TREF1B:		.reg	0faah,w
+
+PSW:		.reg    0fb0h
+ERB:		.bit    0fb0h.0
+EMB:		.bit    0fb0h.1
+IS0:		.bit    0fb0h.2
+IS1:		.bit    0fb0h.3
+
+C:              .bit    0fb1h.3
+
+IPR:		.reg    0fb2h,w
+IME:            .bit    0fb2h.3,w
+
+PCON:		.reg    0fb3h,w
+IMOD0:		.reg    0fb4h,w
+IMOD1:		.reg    0fb5h,w
+
+SCMOD:		.reg    0fb7h,w
+
+IRQB:		.bit    0fb8h.0
+IEB:		.bit    0fb8h.1
+IRQ4:		.bit	0fb8h.2
+IE4:		.bit	0fb8h.3
+
+IRQW:		.bit    0fbah.0
+IEW:		.bit    0fbah.1
+
+IRQT1:		.bit	0fbbh.0
+IET1:		.bit	0fbbh.1
+IRQK:		.bit	0fbbh.2
+IEK:		.bit	0fbbh.3
+
+IRQP:		.bit    0fbch.0
+IEP:		.bit    0fbch.1
+IRQT2:		.bit	0fbch.2
+IET2:		.bit	0fbch.3
+
+IRQS:		.bit    0fbdh.0
+IES:		.bit    0fbdh.1
+
+IRQ0:		.bit    0fbeh.0
+IE0:		.bit    0fbeh.1
+IRQ1:		.bit	0fbeh.2
+IE1:		.bit	0fbeh.3
+
+IRQ2:		.bit    0fbfh.0
+IE2:		.bit    0fbfh.1
+
+BSC0:		.reg    0fc0h
+BSC1:		.reg    0fc1h
+BSC2:		.reg    0fc2h
+BSC3:		.reg    0fc3h
+IMODK:		.reg	0fcch,w
+P2MOD:		.reg	0fceh,w
+IMOD2:		.reg	0fcfh,w
+
+CLMOD:		.reg    0fd0h,w
+CMOD:		.reg	0fd2h
+CMPREG:		.reg	0fd4h,r
+PNE1:       	.reg    0fd6h,w
+PNE2:		.reg	0fd8h,w
+PNE3:		.reg	0fdah,w
+PUMOD1:		.reg    0fdch,w
+PUMOD2:		.reg	0fdeh,w
+
+SMOD:		.reg	0fe0h,w
+SBUF:		.reg	0fe4h
+PMG1:		.reg    0fe6h,w
+PMG2:		.reg    0fe8h,w
+PMG3:		.reg	0feah,w
+
+P0:		.reg    0ff0h
+P1:		.reg    0ff1h
+P2:		.reg    0ff2h
+P3:		.reg	0ff3h
+P4:		.reg    0ff4h
+P5:		.reg    0ff5h
+P6:		.reg    0ff6h
+P7:		.reg    0ff7h
+
+;       system registers
+sp:		.reg    0f80h
+bmod:		.reg    0f85h,w
+bcnt:		.reg    0f86h,r
+wmod:		.reg    0f88h,w
+lpot:		.reg	0f8ah,w
+lmod:		.reg	0f8ch,w
+lcon:		.reg	0f8eh,w
+
+tol2:		.bit	0f92h.0
+boe:       	.bit    0f92h.1
+toe1:		.bit	0f92h.3
+
+wdmod:		.reg	0f98h,w
+
+wdflag:		.reg	0f9ah,w
+wdtcf:		.bit	0f9ah.3,w
+
+tmod1a:		.reg	0fa0h,w
+tmod1b:		.reg	0fa2h,w
+tcnt1a:		.reg	0fa4h,r
+tcnt1b:		.reg	0fa6h,r
+tref1a:		.reg	0fa8h,w
+tref1b:		.reg	0faah,w
+
+psw:		.reg    0fb0h
+erb:		.bit    0fb0h.0
+emb:		.bit    0fb0h.1
+is0:		.bit    0fb0h.2
+is1:		.bit    0fb0h.3
+
+c:              .bit    0fb1h.3
+
+ipr:		.reg    0fb2h,w
+ime:            .bit    0fb2h.3,w
+
+pcon:		.reg    0fb3h,w
+imod0:		.reg    0fb4h,w
+imod1:		.reg    0fb5h,w
+
+scmod:		.reg    0fb7h,w
+
+irqb:		.bit    0fb8h.0
+ieb:		.bit    0fb8h.1
+irq4:		.bit	0fb8h.2
+ie4:		.bit	0fb8h.3
+
+irqw:		.bit    0fbah.0
+iew:		.bit    0fbah.1
+
+irqt1:		.bit	0fbbh.0
+iet1:		.bit	0fbbh.1
+irqk:		.bit	0fbbh.2
+iek:		.bit	0fbbh.3
+
+irqp:		.bit    0fbch.0
+iep:		.bit    0fbch.1
+irqt2:		.bit	0fbch.2
+iet2:		.bit	0fbch.3
+
+irqs:		.bit    0fbdh.0
+ies:		.bit    0fbdh.1
+
+irq0:		.bit    0fbeh.0
+ie0:		.bit    0fbeh.1
+irq1:		.bit	0fbeh.2
+ie1:		.bit	0fbeh.3
+
+irq2:		.bit    0fbfh.0
+ie2:		.bit    0fbfh.1
+
+bsc0:		.reg    0fc0h
+bsc1:		.reg    0fc1h
+bsc2:		.reg    0fc2h
+bsc3:		.reg    0fc3h
+imodk:		.reg	0fcch,w
+p2mod:		.reg	0fceh,w
+imod2:		.reg	0fcfh,w
+
+clmod:		.reg    0fd0h,w
+cmod:		.reg	0fd2h
+cmpreg:		.reg	0fd4h,r
+pne1:       	.reg    0fd6h,w
+pne2:		.reg	0fd8h,w
+pne3:		.reg	0fdah,w
+pumod1:		.reg    0fdch,w
+pumod2:		.reg	0fdeh,w
+
+smod:		.reg	0fe0h,w
+sbuf:		.reg	0fe4h
+pmg1:		.reg    0fe6h,w
+pmg2:		.reg    0fe8h,w
+pmg3:		.reg	0feah,w
+
+p0:		.reg    0ff0h
+p1:		.reg    0ff1h
+p2:		.reg    0ff2h
+p3:		.reg	0ff3h
+p4:		.reg    0ff4h
+p5:		.reg    0ff5h
+p6:		.reg    0ff6h
+p7:		.reg    0ff7h
+
+;
+; END OF 57C21208.REG
+        .list   on

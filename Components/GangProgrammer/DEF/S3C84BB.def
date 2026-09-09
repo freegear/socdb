@@ -1,0 +1,194 @@
+\  88c84bb.DEF Copyright SAMSUNG ELECTRONICS CO. 1998-1999,
+\  Initial     : 06/15/01  J.R.NA
+
+ 10000  ROMSIZE
+ 00 0FF RAMRANGE
+
+\  -----------------------------
+0D0 EQUATE TBCON     0D1 EQUATE TBDATAH   0D2 EQUATE TBDATAL   0D3 EQUATE BTCON
+0D4 EQUATE CLKCON    0D5 EQUATE FLAGS     0D6 EQUATE RP0       0D7 EQUATE RP1
+0D8 EQUATE SPH       0D9 EQUATE SPL       0DA EQUATE IPH       0DB EQUATE IPL
+0DC EQUATE IRQ       0DD EQUATE IMR       0DE EQUATE SYM       0DF EQUATE PP
+0E0 EQUATE P0        0E1 EQUATE P1        0E2 EQUATE P2        0E3 EQUATE P3
+0E4 EQUATE P4        0E5 EQUATE P5
+0E6 EQUATE P6        0E7 EQUATE P7        0E8 EQUATE P8
+0E9 EQUATE TINTPND   0EA EQUATE TACON     0EB EQUATE TADATA    0EC EQUATE TACNT
+0ED EQUATE P8CONH    0EE EQUATE P8CONL    0EF EQUATE P8INTPND
+0F0 EQUATE P0CON     0F1 EQUATE P1CON     0F2 EQUATE P2CONH    0F3 EQUATE P2CONL
+0F4 EQUATE P3CONH    0F5 EQUATE P3CONL    0F6 EQUATE P4CONH    0F7 EQUATE P4CONL
+0F8 EQUATE P5CONH    0F9 EQUATE P5CONL    0FA EQUATE P4INT     0FB EQUATE P4INTPND
+0FC EQUATE FTEST     0FD EQUATE BTCNT     0FE EQUATE EMT       0FF EQUATE IPR
+0E0 EQUATE SIODATA   0E1 EQUATE SIOCON    0E2 EQUATE UDATA0
+0E3 EQUATE UARTCON0  0E4 EQUATE BRDATA0   0E5 EQUATE UARTPND   0E6 EQUATE T1DATAH0
+0E7 EQUATE T1DATAL0  0E8 EQUATE T1DATAH1  0E9 EQUATE T1DATAL1  0EA EQUATE T1CON0
+0EB EQUATE T1CON1    0EC EQUATE T1CNTH0   0ED EQUATE T1CNTL0
+0EE EQUATE T1CNTH1   0EF EQUATE T1CNTL1
+0F0 EQUATE TCDATA0   0F1 EQUATE TCDATA1   0F2 EQUATE TCCON0
+0F3 EQUATE TCCON1    0F4 EQUATE SIOPS     0F5 EQUATE P7CON     0F6 EQUATE DADATA
+0F7 EQUATE ADACON
+0F8 EQUATE ADDATAH   0F9 EQUATE ADDATAL   0FA EQUATE UDATA1    0FB EQUATE UARTCON1
+0FC EQUATE BRDATA1   0FD EQUATE FMCON     0FE EQUATE PGCON     0FF EQUATE PGDATA
+END-EQUATES
+
+WORD-LIST SYSREG_R
+
+TBCON     W,  TBDATAH   W,   TBDATAL   W,  BTCON    W,
+CLKCON    W,  FLAGS     W,   RP0       W,  RP1      W,
+SPH       W,  SPL       W,   IPH       W,  IPL      W,
+IRQ       W,  IMR       W,   SYM       W,  PP       W,
+P0        W,  P1        W,   P2        W,  P3       W,
+P4        W,  P5        W,
+P6        W,  P7        W,   P8        W,
+TINTPND   W,  TACON     W,   TADATA    W,  TACNT    W,
+P8CONH    W,  P8CONL    W,   P8INTPND  W,
+P0CON     W,  P1CON     W,   P2CONH    W,  P2CONL   W,
+P3CONH    W,  P3CONL    W,   P4CONH    W,  P4CONL   W,
+P5CONH    W,  P5CONL    W,   P4INT     W,  P4INTPND W,
+FTEST     W,  BTCNT     W,   EMT       W,  IPR      W,
+SIODATA   W,  SIOCON    W,   UDATA0    W,
+UARTCON0  W,  BRDATA0   W,   UARTPND   W,  T1DATAH0 W,
+T1DATAL0  W,  T1DATAH1  W,   T1DATAL1  W,  T1CON0   W,
+T1CON1    W,  T1CNTH0   W,   T1CNTL0   W,
+T1CNTH1   W,  T1CNTL1   W,
+TCDATA0   W,  TCDATA1   W,   TCCON0    W,  TCCON1   W,
+SIOPS     W,
+P7CON     W,  DADATA    W,  ADACON     W,  ADDATAH  W,
+ADDATAL   W,  UDATA1    W,  UARTCON1   W,  BRDATA1  W,
+FMCON     W,  PGCON     W,  PGDATA     W,
+$; \  77 registers
+
+WORD-LIST SYSREG_W
+
+TBCON     W,  TBDATAH   W,   TBDATAL   W,  BTCON    W,
+CLKCON    W,  FLAGS     W,   RP0       W,  RP1      W,
+SPH       W,  SPL       W,   IPH       W,  IPL      W,
+IMR       W,  SYM       W,   PP        W,
+P0        W,  P1        W,   P2        W,  P3       W,
+P4        W,  P5        W,
+P6        W,  P7        W,   P8        W,
+TINTPND   W,  TACON     W,   TADATA    W,
+P8CONH    W,  P8CONL    W,   P8INTPND  W,
+P0CON     W,  P1CON     W,   P2CONH    W,  P2CONL   W,
+P3CONH    W,  P3CONL    W,   P4CONH    W,  P4CONL   W,
+P5CONH    W,  P5CONL    W,   P4INT     W,  P4INTPND W,
+FTEST     W,  EMT       W,   IPR       W,
+SIODATA   W,  SIOCON    W,   UDATA0    W,
+UARTCON0  W,  BRDATA0   W,   UARTPND   W,  T1DATAH0 W,
+T1DATAL0  W,  T1DATAH1  W,   T1DATAL1  W,  T1CON0   W,
+T1CON1    W,
+TCDATA0   W,  TCDATA1   W,   TCCON0    W,  TCCON1   W,
+SIOPS     W,
+P7CON     W,  DADATA    W,  ADACON     W,
+UDATA1    W,  UARTCON1  W,  BRDATA1    W,
+FMCON     W,  PGCON     W,  PGDATA     W,
+$; \  70 registers 
+
+
+WORD-LIST SYSREG_RW
+
+TBCON     W,  TBDATAH   W,   TBDATAL   W,  BTCON    W,
+CLKCON    W,  FLAGS     W,   RP0       W,  RP1      W,
+SPH       W,  SPL       W,   IPH       W,  IPL      W,
+IMR       W,  SYM       W,   PP        W,
+P0        W,  P1        W,   P2        W,  P3       W,
+P4        W,  P5        W,
+P6        W,  P7        W,   P8        W,
+TINTPND   W,  TACON     W,   TADATA    W,
+P8CONH    W,  P8CONL    W,   P8INTPND  W,
+P0CON     W,  P1CON     W,   P2CONH    W,  P2CONL   W,
+P3CONH    W,  P3CONL    W,   P4CONH    W,  P4CONL   W,
+P5CONH    W,  P5CONL    W,   P4INT     W,  P4INTPND W,
+FTEST     W,  EMT       W,   IPR       W,
+SIODATA   W,  SIOCON    W,   UDATA0    W,
+UARTCON0  W,  BRDATA0   W,   UARTPND   W,  T1DATAH0 W,
+T1DATAL0  W,  T1DATAH1  W,   T1DATAL1  W,  T1CON0   W,
+T1CON1    W,
+TCDATA0   W,  TCDATA1   W,   TCCON0    W,  TCCON1   W,
+SIOPS     W,
+P7CON     W,  DADATA    W,  ADACON     W,
+UDATA1    W,  UARTCON1  W,  BRDATA1    W,
+FMCON     W,  PGCON     W,  PGDATA     W,
+$; \  70 registers 
+
+ 
+WORD-LIST BIT_R
+
+TBCON     W,  TBDATAH   W,   TBDATAL   W,  BTCON    W,
+CLKCON    W,  FLAGS     W,   RP0       W,  RP1      W,
+SPH       W,  SPL       W,   IPH       W,  IPL      W,
+IRQ       W,  IMR       W,   SYM       W,  PP       W,
+P0        W,  P1        W,   P2        W,  P3       W,
+P4        W,  P5        W,
+P6        W,  P7        W,   P8        W,
+TINTPND   W,  TACON     W,   TADATA    W,  TACNT    W,
+P8CONH    W,  P8CONL    W,   P8INTPND  W,
+P0CON     W,  P1CON     W,   P2CONH    W,  P2CONL   W,
+P3CONH    W,  P3CONL    W,   P4CONH    W,  P4CONL   W,
+P5CONH    W,  P5CONL    W,   P4INT     W,  P4INTPND W,
+FTEST     W,  BTCNT     W,   EMT       W,  IPR      W,
+SIODATA   W,  SIOCON    W,   UDATA0    W,
+UARTCON0  W,  BRDATA0   W,   UARTPND   W,  T1DATAH0 W,
+T1DATAL0  W,  T1DATAH1  W,   T1DATAL1  W,  T1CON0   W,
+T1CON1    W,  T1CNTH0   W,   T1CNTL0   W,
+T1CNTH1   W,  T1CNTL1   W,
+TCDATA0   W,  TCDATA1   W,   TCCON0    W,  TCCON1   W,
+SIOPS     W,
+P7CON     W,  DADATA    W,  ADACON     W,  ADDATAH  W,
+ADDATAL   W,  UDATA1    W,  UARTCON1   W,  BRDATA1  W,
+FMCON     W,  PGCON     W,  PGDATA     W,
+$; \  77 registers
+
+WORD-LIST BIT_W
+
+TBCON     W,  TBDATAH   W,   TBDATAL   W,  BTCON    W,
+CLKCON    W,  FLAGS     W,   RP0       W,  RP1      W,
+SPH       W,  SPL       W,   IPH       W,  IPL      W,
+IMR       W,  SYM       W,   PP        W,
+P0        W,  P1        W,   P2        W,  P3       W,
+P4        W,  P5        W,
+P6        W,  P7        W,   P8        W,
+TINTPND   W,  TACON     W,   TADATA    W,
+P8CONH    W,  P8CONL    W,   P8INTPND  W,
+P0CON     W,  P1CON     W,   P2CONH    W,  P2CONL   W,
+P3CONH    W,  P3CONL    W,   P4CONH    W,  P4CONL   W,
+P5CONH    W,  P5CONL    W,   P4INT     W,  P4INTPND W,
+FTEST     W,  EMT       W,   IPR       W,
+SIODATA   W,  SIOCON    W,   UDATA0    W,
+UARTCON0  W,  BRDATA0   W,   UARTPND   W,  T1DATAH0 W,
+T1DATAL0  W,  T1DATAH1  W,   T1DATAL1  W,  T1CON0   W,
+T1CON1    W,
+TCDATA0   W,  TCDATA1   W,   TCCON0    W,  TCCON1   W,
+SIOPS     W,
+P7CON     W,  DADATA    W,  ADACON     W,
+UDATA1    W,  UARTCON1  W,  BRDATA1    W,
+FMCON     W,  PGCON     W,  PGDATA     W,
+$; \  70 registers 
+
+WORD-LIST BIT_RW
+
+TBCON     W,  TBDATAH   W,   TBDATAL   W,  BTCON    W,
+CLKCON    W,  FLAGS     W,   RP0       W,  RP1      W,
+SPH       W,  SPL       W,   IPH       W,  IPL      W,
+IMR       W,  SYM       W,   PP        W,
+P0        W,  P1        W,   P2        W,  P3       W,
+P4        W,  P5        W,
+P6        W,  P7        W,   P8        W,
+TINTPND   W,  TACON     W,   TADATA    W,
+P8CONH    W,  P8CONL    W,   P8INTPND  W,
+P0CON     W,  P1CON     W,   P2CONH    W,  P2CONL   W,
+P3CONH    W,  P3CONL    W,   P4CONH    W,  P4CONL   W,
+P5CONH    W,  P5CONL    W,   P4INT     W,  P4INTPND W,
+FTEST     W,  EMT       W,   IPR       W,
+SIODATA   W,  SIOCON    W,   UDATA0    W,
+UARTCON0  W,  BRDATA0   W,   UARTPND   W,  T1DATAH0 W,
+T1DATAL0  W,  T1DATAH1  W,   T1DATAL1  W,  T1CON0   W,
+T1CON1    W,
+TCDATA0   W,  TCDATA1   W,   TCCON0    W,  TCCON1   W,
+SIOPS     W,
+P7CON     W,  DADATA    W,  ADACON     W,
+UDATA1    W,  UARTCON1  W,  BRDATA1    W,
+FMCON     W,  PGCON     W,  PGDATA     W,
+$; \  70 registers 
+
+INCLUDE 88INST.DEF
+

@@ -1,0 +1,176 @@
+\
+\
+\  88c2264.DEF Copyright SAMSUNG ELECTRONICS CO. 1996-1997,
+\
+\  Initial      : 08/17/99  J.K.Lee
+
+
+10000 ROMSIZE
+00 0BF RAMRANGE
+
+\ Bank0 of set1 register
+0D0 EQUATE T0CNT     0D1 EQUATE T0DATA   0D2 EQUATE T0CON   0D3 EQUATE BTCON
+0D4 EQUATE CLKCON    0D5 EQUATE FLAGS    0D6 EQUATE RP0     0D7 EQUATE RP1
+0D8 EQUATE SPH       0D9 EQUATE SPL      0DA EQUATE IPH     0DB EQUATE IPL
+0DC EQUATE IRQ       0DD EQUATE IMR      0DE EQUATE SYM     0DF EQUATE PP
+0E0 EQUATE P0        0E1 EQUATE P1       0E2 EQUATE P2      0E3 EQUATE P3
+0E4 EQUATE P4        0E5 EQUATE P5
+0E6 EQUATE P6        0E7 EQUATE P0INT    0E8 EQUATE P0PND   0E9 EQUATE P0STA
+0EA EQUATE P0CONH    0EB EQUATE P0CONL
+0EC EQUATE P1CONH    0ED EQUATE P1CONL   0EE EQUATE P1AFS   0EF EQUATE P2CON
+0F0 EQUATE P2AFS     0F1 EQUATE P3CON    0F2 EQUATE P3AFS
+0F3 EQUATE P4CON     0F4 EQUATE P5CON    0F5 EQUATE P6CON   0F8 EQUATE CLKMOD
+0F9 EQUATE INTPND    0FA EQUATE OSCCON   0FC EQUATE LCDTEST
+0FB EQUATE STPCON    0FD EQUATE BTCNT    0FE EQUATE EMT     0FF EQUATE IPR
+
+\ Bank1 of set1 register
+0E0 EQUATE TACNT     0E1 EQUATE TBCNT    0E2 EQUATE TADATA  0E3 EQUATE TBDATA
+0E4 EQUATE TACON     0E5 EQUATE TBCON    0E6 EQUATE WTCON   0E7 EQUATE ELDCON
+0E8 EQUATE LCON      0E9 EQUATE LMOD
+0EA EQUATE SIODATA   0EB EQUATE SIOCON
+0EC EQUATE SIOPS     0ED EQUATE SUSR     0EE EQUATE UDATA   0EF EQUATE UARTCON
+0F0 EQUATE UARTPND   0F1 EQUATE BRDATA   0F2 EQUATE ADDATAH
+0F3 EQUATE ADDATAL   0F4 EQUATE ADCON    0F5 EQUATE VLDCON
+
+WORD-LIST SYSREG_R
+T0CNT      W,   T0DATA    W,   T0CON   W,        BTCON    W,
+CLKCON     W,   FLAGS     W,   RP0     W,        RP1      W,
+SPH        W,   SPL       W,   IPH     W,        IPL      W,
+IRQ        W,   IMR       W,   SYM     W,        PP       W,
+P0         W,   P1        W,   P2      W,        P3       W,
+P4         W,   P5        W,         
+P6         W,   P0INT     W,   P0PND   W,        P0STA    W,
+P0CONH     W,   P0CONL    W,           
+P1CONH     W,   P1CONL    W,   P1AFS   W,        P2CON    W,
+P2AFS      W,   P3CON     W,   P3AFS   W,                
+P4CON      W,   P5CON     W,   P6CON   W,        CLKMOD   W,
+INTPND     W,   OSCCON    W,          
+STPCON     W,   BTCNT     W,   EMT     W,        IPR      W,
+TACNT      W,   TBCNT     W,   TADATA  W,        TBDATA   W,
+TACON      W,   TBCON     W,   WTCON   W,        ELDCON   W,
+LCON       W,   LMOD      W,         
+SIODATA    W,   SIOCON    W,         
+SIOPS      W,   SUSR      W,   UDATA   W,        UARTCON  W,
+UARTPND    W,   BRDATA    W,   ADDATAH W,               
+ADDATAL    W,   ADCON     W,   VLDCON  W,               
+$;
+
+WORD-LIST SYSREG_W
+T0DATA     W,   T0CON     W,   BTCON    W,        LCDTEST  W,
+CLKCON     W,   FLAGS     W,   RP0      W,        RP1      W,
+SPH        W,   SPL       W,   IPH      W,        IPL      W,
+IMR        W,   SYM       W,   PP       W,
+P0         W,   P1        W,   P2       W,        P3       W,
+P4         W,   P5        W,         
+P6         W,   P0INT     W,   P0PND    W,        P0STA    W,
+P0CONH     W,   P0CONL    W,           
+P1CONH     W,   P1CONL    W,   P1AFS    W,        P2CON    W,
+P2AFS      W,   P3CON     W,   P3AFS    W,         
+P4CON      W,   P5CON     W,   P6CON    W,        CLKMOD   W,
+INTPND     W,   OSCCON    W,          
+STPCON     W,   EMT       W,   IPR      W,
+TADATA     W,   TBDATA    W,
+TACON      W,   TBCON     W,   WTCON    W,        ELDCON   W,
+LCON       W,   LMOD      W,         
+SIODATA    W,   SIOCON    W,         
+SIOPS      W,   SUSR      W,   UDATA    W,        UARTCON  W,
+UARTPND    W,   BRDATA    W,                   
+ADCON      W,   VLDCON    W,               
+$;
+
+
+WORD-LIST SYSREG_RW
+T0DATA     W,   T0CON     W,   BTCON    W,
+CLKCON     W,   FLAGS     W,   RP0      W,        RP1      W,
+SPH        W,   SPL       W,   IPH      W,        IPL      W,
+IMR        W,   SYM       W,   PP       W,
+P0         W,   P1        W,   P2       W,        P3       W,
+P4         W,   P5        W,         
+P6         W,   P0INT     W,   P0PND    W,        P0STA    W,
+P0CONH     W,   P0CONL    W,           
+P1CONH     W,   P1CONL    W,   P1AFS    W,        P2CON    W,
+P2AFS      W,   P3CON     W,   P3AFS    W,         
+P4CON      W,   P5CON     W,   P6CON    W,        CLKMOD   W,
+INTPND     W,   OSCCON    W,          
+STPCON     W,   EMT       W,   IPR      W,
+TADATA     W,   TBDATA    W,
+TACON      W,   TBCON     W,   WTCON    W,        ELDCON   W,
+LCON       W,   LMOD      W,         
+SIODATA    W,   SIOCON    W,         
+SIOPS      W,   SUSR      W,   UDATA    W,        UARTCON  W,
+UARTPND    W,   BRDATA    W,                   
+ADCON      W,   VLDCON    W,               
+$;
+
+WORD-LIST BIT_R
+T0CNT      W,   T0DATA    W,   T0CON   W,        BTCON    W,
+CLKCON     W,   FLAGS     W,   RP0     W,        RP1      W,
+SPH        W,   SPL       W,   IPH     W,        IPL      W,
+IRQ        W,   IMR       W,   SYM     W,        PP       W,
+P0         W,   P1        W,   P2      W,        P3       W,
+P4         W,   P5        W,         
+P6         W,   P0INT     W,   P0PND   W,        P0STA    W,
+P0CONH     W,   P0CONL    W,           
+P1CONH     W,   P1CONL    W,   P1AFS   W,        P2CON    W,
+P2AFS      W,   P3CON     W,   P3AFS   W,                
+P4CON      W,   P5CON     W,   P6CON   W,        CLKMOD   W,
+INTPND     W,   OSCCON    W,          
+STPCON     W,   BTCNT     W,   EMT     W,        IPR      W,
+TACNT      W,   TBCNT     W,   TADATA  W,        TBDATA   W,
+TACON      W,   TBCON     W,   WTCON   W,        ELDCON   W,
+LCON       W,   LMOD      W,         
+SIODATA    W,   SIOCON    W,         
+SIOPS      W,   SUSR      W,   UDATA   W,        UARTCON  W,
+UARTPND    W,   BRDATA    W,   ADDATAH W,               
+ADDATAL    W,   ADCON     W,   VLDCON  W,               
+$;
+
+WORD-LIST BIT_W
+T0DATA     W,   T0CON     W,   BTCON    W,        LCDTEST  W,
+CLKCON     W,   FLAGS     W,   RP0      W,        RP1      W,
+SPH        W,   SPL       W,   IPH      W,        IPL      W,
+IMR        W,   SYM       W,   PP       W,
+P0         W,   P1        W,   P2       W,        P3       W,
+P4         W,   P5        W,         
+P6         W,   P0INT     W,   P0PND    W,        P0STA    W,
+P0CONH     W,   P0CONL    W,           
+P1CONH     W,   P1CONL    W,   P1AFS    W,        P2CON    W,
+P2AFS      W,   P3CON     W,   P3AFS    W,         
+P4CON      W,   P5CON     W,   P6CON    W,        CLKMOD   W,
+INTPND     W,   OSCCON    W,          
+STPCON     W,   EMT       W,   IPR      W,
+TADATA     W,   TBDATA    W,
+TACON      W,   TBCON     W,   WTCON    W,        ELDCON   W,
+LCON       W,   LMOD      W,         
+SIODATA    W,   SIOCON    W,         
+SIOPS      W,   SUSR      W,   UDATA    W,        UARTCON  W,
+UARTPND    W,   BRDATA    W,                   
+ADCON      W,   VLDCON    W,               
+$;
+
+WORD-LIST BIT_RW
+T0DATA     W,   T0CON     W,   BTCON    W,
+CLKCON     W,   FLAGS     W,   RP0      W,        RP1      W,
+SPH        W,   SPL       W,   IPH      W,        IPL      W,
+IMR        W,   SYM       W,   PP       W,
+P0         W,   P1        W,   P2       W,        P3       W,
+P4         W,   P5        W,         
+P6         W,   P0INT     W,   P0PND    W,        P0STA    W,
+P0CONH     W,   P0CONL    W,           
+P1CONH     W,   P1CONL    W,   P1AFS    W,        P2CON    W,
+P2AFS      W,   P3CON     W,   P3AFS    W,         
+P4CON      W,   P5CON     W,   P6CON    W,        CLKMOD   W,
+INTPND     W,   OSCCON    W,          
+STPCON     W,   EMT       W,   IPR      W,
+TADATA     W,   TBDATA    W,
+TACON      W,   TBCON     W,   WTCON    W,        ELDCON   W,
+LCON       W,   LMOD      W,         
+SIODATA    W,   SIOCON    W,         
+SIOPS      W,   SUSR      W,   UDATA    W,        UARTCON  W,
+UARTPND    W,   BRDATA    W,                   
+ADCON      W,   VLDCON    W,               
+$;
+
+include 88inst.def
+
+\ end

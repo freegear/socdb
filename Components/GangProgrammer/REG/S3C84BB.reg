@@ -1,0 +1,180 @@
+;       88C41164.reg of KS88C41164 for OPENice
+;	Created on May. 16 2001
+;       1,st Revision  00/05/16 by S.P.Hong
+;	Copyright (c) 2001 AIJISYSTEM CO.
+
+	.list    off
+
+;       88c41164 system register
+;       00/05/16 by j.k.Lee Revision 0
+
+	.romsize       10000h
+	.ram_range      00h, 0C0h
+
+;       System Registers
+TBCON:          .reg    0D0h
+TBDATAH:        .reg    0D1h
+TBDATAL:        .reg    0D2h
+BTCON:          .reg    0D3h
+CLKCON:         .reg    0D4h
+FLAGS:          .reg    0D5h
+RP0:            .reg    0D6h
+RP1:            .reg    0D7h
+SPH:            .reg    0D8h
+SPL:            .reg    0D9h
+IPH:            .reg    0DAh
+IPL:            .reg    0DBh
+IRQ:            .reg    0DCh,r
+IMR:            .reg    0DDh
+SYM:            .reg    0DEh
+PP:             .reg    0DFh
+
+P0:             .reg    0E0h
+P1:             .reg    0E1h
+P2:             .reg    0E2h
+P3:             .reg    0E3h
+P4:             .reg    0E4h
+P5:             .reg    0E5h
+P6:             .reg    0E6h
+P7:             .reg    0E7h
+P8:             .reg    0E8h
+TINTPND:	.reg	0E9h
+TACON:          .reg    0EAh
+TADATA:         .reg    0EBh
+TACNT:          .reg    0ECh,r
+P8CONH:         .reg    0EDh
+P8CONL:         .reg    0EEh
+P8INTPND:       .reg    0EFh
+P0CON:		.reg	0F0h
+P1CON:		.reg	0F1h
+P2CONH:		.reg	0F2h
+P2CONL:		.reg	0F3h
+P3CONH:		.reg	0F4h
+P3CONL:		.reg	0F5h
+P4CONH:		.reg	0F6h
+P4CONL:		.reg	0F7h
+P5CONH:		.reg	0F8h
+P5CONL:		.reg	0F9h
+P4INT:		.reg	0FAh
+P4INTPND:	.reg	0FBh
+BTCNT:		.reg	0FDh,r
+IPR:		.reg	0FFh
+
+SIODATA:	.reg	0E0h
+SIOCON:         .reg    0E1h
+UDATA0:         .reg    0E2h
+UARTCON0:       .reg    0E3h
+BRDATA0:        .reg    0E4h
+UARTPND:	.reg    0E5h
+T1DATAH0:       .reg    0E6h
+T1DATAL0:       .reg    0E7h
+T1DATAH1:       .reg    0E8h
+T1DATAL1:	.reg	0E9h
+T1CON0:         .reg    0EAh
+T1CON1:         .reg    0EBh
+T1CNTH0:        .reg    0ECh,r
+T1CNTL0:        .reg    0EDh,r
+T1CNTH1:        .reg    0EEh,r
+T1CNTL1:        .reg    0EFh,r
+TCDATA0:	.reg	0F0h
+TCDATA1:	.reg	0F1h
+TCCON0:		.reg	0F2h
+TCCON1:		.reg	0F3h
+SIOPS:		.reg	0F4h
+P7CON:		.reg	0F5h
+DADATA:		.reg	0F6h
+ADACON:		.reg	0F7h
+ADDATAH:	.reG	0F8h,r
+ADDATAL:	.reg	0F9h,r
+UDATA1:		.reg	0FAh
+UARTCON1:	.reg	0FBh
+BRDATA1:	.reg	0FCh
+FMCON:	        .reg	0FDh
+PGCON:		.reg	0FEh
+PGDATA:		.reg	0FFh
+
+;       System Registers
+tbcon:          .reg    0D0h
+tbdatah:        .reg    0D1h
+tbdatal:        .reg    0D2h
+btcon:          .reg    0D3h
+clkcon:         .reg    0D4h
+flags:          .reg    0D5h
+rp0:            .reg    0D6h
+rp1:            .reg    0D7h
+sph:            .reg    0D8h
+spl:            .reg    0D9h
+iph:            .reg    0DAh
+ipl:            .reg    0DBh
+irq:            .reg    0DCh,r
+imr:            .reg    0DDh
+sym:            .reg    0DEh
+pp:             .reg    0DFh
+
+p0:             .reg    0E0h
+p1:             .reg    0E1h
+p2:             .reg    0E2h
+p3:             .reg    0E3h
+p4:             .reg    0E4h
+p5:             .reg    0E5h
+p6:             .reg    0E6h
+p7:             .reg    0E7h
+p8:             .reg    0E8h
+tintpnd:	.reg	0E9h
+tacon:          .reg    0EAh
+tadata:         .reg    0EBh
+tacnt:          .reg    0ECh,r
+p8conh:         .reg    0EDh
+p8conl:         .reg    0EEh
+p8intpnd:       .reg    0EFh
+p0con:		.reg	0F0h
+p1con:		.reg	0F1h
+p2conh:		.reg	0F2h
+p2conl:		.reg	0F3h
+p3conh:		.reg	0F4h
+p3conl:		.reg	0F5h
+p4conh:		.reg	0F6h
+p4conl:		.reg	0F7h
+p5conh:		.reg	0F8h
+p5conl:		.reg	0F9h
+p4int:		.reg	0FAh
+p4intpnd:	.reg	0FBh
+btcnt:		.reg	0FDh,r
+ipr:		.reg	0FFh
+
+siodata:	.reg	0E0h
+siocon:         .reg    0E1h
+udata0:         .reg    0E2h
+uartcon0:       .reg    0E3h
+brdata0:        .reg    0E4h
+uartpnd:	.reg    0E5h
+t1datah0:       .reg    0E6h
+t1datal0:       .reg    0E7h
+t1datah1:       .reg    0E8h
+t1datal1:	.reg	0E9h
+t1con0:         .reg    0EAh
+t1con1:         .reg    0EBh
+t1cnth0:        .reg    0ECh,r
+t1cntl0:        .reg    0EDh,r
+t1cnth1:        .reg    0EEh,r
+t1cntl1:        .reg    0EFh,r
+tcdata0:	.reg	0F0h
+tcdata1:	.reg	0F1h
+tccon0:		.reg	0F2h
+tccon1:		.reg	0F3h
+siops:		.reg	0F4h
+p7con:		.reg	0F5h
+dadata:		.reg	0F6h
+adacon:		.reg	0F7h
+addatah:	.reG	0F8h,r
+addatal:	.reg	0F9h,r
+udata1:		.reg	0FAh
+uartcon1:	.reg	0FBh
+brdata1:	.reg	0FCh
+fmcon:   	.reg	0FDh
+pgcon:		.reg	0FEh
+pgdata:		.reg	0FFh
+
+; KS88C41164 [S3C84BB]
+; END OF 88C41004.REG
+	.list   on

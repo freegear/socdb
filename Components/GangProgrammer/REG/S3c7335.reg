@@ -1,0 +1,330 @@
+; 57C3316.REG  Copyright (c) 1996 SAMSUNG ELECTRONICS CO.
+
+        .list   off
+
+;       57C3316 system register
+;	08/05/99 by Lee, Chun-ja for 16bit Test Version 0
+;
+;;;	1st Revision : 07/30/99  by S.L.Ch'oi
+;;;			-> C read only -> R/W			
+;;;	2nd Revision : 08/06/99 by S.L.Ch'oi
+;;;		1) ERROR 1: DUPLICATED LABEL
+;;;		2) PLMOD0 ->PLMOD
+;
+;	3th Revision : 02/22/2002 by S.P.Hong AIJIsystem Co.,
+;		1) LCON : only write ==> r/w [add]
+;		2) SC0/SC1/SC2 skip ==> .bit 0fb0h.0~2,r [add]
+;		3) IE0(0fbdh.1) ==> IE0(0fbeh.1) [add]
+;		4) IFCFG/CEFG/ULFG skip ==> .bit 0fcah.1~3,r [add]
+;		5) PNE7~10 [skip] ==> .bit 0fd6h.0~3,w [add]
+;		   PNE11~13 [skip] ==> .bit 0fd7h.0~2,w [add]
+;		6) PUR0~3 [skip] ==> .bit 0fdch.0~3,w [add]
+;		   PUR4~6 [skip] ==> .bit 0fddh.0~2,w [add]
+;		7) PUM0.0~3 [skip] ==> .bit 0fe6h.0~3,w [add]
+
+
+        .romsize        4000h
+
+        .ram_range      00h, 100h
+
+;       System Registers
+SP:		.reg    0f80h
+BMOD:		.reg    0f85h,w
+BCNT:		.reg    0f86h,r
+WMOD:		.reg    0f88h,w
+                	.bit    0f88h.3,r
+LPOT:		.reg    0f8ah
+LMOD:		.reg    0f8ch,w
+LCON:           .reg    0f8eh
+TMOD0:		.reg    0f90h,w
+TOE:		.reg    0f92h
+BOE:			.bit    0f92h.1
+TOE0:			.bit    0f92h.2
+TCNT0:		.reg    0f94h,r
+TREF0:		.reg    0f96h,w
+WDMOD:		.reg    0f98h,w
+WDFLAG:		.reg    0f9ah,w
+WDTCF:          	.bit    0f9ah.3,w
+IFMOD:          .reg    0f9bh
+IFCNT0:         .reg    0f9ch,r
+IFCNT1:         .reg    0f9eh,r
+APCON:          .reg    0faeh,w
+PSW:		.reg    0fb0h
+ERB:			.bit    0fb0h.0
+EMB:			.bit    0fb0h.1
+IS0:			.bit    0fb0h.2
+IS1:			.bit    0fb0h.3
+SC0:			.bit    0fb0h.0,r
+SC1:			.bit    0fb0h.1,r
+SC2:			.bit    0fb0h.2,r
+C:			.bit    0fb1h.3
+IPR:		.reg    0fb2h,w
+IME:            	.bit    0fb2h.3,w
+PCON:		.reg    0fb3h,w
+IMOD0:		.reg    0fb4h,w
+IMOD1:		.reg    0fb5h,w
+IMOD2:		.reg    0fb6h,w
+SCMOD:		.reg    0fb7h,w
+INT8:		.reg    0fb8h
+IRQB:			.bit    0fb8h.0
+IEB:			.bit    0fb8h.1
+IRQ4:			.bit    0fb8h.2
+IE4:			.bit    0fb8h.3
+INTA:		.reg    0fbah
+IRQW:			.bit    0fbah.0
+IEW:			.bit    0fbah.1
+INTB:		.reg    0fbbh
+IRQCE:			.bit	0fbbh.0
+IECE:			.bit    0fbbh.1
+IRQIF:			.bit    0fbbh.2
+IEIF:			.bit    0fbbh.3
+INTC:           .reg    0fbch
+IRQT0:			.bit    0fbch.0
+IET0:			.bit    0fbch.1
+INTD:           .reg    0fbdh
+IRQS:			.bit    0fbdh.0
+IES:			.bit    0fbdh.1
+INTE:           .reg    0fbeh
+IRQ0:			.bit    0fbeh.0
+IE0:			.bit    0fbeh.1
+IRQ1:			.bit    0fbeh.2
+IE1:			.bit    0fbeh.3
+INTF:           .reg    0fbfh
+IRQ2:			.bit    0fbfh.0
+IE2:			.bit    0fbfh.1
+BSC0:		.reg    0fc0h
+BSC1:		.reg    0fc1h
+BSC2:		.reg    0fc2h
+BSC3:		.reg    0fc3h
+PLLD0:		.reg    0fc4h,w
+PLLD1:		.reg    0fc5h,w
+PLLD2:		.reg    0fc6h,w
+PLLD3:		.reg    0fc7h,w
+PLMOD:		.reg    0fc8h,w
+PLLREF:         .reg    0fc9h,w
+PLLREG:         .reg    0fcah,r
+IFCFG:			.bit	0fcah.1,r
+CEFG:			.bit	0fcah.2,r
+ULFG:			.bit	0fcah.3,r
+CLMOD:		.reg    0fd0h,w
+POFR:           .reg    0fd1h
+POF:			.bit    0fd1h.0
+PNE:            .reg    0fd6h,w
+PNE7:			.bit	0fd6h.0,w
+PNE8:			.bit	0fd6h.1,w
+PNE9:			.bit	0fd6h.2,w
+PNE10:			.bit	0fd6h.3,w
+PNE11:			.bit	0fd7h.0,w
+PNE12:			.bit	0fd7h.1,w
+PNE13:			.bit	0fd7h.2,w
+ADATA:		.reg    0fd8h,r
+ADMOD:		.reg    0fdah
+AFLAG:		.reg    0fdbh
+ADCLK:			.bit    0fdbh.0,w
+EOC:			.bit    0fdbh.2,r
+ADSTR:			.bit    0fdbh.3,w
+PUMOD:		.reg    0fdch,w
+PUR0:			.bit	0fdch.0,w
+PUR1:			.bit	0fdch.1,w
+PUR2:			.bit	0fdch.2,w
+PUR3:			.bit	0fdch.3,w
+PUR4:			.bit	0fddh.0,w
+PUR5:			.bit	0fddh.1,w
+PUR6:			.bit	0fddh.2,w
+SMOD:		.reg    0fe0h,w
+SBUF:		.reg    0fe4h
+PMG0:		.reg    0fe6h,w
+;PUM0.0:			.bit	0fe6h.0,w
+;PUM0.1:			.bit	0fe6h.1,w
+;PUM0.2:			.bit	0fe6h.2,w
+;PUM0.3:			.bit	0fe6h.3,w
+PMG1:		.reg    0fe8h,w
+;PM2.0:			.bit	0fe8h.0,w
+;PM2.1:			.bit	0fe8h.1,w
+;PM2.2:			.bit	0fe8h.2,w
+;PM2.3:			.bit	0fe8h.3,w
+;PM3.0:			.bit	0fe9h.0,w
+;PM3.1:			.bit	0fe9h.1,w
+;PM3.2:			.bit	0fe9h.2,w
+;PM3.3:			.bit	0fe9h.3,w
+PMG2:		.reg    0feah,w
+;PM4.0:			.bit	0feah.0,w
+;PM4.1:			.bit	0feah.1,w
+;PM4.2:			.bit	0feah.2,w
+;PM4.3:			.bit	0feah.3,w
+;PM5.0:			.bit	0febh.0,w
+;PM5.1:			.bit	0febh.1,w
+;PM5.2:			.bit	0febh.2,w
+;PM5.3:			.bit	0febh.3,w
+PMG3:		.reg    0fech,w
+;PM6.0:			.bit	0fech.0,w
+;PM6.1:			.bit	0fech.1,w
+;PM6.2:			.bit	0fech.2,w
+;PM6.3:			.bit	0fech.3,w
+P0:		.reg    0ff0h
+P1:		.reg    0ff1h,r
+P2:		.reg    0ff2h
+P3:		.reg    0ff3h
+P4:		.reg    0ff4h
+P5:		.reg    0ff5h
+P6:		.reg    0ff6h
+P7:		.reg    0ff7h,w
+P8:		.reg    0ff8h,w
+P9:		.reg    0ff9h,w
+P10:		.reg    0ffah,w
+P11:            .reg    0ffbh,w
+P12:            .reg    0ffch,w
+P13:            .reg    0ffdh,w
+
+
+;       system registers
+sp:		.reg    0f80h
+bmod:		.reg    0f85h,w
+bcnt:		.reg    0f86h,r
+wmod:		.reg    0f88h,w
+;                	.bit    0f88h.3,r
+lpot:		.reg    0f8ah
+lmod:		.reg    0f8ch,w
+lcon:           .reg    0f8eh
+tmod0:		.reg    0f90h,w
+toe:		.reg    0f92h
+boe:			.bit    0f92h.1
+toe0:			.bit    0f92h.2
+tcnt0:		.reg    0f94h,r
+tref0:		.reg    0f96h,w
+wdmod:		.reg    0f98h,w
+wdflag:		.reg    0f9ah,w
+wdtcfWDTCF:          	.bit    0f9ah.3,w
+ifmod:          .reg    0f9bh
+ifcnt0:         .reg    0f9ch,r
+ifcnt1:         .reg    0f9eh,r
+apcon:          .reg    0faeh,w
+psw:		.reg    0fb0h
+erb:			.bit    0fb0h.0
+emb:			.bit    0fb0h.1
+is0:			.bit    0fb0h.2
+is1:			.bit    0fb0h.3
+sc0:			.bit    0fb0h.0,r
+sc1:			.bit    0fb0h.1,r
+sc2:			.bit    0fb0h.2,r
+c:			.bit    0fb1h.3
+ipr:		.reg    0fb2h,w
+ime:            	.bit    0fb2h.3,w
+pcon:		.reg    0fb3h,w
+imod0:		.reg    0fb4h,w
+imod1:		.reg    0fb5h,w
+imod2:		.reg    0fb6h,w
+scmod:		.reg    0fb7h,w
+intt8:		.reg    0fb8h
+irqb:			.bit    0fb8h.0
+ieb:			.bit    0fb8h.1
+irq4:			.bit    0fb8h.2
+ie4:			.bit    0fb8h.3
+inta:		.reg    0fbah
+irqw:			.bit    0fbah.0
+iew:			.bit    0fbah.1
+intb:		.reg    0fbbh         ;jackson disable it
+irqce:			.bit	0fbbh.0
+iece:			.bit    0fbbh.1
+irqif:			.bit    0fbbh.2
+ieif:			.bit    0fbbh.3
+intc:           .reg    0fbch
+irqt0:			.bit    0fbch.0
+iet0:			.bit    0fbch.1
+intd:           .reg    0fbdh
+irqs:			.bit    0fbdh.0
+ies:			.bit    0fbdh.1
+inte:           .reg    0fbeh
+irq0:			.bit    0fbeh.0
+ie0:			.bit    0fbeh.1
+irq1:			.bit    0fbeh.2
+ie1:			.bit    0fbeh.3
+intf:           .reg    0fbfh
+irq2:			.bit    0fbfh.0
+ie2:			.bit    0fbfh.1
+bsc0:		.reg    0fc0h
+bsc1:		.reg    0fc1h
+bsc2:		.reg    0fc2h
+bsc3:		.reg    0fc3h
+plld0:		.reg    0fc4h,w
+plld1:		.reg    0fc5h,w
+plld2:		.reg    0fc6h,w
+plld3:		.reg    0fc7h,w
+plmod:		.reg    0fc8h,w
+pllref:         .reg    0fc9h,w
+pllreg:         .reg    0fcah,r
+ifcfg:			.bit	0fcah.1,r
+cefg:			.bit	0fcah.2,r
+ulfg:			.bit	0fcah.3,r
+clmod:		.reg    0fd0h,w
+prfr:           .reg    0fd1h
+pof:			.bit    0fd1h.0
+pne:            .reg    0fd6h,w
+pne7:			.bit	0fd6h.0,w
+pne8:			.bit	0fd6h.1,w
+pne9:			.bit	0fd6h.2,w
+pne10:			.bit	0fd6h.3,w
+pne11:			.bit	0fd7h.0,w
+pne12:			.bit	0fd7h.1,w
+pne13:			.bit	0fd7h.2,w
+adata:		.reg    0fd8h,r
+admod:		.reg    0fdah
+aflag:		.reg    0fdbh
+adclk:			.bit    0fdbh.0,w
+eoc:			.bit    0fdbh.2,r
+adstr:			.bit    0fdbh.3,w
+pumod:		.reg    0fdch,w
+pur0:			.bit	0fdch.0,w
+pur1:			.bit	0fdch.1,w
+pur2:			.bit	0fdch.2,w
+pur3:			.bit	0fdch.3,w
+pur4:			.bit	0fddh.0,w
+pur5:			.bit	0fddh.1,w
+pur6:			.bit	0fddh.2,w
+smod:		.reg    0fe0h,w
+sbuf:		.reg    0fe4h
+pmg0:		.reg    0fe6h,w
+;pum0.0:			.bit	0fe6h.0,w
+;pum0.1:			.bit	0fe6h.1,w
+;pum0.2:			.bit	0fe6h.2,w
+;pum0.3:			.bit	0fe6h.3,w
+pmg1:		.reg    0fe8h,w
+;pm2.0:			.bit	0fe8h.0,w
+;pm2.1:			.bit	0fe8h.1,w
+;pm2.2:			.bit	0fe8h.2,w
+;pm2.3:			.bit	0fe8h.3,w
+;pm3.0:			.bit	0fe9h.0,w
+;pm3.1:			.bit	0fe9h.1,w
+;pm3.2:			.bit	0fe9h.2,w
+;pm3.3:			.bit	0fe9h.3,w
+pmg2:		.reg    0feah,w
+;pm4.0:			.bit	0feah.0,w
+;pm4.1:			.bit	0feah.1,w
+;pm4.2:			.bit	0feah.2,w
+;pm4.3:			.bit	0feah.3,w
+;pm5.0:			.bit	0febh.0,w
+;pm5.1:			.bit	0febh.1,w
+;pm5.2:			.bit	0febh.2,w
+;pm5.3:			.bit	0febh.3,w
+pmg3:		.reg    0fech,w
+;pm6.0:			.bit	0fech.0,w
+;pm6.1:			.bit	0fech.1,w
+;pm6.2:			.bit	0fech.2,w
+;pm6.3:			.bit	0fech.3,w
+p1:		.reg    0ff1h,r
+p2:		.reg    0ff2h
+p3:		.reg    0ff3h
+p4:		.reg    0ff4h
+p5:		.reg    0ff5h
+p6:		.reg    0ff6h
+p7:		.reg    0ff7h,w
+p8:		.reg    0ff8h,w
+p9:		.reg    0ff9h,w
+p10:		.reg    0ffah,w
+p11:            .reg    0ffbh,w
+p12:            .reg    0ffch,w
+p13:            .reg    0ffdh,w
+
+;
+; END OF 57C3316.REG
+        .list   on

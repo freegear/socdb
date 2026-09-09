@@ -1,0 +1,205 @@
+; 88C4316.REG  Copyright (c) 1996 SAMSUNG ELECTRONICS CO.
+
+	.list   off
+
+;       88c4316 system register
+;       96/11/01 by h.j.cho Revision 0
+
+	.romsize        4000h
+
+	.ram_range      00h, 0C0h
+
+;       System Registers
+T0CNT:          .reg    0D0h,r
+T0DATA:         .reg    0D1h
+T0CON:          .reg    0D2h
+BTCON:          .reg    0D3h
+CLKCON:         .reg    0D4h
+FLAGS:          .reg    0D5h
+RP0:            .reg    0D6h
+RP1:            .reg    0D7h
+SPH:            .reg    0D8h
+SPL:            .reg    0D9h
+IPH:            .reg    0DAh
+IPL:            .reg    0DBh
+IRQ:            .reg    0DCh,r
+IMR:            .reg    0DDh
+SYM:            .reg    0DEh
+PP:             .reg    0DFh
+;
+;       Set 1, Bank 0
+P0:             .reg    0E0h
+P1:             .reg    0E1h
+P2:             .reg    0E2h
+P3:             .reg    0E3h
+P4:             .reg    0E4h
+P5:             .reg    0E5h
+P6:             .reg    0E6h
+P0PUR:          .reg    0E7h
+P0CONH:         .reg    0E8h
+P0CONL:         .reg    0E9h
+P1CONH:         .reg    0Eah
+P1CONL:         .reg    0Ebh
+P1PUR:          .reg    0Ech
+P2PUR:          .reg    0Edh
+P2CONH:         .reg    0Eeh
+P2CONL:         .reg    0Efh
+P3CONH:         .reg    0F0h
+P3CONL:         .reg    0F1h
+P4CONH:         .reg    0F2h
+P4CONL:         .reg    0F3h
+P4INT:          .reg    0F4h
+P4PND:          .reg    0F5h
+P4PUR:          .reg    0F6h
+P5CONH:         .reg    0F8h
+P5CONL:         .reg    0F9h
+T1CON:          .reg    0FAh
+T1MOD:          .reg    0FBh
+FTEST:          .reg    0FCh
+BTCNT:          .reg    0FDh
+EMT:            .reg    0FEh
+IPR:            .reg    0FFh
+;
+;       Set 1, Bank 1
+;
+PWM0:           .reg    0E0h
+PWM0EX:         .reg    0E1h
+PWM1:           .reg    0E2h
+PWM1EX:         .reg    0E3h
+CNTCON:         .reg    0E4h
+PWMCON:         .reg    0E5h
+CAP0H:          .reg    0E6h
+CAP0L:          .reg    0E7h
+CAP1H:          .reg    0E8h
+CAP1L:          .reg    0E9h
+COM2H:          .reg    0EAh
+COM2L:          .reg    0EBh
+CAPCON:         .reg    0ECh
+CMPCON:         .reg    0EDh
+CAPPS:          .reg    0EEh
+PWMPS:          .reg    0EFh
+TCH:            .reg    0F0h
+TCL:            .reg    0F1h
+TDH:            .reg    0F2h
+TDL:            .reg    0F3h
+LBPMOD:         .reg    0F6h
+LBPCON:         .reg    0F7h
+ADCON:          .reg    0F8h
+ADDATA:         .reg    0F9h
+SIO0DATA:       .reg    0FAh
+SIO0CON:        .reg    0FBh
+SIO0PS:         .reg    0FCh
+SIO1DATA:       .reg    0FDh
+SIO1CON:        .reg    0FEh
+SIO1PS:         .reg    0FFh
+
+;       Bit equates
+;       flags
+;C:             .bit    FLAGS.7
+;Z:             .bit    FLAGS.6
+;S:             .bit    FLAGS.5
+;V:             .bit    FLAGS.4
+;D:             .bit    FLAGS.3
+;H:             .bit    FLAGS.2
+;FIS:           .bit    FLAGS.1
+;BA:            .bit    FLAGS.0
+
+;       System Registers
+t0cnt:          .reg    0d0h,r
+t0data:         .reg    0d1h
+t0con:          .reg    0d2h
+btcon:          .reg    0d3h
+clkcon:         .reg    0d4h
+flags:          .reg    0d5h
+rp0:            .reg    0d6h
+rp1:            .reg    0d7h
+sph:            .reg    0d8h
+spl:            .reg    0d9h
+iph:            .reg    0dah
+ipl:            .reg    0dbh
+irq:            .reg    0dch,r
+imr:            .reg    0ddh
+sym:            .reg    0deh
+pp:             .reg    0dfh
+;
+;       Set 1, Bank 0
+p0:             .reg    0e0h
+p1:             .reg    0e1h
+p2:             .reg    0e2h
+p3:             .reg    0e3h
+p4:             .reg    0e4h
+p5:             .reg    0e5h
+p6:             .reg    0e6h
+p0pur:          .reg    0E7h
+p0conh:         .reg    0E8h
+p0conl:         .reg    0E9h
+p1conh:         .reg    0Eah
+p1conl:         .reg    0Ebh
+p1pur:          .reg    0Ech
+p2pur:          .reg    0Edh
+p2conh:         .reg    0Eeh
+p2conl:         .reg    0Efh
+p3conh:         .reg    0F0h
+p3conl:         .reg    0F1h
+p4conh:         .reg    0F2h
+p4conl:         .reg    0F3h
+p4int:          .reg    0F4h
+p4pnd:          .reg    0F5h
+p4pur:          .reg    0F6h
+p5conh:         .reg    0F8h
+p5conl:         .reg    0F9h
+t1con:          .reg    0FAh
+t1mod:          .reg    0FBh
+ftest:          .reg    0FCh
+btcnt:          .reg    0FDh
+emt:            .reg    0FEh
+ipr:            .reg    0FFh
+
+;
+;       Set 1, Bank 1
+;
+pwm0:           .reg    0E0h
+pwm0ex:         .reg    0E1h
+pwm1:           .reg    0E2h
+pwm1ex:         .reg    0E3h
+cntcon:         .reg    0E4h
+pwmcon:         .reg    0E5h
+cap0h:          .reg    0E6h
+cap0l:          .reg    0E7h
+cap1h:          .reg    0E8h
+cap1l:          .reg    0E9h
+com2h:          .reg    0EAh
+com2l:          .reg    0EBh
+capcon:         .reg    0ECh
+cmpcon:         .reg    0EDh
+capps:          .reg    0EEh
+pwmps:          .reg    0EFh
+tch:            .reg    0F0h
+tcl:            .reg    0F1h
+tdh:            .reg    0F2h
+tdl:            .reg    0F3h
+lbpmod:         .reg    0F6h
+lbpcon:         .reg    0F7h
+adcon:          .reg    0F8h
+addata:         .reg    0F9h
+sio0data:       .reg    0FAh
+sio0con:        .reg    0FBh
+sio0ps:         .reg    0FCh
+sio1data:       .reg    0FDh
+sio1con:        .reg    0FEh
+sio1ps:         .reg    0FFh
+
+;       Bit equates
+;       flags
+;c:             .bit    flags.7
+;z:             .bit    flags.6
+;s:             .bit    flags.5
+;v:             .bit    flags.4
+;d:             .bit    flags.3
+;h:             .bit    flags.2
+;fis:           .bit    flags.1
+;ba:            .bit    flags.0
+
+;
+; END OF 88C4316.REG
+	.list   on

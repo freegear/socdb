@@ -1,0 +1,100 @@
+\ 86C4404.DEF    Copyright SAMSUNG SEMICONDUCTOR INC. 1996-1998, 01/14/98
+\
+\ Initial     : 10/27/98  by J.K.Lee
+\ Rev					: 07/02/01	by S.P.Hong
+
+100 ROMSIZE
+00 5F RAMRANGE
+
+
+0D0 EQUATE T0CNT   0D1 EQUATE T0DATA 0D2 EQUATE T0CON   
+0D4 EQUATE CLKCON  0D5 EQUATE FLAGS  
+0D9 EQUATE SP      0DB EQUATE MDSREG
+0DC EQUATE BTCON   0DD EQUATE BTCNT  0DE EQUATE FTSTCON 0DF EQUATE SYM
+0E0 EQUATE P0      0E1 EQUATE P1     0E2 EQUATE P2
+0E6 EQUATE P0CON   0E7 EQUATE P0DPUR
+0E8 EQUATE P0PND   0E9 EQUATE P1CONH 0EA EQUATE P1CONL  0EB EQUATE P1DPUR
+0EC EQUATE P2CON   0EF EQUATE SIODATA 0F0 EQUATE SIOCON 0F1 EQUATE SIOPS  
+0F2 EQUATE PWMDATA 0F3 EQUATE PWMEX  0F4 EQUATE PWMCON   
+0F6 EQUATE BUZPS   0F7 EQUATE ADCON
+0F8 EQUATE ADDATAH 0F9 EQUATE ADDATAL 
+
+END-EQUATES \ 31 EQUATES
+\ READ ONLY     4
+\ WRITE ONLY    1
+\ READ/WRITE    26
+\ UNKNOWN       0
+
+WORD-LIST SYSREG_R
+
+        T0CNT   W,  T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  BTCNT   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CON   W,
+        P0DPUR  W,  P0PND   W,  P1CONH  W,  P1CONL  W,  P1DPUR  W,
+        P2CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  PWMDATA W,
+        PWMEX   W,  PWMCON  W,  BUZPS   W,  ADCON   W,  ADDATAH W,
+        ADDATAL W,    
+        $; \ 30 REGISTERS
+
+WORD-LIST SYSREG_W
+        T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  FTSTCON W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CON   W,
+        P0DPUR  W,  P0PND   W,  P1CONH  W,  P1CONL  W,  P1DPUR  W,
+        P2CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  PWMDATA W,
+        PWMEX   W,  PWMCON  W,  BUZPS   W,  ADCON   W,  
+        $; \ 27 REGISTERS
+
+WORD-LIST SYSREG_RW
+        T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CON   W,
+        P0DPUR  W,  P0PND   W,  P1CONH  W,  P1CONL  W,  P1DPUR  W,
+        P2CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  PWMDATA W,
+        PWMEX   W,  PWMCON  W,  BUZPS   W,  ADCON   W, 
+        $; \ 26 REGISTERS
+
+
+WORD-LIST BIT_R
+        T0CNT   W,  T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  BTCNT   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CON   W,
+        P0DPUR  W,  P0PND   W,  P1CONH  W,  P1CONL  W,  P1DPUR  W,
+        P2CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  PWMDATA W,
+        PWMEX   W,  PWMCON  W,  BUZPS   W,  ADCON   W,  ADDATAH W,
+        ADDATAL W,    
+        $; \ 30 REGISTERS
+
+
+WORD-LIST BIT_W
+        T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  FTSTCON W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CON   W,
+        P0DPUR  W,  P0PND   W,  P1CONH  W,  P1CONL  W,  P1DPUR  W,
+        P2CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  PWMDATA W,
+        PWMEX   W,  PWMCON  W,  BUZPS   W,  ADCON   W,  
+        $; \ 27 REGISTERS
+
+
+WORD-LIST BIT_RW
+        T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CON   W,
+        P0DPUR  W,  P0PND   W,  P1CONH  W,  P1CONL  W,  P1DPUR  W,
+        P2CON   W,  SIODATA W,  SIOCON  W,  SIOPS   W,  PWMDATA W,
+        PWMEX   W,  PWMCON  W,  BUZPS   W,  ADCON   W, 
+        $; \ 26 REGISTERS
+
+INCLUDE 86INST.DEF

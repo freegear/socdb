@@ -1,0 +1,223 @@
+; KS88C6564.REG  Copyright (c) 1996 Samsung Electronic Co.
+
+	.list   off
+
+;       KS88C6348 system register
+;       99/09/30 by j.k.lee Revision 0
+
+	.romsize        10000h
+
+	.ram_range      00h, 0C0h
+
+;       System Registers
+TM0CNT:		.reg    0D0h,r
+TM0DATA:	.reg    0D1h,r
+TM0CON:		.reg    0D2h
+BTCON:		.reg    0D3h
+CLKCON:		.reg    0D4h
+FLAGS:		.reg    0D5h
+RP0:			.reg    0D6h
+RP1:			.reg    0D7h
+SPH:		  .reg    0D8h
+SPL:		  .reg    0D9h
+IPH:		  .reg    0DAh
+IPL:		  .reg    0DBh
+IRQ:		  .reg    0DCh,r
+IMR:		  .reg    0DDh
+SYM:		  .reg    0DEh
+PP:		    .reg    0DFh
+
+P0:		    .reg    0E0h
+P1:		    .reg    0E1h
+P2:		    .reg    0E2h
+P3:		    .reg    0E3h
+P4:		    .reg    0E4h
+P5:		    .reg    0E5h
+P0CONH:		.reg    0E6h
+P0CONL:		.reg    0E7h
+P1CONH:		.reg    0E8h
+P1CONL:		.reg    0E9h
+P2CONH:		.reg    0EAh
+P2CONL:		.reg    0EBh
+P3CONH:		.reg    0ECh
+P3CONL:		.reg    0EDh
+P4CONH:		.reg    0EEh
+P4CONL:		.reg    0EFh
+P5CON:		.reg    0F0h
+P4INT:		.reg    0F1h
+TM1CNTH:	.reg    0F2h,r
+TM1CNTL:	.reg    0F3h,r
+TM1DATAH:	.reg    0F4h,r
+TM1DATAL:	.reg    0F5h,r
+TM1CON:		.reg    0F6h
+TM2CNT:		.reg    0F7h,r
+TM2IDATA:	.reg    0F8h
+TM2CDATA:	.reg    0F9h,r
+TM2CON:		.reg    0FAh
+WDTCON:		.reg    0FBh
+BTCNT:		.reg    0FDh
+EMT:		  .reg    0FEh
+IPR:		  .reg    0FFh
+PWM0:		  .reg    0E0h
+PWM1:		  .reg    0E1h
+PWM2:		  .reg    0E2h
+PWM3:		  .reg    0E3h
+PWM4:		  .reg    0E4h
+PWM5:		  .reg    0E5h
+PWM6:		  .reg    0E6h
+PWM7:		  .reg    0E7h
+PWM8:		  .reg    0E8h
+PWM9:		  .reg    0E9h
+PWM10:		.reg    0EAh
+PWM11:		.reg    0EBh
+PWM12:		.reg    0ECh
+PWM13:		.reg    0EDh
+PWM14:		.reg    0EEh
+PWM15:		.reg    0EFh
+PWMCON:		.reg    0F0h
+PWMCNT:		.reg    0F1h,r
+DCON:		  .reg    0F2h
+DAR0:		  .reg    0F3h
+DCCR:		  .reg    0F4h
+DCSR0:		.reg    0F5h
+DCSR1:		.reg    0F6h
+DAR1:		  .reg    0F7h
+TBDR:		  .reg    0F8h
+RBDR:		  .reg    0F9h,r
+DDSR:		  .reg    0FAh
+ADCON:		.reg    0FBh
+ADDATA:		.reg    0FCh
+SYNCON0:	.reg    0FDh
+SYNCON1:	.reg    0FEh
+SYNCON2:	.reg    0FFh
+
+;	Page0
+FADDR:		.reg    000h
+EP0CSR:		.reg    001h
+EP1CSR:		.reg    002h
+EP2CSR:		.reg    003h
+EP0BCNT:	.reg    004h
+EP1BCNT:	.reg    005h
+EP2BCNT:	.reg    006h
+EPMODE:		.reg    007h
+EP0FIFO:	.reg    008h
+EP1FIFO:	.reg    009h
+EP2FIFO:	.reg    00Ah
+USBPND:		.reg    00Bh
+USBINT:		.reg    00Ch
+USBCON:		.reg    00Dh
+PWRMGR:		.reg    00Eh
+USXCON:		.reg    00Fh
+PHGEN:		.reg    010h
+PVGEN:		.reg    011h
+STOPCON:	.reg    012h
+ 
+ 
+;       System Registers
+tm0cnt:		.reg    0d0h,r
+tm0data:	.reg    0d1h,r
+tm0con:		.reg    0d2h
+btcon:		.reg    0d3h
+clkcon:		.reg    0d4h
+flags:		.reg    0d5h
+rp0:		  .reg    0d6h
+rp1:		  .reg    0d7h
+sph:		  .reg    0d8h
+spl:		  .reg    0d9h
+iph:		  .reg    0dah
+ipl:		  .reg    0dbh
+irq:		  .reg    0dch,r
+imr:		  .reg    0ddh
+sym:		  .reg    0deh
+pp:		    .reg    0dfh
+
+p0:		    .reg    0e0h
+p1:		    .reg    0e1h
+p2:		    .reg    0e2h
+p3:		    .reg    0e3h
+p4:		    .reg    0e4h
+p5:		    .reg    0e5h
+p0conh:		.reg    0e6h
+p0conl:		.reg    0e7h
+p1conh:		.reg    0e8h
+p1conl:		.reg    0e9h
+p2conh:		.reg    0eah
+p2conl:		.reg    0ebh
+p3conh:		.reg    0ech
+p3conl:		.reg    0edh
+p4conh:		.reg    0eeh
+p4conl:		.reg    0efh
+p5con:		.reg    0f0h
+p4int:		.reg    0f1h
+tm1cnth:	.reg    0f2h,r
+tm1cntl:	.reg    0f3h,r
+tm1datah:	.reg    0f4h,r
+tm1datal:	.reg    0f5h,r
+tm1con:		.reg    0f6h
+tm2cnt:		.reg    0f7h,r
+tm2idata:	.reg    0f8h
+tm2cdata:	.reg    0f9h,r
+tm2con:		.reg    0fah
+wdtcon:		.reg    0fbh
+btcnt:		.reg    0fdh
+emt:		  .reg    0feh
+ipr:		  .reg    0ffh
+pwm0:		  .reg    0e0h
+pwm1:		  .reg    0e1h
+pwm2:		  .reg    0e2h
+pwm3:		  .reg    0e3h
+pwm4:		  .reg    0e4h
+pwm5:		  .reg    0e5h
+pwm6:		  .reg    0e6h
+pwm7:		  .reg    0e7h
+pwm8:		  .reg    0e8h
+pwm9:		  .reg    0e9h
+pwm10:		.reg    0eah
+pwm11:		.reg    0ebh
+pwm12:		.reg    0ech
+pwm13:		.reg    0edh
+pwm14:		.reg    0eeh
+pwm15:		.reg    0efh
+pwmcon:		.reg    0f0h
+pwmcnt:		.reg    0f1h,r
+dcon:		  .reg    0f2h
+dar0:		  .reg    0f3h
+dccr:		  .reg    0f4h
+dcsr0:		.reg    0f5h
+dcsr1:		.reg    0f6h
+dar1:		  .reg    0f7h
+tbdr:		  .reg    0f8h
+rbdr:		  .reg    0f9h,r
+ddsr:		  .reg    0fah
+adcon:		.reg    0fbh
+addata:		.reg    0fch
+syncon0:	.reg    0fdh
+syncon1:	.reg    0feh
+syncon2:	.reg    0ffh
+
+;	Page0
+faddr:		.reg    000h
+ep0csr:		.reg    001h
+ep1csr:		.reg    002h
+ep2csr:		.reg    003h
+ep0bcnt:	.reg    004h
+ep1bcnt:	.reg    005h
+ep2bcntT:	.reg    006h
+epmode:		.reg    007h
+ep0fifo:	.reg    008h
+ep1fifo:	.reg    009h
+ep2fifo:	.reg    00ah
+usbpnd:		.reg    00bh
+usbint:		.reg    00ch
+usbcon:		.reg    00dh
+pwrmgr:		.reg    00eh
+usxcon:		.reg    00fh
+phgen:		.reg    010h
+pvgen:		.reg    011h
+stopcon:	.reg    012h
+
+; END OF 88C6564.REG
+	.list   on
+
+
+

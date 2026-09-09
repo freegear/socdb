@@ -1,0 +1,259 @@
+\ 88c40912.def   Copyright SAMSUNG SEMICONDUCTOR INC. 1998-1999, 10/04/99
+\
+\ Initial     : 010/04/99  by j.k.Lee
+
+3000 ROMSIZE
+00 0BF RAMRANGE
+
+\ SET1, BANK0 ( 0E0 ~ 0FF )
+
+0E0 EQUATE P0      0E1 EQUATE P1      0E2 EQUATE P2      0E3 EQUATE P3
+0E4 EQUATE P4      0E5 EQUATE P5      0E6 EQUATE P6      0E8 EQUATE P0CONH
+0E9 EQUATE P0CONL  0EA EQUATE P1CONH     
+0EB EQUATE P1CONL  0EC EQUATE P2CONH
+0ED EQUATE P2CONL  0EE EQUATE P3CONH     
+0EF EQUATE P3CONL  0F0 EQUATE P4CONH  0F1 EQUATE P4CONL
+0F2 EQUATE P5CONH  0F3 EQUATE P5CONL     
+0F4 EQUATE P6CON   0F5 EQUATE STPCON
+0F6 EQUATE P0INT   0F7 EQUATE P0PND   0F8 EQUATE TACON   0F9 EQUATE TADATA
+0FA EQUATE TACNT   0FB EQUATE BSCON
+0FD EQUATE BTCNT   0FE EQUATE EMT     0FF EQUATE IPR
+
+\ System Registers, SET1 ( 0D0 ~ 0DF )
+
+0D3 EQUATE BTCON
+0D4 EQUATE CLKCON  0D5 EQUATE FLAGS   0D6 EQUATE RP0     0D7 EQUATE RP1
+0D8 EQUATE SPH     0D9 EQUATE SPL     0DA EQUATE IPH     0DB EQUATE IPL
+0DC EQUATE IRQ     0DD EQUATE IMR     0DE EQUATE SYM     0DF EQUATE PP
+
+\ SET1 , BANK1 ( 0EA ~ 0FF )
+
+0E0 EQUATE PWMCON  0E1 EQUATE PWM     0E2 EQUATE UBRGD   0E3 EQUATE TCCON
+0E4 EQUATE TCCNTH  0E5 EQUATE TCCNTL  0E6 EQUATE TCDATAH 0E7 EQUATE TCDATAL
+0E8 EQUATE BRGD0   0E9 EQUATE BRGD1 
+0EA EQUATE BRGD2   0EB EQUATE UCON    0EC EQUATE UDATA   0ED EQUATE UPND  
+0EE EQUATE SCON    0EF EQUATE SDATA
+0F0 EQUATE SPND    0F1 EQUATE SWDATA   
+0F4 EQUATE ADDATA  0F7 EQUATE ADCON
+0F8 EQUATE ERWCON  0FA EQUATE EXTCON  0FE EQUATE TCPND
+ 
+\ PAGE 8 REGISTER (00 ~ 38)
+00 EQUATE HCON0    01 EQUATE HCON1    02 EQUATE HCON2    03 EQUATE HST0
+04 EQUATE HST1     05 EQUATE HST2     06 EQUATE HIE0     07 EQUATE HIE1
+08 EQUATE HIE2     09 EQUATE RXFIFO   0A EQUATE TXFIFOC  0B EQUATE TXFIFOT
+0C EQUATE HSAR0    0D EQUATE HSAR1    0E EQUATE HSAR2    0F EQUATE HSAR3
+10 EQUATE HBRGTC0  11 EQUATE HBRGTC1  12 EQUATE HPRMB    15 EQUATE PSKCON 
+20 EQUATE DESK10   21 EQUATE DESK11   22 EQUATE DESK12   23 EQUATE DESK13 
+24 EQUATE DESK14   25 EQUATE DESK15   26 EQUATE DESK16   27 EQUATE DESK17
+28 EQUATE DESK20   29 EQUATE DESK21   2A EQUATE DESK22   2B EQUATE DESK23
+2C EQUATE DESK24   2D EQUATE DESK25   2E EQUATE DESK26   2F EQUATE DESK27
+30 EQUATE DESDATA0 31 EQUATE DESDATA1 32 EQUATE DESDATA2 33 EQUATE DESDATA3
+34 EQUATE DESDATA4 35 EQUATE DESDATA5 36 EQUATE DESDATA6 37 EQUATE DESDATA7
+38 EQUATE DESCON
+
+
+END-EQUATES
+
+WORD-LIST SYSREG_R
+        P0       W, P1       W, P2       W,  
+        P4       W, P5       W, P6       W,  
+        P0CONL   W, P1CONH   W, FLAGS    W,  
+        P1CONL   W, P2CONH   W, SPL      W,  
+        P2CONL   W, P3CONH   W, IMR      W,
+        P3CONL   W, P4CONH   W, P4CONL   W,  
+        P5CONH   W, P5CONL   W, RP0      W,   STPCON  W,
+        P6CON    W, TADATA   W, IPH      W,   TCPND    W,
+        P0INT    W, P0PND    W, SYM      W,   P0CONH   W,
+        TACNT    W, BSCON    W, TACON    W,   
+        BTCNT    W, EMT      W, IPR      W,  
+        P3       W, RP1      W, PWMCON   W,   PWM     W,
+        IPL      W, TCCNTH   W, TCCNTL   W,
+        BTCON    W, PP       W, BRGD0    W,   BRGD1    W,
+        CLKCON   W, TCCON    W, BRGD2    W,   UCON     W,
+        SPH      W, TCDATAL  W, SCON     W,   SDATA    W,
+        IRQ      W, SPND     W, SWDATA   W,
+        UBRGD    W, UPND     W, ADDATA   W,   ADCON    W,
+        TCDATAH  W, ERWCON   W, EXTCON   W,   HST0     W,
+        UDATA    W, HCON1    W, HCON2    W,   HIE1     W,
+        HCON0    W, HST2     W, HIE0     W,  
+        HST1     W, RXFIFO   W, HSAR3    W,
+        HIE2     W, HSAR1    W, HSAR2    W,   PSKCON   W,
+        HSAR0    W, HBRGTC1  W, HPRMB    W,   HBRGTC0  W, 
+        DESDATA3 W,
+        DESDATA1 W, DESDATA2 W, DESDATA7 W,
+        DESDATA0 W, DESDATA5 W, DESDATA6 W,            
+        DESDATA4 W,
+        DESCON   W, $;
+        
+WORD-LIST SYSREG_W
+
+        P0       W, P1       W, P2       W,  
+        P4       W, P5       W, P6       W,  
+        P0CONL   W, P1CONH   W, FLAGS    W,  
+        P1CONL   W, P2CONH   W, SPL      W,  
+        P2CONL   W, P3CONH   W, IMR      W,
+        P3CONL   W, P4CONH   W, P4CONL   W,   P0CONH   W,  
+        P5CONH   W, P5CONL   W, RP0      W,   
+        P6CON    W, TADATA   W, IPH      W,   STPCON  W,
+        P0INT    W, P0PND    W, SYM      W,
+        TACNT    W, BSCON    W, TACON    W,   TCPND    W,
+        EMT      W, IPR      W,  
+        P3       W, RP1      W, PWMCON   W,   PWM     W,
+        IPL      W, TCCNTH   W, TCCNTL   W,
+        BTCON    W, PP       W, BRGD0    W,   BRGD1    W,
+        CLKCON   W, TCCON    W, BRGD2    W,   UCON     W,
+        SPH      W, TCDATAL  W, SCON     W,   SDATA    W,
+        SPND     W, SWDATA   W,
+        UBRGD    W, UPND     W, ADDATA   W,   ADCON    W,
+        TCDATAH  W, ERWCON   W, EXTCON   W,   
+        UDATA    W, HCON1    W, HCON2    W,   HIE1     W,
+        HCON0    W, HIE0     W, TXFIFOT  W,
+        TXFIFOC  W, HSAR3    W,
+        HIE2     W, HSAR1    W, HSAR2    W,   PSKCON   W,
+        HSAR0    W, HBRGTC1  W, HPRMB    W,   DESK13   W,
+        HBRGTC0  W, DESK11   W, DESK12   W,   DESK17   W,
+        DESK10   W, DESK15   W, DESK16   W,   DESK23   W,
+        DESK14   W, DESK21   W, DESK22   W,   DESK27   W,
+        DESK20   W, DESK25   W, DESK26   W,   DESDATA3 W,
+        DESK24   W, DESDATA1 W, DESDATA2 W,   DESDATA7 W,
+        DESDATA0 W, DESDATA5 W, DESDATA6 W,            
+        DESDATA4 W,
+        DESCON   W, $;
+   
+  
+WORD-LIST SYSREG_RW
+
+        P0       W, P1       W, P2       W,  
+        P4       W, P5       W, P6       W,  
+        P0CONL   W, P1CONH   W, FLAGS    W,  
+        P1CONL   W, P2CONH   W, SPL      W,  
+        P2CONL   W, P3CONH   W, IMR      W,
+        P3CONL   W, P4CONH   W, P4CONL   W,   P0CONH   W,  
+        P5CONH   W, P5CONL   W, RP0      W,   
+        P6CON    W, TADATA   W, IPH      W,   STPCON  W,
+        P0INT    W, P0PND    W, SYM      W,
+        TACNT    W, BSCON    W, TACON    W,   TCPND    W,
+        EMT      W, IPR      W,  
+        P3       W, RP1      W, PWMCON   W,   PWM     W,
+        IPL      W, TCCNTH   W, TCCNTL   W,
+        BTCON    W, PP       W, BRGD0    W,   BRGD1    W,
+        CLKCON   W, TCCON    W, BRGD2    W,   UCON     W,
+        SPH      W, TCDATAL  W, SCON     W,   SDATA    W,
+        SPND     W, SWDATA   W,
+        UBRGD    W, UPND     W, ADDATA   W,   ADCON    W,
+        TCDATAH  W, ERWCON   W, EXTCON   W,   
+        UDATA    W, HCON1    W, HCON2    W,   HIE1     W,
+        HCON0    W, HIE0     W, 
+        HSAR3    W,
+        HIE2     W, HSAR1    W, HSAR2    W,   PSKCON   W,
+        HSAR0    W, HBRGTC1  W, HPRMB    W,   
+        HBRGTC0  W,     
+        DESDATA3 W,
+        DESDATA1 W, DESDATA2 W, DESDATA7 W,
+        DESDATA0 W, DESDATA5 W, DESDATA6 W,            
+        DESDATA4 W,
+        DESCON   W, $;
+                
+
+WORD-LIST BIT_R
+
+        P0       W, P1       W, P2       W,  
+        P4       W, P5       W, P6       W,  
+        P0CONL   W, P1CONH   W, FLAGS    W,  
+        P1CONL   W, P2CONH   W, SPL      W,  
+        P2CONL   W, P3CONH   W, IMR      W,
+        P3CONL   W, P4CONH   W, P4CONL   W,   P0CONH   W,  
+        P5CONH   W, P5CONL   W, RP0      W,   
+        P6CON    W, TADATA   W, IPH      W,   STPCON  W,
+        P0INT    W, P0PND    W, SYM      W,
+        TACNT    W, BSCON    W, TACON    W,   TCPND    W,
+        BTCNT    W, EMT      W, IPR      W,  
+        P3       W, RP1      W, PWMCON   W,   PWM     W,
+        IPL      W, TCCNTH   W, TCCNTL   W,
+        BTCON    W, PP       W, BRGD0    W,   BRGD1    W,
+        CLKCON   W, TCCON    W, BRGD2    W,   UCON     W,
+        SPH      W, TCDATAL  W, SCON     W,   SDATA    W,
+        IRQ      W, SPND     W, SWDATA   W,
+        UBRGD    W, UPND     W, ADDATA   W,   ADCON    W,
+        TCDATAH  W, ERWCON   W, EXTCON   W,   HST0     W,
+        UDATA    W, HCON1    W, HCON2    W,   HIE1     W,
+        HCON0    W, HST2     W, HIE0     W,  
+        HST1     W, RXFIFO   W, HSAR3    W,
+        HIE2     W, HSAR1    W, HSAR2    W,   PSKCON   W,
+        HSAR0    W, HBRGTC1  W, HPRMB    W,   HBRGTC0  W, 
+        DESDATA3 W,
+        DESDATA1 W, DESDATA2 W, DESDATA7 W,
+        DESDATA0 W, DESDATA5 W, DESDATA6 W,            
+        DESDATA4 W,
+        DESCON   W, $;
+        
+WORD-LIST BIT_W
+
+        P0       W, P1       W, P2       W,  
+        P4       W, P5       W, P6       W,  
+        P0CONL   W, P1CONH   W, FLAGS    W,  
+        P1CONL   W, P2CONH   W, SPL      W,  
+        P2CONL   W, P3CONH   W, IMR      W,
+        P3CONL   W, P4CONH   W, P4CONL   W,   P0CONH   W,  
+        P5CONH   W, P5CONL   W, RP0      W,   
+        P6CON    W, TADATA   W, IPH      W,   STPCON  W,
+        P0INT    W, P0PND    W, SYM      W,
+        TACNT    W, BSCON    W, TACON    W,   TCPND    W,
+        EMT      W, IPR      W,  
+        P3       W, RP1      W, PWMCON   W,   PWM     W,
+        IPL      W, TCCNTH   W, TCCNTL   W,
+        BTCON    W, PP       W, BRGD0    W,   BRGD1    W,
+        CLKCON   W, TCCON    W, BRGD2    W,   UCON     W,
+        SPH      W, TCDATAL  W, SCON     W,   SDATA    W,
+        SPND     W, SWDATA   W,
+        UBRGD    W, UPND     W, ADDATA   W,   ADCON    W,
+        TCDATAH  W, ERWCON   W, EXTCON   W,   
+        UDATA    W, HCON1    W, HCON2    W,   HIE1     W,
+        HCON0    W, HIE0     W, TXFIFOT  W,
+        TXFIFOC  W, HSAR3    W,
+        HIE2     W, HSAR1    W, HSAR2    W,   PSKCON   W,
+        HSAR0    W, HBRGTC1  W, HPRMB    W,   DESK13   W,
+        HBRGTC0  W, DESK11   W, DESK12   W,   DESK17   W,
+        DESK10   W, DESK15   W, DESK16   W,   DESK23   W,
+        DESK14   W, DESK21   W, DESK22   W,   DESK27   W,
+        DESK20   W, DESK25   W, DESK26   W,   DESDATA3 W,
+        DESK24   W, DESDATA1 W, DESDATA2 W,   DESDATA7 W,
+        DESDATA0 W, DESDATA5 W, DESDATA6 W,            
+        DESDATA4 W,
+        DESCON   W, $;
+        
+WORD-LIST BIT_RW
+
+        P0       W, P1       W, P2       W,  
+        P4       W, P5       W, P6       W,  
+        P0CONL   W, P1CONH   W, FLAGS    W,  
+        P1CONL   W, P2CONH   W, SPL      W,  
+        P2CONL   W, P3CONH   W, IMR      W,
+        P3CONL   W, P4CONH   W, P4CONL   W,   P0CONH   W,  
+        P5CONH   W, P5CONL   W, RP0      W,   
+        P6CON    W, TADATA   W, IPH      W,   
+        P0INT    W, P0PND    W, SYM      W,
+        TACNT    W, BSCON    W, TACON    W,   TCPND    W,
+        EMT      W, IPR      W,  
+        P3       W, RP1      W, PWMCON   W,   PWM     W,
+        IPL      W, TCCNTH   W, TCCNTL   W,
+        BTCON    W, PP       W, BRGD0    W,   BRGD1    W,
+        CLKCON   W, TCCON    W, BRGD2    W,   UCON     W,
+        SPH      W, TCDATAL  W, SCON     W,   SDATA    W,
+        SPND     W, SWDATA   W,
+        UBRGD    W, UPND     W, ADDATA   W,   ADCON    W,
+        TCDATAH  W, ERWCON   W, EXTCON   W,   STPCON  W,
+        UDATA    W, HCON1    W, HCON2    W,   HIE1     W,
+        HCON0    W, HIE0     W, 
+        HSAR3    W,
+        HIE2     W, HSAR1    W, HSAR2    W,   PSKCON   W,
+        HSAR0    W, HBRGTC1  W, HPRMB    W,   
+        HBRGTC0  W,     
+        DESDATA3 W,
+        DESDATA1 W, DESDATA2 W, DESDATA7 W,
+        DESDATA0 W, DESDATA5 W, DESDATA6 W,            
+        DESDATA4 W,
+        DESCON   W, $;
+        
+INCLUDE 88INST.DEF
+

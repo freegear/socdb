@@ -1,0 +1,141 @@
+; 86C6208.REG Copyright (c) 1996 SAMSUNG ELECTRONICS CO.
+
+	.list   off
+
+;       86c6208 system register
+;       99/03/03 by J.K.Lee Revision 0
+
+
+	.romsize        2000h
+
+	.ram_range      00h,0B0h
+
+;       System Register
+T0CNT:          .REG    0D0H,r
+T0DATA:         .REG    0D1H
+T0CON:          .REG    0D2H
+P1CON:          .REG    0D3H
+CLKCON:         .REG    0D4H
+FLAGS:          .REG    0D5H
+IICCON:         .REG    0D6H
+IAR:            .REG    0D7H
+IIC:            .REG    0D8H
+SP:             .REG    0D9H
+OCCON:          .REG    0DAH
+BTCON:          .REG    0DCH
+BTCNT:          .REG    0DDH,r
+SYM:            .REG    0DFH
+P0:             .REG    0E0H
+P1:             .REG    0E1H
+STSCHGEP:       .REG    0E2H,r
+MISCCON:        .REG    0E3H
+HPWRMGR:        .REG    0E4H,r
+PBUSSTE:        .REG    0E5H,r
+USBMOD:         .REG    0E7H
+P0CONH:         .REG    0E8H
+P0CONL:         .REG    0E9H
+HPND:           .REG    0EAH
+HINT:           .REG    0EBH
+FSTSCHG:        .REG    0ECH,r
+FSTS:           .REG    0EDH
+DSTS0:          .REG    0EEH,r
+USBTST:         .REG    0EFH
+HEP1STSL:       .REG    0F0H,r
+HEP1STSH:       .REG    0F1H,r
+HEP0STSL:       .REG    0F2H,r
+HEP0STSH:       .REG    0F3H,r
+HSTSL:          .REG    0F4H,r
+HSTSH:          .REG    0F5H,r
+HSTSCHGL:       .REG    0F6H,r
+HSTSCHGH:       .REG    0F7H,r
+HEP0BCNT:       .REG    0F8H,r
+HEP0BUF:        .REG    0F9H
+HEP0CSR:        .REG    0FAH
+PORTSEL:        .REG    0FBH
+PSTSL:          .REG    0FCH,r
+PSTSH:          .REG    0FDH,r
+PSTSCHGL:       .REG    0FEH,r
+PSTSCHGH:       .REG    0FFH,r
+FRAMEL:         .REG    0B0H,r
+FRAMEH:         .REG    0B1H,r
+INTPND:         .REG    0B2H
+IMR:            .REG    0B3H
+FEP0BUF:        .REG    0B4H
+FEP1BUF:        .REG    0B5H
+FEP2BUF:        .REG    0B6H
+FEPPND:         .REG    0B7H
+FEPINT:         .REG    0B8H
+FEPBCNT:        .REG    0B9H,r
+FEPINCSR:       .REG    0BAH
+FEPOUTCSR:      .REG    0BBH
+FEPMAXP:        .REG    0BCH
+FEPCFG:         .REG    0BDH
+FEPSEL:         .REG    0BEH
+FADDR:          .REG    0BFH
+
+;       System Registers
+t0cnt:          .reg    0d0h,r
+t0data:         .reg    0d1h
+t0con:          .reg    0d2h
+p1con:          .reg    0d3h
+clkcon:         .reg    0d4h
+flags:          .reg    0d5h
+iiccon:         .reg    0d6h
+iar:            .reg    0d7h
+iic:            .reg    0d8h
+sp:             .reg    0d9h
+occon:          .reg    0dah
+btcon:          .reg    0dch
+btcnt:          .reg    0ddh,r
+sym:            .reg    0dfh
+p0:             .reg    0e0h
+p1:             .reg    0e1h
+stschgep:       .reg    0e2h,r
+misccon:        .reg    0e3h
+hpwrmgr:        .reg    0e4h,r
+pbusste:        .reg    0e5h,r
+usbmod:         .reg    0e7h
+p0conh:         .reg    0e8h
+p0conl:         .reg    0e9h
+hpnd:           .reg    0eah
+hint:           .reg    0ebh
+fstschg:        .reg    0ech,r
+fsts:           .reg    0edh
+dsts0:          .reg    0eeh,r
+usbtst:         .reg    0efh
+hep1stsl:       .reg    0f0h,r
+hep1stsh:       .reg    0f1h,r
+hep0stsl:       .reg    0f2h,r
+hep0stsh:       .reg    0f3h,r
+hstsl:          .reg    0f4h,r
+hstsh:          .reg    0f5h,r
+hstschgl:       .reg    0f6h,r
+hstschgh:       .reg    0f7h,r
+hep0bcnt:       .reg    0f8h,r
+hep0buf:        .reg    0f9h
+hep0csr:        .reg    0fah
+portsel:        .reg    0fbh
+pstsl:          .reg    0fch,r
+pstsh:          .reg    0fdh,r
+pstschgl:       .reg    0feh,r
+pstschgh:       .reg    0ffh,r
+framel:         .reg    0b0h,r
+frameh:         .reg    0b1h,r
+intpnd:         .reg    0b2h
+imr:            .reg    0b3h
+fep0buf:        .reg    0b4h
+fep1buf:        .reg    0b5h
+fep2buf:        .reg    0b6h
+feppnd:         .reg    0b7h
+fepint:         .reg    0b8h
+fepbcnt:        .reg    0b9h,r
+fepincsr:       .reg    0bah
+fepoutcsr:      .reg    0bbh
+fepmaxp:        .reg    0bch
+fepcfg:         .reg    0bdh
+fepsel:         .reg    0beh
+faddr:          .reg    0bfh
+;
+; End of 86c6208.reg
+	.list   on
+

@@ -1,0 +1,94 @@
+\ 86C6508.DEF    Copyright SAMSUNG SEMICONDUCTOR INC. 1996-1998, 01/05/98
+\
+\ Initial     : 05/03/99  by J.K.Lee
+\ rename the 86C6508.DEF to 86C6504.DEF and resize the ROMSIZE to 1000        2001/03/30 by S.W. ROH
+               
+
+1000 ROMSIZE
+00 BF RAMRANGE
+
+0D0 EQUATE T0CNT   0D1 EQUATE T0DATA 0D2 EQUATE T0CON   
+0D4 EQUATE CLKCON  0D5 EQUATE FLAGS  
+0D9 EQUATE SP      
+0DC EQUATE BTCON   0DD EQUATE BTCNT  0DF EQUATE SYM
+0E0 EQUATE P0      0E1 EQUATE P1     0E2 EQUATE P2      
+0E3 EQUATE PDCON   0E4 EQUATE CCON
+0E5 EQUATE CDATA   0E6 EQUATE P0CONL 0E7 EQUATE P0CONH
+0E8 EQUATE P1CONH  0E9 EQUATE P1CONL 0EA EQUATE P0INT   0EB EQUATE P0PND
+0EC EQUATE P1INT   0ED EQUATE P1PND  0EE EQUATE P2CONINT  0EF EQUATE SUBCON 
+0F0 EQUATE FADDR   0F1 EQUATE EP0CSR  0F2 EQUATE EP1CSR 0F3 EQUATE EP0BCNT
+0F4 EQUATE EP0FIFO 0F5 EQUATE EP1FIFO 0F6 EQUATE USBPND 0F7 EQUATE USBINT
+0F8 EQUATE PWRMGR  0FB EQUATE USBSEL  0FD EQUATE SNKCON 0FE EQUATE XCON
+0FF EQUATE USBRST
+
+END-EQUATES \ 38 EQUATES
+
+
+WORD-LIST SYSREG_R
+
+        T0CNT   W,  P1INT    W,  BTCNT   W,  USBSEL  W,  P2CONINT W,
+        CLKCON  W,  FADDR    W,  P1      W,  EP1CSR  W,  P0PND    W,
+        SP      W,  EP0FIFO  W,  CCON    W,              USBPND   W,
+        BTCON   W,  PWRMGR   W,  P0CONL  W,  SYM     W,  SNKCON   W,
+        P0      W,  USBRST   W,  P1CONL  W,  P2      W,  SUBCON   W,
+        PDCON   W,  T0DATA   W,  P1PND   W,              EP0BCNT  W,
+        CDATA   W,  FLAGS    W,  EP0CSR  W,  P0CONH  W,  USBINT   W,
+        P1CONH  W,  T0CON    W,  EP1FIFO W,  P0INT   W,  XCON     W,
+        $; \ 38 REGISTERS                    
+
+WORD-LIST SYSREG_W
+         P1INT   W,  USBSEL   W,  P2CONINT W, USBRST   W,
+         CLKCON  W,  FADDR    W,  P1      W,  EP1CSR  W,  P0PND    W,
+         SP      W,  EP0FIFO  W,  CCON    W,              USBPND   W,
+         BTCON   W,  PWRMGR   W,  P0CONL  W,  SYM     W,  SNKCON   W,
+         P0      W,  P1CONL  W,  P2      W,  SUBCON   W,
+         PDCON   W,  T0DATA   W,  P1PND   W,              EP0BCNT  W,
+         FLAGS    W,  EP0CSR  W,  P0CONH  W,  USBINT   W,
+         P1CONH  W,  T0CON    W,  EP1FIFO W,  P0INT   W,  XCON     W,
+        $; \ 34 REGISTERS 
+
+WORD-LIST SYSREG_RW
+         P1INT   W,  USBSEL   W,  P2CONINT W, USBRST   W,
+         CLKCON  W,  FADDR    W,  P1      W,  EP1CSR  W,  P0PND    W,
+         SP      W,  EP0FIFO  W,  CCON    W,              USBPND   W,
+         BTCON   W,  PWRMGR   W,  P0CONL  W,  SYM     W,  SNKCON   W,
+         P0      W,  P1CONL  W,  P2      W,  SUBCON   W,
+         PDCON   W,  T0DATA   W,  P1PND   W,              EP0BCNT  W,
+         FLAGS    W,  EP0CSR  W,  P0CONH  W,  USBINT   W,
+         P1CONH  W,  T0CON    W,  EP1FIFO W,  P0INT   W,  XCON     W,
+        $; \ 34 REGISTERS 
+
+WORD-LIST BIT_R
+        T0CNT   W,  P1INT    W,  BTCNT   W,  USBSEL  W,  P2CONINT W,
+        CLKCON  W,  FADDR    W,  P1      W,  EP1CSR  W,  P0PND    W,
+        SP      W,  EP0FIFO  W,  CCON    W,              USBPND   W,
+        BTCON   W,  PWRMGR   W,  P0CONL  W,  SYM     W,  SNKCON   W,
+        P0      W,  USBRST   W,  P1CONL  W,  P2      W,  SUBCON   W,
+        PDCON   W,  T0DATA   W,  P1PND   W,              EP0BCNT  W,
+        CDATA   W,  FLAGS    W,  EP0CSR  W,  P0CONH  W,  USBINT   W,
+        P1CONH  W,  T0CON    W,  EP1FIFO W,  P0INT   W,  XCON     W,
+        $; \ 38 REGISTERS                    
+        
+WORD-LIST BIT_W
+         P1INT   W,  USBSEL   W,  P2CONINT W, USBRST   W,
+         CLKCON  W,  FADDR    W,  P1      W,  EP1CSR  W,  P0PND    W,
+         SP      W,  EP0FIFO  W,  CCON    W,              USBPND   W,
+         BTCON   W,  PWRMGR   W,  P0CONL  W,  SYM     W,  SNKCON   W,
+         P0      W,  P1CONL  W,  P2      W,  SUBCON   W,
+         PDCON   W,  T0DATA   W,  P1PND   W,              EP0BCNT  W,
+         FLAGS    W,  EP0CSR  W,  P0CONH  W,  USBINT   W,
+         P1CONH  W,  T0CON    W,  EP1FIFO W,  P0INT   W,  XCON     W,
+        $; \ 34 REGISTERS 
+
+WORD-LIST BIT_RW
+         P1INT   W,  USBSEL   W,  P2CONINT W, USBRST   W,
+         CLKCON  W,  FADDR    W,  P1      W,  EP1CSR  W,  P0PND    W,
+         SP      W,  EP0FIFO  W,  CCON    W,              USBPND   W,
+         BTCON   W,  PWRMGR   W,  P0CONL  W,  SYM     W,  SNKCON   W,
+         P0      W,  P1CONL  W,  P2      W,  SUBCON   W,
+         PDCON   W,  T0DATA   W,  P1PND   W,              EP0BCNT  W,
+         FLAGS    W,  EP0CSR  W,  P0CONH  W,  USBINT   W,
+         P1CONH  W,  T0CON    W,  EP1FIFO W,  P0INT   W,  XCON     W,
+        $; \ 34 REGISTERS 
+        
+INCLUDE 86INST.DEF

@@ -1,0 +1,258 @@
+\ 86C6308.DEF    Copyright SAMSUNG SEMICONDUCTOR INC. 1996-1999, 03/05/99
+\
+\ Initial     : 09/30/99  by J.K.Lee
+
+2000 ROMSIZE
+00 08F RAMRANGE
+
+0D0 EQUATE TACNT    
+0D1 EQUATE TADATA   
+0D2 EQUATE TACON    
+0D4 EQUATE CLKCON   
+0D5 EQUATE FLAGS    
+0D9 EQUATE SP       
+0DC EQUATE BTCON    
+0DD EQUATE BTCNT    
+0DF EQUATE SYM      
+0E0 EQUATE P0       
+0E1 EQUATE P1       
+0E2 EQUATE STSCHGEP 
+0E3 EQUATE MISCCON  
+0E4 EQUATE SUSRECON
+0E5 EQUATE PBUSSTE
+0E6 EQUATE HINTFSTS0  
+0E7 EQUATE HINTFSTS1 
+0E8 EQUATE FSXCON  
+0E9 EQUATE LSXCON   
+0EA EQUATE HINTSTS  
+0EB EQUATE HINTEN     
+0EC EQUATE EMBFCSTS  
+0ED EQUATE EMBFSTS     
+0EE EQUATE DSTS0   
+0EF EQUATE DSTS1 
+0F0 EQUATE HEP1STS0 
+0F1 EQUATE HEP1STS1 
+0F2 EQUATE HEP0STS0 
+0F3 EQUATE HEP0STS1 
+0F4 EQUATE HSTS0    
+0F5 EQUATE HSTS1    
+0F6 EQUATE HSTS2
+0F7 EQUATE HSTS3 
+0F8 EQUATE HEP0BCNT 
+0F9 EQUATE HEP0BUF  
+0FA EQUATE HEP0CSR  
+0FB EQUATE PORTSEL  
+0FC EQUATE PXSTS0    
+0FD EQUATE PXSTS1    
+0FE EQUATE PXSTS2 
+0FF EQUATE PXSTS3 
+0B0 EQUATE FRAMEL   
+0B1 EQUATE FRAMEH   
+0B2 EQUATE INTPEND   
+0B3 EQUATE INTMASK      
+0B4 EQUATE FEP0BUF  
+0B5 EQUATE FEP1BUF  
+0B6 EQUATE FEP2BUF  
+0B7 EQUATE FINTSTS   
+0B8 EQUATE FINTEN   
+0B9 EQUATE FEPBCNT  
+0BA EQUATE FEPINCSR 
+0BB EQUATE FEPOUTCSR
+0BC EQUATE FEPCFG  
+0BD EQUATE FEPMAXP   
+0BE EQUATE FEPSEL   
+0BF EQUATE FADDR    
+0A0 EQUATE P0CONL 
+0A1 EQUATE P0CONH 
+0A2 EQUATE P1CONL 
+0A3 EQUATE P1CONH 
+0A4 EQUATE P2CONL 
+0A5 EQUATE P2CONH 
+0A6 EQUATE P0INT 
+0A7 EQUATE P0PND  
+0A8 EQUATE P2INT 
+0A9 EQUATE P2PND 
+0AA EQUATE P3CON 
+0AB EQUATE P4CON  
+0AC EQUATE P4INTnP4PNDn
+0AD EQUATE P2 
+0AE EQUATE P3  
+0AF EQUATE P4 
+096 EQUATE USBMODE
+097 EQUATE USBSEL
+098 EQUATE GPIODATA
+099 EQUATE GPIOCONINT
+09A EQUATE TBCNTH
+09B EQUATE TBCNTL
+09C EQUATE TBDATAH
+09D EQUATE TBDATAL
+09E EQUATE TBCON
+09F EQUATE INTPND
+ 
+END-EQUATES 
+
+WORD-LIST SYSREG_R
+
+       TACNT      W,  DSTS0       W,  FEP0BUF   W, P3CON         W, 
+       TADATA     W,  DSTS1       W,  FEP1BUF   W, P4CON         W, 
+       TACON      W,  HEP1STS0    W,  FEP2BUF   W, P4INTnP4PNDn  W, 
+       CLKCON     W,  HEP1STS1    W,  FINTSTS   W, P2            W, 
+       FLAGS      W,  HEP0STS0    W,  FINTEN    W, P3            W, 
+       SP         W,  HEP0STS1    W,  FEPBCNT   W, P4            W, 
+       BTCON      W,  HSTS0       W,  FEPINCSR  W, USBMODE       W, 
+       BTCNT      W,  HSTS1       W,  FEPOUTCSR W, USBSEL        W, 
+       SYM        W,  HSTS2       W,  FEPCFG    W, GPIODATA      W, 
+       P0         W,  HSTS3       W,  FEPMAXP   W, GPIOCONINT    W,
+       P1         W,  HEP0BCNT    W,  FEPSEL    W, TBCNTH        W,
+       STSCHGEP   W,  HEP0BUF     W,  FADDR     W, TBCNTL        W,
+       MISCCON    W,  HEP0CSR     W,  P0CONL    W, TBDATAH       W,
+       SUSRECON   W,  PORTSEL     W,  P0CONH    W, TBDATAL       W,
+       PBUSSTE    W,  PXSTS0      W,  P1CONL    W, TBCON         W,
+       HINTFSTS0  W,  PXSTS1      W,  P1CONH    W, INTPND        W,
+       HINTFSTS1  W,  PXSTS2      W,  P2CONL    W,  
+       FSXCON     W,  PXSTS3      W,  P2CONH    W,  
+       LSXCON     W,  FRAMEL      W,  P0INT     W,  
+       HINTSTS    W,  FRAMEH      W,  P0PND     W,  
+       HINTEN     W,  INTPEND     W,  P2INT     W,  
+       EMBFCSTS   W,  INTMASK     W,  P2PND     W,  
+       EMBFSTS    W,                 
+                                      
+       $; \ 83 REGISTERS
+
+WORD-LIST SYSREG_W
+      FEP0BUF    W,  P3CON     W, 
+      TADATA     W,  FEP1BUF   W,  P4CON         W, 
+      TACON      W,  FEP2BUF   W,  P4INTnP4PNDn  W, 
+      CLKCON     W,  FINTSTS   W,  P2            W, 
+      FLAGS      W,  FINTEN    W,  P3            W, 
+      SP         W,  P4        W, 
+      BTCON      W,  FEPINCSR  W,  USBMODE       W, 
+      HSTS1      W,  USBSEL    W, 
+      SYM        W,  FEPCFG    W,  GPIODATA      W, 
+      P0         W,  FEPMAXP   W,  GPIOCONINT    W,
+      P1         W,  FEPSEL    W,
+      HEP0BUF    W,  FADDR     W,
+      MISCCON    W,  HEP0CSR   W,  P0CONL        W, TBDATAH       W,
+      SUSRECON   W,  PORTSEL   W,  P0CONH        W, TBDATAL       W,
+      P1CONL     W,  TBCON     W,
+      P1CONH     W,  INTPND    W,
+      P2CONL     W,  
+      FSXCON     W,  P2CONH    W,  
+      LSXCON     W,  P0INT     W,  
+      HINTSTS    W,  P0PND     W,  
+      HINTEN     W,  INTPEND   W,  P2INT         W,  
+      EMBFCSTS   W,  INTMASK   W,  P2PND         W,  
+      EMBFSTS    W,                 
+                                     
+      $; \ 57 REGISTERS
+
+WORD-LIST SYSREG_RW
+      FEP0BUF    W,  P3CON     W, 
+      TADATA     W,  FEP1BUF   W,  P4CON         W, 
+      TACON      W,  FEP2BUF   W,  P4INTnP4PNDn  W, 
+      CLKCON     W,  FINTSTS   W,  P2            W, 
+      FLAGS      W,  FINTEN    W,  P3            W, 
+      SP         W,  P4        W, 
+      BTCON      W,  FEPINCSR  W,  USBMODE       W,                                                                                                                                                                                                   
+      HSTS1      W,  USBSEL    W, 
+      SYM        W,  FEPCFG    W,  GPIODATA      W, 
+      P0         W,  FEPMAXP   W,  GPIOCONINT    W,
+      P1         W,  FEPSEL    W,
+      HEP0BUF    W,  FADDR     W,
+      MISCCON    W,  HEP0CSR   W,  P0CONL        W, TBDATAH       W,
+      SUSRECON   W,  PORTSEL   W,  P0CONH        W, TBDATAL       W,
+      P1CONL     W,  TBCON     W,
+      P1CONH     W,  INTPND    W,
+      P2CONL     W,  
+      FSXCON     W,  P2CONH    W,  
+      LSXCON     W,  P0INT     W,  
+      HINTSTS    W,  P0PND     W,  
+      HINTEN     W,  INTPEND   W,  P2INT         W,  
+      EMBFCSTS   W,  INTMASK   W,  P2PND         W,  
+      EMBFSTS    W,                 
+                                     
+      $; \ 57 REGISTERS
+      
+      
+WORD-LIST BIT_R
+       TACNT      W,  DSTS0       W,  FEP0BUF   W, P3CON         W, 
+       TADATA     W,  DSTS1       W,  FEP1BUF   W, P4CON         W, 
+       TACON      W,  HEP1STS0    W,  FEP2BUF   W, P4INTnP4PNDn  W, 
+       CLKCON     W,  HEP1STS1    W,  FINTSTS   W, P2            W, 
+       FLAGS      W,  HEP0STS0    W,  FINTEN    W, P3            W, 
+       SP         W,  HEP0STS1    W,  FEPBCNT   W, P4            W, 
+       BTCON      W,  HSTS0       W,  FEPINCSR  W, USBMODE       W, 
+       BTCNT      W,  HSTS1       W,  FEPOUTCSR W, USBSEL        W, 
+       SYM        W,  HSTS2       W,  FEPCFG    W, GPIODATA      W, 
+       P0         W,  HSTS3       W,  FEPMAXP   W, GPIOCONINT    W,
+       P1         W,  HEP0BCNT    W,  FEPSEL    W, TBCNTH        W,
+       STSCHGEP   W,  HEP0BUF     W,  FADDR     W, TBCNTL        W,
+       MISCCON    W,  HEP0CSR     W,  P0CONL    W, TBDATAH       W,
+       SUSRECON   W,  PORTSEL     W,  P0CONH    W, TBDATAL       W,
+       PBUSSTE    W,  PXSTS0      W,  P1CONL    W, TBCON         W,
+       HINTFSTS0  W,  PXSTS1      W,  P1CONH    W, INTPND        W,
+       HINTFSTS1  W,  PXSTS2      W,  P2CONL    W,  
+       FSXCON     W,  PXSTS3      W,  P2CONH    W,  
+       LSXCON     W,  FRAMEL      W,  P0INT     W,  
+       HINTSTS    W,  FRAMEH      W,  P0PND     W,  
+       HINTEN     W,  INTPEND     W,  P2INT     W,  
+       EMBFCSTS   W,  INTMASK     W,  P2PND     W,  
+       EMBFSTS    W,                 
+                                      
+       $; \ 83 REGISTERS
+       
+WORD-LIST BIT_W
+      FEP0BUF    W,  P3CON     W, 
+      TADATA     W,  FEP1BUF   W,  P4CON         W, 
+      TACON      W,  FEP2BUF   W,  P4INTnP4PNDn  W, 
+      CLKCON     W,  FINTSTS   W,  P2            W, 
+      FLAGS      W,  FINTEN    W,  P3            W, 
+      SP         W,  P4        W, 
+      BTCON      W,  FEPINCSR  W,  USBMODE       W, 
+      HSTS1      W,  USBSEL    W, 
+      SYM        W,  FEPCFG    W,  GPIODATA      W, 
+      P0         W,  FEPMAXP   W,  GPIOCONINT    W,
+      P1         W,  FEPSEL    W,
+      HEP0BUF    W,  FADDR     W,
+      MISCCON    W,  HEP0CSR   W,  P0CONL        W, TBDATAH       W,
+      SUSRECON   W,  PORTSEL   W,  P0CONH        W, TBDATAL       W,
+      P1CONL     W,  TBCON     W,
+      P1CONH     W,  INTPND    W,
+      P2CONL     W,  
+      FSXCON     W,  P2CONH    W,  
+      LSXCON     W,  P0INT     W,  
+      HINTSTS    W,  P0PND     W,  
+      HINTEN     W,  INTPEND   W,  P2INT         W,  
+      EMBFCSTS   W,  INTMASK   W,  P2PND         W,  
+      EMBFSTS    W,                 
+                                     
+      $; \ 57 REGISTERS
+
+WORD-LIST BIT_RW
+      FEP0BUF    W,  P3CON     W, 
+      TADATA     W,  FEP1BUF   W,  P4CON         W, 
+      TACON      W,  FEP2BUF   W,  P4INTnP4PNDn  W, 
+      CLKCON     W,  FINTSTS   W,  P2            W, 
+      FLAGS      W,  FINTEN    W,  P3            W, 
+      SP         W,  P4        W, 
+      BTCON      W,  FEPINCSR  W,  USBMODE       W, 
+      HSTS1      W,  USBSEL    W, 
+      SYM        W,  FEPCFG    W,  GPIODATA      W, 
+      P0         W,  FEPMAXP   W,  GPIOCONINT    W,
+      P1         W,  FEPSEL    W,
+      HEP0BUF    W,  FADDR     W,
+      MISCCON    W,  HEP0CSR   W,  P0CONL        W, TBDATAH       W,
+      SUSRECON   W,  PORTSEL   W,  P0CONH        W, TBDATAL       W,
+      P1CONL     W,  TBCON     W,
+      P1CONH     W,  INTPND    W,
+      P2CONL     W,  
+      FSXCON     W,  P2CONH    W,  
+      LSXCON     W,  P0INT     W,  
+      HINTSTS    W,  P0PND     W,  
+      HINTEN     W,  INTPEND   W,  P2INT         W,  
+      EMBFCSTS   W,  INTMASK   W,  P2PND         W,  
+      EMBFSTS    W,                 
+                                     
+      $; \ 57 REGISTERS
+
+INCLUDE 86INST.DEF

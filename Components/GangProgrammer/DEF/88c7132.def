@@ -1,0 +1,130 @@
+\  88c7132.DEF Copyright SAMSUNG ELECTRONICS CO. 1990-1994,
+\  Initial     : 05/27/94  sjlee
+\  1st Revision: 07/23/94  sjlee
+
+8000 ROMSIZE
+00 0BF RAMRANGE
+
+\  -----------------------------
+\  set 1 registers
+\  D0 D1 D2 D3 D4 is not mapped
+0D5 EQUATE FLAGS     0D6 EQUATE RP0       0D7 EQUATE RP1       0D8 EQUATE SPH
+0D9 EQUATE SPL       0DA EQUATE IPH       0DB EQUATE IPL       0DC EQUATE IRQ
+0DD EQUATE IMR       0DE EQUATE SYM       0DF EQUATE PP        0E0 EQUATE T2DH
+0E1 EQUATE T2DL      0E2 EQUATE T1DH      0E3 EQUATE T1DL      0E4 EQUATE T2PS
+0E5 EQUATE T1PS      0E6 EQUATE T2CON     0E7 EQUATE T2MOD     0E8 EQUATE T1CON
+0E9 EQUATE T1MOD     0EA EQUATE WTMOD     0EB EQUATE WTPS      0EC EQUATE T2L
+0ED EQUATE T2H       0EE EQUATE T1L       0EF EQUATE T1H       0F0 EQUATE TADATA
+0F1 EQUATE TBDATA    0F2 EQUATE TACON     0F3 EQUATE TBCON     0F4 EQUATE TA
+0F5 EQUATE TB        0F6 EQUATE SIO0CON   0F7 EQUATE SIO0PS    0F8 EQUATE SIO0
+0F9 EQUATE SIO1CON   0FA EQUATE SIO1PS    0FB EQUATE SIO1      0FC EQUATE ADOUT
+0FD EQUATE ADCON     0FE EQUATE EMT       0FF EQUATE IPR       0E0 EQUATE P0
+0E1 EQUATE P1        0E2 EQUATE P2        0E3 EQUATE P3        0E4 EQUATE P4
+0E5 EQUATE P5        0E6 EQUATE P6        0E7 EQUATE P8        0F0 EQUATE P0CONL
+0F1 EQUATE P0CONH    0F2 EQUATE P1CONL    0F3 EQUATE P1CONH    0F4 EQUATE P2CONL
+0F5 EQUATE P2CONH    0F6 EQUATE P4CONL    0F7 EQUATE P4CONH    0F8 EQUATE P5CON
+0F9 EQUATE P1PND     0FA EQUATE P6CONL    0FB EQUATE P6CONH    0FC EQUATE P1PUR
+0FD EQUATE P1INT     0FE EQUATE P8CON     0FF EQUATE P65CON    083 EQUATE MFPDATA
+087 EQUATE VFDCON    08B EQUATE MFPCON    08F EQUATE CLKCON    093 EQUATE KEYSL
+097 EQUATE KEYSH
+END-EQUATES \ 73 equates
+\ Read  only   8
+\ Write only   0
+\ Read/Write  65
+\ Unknown      0
+WORD-LIST SYSREG_R
+FLAGS       W,  RP0         W,  RP1         W,  SPH         W,  SPL         W,
+IPH         W,  IPL         W,  IRQ         W,  IMR         W,  SYM         W,
+PP          W,  T2DH        W,  T2DL        W,  T1DH        W,  T1DL        W,
+T2PS        W,  T1PS        W,  T2CON       W,  T2MOD       W,  T1CON       W,
+T1MOD       W,  WTMOD       W,  WTPS        W,  T2L         W,  T2H         W,
+T1L         W,  T1H         W,  TADATA      W,  TBDATA      W,  TACON       W,
+TBCON       W,  TA          W,  TB          W,  SIO0CON     W,  SIO0PS      W,
+SIO0        W,  SIO1CON     W,  SIO1PS      W,  SIO1        W,  ADOUT       W,
+ADCON       W,  EMT         W,  IPR         W,  P0          W,  P1          W,
+P2          W,  P3          W,  P4          W,  P5          W,  P6          W,
+P8          W,  P0CONL      W,  P0CONH      W,  P1CONL      W,  P1CONH      W,
+P2CONL      W,  P2CONH      W,  P4CONL      W,  P4CONH      W,  P5CON       W,
+P1PND       W,  P6CONL      W,  P6CONH      W,  P1PUR       W,  P1INT       W,
+P8CON       W,  P65CON      W,  MFPDATA     W,  VFDCON      W,  MFPCON      W,
+CLKCON      W,  KEYSL       W,  KEYSH       W,
+    $; \ 73 registers
+WORD-LIST SYSREG_W
+FLAGS       W,  RP0         W,  RP1         W,  SPH         W,  SPL         W,
+IPH         W,  IPL         W,  IMR         W,  SYM         W,  PP          W,
+T2DH        W,  T2DL        W,  T1DH        W,  T1DL        W,  T2PS        W,
+T1PS        W,  T2CON       W,  T2MOD       W,  T1CON       W,  T1MOD       W,
+WTMOD       W,  WTPS        W,  TADATA      W,  TBDATA      W,  TACON       W,
+TBCON       W,  SIO0CON     W,  SIO0PS      W,  SIO0        W,  SIO1CON     W,
+SIO1PS      W,  SIO1        W,  ADCON       W,  EMT         W,  IPR         W,
+P0          W,  P1          W,  P2          W,  P3          W,  P4          W,
+P5          W,  P6          W,  P8          W,  P0CONL      W,  P0CONH      W,
+P1CONL      W,  P1CONH      W,  P2CONL      W,  P2CONH      W,  P4CONL      W,
+P4CONH      W,  P5CON       W,  P1PND       W,  P6CONL      W,  P6CONH      W,
+P1PUR       W,  P1INT       W,  P8CON       W,  P65CON      W,  MFPDATA     W,
+VFDCON      W,  MFPCON      W,  CLKCON      W,  KEYSL       W,  KEYSH       W,
+    $; \ 65 registers
+WORD-LIST SYSREG_RW
+FLAGS       W,  RP0         W,  RP1         W,  SPH         W,  SPL         W,
+IPH         W,  IPL         W,  IMR         W,  SYM         W,  PP          W,
+T2DH        W,  T2DL        W,  T1DH        W,  T1DL        W,  T2PS        W,
+T1PS        W,  T2CON       W,  T2MOD       W,  T1CON       W,  T1MOD       W,
+WTMOD       W,  WTPS        W,  TADATA      W,  TBDATA      W,  TACON       W,
+TBCON       W,  SIO0CON     W,  SIO0PS      W,  SIO0        W,  SIO1CON     W,
+SIO1PS      W,  SIO1        W,  ADCON       W,  EMT         W,  IPR         W,
+P0          W,  P1          W,  P2          W,  P3          W,  P4          W,
+P5          W,  P6          W,  P8          W,  P0CONL      W,  P0CONH      W,
+P1CONL      W,  P1CONH      W,  P2CONL      W,  P2CONH      W,  P4CONL      W,
+P4CONH      W,  P5CON       W,  P1PND       W,  P6CONL      W,  P6CONH      W,
+P1PUR       W,  P1INT       W,  P8CON       W,  P65CON      W,  MFPDATA     W,
+VFDCON      W,  MFPCON      W,  CLKCON      W,  KEYSL       W,  KEYSH       W,
+    $; \ 65 registers
+WORD-LIST BIT_R
+FLAGS       W,  RP0         W,  RP1         W,  SPH         W,  SPL         W,
+IPH         W,  IPL         W,  IRQ         W,  IMR         W,  SYM         W,
+PP          W,  T2DH        W,  T2DL        W,  T1DH        W,  T1DL        W,
+T2PS        W,  T1PS        W,  T2CON       W,  T2MOD       W,  T1CON       W,
+T1MOD       W,  WTMOD       W,  WTPS        W,  T2L         W,  T2H         W,
+T1L         W,  T1H         W,  TADATA      W,  TBDATA      W,  TACON       W,
+TBCON       W,  TA          W,  TB          W,  SIO0CON     W,  SIO0PS      W,
+SIO0        W,  SIO1CON     W,  SIO1PS      W,  SIO1        W,  ADOUT       W,
+ADCON       W,  EMT         W,  IPR         W,  P0          W,  P1          W,
+P2          W,  P3          W,  P4          W,  P5          W,  P6          W,
+P8          W,  P0CONL      W,  P0CONH      W,  P1CONL      W,  P1CONH      W,
+P2CONL      W,  P2CONH      W,  P4CONL      W,  P4CONH      W,  P5CON       W,
+P1PND       W,  P6CONL      W,  P6CONH      W,  P1PUR       W,  P1INT       W,
+P8CON       W,  P65CON      W,  MFPDATA     W,  VFDCON      W,  MFPCON      W,
+CLKCON      W,  KEYSL       W,  KEYSH       W,
+    $; \ 73 registers
+WORD-LIST BIT_W
+FLAGS       W,  RP0         W,  RP1         W,  SPH         W,  SPL         W,
+IPH         W,  IPL         W,  IMR         W,  SYM         W,  PP          W,
+T2DH        W,  T2DL        W,  T1DH        W,  T1DL        W,  T2PS        W,
+T1PS        W,  T2CON       W,  T2MOD       W,  T1CON       W,  T1MOD       W,
+WTMOD       W,  WTPS        W,  TADATA      W,  TBDATA      W,  TACON       W,
+TBCON       W,  SIO0CON     W,  SIO0PS      W,  SIO0        W,  SIO1CON     W,
+SIO1PS      W,  SIO1        W,  ADCON       W,  EMT         W,  IPR         W,
+P0          W,  P1          W,  P2          W,  P3          W,  P4          W,
+P5          W,  P6          W,  P8          W,  P0CONL      W,  P0CONH      W,
+P1CONL      W,  P1CONH      W,  P2CONL      W,  P2CONH      W,  P4CONL      W,
+P4CONH      W,  P5CON       W,  P1PND       W,  P6CONL      W,  P6CONH      W,
+P1PUR       W,  P1INT       W,  P8CON       W,  P65CON      W,  MFPDATA     W,
+VFDCON      W,  MFPCON      W,  CLKCON      W,  KEYSL       W,  KEYSH       W,
+    $; \ 65 registers
+WORD-LIST BIT_RW
+FLAGS       W,  RP0         W,  RP1         W,  SPH         W,  SPL         W,
+IPH         W,  IPL         W,  IMR         W,  SYM         W,  PP          W,
+T2DH        W,  T2DL        W,  T1DH        W,  T1DL        W,  T2PS        W,
+T1PS        W,  T2CON       W,  T2MOD       W,  T1CON       W,  T1MOD       W,
+WTMOD       W,  WTPS        W,  TADATA      W,  TBDATA      W,  TACON       W,
+TBCON       W,  SIO0CON     W,  SIO0PS      W,  SIO0        W,  SIO1CON     W,
+SIO1PS      W,  SIO1        W,  ADCON       W,  EMT         W,  IPR         W,
+P0          W,  P1          W,  P2          W,  P3          W,  P4          W,
+P5          W,  P6          W,  P8          W,  P0CONL      W,  P0CONH      W,
+P1CONL      W,  P1CONH      W,  P2CONL      W,  P2CONH      W,  P4CONL      W,
+P4CONH      W,  P5CON       W,  P1PND       W,  P6CONL      W,  P6CONH      W,
+P1PUR       W,  P1INT       W,  P8CON       W,  P65CON      W,  MFPDATA     W,
+VFDCON      W,  MFPCON      W,  CLKCON      W,  KEYSL       W,  KEYSH       W,
+    $; \ 65 registers
+
+INCLUDE 88INST.DEF

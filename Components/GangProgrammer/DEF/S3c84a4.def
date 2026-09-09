@@ -1,0 +1,133 @@
+\ 88c41004.def   Copyright SAMSUNG SEMICONDUCTOR INC. 1998-1999, 07/23/99
+\
+\ Initial     : 07/23/99  by j.k.Lee
+
+10000 ROMSIZE
+00 0BF RAMRANGE
+
+\ SET1, BANK0 ( 0E0 ~ 0FF )
+
+0E0 EQUATE P0      0E1 EQUATE P1      0E2 EQUATE P2      0E3 EQUATE P3
+0E6 EQUATE TBDATA  0E7 EQUATE P2INT
+0E8 EQUATE TCCON   0E9 EQUATE TDCON     
+0EA EQUATE TCDATAH 0EB EQUATE TCDATAL 0EC EQUATE TDDATAH 0ED EQUATE TDDATAL  
+0EE EQUATE TCPND   0EF EQUATE TDPND
+
+0F0 EQUATE P0CONH  0F1 EQUATE P0CONL  0F2 EQUATE P1CONH  0F3 EQUATE P1CONL
+0F4 EQUATE P2CONH  0F5 EQUATE P2CONL  0F6 EQUATE P3CONH  0F7 EQUATE P3CONL
+0FA EQUATE EXTCON  0FB EQUATE P2PND
+0FC EQUATE TESTMOD 0FD EQUATE BTCNT   0FE EQUATE EMT     0FF EQUATE IPR
+
+\ System Registers, SET1 ( 0D0 ~ 0DF )
+
+0D0 EQUATE TACON   0D1 EQUATE TBCON   0D2 EQUATE TADATA  0D3 EQUATE BTCON
+0D4 EQUATE CLKCON  0D5 EQUATE FLAGS   0D6 EQUATE RP0     0D7 EQUATE RP1
+0D8 EQUATE SPH     0D9 EQUATE SPL     0DA EQUATE IPH     0DB EQUATE IPL
+0DC EQUATE IRQ     0DD EQUATE IMR     0DE EQUATE SYM     0DF EQUATE PP
+
+\ SET1 , BANK1 ( 0EA ~ 0FF )
+
+0EA EQUATE TACNT   0EB EQUATE TBCNT   0EC EQUATE TCCNTH  0ED EQUATE TCCNTL  
+0EE EQUATE TDCNTH  0EF EQUATE TDCNTL
+0F4 EQUATE ADDATA  0F5 EQUATE VLD     0F7 EQUATE ADCON
+0F9 EQUATE PWMCON  0FA EQUATE PWM1    0FB EQUATE PWM0
+0FC EQUATE CSDATA0 0FD EQUATE CSDATA1 
+
+END-EQUATES
+
+WORD-LIST SYSREG_R
+
+        TACON   W,  TBCON   W,  TADATA  W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IRQ     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W, 
+        TBDATA  W,  P2INT   W,  TCCON   W,
+        TDCON   W,  TCDATAH W,  TCDATAL W,  TDDATAH W,  TDDATAL W,  
+        TCPND   W,  TDPND   W,  P0CONH  W,  P0CONL  W,  P1CONH  W,
+        P1CONL  W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        EXTCON  W,  P2PND   W,  TESTMOD W,
+        BTCNT   W,  EMT     W,  IPR     W,  TACNT   W,  TBCNT   W,
+        TCCNTH  W,  TCCNTL  W,  TDCNTH  W,  TDCNTL  W,  ADDATA  W,  
+        VLD     W,  ADCON   W,
+        PWMCON  W,  PWM1    W,  PWM0    W,  CSDATA0 W,  CSDATA1 W, $;
+       
+WORD-LIST SYSREG_W
+
+        TACON   W,  TBCON   W,  TADATA  W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W, 
+        TBDATA  W,  P2INT   W,  TCCON   W,
+        TDCON   W,  TCDATAH W,  TCDATAL W,  TDDATAH W,  TDDATAL W,  
+        TCPND   W,  TDPND   W,  P0CONH  W,  P0CONL  W,  P1CONH  W,
+        P1CONL  W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        EXTCON  W,  P2PND   W,  TESTMOD W,
+        EMT     W,  IPR     W,  
+        VLD     W,  ADCON   W,
+        PWMCON  W,  PWM1    W,  PWM0    W,  CSDATA0 W,  CSDATA1 W, $;
+
+WORD-LIST SYSREG_RW
+
+        
+        TACON   W,  TBCON   W,  TADATA  W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W, 
+        TBDATA  W,  P2INT   W,  TCCON   W,
+        TDCON   W,  TCDATAH W,  TCDATAL W,  TDDATAH W,  TDDATAL W,  
+        TCPND   W,  TDPND   W,  P0CONH  W,  P0CONL  W,  P1CONH  W,
+        P1CONL  W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        EXTCON  W,  P2PND   W,  TESTMOD W,
+        EMT     W,  IPR     W,  
+        VLD     W,  ADCON   W,
+        PWMCON  W,  PWM1    W,  PWM0    W,  CSDATA0 W,  CSDATA1 W, $;
+
+
+WORD-LIST BIT_R
+
+        TACON   W,  TBCON   W,  TADATA  W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IRQ     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W, 
+        TBDATA  W,  P2INT   W,  TCCON   W,
+        TDCON   W,  TCDATAH W,  TCDATAL W,  TDDATAH W,  TDDATAL W,  
+        TCPND   W,  TDPND   W,  P0CONH  W,  P0CONL  W,  P1CONH  W,
+        P1CONL  W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        EXTCON  W,  P2PND   W,  TESTMOD W,
+        BTCNT   W,  EMT     W,  IPR     W,  TACNT   W,  TBCNT   W,
+        TCCNTH  W,  TCCNTL  W,  TDCNTH  W,  TDCNTL  W,  ADDATA  W,  
+        VLD     W,  ADCON   W,
+        PWMCON  W,  PWM1    W,  PWM0    W,  CSDATA0 W,  CSDATA1 W, $;
+        
+WORD-LIST BIT_W
+
+        TACON   W,  TBCON   W,  TADATA  W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W, 
+        TBDATA  W,  P2INT   W,  TCCON   W,
+        TDCON   W,  TCDATAH W,  TCDATAL W,  TDDATAH W,  TDDATAL W,  
+        TCPND   W,  TDPND   W,  P0CONH  W,  P0CONL  W,  P1CONH  W,
+        P1CONL  W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        EXTCON  W,  P2PND   W,  TESTMOD W,
+        EMT     W,  IPR     W,  
+        VLD     W,  ADCON   W,
+        PWMCON  W,  PWM1    W,  PWM0    W,  CSDATA0 W,  CSDATA1 W, $;
+
+WORD-LIST BIT_RW
+
+        TACON   W,  TBCON   W,  TADATA  W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W, 
+        TBDATA  W,  P2INT   W,  TCCON   W,
+        TDCON   W,  TCDATAH W,  TCDATAL W,  TDDATAH W,  TDDATAL W,  
+        TCPND   W,  TDPND   W,  P0CONH  W,  P0CONL  W,  P1CONH  W,
+        P1CONL  W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        EXTCON  W,  P2PND   W,  TESTMOD W,
+        EMT     W,  IPR     W,  
+        VLD     W,  ADCON   W,
+        PWMCON  W,  PWM1    W,  PWM0    W,  CSDATA0 W,  CSDATA1 W, $;
+
+INCLUDE 88INST.DEF
+

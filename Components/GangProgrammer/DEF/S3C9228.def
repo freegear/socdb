@@ -1,0 +1,140 @@
+\ S3C9228.DEF    Copyright SAMSUNG SEMICONDUCTOR INC. 2002, 03/25/02
+\
+\ Initial     : 03/25/02  by K.M.CHOI
+\ Modify      : 03/08/2003  by S.W.ROH
+\          SIOON -> SI0CON  SYSREG - > BIT Removed Unkown Character before P5 
+  
+
+02000H ROMSIZE
+00 0BF RAMRANGE
+
+\ SET1, BANK0
+0BA EQUATE TBCON    0BB EQUATE TACON     0BC EQUATE TBDATA     0BD EQUATE TADATA    
+0BE EQUATE TBCNT    0BF EQUATE TACNT     0D0 EQUATE ADCON      0D1 EQUATE ADDATAH
+0D2 EQUATE ADDATAL  0D3 EQUATE OSCCON    0D4 EQUATE CLKCON     0D5 EQUATE FLAGS 
+0D6 EQUATE INTPND1  0D7 EQUATE INTPND2   0D8 EQUATE LPOT       0D9 EQUATE SP   
+0DA EQUATE WTCON    0DB EQUATE TSTMOD1   0DC EQUATE BTCON      0DD EQUATE BTCNT
+0DE EQUATE TSTMOD2  0DF EQUATE SYM       0E0 EQUATE STPCON     0E1 EQUATE SIOCON
+0E2 EQUATE SIODATA  0E3 EQUATE SIOPS     0E4 EQUATE P0         0E5 EQUATE P1  
+0E6 EQUATE P2       0E7 EQUATE P3        0E8 EQUATE P4         0E9 EQUATE P5
+0EA EQUATE P6       0EB EQUATE P0CON     0EC EQUATE P0PUR      0ED EQUATE P0INT
+0EE EQUATE P0EDGE   0EF EQUATE P1CON     0F0 EQUATE P1PUR      0F1 EQUATE P1INT   
+0F2 EQUATE P1EDGE   0F3 EQUATE P2CON     0F4 EQUATE P2PUR      0F5 EQUATE P3CON
+0F6 EQUATE P3PUR    0F7 EQUATE P3INT     0F8 EQUATE P3EDGE     0F9 EQUATE P4CONH
+0FA EQUATE P4CONL   0FB EQUATE P5CONH    0FC EQUATE P5CONL     0FD EQUATE P6CON   
+0FE EQUATE LMOD     0FF EQUATE TSTMOD3  
+
+
+END-EQUATES \ 54 EQUATES
+\ READ ONLY     3
+\ WRITE ONLY    0
+\ READ/WRITE   51
+\ UNKNOWN       0
+
+WORD-LIST SYSREG_R
+
+        TBCON    W,   TACON    W,   TBDATA    W,    TADATA    W, 
+        TBCNT    W,   TACNT    W,   ADCON     W,    ADDATAH   W, 
+        ADDATAL  W,   OSCCON   W,   CLKCON    W,    FLAGS     W, 
+        INTPND1  W,   INTPND2  W,   LPOT      W,    SP        W, 
+        WTCON    W,   TSTMOD1  W,   BTCON     W,    BTCNT     W, 
+        TSTMOD2  W,   SYM      W,   STPCON    W,    SIOCON     W, 
+        SIODATA  W,   SIOPS    W,   P0        W,    P1        W, 
+        P2       W,   P3       W,   P4        W,    P5       W, 
+        P6       W,   P0CON    W,   P0PUR     W,    P0INT     W, 
+        P0EDGE   W,   P1CON    W,   P1PUR     W,    P1INT     W, 
+        P1EDGE   W,   P2CON    W,   P2PUR     W,    P3CON     W, 
+        P3PUR    W,   P3INT    W,   P3EDGE    W,    P4CONH    W, 
+        P4CONL   W,   P5CONH   W,   P5CONL    W,    P6CON     W, 
+        LMOD     W,   TSTMOD3  W,  $; \ 64 REGISTERS
+
+
+WORD-LIST SYSREG_W
+
+        TBCON    W,   TACON    W,   TBDATA    W,    TADATA    W, 
+        ADCON    W,   ADDATAH  W,                             
+        ADDATAL  W,   OSCCON   W,   CLKCON    W,    FLAGS     W, 
+        INTPND1  W,   INTPND2  W,   LPOT      W,    SP        W, 
+        WTCON    W,   TSTMOD1  W,   BTCON     W,              
+        TSTMOD2  W,   SYM      W,   STPCON    W,    SIOCON    W, 
+        SIODATA  W,   SIOPS    W,   P0        W,    P1        W, 
+        P2       W,   P3       W,   P4        W,    P5        W, 
+        P6       W,   P0CON    W,   P0PUR     W,    P0INT     W, 
+        P0EDGE   W,   P1CON    W,   P1PUR     W,    P1INT     W, 
+        P1EDGE   W,   P2CON    W,   P2PUR     W,    P3CON     W, 
+        P3PUR    W,   P3INT    W,   P3EDGE    W,    P4CONH    W, 
+        P4CONL   W,   P5CONH   W,   P5CONL    W,    P6CON     W, 
+        LMOD     W,   TSTMOD3  W,  $; \ 61 REGISTERS
+
+WORD-LIST SYSREG_RW
+
+        TBCON    W,   TACON    W,   TBDATA    W,    TADATA    W, 
+        ADCON    W,   ADDATAH  W, 
+        ADDATAL  W,   OSCCON   W,   CLKCON    W,    FLAGS     W, 
+        INTPND1  W,   INTPND2  W,   LPOT      W,    SP        W, 
+        WTCON    W,   TSTMOD1  W,   BTCON     W,                 
+        TSTMOD2  W,   SYM      W,   STPCON    W,    SIOCON    W, 
+        SIODATA  W,   SIOPS    W,   P0        W,    P1        W, 
+        P2       W,   P3       W,   P4        W,    P5        W, 
+        P6       W,   P0CON    W,   P0PUR     W,    P0INT     W, 
+        P0EDGE   W,   P1CON    W,   P1PUR     W,    P1INT     W, 
+        P1EDGE   W,   P2CON    W,   P2PUR     W,    P3CON     W, 
+        P3PUR    W,   P3INT    W,   P3EDGE    W,    P4CONH    W, 
+        P4CONL   W,   P5CONH   W,   P5CONL    W,    P6CON     W, 
+        LMOD     W,   TSTMOD3  W,  $; \ 61 REGISTERS
+
+WORD-LIST BIT_R
+
+        TBCON    W,   TACON    W,   TBDATA    W,    TADATA    W, 
+        TBCNT    W,   TACNT    W,   ADCON     W,    ADDATAH   W, 
+        ADDATAL  W,   OSCCON   W,   CLKCON    W,    FLAGS     W, 
+        INTPND1  W,   INTPND2  W,   LPOT      W,    SP        W, 
+        WTCON    W,   TSTMOD1  W,   BTCON     W,    BTCNT     W, 
+        TSTMOD2  W,   SYM      W,   STPCON    W,    SIOCON     W, 
+        SIODATA  W,   SIOPS    W,   P0        W,    P1        W, 
+        P2       W,   P3       W,   P4        W,    P5        W, 
+        P6       W,   P0CON    W,   P0PUR     W,    P0INT     W, 
+        P0EDGE   W,   P1CON    W,   P1PUR     W,    P1INT     W, 
+        P1EDGE   W,   P2CON    W,   P2PUR     W,    P3CON     W, 
+        P3PUR    W,   P3INT    W,   P3EDGE    W,    P4CONH    W, 
+        P4CONL   W,   P5CONH   W,   P5CONL    W,    P6CON     W, 
+        LMOD     W,   TSTMOD3  W,  $; \ 64 REGISTERS
+
+
+WORD-LIST BIT_W
+
+        TBCON    W,   TACON    W,   TBDATA    W,    TADATA    W, 
+        ADCON    W,   ADDATAH  W,                             
+        ADDATAL  W,   OSCCON   W,   CLKCON    W,    FLAGS     W, 
+        INTPND1  W,   INTPND2  W,   LPOT      W,    SP        W, 
+        WTCON    W,   TSTMOD1  W,   BTCON     W,              
+        TSTMOD2  W,   SYM      W,   STPCON    W,    SIOCON    W, 
+        SIODATA  W,   SIOPS    W,   P0        W,    P1        W, 
+        P2       W,   P3       W,   P4        W,    P5        W, 
+        P6       W,   P0CON    W,   P0PUR     W,    P0INT     W, 
+        P0EDGE   W,   P1CON    W,   P1PUR     W,    P1INT     W, 
+        P1EDGE   W,   P2CON    W,   P2PUR     W,    P3CON     W, 
+        P3PUR    W,   P3INT    W,   P3EDGE    W,    P4CONH    W, 
+        P4CONL   W,   P5CONH   W,   P5CONL    W,    P6CON     W, 
+        LMOD     W,   TSTMOD3  W,  $; \ 61 REGISTERS
+
+WORD-LIST BIT_RW
+
+        TBCON    W,   TACON    W,   TBDATA    W,    TADATA    W, 
+        ADCON    W,   ADDATAH  W, 
+        ADDATAL  W,   OSCCON   W,   CLKCON    W,    FLAGS     W, 
+        INTPND1  W,   INTPND2  W,   LPOT      W,    SP        W, 
+        WTCON    W,   TSTMOD1  W,   BTCON     W,                 
+        TSTMOD2  W,   SYM      W,   STPCON    W,    SIOCON    W, 
+        SIODATA  W,   SIOPS    W,   P0        W,    P1        W, 
+        P2       W,   P3       W,   P4        W,    P5        W, 
+        P6       W,   P0CON    W,   P0PUR     W,    P0INT     W, 
+        P0EDGE   W,   P1CON    W,   P1PUR     W,    P1INT     W, 
+        P1EDGE   W,   P2CON    W,   P2PUR     W,    P3CON     W, 
+        P3PUR    W,   P3INT    W,   P3EDGE    W,    P4CONH    W, 
+        P4CONL   W,   P5CONH   W,   P5CONL    W,    P6CON     W, 
+        LMOD     W,   TSTMOD3  W,  $; \ 61 REGISTERS
+        
+
+INCLUDE 86INST.DEF
+

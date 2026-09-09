@@ -1,0 +1,137 @@
+\ 88C0716.DEF    Copyright SAMSUNG SEMICONDUCTOR INC. 1996-1997, 04/21/98
+\
+\ Initial     : 04/21/98  by j.k.Lee
+
+10000 ROMSIZE
+00 0BF RAMRANGE
+
+\ System Registers, SET1 ( 0D0 ~ 0DF )
+
+0D0 EQUATE TCH     0D1 EQUATE TCL    0D3 EQUATE BTCON
+0D4 EQUATE CLKCON  0D5 EQUATE FLAGS  0D6 EQUATE RP0     0D7 EQUATE RP1
+0D8 EQUATE SPH     0D9 EQUATE SPL    0DA EQUATE IPH     0DB EQUATE IPL
+0DC EQUATE IRQ     0DD EQUATE IMR    0DE EQUATE SYM     0DF EQUATE PP
+
+\ SET1, BANK0 ( 0E0 ~ 0FF )
+
+0E0 EQUATE P0      0E1 EQUATE P1      0E2 EQUATE P2      0E3 EQUATE P3
+0E4 EQUATE P4      0E5 EQUATE P5      0E6 EQUATE P6      0E7 EQUATE P4PND
+0E8 EQUATE P4INT
+0E9 EQUATE SIO     0EA EQUATE SIOCON  0EB EQUATE SIOPND  0EC EQUATE TADATA
+0ED EQUATE TBDATA  0EE EQUATE T0CON   0EF EQUATE TBINT
+0F0 EQUATE P0CON   0F1 EQUATE P1CON   0F2 EQUATE P2CONH  0F3 EQUATE P2CONL
+0F4 EQUATE P3CONH  0F5 EQUATE P3CONL  0F6 EQUATE P4CONH  0F7 EQUATE P4CONL
+0F8 EQUATE TDH     0F9 EQUATE TDL     0FA EQUATE T1CON   0FB EQUATE T1MOD
+0FC EQUATE FTEST   0FD EQUATE BTCNT   0FE EQUATE EMT     0FF EQUATE IPR
+
+\ SET1 , BANK1 ( 0F8 ~ 0F9 )
+
+0F8 EQUATE P5CON    0F9 EQUATE P6CON
+
+END-EQUATES
+
+WORD-LIST SYSREG_R
+        TCH     W,  TCL     W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IRQ     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W,
+        P4      W,  P5      W,  P6      W,  P4PND   W,  P4INT   W,
+        SIO     W,
+        SIOCON  W,  SIOPND  W,  TADATA  W,  TBDATA  W,  
+        T0CON   W,  P0CON   W,
+        P1CON   W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        P4CONH  W,  P4CONL  W,  TDH     W,  TDL     W,  T1CON   W,
+        T1MOD   W,  FTEST   W,  BTCNT   W,  EMT     W,  IPR     W,  
+        P5CON   W,  P6CON   W,  $;
+
+WORD-LIST SYSREG_W
+        TCH     W,  TCL     W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W,
+        P4      W,  P5      W,  P6      W,  P4PND   W,  P4INT   W,
+        SIO     W,
+        SIOCON  W,  SIOPND  W,  TADATA  W,  TBDATA  W,  
+        T0CON   W,  TBINT   W,  P0CON   W,
+        P1CON   W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        P4CONH  W,  P4CONL  W,  TDH     W,  TDL     W,  T1CON   W,
+        T1MOD   W,  FTEST   W,  BTCNT   W,  EMT     W,  IPR     W, 
+        P5CON   W,  P6CON   W,  $;
+
+
+WORD-LIST SYSREG_RW
+        TCH     W,  TCL     W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W,
+        P4      W,  P5      W,  P6      W,  P4PND   W,  P4INT   W,
+        SIO     W,
+        SIOCON  W,  SIOPND  W,  TADATA  W,  TBDATA  W,  
+        T0CON   W,  P0CON   W,
+        P1CON   W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        P4CONH  W,  P4CONL  W,  TDH     W,  TDL     W,  T1CON   W,
+        T1MOD   W,  FTEST   W,  BTCNT   W,  EMT     W,  IPR     W, 
+        P5CON   W,  P6CON   W,  $;
+
+WORD-LIST BIT_R
+        TCH     W,  TCL     W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IRQ     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W,
+        P4      W,  P5      W,  P6      W,  P4PND   W,  P4INT   W,
+        SIO     W,
+        SIOCON  W,  SIOPND  W,  TADATA  W,  TBDATA  W,  
+        T0CON   W,  P0CON   W,
+        P1CON   W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        P4CONH  W,  P4CONL  W,  TDH     W,  TDL     W,  T1CON   W,
+        T1MOD   W,  FTEST   W,  BTCNT   W,  EMT     W,  IPR     W,  
+        P5CON   W,  P6CON   W,  $;
+
+WORD-LIST BIT_W
+        TCH     W,  TCL     W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W,
+        P4      W,  P5      W,  P6      W,  P4PND   W,  P4INT   W,
+        SIO     W,
+        SIOCON  W,  SIOPND  W,  TADATA  W,  TBDATA  W,  
+        T0CON   W,  TBINT   W,  P0CON   W,
+        P1CON   W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        P4CONH  W,  P4CONL  W,  TDH     W,  TDL     W,  T1CON   W,
+        T1MOD   W,  FTEST   W,  BTCNT   W,  EMT     W,  IPR     W, 
+        P5CON   W,  P6CON   W,  $;
+
+WORD-LIST BIT_RW
+        TCH     W,  TCL     W,  BTCON   W,  CLKCON  W,
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P3      W,
+        P4      W,  P5      W,  P6      W,  P4PND   W,  P4INT   W,
+        SIO     W,
+        SIOCON  W,  SIOPND  W,  TADATA  W,  TBDATA  W,  
+        T0CON   W,  P0CON   W,
+        P1CON   W,  P2CONH  W,  P2CONL  W,  P3CONH  W,  P3CONL  W,
+        P4CONH  W,  P4CONL  W,  TDH     W,  TDL     W,  T1CON   W,
+        T1MOD   W,  FTEST   W,  BTCNT   W,  EMT     W,  IPR     W, 
+        P5CON   W,  P6CON   W,  $;
+
+\ Bit Equates
+\
+\ 0D5 0 BIT-EQUATE BA     0D5 1 BIT-EQUATE FIS      0D5 2 BIT-EQUATE H
+\ 0D5 3 BIT-EQUATE D      0D5 4 BIT-EQUATE V        0D5 5 BIT-EQUATE S
+\ 0D5 6 BIT-EQUATE Z      0D5 7 BIT-EQUATE C        0EA 0 BIT-EQUATE TIE
+\ 0E7 0 BIT-EQUATE BTIE
+\ 0EA 1 BIT-EQUATE RIE    0EA 2 BIT-EQUATE RB8      0EA 3 BIT-EQUATE TB8
+\ 0EA 4 BIT-EQUATE RE     0EA 5 BIT-EQUATE MCE      0EA 6 BIT-EQUATE MS0
+\ 0EA 7 BIT-EQUATE MS1    0EB 0 BIT-EQUATE TIP      0EB 1 BIT-EQUATE TIP
+\ 0EE 2 BIT-EQUATE EAPWM  0EE 1 BIT-EQUATE TAIP     0EE 2 BIT-EQUATE ETAI
+\ 0EE 3 BIT-EQUATE TCS    0EE 4 BIT-EQUATE TPS0     0EE 5 BIT-EQUATE TPS1
+\ 0EE 6 BIT-EQUATE TPS2   0EE 7 BIT-EQUATE TPS3     0EF 0 BIT-EQUATE EBPWM
+\ 0FA 0 BIT-EQUATE TCE    0FA 1 BIT-EQUATE TDE      0FA 2 BIT-EQUATE TCIE
+\ 0FA 3 BIT-EQUATE TDIE   0FA 4 BIT-EQUATE TCIP     0FA 5 BIT-EQUATE TDIP
+\ 0FA 7 BIT-EQUATE BSEL   0FB 0 BIT-EQUATE TCM0     0FB 1 BIT-EQUATE TCM1
+\ 0FB 2 BIT-EQUATE TCC    0FB 3 BIT-EQUATE GCE      0FB 4 BIT-EQUATE TDM0
+\ 0FB 5 BIT-EQUATE TDM1   0FB 6 BIT-EQUATE TDC      0FB 7 BIT-EQUATE GDE
+\ END-EQUATES
+
+INCLUDE 88INST.DEF

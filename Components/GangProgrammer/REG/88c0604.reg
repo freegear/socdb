@@ -1,0 +1,135 @@
+; 88C0604.REG  Copyright (c) 1996 SAMSUNG ELECTRONICS CO.
+	
+	.list   off
+
+;       88c0604 system register
+;       96/11/01 by h.j.cho Revision 0
+	
+	.romsize        1000h
+	
+	.ram_range      00h, 0C0h
+
+;       System Registers
+FLAGS:          .reg    0D5h
+RP0:            .reg    0D6h
+RP1:            .reg    0D7h
+SPH:            .reg    0D8h
+SPL:            .reg    0D9h
+IPH:            .reg    0DAh
+IPL:            .reg    0DBh
+IRQ:            .reg    0DCh,r
+IMR:            .reg    0DDh
+SYM:            .reg    0DEh
+PP:             .reg    0DFh
+;       Set 1, Bank 0
+P0:             .reg    0E0h
+P1:             .reg    0E1h
+P2:             .reg    0E2h
+P0CON:          .reg    0E3h
+P1CON:          .reg    0E4h
+P2CONH:         .reg    0E5h
+P2CONL:         .reg    0E6h
+P2INT:          .reg    0E7h
+P2PND:          .reg    0E8h
+;
+TADATA:         .reg    0ECh,w
+;
+TACON:          .reg    0EEh
+;
+EMT:            .reg    0FEh
+IPR:            .reg    0FFh
+;
+;       Set 1, Bank 1
+P3:             .reg    0E0h
+;
+P4:             .reg    0E2h
+P3CON:          .reg    0E3h
+;
+P4CON:          .reg    0E6h
+P4INT:          .reg    0E7h
+P4PND:          .reg    0E8h
+;
+;       Bit equates
+;       flags
+;C:             .bit    FLAGS.7
+;Z:             .bit    FLAGS.6
+;S:             .bit    FLAGS.5
+;V:             .bit    FLAGS.4
+;D:             .bit    FLAGS.3
+;H:             .bit    FLAGS.2
+;FIS:           .bit    FLAGS.1
+;BA:            .bit    FLAGS.0
+;;      tacon
+;TPS3:          .bit    TACON.7,w
+;TPS2:          .bit    TACON.6,w
+;TPS1:          .bit    TACON.5,w
+;TPS0:          .bit    TACON.4,w
+;TACLR:         .bit    TACON.3,w
+;ETAI:          .bit    TACON.2,w
+;TAIP:          .bit    TACON.1
+;TA:            .bit    TACON.0,w
+
+;       System Registers
+flags:          .reg    0d5h
+rp0:            .reg    0d6h
+rp1:            .reg    0d7h
+sph:            .reg    0d8h
+spl:            .reg    0d9h
+iph:            .reg    0dah
+ipl:            .reg    0dbh
+irq:            .reg    0dch,r
+imr:            .reg    0ddh
+sym:            .reg    0deh
+pp:             .reg    0dfh
+;       Set 1, Bank 0
+p0:             .reg    0e0h
+p1:             .reg    0e1h
+p2:             .reg    0e2h
+p0con:          .reg    0e3h
+p1con:          .reg    0e4h
+p2conh:         .reg    0e5h
+p2conl:         .reg    0e6h
+p2int:          .reg    0e7h
+p2pnd:          .reg    0e8h
+;
+tadata:         .reg    0ech,w
+;
+tacon:          .reg    0eeh
+;
+emt:            .reg    0feh
+ipr:            .reg    0ffh
+;
+;       Set 1, Bank 1
+p3:             .reg    0e0h
+;
+p4:             .reg    0e2h
+p3con:          .reg    0e3h
+;
+p4con:          .reg    0e6h
+p4int:          .reg    0e7h
+p4pnd:          .reg    0e8h
+;
+;       Bit equates
+;       flags
+;c:             .bit    flags.7
+;z:             .bit    flags.6
+;s:             .bit    flags.5
+;v:             .bit    flags.4
+;d:             .bit    flags.3
+;h:             .bit    flags.2
+;fis:           .bit    flags.1
+;ba:            .bit    flags.0
+;;      tacon
+;tps3:          .bit    tacon.7,w
+;tps2:          .bit    tacon.6,w
+;tps1:          .bit    tacon.5,w
+;tps0:          .bit    tacon.4,w
+;taclr:         .bit    tacon.3,w
+;etai:          .bit    tacon.2,w
+;taip:          .bit    tacon.1
+;ta:            .bit    tacon.0,w
+;;
+;
+; END OF 88C0604.REG
+	.list   on
+

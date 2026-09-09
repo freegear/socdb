@@ -1,0 +1,176 @@
+; KS88C4616.REG  Copyright (c) 1996 Samsung Electronic Co.
+
+	.list   off
+
+;       KS88C4616 system register
+;       98/08/10 by j.k.lee Revision 0
+
+	.romsize        4000h
+
+	.ram_range      00h, 0C0h
+
+;       System Registers
+T0CNT:          .reg    0d0h,r
+T0DATA:         .reg    0d1h
+T0CON:          .reg    0d2h
+BTCON:          .reg    0d3h
+CLKCON:         .reg    0d4h
+FLAGS:          .reg    0d5h
+RP0:            .reg    0d6h
+RP1:            .reg    0d7h
+SPH:            .reg    0d8h
+SPL:            .reg    0d9h
+IPH:            .reg    0dah
+IPL:            .reg    0dbh
+IRQ:            .reg    0dch,r
+IMR:            .reg    0ddh
+SYM:            .reg    0deh
+PP:             .reg    0dfh
+
+P0:             .reg    0e0h
+P1:             .reg    0e1h
+P2:             .reg    0e2h
+P3:             .reg    0e3h
+P4:             .reg    0e4h
+P5:             .reg    0e5h
+P6:             .reg    0e6h
+P0PUR:          .reg    0e7h
+P0CONH:         .reg    0e8h
+P0CONL:         .reg    0e9h
+P1CONH:         .reg    0eAh
+P1CONL:         .reg    0eBh
+P1PUR:          .reg    0eCh
+P2PUR:          .reg    0eDh
+P2CONH:         .reg    0eeh
+P2CONL:         .reg    0efh
+P3CONH:		.reg	0f0h
+P3CONL:         .reg    0f1h
+P4CONH:         .reg    0f2h
+P4CONL:         .reg    0f3h
+P4INT:          .reg	0f4h
+P4PND:          .reg    0f5h
+P4PUR:          .reg    0f6h
+P6PUR:		.reg	0f7h
+P5CONH:		.reg	0f8h
+P5CONL:         .reg    0f9h
+T1CON:          .reg    0fAh
+T1MOD:          .reg	0fBh
+FTEST:          .reg    0fCh
+BTCNT:          .reg    0fDh,r
+EMT:            .reg    0feh
+IPR:            .reg    0ffh
+
+PWM0:           .reg    0e0h
+PWM0EX:         .reg    0e1h
+PWM1:           .reg    0e2h
+PWM1EX:         .reg    0e3h
+PWMCON:         .reg    0e4h
+CAPA:           .reg    0e5h,r
+PWMPS:          .reg    0e6h
+T2CON:          .reg    0e7h
+T2CNT:          .reg    0e8h,r
+T2DATA:         .reg    0e9h
+ZCMOD:          .reg    0eah
+BUZPS:          .reg    0ebh
+P6CONH:         .reg    0eeh
+P6CONL:         .reg    0efh
+TCH:            .reg    0f0h
+TCL:            .reg    0f1h
+TDH:            .reg    0f2h
+TDL:            .reg    0f3h
+ADCON:		.reg	0f7h
+ADDATAH:	.reg	0f8h,r
+ADDATAL:        .reg    0f9h,r
+UARTDATA:       .reg    0fAh
+UARTCON:        .reg	0fBh
+UARTPND:        .reg    0fCh
+SIODATA:        .reg    0fDh
+SIOCON:         .reg    0feh
+SIOPS:          .reg    0ffh
+
+;       System Registers
+
+t0cnt:          .reg    0d0h,r
+t0data:         .reg    0d1h
+t0con:          .reg    0d2h
+btcon:          .reg    0d3h
+clkcon:         .reg    0d4h
+flags:          .reg    0d5h
+rp0:            .reg    0d6h
+rp1:            .reg    0d7h
+sph:            .reg    0d8h
+spl:            .reg    0d9h
+iph:            .reg    0dah
+ipl:            .reg    0dbh
+irq:            .reg    0dch,r
+imr:            .reg    0ddh
+sym:            .reg    0deh
+pp:             .reg    0dfh
+
+p0:             .reg    0e0h
+p1:             .reg    0e1h
+p2:             .reg    0e2h
+p3:             .reg    0e3h
+p4:             .reg    0e4h
+p5:             .reg    0e5h
+p6:             .reg    0e6h
+p0pur:          .reg    0e7h
+p0conh:         .reg    0e8h
+p0conl:         .reg    0e9h
+p1conh:         .reg    0eah
+p1conl:         .reg    0ebh
+p1pur:          .reg    0ech
+p2pur:          .reg    0edh
+p2conh:         .reg    0eeh
+p2conl:         .reg    0efh
+p3conh:		.reg	0f0h
+p3conl:         .reg    0f1h
+p4conh:         .reg    0f2h
+p4conl:         .reg    0f3h
+p4int:          .reg	0f4h
+p4pnd:          .reg    0f5h
+p4pur:          .reg    0f6h
+p6pur:		.reg	0f7h
+p5conh:		.reg	0f8h
+p5conl:         .reg    0f9h
+t1con:          .reg    0fah
+t1mod:          .reg	0fbh
+ftest:          .reg    0fch
+btcnt:          .reg    0fdh,r
+emt:            .reg    0feh
+ipr:            .reg    0ffh
+
+pwm0:           .reg    0e0h
+pwm0ex:         .reg    0e1h
+pwm1:           .reg    0e2h
+pwm1ex:         .reg    0e3h
+pwmcon:         .reg    0e4h
+capa:           .reg    0e5h,r
+pwmps:          .reg    0e6h
+t2con:          .reg    0e7h
+t2cnt:          .reg    0e8h,r
+t2data:         .reg    0e9h
+zcmod:          .reg    0eah
+buzps:          .reg    0ebh
+p6conh:         .reg    0eeh
+p6conl:         .reg    0efh
+tch:            .reg    0f0h
+tcl:            .reg    0f1h
+tdh:            .reg    0f2h
+tdl:            .reg    0f3h
+adcon:		.reg	0f7h
+addatah:	.reg	0f8h,r
+addatal:        .reg    0f9h,r
+uartdata:       .reg    0fah
+uartcon:        .reg	0fbh
+uartpnd:        .reg    0fch
+siodata:        .reg    0fdh
+siocon:         .reg    0feh
+siops:          .reg    0ffh
+
+;
+; END OF 88C4616.REG
+	.list   on
+
+
+

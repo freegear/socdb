@@ -1,0 +1,170 @@
+; S3C830A.REG  Copyright (c) 2001 SAMSUNG ELECTRONICS CO.
+	.list	off
+;      TEST REVISION  2001.06.11 BY K.M.CHOI
+
+	.romsize	0C000h
+	.ram_range	00h,0C0h
+;	System Registers
+
+BTCON:     .REG    0D3H
+CLKCON:    .REG    0D4H
+FLAGS:	   .REG	   0D5h
+RP0:	   .REG	   0D6h
+RP1:	   .REG	   0D7h
+SPH:       .REG    0D8h
+SPL:	   .REG	   0D9h
+IPH:	   .REG	   0DAh
+IPL:	   .REG	   0DBh
+IRQ:	   .REG	   0DCh,r
+IMR:	   .REG    0DDh
+SYM:	   .REG	   0DEh
+PP:	   .REG	   0DFh
+
+;     Set1, Bank0
+
+T0CNT:      .REG    0E0H,r
+T0DATA:     .REG    0E1H
+T0CON:      .REG    0E2H
+T1CNT:      .REG    0E3H,r
+T1DATA:     .REG    0E4H
+T1CON:      .REG    0E5H
+INTPND:     .REG    0E6H
+WTCON:      .REG    0E8H
+SIO0CON:    .REG    0E9H
+SIO0DATA:   .REG    0EAH
+SIO0PS:     .REG    0EBH
+SIO1CON:    .REG    0ECH
+SIO1DATA:   .REG    0EDH
+SIO1PS:     .REG    0EEH
+ADCON:      .REG    0EFH
+ADDATA:     .REG    0F0H,r
+LCON: 	    .REG    0F1H
+LMOD:       .REG    0F2H
+IFMOD:      .REG    0F3H
+IFCNT1:     .REG    0F4H,r
+IFCNT0:     .REG    0F5H,r
+PLLD1:      .REG    0F6H
+PLLD0:      .REG    0F7H
+PLLMOD:     .REG    0F8H
+PLLREF:     .REG    0F9H
+STPCON:     .REG    0FBH
+BTCNT:      .REG    0FDH
+IPR:        .REG    0FFH
+
+;  Set1  ,Bank1
+
+P0CONH:     .REG    0E0H
+P0CONL:     .REG    0E1H
+P0PUR:      .REG    0E2H
+P1CONH:     .REG    0E4H
+P1CONL:     .REG    0E5H
+P1INT:      .REG    0E6H
+P1PND:      .REG    0E7H
+P2CONH:     .REG    0E8H
+P2CONL:     .REG    0E9H
+P3CONH:     .REG    0EAH
+P3CONL:     .REG    0EBH
+P3PUR:      .REG    0ECH
+PG0CON:     .REG    0EDH
+PG1CON:     .REG    0EEH
+PG2CON:     .REG    0EFH
+P0:         .REG    0F0H
+P1:         .REG    0F1H
+P2:         .REG    0F2H
+P3:         .REG    0F3H
+P4:         .REG    0F4H
+P5:         .REG    0F5H
+P6:         .REG    0F6H
+P7:         .REG    0F7H
+P8:         .REG    0F8H
+T2CNTH:	    .REG    0FAH,r
+T2CNTL      .REG    0FBH,r
+T2DATAH:    .REG    0FCH
+T2DATAL:    .REG    0FDH
+T2CON:      .REG    0FEH
+
+
+;	System Registers
+
+btcon:     .reg    0d3h
+clkcon:    .reg    0d4h
+flags:	   .reg	   0d5h
+rp0:	   .reg	   0d6h
+rp1:	   .reg	   0d7h
+sph:       .reg    0d8h
+spl:	   .reg	   0d9h
+iph:	   .reg	   0dah
+ipl:	   .reg	   0dbh
+irq:	   .reg	   0dch,r
+imr:	   .reg    0ddh
+sym:	   .reg	   0deh
+pp:	   .reg	   0dfh
+
+;     set1, bank0
+
+t0cnt:      .reg    0e0h,r
+t0data:     .reg    0e1h
+t0con:      .reg    0e2h
+t1cnt:      .reg    0e3h,r
+t1data:     .reg    0e4h
+t1con:      .reg    0e5h
+intpnd:     .reg    0e6h
+wtcon:      .reg    0e8h
+sio0con:    .reg    0e9h
+sio0data:   .reg    0eah
+sio0ps:     .reg    0ebh
+sio1con:    .reg    0ech
+sio1data:   .reg    0edh
+sio1ps:     .reg    0eeh
+adcon:      .reg    0efh
+addata:     .reg    0f0h,r
+lcon: 	    .reg    0f1h
+lmod:       .reg    0f2h
+ifmod:      .reg    0f3h
+ifcnt1:     .reg    0f4h,r
+ifcnt0:     .reg    0f5h,r
+plld1:      .reg    0f6h
+plld0:      .reg    0f7h
+pllmod:     .reg    0f8h
+pllref:     .reg    0f9h
+stpcon:     .reg    0fbh
+btcnt:      .reg    0fdh
+ipr:        .reg    0ffh
+
+
+;  set1  ,bank1
+
+p0conh:     .reg    0e0h
+p0conl:     .reg    0e1h
+p0pur:      .reg    0e2h
+p1conh:     .reg    0e4h
+p1conl:     .reg    0e5h
+p1int:      .reg    0e6h
+p1pnd:      .reg    0e7h
+p2conh:     .reg    0e8h
+p2conl:     .reg    0e9h
+p3conh:     .reg    0eah
+p3conl:     .reg    0ebh
+p3pur:      .reg    0ech
+pg0con:     .reg    0edh
+pg1con:     .reg    0eeh
+pg2con:     .reg    0efh
+p0:         .reg    0f0h
+p1:         .reg    0f1h
+p2:         .reg    0f2h
+p3:         .reg    0f3h
+p4:         .reg    0f4h
+p5:         .reg    0f5h
+p6:         .reg    0f6h
+p7:         .reg    0f7h
+p8:         .reg    0f8h
+t2cnth:	    .reg    0fah,r
+t2cntl      .reg    0fbh,r
+t2datah:    .reg    0fch
+t2datal:    .reg    0fdh
+t2con:      .reg    0feh
+
+
+;
+; END OF S3C83A.REG
+	.list	on

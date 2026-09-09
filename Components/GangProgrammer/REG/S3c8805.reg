@@ -1,0 +1,211 @@
+; 88C8016.REG  Copyright (c) 1996 SAMSUNG ELECTRONICS CO.
+
+	.list    off
+
+;       88c8016 system register
+;       96/11/01 by h.j.cho Revision 0
+
+	.romsize        4000h
+	.ram_range      040h, 0C0h
+
+;       System Registers
+FLAGS:          .reg    0D5h
+RP0:            .reg    0D6h
+RP1:            .reg    0D7h
+SPH:            .reg    0D8h
+SPL:            .reg    0D9h
+IPH:            .reg    0DAh
+IPL:            .reg    0DBh
+IRQ:            .reg    0DCh,r
+IMR:            .reg    0DDh
+SYM:            .reg    0DEh
+PP:             .reg    0DFh
+;
+;       Set 1, Bank 0
+P0:             .reg    0E0h
+P1:             .reg    0E1h
+P2:             .reg    0E2h
+P0CON:          .reg    0E3h
+P1CON:          .reg    0E4h
+P2CONH:         .reg    0E5h
+P2CONL:         .reg    0E6h
+P2PND:          .reg    0E8h
+P2INT:          .reg    0E7h
+SIO:            .reg    0E9h
+SIOCON:         .reg    0EAh,w
+SIOPS:          .reg    0EBh,w
+TADATA:         .reg    0ECh,w
+TBDATA:         .reg    0EDh,w
+T0CON:          .reg    0EEh
+TBINT:          .reg    0EFh,w
+BTCON:          .reg    0F0h
+;
+EMT:            .reg    0FEh
+IPR:            .reg    0FFh
+;
+;       Set 1, Bank 1
+P3:             .reg    0E0h
+;
+P4:             .reg    0E2h
+P3CON:          .reg    0E3h
+;
+P4CONH:         .reg    0E5h
+P4CONL:         .reg    0E6h
+P4INT:          .reg    0E7h
+P4PND:          .reg    0E8h
+;
+;       Page 0 (prime area)
+T2M4PS:         .reg    000h,w
+T2M5CON:        .reg    001h,w
+T2M5H:          .reg    002h,w
+T2M5L:          .reg    003h,w
+T2M5OUT:        .reg    004h,w
+T2M3PS:         .reg    005h,w
+T2M5PG:         .reg    006h,w
+T1CON:          .reg    007h,w
+T1PS:           .reg    008h,w
+T1M0CON:        .reg    009h,w
+T1M0H:          .reg    00Ah
+T1M0L:          .reg    00Bh
+T1M0TGL:        .reg    00Ch,w
+T1M1OUT:        .reg    00Dh,w
+T1M1CON:        .reg    00Eh,w
+T1M1H:          .reg    00Fh,w
+T1M1L:          .reg    010h,w
+T1M1PG:         .reg    011h,w
+T2EX:           .reg    012h,r
+T2CON:          .reg    013h,w
+T2M0PS:         .reg    014h,w
+T2M1PS:         .reg    015h,w
+T2M2PS:         .reg    016h,w
+T2M0CON:        .reg    017h,w
+T2M1CON:        .reg    018h,w
+T2M2CON:        .reg    019h,w
+T2M0H:          .reg    01Ah,r
+T2M0L:          .reg    01Bh,r
+T2M1H:          .reg    01Ch,r
+T2M1L:          .reg    01Dh,r
+T2M2H:          .reg    01Eh,r
+T2M2L:          .reg    01Fh,r
+T2M3CON:        .reg    020h,w
+T2M3H:          .reg    021h
+T2M3L:          .reg    022h
+T2M3TGL:        .reg    023h,w
+T2M4CON:        .reg    024h,w
+T2M4H:          .reg    025h
+T2M4L:          .reg    026h
+T1M0PS:         .reg    027h,w
+ADCON:          .reg    028h
+P5:             .reg    029h,r
+ADIN:           .reg    P5,r
+ADDATA:         .reg    02Ah,r
+;
+PWM0:           .reg    02Ch,w
+PWM0EX:         .reg    02Dh,w
+PWM1:           .reg    02Eh,w
+PWM1EX:         .reg    02Fh,w
+;
+PWMCON:         .reg    03Ch,w
+;
+
+;       System Registers
+flags:          .reg    0d5h
+rp0:            .reg    0d6h
+rp1:            .reg    0d7h
+sph:            .reg    0d8h
+spl:            .reg    0d9h
+iph:            .reg    0dah
+ipl:            .reg    0dbh
+irq:            .reg    0dch,r
+imr:            .reg    0ddh
+sym:            .reg    0deh
+pp:             .reg    0dfh
+;
+;       Set 1, Bank 0
+p0:             .reg    0e0h
+p1:             .reg    0e1h
+p2:             .reg    0e2h
+p0con:          .reg    0e3h
+p1con:          .reg    0e4h
+p2conh:         .reg    0e5h
+p2conl:         .reg    0e6h
+p2pnd:          .reg    0e8h
+p2int:          .reg    0e7h
+sio:            .reg    0e9h
+siocon:         .reg    0eah,w
+siops:          .reg    0ebh,w
+tadata:         .reg    0ech,w
+tbdata:         .reg    0edh,w
+t0con:          .reg    0eeh
+tbint:          .reg    0efh,w
+btcon:          .reg    0f0h
+;
+emt:            .reg    0feh
+ipr:            .reg    0ffh
+;
+;       Set 1, Bank 1
+p3:             .reg    0e0h
+;
+p4:             .reg    0e2h
+p3con:          .reg    0e3h
+;
+p4conh:         .reg    0e5h
+p4conl:         .reg    0e6h
+p4int:          .reg    0e7h
+p4pnd:          .reg    0e8h
+;
+;       Page 0 (prime area)
+t2m4ps:         .reg    000h,w
+t2m5con:        .reg    001h,w
+t2m5h:          .reg    002h,w
+t2m5l:          .reg    003h,w
+t2m5out:        .reg    004h,w
+t2m3ps:         .reg    005h,w
+t2m5pg:         .reg    006h,w
+t1con:          .reg    007h,w
+t1ps:           .reg    008h,w
+t1m0con:        .reg    009h,w
+t1m0h:          .reg    00ah
+t1m0l:          .reg    00bh
+t1m0tgl:        .reg    00ch,w
+t1m1out:        .reg    00dh,w
+t1m1con:        .reg    00eh,w
+t1m1h:          .reg    00fh,w
+t1m1l:          .reg    010h,w
+t1m1pg:         .reg    011h,w
+t2ex:           .reg    012h,r
+t2con:          .reg    013h,w
+t2m0ps:         .reg    014h,w
+t2m1ps:         .reg    015h,w
+t2m2ps:         .reg    016h,w
+t2m0con:        .reg    017h,w
+t2m1con:        .reg    018h,w
+t2m2con:        .reg    019h,w
+t2m0h:          .reg    01ah,r
+t2m0l:          .reg    01bh,r
+t2m1h:          .reg    01ch,r
+t2m1l:          .reg    01dh,r
+t2m2h:          .reg    01eh,r
+t2m2l:          .reg    01fh,r
+t2m3con:        .reg    020h,w
+t2m3h:          .reg    021h
+t2m3l:          .reg    022h
+t2m3tgl:        .reg    023h,w
+t2m4con:        .reg    024h,w
+t2m4h:          .reg    025h
+t2m4l:          .reg    026h
+t1m0ps:         .reg    027h,w
+adcon:          .reg    028h
+p5:             .reg    029h,r
+adin:           .reg    p5,r
+addata:         .reg    02ah,r
+;
+pwm0:           .reg    02ch,w
+pwm0ex:         .reg    02dh,w
+pwm1:           .reg    02eh,w
+pwm1ex:         .reg    02fh,w
+;
+pwmcon:         .reg    03ch,w
+;
+; END OF 88C8016.REG
+	.list   on

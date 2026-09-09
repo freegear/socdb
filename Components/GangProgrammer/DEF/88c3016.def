@@ -1,0 +1,122 @@
+\ 88c3016.rdf    Copyright SAMSUNG SEMICONDUCTOR INC. 1990-1992, 05/14/92
+\
+\ Initial : 03/12/93  by s.h.Lee
+\ 2nd Revision: 11/11/93 sjlee
+
+4000 ROMSIZE
+00 0BF RAMRANGE
+
+\ System Registers, Set1 (D0 ~DF)
+
+0D5 EQUATE FLAGS       0D6 EQUATE RP0
+0D7 EQUATE RP1         0D8 EQUATE SPH
+0D9 EQUATE SPL         0DA EQUATE IPH
+0DB EQUATE IPL         0DC EQUATE IRQ
+0DD EQUATE IMR         0DE EQUATE SYM
+0DF EQUATE PP
+
+\ System Registers, Set1 (FC ~FF)
+
+0FE EQUATE EMT     0FF EQUATE IPR
+
+\ System Registers, Set1, Bank0 (E0 ~FB)
+
+0E0 EQUATE P0      0E1 EQUATE P1      0E2 EQUATE P2      0E3 EQUATE P0CON
+0E4 EQUATE P1CON   0E5 EQUATE P2CONH  0E6 EQUATE P2CONL  0E7 EQUATE P2INT
+0E8 EQUATE P2PND   0E9 EQUATE SIO     0EA EQUATE SIOCON  0EB EQUATE SIOPS
+0EC EQUATE TADATA  0ED EQUATE TBDATA  0EE EQUATE T0CON   0EF EQUATE TBINT
+0F0 EQUATE BTCON
+
+\ System Registers, Set1, Bank1 (E0 ~FB)
+
+0E0 EQUATE P3          0E3 EQUATE P3CON
+
+\ Peripherals, I/O  Set2, Page0 (2B ~ 3F)
+
+02B EQUATE ADCON   02C EQUATE PWM0    02D EQUATE PWM0EX  030 EQUATE PWM10
+031 EQUATE PWM11   032 EQUATE PWM12   033 EQUATE PWM13   034 EQUATE PWM14
+035 EQUATE PWM15   036 EQUATE PWM16   037 EQUATE PWM17   038 EQUATE PWM18
+039 EQUATE PWM19   03A EQUATE PWM110  03B EQUATE PWM111  03C EQUATE PWMCON
+03D EQUATE CAPA    03E EQUATE CAPBH   03F EQUATE CAPBL
+\ OSD Control, Set2, Page1 (EF ~ F7)
+
+0F0 EQUATE CHACON  0F1 EQUATE FADECON 0F2 EQUATE ROWCON  0F3 EQUATE CLMCON
+0F4 EQUATE COLCON  0F5 EQUATE DSPCON  0F6 EQUATE COLBUF
+
+\ Bit Equates
+
+0D5 0 BIT-EQUATE BA     0D5 1 BIT-EQUATE FIS      0D5 2 BIT-EQUATE H
+0D5 3 BIT-EQUATE D      0D5 4 BIT-EQUATE V        0D5 5 BIT-EQUATE S
+0D5 6 BIT-EQUATE Z      0D5 7 BIT-EQUATE C        0EA 0 BIT-EQUATE ESIOI
+0EA 1 BIT-EQUATE SDIO   0EA 2 BIT-EQUATE SOP0     0EA 3 BIT-EQUATE SOP1
+0EA 4 BIT-EQUATE EGS    0EB 0 BIT-EQUATE PS0      0EB 1 BIT-EQUATE PS1
+0EB 2 BIT-EQUATE PS3    0EB 3 BIT-EQUATE PS4      0EB 4 BIT-EQUATE PS4
+0EB 5 BIT-EQUATE SIAK   0EB 6 BIT-EQUATE SCIO     0EE 2 BIT-EQUATE EAPWM
+0EE 1 BIT-EQUATE TAIP   0EE 2 BIT-EQUATE ETAI     0EE 3 BIT-EQUATE TCS
+0EE 4 BIT-EQUATE TPS0   0EE 5 BIT-EQUATE TPS1     0EE 6 BIT-EQUATE TPS2
+0EE 7 BIT-EQUATE TPS3   0EF 0 BIT-EQUATE EBPWM
+
+END-EQUATES
+
+WORD-LIST SYSREG_R
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  PP      W,  SYM     W,
+        EMT     W,  IPR     W,  P0CON   W,  P3CON   W,  P1CON   W,
+        P2CONH  W,  P2CONL  W,  P2INT   W,  BTCON   W,  P0      W,
+        P1      W,  P2      W,  P3      W,  SIO     W,  T0CON   W,
+        IRQ     W,  P2PND   W,  $;
+
+WORD-LIST SYSREG_W
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  PP      W,  SYM     W,
+        EMT     W,  IPR     W,  P0CON   W,  P3CON   W,  P1CON   W,
+        P2CONH  W,  P2CONL  W,  P2INT   W,  BTCON   W,  P0      W,
+        P1      W,  P2      W,  P3      W,  SIO     W,  T0CON   W,
+        SIOCON  W,  SIOPS   W,  TBINT   W,  TADATA  W,  TBDATA  W,
+        P2PND   W,  $;
+
+WORD-LIST SYSREG_RW
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  PP      W,  SYM     W,
+        EMT     W,  IPR     W,  P0CON   W,  P3CON   W,  P1CON   W,
+        P2CONH  W,  P2CONL  W,  P2INT   W,  P0      W,
+        P1      W,  P2      W,  P3      W,  SIO     W,  $;
+
+WORD-LIST XREG_RW
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  PP      W,  SYM     W,
+        EMT     W,  IPR     W,  P0CON   W,  P3CON   W,  P1CON   W,
+        P2CONH  W,  P2CONL  W,  P2INT   W,  BTCON   W,  P0      W,
+        P1      W,  P2      W,  P3      W,  SIO     W,  T0CON   W,
+        P2PND   W,  $;
+
+WORD-LIST BIT_RW
+        EMT     W,  FLAGS   W,  IMR     W,  IPL     W,
+        IPH     W,  IPR     W,  P0CON   W,  P1CON   W,  P2CONH  W,
+        P2CONL  W,  P2INT   W,  P3CON   W,  PP      W,  RP0     W,
+        SPH     W,  SPL     W,  SYM     W,
+        P0      W,  P1      W,  P2      W,  P3      W,  $;
+
+WORD-LIST XBIT_RW
+        BTCON   W,  EMT     W,  FLAGS   W,  IMR     W,  IPL     W,
+        IPH     W,  IPR     W,  P0CON   W,  P1CON   W,  P2CONH  W,
+        P2CONL  W,  P2INT   W,  P3CON   W,  PP      W,  RP0     W,
+        SPH     W,  SPL     W,  SYM     W,  T0CON   W,  P2PND   W,
+        P0      W,  P1      W,  P2      W,  P3      W,  $;
+
+WORD-LIST BIT_R
+        BTCON   W,  EMT     W,  FLAGS   W,  IMR     W,  IPL     W,
+        IPH     W,  IPR     W,  P0CON   W,  P1CON   W,  P2CONH  W,
+        P2CONL  W,  P2INT   W,  P3CON   W,  PP      W,  RP0     W,
+        SPH     W,  SPL     W,  SYM     W,  IRQ     W,  P2PND   W,
+        T0CON   W,  P0      W,  P1      W,  P2      W,  P3      W,  $;
+
+WORD-LIST BIT_W
+        BTCON   W,  EMT     W,  FLAGS   W,  IMR     W,  IPL     W,
+        IPH     W,  IPR     W,  P0CON   W,  P1CON   W,  P2CONH  W,
+        P2CONL  W,  P2INT   W,  P3CON   W,  PP      W,  RP0     W,
+        SPH     W,  SPL     W,  SYM     W,  SIOCON  W,  SIOPS   W,
+        TBINT   W,  T0CON   W,  P2PND   W,
+        P0      W,  P1      W,  P2      W,  P3      W,  $;
+
+INCLUDE 88INST.DEF

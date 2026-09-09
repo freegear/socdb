@@ -1,0 +1,163 @@
+; 88C4504.REG  Copyright (c) 1998 SAMSUNG ELECTRONICS CO.
+
+	.list    off
+
+;       88c4504 system register
+;       98/07/23 by j.k.Lee Revision 0
+
+	.romsize        10000h
+
+	.ram_range      00h, 0C0h
+
+;       System Registers
+TACON:          .reg    0D0h
+TBCON:          .reg    0D1h
+TADATA:         .reg    0D2h
+BTCON:          .reg    0D3h
+CLKCON:         .reg    0D4h
+FLAGS:          .reg    0D5h
+RP0:            .reg    0D6h
+RP1:            .reg    0D7h
+SPH:            .reg    0D8h
+SPL:            .reg    0D9h
+IPH:            .reg    0DAh
+IPL:            .reg    0DBh
+IRQ:            .reg    0DCh,r
+IMR:            .reg    0DDh
+SYM:            .reg    0DEh
+PP:             .reg    0DFh
+;
+;       Set 1, Bank 0
+P0:             .reg    0E0h
+P1:             .reg    0E1h
+P2:             .reg    0E2h
+P3:             .reg    0E3h
+P4:             .reg    0E4h
+P5:             .reg    0E5h
+TBDATA:         .reg    0E6h
+P2INT:          .reg    0E7h
+TCCON:          .reg    0E8h
+TDCON:          .reg    0E9h
+TCDATAH:        .reg    0EAh
+TCDATAL:        .reg    0EBh
+TDDATAH:        .reg    0ECh
+TDDATAL:        .reg    0EDh
+TCPND:          .reg    0EEh
+TDPND:          .reg    0EFh
+;
+P0CONH:         .reg    0F0h
+P0CONL:         .reg    0F1h
+P1CONH:         .reg    0F2h
+P1CONL:         .reg    0F3h
+P2CONH:         .reg    0F4h
+P2CONL:         .reg    0F5h
+P3CONH:         .reg    0F6h
+P3CONL:         .reg    0F7h
+P4CONH:         .reg    0F8h
+P4CONL:         .reg    0F9h
+P5CON:          .reg    0FAh
+P2PND:          .reg    0FBh
+TESTMOD:        .reg    0FCh
+BTCNT:          .reg    0FDh,r
+EMT:            .reg    0FEh
+IPR:            .reg    0FFh
+;
+;       Set 1, Bank 1
+TACNT:          .reg    0EAh,r
+TBCNT:          .reg    0EBh,r
+TCCNTH:         .reg    0ECh,r
+TCCNTL:         .reg    0EDh,r
+TDCNTH:         .reg    0EEh,r
+TDCNTL:         .reg    0EFh,r
+SIOCON:         .reg    0F1h
+SIODATA:        .reg    0F2h
+SIOPS:          .reg    0F3h
+ADDATA:         .reg    0F4h,r
+EXTBUS:         .reg    0F5h
+ADCON:          .reg    0F7h
+PWMCON:         .reg    0F9h
+PWM1:           .reg    0FAh
+PWM0:           .reg    0FBh
+CSDATA0:        .reg    0FCh
+CSDATA1:        .reg    0FDh
+CSDATA2:        .reg    0FEh
+CSDATA3:        .reg    0FFh
+;
+
+;       System Registers
+tacon:          .reg    0d0h
+tbcon:          .reg    0d1h
+tadata:         .reg    0d2h
+btcon:          .reg    0d3h
+clkcon:         .reg    0d4h
+flags:          .reg    0d5h
+rp0:            .reg    0d6h
+rp1:            .reg    0d7h
+sph:            .reg    0d8h
+spl:            .reg    0d9h
+iph:            .reg    0dah
+ipl:            .reg    0dbh
+irq:            .reg    0dch,r
+imr:            .reg    0ddh
+sym:            .reg    0deh
+pp:             .reg    0dfh
+;
+;       set 1, bank 0
+p0:             .reg    0e0h
+p1:             .reg    0e1h
+p2:             .reg    0e2h
+p3:             .reg    0e3h
+p4:             .reg    0e4h
+p5:             .reg    0e5h
+tbdata:         .reg    0e6h
+p2int:          .reg    0e7h
+tccon:          .reg    0e8h
+tdcon:          .reg    0e9h
+tcdatah:        .reg    0eah
+tcdatal:        .reg    0ebh
+tddatah:        .reg    0ech
+tddatal:        .reg    0edh
+tcpnd:          .reg    0eeh
+tdpnd:          .reg    0efh
+;
+p0conh:         .reg    0f0h
+p0conl:         .reg    0f1h
+p1conh:         .reg    0f2h
+p1conl:         .reg    0f3h
+p2conh:         .reg    0f4h
+p2conl:         .reg    0f5h
+p3conh:         .reg    0f6h
+p3conl:         .reg    0f7h
+p4conh:         .reg    0f8h
+p4conl:         .reg    0f9h
+p5con:          .reg    0fah
+p2pnd:          .reg    0fbh
+testmod:        .reg    0fch
+btcnt:          .reg    0fdh,r
+emt:            .reg    0feh
+ipr:            .reg    0ffh
+;
+;       set 1, bank 1
+tacnt:          .reg    0eah,r
+tbcnt:          .reg    0ebh,r
+tccnth:         .reg    0ech,r
+tccntl:         .reg    0edh,r
+tdcnth:         .reg    0eeh,r
+tdcntl:         .reg    0efh,r
+siocon:         .reg    0f1h
+siodata:        .reg    0f2h
+siops:          .reg    0f3h
+addata:         .reg    0f4h,r
+extbus:         .reg    0f5h
+adcon:          .reg    0f7h
+pwmcon:         .reg    0f9h
+pwm1:           .reg    0fah
+pwm0:           .reg    0fbh
+csdata0:        .reg    0fch
+csdata1:        .reg    0fdh
+csdata2:        .reg    0feh
+csdata3:        .reg    0ffh
+
+;
+; END OF 88C4504.REG
+	.list   on

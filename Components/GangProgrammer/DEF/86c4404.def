@@ -1,0 +1,97 @@
+\ 86C4404.DEF    Copyright SAMSUNG SEMICONDUCTOR INC. 1996-1998, 08/09/99
+\
+\ Initial     : 8/9/99  by J.K.Lee
+\               
+
+1000 ROMSIZE
+00 0BF RAMRANGE
+
+
+0D0 EQUATE T0CNT   0D1 EQUATE T0DATA 0D2 EQUATE T0CON   
+0D4 EQUATE CLKCON  0D5 EQUATE FLAGS  
+0D9 EQUATE SP      0DB EQUATE MDSREG
+0DC EQUATE BTCON   0DD EQUATE BTCNT  0DE EQUATE FTSTCON 0DF EQUATE SYM
+0E0 EQUATE P0      0E1 EQUATE P1     0E2 EQUATE P2
+0E6 EQUATE P0CONH  0E7 EQUATE P0CONL
+0E8 EQUATE P0PND   0E9 EQUATE P1CON  0EA EQUATE P2CONH  0EB EQUATE P2CONL
+0F2 EQUATE PWMDATA 0F3 EQUATE PWMCON   
+0F4 EQUATE STOPCON 0F7 EQUATE ADCON
+0F8 EQUATE ADDATAH 0F9 EQUATE ADDATAL 
+
+END-EQUATES \ 31 EQUATES
+\ READ ONLY     4
+\ WRITE ONLY    1
+\ READ/WRITE    21
+
+WORD-LIST SYSREG_R
+
+        T0CNT   W,  T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  BTCNT   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CONH  W,
+        P0CONL  W,  P0PND   W,  P1CON   W,  
+        P2CONH  W,  P2CONL  W,  PWMDATA W,
+        PWMCON  W,  STOPCON W,  ADCON   W,  ADDATAH W,
+        ADDATAL W,    
+        $; \ 25 REGISTERS
+
+WORD-LIST SYSREG_W
+        T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  FTSTCON W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CONH  W,
+        P0CONL  W,  P0PND   W,  P1CON   W,  
+        P2CONH  W,  P2CONL  W,  PWMDATA W,
+        PWMCON  W,  STOPCON W,  ADCON   W,     
+        $; \ 22 REGISTERS
+
+WORD-LIST SYSREG_RW
+        T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CONH  W,
+        P0CONL  W,  P0PND   W,  P1CON   W,  
+        P2CONH  W,  P2CONL  W,  PWMDATA W,
+        PWMCON  W,  STOPCON W,  ADCON   W,     
+        $; \ 21 REGISTERS
+
+
+WORD-LIST BIT_R
+         T0CNT   W,  T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  BTCNT   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CONH  W,
+        P0CONL  W,  P0PND   W,  P1CON   W,  
+        P2CONH  W,  P2CONL  W,  PWMDATA W,
+        PWMCON  W,  STOPCON W,  ADCON   W,  ADDATAH W,
+        ADDATAL W,    
+        $; \ 25 REGISTERS
+
+WORD-LIST BIT_W
+        T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  FTSTCON W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CONH  W,
+        P0CONL  W,  P0PND   W,  P1CON   W,  
+        P2CONH  W,  P2CONL  W,  PWMDATA W,
+        PWMCON  W,  STOPCON W,  ADCON   W,     
+        $; \ 22 REGISTERS
+
+
+WORD-LIST BIT_RW
+        T0DATA  W,  T0CON   W, 
+        CLKCON  W,  FLAGS   W,
+        SP      W,  MDSREG  W,  BTCON   W,  SYM     W,  
+        P0      W,
+        P1      W,  P2      W,  P0CONH  W,
+        P0CONL  W,  P0PND   W,  P1CON   W,  
+        P2CONH  W,  P2CONL  W,  PWMDATA W,
+        PWMCON  W,  STOPCON W,  ADCON   W,     
+        $; \ 21 REGISTERS
+
+INCLUDE 86INST.DEF

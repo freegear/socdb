@@ -1,0 +1,615 @@
+\ 57C0302.DEF    Copyright SAMSUNG SEMICONDUCTOR INC. 1990-1992, 02/10/92
+\
+\ Initial Release: 01/15/94    by  W. Y. Chung
+\ 1'st revision: 10/29/97 by K.M. Yi
+\              : Edited most of instruction area
+
+0800 ROMSIZE
+
+\ Various port addresses
+
+0F80 EQUATE  SP                 0F85 EQUATE  BMOD
+0F86 EQUATE  BCNT               0F88 EQUATE  WMOD
+0F90 EQUATE  TMOD0              0F92 EQUATE  XF92
+0F94 EQUATE  TCNT0              0F96 EQUATE  TREF0
+000F EQUATE  @L
+
+\ Mema ports:
+
+0FB0 EQUATE  PSW                0FB2 EQUATE  IPR
+0FB3 EQUATE  PCON
+0FB5 EQUATE  IMOD1              0FB6 EQUATE  IMODK
+0FB8 EQUATE  XFB8               0FBA EQUATE  XFBA
+0FBC EQUATE  XFBC               0FBD EQUATE  XFBD
+0FBE EQUATE  XFBE               0FBF EQUATE  XFBF
+
+\ Memb ports:
+
+0FC0 EQUATE  BSC0               0FC1 EQUATE  BSC1
+0FC2 EQUATE  BSC2               0FC3 EQUATE  BSC3
+0FD0 EQUATE  CLMOD              0FD4 EQUATE  CMPREG
+0FD6 EQUATE  CMOD               0FDA EQUATE  PNE
+0FDC EQUATE  PUMOD1             0FDE EQUATE  PUMOD2
+0FE0 EQUATE  SMOD               0FE2 EQUATE  P1MOD
+0FE4 EQUATE  SBUF               0FE8 EQUATE  PMG1
+0FEA EQUATE  PMG2
+
+\ mema or memb ports:
+
+0FF0 EQUATE  P0                 0FF1 EQUATE  P1
+0FF2 EQUATE  P2                 0FF3 EQUATE  P3
+
+\ Bit operands:
+
+0F92 2 BIT-EQUATE  TOE0
+
+\ Mema bit operands:
+
+0FB0 0 BIT-EQUATE  ERB          0FB0 1 BIT-EQUATE  EMB
+0FB0 2 BIT-EQUATE  IS0          0FB0 3 BIT-EQUATE  IS1
+0FB2 3 BIT-EQUATE  IME          0FB8 0 BIT-EQUATE  IRQB
+0FB8 1 BIT-EQUATE  IEB          0FBA 0 BIT-EQUATE  IRQW
+0FBA 1 BIT-EQUATE  IEW          0FBC 0 BIT-EQUATE  IRQT0
+0FBC 1 BIT-EQUATE  IET0         0FBD 0 BIT-EQUATE  IRQS
+0FBD 1 BIT-EQUATE  IES          0FBE 2 BIT-EQUATE  IRQ1
+0FBE 3 BIT-EQUATE  IE1          0FBF 0 BIT-EQUATE  IRQK
+0FBF 1 BIT-EQUATE  IEK
+
+\ Memb bit operands:
+
+END-EQUATES
+
+$ARRAY R     0 ,$ A       1 ,$ E      2 ,$ L      3 ,$ H
+             4 ,$ X       5 ,$ W      6 ,$ Z      7 ,$ Y   $;
+
+$ARRAY RA    1 ,$ E       2 ,$ L      3 ,$ H      4 ,$ X
+             5 ,$ W       6 ,$ Z      7 ,$ Y               $;
+
+$ARRAY RR    0 ,$ EA      2 ,$ HL     4 ,$ WX     6 ,$ YZ  $;
+
+$ARRAY RRA   5 ,$ HL      6 ,$ WX     7 ,$ WL     $;
+
+$ARRAY RRB   2 ,$ HL      4 ,$ WX     6 ,$ YZ     $;
+
+BIT-LIST IEX
+            IEB   ,,  IEW  ,,  IET0  ,,  IES  ,,
+            IE1   ,,  IEK  ,, $;
+
+WORD-LIST IO-8R
+        SP     W,  BCNT   W,  TCNT0  W,  PSW    W,  BSC0   W,  BSC2   W,
+        CMOD   W,  SBUF   W,  P2     W,  $;
+
+WORD-LIST IO-8W
+        SP     W,  WMOD   W,  TMOD0  W,  TREF0  W,  BSC0   W,  BSC2   W,
+        CMOD   W,  PNE    W,  PUMOD1 W,  PUMOD2 W,  SMOD   W,  SBUF   W,
+        PMG1   W,  PMG2   W,  P2     W,  $;
+
+WORD-LIST IO-8RW
+        SP     W,  BSC0   W,  BSC2   W,  CMOD   W,  SBUF   W,  P2     W, $;
+
+WORD-LIST IO-4R
+        XF92   W,  PSW    W,  XFB8   W,  XFBA   W,  XFBC   W,  XFBD   W,
+        XFBE   W,  XFBF   W,  BSC0   W,  BSC1   W,  BSC2   W,  BSC3   W,
+        CMPREG W,  P0     W,  P1     W,  P2     W,  P3     W,  $;
+
+WORD-LIST IO-4W
+        BMOD   W,  XF92   W,  PSW    W,  IPR    W,  PCON   W,  IMOD1  W,
+        XFBC   W,  IMODK  W,  XFB8   W,  XFBA   W,  XFBD   W,
+        XFBE   W,  XFBF   W,  BSC0   W,  BSC1   W,  BSC2   W,  BSC3   W,
+        CLMOD  W,  P1MOD  W,  P0     W,  P1     W,  P2     W,  P3     W, $;
+
+WORD-LIST IO-4RW
+        XF92   W,  PSW    W,  XFB8   W,  XFBA   W,  XFBC   W,  XFBD   W,
+        XFBE   W,  XFBF   W,  BSC0   W,  BSC1   W,  BSC2   W,  BSC3   W,
+        P0     W,  P1     W,  P2     W,  P3     W,  $;
+
+WORD-LIST IO1W3
+\ DA.b
+        IPR    W,  BMOD   W,  TMOD0  W,  SMOD   W,  $;
+
+WORD-LIST IO1RW
+\ DA.b
+        XF92   W,  BSC0   W,  BSC1   W,  BSC2   W,  BSC3   W, XFB8    W,
+        XFBA   W,  XFBC   W,  XFBD   W,  XFBE   W,  XFBF   W, P0      W,
+        P1     W,  P2     W,  P3     W,  $;
+
+WORD-LIST IOX
+        @L     W, $;
+
+WORD-LIST IO2W3
+\ mema.b(0FB0 ~ 0FBF)
+        IPR    W,  $;
+
+WORD-LIST IO2RW
+\ mema.b(0FB0 ~ 0FBF)
+        PSW    W,  XFB8   W,  XFBA   W,  XFBC   W,  XFBD   W,  XFBE  W,
+        XFBF   W,  $;
+
+WORD-LIST IO3RW
+\ mema.b(0FF0 ~ 0FFF)
+        P0     W,  P1     W,  P2     W,  P3     W,  $;
+
+WORD-LIST IO4RW
+\ memb.@L(0FC0 ~ 0FFF)
+        BSC0   W,  BSC1   W,  BSC2   W,  BSC3   W,  P0     W,  P1     W,
+        P2     W,  P3     W,  $;
+
+BIT-LIST MEMA,B
+        ERB    ,,   EMB    ,,   IS0    ,,   IS1   ,,
+        IRQB   ,,   IEB    ,,
+        IRQW   ,,   IEW    ,,
+        IRQT0  ,,   IET0   ,,
+        IRQS   ,,   IES    ,,
+                                IRQ1   ,,   IE1   ,,
+        IRQK   ,,   IEK    ,,   $;
+
+\  DATA TRANSFER
+I: LD
+      " EA" , " @HL"                      [ 0DC 10 ][ 08 0 ]
+      " @HL" , " A"                       [ 0C4 10 ]
+      " @HL" , " EA"                      [ 0DC 10 ][ 00 0 ]
+      " A" , " @" { RRA ^*1 }             [ 88 @1 + 10 ]
+      " A" , { RA ^*1 }                   [ 0DD 10 ][ 08 @1 + 0 ]
+      " A" , { *1 IO-4R }                 [ 8C 10 ][ @1 0 ]
+      " A" , " #" 1 # { *1 0 0F ==}       [ 0B0 @1 + 10 ]
+      " A" , { *1 0 0FF ==}               [ 8C 10 ][ @1 0 ]
+      " EA" , { RRB ^*1 }                 [ 0DC 10 ][ 0F8 @1 + 0 ]
+      " EA" , { *1 IO-8R }                [ 0CE 10 ][ @1 0 ]
+      " EA" , { *1 0 0FF ==}              [ 0CE 10 ][ @1 0 ]
+      " EA" , " #" { *1 0 3FFF ==}        [ 81 10 ][ @1 0FF & 0 ]
+      { *1 IO-4W } , " A"                 [ 89 10 ][ @1 0 ]
+      { *1 0 0FF ==} , " A"               [ 89 10 ][ @1 0 ]
+      { RRB ^*1 } , " EA"                 [ 0DC 10 ][ 0F0 @1 + 0 ]
+      { *1 IO-8W } , " EA"                [ 0CD 10 ][ @1 0 ]
+      { *1 0 0FF ==} , " EA"              [ 0CD 10 ][ @1 0 ]
+      { RR ^*1 } , " #" { *2 0 3FFF ==}   [ @1 6 & 81 + 10 ][ @2 0FF & 0 ]
+      { RA ^*1 } , " A"                   [ 0DD 10 ][ 0 @1 + 0 ]
+      { RA ^*1 } , " #" { *2 0 0F ==}     [ 0D9 10 ][ @2 4 << 8 + @1 + 0 ]
+      2 I;
+
+I: LDI
+      " A" , " @HL"                       [ 8A 90 ]  1 I;
+
+I: LDD
+      " A" , " @HL"                       [ 8B 90 ]  1 I;
+
+I: LDC
+      " EA" , " @WX"                      [ 0CC 30 ]
+      " EA" , " @EA"                      [ 0C8 30 ]  1 I;
+
+I: JR
+     " @EA"                               [ 0DD 10 ][ 60 80 ]
+     " @WX"                               [ 0DD 10 ][ 64 80 ]
+     " +" { *1 2 10 ==|}                  [ @1 1 - 10 + 90 ]
+     " -" { *1 0 0F ==|}                  [ 0F @1 - 90 ]
+     { *1 *6 - 1 10 ==|}                  [ @1 *6 - 1 - 10 + 90 ]
+     { *6 *1 - 0 0F ==|}                  [ 0F *6 @1 - - 90 ]
+     1 I;
+
+I: JP
+     { *1 0 07FF ==|}   [ 0DB 10 ][ @1 700 & 8 >> 0 ][ @1 00FF & 0 ]  3 I;
+
+I: JPS
+     { *1 0F000 & *6 2 + 0F000 & - 0 0 ==}
+                          [ @1 0F00 & 8 >> 90 + 10 ][ @1 00FF & 0 ]  2 I;
+
+\     SUBROUTINE HANDLING
+
+I: CALLS
+     { *1 0 07FF ==|}     [ @1 700 & 8 >> 0E8 + 30 ][ @1 0FF & 0 ]  2 I;
+
+I: CALL
+     { *1 0 07FF ==|} [ 0DB 10 ][ @1 700 & 8 >> 40 + 0 ][ @1 00FF & 0 ] 3 I;
+
+I: RET                          [ 0C5 30 ] 1 I;
+
+\     SPECIAL
+
+I: SMB
+     { *1 0 0 ==|}             [ 0DD 10 ][ @1 40 + 0 ]
+     { *1 0F 0F ==|}           [ 0DD 10 ][ @1 40 + 0 ]
+     { *1 15 15 ==}             [ 0DD 10 ][ 4F 0 ]  2 I;
+
+I: SRB
+     { *1 0 3 ==}               [ 0DD 10 ][ @1 50 + 0 ]  2 I;
+
+I: REF
+     { *1 20 7F ==|}            [ @1 70 & @1 0F & 1 >> + 30 ]  1 I;
+
+I: TJP
+     { *1 0 7FF ==|}           [ @1 700 & 8 >> 10 ][ @1 00FF & 0 ]  2 I;
+
+I: TCALL
+     { *1 0 7FF ==|}      [ @1 700 & 8 >> 40 + 10 ][ @1 00FF & 0 ]  2 I;
+
+I: NOP                          [ 0A0 10 ]  1 I;
+
+I: INCS
+      " @HL"                    [ 0DD 10 ][ 62 0 ]
+      { RRB ^*1 }               [ @1 80 + 10 ]
+      { *1 IO-4RW }             [ 0CA 10 ][ @1 0 ]
+      { *1 IO-8RW }             [ 0CA 10 ][ @1 0 ]
+      { R ^*1 }                 [ @1 58 + 10 ]
+      { *1 0 0FF ==|}           [ 0CA 10 ][ @1 0 ]
+      2 I;
+
+I: DECS
+      { RR ^*1 }                [ 0DC 10 ][ @1 0D8 + 0 ]
+      { R ^*1 |}                [ @1 48 + 10 ]
+      2 I;
+
+\     ARITHMETIC
+
+I: ADS
+      " A" , " @HL"                      [ 3F 10 ]
+      " A" , " #" 1 # { *1 0 0F ==}      [ @1 0A0 + 10 ]
+      " EA" , { RR ^*1 }                 [ 0DC 10 ][ @1 98 + 0 ]
+      " EA" , " #" { *1 0 3FFF ==}       [ 0C9 10 ][ @1 00FF & 0 ]
+      { RRB ^*1 } , " EA"                [ 0DC 10 ][ @1 90 + 0 ]  2 I;
+
+I: ADC
+      " A" , " @HL"                      [ 3E 10 ]
+      " EA" , { RR ^*1 }                 [ 0DC 10 ][ @1 0A8 + 0 ]
+      { RRB ^*1 } , " EA"                [ 0DC 10 ][ @1 0A0 + 0 ]  2 I;
+
+I: SBS
+      " A" , " @HL"                      [ 3D 10 ]
+      " EA" , { RR ^*1 }                 [ 0DC 10 ][ @1 0B8 + 0 ]
+      { RRB ^*1 } , " EA"                [ 0DC 10 ][ @1 0B0 + 0 ]  2 I;
+
+I: SBC
+      " A" , " @HL"                      [ 3C 10 ]
+      " EA" , { RR ^*1 }                 [ 0DC 10 ][ @1 0C8 + 0 ]
+      { RRB ^*1 } , " EA"                [ 0DC 10 ][ @1 0C0 + 0 ]  2 I;
+
+I: XCH
+      " EA" , " @HL"                     [ 0DC 10 ][ 01 0 ]
+      " EA" , { RRB ^*1 }                [ 0DC 10 ][ @1 0E0 + 0 ]
+      " EA" , { *1 IO-8RW }              [ 0CF 10 ][ @1 0 ]
+      " EA" , { *1 0 0FF ==}             [ 0CF 10 ][ @1 0 ]
+      " A" , { RA ^*1 }                  [ @1 68 + 10 ]
+      " A" , " @" { RRA ^*1 }            [ @1 78 + 10 ]
+      " A" , { *1 IO-4RW }               [ 79 10 ][ @1 0 ]
+      " A" , { *1 0 0FF ==|}             [ 79 10 ][ @1 0 ]  2 I;
+
+I: XCHI
+      " A" , " @HL"                      [ 7A 90 ]  1 I;
+
+I: XCHD
+      " A" , " @HL"                      [ 7B 90 ]  1 I;
+
+I: BITS
+\ @H+DA b
+   " @H+" { *1 0 0FF ==} ., { *2 0 3 ==} [ 0FF 10 ][ @2 4 << @1 0F & + 0 ]
+   " @H+" { *1 IO1RW } ., { *2 0 3 ==}   [ 0FF 10 ][ @2 4 << @1 0F & + 0 ]
+   " @H+" { *1 IO1W3 } ., { *2 3 3 ==}   [ 0FF 10 ][ @2 4 << @1 0F & + 0 ]
+
+\ memb @L
+   { *1 IO4RW } ., { *2 IOX }            [ 0FF 10 ][ @1 3C & 2 >> 40 + 0 ]
+
+\ mema b
+   { *1 IO2RW } ., { *2 0 3 ==}    [ 0FF 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO2W3 } ., { *2 3 3 ==}    [ 0FF 10 ][ 08 @2 + 4 << @1 4F & + 0 ]
+   { *1 IO3RW } ., { *2 0 3 ==}    [ 0FF 10 ][ 0C @2 + 4 << @1 0F & + 0 ]
+   { *1 } ., { @1 *2 MEMA,B |}     [ 0FF 10 ][ 08 @2 + 4 << @1 4F & + 0 ]
+
+\ DA b
+   { *1 IO1RW } ., { *2 0 3 ==}       [ @2 4 << 0C1 + 10 ][ @1 0FF & 0 ]
+   { *1 IO1W3 } ., { *2 3 3 ==}       [ @2 4 << 0C1 + 10 ][ @1 0FF & 0 ]
+   { *1 0 0FF ==} ., { *2 0 3 ==}     [ @2 4 << 0C1 + 10 ][ @1 0FF & 0 ]
+
+   2 I;
+
+I: BITR
+\ @H+DA b
+   " @H+" { *1 0 0FF ==} ., { *2 0 3 ==} [ 0FE 10 ][ @2 4 << @1 0F & + 0 ]
+   " @H+" { *1 IO1RW } ., { *2 0 3 ==}  [ 0FE 10 ][ @2 4 << @1 0F & + 0 ]
+   " @H+" { *1 IO1W3 } ., { *2 3 3 ==}  [ 0FE 10 ][ @2 4 << @1 0F & + 0 ]
+
+\ memb @L
+   { *1 IO4RW } ., { *2 IOX }           [ 0FE 10 ][ @1 3C & 2 >> 40 + 0 ]
+
+\ mema b
+   { *1 IO2RW } ., { *2 0 3 ==}    [ 0FE 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO2W3 } ., { *2 3 3 ==}    [ 0FE 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO3RW } ., { *2 0 3 ==}    [ 0FE 10 ][ 0C @2  + 4 << @1 0F & + 0 ]
+   { *1 } ., { @1 *2 MEMA,B |}     [ 0FE 10 ][ 08 @2 + 4 << @1 4F & + 0 ]
+
+\ DA b
+    { *1 IO1RW } ., { *2 0 3 ==}     [ @2 4 << 0C0 + 10 ][ @1 0FF & 0 ]
+    { *1 IO1W3 } ., { *2 3 3 ==}     [ @2 4 << 0C0 + 10 ][ @1 0FF & 0 ]
+    { *1 0 0FF ==} ., { *2 0 3 ==}   [ @2 4 << 0C0 + 10 ][ @1 0FF & 0 ]
+   2 I;
+
+I: CPSE
+   " A" , " @HL"                             [ 38 10 ]
+   " EA" , " @HL"                            [ 0DC 10 ][ 09 0 ]
+   " A" , { R ^*1 }                          [ 0DD 10 ][ 68 @1 + 0 ]
+   " EA" , { RR ^*1 }                        [ 0DC 10 ][ @1 0E8 + 0 ]
+   " @HL" , " #" { *1 0 0F ==}               [ 0DD 10 ][ @1 70 + 0 ]
+   { R ^*1 } , " #" { *2 0 0F ==}            [ 0D9 10 ][ @2 4 << @1 + 0 ]
+   2 I;
+
+I: BTST
+\ @H+DA b
+   " @H+" { *1 0 0FF ==} ., { *2 0 3 ==} [ 0F9 10 ][ @2 4 << @1 0F & + 0 ]
+   " @H+" { *1 IO1RW } ., { *2 0 3 ==}   [ 0F9 10 ][ @2 4 << @1 0F & + 0 ]
+   " @H+" { *1 IO1W3 } ., { *2 3 3 ==}   [ 0F9 10 ][ @2 4 << @1 0F & + 0 ]
+
+\ memb @L
+   { *1 IO4RW } ., { *2 IOX }          [ 0F9 10 ][ @1 3C & 2 >> 40 + 0 ]
+
+\ mema b
+   { *1 IO2RW } ., { *2 0 3 ==}     [ 0F9 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO2W3 } ., { *2 3 3 ==}     [ 0F9 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO3RW } ., { *2 0 3 ==}     [ 0F9 10 ][ 0C @2 + 4 << @1 0F & + 0 ]
+   { *1 } ., { @1 *2 MEMA,B |}      [ 0F9 10 ][ 08 @2 + 4 << @1 4F & + 0 ]
+   " C" ;?                          [ 0D7 10 ]
+
+\ DA b
+   { *1 IO1RW } ., { *2 0 3 ==}       [ @2 4 << 0C3 + 10 ][ @1 0FF & 0 ]
+   { *1 IO1W3 } ., { *2 3 3 ==}       [ @2 4 << 0C3 + 10 ][ @1 0FF & 0 ]
+   { *1 0 0FF ==} ., { *2 0 3 ==}     [ @2 4 << 0C3 + 10 ][ @1 0FF & 0 ]
+   2 I;
+
+\     OTHER MEMORY BIT CONTROLS
+I: BTSF
+\ @H+DA b
+   " @H+" { *1 0 0FF ==} ., { *2 0 3 ==} [ 0F8 10 ][ @2 4 << @1 0F & + 0 ]
+   " @H+" { *1 IO1RW } ., { *2 0 3 ==}   [ 0F8 10 ][ @2 4 << @1 0F & + 0 ]
+   " @H+" { *1 IO1W3 } ., { *2 3 3 ==}   [ 0F8 10 ][ @2 4 << @1 0F & + 0 ]
+
+\ memb @L
+   { *1 IO4RW } ., { *2 IOX }         [ 0F8 10 ][ @1 3C & 2 >> 40 + 0 ]
+
+\ mema b
+   { *1 IO2RW } ., { *2 0 3 ==}    [ 0F8 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO2W3 } ., { *2 3 3 ==}    [ 0F8 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO3RW } ., { *2 0 3 ==}    [ 0F8 10 ][ 0C @2 + 4 << @1 0F & + 0 ]
+   { *1 } ., { @1 *2 MEMA,B |}     [ 0F8 10 ][ 08 @2 + 4 << @1 4F & + 0 ]
+
+\ DA b
+   { *1 IO1RW } ., { *2 0 3 ==}       [ @2 4 << 0C2 + 10 ][ @1 0FF & 0 ]
+   { *1 IO1W3 } ., { *2 3 3 ==}       [ @2 4 << 0C2 + 10 ][ @1 0FF & 0 ]
+   { *1 0 0FF ==} ., { *2 0 3 ==}     [ @2 4 << 0C2 + 10 ][ @1 0FF & 0 ]
+   2 I;
+
+I: BTSTZ
+\ @H+DA b
+    " @H+" { *1 0 0FF ==} ., { *2 0 3 ==} [ 0FD 10 ][ @2 4 << @1 0F & + 0 ]
+    " @H+" { *1 IO1RW } ., { *2 0 3 ==}  [ 0FD 10 ][ @2 4 << @1 0F & + 0 ]
+    " @H+" { *1 IO1W3 } ., { *2 3 3 ==}  [ 0FD 10 ][ @2 4 << @1 0F & + 0 ]
+
+\ memb @L
+   { *1 IO4RW } ., { *2 IOX }           [ 0FD 10 ][ @1 3C & 2 >> 40 + 0 ]
+
+\ mema b
+   { *1 IO2RW } ., { *2 0 3 ==}   [ 0FD 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO2W3 } ., { *2 3 3 ==}   [ 0FD 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO2W3 } ., { *2 3 3 ==}   [ 0FD 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO3RW } ., { *2 0 3 ==}   [ 0FD 10 ][ 0C @2 + 4 << @1 0F & + 0 ]
+   { *1 } ., { @1 *2 MEMA,B |}    [ 0FD 10 ][ 08 @2 + 4 << @1 4F & + 0 ]
+   2 I;
+
+I: LDB
+\ C @H+DA b
+   " C" , " @H+" { *1 0 0FF ==} ., { *2 0 3 ==}
+                                       [ 0F4 10 ][ @2 4 << @1 0F & + 0 ]
+   " C" , " @H+" { *1 IO1RW } ., { *2 0 3 ==}
+                                       [ 0F4 10 ][ @2 4 << @1 0F & + 0 ]
+   " C" , " @H+" { *1 IO1W3 } ., { *2 3 3 ==}
+                                       [ 0F4 10 ][ @2 4 << @1 0F & + 0 ]
+
+\ C memb @L
+   " C" , { *1 IO4RW } ., { *2 IOX }   [ 0F4 10 ][ @1 3C & 2 >> 40 + 0 ]
+
+\ C mema b
+   " C" , { *1 IO2RW } ., { *2 0 3 ==}
+                                  [ 0F4 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   " C" , { *1 IO2W3 } ., { *2 3 3 ==}
+                                  [ 0F4 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   " C" , { *1 IO3RW } ., { *2 0 3 ==}
+                                  [ 0F4 10 ][ 0C @2 + 4 << @1 0F & + 0 ]
+   " C" , { *1 } ., { @1 *2 MEMA,B |}
+                                  [ 0F4 10 ][ 08 @2 + 4 << @1 4F & + 0 ]
+
+\ @H+DA b C
+   " @H+" { *1 0 0FF ==} ., { *2 0 3 ==} , " C"
+                                      [ 0FC 10 ][ @2 4 << @1 0F & + 0 ]
+   " @H+" { *1 IO1RW } ., { *2 0 3 ==} , " C"
+                                      [ 0FC 10 ][ @2 4 << @1 0F & + 0 ]
+   " @H+" { *1 IO1W3 } ., { *2 3 3 ==} , " C"
+                                      [ 0FC 10 ][ @2 4 << @1 0F & + 0 ]
+
+\ memb @L C
+   { *1 IO4RW } ., { *2 IOX } , " C"    [ 0FC 10 ][ @1 3C & 2 >> 40 + 0 ]
+
+\ mema b C
+   { *1 IO2RW } ., { *2 0 3 ==} , " C"
+                                   [ 0FC 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO2W3 } ., { *2 3 3 ==} , " C"
+                                   [ 0FC 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   { *1 IO3RW } ., { *2 0 3 ==} , " C"
+                                   [ 0FC 10 ][ 0C @2 + 4 << @1 0F & + 0 ]
+   { *1 } ., { @1 *2 MEMA,B |} , " C"
+                                   [ 0FC 10 ][ 08 @2 + 4 << @1 4F & + 0 ]
+   2 I;
+
+\     LOGICAL
+I: AND   " A" , " @HL"                    [ 039 10 ]
+      " A" , " #" { *1 0 0F ==}           [ 0DD 10 ][ @1 10 + 0 ]
+      " EA" , { RR ^*1 }                  [ 0DC 10 ][ @1 18 + 0 ]
+      { RRB ^*1 } , " EA"                 [ 0DC 10 ][ @1 10 + 0 ]  2 I;
+
+I: OR    " A" , " @HL"                    [ 3A 10 ]
+      " A" , " #" { *1 0 0F ==}           [ 0DD 10 ][ @1 20 + 0 ]
+      " EA" , { RR ^*1 }                  [ 0DC 10 ][ @1 28 + 0 ]
+      { RRB ^*1 } , " EA"                 [ 0DC 10 ][ @1 20 + 0 ]  2 I;
+
+I: XOR   " A" , " @HL"                    [ 3B 10 ]
+      " A" , " #" { *1 0 0F ==}           [ 0DD 10 ][ @1 30 + 0 ]
+      " EA" , { RR ^*1 }                  [ 0DC 10 ][ @1 38 + 0 ]
+      { RRB ^*1 } , " EA"                 [ 0DC 10 ][ @1 30 + 0 ]  2 I;
+
+\    ACCUMULATOR MANIPULATION
+
+I: RRC  " A"                              [ 88 10 ]  1 I;
+
+I: COM  " A"                              [ 0DD 10 ][ 3F 0 ]  2 I;
+
+\     INCREMENT/DECREMENT
+\     COMPARISON
+\     CARRY FLAG & MEMORY BIT
+
+I: SCF                                    [ 0E7 10 ]  1 I;
+
+I: RCF                                    [ 0E6 10 ]  1 I;
+
+I: CCF                                    [ 0D6 10 ]  1 I;
+
+I: BAND
+\ C @H+DA b
+   " C" , " @H+" { *1 0 0FF ==} ., { *2 0 3 ==}
+                                      [ 0F5 10 ][ @2 4 << @1 0F & + 0 ]
+   " C" , " @H+" { *1 IO1RW } ., { *2 0 3 ==}
+                                      [ 0F5 10 ][ @2 4 << @1 0F & + 0 ]
+   " C" , " @H+" { *1 IO1W3 } ., { *2 3 3 ==}
+                                      [ 0F5 10 ][ @2 4 << @1 0F & + 0 ]
+
+\ C memb @L
+   " C" , { *1 IO4RW } ., { *2 IOX }  [ 0F5 10 ][ @1 3C & 2 >> 40 + 0 ]
+
+\ C mema b
+   " C" , { *1 IO2RW } ., { *2 0 3 ==}
+                                 [ 0F5 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   " C" , { *1 IO2W3 } ., { *2 3 3 ==}
+                                 [ 0F5 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   " C" , { *1 IO3RW } ., { *2 0 3 ==}
+                                 [ 0F5 10 ][ 0C @2 + 4 << @1 0F & + 0 ]
+   " C" , { *1 } ., { @1 *2 MEMA,B |}
+                                 [ 0F5 10 ][ 08 @2 + 4 << @1 4F & + 0 ]
+   2 I;
+
+I: BOR
+\ C @H+DA b
+   " C" , " @H+" { *1 0 0FF ==} ., { *2 0 3 ==}
+                                      [ 0F6 10 ][ @2 4 << @1 0F & + 0 ]
+   " C" , " @H+" { *1 IO1RW } ., { *2 0 3 ==}
+                                      [ 0F6 10 ][ @2 4 << @1 0F & + 0 ]
+   " C" , " @H+" { *1 IO1W3 } ., { *2 0 3 ==}
+                                      [ 0F6 10 ][ @2 4 << @1 0F & + 0 ]
+
+\ C memb @L
+    " C" , { *1 IO4RW } ., { *2 IOX }  [ 0F6 10 ][ @1 3C & 2 >> 40 + 0 ]
+
+\ C mema b
+   " C" , { *1 IO2RW } ., { *2 0 3 ==}
+                                 [ 0F6 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   " C" , { *1 IO2W3 } ., { *2 3 3 ==}
+                                 [ 0F6 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   " C" , { *1 IO3RW } ., { *2 0 3 ==}
+                                  [ 0F6 10 ][ 0C @2 + 4 << @1 0F & + 0 ]
+   " C" , { *1 } ., { @1 *2 MEMA,B |}
+                                  [ 0F6 10 ][ 08 @2 + 4 << @1 4F & + 0 ]
+   2 I;
+
+I: BXOR
+\ C @H+DA b
+   " C" , " @H+" { *1 0 0FF ==} ., { *2 0 3 ==}
+                                      [ 0F7 10 ][ @2 4 << @1 0F & + 0 ]
+   " C" , " @H+" { *1 IO1RW } ., { *2 0 3 ==}
+                                      [ 0F7 10 ][ @2 4 << @1 0F & + 0 ]
+   " C" , " @H+" { *1 IO1W3 } ., { *2 0 3 ==}
+                                      [ 0F7 10 ][ @2 4 << @1 0F & + 0 ]
+
+\ C memb @L
+    " C" , { *1 IO4RW } ., { *2 IOX }  [ 0F7 10 ][ @1 3C & 2 >> 40 + 0 ]
+
+\ C mema b
+   " C" , { *1 IO2RW } ., { *2 0 3 ==}
+                               [ 0F7 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   " C" , { *1 IO2W3 } ., { *2 3 3 ==}
+                               [ 0F7 10 ][ @2 08 + 4 << @1 0F & + 0 ]
+   " C" , { *1 IO3RW } ., { *2 0 3 ==}
+                                 [ 0F7 10 ][ 0C @2 + 4 << @1 0F & + 0 ]
+   " C" , { *1 } ., { @1 *2 MEMA,B |}
+                                 [ 0F7 10 ][ 08 @2 + 4 << @1 4F & + 0 ]
+   2 I;
+
+I: SRET                             [ 0E5 30 ]  1 I;
+
+I: IRET                             [ 0D5 30 ]  1 I;
+
+I: PUSH  " SB"                      [ 0DD 10 ][ 67 0 ]
+      { RR ^*1 }                    [ 29 @1 + 10 ]  1 I;
+
+I: POP   " SB"                      [ 0DD 10 ][ 66 0 ]
+      { RR ^*1 }                    [ 28 @1 + 10 ]  1 I;
+
+\     INTERRUPT CONTROL
+
+I: EI
+      { *1 @2 IEX }             [ 0FF 10 ][ 98 @2 2 & 4 << + @1 7 & + 0 ]
+                                [ 0FF 10 ][ 0B2 0 ]  2 I;
+
+I: DI
+      { *1 @2 IEX }             [ 0FE 10 ][ 98 @2 2 & 4 << + @1 7 & + 0 ]
+                                [ 0FE 10 ][ 0B2 0 ]  2 I;
+
+\     CPU CONTROL
+
+I: IDLE
+                          [ 0FF 10 ][ 0A3 0 ]  2 I;
+
+I: STOP
+                          [ 0FF 10 ][ 0B3 0 ]  2 I;
+
+\ Indirect addressing in ROM
+\  VECTOR OPS
+
+I: VENT0
+   { *1 0 1 ==} , { *2 0 1 ==} , { *3 0 3FFF ==|}
+                   [ @1 7 << @2 6 << + @3 8 >> + 0 ][ @3 00FF & 0 ]  2 I;
+I: VENT1
+   { *1 0 1 ==} , { *2 0 1 ==} , { *3 0 3FFF ==|}
+                   [ @1 7 << @2 6 << + @3 8 >> + 0 ][ @3 00FF & 0 ]  2 I;
+I: VENT2
+   { *1 0 1 ==} , { *2 0 1 ==} , { *3 0 3FFF ==|}
+                   [ @1 7 << @2 6 << + @3 8 >> + 0 ][ @3 00FF & 0 ]  2 I;
+I: VENT3
+   { *1 0 1 ==} , { *2 0 1 ==} , { *3 0 3FFF ==|}
+                   [ @1 7 << @2 6 << + @3 8 >> + 0 ][ @3 00FF & 0 ]  2 I;
+I: VENT4
+   { *1 0 1 ==} , { *2 0 1 ==} , { *3 0 3FFF ==|}
+                   [ @1 7 << @2 6 << + @3 8 >> + 0 ][ @3 00FF & 0 ]  2 I;
+I: VENT5
+   { *1 0 1 ==} , { *2 0 1 ==} , { *3 0 3FFF ==|}
+                   [ @1 7 << @2 6 << + @3 8 >> + 0 ][ @3 00FF & 0 ]  2 I;
+I: VENT6
+   { *1 0 1 ==} , { *2 0 1 ==} , { *3 0 3FFF ==|}
+                   [ @1 7 << @2 6 << + @3 8 >> + 0 ][ @3 00FF & 0 ]  2 I;
+I: VENT7
+   { *1 0 1 ==} , { *2 0 1 ==} , { *3 0 3FFF ==|}
+                   [ @1 7 << @2 6 << + @3 8 >> + 0 ][ @3 00FF & 0 ]  2 I;
+
+I: DH
+   { *1 0 07FF ==}    [ @1 0700 & 8 >> 10 ]  1 I;
+
+I: DL
+   { *1 0 07FF ==}    [ @1 00FF & 10 ]  1 I;
+
+I: DB
+        REPEAT:
+        " '" CHARS
+        { *1 |} [ @1 0FF & 10 REP]
+        1 I;
+
+I: DW
+        REPEAT:
+        { *1 |} [ @1 8 >> 0FF & 10 ][ @1 0FF & 0 REP]
+        2 I;
+
+
+
+
+

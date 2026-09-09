@@ -1,0 +1,161 @@
+\ 86C20125.DEF    Copyright SAMSUNG SEMICONDUCTOR INC. 1999-2000,12/27/99
+\
+\ Initial     : 01/03/2000  by J.K.Lee
+
+
+40000 ROMSIZE
+00 0BF RAMRANGE
+
+0D0 EQUATE T0CNT   
+0D1 EQUATE T0DATA  
+0D2 EQUATE T0CON   
+0D3 EQUATE INTPND
+0D4 EQUATE CLKCON  
+0D5 EQUATE FLAGS   
+0D6 EQUATE BLDCON  
+0D7 EQUATE IDROMS
+0D9 EQUATE SP      
+0DA EQUATE P1PND   
+0DC EQUATE BTCON   
+0DD EQUATE BTCNT   
+0DF EQUATE SYM     
+0E0 EQUATE WTCON   
+0E1 EQUATE P1      
+0E2 EQUATE P2      
+0E3 EQUATE P3
+0E4 EQUATE P4
+0E5 EQUATE LCON    
+0E6 EQUATE P1CONH  
+0E7 EQUATE P1CONL
+0E8 EQUATE P1INT   
+0E9 EQUATE P1STA   
+0EA EQUATE P1PUR
+0EB EQUATE P2CON   
+0EC EQUATE P3CONH  
+0ED EQUATE P3CONL
+0EE EQUATE P3PUR   
+0EF EQUATE P4CON   
+0F0 EQUATE TACNT   
+0F1 EQUATE TBCNT
+0F2 EQUATE TADATA  
+0F3 EQUATE TBDATA  
+0F4 EQUATE TACON   
+0F5 EQUATE TBCON
+0F6 EQUATE PWM0DATA 
+0F7 EQUATE PWM1DATA
+0F8 EQUATE PWM0CNT 
+0F9 EQUATE PWM1CNT
+0FA EQUATE OSCCON  
+0FB EQUATE STPCON  
+0FC EQUATE PWM0MOD
+0FD EQUATE PWM1MOD 
+0FE EQUATE PWMCON  
+0FF EQUATE VEREG
+
+END-EQUATES \ 45 EQUATES
+\ READ ONLY     6
+\ WRITE ONLY    0
+\ READ/WRITE    39
+\ UNKNOWN       0
+
+WORD-LIST SYSREG_R
+
+        T0CNT  W,  P1     W,  P3PUR     W,  STPCON  W,
+        T0DATA W,  P2     W,  P4CON     W,  PWM0MOD W,
+        T0CON  W,  P3     W,  TACNT     W,  PWM1MOD W,
+        INTPND W,  P4     W,  TBCNT     W,  PWMCON  W,
+        CLKCON W,  LCON   W,  TADATA    W,  VEREG   W,
+        FLAGS  W,  P1CONH W,  TBDATA    W, 
+        BLDCON W,  P1CONL W,  TACON     W, 
+        IDROMS W,  P1INT  W,  TBCON     W, 
+        SP     W,  P1STA  W,  PWM0DATA  W, 
+        P1PND  W,  P1PUR  W,  PWM1DATA  W, 
+        BTCON  W,  P2CON  W,  PWM0CNT   W, 
+        BTCNT  W,  P3CONH W,  PWM1CNT   W, 
+        SYM    W,  P3CONL W,  OSCCON    W, 
+        WTCON  W,  $; \ 45 REGSTPCON  ISTERS
+
+WORD-LIST SYSREG_W
+
+       P1     W,  P3PUR  W,  STPCON    W,
+       T0DATA W,  P2     W,  P4CON     W,  PWM0MOD W,
+       T0CON  W,  P3     W,  PWM1MOD   W,
+       INTPND W,  P4     W,  PWMCON    W,
+       CLKCON W,  LCON   W,  TADATA    W,  VEREG   W,
+       FLAGS  W,  P1CONH W,  TBDATA    W, 
+       BLDCON W,  P1CONL W,  TACON     W, 
+       IDROMS W,  P1INT  W,  TBCON     W, 
+       SP     W,  P1STA  W,  PWM0DATA  W, 
+       P1PND  W,  P1PUR  W,  PWM1DATA  W, 
+       BTCON  W,  P2CON  W, 
+       P3CONH W,  
+       SYM    W,  P3CONL W,  OSCCON    W, 
+       WTCON  W,  $; \ 39 REGSTPCON  ISTERS
+
+WORD-LIST SYSREG_RW
+         P1     W,  P3PUR  W,  STPCON    W,
+         T0DATA W,  P2     W,  P4CON     W,  PWM0MOD W,
+         T0CON  W,  P3     W,  PWM1MOD   W,
+         INTPND W,  P4     W,  PWMCON    W,
+         CLKCON W,  LCON   W,  TADATA    W,  VEREG   W,
+         FLAGS  W,  P1CONH W,  TBDATA    W, 
+         BLDCON W,  P1CONL W,  TACON     W, 
+         IDROMS W,  P1INT  W,  TBCON     W, 
+         SP     W,  P1STA  W,  PWM0DATA  W, 
+         P1PND  W,  P1PUR  W,  PWM1DATA  W, 
+         BTCON  W,  P2CON  W, 
+         P3CONH W,  
+         SYM    W,  P3CONL W,  OSCCON    W, 
+         WTCON  W,  $; \ 39 REGSTPCON  ISTERS
+
+WORD-LIST BIT_R
+         T0CNT  W,  P1     W,  P3PUR     W,  STPCON  W,
+         T0DATA W,  P2     W,  P4CON     W,  PWM0MOD W,
+         T0CON  W,  P3     W,  TACNT     W,  PWM1MOD W,
+         INTPND W,  P4     W,  TBCNT     W,  PWMCON  W,
+         CLKCON W,  LCON   W,  TADATA    W,  VEREG   W,
+         FLAGS  W,  P1CONH W,  TBDATA    W, 
+         BLDCON W,  P1CONL W,  TACON     W, 
+         IDROMS W,  P1INT  W,  TBCON     W, 
+         SP     W,  P1STA  W,  PWM0DATA  W, 
+         P1PND  W,  P1PUR  W,  PWM1DATA  W, 
+         BTCON  W,  P2CON  W,  PWM0CNT   W, 
+         BTCNT  W,  P3CONH W,  PWM1CNT   W, 
+         SYM    W,  P3CONL W,  OSCCON    W, 
+         WTCON  W,  $; \ 45 REGSTPCON  ISTERS
+
+WORD-LIST BIT_W
+         P1     W,  P3PUR  W,  STPCON    W,
+         T0DATA W,  P2     W,  P4CON     W,  PWM0MOD W,
+         T0CON  W,  P3     W,  PWM1MOD   W,
+         INTPND W,  P4     W,  PWMCON    W,
+         CLKCON W,  LCON   W,  TADATA    W,  VEREG   W,
+         FLAGS  W,  P1CONH W,  TBDATA    W, 
+         BLDCON W,  P1CONL W,  TACON     W, 
+         IDROMS W,  P1INT  W,  TBCON     W, 
+         SP     W,  P1STA  W,  PWM0DATA  W, 
+         P1PND  W,  P1PUR  W,  PWM1DATA  W, 
+         BTCON  W,  P2CON  W, 
+         P3CONH W,  
+         SYM    W,  P3CONL W,  OSCCON    W, 
+         WTCON  W,  $; \ 39 REGSTPCON  ISTERS
+
+WORD-LIST BIT_RW
+         P1     W,  P3PUR  W,  STPCON    W,
+         T0DATA W,  P2     W,  P4CON     W,  PWM0MOD W,
+         T0CON  W,  P3     W,  PWM1MOD   W,
+         INTPND W,  P4     W,  PWMCON    W,
+         CLKCON W,  LCON   W,  TADATA    W,  VEREG   W,
+         FLAGS  W,  P1CONH W,  TBDATA    W, 
+         BLDCON W,  P1CONL W,  TACON     W, 
+         IDROMS W,  P1INT  W,  TBCON     W, 
+         SP     W,  P1STA  W,  PWM0DATA  W, 
+         P1PND  W,  P1PUR  W,  PWM1DATA  W, 
+         BTCON  W,  P2CON  W, 
+         P3CONH W,  
+         SYM    W,  P3CONL W,  OSCCON    W, 
+         WTCON  W,  $; \ 39 REGSTPCON  ISTERS
+
+
+INCLUDE 86INST.DEF
+

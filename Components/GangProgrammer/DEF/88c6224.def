@@ -1,0 +1,171 @@
+\  88c6224.DEF Copyright SAMSUNG ELECTRONICS CO. 1998-1999,
+\  Initial     : 07/03/98  J.K.LEE
+
+ 6000 ROMSIZE
+ 00 0BF RAMRANGE
+
+\  -----------------------------
+0D0 EQUATE TM0CNT    0D1 EQUATE TM0DATA   0D2 EQUATE TM0CON    0D3 EQUATE BTCON
+0D4 EQUATE CLKCON    0D5 EQUATE FLAGS     0D6 EQUATE RP0       0D7 EQUATE RP1
+0D8 EQUATE SPH       0D9 EQUATE SPL       0DA EQUATE IPH       0DB EQUATE IPL
+0DC EQUATE IRQ       0DD EQUATE IMR       0DE EQUATE SYM       0DF EQUATE PP
+0E0 EQUATE P0        0E1 EQUATE P1        0E2 EQUATE P2        0E3 EQUATE P3
+0E4 EQUATE P0CONH    0E5 EQUATE P0CONL
+0E6 EQUATE P1CON     0E7 EQUATE P2CONH    0E8 EQUATE P2CONL    
+0E9 EQUATE P3CONH    0EA EQUATE P3CONL    0EB EQUATE P0INT         
+0ED EQUATE SYNCON0   0EE EQUATE SYNCON1   0EF EQUATE SYNCON2
+0F0 EQUATE SYNCRD    0F1 EQUATE TM1CNTH   0F2 EQUATE TM1CNTL   0F3 EQUATE TM1DATAH
+0F4 EQUATE TM1DATAL  0F5 EQUATE TM1CON    0F6 EQUATE TM2CON    0F7 EQUATE ADCON
+0F8 EQUATE ADDATA    0FD EQUATE BTCNT     0FE EQUATE EMT       
+0FF EQUATE IPR       0E0 EQUATE PWM0      0E1 EQUATE PWM1      0E2 EQUATE PWM2      
+0E3 EQUATE PWM3      0E4 EQUATE PWM4      0E5 EQUATE PWM5      0E6 EQUATE PWM6      
+0E7 EQUATE PWMCON    0E8 EQUATE PWMCNT    0E9 EQUATE DCON      0EA EQUATE DAR0  
+0EB EQUATE DCCR      0EC EQUATE DCSR0
+0ED EQUATE DCSR1     0EE EQUATE DAR1      0EF EQUATE TBDR
+0F0 EQUATE RBDR      0F1 EQUATE DDSR
+0F2 EQUATE ICCR      0F3 EQUATE ICSR     
+0F4 EQUATE IAR       0F5 EQUATE IDSR    
+
+    END-EQUATES \ 65 equates
+\ Read  only  12
+\ Write only   0
+\ Read/Write  53
+
+WORD-LIST SYSREG_R
+
+TM0CNT      W,  TM0DATA     W,  TM0CON      W,  BTCON       W,
+CLKCON      W,  FLAGS       W,  RP0         W,  RP1         W,
+SPH         W,  SPL         W,  IPH         W,  IPL         W,
+IRQ         W,  IMR         W,  SYM         W,  PP          W,
+P0          W,  P1          W,  P2          W,  P3          W,
+P0CONH      W,  P0CONL      W,  P1CON       W,  P2CONH      W,
+P2CONL      W,  P3CONH      W, 
+P3CONL      W,  P0INT       W,  SYNCON0     W,  
+SYNCON1     W,  SYNCON2     W,  SYNCRD      W,  
+TM1CNTH     W,  TM1CNTL     W,  TM1DATAH    W,  TM1DATAL    W,
+TM1CON      W,  TM2CON      W,  ADCON       W,  ADDATA      W, 
+BTCNT       W,  EMT         W,  IPR         W,                 
+PWM0        W,  PWM1        W,  PWM2        W,  PWM3        W,
+PWM4        W,  PWM5        W,  PWM6        W,  PWMCON      W,
+PWMCNT      W,  DCON        W,  DAR0        W,  DCCR        W,
+DCSR0       W,  DCSR1       W,  DAR1        W,  TBDR        W,
+RBDR        W,  DDSR        W,  ICCR        W,  ICSR        W,  
+IAR         W,  IDSR        W,
+
+   $; \  65 registers
+
+WORD-LIST SYSREG_W
+
+TM0CON      W,  BTCON       W,
+CLKCON      W,  FLAGS       W,  RP0         W,  RP1         W,
+SPH         W,  SPL         W,  IPH         W,  IPL         W,
+IMR         W,  SYM         W,  PP          W,
+P0          W,  P1          W,  P2          W,  P3          W,
+P0CONH      W,  P0CONL      W,  P1CON       W,  P2CONH      W,
+P2CONL      W,  P3CONH      W, 
+P3CONL      W,  P0INT       W,  SYNCON0     W,  
+SYNCON1     W,  SYNCON2     W,  
+TM1CON      W,  TM2CON      W,  ADCON       W,  EMT         W,  
+IPR         W,                 
+PWM0        W,  PWM1        W,  PWM2        W,  PWM3        W,
+PWM4        W,  PWM5        W,  PWM6        W,  PWMCON      W,
+DCON        W,  DAR0        W,  DCCR        W,
+DCSR0       W,  DCSR1       W,  DAR1        W,  TBDR        W,
+DDSR        W,  ICCR        W,  ICSR        W,  
+IAR         W,  IDSR        W,
+
+
+    $; \ 53 registers
+
+WORD-LIST SYSREG_RW
+
+TM0CON      W,  BTCON       W,
+CLKCON      W,  FLAGS       W,  RP0         W,  RP1         W,
+SPH         W,  SPL         W,  IPH         W,  IPL         W,
+IMR         W,  SYM         W,  PP          W,
+P0          W,  P1          W,  P2          W,  P3          W,
+P0CONH      W,  P0CONL      W,  P1CON       W,  P2CONH      W,
+P2CONL      W,  P3CONH      W, 
+P3CONL      W,  P0INT       W,  SYNCON0     W,  
+SYNCON1     W,  SYNCON2     W,  
+TM1CON      W,  TM2CON      W,  ADCON       W,  EMT         W,  
+IPR         W,                 
+PWM0        W,  PWM1        W,  PWM2        W,  PWM3        W,
+PWM4        W,  PWM5        W,  PWM6        W,  PWMCON      W,
+DCON        W,  DAR0        W,  DCCR        W,
+DCSR0       W,  DCSR1       W,  DAR1        W,  TBDR        W,
+DDSR        W,  ICCR        W,  ICSR        W,  
+IAR         W,  IDSR        W,
+
+    $; \ 53 registers
+
+WORD-LIST BIT_R
+
+TM0CNT      W,  TM0DATA     W,  TM0CON      W,  BTCON       W,
+CLKCON      W,  FLAGS       W,  RP0         W,  RP1         W,
+SPH         W,  SPL         W,  IPH         W,  IPL         W,
+IRQ         W,  IMR         W,  SYM         W,  PP          W,
+P0          W,  P1          W,  P2          W,  P3          W,
+P0CONH      W,  P0CONL      W,  P1CON       W,  P2CONH      W,
+P2CONL      W,  P3CONH      W, 
+P3CONL      W,  P0INT       W,  SYNCON0     W,  
+SYNCON1     W,  SYNCON2     W,  SYNCRD      W,  
+TM1CNTH     W,  TM1CNTL     W,  TM1DATAH    W,  TM1DATAL    W,
+TM1CON      W,  TM2CON      W,  ADCON       W,  ADDATA      W, 
+BTCNT       W,  EMT         W,  IPR         W,                 
+PWM0        W,  PWM1        W,  PWM2        W,  PWM3        W,
+PWM4        W,  PWM5        W,  PWM6        W,  PWMCON      W,
+PWMCNT      W,  DCON        W,  DAR0        W,  DCCR        W,
+DCSR0       W,  DCSR1       W,  DAR1        W,  TBDR        W,
+RBDR        W,  DDSR        W,  ICCR        W,  ICSR        W,  
+IAR         W,  IDSR        W,
+
+   $; \  65 registers
+
+WORD-LIST BIT_W
+
+TM0CON      W,  BTCON       W,
+CLKCON      W,  FLAGS       W,  RP0         W,  RP1         W,
+SPH         W,  SPL         W,  IPH         W,  IPL         W,
+IMR         W,  SYM         W,  PP          W,
+P0          W,  P1          W,  P2          W,  P3          W,
+P0CONH      W,  P0CONL      W,  P1CON       W,  P2CONH      W,
+P2CONL      W,  P3CONH      W, 
+P3CONL      W,  P0INT       W,  SYNCON0     W,  
+SYNCON1     W,  SYNCON2     W,  
+TM1CON      W,  TM2CON      W,  ADCON       W,  EMT         W,  
+IPR         W,                 
+PWM0        W,  PWM1        W,  PWM2        W,  PWM3        W,
+PWM4        W,  PWM5        W,  PWM6        W,  PWMCON      W,
+DCON        W,  DAR0        W,  DCCR        W,
+DCSR0       W,  DCSR1       W,  DAR1        W,  TBDR        W,
+DDSR        W,  ICCR        W,  ICSR        W,  
+IAR         W,  IDSR        W,
+
+
+    $; \ 53 registers
+
+WORD-LIST BIT_RW
+
+TM0CON      W,  BTCON       W,
+CLKCON      W,  FLAGS       W,  RP0         W,  RP1         W,
+SPH         W,  SPL         W,  IPH         W,  IPL         W,
+IMR         W,  SYM         W,  PP          W,
+P0          W,  P1          W,  P2          W,  P3          W,
+P0CONH      W,  P0CONL      W,  P1CON       W,  P2CONH      W,
+P2CONL      W,  P3CONH      W, 
+P3CONL      W,  P0INT       W,  SYNCON0     W,  
+SYNCON1     W,  SYNCON2     W,  
+TM1CON      W,  TM2CON      W,  ADCON       W,  EMT         W,  
+IPR         W,                 
+PWM0        W,  PWM1        W,  PWM2        W,  PWM3        W,
+PWM4        W,  PWM5        W,  PWM6        W,  PWMCON      W,
+DCON        W,  DAR0        W,  DCCR        W,
+DCSR0       W,  DCSR1       W,  DAR1        W,  TBDR        W,
+DDSR        W,  ICCR        W,  ICSR        W,  
+IAR         W,  IDSR        W,
+
+
+    $; \ 53 registers
+
+INCLUDE 88INST.DEF

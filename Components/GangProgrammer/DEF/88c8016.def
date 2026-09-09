@@ -1,0 +1,136 @@
+\ 88c8016.def    Copyright SAMSUNG SEMICONDUCTOR INC. 1990-1992, 05/14/92
+\
+\ Intialize : 05/24/93  by j.y.Seo
+\ Revised   : 11/11/93  by j.y.Seo
+\ 2nd revision  : 03/10/95 by n.h.Bae	;ramrange 00-0bf--->40-0bf
+
+4000 ROMSIZE
+40 0BF RAMRANGE
+
+\ System Registers, Set1 (D0 ~DF)
+
+0D5 EQUATE FLAGS       0D6 EQUATE RP0
+0D7 EQUATE RP1         0D8 EQUATE SPH
+0D9 EQUATE SPL         0DA EQUATE IPH
+0DB EQUATE IPL         0DC EQUATE IRQ
+0DD EQUATE IMR         0DE EQUATE SYM
+0DF EQUATE PP
+
+\ Set1, Bank0 (E0 ~F0, FE, FF)
+
+0E0 EQUATE P0      0E1 EQUATE P1      0E2 EQUATE P2      0E3 EQUATE P0CON
+0E4 EQUATE P1CON   0E5 EQUATE P2CONH  0E6 EQUATE P2CONL  0E7 EQUATE P2INT
+0E8 EQUATE P2PND   0E9 EQUATE SIO     0EA EQUATE SIOCON  0EB EQUATE SIOPS
+0EC EQUATE TADATA  0ED EQUATE TBDATA  0EE EQUATE T0CON   0EF EQUATE TBINT
+0F0 EQUATE BTCON   0FE EQUATE EMT     0FF EQUATE IPR
+
+\ Set1, Bank1 (E0 ~FB)
+
+0E0 EQUATE P3      0E2 EQUATE P4      0E3 EQUATE P3CON   0E5 EQUATE P4CONH
+0E6 EQUATE P4CONL  0E7 EQUATE P4INT   0E8 EQUATE P4PND
+
+\ Page0 (00 ~2F, 3C)
+
+00  EQUATE T2M4PS  01  EQUATE T2M5CON 02  EQUATE T2M5H   03  EQUATE T2M5L
+04  EQUATE T2M5OUT 05  EQUATE T2M3PS  06  EQUATE T2M5PG  07  EQUATE T1CON
+08  EQUATE T1PS    09  EQUATE T1M0CON 0A  EQUATE T1M0H   0B  EQUATE T1M0L
+0C  EQUATE T1M0TGL 0D  EQUATE T1M1OUT 0E  EQUATE T1M1CON 0F  EQUATE T1M1H
+10  EQUATE T1M1L   11  EQUATE T1M1PG  12  EQUATE T2EX    13  EQUATE T2CON
+14  EQUATE T2M0PS  15  EQUATE T2M1PS  16  EQUATE T2M2PS  17  EQUATE T2M0CON
+18  EQUATE T2M1CON 19  EQUATE T2M2CON 1A  EQUATE T2M0H   1B  EQUATE T2M0L
+1C  EQUATE T2M1H   1D  EQUATE T2M1L   1E  EQUATE T2M2H   1F  EQUATE T2M2L
+20  EQUATE T2M3CON 21  EQUATE T2M3H   22  EQUATE T2M3L   23  EQUATE T2M3TGL
+24  EQUATE T2M4CON 25  EQUATE T2M4H   26  EQUATE T2M4L   27  EQUATE T1M0PS
+28  EQUATE ADCON   29  EQUATE P5      29  EQUATE ADIN    2A  EQUATE ADDATA
+2C  EQUATE PWM0    2D  EQUATE PWM0EX  2E  EQUATE PWM1    2F  EQUATE PWM1EX
+3C  EQUATE PWMCON
+
+END-EQUATES
+
+WORD-LIST SYSREG_R
+
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IRQ     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P0CON   W,
+        P1CON   W,  P2CONH  W,  P2CONL  W,  P2INT   W,  P2PND   W,
+        SIO     W,  BTCON   W,  EMT     W,  IPR     W,  P3      W,
+        P4      W,  P3CON   W,  P4CONH  W,  P4CONL  W,  P4INT   W,
+        P4PND   W,  T1M0H   W,  T1M0L   W,  T2EX    W,  T2M0H   W,
+        T2M0L   W,  T2M1H   W,  T2M1L   W,  T2M2H   W,  T2M2L   W,
+        T2M3H   W,  T2M3L   W,  T2M4H   W,  T2M4L   W,  ADCON   W,
+        P5      W,  ADIN    W,  ADDATA  W,  $;
+
+WORD-LIST SYSREG_W
+
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,  PP      W,
+        P0      W,  P1      W,  P2      W,  P0CON   W,  P1CON   W,
+        P2CONH  W,  P2CONL  W,  P2INT   W,  P2PND   W,  SIO     W,
+        SIOCON  W,  SIOPS   W,  TADATA  W,  TBDATA  W,  T0CON   W,
+        TBINT   W,  BTCON   W,  EMT     W,  IPR     W,  P3      W,
+        P4      W,  P3CON   W,  P4CONH  W,  P4CONL  W,  P4INT   W,
+        P4PND   W,  T2M4PS  W,  T2M5CON W,  T2M5H   W,  T2M5L   W,
+        T2M5OUT W,  T2M3PS  W,  T2M5PG  W,  T1CON   W,  T1PS    W,
+        T1M0CON W,  T1M0H   W,  T1M0L   W,  T1M0TGL W,  T1M1OUT W,
+        T1M1CON W,  T1M1H   W,  T1M1L   W,  T1M1PG  W,  T2CON   W,
+        T2M0PS  W,  T2M1PS  W,  T2M2PS  W,
+        T2M0CON W,  T2M1CON W,  T2M2CON W,  T2M3CON W,  T2M3H   W,
+        T2M3L   W,  T2M3TGL W,  T2M4CON W,  T2M4H   W,  T2M4L   W,
+        T1M0PS  W,  ADCON   W,  PWM0    W,  PWM0EX  W,  PWM1    W,
+        PWM1EX  W,  PWMCON  W,  $;
+
+WORD-LIST SYSREG_RW
+
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,  PP      W,
+        P0      W,  P1      W,  P2      W,  P0CON   W,  P1CON   W,
+        P2CONH  W,  P2CONL  W,  P2INT   W,  SIO     W,  EMT     W,
+        IPR     W,  P3      W,  P4      W,  P3CON   W,  P4CONH  W,
+        P4CONL  W,  P4INT   W,  T1M0H   W,  T1M0L   W,  T2M3H   W,
+        T2M3L   W,  T2M4H   W,  T2M4L   W,  ADCON   W,  $;
+
+
+WORD-LIST BIT_R
+
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IRQ     W,  IMR     W,  SYM     W,
+        PP      W,  P0      W,  P1      W,  P2      W,  P0CON   W,
+        P1CON   W,  P2CONH  W,  P2CONL  W,  P2INT   W,  P2PND   W,
+        SIO     W,  BTCON   W,  EMT     W,  IPR     W,  P3      W,
+        P4      W,  P3CON   W,  P4CONH  W,  P4CONL  W,  P4INT   W,
+        P4PND   W,  T1M0H   W,  T1M0L   W,  T2EX    W,  T2M0H   W,
+        T2M0L   W,  T2M1H   W,  T2M1L   W,  T2M2H   W,  T2M2L   W,
+        T2M3H   W,  T2M3L   W,  T2M4H   W,  T2M4L   W,  ADCON   W,
+        P5      W,  ADIN    W,  ADDATA  W,  $;
+
+WORD-LIST BIT_W
+
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,  PP      W,
+        P0      W,  P1      W,  P2      W,  P0CON   W,  P1CON   W,
+        P2CONH  W,  P2CONL  W,  P2INT   W,  P2PND   W,  SIO     W,
+        SIOCON  W,  SIOPS   W,  TADATA  W,  TBDATA  W,  T0CON   W,
+        TBINT   W,  BTCON   W,  EMT     W,  IPR     W,  P3      W,
+        P4      W,  P3CON   W,  P4CONH  W,  P4CONL  W,  P4INT   W,
+        P4PND   W,  T2M4PS  W,  T2M5CON W,  T2M5H   W,  T2M5L   W,
+        T2M5OUT W,  T2M3PS  W,  T2M5PG  W,  T1CON   W,  T1PS    W,
+        T1M0CON W,  T1M0H   W,  T1M0L   W,  T1M0TGL W,  T1M1OUT W,
+        T1M1CON W,  T1M1H   W,  T1M1L   W,  T1M1PG  W,  T2CON   W,
+        T2M0PS  W,  T2M1PS  W,  T2M2PS  W,
+        T2M0CON W,  T2M1CON W,  T2M2CON W,  T2M3CON W,  T2M3H   W,
+        T2M3L   W,  T2M3TGL W,  T2M4CON W,  T2M4H   W,  T2M4L   W,
+        T1M0PS  W,  ADCON   W,  PWM0    W,  PWM0EX  W,  PWM1    W,
+        PWM1EX  W,  PWMCON  W,  $;
+
+WORD-LIST BIT_RW
+
+        FLAGS   W,  RP0     W,  RP1     W,  SPH     W,  SPL     W,
+        IPH     W,  IPL     W,  IMR     W,  SYM     W,  PP      W,
+        P0      W,  P1      W,  P2      W,  P0CON   W,  P1CON   W,
+        P2CONH  W,  P2CONL  W,  P2INT   W,  SIO     W,  EMT     W,
+        IPR     W,  P3      W,  P4      W,  P3CON   W,  P4CONH  W,
+        P4CONL  W,  P4INT   W,  T1M0H   W,  T1M0L   W,  T2M3H   W,
+        T2M3L   W,  T2M4H   W,  T2M4L   W,  ADCON   W,  $;
+
+
+INCLUDE 88INST.DEF

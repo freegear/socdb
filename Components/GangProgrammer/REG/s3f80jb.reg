@@ -1,0 +1,155 @@
+; S3F80JB.REG  Copyright (c) 2003  SAMSUNG ELECTRONICS CO.
+	.list	off
+;             
+;  Modified 2003/11/19
+;  BY M.D. Cho
+;  Copyright (c) AIJI System Co., Ltd.
+	
+  .romsize	10000h
+	.ram_range	00h,0C0h
+
+;	System Registers
+T0CNT      .REG    0D0H,r
+T0DATA     .REG    0D1H
+T0CON      .REG    0D2H
+BTCON      .REG    0D3H
+CLKCON     .REG    0D4H
+FLAGS:	   .REG	   0D5h
+RP0:	     .REG	   0D6h
+RP1:	     .REG	   0D7h
+SPL:	     .REG	   0D9h
+IPH:	     .REG	   0DAh
+IPL:	     .REG	   0DBh
+IRQ:	     .REG	   0DCh,r
+IMR:	     .REG	   0DDh
+SYM:	     .REG	   0DEh
+PP:	       .REG	   0DFh
+
+;     Set1, Bank0
+
+P0:        .REG    0E0H
+P1:        .REG    0E1H
+P2:        .REG    0E2H
+P3:        .REG    0E3H
+P4:        .REG    0E4H
+P2INT:     .REG    0E5H
+P2PND:     .REG    0E6H
+P0PUR:     .REG    0E7H
+P0CONH:    .REG    0E8H
+P0CONL:    .REG    0E9H
+P1CONH:    .REG    0EAH
+P1CONL:    .REG    0EBH
+P2CONH:    .REG    0ECH
+P2CONL:    .REG    0EDH
+P2PUR:     .REG    0EEH
+P3CON:     .REG    0EFH
+P4CON:     .REG    0F0H
+P0INT:     .REG    0F1H
+P0PND:     .REG    0F2H
+CACON:     .REG    0F3H
+CADATAH:   .REG    0F4H
+CADATAL:   .REG    0F5H
+T1CNTH:    .REG    0F6H,r
+T1CNTL:    .REG    0F7H,r
+T1DATAH:   .REG    0F8H
+T1DATAL:   .REG    0F9H
+T1CON:     .REG    0FAH
+STOPCON:   .REG    0FBH,w
+BTCNT:     .REG    0FDH,r
+EMT:       .REG    0FEH
+IPR:       .REG    0FFH
+
+;     Set1, Bank1
+
+LVDCON     .REG    0E0H
+P345CON    .REG    0E1H
+P4CONH     .REG    0E2H
+P4CONL     .REG    0E3H
+T2CNTH     .REG    0E4H,r
+T2CNTL     .REG    0E5H,r
+T2DATAH    .REG    0E6H
+T2DATAL    .REG    0E7H
+T2CON      .REG    0E8H
+CMOD       .REG    0E9H
+CMPREG     .REG    0EAH,r
+CMPSEL     .REG    0EBH
+FMSECH     .REG    0ECH
+FMSECL     .REG    0EDH
+FMUSR      .REG    0EEH
+FMCON      .REG    0EFH
+
+
+; system register
+
+t0cnt      .reg    0d0h,r
+t0data     .reg    0d1h
+t0con      .reg    0d2h
+btcon      .reg    0d3h
+clkcon     .reg    0d4h
+flags:	   .reg	   0d5h
+rp0:	     .reg	   0d6h
+rp1:	     .reg	   0d7h
+spl:	     .reg	   0d9h
+iph:	     .reg	   0dah
+ipl:	     .reg	   0dbh
+irq:	     .reg	   0dch,r
+imr:	     .reg	   0ddh
+sym:	     .reg	   0deh
+pp:	       .reg	   0dfh
+
+;     Set1, Bank0
+
+p0:        .reg    0e0h
+p1:        .reg    0e1h
+p2:        .reg    0e2h
+p3:        .reg    0e3h
+p4:        .reg    0e4h
+p2int:     .reg    0e5h
+p2pnd:     .reg    0e6h
+p0pur:     .reg    0e7h
+p0conh:    .reg    0e8h
+p0conl:    .reg    0e9h
+p1conh:    .reg    0eah
+p1conl:    .reg    0ebh
+p2conh:    .reg    0ech
+p2conl:    .reg    0edh
+p2pur:     .reg    0eeh
+p3con:     .reg    0efh
+p4con:     .reg    0f0h
+p0int:     .reg    0f1h
+p0pnd:     .reg    0f2h
+cacon:     .reg    0f3h
+cadatah:   .reg    0f4h
+cadatal:   .reg    0f5h
+t1cnth:    .reg    0f6h,r
+t1cntl:    .reg    0f7h,r
+t1datah:   .reg    0f8h
+t1datal:   .reg    0f9h
+t1con:     .reg    0fah
+stopcon:   .reg    0fbh,w
+btcnt:     .reg    0fdh,r
+emt:       .reg    0feh
+ipr:       .reg    0ffh
+
+;     Set1, Bank1
+
+lvdcon     .reg   0e0h
+p345con    .reg   0e1h
+p4conh     .reg   0e2h
+p4conl     .reg   0e3h
+t2cnth     .reg   0e4h,r
+t2cntl     .reg   0e5h,r
+t2datah    .reg   0e6h
+t2datal    .reg   0e7h
+t2con      .reg   0e8h
+cmod       .reg   0e9h
+cmpreg     .reg   0eah,r
+cmpsel     .reg   0ebh
+fmsech     .reg   0ech
+fmsecl     .reg   0edh
+fmusr      .reg   0eeh
+fmcon      .reg   0efh
+
+;
+; END OF  S3F80JB.REG
+	.list	on
