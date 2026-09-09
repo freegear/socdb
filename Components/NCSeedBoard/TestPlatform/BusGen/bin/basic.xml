@@ -1,0 +1,493 @@
+<?xml version="1.0"?>
+<!DOCTYPE BUS SYSTEM "basic.dtd">
+<!--?xml:stylesheet type="text/xsl" href="basic.xsl"?-->
+<!-- Bus generation MAIN config file -->
+<!-- Generator version 0.1           -->
+
+<BUS>
+<!-- __________________Main Setting AREA_________________________ -->
+
+
+    <Main>
+        <name masternum="4" slavenum="5">TestPlatform</name>
+        <width>
+            <buswidth>32</buswidth>
+            <addresswidth>32</addresswidth>
+        </width>
+
+        <channel_connection>
+            <!-- cross_bar | shared_bus -->
+            <write_addr>cross_bar</write_addr>
+            <write_data>cross_bar</write_data>
+            <write_resp>cross_bar</write_resp>
+            <read_addr>cross_bar</read_addr>
+            <read_data>cross_bar</read_data>
+        </channel_connection>
+    
+        <memory_map>
+            <remap_enable>disable</remap_enable>
+            <map0>
+                <slave start_addr="0x40000000" area_addr="0x80000000" end_addr="0x80000000">DDRCtrl</slave>
+                <slave start_addr="0x20000000" area_addr="0x30000000" end_addr="0x30000000">APB0</slave>
+                <slave start_addr="0x30000000" area_addr="0x40000000" end_addr="0x40000000">APB1</slave>
+                <slave start_addr="0x00000000" area_addr="0x10000000" end_addr="0x10000000">SMC</slave>
+                <slave start_addr="0x10000000" area_addr="0x20000000" end_addr="0x20000000">IntSRAM</slave>
+            </map0>
+            <!--Remap area "if you not use remap, 
+                you need not fill this area"-->
+            <map1>
+                <slave start_addr="0x00000000" area_addr="0x0FFFFFFF" end_addr="0x0FFFFFFF">DDRCtrl</slave>
+                <slave start_addr="0x10000000" area_addr="0x1FFFFFFF" end_addr="0x1FFFFFFF">APB0</slave>
+                <slave start_addr="0x20000000" area_addr="0x2FFFFFFF" end_addr="0x2FFFFFFF">APB1</slave>
+                <slave start_addr="0x30000000" area_addr="0x3FFFFFFF" end_addr="0x3FFFFFFF">SMC</slave>
+                <slave start_addr="0x40000000" area_addr="0x4FFFFFFF" end_addr="0x4FFFFFFF">IntSRAM</slave>
+            </map1>
+        </memory_map>
+    </Main>
+    
+
+<!-- __________________Master Setting AREA_________________________ -->
+
+    <!-- ARM926 -->
+    <Master name="ARM" writeidwid="0" readidwid="0">
+        <connect_slave>
+            <!-- insert slave name -->
+            <conslave_name>DDRCtrl</conslave_name> 
+            <conslave_name>APB0</conslave_name> 
+            <conslave_name>APB1</conslave_name>
+            <conslave_name>SMC</conslave_name>
+            <conslave_name>IntSRAM</conslave_name>
+        </connect_slave>
+        <operate_write>
+            <!-- simple, advaneced -->
+            <method>advanced</method>
+            <!-- enable, disable-->
+            <lock_access>enable</lock_access>
+            <!-- max count number -->
+            <write_issuing_cap>1</write_issuing_cap>
+            <read_issuing_cap>1</read_issuing_cap>
+        </operate_write>
+        <portconfig>
+            <writechannel>
+                <channel_enable>enable</channel_enable>
+                <lock>enable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+                <wstrb>enable</wstrb>
+            </writechannel>
+            <readchannel>
+                <channel_enable>enable</channel_enable>
+                <lock>enable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+            </readchannel>
+        </portconfig>
+        <masterregisterslice>
+            <!-- mode = (FULL | FOWARD) rmum => total slice number -->
+            <mastertosi rnum="1" mode="FULL">enable</mastertosi>
+            <sitomi rnum="0" mode="FULL">enable</sitomi>
+        </masterregisterslice>
+    </Master>
+    
+    <!-- Display Module -->
+    <Master name="DisplayCtrl"  writeidwid="2" readidwid="2">
+        <connect_slave>
+            <!-- insert slave name -->
+            <conslave_name>DDRCtrl</conslave_name> 
+			<!-- <conslave_name>APB0</conslave_name> -->
+			<!-- <conslave_name>APB1</conslave_name> -->
+			<conslave_name>SMC</conslave_name>
+            <conslave_name>IntSRAM</conslave_name>
+        </connect_slave>
+        <operate_write>
+            <!-- simple, advaneced -->
+            <method>advanced</method>
+            <!-- enable, disable-->
+            <lock_access>disable</lock_access>
+            <!-- max count number -->
+            <write_issuing_cap>3</write_issuing_cap>
+            <read_issuing_cap>3</read_issuing_cap>
+        </operate_write>
+        <portconfig>
+            <writechannel>
+                <channel_enable>disable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+                <wstrb>disable</wstrb>
+            </writechannel>
+            <readchannel>
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+            </readchannel>
+        </portconfig>
+        <masterregisterslice>
+            <!-- mode = (FULL | FOWARD) rmum => total slice number -->
+            <mastertosi rnum="1" mode="FULL">enable</mastertosi>
+            <sitomi rnum="0" mode="FULL">disable</sitomi>
+        </masterregisterslice>
+    </Master>
+
+    <!-- DMA Controller(2x4) -->
+    <Master name="DMACtrl"  writeidwid="1" readidwid="1">
+        <connect_slave>
+            <!-- insert slave name -->
+            <conslave_name>DDRCtrl</conslave_name> 
+			<conslave_name>APB0</conslave_name>
+			<conslave_name>APB1</conslave_name>
+			<conslave_name>SMC</conslave_name>
+            <conslave_name>IntSRAM</conslave_name>
+        </connect_slave>
+        <operate_write>
+            <!-- simple, advaneced -->
+            <method>advanced</method>
+            <!-- enable, disable-->
+            <lock_access>disable</lock_access>
+            <!-- max count number -->
+            <write_issuing_cap>2</write_issuing_cap>
+            <read_issuing_cap>2</read_issuing_cap>
+        </operate_write>
+        <portconfig>
+            <writechannel>
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+                <wstrb>enable</wstrb>
+            </writechannel>
+            <readchannel>
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+            </readchannel>
+        </portconfig>
+        <masterregisterslice>
+            <!-- mode = (FULL | FOWARD) rmum => total slice number -->
+            <mastertosi rnum="1" mode="FULL">enable</mastertosi>
+            <sitomi rnum="0" mode="FULL">disable</sitomi>
+        </masterregisterslice>
+    </Master>
+
+    <!-- Video Input Port(BT656 Interface) -->
+    <Master name="VideoIn"  writeidwid="0" readidwid="0">
+        <connect_slave>
+            <!-- insert slave name -->
+            <conslave_name>DDRCtrl</conslave_name> 
+			<conslave_name>SMC</conslave_name>
+            <conslave_name>IntSRAM</conslave_name>
+        </connect_slave>
+        <operate_write>
+            <!-- simple, advaneced -->
+            <method>advanced</method>
+            <!-- enable, disable-->
+            <lock_access>disable</lock_access>
+            <!-- max count number -->
+            <write_issuing_cap>2</write_issuing_cap>
+            <read_issuing_cap>1</read_issuing_cap>
+        </operate_write>
+        <portconfig>
+            <writechannel>
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+                <wstrb>enable</wstrb>
+            </writechannel>
+            <readchannel>
+                <channel_enable>disable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+            </readchannel>
+        </portconfig>
+        <masterregisterslice>
+            <!-- mode = (FULL | FOWARD) rmum => total slice number -->
+            <mastertosi rnum="1" mode="FULL">enable</mastertosi>
+            <sitomi rnum="0" mode="FULL">disable</sitomi>
+        </masterregisterslice>
+    </Master>
+
+
+<!-- __________________Slave Setting AREA_________________________ -->
+
+
+    <!-- DDR Controller -->
+    <Slave name = "DDRCtrl">
+        <arbiter>
+            <method>normal</method>
+            <priority>
+                <mastername>DisplayCtrl</mastername>
+                <mastername>DMACtrl</mastername>
+                <mastername>VideoIn</mastername>
+                <mastername>ARM</mastername>
+            </priority>
+        </arbiter>
+        <operate_read>
+            <!-- max depth -->
+            <write_issuing_cap>4</write_issuing_cap>
+            <read_issuing_cap>4</read_issuing_cap>
+            <burst_type>
+                <!-- enable | disable -->
+                <FIXED>disable</FIXED>
+                <INCR>enable</INCR>
+                <WRAP>enable</WRAP>
+            </burst_type>
+        </operate_read>
+        <portconfig>
+            <writechannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+                <wstrb>enable</wstrb>
+            </writechannel>
+            <readchannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+            </readchannel>
+        </portconfig>
+        <slaveregisterslice>
+            <!-- mode = (FULL | FOWARD) rmum => total slice number -->
+            <slavetomi rnum="1" mode="FULL">enable</slavetomi>
+            <mitosi rnum="1" mode="FULL">disable</mitosi>
+        </slaveregisterslice>
+    </Slave>
+    
+
+    <!-- APB0 -->
+    <Slave name = "APB0">
+        <arbiter>
+            <method>normal</method>
+            <priority>
+                <mastername>DMACtrl</mastername>
+                <mastername>ARM</mastername>
+            </priority>
+        </arbiter>
+        <operate_read>
+            <!-- max depth -->
+            <write_issuing_cap>1</write_issuing_cap>
+            <read_issuing_cap>1</read_issuing_cap>
+            <burst_type>
+                <!-- enable | disable -->
+                <FIXED>enable</FIXED>
+                <INCR>enable</INCR>
+                <WRAP>enable</WRAP>
+            </burst_type>
+        </operate_read>
+        <portconfig>
+            <writechannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+                <wstrb>disable</wstrb>
+            </writechannel>
+            <readchannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+            </readchannel>
+        </portconfig>
+        <slaveregisterslice>
+            <!-- mode = (FULL | FOWARD) rmum => total slice number -->
+            <slavetomi rnum="1" mode="FULL">enable</slavetomi>
+            <mitosi rnum="1" mode="FULL">disable</mitosi>
+        </slaveregisterslice>
+    </Slave>
+    
+    <!-- APB1 -->
+    <Slave name = "APB1">
+        <arbiter>
+            <method>normal</method>
+            <priority>
+                <mastername>DMACtrl</mastername>
+                <mastername>ARM</mastername>
+            </priority>
+        </arbiter>
+        <operate_read>
+            <!-- max depth -->
+            <write_issuing_cap>1</write_issuing_cap>
+            <read_issuing_cap>1</read_issuing_cap>
+            <burst_type>
+                <!-- enable | disable -->
+                <FIXED>enable</FIXED>
+                <INCR>enable</INCR>
+                <WRAP>enable</WRAP>
+            </burst_type>
+        </operate_read>
+        <portconfig>
+            <writechannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+                <wstrb>disable</wstrb>
+            </writechannel>
+            <readchannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+            </readchannel>
+        </portconfig>
+        <slaveregisterslice>
+            <!-- mode = (FULL | FOWARD) rmum => total slice number -->
+            <slavetomi rnum="1" mode="FULL">enable</slavetomi>
+            <mitosi rnum="1" mode="FULL">disable</mitosi>
+        </slaveregisterslice>
+    </Slave>
+    
+    <!-- External Static Memory Controller -->
+    <Slave name = "SMC">
+        <arbiter>
+            <method>normal</method>
+            <priority>
+                <mastername>ARM</mastername>
+                <mastername>DisplayCtrl</mastername>
+                <mastername>DMACtrl</mastername>
+                <mastername>VideoIn</mastername>
+            </priority>
+        </arbiter>
+        <operate_read>
+            <!-- max depth -->
+            <write_issuing_cap>2</write_issuing_cap>
+            <read_issuing_cap>2</read_issuing_cap>
+            <burst_type>
+                <!-- enable | disable -->
+                <FIXED>enable</FIXED>
+                <INCR>enable</INCR>
+                <WRAP>enable</WRAP>
+            </burst_type>
+        </operate_read>
+        <portconfig>
+            <writechannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+                <wstrb>enable</wstrb>
+            </writechannel>
+            <readchannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+            </readchannel>
+        </portconfig>
+        <slaveregisterslice>
+            <!-- mode = (FULL | FOWARD) rmum => total slice number -->
+            <slavetomi rnum="1" mode="FULL">enable</slavetomi>
+            <mitosi rnum="1" mode="FULL">disable</mitosi>
+        </slaveregisterslice>
+    </Slave>
+    
+    <!-- Internal SRAM Controller -->
+    <Slave name = "IntSRAM">
+        <arbiter>
+            <method>normal</method>
+            <priority>
+                <mastername>DisplayCtrl</mastername>
+                <mastername>DMACtrl</mastername>
+                <mastername>ARM</mastername>
+                <mastername>VideoIn</mastername>
+            </priority>
+        </arbiter>
+        <operate_read>
+            <!-- max depth -->
+            <write_issuing_cap>2</write_issuing_cap>
+            <read_issuing_cap>2</read_issuing_cap>
+            <burst_type>
+                <!-- enable | disable -->
+                <FIXED>enable</FIXED>
+                <INCR>enable</INCR>
+                <WRAP>enable</WRAP>
+            </burst_type>
+        </operate_read>
+        <portconfig>
+            <writechannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+                <wstrb>enable</wstrb>
+            </writechannel>
+            <readchannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+            </readchannel>
+        </portconfig>
+        <slaveregisterslice>
+            <!-- mode = (FULL | FOWARD) rmum => total slice number -->
+            <slavetomi rnum="1" mode="FULL">enable</slavetomi>
+            <mitosi rnum="1" mode="FULL">disable</mitosi>
+        </slaveregisterslice>
+    </Slave>
+
+
+    <!-- ******************************* -->
+    <!--  don't modify this definition   -->
+    <!-- ******************************* -->
+    <!-- Default Slave name is "default" -->
+    <!-- ******************************* -->
+    <Slave name = "default">
+        <arbiter>
+            <method>normal</method>
+            <priority>
+                <!-- don't insert master name  -->
+                <mastername>Don't_insert_any_master</mastername>
+            </priority>
+        </arbiter>
+        <operate_read>
+            <!-- max depth -->
+            <write_issuing_cap>4</write_issuing_cap>
+            <read_issuing_cap>4</read_issuing_cap>
+            <burst_type>
+                <!-- enable | disable -->
+                <FIXED>enable</FIXED>
+                <INCR>enable</INCR>
+                <WRAP>enable</WRAP>
+            </burst_type>
+        </operate_read>
+        <portconfig>
+            <writechannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+                <wstrb>enable</wstrb>
+            </writechannel>
+            <readchannel>
+                <!-- enable | disable -->
+                <channel_enable>enable</channel_enable>
+                <lock>disable</lock>
+                <cache>disable</cache>
+                <protect>disable</protect>
+            </readchannel>
+        </portconfig>
+        <slaveregisterslice>
+            <!-- mode = (FULL | FOWARD) rmum => total slice number -->
+            <slavetomi rnum="1" mode="FULL">enable</slavetomi>
+            <mitosi rnum="1" mode="FULL">disable</mitosi>
+        </slaveregisterslice>
+    </Slave>
+    
+</BUS>

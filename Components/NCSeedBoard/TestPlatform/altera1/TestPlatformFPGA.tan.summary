@@ -1,0 +1,156 @@
+--------------------------------------------------------------------------------------
+Timing Analyzer Summary
+--------------------------------------------------------------------------------------
+
+Type           : Worst-case tsu
+Slack          : N/A
+Required Time  : None
+Actual Time    : 12.324 ns
+From           : RESETn
+To             : TestPlatformCore:Core|tarm_axi_fastclk:CPU|tarm_axi:tarm_axi|cpu:uCPU|TOYARM:toyarm_0|GREG:I_9|buf_cell_6_[3]
+From Clock     : --
+To Clock       : Clock
+Failed Paths   : 0
+
+Type           : Worst-case tco
+Slack          : N/A
+Required Time  : None
+Actual Time    : 26.132 ns
+From           : TestPlatformCore:Core|DmTop:DisplayCtrl|LcdTG:LcdTG|TFTPDEn
+To             : LCDData[18]
+From Clock     : Clock
+To Clock       : --
+Failed Paths   : 0
+
+Type           : Worst-case tpd
+Slack          : N/A
+Required Time  : None
+Actual Time    : 13.291 ns
+From           : RESETn
+To             : led_4094oe
+From Clock     : --
+To Clock       : --
+Failed Paths   : 0
+
+Type           : Worst-case th
+Slack          : N/A
+Required Time  : None
+Actual Time    : 7.050 ns
+From           : SD_DQ[7]
+To             : TestPlatformCore:Core|DDRTop:DDRCtrl|DDRAi:DDRAi|RData1stStgLo[7]
+From Clock     : --
+To Clock       : Clock
+Failed Paths   : 0
+
+Type           : Clock Setup: 'TestPlatformCore:Core|ClockResetGen_2s_1s_0_500000_1s:ClockResetGen|SD_CLK_c'
+Slack          : 1.392 ns
+Required Time  : 25.00 MHz ( period = 40.000 ns )
+Actual Time    : N/A
+From           : TestPlatformCore:Core|tarm_axi_fastclk:CPU|F2SSlice_Advanced:aw_f2sslice|AWADDR_ARM_20
+To             : TestPlatformCore:Core|SBUS:SBUS|WriteChannel:SBUS_WriteChannel|ARM_RS_WriteChannelsi:ARM_RS_WriteChannelsi|ARM_AWSIm2si_registered:ARM_0_AWSIm2si_registered|INFORMATION_1[20]
+From Clock     : Clock
+To Clock       : TestPlatformCore:Core|ClockResetGen_2s_1s_0_500000_1s:ClockResetGen|SD_CLK_c
+Failed Paths   : 0
+
+Type           : Clock Setup: 'Clock'
+Slack          : 2.188 ns
+Required Time  : 50.00 MHz ( period = 20.000 ns )
+Actual Time    : 56.14 MHz ( period = 17.812 ns )
+From           : TestPlatformCore:Core|tarm_axi_fastclk:CPU|tarm_axi:tarm_axi|cpu:uCPU|TOYARM:toyarm_0|FF1_32_11:I_21|OUT1_r2_0
+To             : TestPlatformCore:Core|tarm_axi_fastclk:CPU|tarm_axi:tarm_axi|cpu:uCPU|cachemem:cachemem_0|sp128x22m4:icam_0|altsyncram:mem_Z|altsyncram_00n1:auto_generated|ram_block1a0~porta_datain_reg4
+From Clock     : Clock
+To Clock       : Clock
+Failed Paths   : 0
+
+Type           : Clock Setup: 'TestPlatformCore:Core|MMCTop:MMCTop|mmc_Prescaler:Prescaler|MMC_CLKOUT_c'
+Slack          : 3.508 ns
+Required Time  : 3.13 MHz ( period = 320.000 ns )
+Actual Time    : N/A
+From           : TestPlatformCore:Core|MMCTop:MMCTop|mmc_APBRegisterIF:mmc_APBRegisterIF|SDreset~DUPLICATE
+To             : TestPlatformCore:Core|MMCTop:MMCTop|mmc_FeedBackSync:FeedBackSync|DATIN_i_7
+From Clock     : TestPlatformCore:Core|ClockResetGen_2s_1s_0_500000_1s:ClockResetGen|SD_CLK_c
+To Clock       : TestPlatformCore:Core|MMCTop:MMCTop|mmc_Prescaler:Prescaler|MMC_CLKOUT_c
+Failed Paths   : 0
+
+Type           : Clock Setup: 'SD_DQS[0]'
+Slack          : 19.169 ns
+Required Time  : 50.00 MHz ( period = 20.000 ns )
+Actual Time    : Restricted to 500.00 MHz ( period = 2.000 ns )
+From           : TestPlatformCore:Core|DDRTop:DDRCtrl|DDRAi:DDRAi|RData1stStgLo[6]
+To             : TestPlatformCore:Core|DDRTop:DDRCtrl|DDRAi:DDRAi|RData2ndStg[6]
+From Clock     : SD_DQS[0]
+To Clock       : SD_DQS[0]
+Failed Paths   : 0
+
+Type           : Clock Setup: 'SD_DQS[1]'
+Slack          : 19.216 ns
+Required Time  : 50.00 MHz ( period = 20.000 ns )
+Actual Time    : Restricted to 500.00 MHz ( period = 2.000 ns )
+From           : TestPlatformCore:Core|DDRTop:DDRCtrl|DDRAi:DDRAi|RData1stStgHi[1]
+To             : TestPlatformCore:Core|DDRTop:DDRCtrl|DDRAi:DDRAi|RData2ndStg[9]
+From Clock     : SD_DQS[1]
+To Clock       : SD_DQS[1]
+Failed Paths   : 0
+
+Type           : Clock Hold: 'TestPlatformCore:Core|ClockResetGen_2s_1s_0_500000_1s:ClockResetGen|SD_CLK_c'
+Slack          : -4.436 ns
+Required Time  : 25.00 MHz ( period = 40.000 ns )
+Actual Time    : N/A
+From           : TestPlatformCore:Core|DmTop:DisplayCtrl|DmReg:DmReg|LCDTiming3PCLK_i[0]
+To             : TestPlatformCore:Core|DmTop:DisplayCtrl|DmReg:DmReg|LcdReg:LcdSyncLcdClk|LCDTiming3LCDCLK[0]
+From Clock     : TestPlatformCore:Core|ClockResetGen_2s_1s_0_500000_1s:ClockResetGen|SD_CLK_c
+To Clock       : TestPlatformCore:Core|ClockResetGen_2s_1s_0_500000_1s:ClockResetGen|SD_CLK_c
+Failed Paths   : 1671
+
+Type           : Clock Hold: 'Clock'
+Slack          : 0.021 ns
+Required Time  : 50.00 MHz ( period = 20.000 ns )
+Actual Time    : N/A
+From           : TestPlatformCore:Core|tarm_axi_fastclk:CPU|tarm_axi:tarm_axi|AHB2AXIBridge:AHB2AXIBridge|ARADDR_Fast_10
+To             : TestPlatformCore:Core|tarm_axi_fastclk:CPU|F2SSlice_Advanced_1:ar_f2sslice|INFORMATION_1[28]
+From Clock     : Clock
+To Clock       : Clock
+Failed Paths   : 0
+
+Type           : Clock Hold: 'SD_DQS[1]'
+Slack          : 0.381 ns
+Required Time  : 50.00 MHz ( period = 20.000 ns )
+Actual Time    : N/A
+From           : TestPlatformCore:Core|DDRTop:DDRCtrl|DDRAi:DDRAi|RData1stStgHi[0]
+To             : TestPlatformCore:Core|DDRTop:DDRCtrl|DDRAi:DDRAi|RData2ndStg[8]
+From Clock     : SD_DQS[1]
+To Clock       : SD_DQS[1]
+Failed Paths   : 0
+
+Type           : Clock Hold: 'SD_DQS[0]'
+Slack          : 0.412 ns
+Required Time  : 50.00 MHz ( period = 20.000 ns )
+Actual Time    : N/A
+From           : TestPlatformCore:Core|DDRTop:DDRCtrl|DDRAi:DDRAi|RData1stStgLo[3]
+To             : TestPlatformCore:Core|DDRTop:DDRCtrl|DDRAi:DDRAi|RData2ndStg[3]
+From Clock     : SD_DQS[0]
+To Clock       : SD_DQS[0]
+Failed Paths   : 0
+
+Type           : Clock Hold: 'TestPlatformCore:Core|MMCTop:MMCTop|mmc_Prescaler:Prescaler|MMC_CLKOUT_c'
+Slack          : 36.059 ns
+Required Time  : 3.13 MHz ( period = 320.000 ns )
+Actual Time    : N/A
+From           : TestPlatformCore:Core|MMCTop:MMCTop|mmc_APBRegisterIF:mmc_APBRegisterIF|SDreset~DUPLICATE
+To             : TestPlatformCore:Core|MMCTop:MMCTop|mmc_FeedBackSync:FeedBackSync|DATIN_i_3
+From Clock     : TestPlatformCore:Core|ClockResetGen_2s_1s_0_500000_1s:ClockResetGen|SD_CLK_c
+To Clock       : TestPlatformCore:Core|MMCTop:MMCTop|mmc_Prescaler:Prescaler|MMC_CLKOUT_c
+Failed Paths   : 0
+
+Type           : Total number of failed paths
+Slack          : 
+Required Time  : 
+Actual Time    : 
+From           : 
+To             : 
+From Clock     : 
+To Clock       : 
+Failed Paths   : 1671
+
+--------------------------------------------------------------------------------------
+

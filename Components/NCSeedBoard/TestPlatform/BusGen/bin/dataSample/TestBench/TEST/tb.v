@@ -1,0 +1,413 @@
+
+
+
+
+`timescale 1 ns/ 10ps
+module tb;
+
+parameter CLK_HALFPERIOD=10;
+
+reg         ACLK        ;     // APB system clock
+reg         ARESETn     ;     // APB system reset
+always #CLK_HALFPERIOD	ACLK = ~ACLK;
+initial ACLK 		= 0;     // clock
+initial
+begin
+	ARESETn 	= 0;     // reset
+	repeat(10) @(posedge ACLK);
+	ARESETn	= 1;
+end
+
+//DEF_STATE
+
+
+    //Write Channel SlaveInterface
+    //_______________________________________________________________
+//STATE00_START
+    
+    //For Master ?? :: ?NAME?
+    //Write address channel
+    wire   [WRITECHID??_WID-1:0]   AWIDm?NAME?2si??;    
+    wire   [ADDR_WID-1:0]          AWADDRm?NAME?2si??;
+    wire   [AWLEN_WID-1:0]         AWLENm?NAME?2si??;
+    wire   [AWSIZE_WID-1:0]        AWSIZEm?NAME?2si??;  
+    wire   [AWBURST_WID-1:0]       AWBURSTm?NAME?2si??; 
+    wire   [AWLOCK_WID-1:0]        AWLOCKm?NAME?2si??;  
+    wire   [AWCACHE_WID-1:0]       AWCACHEm?NAME?2si??; 
+    wire   [AWPROT_WID-1:0]        AWPROTm?NAME?2si??;  
+
+    wire   AWVALIDm?NAME?2si??; 
+    wire  AWREADYsi??2m?NAME?; 
+
+    //Write data channel
+    wire   [WRITECHID??_WID-1:0]   WIDm?NAME?2si??;     
+    wire   [BUS_WID-1:0]           WDATAm?NAME?2si??;   
+    wire   [WSTRB_WID-1:0]         WSTRBm?NAME?2si??;   
+    wire   WLASTm?NAME?2si??;   
+    wire   WVALIDm?NAME?2si??;  
+    wire  WREADYsi??2m?NAME?;  
+
+    //Write response channel
+    wire   [WRITECHID??_WID-1:0]  BIDsi??2m?NAME?;     
+    wire   [BRESP_WID-1:0]        BRESPsi??2m?NAME?;   
+    wire   BVALIDsi??2m?NAME?;  
+    wire    BREADYm?NAME?2si??;  
+    //_______________________________________________________________
+//STATE_END
+
+
+    //Write Channel MasterInterface
+    //_______________________________________________________________
+//STATE01_START
+   
+    // For slave ?? :: ?NAME?
+    //__________________________________________________
+    //Write address channel
+    wire   [WR_SLAVEID??_WID-1:0]AWIDmi??2s?NAME?;    
+    wire   [ADDR_WID-1:0]     AWADDRmi??2s?NAME?;
+    wire   [AWLEN_WID-1:0]    AWLENmi??2s?NAME?;
+    wire   [AWSIZE_WID-1:0]   AWSIZEmi??2s?NAME?;  
+    wire   [AWBURST_WID-1:0]  AWBURSTmi??2s?NAME?; 
+    wire   [AWLOCK_WID-1:0]   AWLOCKmi??2s?NAME?;  
+    wire   [AWCACHE_WID-1:0]  AWCACHEmi??2s?NAME?; 
+    wire   [AWPROT_WID-1:0]   AWPROTmi??2s?NAME?;  
+
+    wire   AWVALIDmi??2s?NAME?; 
+    wire    AWREADYs?NAME?2mi??; 
+    
+    //Write data channel
+    wire   [WR_SLAVEID??_WID-1:0]WIDmi??2s?NAME?;     
+    wire   [BUS_WID-1:0]      WDATAmi??2s?NAME?;   
+    wire   [WSTRB_WID-1:0]    WSTRBmi??2s?NAME?;   
+    wire   WLASTmi??2s?NAME?;   
+    wire   WVALIDmi??2s?NAME?;  
+    wire    WREADYs?NAME?2mi??; 
+
+    //Write response channel
+    wire   [WR_SLAVEID??_WID-1:0] BIDs?NAME?2mi??;     
+    wire   [BRESP_WID-1:0]     BRESPs?NAME?2mi??;   
+    wire   BVALIDs?NAME?2mi??;  
+    wire  BREADYmi??2s?NAME?;  
+//STATE_END
+
+
+
+    //Read Channel SlaveInterface
+    //_______________________________________________________________
+//STATE02_START
+    
+    //For Master ?? :: ?NAME?
+    //Read address channel
+    wire   [READCHID??_WID-1:0]ARIDm?NAME?2si??;    
+    wire   [ADDR_WID-1:0]     ARADDRm?NAME?2si??;
+    wire   [ARLEN_WID-1:0]    ARLENm?NAME?2si??;
+    wire   [ARSIZE_WID-1:0]   ARSIZEm?NAME?2si??;  
+    wire   [ARBURST_WID-1:0]  ARBURSTm?NAME?2si??; 
+    wire   [ARLOCK_WID-1:0]   ARLOCKm?NAME?2si??;  
+    wire   [ARCACHE_WID-1:0]  ARCACHEm?NAME?2si??; 
+    wire   [ARPROT_WID-1:0]   ARPROTm?NAME?2si??;  
+
+    wire   ARVALIDm?NAME?2si??; 
+    wire  ARREADYsi??2m?NAME?; 
+
+    //Read data channel
+    wire   [READCHID??_WID-1:0]RIDsi??2m?NAME?;     
+    wire   [BRESP_WID-1:0]   RRESPsi??2m?NAME?;   
+    wire   [BUS_WID-1:0]     RDATAsi??2m?NAME?;
+    wire   RLASTsi??2m?NAME?;
+    wire   RVALIDsi??2m?NAME?;  
+    wire    RREADYm?NAME?2si??;  
+
+//STATE_END
+
+
+    //MasterInterface
+    //_______________________________________________________________
+//STATE03_START
+    
+    // For slave ??
+    //__________________________________________________
+
+    // Read address channel
+    wire   [RD_SLAVEID??_WID-1:0]ARIDmi??2s?NAME?;    
+    wire   [ADDR_WID-1:0]     ARADDRmi??2s?NAME?;
+    wire   [ARLEN_WID-1:0]    ARLENmi??2s?NAME?;
+    wire   [ARSIZE_WID-1:0]   ARSIZEmi??2s?NAME?;  
+    wire   [ARBURST_WID-1:0]  ARBURSTmi??2s?NAME?; 
+    wire   [ARLOCK_WID-1:0]   ARLOCKmi??2s?NAME?;  
+    wire   [ARCACHE_WID-1:0]  ARCACHEmi??2s?NAME?; 
+    wire   [ARPROT_WID-1:0]   ARPROTmi??2s?NAME?;  
+
+    wire   ARVALIDmi??2s?NAME?; 
+    wire    ARREADYs?NAME?2mi??; 
+    
+
+    //Read data channel
+    wire   [RD_SLAVEID??_WID-1:0] RIDs?NAME?2mi??;     
+    wire   [RRESP_WID-1:0]     RRESPs?NAME?2mi??;   
+    wire   [BUS_WID-1:0]       RDATAs?NAME?2mi??;  
+    wire   RLASTs?NAME?2mi??;  
+    wire   RVALIDs?NAME?2mi??;  
+    wire  RREADYmi??2s?NAME?;  
+
+//STATE_END
+    //_______________________________________________________________
+
+
+//STATE04_START
+SBUS ?BUSNAME?(
+//STATE_END
+
+//Write channel signal
+//STATE05_START
+    //_______________________________________________________________
+    //For Master ?? :: ?NAME?
+    //Write address channel
+    .AWIDm?NAME?2si??    (AWIDm?NAME?2si??    ),
+    .AWADDRm?NAME?2si??  (AWADDRm?NAME?2si??  ),
+    .AWLENm?NAME?2si??   (AWLENm?NAME?2si??   ),
+    .AWSIZEm?NAME?2si??  (AWSIZEm?NAME?2si??  ),
+    .AWBURSTm?NAME?2si?? (AWBURSTm?NAME?2si?? ),
+    .AWLOCKm?NAME?2si??  (AWLOCKm?NAME?2si??  ),
+    .AWCACHEm?NAME?2si?? (AWCACHEm?NAME?2si?? ),
+    .AWPROTm?NAME?2si??  (AWPROTm?NAME?2si??  ),
+
+    .AWVALIDm?NAME?2si?? (AWVALIDm?NAME?2si?? ),
+    .AWREADYsi??2m?NAME? (AWREADYsi??2m?NAME? ),
+
+    //Write data channel
+    .WIDm?NAME?2si??     (WIDm?NAME?2si??     ),
+    .WDATAm?NAME?2si??   (WDATAm?NAME?2si??   ),
+    .WSTRBm?NAME?2si??   (WSTRBm?NAME?2si??   ),
+    .WLASTm?NAME?2si??   (WLASTm?NAME?2si??   ),
+    .WVALIDm?NAME?2si??  (WVALIDm?NAME?2si??  ),
+    .WREADYsi??2m?NAME?  (WREADYsi??2m?NAME?  ),
+
+    //Write response channel
+    .BIDsi??2m?NAME?     (BIDsi??2m?NAME?     ),
+    .BRESPsi??2m?NAME?   (BRESPsi??2m?NAME?   ),
+    .BVALIDsi??2m?NAME?  (BVALIDsi??2m?NAME?  ),
+    .BREADYm?NAME?2si??  (BREADYm?NAME?2si??  ),
+//STATE_END
+
+//STATE06_START
+    //_______________________________________________________________
+    //For Slave ?? :: ?NAME?
+    //Write address channel
+    .AWIDmi??2s?NAME?    (AWIDmi??2s?NAME?    ),
+    .AWADDRmi??2s?NAME?  (AWADDRmi??2s?NAME?  ),
+    .AWLENmi??2s?NAME?   (AWLENmi??2s?NAME?   ),
+    .AWSIZEmi??2s?NAME?  (AWSIZEmi??2s?NAME?  ),
+    .AWBURSTmi??2s?NAME? (AWBURSTmi??2s?NAME? ),
+    .AWLOCKmi??2s?NAME?  (AWLOCKmi??2s?NAME?  ),
+    .AWCACHEmi??2s?NAME? (AWCACHEmi??2s?NAME? ),
+    .AWPROTmi??2s?NAME?  (AWPROTmi??2s?NAME?  ),
+    .AWVALIDmi??2s?NAME? (AWVALIDmi??2s?NAME? ),
+    .AWREADYs?NAME?2mi?? (AWREADYs?NAME?2mi?? ),
+
+    //Write data channel
+    .WIDmi??2s?NAME?     (WIDmi??2s?NAME?     ),
+    .WDATAmi??2s?NAME?   (WDATAmi??2s?NAME?   ),
+    .WSTRBmi??2s?NAME?   (WSTRBmi??2s?NAME?   ),
+    .WLASTmi??2s?NAME?   (WLASTmi??2s?NAME?   ),
+    .WVALIDmi??2s?NAME?  (WVALIDmi??2s?NAME?  ),
+    .WREADYs?NAME?2mi??  (WREADYs?NAME?2mi??  ),
+
+    //Write response channel
+    .BIDs?NAME?2mi??     (BIDs?NAME?2mi??     ),
+    .BRESPs?NAME?2mi??   (BRESPs?NAME?2mi??   ),
+    .BVALIDs?NAME?2mi??  (BVALIDs?NAME?2mi??  ),
+    .BREADYmi??2s?NAME?  (BREADYmi??2s?NAME?  ),
+//STATE_END
+
+
+//Read channel signal
+//STATE07_START
+    //_______________________________________________________________
+    //For Master ?? :: ?NAME?
+    //Read address channel
+    .ARIDm?NAME?2si??    (ARIDm?NAME?2si??    ),
+    .ARADDRm?NAME?2si??  (ARADDRm?NAME?2si??  ),
+    .ARLENm?NAME?2si??   (ARLENm?NAME?2si??   ),
+    .ARSIZEm?NAME?2si??  (ARSIZEm?NAME?2si??  ),
+    .ARBURSTm?NAME?2si?? (ARBURSTm?NAME?2si?? ),
+    .ARLOCKm?NAME?2si??  (ARLOCKm?NAME?2si??  ),
+    .ARCACHEm?NAME?2si?? (ARCACHEm?NAME?2si?? ),
+    .ARPROTm?NAME?2si??  (ARPROTm?NAME?2si??  ),
+
+    .ARVALIDm?NAME?2si?? (ARVALIDm?NAME?2si?? ),
+    .ARREADYsi??2m?NAME? (ARREADYsi??2m?NAME? ),
+
+    //Read data channel
+    .RIDsi??2m?NAME?     (RIDsi??2m?NAME?     ),
+    .RRESPsi??2m?NAME?   (RRESPsi??2m?NAME?   ),
+    .RDATAsi??2m?NAME?   (RDATAsi??2m?NAME?   ),
+    .RLASTsi??2m?NAME?   (RLASTsi??2m?NAME?   ),
+    .RVALIDsi??2m?NAME?  (RVALIDsi??2m?NAME?  ),
+    .RREADYm?NAME?2si??  (RREADYm?NAME?2si??  ),
+//STATE_END
+    
+//STATE08_START
+    //_______________________________________________________________
+    //For Slave ?? :: ?NAME?
+    .ARIDmi??2s?NAME?    (ARIDmi??2s?NAME?    ),
+    .ARADDRmi??2s?NAME?  (ARADDRmi??2s?NAME?  ),
+    .ARLENmi??2s?NAME?   (ARLENmi??2s?NAME?   ),
+    .ARSIZEmi??2s?NAME?  (ARSIZEmi??2s?NAME?  ),
+    .ARBURSTmi??2s?NAME? (ARBURSTmi??2s?NAME? ),
+    .ARLOCKmi??2s?NAME?  (ARLOCKmi??2s?NAME?  ),
+    .ARCACHEmi??2s?NAME? (ARCACHEmi??2s?NAME? ),
+    .ARPROTmi??2s?NAME?  (ARPROTmi??2s?NAME?  ),
+
+    .ARVALIDmi??2s?NAME? (ARVALIDmi??2s?NAME? ),
+    .ARREADYs?NAME?2mi?? (ARREADYs?NAME?2mi?? ),
+
+    //Read data channel
+    .RIDs?NAME?2mi??     (RIDs?NAME?2mi??     ),
+    .RRESPs?NAME?2mi??   (RRESPs?NAME?2mi??   ),
+    .RDATAs?NAME?2mi??   (RDATAs?NAME?2mi??  ),
+    .RLASTs?NAME?2mi??   (RLASTs?NAME?2mi??  ),
+    .RVALIDs?NAME?2mi??  (RVALIDs?NAME?2mi??  ),
+    .RREADYmi??2s?NAME?  (RREADYmi??2s?NAME?  ),
+//STATE_END
+
+    .ACLK    (ACLK),
+    .ARESETn (ARESETn)
+);
+
+
+
+//STATE09_START
+//_______________________________________________________________
+// Master ??
+?NAME?_TestMaster  #(
+	.WID_WIDTH(WRITECHID??_WID),
+	.RID_WIDTH(READCHID??_WID)
+)
+?NAME?_TestMaster
+(
+		.MASTER_ID(?WID?'d??),
+
+		.ACLK(ACLK),
+		.ARESETn(ARESETn),
+
+		.AWID(AWIDm?NAME?2si??),
+		.AWADDR(AWADDRm?NAME?2si??),
+		.AWLEN(AWLENm?NAME?2si??),
+		.AWSIZE(AWSIZEm?NAME?2si??),
+		.AWBURST(AWBURSTm?NAME?2si??),
+		.AWLOCK(AWLOCKm?NAME?2si??),
+		.AWCACHE(AWCACHEm?NAME?2si??),
+		.AWPROT(AWPROTm?NAME?2si??),
+		.AWVALID(AWVALIDm?NAME?2si??),
+		.AWREADY(AWREADYsi??2m?NAME?),
+
+		.WID(WIDm?NAME?2si??),
+		.WDATA(WDATAm?NAME?2si??),
+		.WSTRB(WSTRBm?NAME?2si??),
+		.WLAST(WLASTm?NAME?2si??),
+		.WVALID(WVALIDm?NAME?2si??),
+		.WREADY(WREADYsi??2m?NAME?),
+
+		.BID(BIDsi??2m?NAME?),
+		.BRESP(BRESPsi??2m?NAME?),
+		.BVALID(BVALIDsi??2m?NAME?),
+		.BREADY(BREADYm?NAME?2si??),
+
+		.ARID(ARIDm?NAME?2si??),
+		.ARADDR(ARADDRm?NAME?2si??),
+		.ARLEN(ARLENm?NAME?2si??),
+		.ARSIZE(ARSIZEm?NAME?2si??),
+		.ARBURST(ARBURSTm?NAME?2si??),
+		.ARLOCK(ARLOCKm?NAME?2si??),
+		.ARCACHE(ARCACHEm?NAME?2si??),
+		.ARPROT(ARPROTm?NAME?2si??),
+		.ARVALID(ARVALIDm?NAME?2si??),
+		.ARREADY(ARREADYsi??2m?NAME?),
+
+		// Read Data Channel
+		.RID(RIDsi??2m?NAME?),
+		.RDATA(RDATAsi??2m?NAME?),
+		.RRESP(RRESPsi??2m?NAME?),
+		.RLAST(RLASTsi??2m?NAME?),
+		.RVALID(RVALIDsi??2m?NAME?),
+		.RREADY(RREADYm?NAME?2si??)
+);
+//STATE_END
+
+
+//STATE10_START
+//_______________________________________________________________
+// Slave ?? :: ?NAME?
+wire [ADDR_WID-1:0] MEMADDR??;
+wire [BUS_WID-1:0] MEMRDATA??;
+wire [BUS_WID-1:0] MEMWDATA??;
+wire        MEMCEn??;
+wire [3:0]  MEMWEn??;
+
+?IntSRAMController? #(
+	.WID_WIDTH(WR_SLAVEID??_WID),
+	.RID_WIDTH(RD_SLAVEID??_WID)
+)
+IntSRAMController??
+(
+		.ACLK(ACLK),
+		.ARESETn(ARESETn),
+
+		.AWID(AWIDmi??2s?NAME?),
+		.AWADDR(AWADDRmi??2s?NAME?),
+		.AWLEN(AWLENmi??2s?NAME?),
+		.AWSIZE(AWSIZEmi??2s?NAME?),
+		.AWBURST(AWBURSTmi??2s?NAME?),
+		.AWVALID(AWVALIDmi??2s?NAME?),
+		.AWREADY(AWREADYs?NAME?2mi??),
+
+		.WID(WIDmi??2s?NAME?),
+		.WDATA(WDATAmi??2s?NAME?),
+		.WSTRB(WSTRBmi??2s?NAME?),
+		.WLAST(WLASTmi??2s?NAME?),
+		.WVALID(WVALIDmi??2s?NAME?),
+		.WREADY(WREADYs?NAME?2mi??),
+
+		.BID(BIDs?NAME?2mi??),
+		.BRESP(BRESPs?NAME?2mi??),
+		.BVALID(BVALIDs?NAME?2mi??),
+		.BREADY(BREADYmi??2s?NAME?),
+
+		.ARID(ARIDmi??2s?NAME?),
+		.ARADDR(ARADDRmi??2s?NAME?),
+		.ARLEN(ARLENmi??2s?NAME?),
+		.ARSIZE(ARSIZEmi??2s?NAME?),
+		.ARBURST(ARBURSTmi??2s?NAME?),
+		.ARVALID(ARVALIDmi??2s?NAME?),
+		.ARREADY(ARREADYs?NAME?2mi??),
+
+		// Read Data Channel
+		.RID(RIDs?NAME?2mi??),
+		.RDATA(RDATAs?NAME?2mi??),
+		.RRESP(RRESPs?NAME?2mi??),
+		.RLAST(RLASTs?NAME?2mi??),
+		.RVALID(RVALIDs?NAME?2mi??),
+		.RREADY(RREADYmi??2s?NAME?),
+
+		.MEMADDR(MEMADDR??[29:0]),
+		.MEMCEn(MEMCEn??),
+		.MEMWEn(MEMWEn??),
+		.MEMRDATA(MEMRDATA??),
+		.MEMWDATA(MEMWDATA??)
+);
+
+SSRAM32bit #(21) SRAM??
+(
+		.CLK(ACLK),
+		.ADDR(MEMADDR??[20:0]),
+		.CEn(MEMCEn??),
+		.WEn(MEMWEn??),
+		.RDATA(MEMRDATA??),
+		.WDATA(MEMWDATA??)
+);
+//STATE_END
+
+endmodule
+//Code_END
+

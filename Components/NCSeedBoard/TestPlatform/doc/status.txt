@@ -1,0 +1,29 @@
+현재 상태
+삼성테크윈 데모를 위해 준비한 시스템에서 다음과 같은 두가지 bug를 fix함
+- DMA Controller쪽의 Descriptor load하고 size를 load하도록 변경
+- Internal SRAM Controller 4KB Boundary에서 RREADY가 떨어졌을 때 문제 발생한 부분해결
+
+삼성테크윈 데모 버젼
+- altera0/FPGA0.invert.jic, altera1/되는애(CPU만2배_IntSRAMCtrl_Bug)TestPlatformFPGA.jic
+
+최종버젼
+- altera0/FPGA0.invert.jic, altera1/TestPlatformFPGA.jic
+
+사용된 tool
+- Synplify Pro 8.6.2
+- QUARTUS II 6.0 SP1(jtag programmer patch적용)
+
+해결 하지 못한 문제
+현재 compile된 시스템은 system clock으로 clock 입력과 그 clock의 2분주 clock을 사용한다.
+원래 의도는 CPU clock은 clock, BUS clock은 clock/2, APB clock은 clock/8을 사용할 예정이었으나 그렇게 configuration하여 compile하면 APB register read가 안되는 문제가 발생한다.
+우선은 APB clock을 BUS clock과 동일하게 하여 해결하였음.
+추정하기로는 QUARTUS가 BUS clock과 APB clock이 다를 때는 그것을 맞추어주지 못하는 것으로 보인다.
+main clock을 기준으로 BUS clock과 APB clock을 relative clock으로 선언하기 때문에
+main clock과 BUS clock, main clock과 APB clock을 맞추기는 하지만 BUS clock과 APB clock 사이를 맞추지 못할 것이라는 추정이다.
+
+합성을 하기 위해서는...
+- Synplify Pro를 각 clock group에 맞추어 사용되는 모든 clock을 선언하여 합성한다.
+- Synplify Pro의 결과 파일중에 TestPlatformFPGA_rm.tcl에서 각 clock 노드를 보고 QUARTUS에서 clock을 선언해야 한다.
+- DDR을 동작시키기 위해서는 DQSI와 DQ 입력에서 DDR Controller 내부의 register까지의 input delay를 선언하여야 한다.(TestPlatformFPGA.qsf 참조)
+- 합성 결과 QUARTUS의 timing report중에 th(hold time)의 table에서 DQ가 약 7ns 전후로 많이 hold time을 가지고 있어야 DDR이 제대로 동작할 것이다.
+

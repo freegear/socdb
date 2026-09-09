@@ -1,0 +1,81 @@
+<!ELEMENT BUS (Main, Master*, Slave*)>
+
+<!ELEMENT Main (name, width, channel_connection, memory_map)>
+    <!ELEMENT name (#PCDATA)>
+        <!ATTLIST name masternum CDATA #REQUIRED
+                       slavenum  CDATA #REQUIRED>
+    <!ELEMENT width (buswidth, addresswidth)>
+        <!ELEMENT buswidth (#PCDATA)>
+        <!ELEMENT addresswidth (#PCDATA)>
+
+    <!ELEMENT channel_connection (write_addr, write_data, write_resp, read_addr, read_data)>
+        <!ELEMENT write_addr (#PCDATA)>
+        <!ELEMENT write_data (#PCDATA)>
+        <!ELEMENT write_resp (#PCDATA)>
+        <!ELEMENT read_addr (#PCDATA)>
+        <!ELEMENT read_data (#PCDATA)>
+
+    <!ELEMENT memory_map (remap_enable, map0, map1)>
+        <!ELEMENT remap_enable (#PCDATA)>
+        <!ELEMENT map0 (slave*)>
+        <!ELEMENT map1 (slave*)>
+            <!ELEMENT slave (#PCDATA)>
+                <!ATTLIST slave start_addr CDATA #REQUIRED
+                                area_addr CDATA #REQUIRED
+                                end_addr CDATA #REQUIRED>
+
+<!ELEMENT Master (connect_slave, operate_write, portconfig, masterregisterslice)>
+    <!ATTLIST Master name CDATA #REQUIRED
+                     idwid CDATA #REQUIRED>
+
+    <!ELEMENT connect_slave (conslave_name*) >
+        <!ELEMENT conslave_name (#PCDATA)>
+
+    <!ELEMENT operate_write (method, lock_access, write_issuing_cap, read_issuing_cap)>
+        <!ELEMENT method (#PCDATA)>
+        <!ELEMENT lock_access (#PCDATA) >
+        <!ELEMENT write_issuing_cap (#PCDATA) >
+        <!ELEMENT read_issuing_cap (#PCDATA) >
+
+    <!ELEMENT portconfig (writechannel, readchannel)>
+        <!ELEMENT writechannel (channel_enable, lock , cache , protect , wstrb)>
+            <!ELEMENT channel_enable (#PCDATA) >
+            <!ELEMENT lock (#PCDATA) >
+            <!ELEMENT cache (#PCDATA) >
+            <!ELEMENT protect (#PCDATA) >
+            <!ELEMENT wstrb (#PCDATA) >
+
+        <!ELEMENT readchannel (channel_enable, lock , cache , protect)>
+
+    <!ELEMENT masterregisterslice (mastertosi, sitomi)>
+        <!ELEMENT mastertosi (#PCDATA) >
+            <!ATTLIST mastertosi rnum CDATA #REQUIRED
+                                 mode CDATA #REQUIRED>
+        <!ELEMENT sitomi (#PCDATA) >
+            <!ATTLIST sitomi rnum CDATA #REQUIRED
+                             mode CDATA #REQUIRED>
+
+
+
+
+
+<!ELEMENT Slave (arbiter, operate_read, portconfig, slaveregisterslice)>
+    <!ATTLIST Slave name CDATA #REQUIRED>
+
+    <!ELEMENT arbiter (method, priority)>
+        <!ELEMENT priority (mastername*)>
+            <!ELEMENT mastername (#PCDATA)>
+
+    <!ELEMENT operate_read (write_issuing_cap, read_issuing_cap, burst_type)>
+        <!ELEMENT burst_type (FIXED, INCR, WRAP)>
+            <!ELEMENT FIXED (#PCDATA)>
+            <!ELEMENT INCR (#PCDATA)>
+            <!ELEMENT WRAP (#PCDATA)>
+
+    <!ELEMENT slaveregisterslice (slavetomi, mitosi)>
+        <!ELEMENT slavetomi (#PCDATA) >
+            <!ATTLIST slavetomi rnum CDATA #REQUIRED
+                                mode CDATA #REQUIRED>
+        <!ELEMENT mitosi (#PCDATA) >
+            <!ATTLIST mitosi rnum CDATA #REQUIRED
+                             mode CDATA #REQUIRED>
