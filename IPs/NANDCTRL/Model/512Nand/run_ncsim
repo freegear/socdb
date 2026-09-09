@@ -1,0 +1,73 @@
+#        ____________________________________ 
+#       /                                    |
+#      |                                     |
+#      |      __________________   __________|
+#      |     |                 |   |
+#       \     \                |   |   _______________________________________________________
+#        \     \               |   |
+#         \     \              |   |                                                
+#          \     \             |   |                                                NAND512W3A   
+#           \     \            |   |      
+#            \     \           |   |                                               512Gbit (x8)       
+#             \     \          |   |                    528 Byte Page, 3V, NAND Flash Memories
+#              \     \         |   |       
+#               \     \        |   |                                     VHDL Behavioral Model
+#                |     \       |   |                                               Version 1.0
+#                |     |       |   |                                               
+#  ______________|     |       |   |                     Copyright (c) 2005 STMicroelectronics
+# |                    |       |   |  
+# |                    |       |   |  _________________________________________________________
+# |___________________/        |___|
+# 
+# 
+# ********************************************************************************************* 
+# 
+#!/bin/csh -f
+
+
+set RUNDIR  = ./
+set LIBDIR  = ./lib
+set CODEDIR = ./code
+set STIMDIR = ./stim
+set TOPDIR  = ./top
+set SIMDIR  = ./sim
+set HDLPATH = ./hdl.var
+set CDSPATH = ./cds.lib
+
+
+\rm -r work
+mkdir work
+
+
+#LIBRARY
+ncvhdl  -cdslib $CDSPATH -hdlvar $HDLPATH -MESSAGES -NOCOPYRIGHT -LINEDEBUG  -V93 $LIBDIR/def.vhd
+ncvhdl  -cdslib $CDSPATH -hdlvar $HDLPATH -MESSAGES -NOCOPYRIGHT -LINEDEBUG  -V93 $LIBDIR/UserData.vhd
+ncvhdl  -cdslib $CDSPATH -hdlvar $HDLPATH -MESSAGES -NOCOPYRIGHT -LINEDEBUG  -V93 $LIBDIR/CUIcommandData.vhd
+ncvhdl  -cdslib $CDSPATH -hdlvar $HDLPATH -MESSAGES -NOCOPYRIGHT -LINEDEBUG  -V93 $LIBDIR/data.vhd
+ncvhdl  -cdslib $CDSPATH -hdlvar $HDLPATH -MESSAGES -NOCOPYRIGHT -LINEDEBUG  -V93 $LIBDIR/TimingData.vhd
+ncvhdl  -cdslib $CDSPATH -hdlvar $HDLPATH -MESSAGES -NOCOPYRIGHT -LINEDEBUG  -V93 $LIBDIR/StringLib.vhd
+ncvhdl  -cdslib $CDSPATH -hdlvar $HDLPATH -MESSAGES -NOCOPYRIGHT -LINEDEBUG  -V93 $LIBDIR/MemoryLib.vhd
+ncvhdl  -cdslib $CDSPATH -hdlvar $HDLPATH -MESSAGES -NOCOPYRIGHT -LINEDEBUG  -V93 $LIBDIR/BlockLib.vhd
+
+
+#CODE
+ncvhdl  -cdslib $CDSPATH -hdlvar $HDLPATH -MESSAGES -NOCOPYRIGHT -LINEDEBUG  -V93 $CODEDIR/NAND512W3A.vhd
+
+
+#STIM
+ncvhdl  -cdslib $CDSPATH -hdlvar $HDLPATH -MESSAGES -NOCOPYRIGHT -LINEDEBUG -V93 $STIMDIR/program/page_program-areaA.vhd
+
+
+#TOP
+ncvhdl  -cdslib $CDSPATH -hdlvar $HDLPATH -MESSAGES -NOCOPYRIGHT -LINEDEBUG -V93 $TOPDIR/TestBench.vhd
+
+
+# Elaborate
+ncelab -cdslib $CDSPATH -hdlvar $HDLPATH -mess -NOWARN CUDEFB work.Top:TestBench -access +r
+
+
+# Simulate
+cd $SIMDIR
+ncsim -cdslib ../$CDSPATH -hdlvar ../$HDLPATH work.Top -gui
+
+
