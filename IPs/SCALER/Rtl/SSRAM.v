@@ -1,0 +1,73 @@
+// ==============================================================================
+// This confidential and proprietary software may be used only as
+// authorised by a licensing agreement from SANGHWA MICRO Technology
+// ALL RIGHTS RESERVED SANGHWA MICRO Technology      
+// ------------------------------------------------------------------------------
+// Version and Release information:
+// 
+// File Name           : SSRAM32bit.v
+// File Revision       : 0.1
+//  -----------------------------------------------------------------------------
+//  Purpose            : Synchronous SRAM
+//                     : This module is for test purpose only.
+//  =============================================================================
+
+`timescale 1ns/10ps
+
+module SSRAM 
+(
+		CLK     , 
+
+		ADDR    ,
+		CEn     ,
+		WEn     ,
+		RDATA   ,
+		WDATA
+);
+
+//
+// module parameter
+//
+parameter ADDR_WIDTH = 25;	// Memory Address Width : should be at least 12(4KB)
+parameter DATA_WIDTH = 64;
+parameter BYTE_NUM = (DATA_WIDTH/8);
+    
+input  CLK;
+input  [ADDR_WIDTH-1:0] ADDR;
+input  CEn;
+input  [BYTE_NUM-1:0] WEn;
+input  [DATA_WIDTH-1:0] WDATA;
+output [DATA_WIDTH-1:0] RDATA;
+
+reg [DATA_WIDTH-1:0] memory[{ADDR_WIDTH{1'b1}}:0];
+
+reg [DATA_WIDTH-1:0] RDATA;
+
+//integer i;
+wire[ADDR_WIDTH-2:0] iaddr;
+assign iaddr = ADDR[23:0];
+always @(posedge CLK)
+begin
+	if(CEn == 1'b0)
+	begin
+		if(WEn[0] == 1'b0)
+			memory[ADDR][7:0] = WDATA[7:0];
+		if(WEn[1] == 1'b0)
+			memory[ADDR][15:8] = WDATA[15:8];
+		if(WEn[2] == 1'b0)
+			memory[ADDR][23:16] = WDATA[23:16];
+		if(WEn[3] == 1'b0)
+			memory[ADDR][31:24] = WDATA[31:24];
+		if(WEn[4] == 1'b0)
+			memory[ADDR][39:32] = WDATA[39:32];
+		if(WEn[5] == 1'b0)
+			memory[ADDR][47:40] = WDATA[47:40];
+		if(WEn[6] == 1'b0)
+			memory[ADDR][55:48] = WDATA[55:48];
+		if(WEn[7] == 1'b0)
+			memory[ADDR][63:56] = WDATA[63:56];
+		RDATA = memory[ADDR];
+	end
+end
+
+endmodule
