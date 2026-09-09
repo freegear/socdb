@@ -1,0 +1,54 @@
+--------------------------
+* FirmWare v0.2
+--------------------------
+
+[Startup/ directory]
+
+	option.s
+		- Syntax error fix
+	memcfg.s
+		- Syntax error fix
+	startup.s
+		- Syntax error fix
+
+[Comm/ directory]
+	Uarttest.c
+		- Macro define modify to avoid conflict
+			: UART_BASE_ADDR -> UART_BASE_ADDRESS
+
+[Storage/ directory]
+	sdmmc.c
+		- Deinitialize() add
+
+[Added Files]
+	cachefunc.s
+	mmufunc.s
+	* CacheRangeFlush()	- 추후 추가 여부 결정 (2006/11/08)
+[Modified Files]
+	syscfg.h
+	sysreg.h
+
+* Further work
+	- Starup code Verify
+	- Each peri block F/W update & Verify
+	- Added peri block F/W coding & Verify
+
+--------------------------
+* FirmWare v0.3
+--------------------------
+
+* i2c
+	Pre driver update & register define insert
+* i2s insert
+	Register & structure insert
+* dma insert
+	Pre driver insert & mask modify
+* sdmmc insert
+	Pre driver insert
+
+* makefile buidling support
+	irq.h					: interrupt handler __irq modify
+	irq.c					: interrupt handler __irq modify
+	lib.c					: inline asm modify
+	library.c			: Header file insert, inline asm modify
+	pwrmanage.c		: inline asm modify

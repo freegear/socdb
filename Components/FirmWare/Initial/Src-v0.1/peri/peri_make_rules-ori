@@ -1,0 +1,83 @@
+#
+# MODULE NAME:    peri_make_rules 
+# PROJECT CODE:   F/W
+# DESCRIPTION:    This makefile provides sources
+# AUTHOR:         SHMT SOC 2Team
+# DATE:           28 November, 2006
+#
+# SOURCE CONTROL: $Id: core_make_rules,v 1.65 2001/10/16 11:55:24 griffini Exp $
+#
+# LICENSE:
+#    This source code is copyright (c) 2006 shmt Limited.
+#    All rights reserved.
+#
+# REVISION HISTORY:
+#
+# SOURCE:
+#
+# ISSUES:
+#
+
+
+## Source Listing ##
+PERI_BASE_DIR = peri
+
+# When Top
+PERI_SOURCES = \
+	$(PERI_BASE_DIR)/adc.c				\
+	$(PERI_BASE_DIR)/einttest.c	\
+	$(PERI_BASE_DIR)/esmc.c			\
+	$(PERI_BASE_DIR)/fmc.c				\
+	$(PERI_BASE_DIR)/gpio.c			\
+	$(PERI_BASE_DIR)/i2c.c				\
+	$(PERI_BASE_DIR)/init.c			\
+#	$(PERI_BASE_DIR)/mmcsd.c			\
+	$(PERI_BASE_DIR)/pwrmanage.c	\
+	$(PERI_BASE_DIR)/registercheck.c\
+	$(PERI_BASE_DIR)/timerpwm.c	\
+	$(PERI_BASE_DIR)/uart.c			\
+	$(PERI_BASE_DIR)/uarttest.c	\
+	$(PERI_BASE_DIR)/uarttst.c		\
+	$(PERI_BASE_DIR)/dt.c
+
+# When peri directory
+#PERI_SOURCES = \
+#	adc.c				\
+#	einttest.c	\
+#	esmc.c			\
+#	fmc.c				\
+#	gpio.c			\
+#	i2c.c				\
+#	init.c			\
+##	mmcsd.c			\
+#	pwrmanage.c	\
+#	registercheck.c\
+#	timerpwm.c	\
+#	uart.c			\
+#	uarttest.c	\
+#	uarttst.c		\
+#	wdt.c
+
+
+## Include Directories ##
+INCLUDE_BASE_DIR = inc
+
+PERI_INCLUDES = \
+     -I./$(INCLUDE_BASE_DIR) -I./sys -I./peri				# When Top
+#     -I../$(INCLUDE_BASE_DIR) -I../sys -I../peri		# When peri directory
+
+
+#PERI_TARGET = peri_objs defined int the top directory makefile
+peri: $(PERI_TARGET)
+$(PERI_TARGET): $(PERI_SOURCES:.c=.o)
+
+
+#When current directory building
+#%.o:%.c
+#	@echo "Building PERI: $(PERI_TARGET)"
+#	$(CC) -march=armv4 -c $(COMPILER_FLAGS) $(CONFIG_FLAGS) $(OPTIMIZATIONS) $(PERI_INCLUDES) $< -o $@ 2>>error.log
+
+.phony: peri_clean
+
+peri_clean:
+	-$(RM) $(PERI_TARGET) $(PERI_SOURCES:.c=.o)

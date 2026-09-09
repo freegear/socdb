@@ -1,0 +1,94 @@
+#
+# MODULE NAME:    fat_make_rules 
+# PROJECT CODE:   F/W
+# DESCRIPTION:    This makefile provides sources
+# AUTHOR:         SHMT SOC 2Team
+# DATE:           28 November, 2006
+#
+# SOURCE CONTROL: $Id: core_make_rules,v 1.65 2001/10/16 11:55:24 griffini Exp $
+#
+# LICENSE:
+#    This source code is copyright (c) 2006 shmt Limited.
+#    All rights reserved.
+#
+# REVISION HISTORY:
+#
+# SOURCE:
+#
+# ISSUES:
+#
+
+
+## Source Listing ##
+FAT32_BASE_DIR = fpgatest/rfat32_lib
+#FAT32_BASE_DIR = ./					# When fat directory
+
+
+FAT_DRIVERS_SOURCES = \
+     $(FAT32_BASE_DIR)/drivers/drivers.c
+
+FAT_SOURCES = \
+     $(FAT32_BASE_DIR)/fat/fat32_access.c	\
+     $(FAT32_BASE_DIR)/fat/fat32_base.c
+
+FILE_DIR_IO_SOURCES = \
+     $(FAT32_BASE_DIR)/file-dir-io/dirsearchbrowse.c	\
+     $(FAT32_BASE_DIR)/file-dir-io/fatmisc.c	\
+     $(FAT32_BASE_DIR)/file-dir-io/filestring.c
+
+FILELIB_SOURCES = \
+     $(FAT32_BASE_DIR)/filelib/filelib.c
+
+IDE_SOURCES = \
+     $(FAT32_BASE_DIR)/ide/ide_access.c	\
+     $(FAT32_BASE_DIR)/ide/ide_base.c
+
+
+## Object Listing ##
+FAT32_OBJS = \
+     $(FAT32_BASE_DIR)/drivers/drivers.o	\
+     $(FAT32_BASE_DIR)/fat/fat32_access.o	\
+     $(FAT32_BASE_DIR)/fat/fat32_base.o		\
+     $(FAT32_BASE_DIR)/file-dir-io/dirsearchbrowse.o	\
+     $(FAT32_BASE_DIR)/file-dir-io/fatmisc.o		\
+     $(FAT32_BASE_DIR)/file-dir-io/filestring.o	\
+     $(FAT32_BASE_DIR)/filelib/filelib.o	\
+     $(FAT32_BASE_DIR)/ide/ide_access.o		\
+     $(FAT32_BASE_DIR)/ide/ide_base.o
+
+
+## Include Directories ##
+INCLUDE_BASE_DIR = inc
+
+FAT_INCLUDES = \
+     -I./$(INCLUDE_BASE_DIR) -I./sys -I./peri # When top
+#     -I./$(INCLUDE_BASE_DIR) -I./sys -I./peri -I../../../sys	# When top
+#     -I../../$(INCLUDE_BASE_DIR) -I../../sys -I../../peri		# When fat directory
+
+
+## fat Directory Source & Include ##
+FAT32_SOURCES = \
+     $(FAT_DRIVERS_SOURCES)	\
+     $(FAT_SOURCES)					\
+     $(FILE_DIR_IO_SOURCES)	\
+     $(FILELIB_SOURCES)			\
+     $(IDE_SOURCES)
+
+
+
+#FAT32_TARGET = fat32.a defined int the top directory makefile
+fat: $(FAT32_TARGET)
+$(FAT32_TARGET): $(FAT32_SOURCES:.c=.o)
+	$(AR) $(ARFLAGS) $(FAT32_TARGET) $(FAT32_OBJS)
+	mv $(FAT32_TARGET) $(FAT32_BASE_DIR)
+
+
+#When current directory building
+#%.o:%.c
+#	@echo "Building FAT32: $(FAT32_TARGET)"
+#	$(CC) -march=armv4 -c $(COMPILER_FLAGS) $(CONFIG_FLAGS) $(OPTIMIZATIONS) $(FAT_INCLUDES) $< -o $@ 2>>error.log
+
+.phony: fat_clean
+
+fat_clean:
+	-$(RM) $(FAT32_TARGET) $(FAT32_SOURCES:.c=.o)

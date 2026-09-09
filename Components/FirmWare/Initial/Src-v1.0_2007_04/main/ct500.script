@@ -1,0 +1,12 @@
+
+setmem 0x40004000 0x37535 32
+setmem 0x40004004 0xA1    32
+setmem 0x4000400C 0x410   32
+setmem 0x40004010 0x24    32
+
+Load ct500.axf
+
+spp vector_catch 0
+spp semihosting_enabled 1
+let $top_of_memory 0x20020000
+sreg cpsr 0xd3

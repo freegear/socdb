@@ -1,0 +1,277 @@
+/////////////////////////////////////////////////////
+[ 1st API Porting ]
+/////////////////////////////////////////////////////
+- 목표 : 리눅스 makefile api 포함 F/W 컴파일
+
+1. LCD api
+	* File list
+		lcd-recordr.c
+
+	* Modification
+		config.h				- Modified by DJKIM
+
+2. Media api
+	1) sound
+	* File list
+		mp3_playback.c
+		mpeg.c
+		sound.c
+		tuner_samsung.c
+
+	* Modification
+		panic.h					- Modified by DJKIM
+		system.h				- Modified by DJKIM
+
+		mp3_playback.c	- Modified by DJKIM
+		mpeg.c					- Modified by DJKIM
+
+	** dac.h : Just inserted to compile mp3_playback.c
+
+	2) Audio
+	* File list
+		pcm_record.c
+		powermgmt.c
+		replaygain.c
+		rolo.c
+
+	* Modification
+		sprintf.h				- Modified by DJKIM
+		id3.h						- Modified by DJKIM
+		
+		pcm_record.c		- Modified by DJKIM
+		powermgmt.c			- Modified by DJKIM
+
+3. Common api
+	1) String/Memory
+	* File list
+		[string.h]
+		memchr.c
+		memcmp.c
+		memcpy.c
+		memset.c
+		sprintf.c
+		strcasecmp.c
+		strcasestr.c
+		strcat.c
+		strchr.c
+		strcmp.c
+		strcpy.c
+		strlen.c
+		strncmp.c
+		strncpy.c
+		strrchr.c
+		strtok.c
+
+		[stdlib.h]
+		qsort.c
+		random.c
+	* Modification
+
+	2) Memory allocation
+	* File list
+
+	* Modification
+
+/////////////////////////////////////////////////////
+[ 2nd API Porting ]
+/////////////////////////////////////////////////////
+- 목표 : api 소스 사이즈 축소
+
+1. Display api
+	lcd-recorder.c
+		- SIMULATOR define delete
+
+2. Media api
+	1) sound
+	mp3_playback.c		: SIMULATOR delte. config.h -> 	Only MAS3587F enable
+	mpeg.c						: SIMULATOR delete
+	pmc_record.c			: UDA1380 & TLV320 delete
+	powermgmt.c				: SIMULATOR delete
+	replaygain.c			:
+	rolo.c						: Only SH7034 enable
+	sound.c						: UDA1380 & TLV320 delete. CODEC MAS3507D delete (MAS3587F enable)
+	tuner_samsung.c		: Only S1A0903X01 enable (config.h modify)
+
+3. Common api
+	1) Strig/Memory
+		memchr.c				: Use as it
+		memcmp.c				: Use as it
+		memcpy.c				: Use as it
+		memset.c				: Use as it
+		sprintf.c				: Use as it
+		strcasecmp.c		: Use as it
+		strcasestr.c		: Use as it
+		strcat.c				: Use as it
+		strchr.c				: Use as it
+		strcmp.c				: Use as it
+		strcpy.c				: Use as it
+		strlen.c				: Use as it
+		strncmp.c				: Use as it
+		strncpy.c				: Use as it
+		strrchr.c				: Use as it
+		strtok.c				: Use as it
+		qsort.c					: Use as it
+		random.c				: Use as it
+
+	2) Memory allocation
+		malloc					: stdlib.h 함수 사용
+		free
+		realloc
+		calloc
+
+/////////////////////////////////////////////////////
+[ Header file dependency ]
+- Standard library제외한 user define header file
+	dependency
+
+1. Display api
+	lcd-recorder.c
+
+		config.h
+		lcd.h
+		debug.h
+		font.h
+		bidi.h
+
+2. Media api
+	1) sound
+	mp3_playback.c
+
+		config.h
+		debug.h
+		panic.h
+		mpeg.h
+		mp3_playback.h
+		sound.h
+		i2c.h
+		mas.h
+		dac.h
+		system.h
+		hwcompat.h
+
+	mpeg.c
+
+		config.h
+		debug.h
+		panic.h
+		id3.h
+		mpeg.h
+		audio.h
+		ata.h
+		string.h
+		thread.h
+		errno.h
+		mp3data.h
+		buffer.h
+		mp3_playback.h
+		sound.h
+		bitswap.h
+		i2c.h
+		mas.h
+		dac.h
+		system.h
+		usb.h
+		file.h
+		hwcompat.h
+
+	pcm_record.c
+
+		config.h
+		debug.h
+		thread.h
+		cpu.h
+		i2c.h
+		system.h
+		usb.h
+		buffer.h
+		audio.h
+		button.h
+		file.h
+		lcd.h
+		pcm_playback.h
+		pcm_record.h
+
+	powermgmt.c
+
+		config.h
+		cpu.h
+		thread.h
+		system.h
+		debug.h
+		string.h
+		sprintf.h
+		ata.h
+		power.h
+		button.h
+		audio.h
+		mp3_playback.h
+		usb.h
+		powermgmt.h
+		backlight.h
+		lcd.h
+		rtc.h
+
+	replaygain.c
+
+		id3.h
+		debug.h
+
+	rolo.c
+
+		config.h
+		lcd.h
+		button.h
+		file.h
+		audio.h
+		system.h
+		i2c.h
+		buffer.h
+
+	sound.c
+
+		config.h
+		sound.h
+		mas.h
+		system.h
+		hwcompat.h
+		pcm_playback.h
+
+	tuner_samsung.c
+
+		config.h
+		tuner.h
+		fmradio.h
+		mpeg.h
+		sound.h
+
+3. Common api
+	1) Strig/Memory
+		memchr.c				: Use as it
+		memcmp.c				: Use as it
+		memcpy.c				: Use as it
+			config.h
+		memset.c				: Use as it
+		sprintf.c				: Use as it
+				file.h
+				sprintf.h
+		strcasecmp.c		: Use as it
+		strcasestr.c		: Use as it
+		strcat.c				: Use as it
+		strchr.c				: Use as it
+		strcmp.c				: Use as it
+		strcpy.c				: Use as it
+		strlen.c				: Use as it
+			config.h
+		strncmp.c				: Use as it
+		strncpy.c				: Use as it
+		strrchr.c				: Use as it
+		strtok.c				: Use as it
+			config.h
+		qsort.c					: Use as it
+		random.c				: Use as it
+
+	2) Memory allocation
+		malloc					: stdlib.h 함수 사용
+		free
+		realloc
+		calloc

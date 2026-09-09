@@ -1,0 +1,161 @@
+[2007/01/10]
+F/W Source & Directory 沥府
+
+	1. Source file lower name
+		- Apply to all F/W directory
+	2. Header file & source file directory 沥府
+		- Apply to inc and lib directory
+	3. Source file directory 沥府
+		- Structure move
+		- Source merge (inc/ peri relative header file)
+	4. Source code convention match
+
+
+1) Source file lower name
+	- sys/ directory
+		: sysdataDef.h		-> sysdatadef.h
+		: Relative file
+			peri/storage/sdmmc.h
+			inc/sysinc.h
+	
+	- startup/ directory
+		: Don't care
+	- fpgatest/ directory
+		: Don't care
+	- inc/ directory
+		: Commonmacro.h		-> commonmacro.h
+		: Relative file
+			dmac.h
+			dmac.c
+			i2c_pre_drv.h
+			i2c_pre_drv.c
+			uart_post_drv.h
+			uart_pre_drv.h
+			post_error.h
+			pre_error.h
+			lib.h
+			lcdpostdrv.h
+			lcdpredrv.h		: Why api/ driver/ directory exist???
+			sdmmc_post_drv.c
+			lib.c
+			library.c
+			init.c
+			init.h
+			registercheck.c
+		
+		: structDef.h		-> structdef.h
+		: Relative file
+			dmac.h
+			post_error.h
+			pre_error.h
+			global.h
+			lib.h
+			i2c_pre_drv.c
+			lib.c
+			library.c
+			init.c
+			init.h
+			fmc.c
+
+	- peri/ directory
+		: Don't care
+	- lib/ directory
+		api/common/
+			: Don't care
+
+		api/display/
+			: Lcd16bit.c	-> lcd16bit.c
+			: Relative file
+				lib_make_rules
+		
+			: LcdH300.c		-> lcdh300.c
+			: Relative file
+				lib_make_rules
+			
+			: lcdPostDrv.h	-> lcdpostdrv.h
+			: Relative file
+				lcdh300.c
+				lcdpostdrv.c
+			
+			: lcdPreDrv.h	-> lcdpredrv.h
+			: Relative file
+				lcdpredrv.c
+		
+		api/expert/
+			: ConfigH300.h	-> configh300.h
+			: Relative file
+				config.h
+
+		api/filesystem/
+			: Don't care
+		api/include/
+			: Don't care
+		api/media/
+			: Don't care
+
+		drivers/comm/
+			: Don't care
+
+		drivers/display/
+			: lcdPostDrv.c	-> lcdpostdrv.c
+			: Relative file
+				lib_make_rules
+
+			: lcdPreDrv.c	-> lcdpredrv.c
+			: Relative file
+				lib_make_rules
+
+			: lcdPostDrv.h	-> lcdpostdrv.h
+			: lcdPreDrv.h	-> lcdpredrv.h
+
+		drivers/media/
+			: Don't care
+		drivers/peri/
+			: Don't care
+		drivers/storage/
+			: Don't care
+
+2) Header file & source file directory 沥府
+	- inc/drivers/ directory
+		: comm/ directory
+			- Move i2s/i2s_pre_drv.h from drivers/comm/i2s/
+		
+		: display/ directory
+			- Move lcdpostdrv.h/lcdpredrv.h from drivers/display/
+
+		: media/ directory
+			- Move audio_post_drv.h from drivers/media/audio/
+
+		: peri/ directory
+			- Don't care
+
+		: storage/ directory
+			- Move sdmmc_post/pre_drv.h from drivers/storage/sdmmc/
+			* sdmmc_post_drv.c modify : Include header file path
+
+	- inc/api/ directory
+		: common/ directory
+			- Move expert/, include/ from lib/api/
+
+		: display/ directory
+			- Move lcdpost/predrv.h from api/display/
+
+		: filesystem/ directory
+			- Move
+				sw_fs_dir.h
+				sw_fs_file.h
+				sw_fs_rbunicode.h
+				sw_fs_system_string.h
+				sw_fs_typedefs.h
+				from api/filesystem/
+			- Move sw_fs_drv_fat.h from api/filesystem/sw_fs_driver/fat32/
+			- Move sw_fs_drv_part.h from api/filesystem/sw_fs_driver/part/
+			* sw_fs_drv_fat.c modify : Include header file path
+
+		: media/ directory
+			- Move sound_api.h from api/media/audio/
+			* sound_api.h modify : Includde header file path
+
+	** lib_make_rules file modify
+
+

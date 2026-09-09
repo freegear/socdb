@@ -1,0 +1,53 @@
+; screen.on                    ; all messages are displayed
+; AREA.RESet
+; WINPAGE.RESET
+ WINCLEAR
+; WINPOS 0. 27. 63. 7. 0. 0. W006
+; AREA
+;print "resetting..."
+ 
+ reset
+
+; Initializing Debugger
+; print "initializing..."
+ 
+system.cpu arm926ej
+system.jtagclock RTCK
+system.up
+register.reset
+
+data.set 0x40004000 %long 0x00037535 
+data.set 0x40004004 %long 0xA1    
+data.set 0x4000400C %long 0x410   
+data.set 0x40004010 %long 0x24  
+
+data.load ./ct500_ucos_Data/Debug/ct500_ucos.axf
+	 
+; initialize mutitasking support
+; print "initializing multitask support..."
+ TASK.CONFIG ucos         ; load ucos awareness (ucos.t32)
+ MENU.ReProgram ucos      ; load ucos specific menu (ucos.men)
+
+; print "load complete."  ; send to Message Line
+
+; open some windows
+
+do suno_win.cmm
+ 
+ ; the applications reroute their outputs to a TRACE32 terminal emulation
+ ; see uhal.c for redirection of output to TRACE32 terminal
+ 
+;TERM.Protocol SingleE
+; WINPOS 43. 0. 80. 12. 0. 0. W000
+; TERM OSPrioHighRdy 0
+
+ g ucos_main
+ 
+ 
+
+
+
+
+
+
+

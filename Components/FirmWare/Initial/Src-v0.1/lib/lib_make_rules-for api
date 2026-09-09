@@ -1,0 +1,166 @@
+#
+# MODULE NAME:    lib_make_rules 
+# PROJECT CODE:   F/W
+# DESCRIPTION:    This makefile provides sources
+# AUTHOR:         SHMT SOC 2Team
+# DATE:           04 December, 2006
+#
+# SOURCE CONTROL: $Id: core_make_rules,v 1.65 2001/10/16 11:55:24 griffini Exp $
+#
+# LICENSE:
+#    This source code is copyright (c) 2006 shmt Limited.
+#    All rights reserved.
+#
+# REVISION HISTORY:
+#
+# SOURCE:
+#
+# ISSUES:
+#
+
+
+## Source Listing ##
+LIB_BASE_DIR = lib
+
+LIB_API_DIR = api
+LIB_API_COMMON_DIR = common
+LIB_API_DISPLAY_DIR = display
+LIB_API_MEDIA_DIR = media
+LIB_API_AUDIO_DIR = audio
+
+# When top
+LIB_COMMON_SOURCES = \
+     $(LIB_BASE_DIR)/irq_toy.c \
+     $(LIB_BASE_DIR)/lib_toy.c
+
+# When lib directory
+#LIB_COMMON_SOURCES = \
+#	irq_toy.c \
+#	lib_toy.c
+
+## Further work : Need to modified by DJKIM 2006/11/28
+LIB_DRIVERS_SOURCES = \
+#     $(LIB_BASE_DIR)/drivers/drivers_exam.c
+
+LIB_API_SOURCES = \
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/memchr.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/memcmp.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/memcpy.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/memset.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/qsort.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/random.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/sprintf.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strcasecmp.c	\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strcasestr.c	\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strcat.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strchr.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strcmp.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strcpy.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strlen.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strncmp.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strncpy.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strrchr.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strtok.c			\
+     																																		\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_DISPLAY_DIR)/lcd-recorder.c		\
+     																																				\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/pcm_record.c		\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/powermgmt.c			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/replaygain.c		\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/rolo.c					\
+     																																													\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/mp3_playback.c	\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/mpeg.c					\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/sound.c					\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/tuner_samsung.c
+
+
+## Object Listing ##
+LIB_COMMON_OBJS = \
+     $(LIB_BASE_DIR)/irq_toy.o \
+     $(LIB_BASE_DIR)/lib_toy.o
+
+## Further work : Need to modified by DJKIM 2006/11/28
+LIB_DRIVERS_OBJS = \
+#     $(LIB_BASE_DIR)/drivers/drivers_exam.o
+
+LIB_API_OBJS = \
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/memchr.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/memcmp.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/memcpy.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/memset.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/qsort.o				\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/random.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/sprintf.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strcasecmp.o	\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strcasestr.o	\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strcat.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strchr.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strcmp.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strcpy.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strlen.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strncmp.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strncpy.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strrchr.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_COMMON_DIR)/strtok.o			\
+     																																		\
+     																																		\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_DISPLAY_DIR)/lcd-recorder.o		\
+     																																				\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/pcm_record.o		\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/powermgmt.o			\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/replaygain.o		\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/rolo.o					\
+     																																													\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/mp3_playback.o	\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/mpeg.o					\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/sound.o					\
+     $(LIB_BASE_DIR)/$(LIB_API_DIR)/$(LIB_API_MEDIA_DIR)/$(LIB_API_AUDIO_DIR)/tuner_samsung.o
+
+
+## Include Directories ##
+INCLUDE_BASE_DIR = inc
+
+LIB_COMMON_INCLUDES = \
+     -I./$(INCLUDE_BASE_DIR) -I./sys -I./peri					# When top
+#     -I../$(INCLUDE_BASE_DIR) -I../sys -I../peri			# When lib directory
+
+## Further work : Need to modified by DJKIM 2006/11/28
+LIB_DRIVERS_INCLUDES = \
+#     -I./$(INCLUDE_BASE_DIR)/drivers
+
+## Further work : Need to modified by DJKIM 2006/11/28
+LIB_API_INCLUDES = \
+     -I./$(LIB_BASE_DIR)/api/expert		\
+     -I./$(LIB_BASE_DIR)/api/include
+
+
+## lib Directory Source & Include ##
+LIB_SOURCES = \
+     $(LIB_COMMON_SOURCES) \
+     $(LIB_DRIVERS_SOURCES) \
+     $(LIB_API_SOURCES)
+
+LIB_INCLUDES = \
+     $(LIB_COMMON_INCLUDES) \
+     $(LIB_DRIVERS_INCLUDES) \
+     $(LIB_API_INCLUDES)
+
+
+# LIB_TARGET = lib.a defined int the top directory makefile
+lib: $(LIB_TARGET)
+$(LIB_TARGET): $(LIB_SOURCES:.c=.o)
+	$(AR) $(ARFLAGS) $(LIB_TARGET) $(LIB_COMMON_OBJS) $(LIB_DRIVERS_OBJS) $(LIB_API_OBJS)
+	mv $(LIB_TARGET) $(LIB_BASE_DIR)
+
+
+#When current directory building
+#%.o:%.c
+#	@echo "Building LIB: $(LIB_TARGET)"
+#	$(CC) -march=armv4 -c $(COMPILER_FLAGS) $(CONFIG_FLAGS) $(OPTIMIZATIONS) $(LIB_INCLUDES) $< -o $@ 2>>error.log
+
+
+.phony: lib_clean
+
+lib_clean:
+	-$(RM) $(LIB_TARGET) $(LIB_SOURCES:.c=.o)

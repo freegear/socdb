@@ -1,0 +1,110 @@
+#
+# MODULE NAME:    peri_make_rules 
+# PROJECT CODE:   F/W
+# DESCRIPTION:    This makefile provides sources
+# AUTHOR:         SHMT SOC 2Team
+# DATE:           04 December, 2006
+#
+# SOURCE CONTROL: $Id: core_make_rules,v 1.65 2001/10/16 11:55:24 griffini Exp $
+#
+# LICENSE:
+#    This source code is copyright (c) 2006 shmt Limited.
+#    All rights reserved.
+#
+# REVISION HISTORY:
+#
+# SOURCE:
+#
+# ISSUES:
+#
+
+
+## Source Listing ##
+PERI_BASE_DIR = peri
+
+PERI_2DACCEL_DIR = 2daccel
+PERI_COMM_DIR = comm
+PERI_DISPLAY_DIR = display
+PERI_MEDIA_DIR = media
+PERI_STORAGE_DIR = storage
+
+# When Top
+PERI_SOURCES = \
+	$(PERI_BASE_DIR)/adc.c				\
+	$(PERI_BASE_DIR)/dma.c				\
+	$(PERI_BASE_DIR)/vic.c				\
+	$(PERI_BASE_DIR)/vif.c				\
+	$(PERI_BASE_DIR)/gpio.c				\
+	$(PERI_BASE_DIR)/init.c				\
+	$(PERI_BASE_DIR)/pll.c				\
+	$(PERI_BASE_DIR)/pwrmanage.c		\
+	$(PERI_BASE_DIR)/registercheck.c	\
+	$(PERI_BASE_DIR)/timerpwm.c			\
+	$(PERI_BASE_DIR)/wdt.c				\
+														\
+	$(PERI_BASE_DIR)/$(PERI_2DACCEL_DIR)/twodaccel.c	\
+														\
+	$(PERI_BASE_DIR)/$(PERI_COMM_DIR)/cs8900.c		\
+	$(PERI_BASE_DIR)/$(PERI_COMM_DIR)/gps.c			\
+	$(PERI_BASE_DIR)/$(PERI_COMM_DIR)/i2c.c			\
+	$(PERI_BASE_DIR)/$(PERI_COMM_DIR)/i2s.c			\
+	$(PERI_BASE_DIR)/$(PERI_COMM_DIR)/spi.c			\
+	$(PERI_BASE_DIR)/$(PERI_COMM_DIR)/usb.c			\
+													\
+	$(PERI_BASE_DIR)/$(PERI_DISPLAY_DIR)/lcd.c		\
+	$(PERI_BASE_DIR)/$(PERI_DISPLAY_DIR)/videoenc.c	\
+												\
+	$(PERI_BASE_DIR)/$(PERI_MEDIA_DIR)/audio.c	\
+												\
+	$(PERI_BASE_DIR)/$(PERI_STORAGE_DIR)/memory_test.c	\
+	$(PERI_BASE_DIR)/$(PERI_STORAGE_DIR)/micro_ecc.c	\
+	$(PERI_BASE_DIR)/$(PERI_STORAGE_DIR)/dmc.c	\
+	$(PERI_BASE_DIR)/$(PERI_STORAGE_DIR)/smc.c	\
+	$(PERI_BASE_DIR)/$(PERI_STORAGE_DIR)/nand.c	\
+	$(PERI_BASE_DIR)/$(PERI_STORAGE_DIR)/sdmmc.c\
+	$(PERI_BASE_DIR)/$(PERI_COMM_DIR)/uart.c
+#	$(PERI_BASE_DIR)/$(PERI_COMM_DIR)/uarttest.c	\	
+#	$(PERI_BASE_DIR)/$(PERI_COMM_DIR)/uarttst.c		
+
+PERI_OBJS = $(PERI_SOURCES:.c=.o)
+	
+
+
+## Include Directories ##
+INCLUDE_BASE_DIR = inc
+SYS_BASE_DIR = sys
+
+PERI_INCLUDES = \
+     -I./$(INCLUDE_BASE_DIR)					\
+     -I./$(SYS_BASE_DIR)						\
+     -I./$(PERI_BASE_DIR)						\
+     -I./$(PERI_BASE_DIR)/$(PERI_2DACCEL_DIR)	\
+     -I./$(PERI_BASE_DIR)/$(PERI_COMM_DIR)		\
+     -I./$(PERI_BASE_DIR)/$(PERI_DISPLAY_DIR)	\
+     -I./$(PERI_BASE_DIR)/$(PERI_MEDIA_DIR)		\
+     -I./$(PERI_BASE_DIR)/$(PERI_STORAGE_DIR)
+
+
+#PERI_TARGET = peri_objs defined int the top directory makefile
+peri: $(PERI_TARGET)
+$(PERI_TARGET): $(PERI_SOURCES:.c=.o)
+
+
+peri_dep:
+
+	@echo "#test peri dependency" > peri_make_rules.dep
+	
+	@for i in $(PERI_OBJS:.o=); do 	\
+		$(CC) -M $(LIB_COMMON_INCLUDES) $(LIB_DRIVERS_INCLUDES)	$(LIB_API_INCLUDES)		\
+		 $$i.c | sed "s!\([^.]*\)\.o[ :]*!$$i.o: !" >> peri_make_rules.dep;				\
+        done;
+#When current directory building
+#%.o:%.c
+#	@echo "Building PERI: $(PERI_TARGET)"
+#	$(CC) -march=armv4 -c $(COMPILER_FLAGS) $(CONFIG_FLAGS) $(OPTIMIZATIONS) $(PERI_INCLUDES) $< -o $@ 2>>error.log
+
+.phony: peri_clean
+
+peri_clean:
+	-$(RM) $(PERI_TARGET) $(PERI_SOURCES:.c=.o)
+-include peri_make_rules.dep

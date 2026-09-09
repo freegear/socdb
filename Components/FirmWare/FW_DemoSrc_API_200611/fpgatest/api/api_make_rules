@@ -1,0 +1,78 @@
+#
+# MODULE NAME:    api_make_rules 
+# PROJECT CODE:   F/W
+# DESCRIPTION:    This makefile provides sources
+# AUTHOR:         SHMT SOC 2Team
+# DATE:           28 November, 2006
+#
+# SOURCE CONTROL: $Id: core_make_rules,v 1.65 2001/10/16 11:55:24 griffini Exp $
+#
+# LICENSE:
+#    This source code is copyright (c) 2006 shmt Limited.
+#    All rights reserved.
+#
+# REVISION HISTORY:
+#
+# SOURCE:
+#
+# ISSUES:
+#
+
+
+## Source Listing ##
+API_BASE_DIR = fpgatest/api
+
+# When top
+API_SOURCES = \
+     $(API_BASE_DIR)/apidmac.c		\
+     $(API_BASE_DIR)/apigpio.c		\
+     $(API_BASE_DIR)/apii2c.c		\
+     $(API_BASE_DIR)/apii2s.c		\
+     $(API_BASE_DIR)/apilcd.c		\
+     $(API_BASE_DIR)/apimmc.c		\
+     $(API_BASE_DIR)/apiuart.c
+
+
+## When api directory
+#API_SOURCES = \
+#	apidmac.c		\
+#	apigpio.c		\
+#	apii2c.c		\
+#	apii2s.c		\
+#	apilcd.c		\
+#	apimmc.c		\
+#	apiuart.c
+
+
+API_OBJS = \
+     $(API_BASE_DIR)/apidmac.o		\
+     $(API_BASE_DIR)/apigpio.o		\
+     $(API_BASE_DIR)/apii2c.o		\
+     $(API_BASE_DIR)/apii2s.o		\
+     $(API_BASE_DIR)/apilcd.o		\
+     $(API_BASE_DIR)/apimmc.o		\
+     $(API_BASE_DIR)/apiuart.o
+
+
+## Include Directories ##
+INCLUDE_BASE_DIR = inc
+
+API_INCLUDES = \
+     -I./$(INCLUDE_BASE_DIR) -I./sys -I./peri									# When top
+#     -I../../$(INCLUDE_BASE_DIR) -I../../sys -I../../peri		# When api directory
+
+
+#API_TARGET = api_objs defined int the top directory makefile
+api: $(API_TARGET)
+$(API_TARGET): $(API_SOURCES:.c=.o)
+
+
+#When current directory building
+#%.o:%.c
+#	@echo "Building API: $(API_TARGET)"
+#	$(CC) -march=armv4 -c $(COMPILER_FLAGS) $(CONFIG_FLAGS) $(OPTIMIZATIONS) $(API_INCLUDES) $< -o $@ 2>>error.log
+
+.phony: api_clean
+
+api_clean:
+	-$(RM) $(API_TARGET) $(API_SOURCES:.c=.o)

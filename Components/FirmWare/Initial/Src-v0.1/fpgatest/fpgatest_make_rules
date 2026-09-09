@@ -1,0 +1,96 @@
+#
+# MODULE NAME:    fpgatest_make_rules 
+# PROJECT CODE:   F/W
+# DESCRIPTION:    This makefile provides sources
+# AUTHOR:         SHMT SOC 2Team
+# DATE:           04 December, 2006
+#
+# SOURCE CONTROL: $Id: core_make_rules,v 1.65 2001/10/16 11:55:24 griffini Exp $
+#
+# LICENSE:
+#    This source code is copyright (c) 2006 shmt Limited.
+#    All rights reserved.
+#
+# REVISION HISTORY:
+#
+# SOURCE:
+#
+# ISSUES:
+#
+
+
+## Source Listing ##
+FPGATEST_BASE_DIR = fpgatest
+
+# When top
+FPGATEST_SOURCES = \
+     $(FPGATEST_BASE_DIR)/main.c
+
+FPGATEST_ASMSRC = \
+     $(FPGATEST_BASE_DIR)/start.S
+
+
+## When fpgatest directory
+#FPGATEST_SOURCES = \
+#	main.c			\
+
+#FPGATEST_ASMSRC = \
+#     start.S
+
+
+## Object Listing ##
+FPGATEST_OBJS = \
+     $(FPGATEST_BASE_DIR)/start.o			\
+     $(FPGATEST_BASE_DIR)/main.o
+
+
+## Include Directories ##
+INCLUDE_BASE_DIR = inc
+SYS_BASE_DIR = sys
+PERI_BASE_DIR = peri
+
+FPGATEST_INCLUDES = \
+     -I./$(INCLUDE_BASE_DIR)		\
+     -I./$(SYS_BASE_DIR)				\
+     -I./$(PERI_BASE_DIR)				\
+
+
+## FPGATEST Compile option ##
+FPGATEST_CFLAGS = -march=armv4 -O2
+FPGATEST_LD_SCRIPT = ${FPGATEST_BASE_DIR}/ldscript.scr
+FPGATEST_LDFLAGS = -nostartfiles -nodefaultlibs -static
+
+
+FPGA_DEPENDENT_SRC =			\
+	-Xlinker --start-group -lfw $(PERI_OBJS) -Xlinker --end-group	\
+	-L./$(LIB_BASE_DIR)
+#     $(PERI_OBJS)				\
+#     -lfw -L./$(LIB_BASE_DIR)
+
+
+	
+
+#FPGATEST_TARGET = fpgatest defined in the top directory makefile
+fpga: $(FPGATEST_TARGET)
+	@echo "Building FPGATEST"
+	rm -rf $(FPGATEST_TARGET).elf $(FPGATEST_TARGET).bin
+	$(CC) $(FPGATEST_CFLAGS) $(FPGATEST_INCLUDES) -o $(FPGATEST_TARGET).elf -T $(FPGATEST_LD_SCRIPT) \
+	$(FPGATEST_OBJS) $(FPGA_DEPENDENT_SRC) -nostartfiles $(FPGATEST_LDFLAGS) -Wl,-Map,$(FPGATEST_TARGET).map
+	$(OBJCOPY) -I elf32-littlearm $(FPGATEST_TARGET).elf -O binary $(FPGATEST_TARGET).bin
+#	$(OBJDUMP) -DS $(FPGATEST_TARGET).elf > $(FPGATEST_TARGET).elf.dis
+##	./mtirgen -16 ./${FPGATEST_TARGET}.bin ./program.rom
+
+	mv $(FPGATEST_TARGET).elf $(FPGATEST_TARGET).bin $(FPGATEST_TARGET).map $(FPGATEST_BASE_DIR)
+
+$(FPGATEST_TARGET): $(FPGATEST_ASMSRC:.S=.o) $(FPGATEST_SOURCES:.c=.o)
+
+
+#When current directory building
+#%.o:%.c
+#	@echo "Building FPGATEST: $(FPGATEST_TARGET)"
+#	$(CC) -march=armv4 -c $(COMPILER_FLAGS) $(CONFIG_FLAGS) $(OPTIMIZATIONS) $(FPGATEST_INCLUDES) $< -o $@ 2>>error.log
+
+.phony: fpgatest_clean
+
+fpgatest_clean:
+	-$(RM) $(FPGATEST_TARGET).elf $(FPGATEST_TARGET).bin $(FPGATEST_TARGET).elf.dis $(FPGATEST_SOURCES:.c=.o) $(FPGATEST_ASMSRC:.S=.o)
