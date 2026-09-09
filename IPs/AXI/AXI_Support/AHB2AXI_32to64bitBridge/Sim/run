@@ -1,0 +1,14 @@
+rm -rf ./work/*
+
+ncvlog ../Tb/TestSlave.v
+ncvlog ../Tb/AHBTestMaster.v
+ncvlog ../Rtl/AHB32bit2AXI64bitBridge.v
+
+# TOP
+ncvlog ../Tb/tb.v
+
+### Elaboration
+ncelab -messages work.tb -access +rwc -timescale 1ns/10ps
+
+### Simulation
+ncsim  work.tb

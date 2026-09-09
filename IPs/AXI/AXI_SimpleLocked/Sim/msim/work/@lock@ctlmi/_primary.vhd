@@ -1,0 +1,49 @@
+library verilog;
+use verilog.vl_types.all;
+entity LockCtlmi is
+    generic(
+        BUS_WID         : integer := 32;
+        ADDR_WID        : integer := 32;
+        ID_WID          : integer := 4;
+        AWLEN_WID       : integer := 4;
+        AWSIZE_WID      : integer := 3;
+        AWBURST_WID     : integer := 2;
+        AWLOCK_WID      : integer := 2;
+        AWCACHE_WID     : integer := 4;
+        AWPROT_WID      : integer := 3;
+        WSTRB_WID       : integer := 4;
+        BRESP_WID       : integer := 2;
+        RRESP_WID       : integer := 2;
+        ARLEN_WID       : integer := 4;
+        ARSIZE_WID      : integer := 3;
+        ARBURST_WID     : integer := 2;
+        ARLOCK_WID      : integer := 2;
+        ARCACHE_WID     : integer := 4;
+        ARPROT_WID      : integer := 3;
+        MASTER_WID      : integer := 4;
+        SLAVE_WID       : integer := 3;
+        SLAVE_NUM       : integer := 6;
+        MASTER_NUM      : integer := 4;
+        SLAVECNTWID     : integer := 5;
+        IDLE            : integer := 0;
+        FULL_MASK       : integer := 1;
+        MASK            : integer := 2;
+        \LOCK\          : integer := 3;
+        RELEASE         : integer := 4
+    );
+    port(
+        ACLK            : in     vl_logic;
+        ARESETn         : in     vl_logic;
+        ReqIntEmpty     : in     vl_logic;
+        DataCntEmptyRdmi2Wrmi: in     vl_logic;
+        ALOCK           : in     vl_logic_vector;
+        AVALID          : in     vl_logic;
+        \Lock\          : in     vl_logic;
+        LockPort        : in     vl_logic_vector;
+        ArbiterMask     : out    vl_logic_vector;
+        CtlData         : in     vl_logic_vector;
+        EnAMUXn         : out    vl_logic;
+        EnAREADYMUXn    : out    vl_logic;
+        LockArbiter     : out    vl_logic
+    );
+end LockCtlmi;

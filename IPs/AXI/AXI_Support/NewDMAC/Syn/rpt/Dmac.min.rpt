@@ -1,0 +1,272 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay min
+        -nworst 10
+        -input_pins
+        -nets
+        -max_paths 10
+        -transition_time
+        -capacitance
+Design : Dmac
+Version: V-2004.06
+Date   : Tue Jun 20 16:17:01 2006
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: slow   Library: slow
+Wire Load Model Mode: top
+
+  Startpoint: SCANOUTHCLK (internal pin)
+  Endpoint: SCANOUTHCLK
+            (output port)
+  Path Group: (none)
+  Path Type: min
+
+  Point                        Fanout       Cap     Trans      Incr       Path
+  -------------------------------------------------------------------------------
+  SCANOUTHCLK (out)                                  0.00      0.00       0.00 r
+  data arrival time                                                       0.00
+  -------------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+  Startpoint: SCANOUTHCLK (internal pin)
+  Endpoint: SCANOUTHCLK
+            (output port)
+  Path Group: (none)
+  Path Type: min
+
+  Point                        Fanout       Cap     Trans      Incr       Path
+  -------------------------------------------------------------------------------
+  SCANOUTHCLK (out)                                  0.00      0.00       0.00 f
+  data arrival time                                                       0.00
+  -------------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+  Startpoint: uDmacAhbSlaveIf/iHRESP_reg_0_
+              (rising edge-triggered flip-flop)
+  Endpoint: HRESP[0] (output port)
+  Path Group: (none)
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  uDmacAhbSlaveIf/iHRESP_reg_0_/CK (DFFRX4)                         0.00      0.00 #     0.00 r
+  uDmacAhbSlaveIf/iHRESP_reg_0_/Q (DFFRX4)                          0.04      0.43       0.43 f
+  uDmacAhbSlaveIf/HRESP[0] (net)                1         0.00                0.00       0.43 f
+  uDmacAhbSlaveIf/HRESP[0] (DmacAhbSlaveIf)                                   0.00       0.43 f
+  HRESP[0] (net)                                          0.00                0.00       0.43 f
+  HRESP[0] (out)                                                    0.04      0.00       0.43 f
+  data arrival time                                                                      0.43
+  ----------------------------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+  Startpoint: uDmacAhbSlaveIf/iHRESP_reg_1_
+              (rising edge-triggered flip-flop)
+  Endpoint: HRESP[1] (output port)
+  Path Group: (none)
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  uDmacAhbSlaveIf/iHRESP_reg_1_/CK (DFFRX4)                         0.00      0.00 #     0.00 r
+  uDmacAhbSlaveIf/iHRESP_reg_1_/Q (DFFRX4)                          0.04      0.43       0.43 f
+  uDmacAhbSlaveIf/HRESP[1] (net)                1         0.00                0.00       0.43 f
+  uDmacAhbSlaveIf/HRESP[1] (DmacAhbSlaveIf)                                   0.00       0.43 f
+  HRESP[1] (net)                                          0.00                0.00       0.43 f
+  HRESP[1] (out)                                                    0.04      0.00       0.43 f
+  data arrival time                                                                      0.43
+  ----------------------------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+  Startpoint: uDmacAhbSlaveIf/iHREADYOUT_reg
+              (rising edge-triggered flip-flop)
+  Endpoint: HREADYOUT (output port)
+  Path Group: (none)
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  uDmacAhbSlaveIf/iHREADYOUT_reg/CK (DFFSX4)                        0.00      0.00 #     0.00 r
+  uDmacAhbSlaveIf/iHREADYOUT_reg/Q (DFFSX4)                         0.07      0.45       0.45 f
+  uDmacAhbSlaveIf/HREADYOUT (net)               5         0.02                0.00       0.45 f
+  uDmacAhbSlaveIf/HREADYOUT (DmacAhbSlaveIf)                                  0.00       0.45 f
+  HREADYOUT (net)                                         0.02                0.00       0.45 f
+  HREADYOUT (out)                                                   0.07      0.00       0.45 f
+  data arrival time                                                                      0.45
+  ----------------------------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+  Startpoint: u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_26_
+              (rising edge-triggered flip-flop)
+  Endpoint: HWDATAM1[26]
+            (output port)
+  Path Group: (none)
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_26_/CK (DFFRX4)
+                                                                    0.00      0.00 #     0.00 r
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_26_/QN (DFFRX4)
+                                                                    0.05      0.33       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/n10541 (net)
+                                                1         0.00                0.00       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/U4424/C1 (OAI222X1)               0.05      0.00       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/U4424/Y (OAI222X1)                0.15      0.13       0.46 f
+  u1DmacAhbMaster/uDmacLiteMaster/MWDATA[26] (net)
+                                                2         0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacLiteMaster/MWDATA[26] (DmacLiteMaster_1)               0.00       0.46 f
+  u1DmacAhbMaster/MWDATA[26] (net)                        0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/MWDATA[26] (DmacMasterWrap_1)               0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/MWDATA0[26] (net)       0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/HWDATA[26] (DmacMasterWrap_1)               0.00       0.46 f
+  u1DmacAhbMaster/HWDATAM[26] (net)                       0.00                0.00       0.46 f
+  u1DmacAhbMaster/HWDATAM[26] (DmacAhbMaster_1)                               0.00       0.46 f
+  HWDATAM1[26] (net)                                      0.00                0.00       0.46 f
+  HWDATAM1[26] (out)                                                0.15      0.00       0.46 f
+  data arrival time                                                                      0.46
+  ----------------------------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+  Startpoint: u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_27_
+              (rising edge-triggered flip-flop)
+  Endpoint: HWDATAM1[27]
+            (output port)
+  Path Group: (none)
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_27_/CK (DFFRX4)
+                                                                    0.00      0.00 #     0.00 r
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_27_/QN (DFFRX4)
+                                                                    0.05      0.33       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/n10540 (net)
+                                                1         0.00                0.00       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/U4417/C1 (OAI222X1)               0.05      0.00       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/U4417/Y (OAI222X1)                0.15      0.13       0.46 f
+  u1DmacAhbMaster/uDmacLiteMaster/MWDATA[27] (net)
+                                                2         0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacLiteMaster/MWDATA[27] (DmacLiteMaster_1)               0.00       0.46 f
+  u1DmacAhbMaster/MWDATA[27] (net)                        0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/MWDATA[27] (DmacMasterWrap_1)               0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/MWDATA0[27] (net)       0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/HWDATA[27] (DmacMasterWrap_1)               0.00       0.46 f
+  u1DmacAhbMaster/HWDATAM[27] (net)                       0.00                0.00       0.46 f
+  u1DmacAhbMaster/HWDATAM[27] (DmacAhbMaster_1)                               0.00       0.46 f
+  HWDATAM1[27] (net)                                      0.00                0.00       0.46 f
+  HWDATAM1[27] (out)                                                0.15      0.00       0.46 f
+  data arrival time                                                                      0.46
+  ----------------------------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+  Startpoint: u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_28_
+              (rising edge-triggered flip-flop)
+  Endpoint: HWDATAM1[28]
+            (output port)
+  Path Group: (none)
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_28_/CK (DFFRX4)
+                                                                    0.00      0.00 #     0.00 r
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_28_/QN (DFFRX4)
+                                                                    0.05      0.33       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/n10539 (net)
+                                                1         0.00                0.00       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/U4410/C1 (OAI222X1)               0.05      0.00       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/U4410/Y (OAI222X1)                0.15      0.13       0.46 f
+  u1DmacAhbMaster/uDmacLiteMaster/MWDATA[28] (net)
+                                                2         0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacLiteMaster/MWDATA[28] (DmacLiteMaster_1)               0.00       0.46 f
+  u1DmacAhbMaster/MWDATA[28] (net)                        0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/MWDATA[28] (DmacMasterWrap_1)               0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/MWDATA0[28] (net)       0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/HWDATA[28] (DmacMasterWrap_1)               0.00       0.46 f
+  u1DmacAhbMaster/HWDATAM[28] (net)                       0.00                0.00       0.46 f
+  u1DmacAhbMaster/HWDATAM[28] (DmacAhbMaster_1)                               0.00       0.46 f
+  HWDATAM1[28] (net)                                      0.00                0.00       0.46 f
+  HWDATAM1[28] (out)                                                0.15      0.00       0.46 f
+  data arrival time                                                                      0.46
+  ----------------------------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+  Startpoint: u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_29_
+              (rising edge-triggered flip-flop)
+  Endpoint: HWDATAM1[29]
+            (output port)
+  Path Group: (none)
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_29_/CK (DFFRX4)
+                                                                    0.00      0.00 #     0.00 r
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_29_/QN (DFFRX4)
+                                                                    0.05      0.33       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/n10538 (net)
+                                                1         0.00                0.00       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/U4403/C1 (OAI222X1)               0.05      0.00       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/U4403/Y (OAI222X1)                0.15      0.13       0.46 f
+  u1DmacAhbMaster/uDmacLiteMaster/MWDATA[29] (net)
+                                                2         0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacLiteMaster/MWDATA[29] (DmacLiteMaster_1)               0.00       0.46 f
+  u1DmacAhbMaster/MWDATA[29] (net)                        0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/MWDATA[29] (DmacMasterWrap_1)               0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/MWDATA0[29] (net)       0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/HWDATA[29] (DmacMasterWrap_1)               0.00       0.46 f
+  u1DmacAhbMaster/HWDATAM[29] (net)                       0.00                0.00       0.46 f
+  u1DmacAhbMaster/HWDATAM[29] (DmacAhbMaster_1)                               0.00       0.46 f
+  HWDATAM1[29] (net)                                      0.00                0.00       0.46 f
+  HWDATAM1[29] (out)                                                0.15      0.00       0.46 f
+  data arrival time                                                                      0.46
+  ----------------------------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+  Startpoint: u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_30_
+              (rising edge-triggered flip-flop)
+  Endpoint: HWDATAM1[30]
+            (output port)
+  Path Group: (none)
+  Path Type: min
+
+  Point                                       Fanout       Cap     Trans      Incr       Path
+  ----------------------------------------------------------------------------------------------
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_30_/CK (DFFRX4)
+                                                                    0.00      0.00 #     0.00 r
+  u1DmacAhbMaster/uDmacLiteMaster/BuffHWData_reg_30_/QN (DFFRX4)
+                                                                    0.05      0.33       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/n10536 (net)
+                                                1         0.00                0.00       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/U4395/C1 (OAI222X1)               0.05      0.00       0.33 r
+  u1DmacAhbMaster/uDmacLiteMaster/U4395/Y (OAI222X1)                0.15      0.13       0.46 f
+  u1DmacAhbMaster/uDmacLiteMaster/MWDATA[30] (net)
+                                                2         0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacLiteMaster/MWDATA[30] (DmacLiteMaster_1)               0.00       0.46 f
+  u1DmacAhbMaster/MWDATA[30] (net)                        0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/MWDATA[30] (DmacMasterWrap_1)               0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/MWDATA0[30] (net)       0.00                0.00       0.46 f
+  u1DmacAhbMaster/uDmacMasterWrap/HWDATA[30] (DmacMasterWrap_1)               0.00       0.46 f
+  u1DmacAhbMaster/HWDATAM[30] (net)                       0.00                0.00       0.46 f
+  u1DmacAhbMaster/HWDATAM[30] (DmacAhbMaster_1)                               0.00       0.46 f
+  HWDATAM1[30] (net)                                      0.00                0.00       0.46 f
+  HWDATAM1[30] (out)                                                0.15      0.00       0.46 f
+  data arrival time                                                                      0.46
+  ----------------------------------------------------------------------------------------------
+  (Path is unconstrained)
+
+
+1

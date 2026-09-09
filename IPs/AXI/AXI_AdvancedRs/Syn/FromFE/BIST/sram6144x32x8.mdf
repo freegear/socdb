@@ -1,0 +1,26 @@
+%GLOBAL
+{
+	%TIMESCALE 1ns/10ps ;
+	%CLK_CYCLE  13;	
+}
+%MEMORY sram6144x32x8
+{
+		%TYPE           SRAM;
+		%ADDR_BITS      13;
+		%LOW_ADDR       13'b0000000000000;
+		%HIGH_ADDR      13'b1011111111111;
+		%DATA_BITS      32;
+		%LATENCY        0;
+	%PORT       a
+	{
+		%TYPE        rw;
+		%ADDRESS      A;
+		%DATA_IN      D;
+		%DATA_OUT     Q;
+		%CLOCK      CLK;
+		%SELECT    -CEN;
+		%WRITE_EN  -WEN[3:0];
+		%OUTPUT_EN -OEN;
+	}
+}    
+

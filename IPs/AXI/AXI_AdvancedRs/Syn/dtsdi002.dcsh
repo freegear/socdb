@@ -1,0 +1,246 @@
+/******************************************************************************/
+/*    Variable Definition                                                     */
+/******************************************************************************/
+/*--========================================================================--*/
+/*    In case of initial synthesis, define these variables.                   */
+/*    These variables are to prohibit reading and writing of caches.          */
+/*    Merit: Turn around time for logic synthesis can be reduced.             */
+/*    Demerit: Better result of re-synthesis may not be achieved.             */
+/*--========================================================================--*/
+cache_read = ""
+cache_write = ""
+
+hdlin_enable_presto = false
+
+/*--========================================================================--*/
+/*    Define a top module name variable.                                      */
+/*--========================================================================--*/
+TopDesign = DTSDI002Top
+
+/*--========================================================================--*/
+/*    Define directory variables                                              */
+/*    to save log files, db files, and report files.                          */
+/*--========================================================================--*/
+LogDir = ./log
+DbDir  = ./db
+RptDir = ./rpt
+NetDir = ./Netlist
+
+/*--========================================================================--*/
+/*    Make directories if no directory.                                       */
+/*--========================================================================--*/
+which LogDir
+if(dc_shell_status == {}) {
+  sh mkdir LogDir
+}
+
+which DbDir
+if(dc_shell_status == {}) {
+  sh mkdir DbDir
+}
+
+which RptDir
+if(dc_shell_status == {}) {
+  sh mkdir RptDir
+}
+
+which NetDir
+if(dc_shell_status == {}) {
+  sh mkdir NetDir
+}
+
+/******************************************************************************/
+/*    Read design.                                                            */
+/******************************************************************************/
+include ReadDesign.scr
+
+/*--========================================================================--*/
+/*    Set current design to a top module.                                     */
+/*--========================================================================--*/
+current_design TopDesign
+
+/*--========================================================================--*/
+/*    Link design and libraries                                               */
+/*--========================================================================--*/
+link
+
+/******************************************************************************/
+/*    Remove HDL-Compiler license.                                            */
+/******************************************************************************/
+remove_license HDL-Compiler
+
+/******************************************************************************/
+/*    Write Gtech db of design.                                               */
+/******************************************************************************/
+write -f db -h -o DbDir + "/" + TopDesign + ".GTECH.db"
+
+/******************************************************************************/
+/*    Check RTL design.                                                       */
+/******************************************************************************/
+check_design > LogDir + "/" + TopDesign + ".check_design.GTECH.log"
+
+/******************************************************************************/
+/*    Perform uniquify before compile.                                        */
+/******************************************************************************/
+uniquify
+
+/******************************************************************************/
+/*    Write uniquified Gtech db.                                              */
+/******************************************************************************/
+write -f db -h -o DbDir + "/" + TopDesign + ".GTECH.Uniq.db"
+
+/******************************************************************************/
+/*    Set dont touch attribute at net of iddq.                                */
+/******************************************************************************/
+/*include "dont_touch_net" + ".dcsh"*/
+
+/******************************************************************************/
+/*    Run set_fix_multiple_port_nets command to fix multiple ports and nets   */
+/*    You should set the command to all design to avoid Design Compiler bugs  */
+/******************************************************************************/
+set_fix_multiple_port_nets -all -buffer_constants
+foreach (each_design, find(design, "*")) {
+  current_design = each_design
+  set_fix_multiple_port_nets -all -buffer_constants
+}
+current_design TopDesign
+
+/******************************************************************************/
+/*    Set timing constraints with timing exceptions.                          */
+/******************************************************************************/
+include "constraints_template" + ".dcsh"
+
+/******************************************************************************/
+/*    Write the design including timing constraints.                          */
+/******************************************************************************/
+write -f db -h -o DbDir + "/" + TopDesign + ".GTECH.Uniq.TC.db"
+
+/******************************************************************************/
+/*    First, run fastest compile to perform release check.                    */
+/*    Don't run simple mode compile (set_simple_mode_compile_mode command)    */
+/*    that release checker creates many warning and error messages.           */
+/******************************************************************************/
+compile -map_effort low -area_effort none -no_design_rule
+
+/******************************************************************************/
+/*    Write the first compiled design.                                        */
+/******************************************************************************/
+write -f db -h -o DbDir + "/" + TopDesign + ".FirstCom.db"
+
+/******************************************************************************/
+/*    Check design and constraints.                                           */
+/******************************************************************************/
+/*--========================================================================--*/
+/*    Check design after synthesis.                                           */
+/*--========================================================================--*/
+check_design > LogDir + "/" + TopDesign + ".check_design.Net.log"
+
+/*--========================================================================--*/
+/*    Check timing after synthesis.                                           */
+/*--========================================================================--*/
+check_timing > LogDir + "/" + TopDesign + ".check_timing.Net.log"
+
+/*--========================================================================--*/
+/*    Check timing exceptions after synthesis.                                */
+/*--========================================================================--*/
+/*report_timing_requirements -ignored \*/
+                          /*> LogDir + "/" + TopDesign + ".exceptions.Net.log"*/
+
+/******************************************************************************/
+/*    Perform ungroup DesignWare                                              */
+/*    to avoid an equivalent input cell circuit and a chopper circuit.        */
+/******************************************************************************/
+include UngroupDW.dcsh
+
+/******************************************************************************/
+/*    Write the design after performing ungroup DesignWare.                   */
+/******************************************************************************/
+write -f db -h -o DbDir + "/" + TopDesign + ".FirstCom.UngDW.db"
+
+/* check result */
+/*current_design TopDesign*/
+/*write -f verilog -h -o NetDir + "/" + TopDesign + ".FirstCom.vnet"*/
+
+/******************************************************************************/
+/*    Perform incremental synthesis                                           */
+/*    to avoid an equivalent input cell circuit and a chopper circuit.        */
+/******************************************************************************/
+/*compile -inc -map_effort low -area_effort none -no_design_rule*/
+compile -inc -map_effort high -area_effort none
+
+/******************************************************************************/
+current_design TopDesign
+change_names
+
+/******************************************************************************/
+/*    Write the incremental optimized design.                                 */
+/******************************************************************************/
+write -f db -h -o DbDir + "/" + TopDesign + ".noscan.db"
+write -f verilog -h -o NetDir + "/" + TopDesign + ".noscan.v"
+
+/******************************************************************************/
+current_design TopDesign
+change_names
+
+/******************************************************************************/
+/* compile scan */
+/******************************************************************************/
+/*compile -map_effort high -area_effort none -scan*/
+
+/******************************************************************************/
+/*current_design TopDesign*/
+/*change_names*/
+
+/******************************************************************************/
+/*    Write the incremental optimized design for scan.                        */
+/******************************************************************************/
+/*write -f db -h -o DbDir + "/" + TopDesign + ".db"*/
+/*write -f verilog -h -o NetDir + "/" + TopDesign + ".v"*/
+
+/******************************************************************************/
+/*    Report about your design.                                               */
+/******************************************************************************/
+/*--========================================================================--*/
+/*    Report quality of results.                                              */
+/*--========================================================================--*/
+report_qor > RptDir + "/" + TopDesign + ".qor.rpt"
+
+/*--========================================================================--*/
+/*    Report area of design.                                                  */
+/*--========================================================================--*/
+report_area > RptDir + "/" + TopDesign + ".area.rpt"
+
+/*--========================================================================--*/
+/*    Report high fan-out nets of design.                                     */
+/*--========================================================================--*/
+/*report_net_fanout -threshold 100 > RptDir + "/" + TopDesign + ".high_fanout.rpt"*/
+report_net_fanout -threshold 17 > RptDir + "/" + TopDesign + ".high_fanout.rpt"
+
+/*--========================================================================--*/
+/*    Report all violations of design.                                        */
+/*--========================================================================--*/
+/*report_constraints -all_violators \*/
+/*                  > RptDir + "/" + TopDesign + ".all_viol.rpt"*/
+
+/*--========================================================================--*/
+/*    Report all violation paths of design.                                   */
+/*--========================================================================--*/
+/*report_constraints -all_violators -verbose \*/
+/*                  > RptDir + "/" + TopDesign + ".all_viol.verbose.rpt"*/
+
+/*--========================================================================--*/
+/*    Report timing paths with setup violation.                               */
+/*--========================================================================--*/
+report_timing -tran -cap -net -input -nworst 10 \
+             > RptDir + "/" + TopDesign + ".max.rpt"
+
+/*--========================================================================--*/
+/*    Report timing paths with hold violation.                                */
+/*--========================================================================--*/
+report_timing -delay min -tran -cap -net -input -nworst 10 \
+             > RptDir + "/" + TopDesign + ".min.rpt"
+
+/******************************************************************************/
+/*    Exit Design Compiler.                                                   */
+/******************************************************************************/
+quit

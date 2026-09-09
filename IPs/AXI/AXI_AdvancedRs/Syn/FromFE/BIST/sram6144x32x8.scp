@@ -1,0 +1,34 @@
+/* FILE : SynTest SRAMBIST Synopsys Synthesis Script file */
+/* NAME : sram6144x32x8.scp                                 */
+/* TOOL : srambist V1.2.0 r01 (05/30/01 09:35:47) */
+/* TIME : Wed Jul 19 01:22:32 2000
+ */
+
+sh date
+
+read -f verilog { \
+               sram6144x32x8_top.v \
+               sram6144x32x8_wrapper.v \
+               sram6144x32x8_rb.v \
+              }
+
+current_design Bisted_sram6144x32x8
+
+check_design  -summary
+
+set_operating_conditions WCCOM
+
+create_clock -name CLK -period 13 -waveform {0  6.500} find (port "CLK")
+
+set_dont_touch_network CLK
+
+uniquify
+
+compile -map_effort high
+
+report_area
+report_timing
+
+write -f verilog -h -o Bisted_sram6144x32x8.vg
+
+quit

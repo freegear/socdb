@@ -1,0 +1,44 @@
+library verilog;
+use verilog.vl_types.all;
+entity dmaclitemaster is
+    port(
+        hclk            : in     vl_logic;
+        hresetn         : in     vl_logic;
+        mready          : in     vl_logic;
+        merror          : in     vl_logic;
+        mrdata          : in     vl_logic_vector(31 downto 0);
+        bigendianm      : in     vl_logic;
+        ch0hwdata       : in     vl_logic_vector(31 downto 0);
+        ch1hwdata       : in     vl_logic_vector(31 downto 0);
+        ch2hwdata       : in     vl_logic_vector(31 downto 0);
+        ch3hwdata       : in     vl_logic_vector(31 downto 0);
+        ch4hwdata       : in     vl_logic_vector(31 downto 0);
+        ch5hwdata       : in     vl_logic_vector(31 downto 0);
+        ch6hwdata       : in     vl_logic_vector(31 downto 0);
+        ch7hwdata       : in     vl_logic_vector(31 downto 0);
+        arbhlock        : in     vl_logic;
+        arbhprot        : in     vl_logic_vector(2 downto 0);
+        arbhsize        : in     vl_logic_vector(2 downto 0);
+        arbhaddr        : in     vl_logic_vector(31 downto 0);
+        arbincrxfer     : in     vl_logic;
+        arbpriority     : in     vl_logic;
+        arbxferdir      : in     vl_logic;
+        arbxferreq      : in     vl_logic;
+        arbnumofxfers   : in     vl_logic_vector(4 downto 0);
+        abortxfer       : in     vl_logic;
+        mwdata          : out    vl_logic_vector(31 downto 0);
+        mlock           : out    vl_logic;
+        mprot           : out    vl_logic_vector(3 downto 0);
+        mburst          : out    vl_logic_vector(2 downto 0);
+        mtrans          : out    vl_logic_vector(1 downto 0);
+        maddr           : out    vl_logic_vector(31 downto 0);
+        msize           : out    vl_logic_vector(2 downto 0);
+        mwrite          : out    vl_logic;
+        busavlblm       : out    vl_logic;
+        xferaborted     : out    vl_logic;
+        arbstop         : out    vl_logic;
+        arbdataerror    : out    vl_logic;
+        masteraddress   : out    vl_logic_vector(31 downto 0);
+        chwrdata        : out    vl_logic_vector(31 downto 0)
+    );
+end dmaclitemaster;

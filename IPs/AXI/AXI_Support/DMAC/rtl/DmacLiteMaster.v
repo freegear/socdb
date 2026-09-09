@@ -1,0 +1,2519 @@
+// --=========================================================================--
+// This confidential and proprietary software may be used only as
+// authorised by a licensing agreement from ARM Limited
+//   (C) COPYRIGHT 2000-2004 ARM Limited
+//       ALL RIGHTS RESERVED
+// The entire notice above must be reproduced on all authorised
+// copies and copies may only be made to the extent permitted
+// by a licensing agreement from ARM Limited.
+//
+// -----------------------------------------------------------------------------
+// Version and Release Control Information:
+//
+// File Name              : DmacLiteMaster.v.rca
+// File Revision          : 1.7
+//
+// Release Information    : PrimeCell(TM)-PL080-r1p3-00rel0
+//
+// -----------------------------------------------------------------------------
+// Purpose :
+//           DMA controller AHB Lite Master Interface module
+//           This module interfaces the channel to AHB through AHB wrapper
+//
+// --=========================================================================--
+
+`timescale 1ns/1ps
+
+// -----------------------------------------------------------------------------
+
+module DmacLiteMaster (
+// Inputs
+                       // AHB signals
+                       // From Reset and clock generator
+                       HCLK,
+                       HRESETn,
+                       // From AHB Slave / AHB-Wrapper
+                       MREADY,
+                       MERROR,
+                       MRDATA,
+                       // DMAC AHB Slave signals
+                       BigEndianM,
+                       // From Channels
+                       Ch0HWDATA,
+                       Ch1HWDATA,
+                       Ch2HWDATA,
+                       Ch3HWDATA,
+                       Ch4HWDATA,
+                       Ch5HWDATA,
+                       Ch6HWDATA,
+                       Ch7HWDATA,
+                       // From internal arbiter
+                       ArbHLOCK,
+                       ArbHPROT,
+                       ArbHSIZE,
+                       ArbHADDR,
+                       ArbIncrXfer,
+                       ArbPriority,
+                       ArbXferDir,
+                       ArbXferReq,
+                       ArbNumOfXfers,
+                       AbortXfer,
+
+// Outputs
+                       // To AHB/Wrapper signals
+                       MWDATA,
+                       MLOCK,
+                       MPROT,
+                       MBURST,
+                       MTRANS,
+                       MADDR,
+                       MSIZE,
+                       MWRITE,
+                       // To internal arbiter
+                       BusAvlblM,
+                       XferAborted,
+                       ArbStop,
+                       ArbDataError,
+                       MasterAddress,
+                       ChWrData
+                       );
+// Inputs
+// AHB signals
+// From Reset and clock generator
+input         HCLK;             // AHB clock
+input         HRESETn;          // AHB Reset
+
+// From AHB Slave / AHB-Wrapper
+input         MREADY;           // Signal to indicate waited transfers
+input         MERROR;           // Signal to indicate Error response
+input  [31:0] MRDATA;           // Read data bus
+// DMAC AHB Slave signals
+input         BigEndianM;       // Endianness information
+// From Channels
+input  [31:0] Ch0HWDATA;        // Write data from channel 0
+input  [31:0] Ch1HWDATA;        // Write data from channel 1
+input  [31:0] Ch2HWDATA;        // Write data from channel 2
+input  [31:0] Ch3HWDATA;        // Write data from channel 3
+input  [31:0] Ch4HWDATA;        // Write data from channel 4
+input  [31:0] Ch5HWDATA;        // Write data from channel 5
+input  [31:0] Ch6HWDATA;        // Write data from channel 6
+input  [31:0] Ch7HWDATA;        // Write data from channel 7
+// From internal arbiter
+input         ArbHLOCK;         // HLOCK information
+input   [2:0] ArbHPROT;         // HPROT information
+input   [2:0] ArbHSIZE;         // HSIZE information
+input  [31:0] ArbHADDR;         // HADDR information
+input         ArbIncrXfer;      // Indicates incremental addressing
+input         ArbPriority;      // Indicates priority of the granted
+input         ArbXferDir;       // HWRITE information
+input         ArbXferReq;       // AHB Transfer Request
+input   [4:0] ArbNumOfXfers;    // Number of transfers requested
+input         AbortXfer;        // Signal to abort the transfer
+
+// Outputs
+// To AHB/Wrapper signals
+output [31:0] MWDATA;           // Write Data Bus
+output        MLOCK;            // Locking Information of AHB transfer
+output  [3:0] MPROT;            // Protection Info on AHB
+output  [2:0] MBURST;           // Burst Information
+output  [1:0] MTRANS;           // Type of transfer on AHB
+output [31:0] MADDR;            // AHB Slave Address to be accessed for
+output  [2:0] MSIZE;            // Width of the AHB data transfer
+output        MWRITE;           // Signal to specify the read or write
+// To internal arbiter
+output        BusAvlblM;        // AHB Data Bus available
+output        XferAborted;      // Signal to indicate that the transfer
+                                // is aborted (acknowledge to the
+                                // AbortXfer from internal arbiter)
+output        ArbStop;          // Stop Arbitration
+output        ArbDataError;     // Indicates Error on AHB
+output [31:0] MasterAddress;    // HADDR information
+output [31:0] ChWrData;         // Write Data bus to channel FIFO
+
+// Inputs
+// AHB signals
+// From Reset and clock generator
+wire          HCLK;             // AHB clock
+wire          HRESETn;          // AHB Reset
+// From AHB Slave / AHB-Wrapper
+wire          MREADY;           // Signal to indicate waited transfers
+wire          MERROR;           // Signal to indicate Error response
+wire   [31:0] MRDATA;           // Read data bus
+// DMAC AHB Slave signals
+wire          BigEndianM;       // Endianness information
+// From Channels
+wire   [31:0] Ch0HWDATA;        // Write data from channel 0
+wire   [31:0] Ch1HWDATA;        // Write data from channel 1
+wire   [31:0] Ch2HWDATA;        // Write data from channel 2
+wire   [31:0] Ch3HWDATA;        // Write data from channel 3
+wire   [31:0] Ch4HWDATA;        // Write data from channel 4
+wire   [31:0] Ch5HWDATA;        // Write data from channel 5
+wire   [31:0] Ch6HWDATA;        // Write data from channel 6
+wire   [31:0] Ch7HWDATA;        // Write data from channel 7
+// From internal arbiter
+wire          ArbHLOCK;         // HLOCK information
+wire    [2:0] ArbHPROT;         // HPROT information
+wire    [2:0] ArbHSIZE;         // HSIZE information
+wire   [31:0] ArbHADDR;         // HADDR information
+wire          ArbIncrXfer;      // Indicates incremental addressing
+wire          ArbPriority;      // Indicates priority of the granted
+                                // channel
+wire          ArbXferDir;       // HWRITE information
+wire          ArbXferReq;       // AHB Transfer Request
+wire    [4:0] ArbNumOfXfers;    // Number of transfers requested
+wire          AbortXfer;        // Signal to abort the transfer
+
+// Outputs
+// To AHB/Wrapper signals
+wire   [31:0] MWDATA;           // Write Data Bus
+reg           MLOCK;            // Locking Information of AHB transfer
+wire    [3:0] MPROT;            // Protection Info on AHB
+reg     [2:0] MBURST;           // Burst Information
+reg     [1:0] MTRANS;           // Type of transfer on AHB
+reg    [31:0] MADDR;            // AHB Slave Address to be accessed for
+                                // transfer
+reg     [2:0] MSIZE;            // Width of the AHB data transfer
+reg           MWRITE;           // Signal to specify the read or write
+                                // transfer to/from slave
+
+// To internal arbiter
+reg           BusAvlblM;        // AHB Data Bus available
+reg           XferAborted;      // Signal to indicate that the transfer
+                                // is aborted (acknowledge to the
+                                // AbortXfer from internal arbiter)
+wire          ArbStop;          // Stop Arbitration
+wire          ArbDataError;     // Indicates Error on AHB
+reg    [31:0] MasterAddress;    // HADDR information
+reg    [31:0] ChWrData;         // Write Data bus to channel FIFO
+
+// -----------------------------------------------------------------------------
+//
+//                               DmacLiteMaster
+//                               ==============
+//
+// -----------------------------------------------------------------------------
+//
+// Overview
+// ========
+//
+//   This module implements the AHB Lite Master Interface for the DMA
+// controller. This module along with the AHB-Lite wrapper acts as the interface
+// between the AHB and the channels/internal arbiter.
+// This module contains a single state machine with 4 states as described in the
+// description at the start of the state machine logic.
+//
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Constant declarations
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Wire declarations
+// -----------------------------------------------------------------------------
+wire        NxtLastXfer;
+// D input of LastXfer
+
+wire  [4:0] RemPsbleXfers;
+// Number of transfers possible in the next burst without crossing the 1KB
+// boundary if the burst is started with the current values of the internal
+// address and control signals
+
+wire        RemPsble16;
+// 16 transfers are possible in a burst if the burst is started with the
+// current values of the internal address and control signals
+
+wire  [4:0] ArbPsbleXfers;
+// Number of transfers possible in the burst without crossing the 1KB boundary
+// if the burst is started with the values of the address and control signals
+// from the Internal Arbiter
+
+wire        ArbPsble16;
+// 16 transfers are possible in a burst without crossing the 1 KB boundary if
+// the burst is started with the values of the address and control signals from
+// the Internal Arbiter
+
+wire  [4:0] Buf1PsbleXfers;
+// Number of transfers possible in the burst without crossing the 1 KB boundary,
+// if the transfer starts with the address and control information from
+// intermediate buffers
+
+wire        Buf1Psble16;
+// 16 transfers are not possible in a burst without crossing the 1 KB boundary,
+// if the transfer starts with the address and control information from
+// intermediate buffers
+
+wire  [7:0] NewBrstFrmRem;
+// New burst to be started from the remaining number of transfer out of the
+// requested number of transfers by the internal arbiter
+
+wire  [7:0] NewBrstFrmArb;
+// New burst to be started directly from the information provided by the
+// internal arbiter
+
+wire  [7:0] NewBrstFrmBuf1;
+// New burst to be started from the intermediate buffers
+
+wire [31:0] IncrementedAddr;
+// Incremented version of the address
+
+// Endianization related signals
+wire [31:0] ChHWDATA;
+// ORed version of the Write-Data from all the channels
+
+wire  [31:0] NdNsdBufRdData;
+// Endianised Buffered HRDATA bus
+
+// -----------------------------------------------------------------------------
+// Register declarations
+// -----------------------------------------------------------------------------
+reg   [3:0] DMAMasterState;
+// This indicates the Current Master state
+
+reg   [4:0] RemNumOfXfers;
+// This indicates the number of transfers remaining to be done from the
+// requested number of transfers by the internal arbiter
+
+reg         IncrXfer;
+// This signal indicates whether the current transfer is of incrementing type or
+// non-incrementing type addressing
+
+reg   [4:0] RmnFrmBurst;
+// This indicates the number of transfers remaining to be done to complete the
+// committed number of beats in a burst on the AHB by the Master interface
+
+reg   [3:0] NxtMasterState;
+// D input of DMAMasterState
+
+reg         NxtXferAborted;
+// D input of XferAborted
+
+reg         NxtArbStopSeq;
+// D Input of ArbStopSeq
+
+reg         ArbStopSeq;
+// Request from Master FSM to stop arbitration
+
+reg         NxtBusAvlblM;
+// D Input of iBusAvlblM
+
+reg         BusAvlblMV2;
+// AHB Data Bus available - version 2 (Equivalent to BusAvlblM,
+// replicated to limit fanout load on the flip-flop output)
+
+reg         BusAvlblMV3;
+// AHB Data Bus available - version 3 (Equivalent to BusAvlblM,
+// replicated to limit fanout load on the flip-flop output)
+
+reg         BusAvlblMV4;
+// AHB Data Bus available - version 4 (Equivalent to BusAvlblM,
+// replicated to limit fanout load on the flip-flop output)
+
+reg         NxtBusAvlblMV2;
+// D Input of BusAvlblMV2
+
+reg         NxtBusAvlblMV3;
+// D Input of BusAvlblMV3
+
+reg         NxtBusAvlblMV4;
+// D Input of BusAvlblMV4
+
+reg  [31:0] MasterAddr1;
+// First level of pipe lined master address
+
+reg         RstDueToAbort;
+// When HIGH, this signal indicated that the ArbStopSeq is made LOW because of
+// the ABORT request from the channel/arbiter.
+
+reg         BuffPriority;
+// Signal to store the information about priority of the previous channel whose
+// request is currently being serviced
+
+reg         WaitOneClk;
+// Wait for one more clock for for re-arbitration in case of error response
+// re-arbitration
+
+reg         LastXfer;
+// Indicates that the last transfer is in progress
+
+reg  [31:0] BuffHRData;
+// Buffer for HRDATA from the AHB Slave
+
+reg   [1:0] FrstBuffAddr;
+// First level buffer for last 2 bits of AHB address
+
+reg   [2:0] FrstBuffSize;
+// First level buffer for MSIZE
+
+reg   [1:0] AddrForData;
+// Address(2 LSBs) corresponding to data to be endianized which is buffer
+
+reg   [2:0] SizeForData;
+// HSIZE corresponding to data to be endianized which is buffer
+
+reg   [1:0] NxtFrstBuffAddr;
+// D Input of FrstBuffAddr
+
+reg   [2:0] NxtFrstBuffSize;
+// D Input of FrstBuffSize
+
+reg   [1:0] NxtAddrForData;
+// D Input of AddrForData
+
+reg   [2:0] NxtSizeForData;
+// D Input of SizeForData
+
+reg   [1:0] InMTrans;
+// D-input of RgInMTrans
+
+reg   [2:0] InMBurst;
+// D-input of RgInMBurst
+
+reg         InMWrite;
+// D-input of RgInMWrite
+
+reg   [2:0] InMSize;
+// D-input of RgInMSize
+
+reg   [2:0] InMProt;
+// D-input of RgInMProt
+
+reg         InMLock;
+// D-input of RgInMLock
+
+reg  [31:0] InMAddr;
+// D-input of RgInMAddr
+
+reg         InXferAborted;
+// Intermediate signal for NxtXferAborted
+
+reg         InArbStopSeq;
+// Intermediate signal for NxtArbStopSeq
+
+reg  [31:0] InMasterAddr1;
+// D-input of RgInMasterAddr1
+
+reg   [3:0] InMasterState;
+// Intermediate signal for NxtMasterState
+
+reg   [4:0] InNumOfXfers;
+// Intermediate signal for Nxttermediate
+
+reg   [4:0] InRmnFrmBurst;
+// Intermediate signal for NxtRmnFrmBurst
+
+reg         InIncrXfer;
+// Intermediate signal for NxtIncrXfer
+
+reg         InRstDueToAbort;
+// Intermediate signal for NxtRstDueToAbort
+
+reg         InBuffPriority;
+// Intermediate signal for NxtBuffPriority
+
+reg         InErrored;
+// signal to indicate the error response
+
+reg         InWaitOneClk;
+// D input of WaitOneClk
+
+// The values of the signal to be assigned for the D input of the flipflops
+// in case of slave returning Error response
+
+reg   [1:0] ErrMTrans;
+// D-input of RgErMTrans
+
+reg   [2:0] ErrMBurst;
+// D-input of RgErMBurst
+
+reg         ErrMWrite;
+// D-input of RgErMWrite
+
+reg   [2:0] ErrMSize;
+// D-input of RgErMSize
+
+reg   [2:0] ErrMProt;
+// D-input of RgErMProt
+
+reg         ErrMLock;
+// D-input of RgErMLock
+
+reg  [31:0] ErrMAddr;
+// D-input of RgErMAddr
+
+reg         ErrXferAborted;
+// Intermediate signal for NxtXferAborted
+
+reg         ErrArbStopSeq;
+// Intermediate signal for NxtArbStopSeq
+
+reg   [3:0] ErrMasterState;
+// Intermediate signal for NxtMasterState
+
+reg   [4:0] ErrNumOfXfers;
+// D-input of RgErNumOfXfers
+
+reg   [4:0] ErrRmnFrmBurst;
+// D-input of RgErRmnFrmBurst
+
+reg         ErrWaitOneClk;
+// D-input of RgErWaitOneClk
+
+// Buffered Information is required when MREADY goes low but the BusAvlblM
+// signal is HIGH. (because arbiter would have re-arbitrated and information
+// from it is available in that clock window only).
+
+// Following signals are first level buffered signals coming from internal
+// arbiter. Buf1 prefix indicates the first level of buffering.
+reg         Buf1HLOCK;
+// Buffered ArbHLOCK
+
+reg   [2:0] Buf1HPROT;
+// Buffered ArbHPROT
+
+reg   [2:0] Buf1HSIZE;
+// Buffered ArbHSIZE
+
+reg  [31:0] Buf1HADDR;
+// Buffered ArbHADDR
+
+reg         Buf1IncrXfer;
+// Buffered ArbIncrXfer
+
+reg         Buf1Priority;
+// Buffered ArbPriority
+
+reg         Buf1XferDir;
+// Buffered ArbXferDir
+
+reg   [4:0] Buf1NumOfXfers;
+// Buffered ArbNumOfXfers
+
+// D Inputs of buffers holding the information from the internal arbiter
+reg         NxtBuf1HLOCK;
+// D input of Buf1HLOCK
+
+reg   [2:0] NxtBuf1HPROT;
+// D input of Buf1HPROT
+
+reg   [2:0] NxtBuf1HSIZE;
+// D input of Buf1HSIZE
+
+reg  [31:0] NxtBuf1HADDR;
+// D input of Buf1HADDR
+
+reg         NxtBuf1IncrXfer;
+// D input NxtBuf1IncrXfer
+
+reg         NxtBuf1Priority;
+// D input of Buf1Priority
+
+reg         NxtBuf1XferDir;
+// D input of Buf1XferDir
+
+reg   [4:0] NxtBuf1NXfers;
+// D input of Buf1NXfers
+
+reg         StartFrmBuff;
+// Signal to indicate that the next transfer has to be done from the
+// intermediate buffers
+
+reg         NxtStartFrmBuff;
+// D Input of StartFrmBuff
+
+reg         InStartFrmBuff;
+// Intermediate signal for D-Input of StartFrmBuff
+
+reg  [31:0] BuffHWData;
+// Buffered HWDATA Write Data
+
+reg   [2:0] iMPROT;
+// 3 bits of the MPROT signal
+
+reg   [4:0] RgErNumOfXfers;
+//  Register for ErrNumOfXfers
+
+reg   [4:0] RgErRmnFrmBurst;
+//  Register for ErrRmnFrmBurst
+
+reg         RgErIncrXfer;
+//  Register for IncrXfer
+
+reg         RgErRstDueToAb;
+//  Register for RstDueToAbort
+
+reg         RgErBuffPrio;
+//  Register for BuffPriority
+
+reg         RgErWaitOneClk;
+//  Register for ErrWaitOneClk
+
+reg   [4:0] RgInNumOfXfers;
+//  Register for InNumOfXfers
+
+reg   [4:0] RgInRmnFrmBurst;
+//  Register for InRmnFrmBurst
+
+reg         RgInIncrXfer;
+//  Register for InIncrXfer
+
+reg         RgInRstDueToAb;
+//  Register for InRstDueToAbort
+
+reg         RgInBuffPrio;
+//  Register for InBuffPriority
+
+reg         RgInWaitOneClk;
+//  Register for InWaitOneClk
+
+reg   [1:0] RgInMTrans;
+//  Register for InMTrans
+
+reg   [2:0] RgInMBurst;
+//  Register for InMBurst
+
+reg         RgInMWrite;
+//  Register for InMWrite
+
+reg   [2:0] RgInMSize;
+//  Register for InMSize
+
+reg   [2:0] RgInMProt;
+//  Register for InMProt
+
+reg         RgInMLock;
+//  Register for InMLock
+
+reg  [31:0] RgInMAddr;
+//  Register for InMAddr
+
+reg   [1:0] RgErMTrans;
+//  Register for ErrMTrans
+
+reg   [2:0] RgErMBurst;
+//  Register for ErrMBurst
+
+reg         RgErMWrite;
+//  Register for ErrMWrite
+
+reg   [2:0] RgErMSize;
+//  Register for ErrMSize
+
+reg   [2:0] RgErMProt;
+//  Register for ErrMProt
+
+reg         RgErMLock;
+//  Register for ErrMLock
+
+reg  [31:0] RgErMAddr;
+//  Register for ErrMAddr
+
+reg  [31:0] RgMasterAddr1;
+//  Register for MasterAddr1
+
+reg  [31:0] IntHWDATAM;
+// Endianised HWDATA from the channel
+
+reg  [31:0] RgInMasterAddr1;
+//  Register for InMasterAddr1
+
+//Include Parameters File
+`include "DmacParams.v"
+
+// -----------------------------------------------------------------------------
+// Function declarations
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// AddrIncr()    :
+// The function to increment the AHB address for incrementing burst transfers on
+// the AHB for pipe lining.
+// The address is incremented by either 1, 2 or 4 depending on the
+// size of the transfer (i.e. MSIZE)
+// The incrementing logic is implemented by splitting it into a combinational
+// logic for the nibble counters.
+// The function takes 2 arguments Current Address and the size of the transfer
+// and returns the incremented address.
+// Coding uses the principle similar to Look-ahead carry generator for reducing
+// the time required for operation.
+// -----------------------------------------------------------------------------
+function [31:0] AddrIncr;
+input [31:0] Addr;          // Current Address
+input  [2:0] HSize;         // Width of the transfer
+
+reg   [31:0] IncrAddr;
+// Incremented version of the current address
+
+begin
+  IncrAddr = 32'h00000000;
+  case (HSize)
+    `BYTE_ACCESS :
+      begin
+        IncrAddr[31:00] = Addr[31:00] + 1;
+      end
+
+    `HWORD_ACCESS :
+      begin
+        IncrAddr[00]    = Addr[00];
+        IncrAddr[31:01] = Addr[31:01] + 1;
+      end
+
+    `WORD_ACCESS :
+      begin
+        IncrAddr[01:00] = Addr[01:00];
+        IncrAddr[31:02] = Addr[31:02] + 1;
+      end
+    default :
+      begin
+        // IncrAddr = 32'h00000000;
+        // synopsys translate_off
+        $display("DmacLiteMaster1 : HSize is not correct");
+        // synopsys translate_on
+      end
+  endcase
+  AddrIncr = IncrAddr;
+end
+endfunction
+
+
+// -----------------------------------------------------------------------------
+// StartNewBurst():
+//                  The function used for determining the type of burst for
+//                  starting any new burst on AHB.
+//
+// This function is called at the start of new burst of transfers requested by
+// the arbiter or after completion of intermediate burst on the AHB.
+// The function takes 4 arguments
+// 1. XfersPossible and 2. Possible16 : This gives the number of transfers
+//   possible in a single burst without crossing the boundary.
+//   Possible16 gives whether 16 transfers are possible in a burst.
+//   This takes into account the 1KB device boundary specification, so that it
+//   is not crossed in the burst.
+// 3. ArbIncrXfer: This indicates whether the current burst of transfer is of
+//   incrementing or non-incrementing type.
+// 4. NumOfXfers: This indicates the number of transfers channel want to do and
+//   it is ready for doing those many transfers without any break.
+//
+// On taking these 4 arguments it calculates the optimum number of transfers
+// which can be done in a single burst.
+// Return the TYPE of BURST and the NUMBER of TRANSFERS in that burst.
+// -----------------------------------------------------------------------------
+function [7:0] StartNewBurst;
+input  [3:0] XfersPossible;   // Number of transfers possible in a burst
+input        Possible16;      // 16 transfers possible in a burst
+input        ArbIncrXfer;     // Type of the transfer
+input  [4:0] NumOfXfers;      // Total number of transfers to be done
+
+reg    [4:0] XfersToBeDone;   // Number of transfers to be done in this burst
+// Incremented version of the current address
+
+reg    [2:0] NewHBurst;       // The Value of the new HBURST on AHB to be put
+// Incremented version of the current address
+
+begin
+  if (ArbIncrXfer == 1'b1)
+    begin
+      // If the requested NumOfXfers are 16
+      if (NumOfXfers [4] == 1'b1)
+        begin
+          if (Possible16 == 1'b0)
+            begin
+              if (XfersPossible[3] == 1'b0)
+                begin
+                  if (XfersPossible[2] == 1'b0)
+                    begin
+                      NewHBurst       = `HBURSTM_UINCR;
+                      XfersToBeDone   = {3'b0, XfersPossible[1:0]};
+                    end
+                  else
+                    begin
+                      NewHBurst       = `HBURSTM_INCR4;
+                      XfersToBeDone   = 5'b00100;
+                    end
+                end
+              else
+                begin
+                  NewHBurst       = `HBURSTM_INCR8;
+                  XfersToBeDone   = 5'b01000;
+                end
+            end
+          else
+            begin
+              NewHBurst       = `HBURSTM_INCR16;
+              XfersToBeDone   = 5'b10000;
+            end
+        end
+       // If the requested NumOfXfers are > 7
+      else if (NumOfXfers[3] == 1'b1)
+        begin
+          if ((Possible16 | XfersPossible[3]) == 1'b1)
+            begin
+              NewHBurst       = `HBURSTM_INCR8;
+              XfersToBeDone   = 5'b01000;
+            end
+          else
+            begin
+              if (XfersPossible[2] == 1'b0)
+                begin
+                  NewHBurst       = `HBURSTM_UINCR;
+                  XfersToBeDone   = {3'b0, XfersPossible[1:0]};
+                end
+              else
+                begin
+                  NewHBurst       = `HBURSTM_INCR4;
+                  XfersToBeDone   = 5'b00100;
+                end
+            end
+        end
+      // If the requested NumOfXfers are > 3
+      else if (NumOfXfers[2] == 1'b1)
+        begin
+          if ((Possible16 | XfersPossible[3] | XfersPossible[2]) == 1'b1)
+            begin
+              NewHBurst       = `HBURSTM_INCR4;
+              XfersToBeDone   = 5'b00100;
+            end
+          else
+            begin
+              NewHBurst       = `HBURSTM_UINCR;
+              XfersToBeDone   = {3'b0, XfersPossible[1:0]};
+            end
+        end
+      // If the requested NumOfXfers are = 3
+      else if (NumOfXfers[1:0] == 2'b11)
+        begin
+          NewHBurst       = `HBURSTM_UINCR;
+          if ((Possible16 | XfersPossible[3] | XfersPossible[2]) == 1'b1)
+            begin
+              XfersToBeDone   = 5'b00011;
+            end
+          else
+            begin
+              XfersToBeDone   = {3'b0,XfersPossible[1:0]};
+            end
+        end
+          // If the requested NumOfXfers are = 2
+      else if (NumOfXfers[1] == 1'b1)
+        begin
+          NewHBurst       = `HBURSTM_UINCR;
+          if ((Possible16 | XfersPossible[3] | XfersPossible[2] |
+               XfersPossible[1]) == 1'b1)
+            begin
+              XfersToBeDone   = 5'b00010;
+            end
+          else
+            begin
+              XfersToBeDone   = 5'b00001;
+            end
+        end
+        // If the requested NumOfXfers is = 1
+      else
+        begin
+          NewHBurst       = `HBURSTM_UINCR;
+          XfersToBeDone   = 5'b00001;
+        end
+    end
+  else
+    begin
+      // All the non-incrementing accesses are done with UINCR burst with NSEQ's
+      // followed by NSEQ's.
+      NewHBurst       = `HBURSTM_UINCR;
+      XfersToBeDone   = NumOfXfers;
+    end
+StartNewBurst = {NewHBurst, XfersToBeDone};
+end
+endfunction
+
+// -----------------------------------------------------------------------------
+// CalcPossible() :
+//                  Calculating the possible transfers in a burst without
+//                  crossing the 1 KB boundary.
+// Possible Xfers Calculation :
+//   XfersPossible = Boundary - Address
+// The Address bits to be subtracted from the Boundary are determined by the
+// actual boundary size and the Size of the transfer (i.e. HSIZE)
+// -----------------------------------------------------------------------------
+function [4:0] CalcPossible;
+input  [2:0] Size;          // Width of the transfer
+input  [9:0] Address;       // Current address
+
+reg    [4:0] XfersPossible;
+// Number of transfers possible in a burst without crossing the boundary
+
+begin
+  XfersPossible   = 5'b00000;
+  // Possible number of transfers in the burst without crossing the 1 KB
+  // page boundary is calculated from the Address boundary and the current
+  // address.
+  // This number is the number of transfers by which the current address is away
+  // from the 1 KB page boundary
+  // Accesses are assumed to be aligned (i.e. In case of BYTE access address is
+  // BYTE aligned and in case of H-Word access it is H-Word aligned similarly
+  // for for WORD access it is word aligned.
+  case (Size)
+    `BYTE_ACCESS :
+      begin
+        if ((& Address[9:4]) == 1'b0)
+          begin
+            XfersPossible   = 5'b10000;
+          end
+        else
+          begin
+            XfersPossible   = 5'd16 - {1'b0, Address[3:0]};
+          end
+      end
+
+    `HWORD_ACCESS :
+      begin
+        if ((& Address[9:5]) == 1'b0)
+          begin
+            XfersPossible   = 5'b10000;
+          end
+        else
+          begin
+            XfersPossible   = 5'd16 - {1'b0, Address[4:1]};
+          end
+      end
+
+    `WORD_ACCESS :
+      begin
+        if ((& Address [9:6]) == 1'b0)
+          begin
+            XfersPossible   = 5'b10000;
+          end
+        else
+          begin
+            XfersPossible   = 5'd16 - {1'b0, Address[5:2]};
+          end
+      end 
+
+    default :
+      begin
+        // XfersPossible   = 5'b00000;
+        // synopsys translate_off
+        $display("DmacLiteMaster2 : Invalid HSIZE for the DMA access");
+        // synopsys translate_on
+      end
+  endcase
+CalcPossible = XfersPossible;
+end
+endfunction
+
+
+// -----------------------------------------------------------------------------
+//
+// Main body of code
+// =================
+//
+// -----------------------------------------------------------------------------
+
+
+// -----------------------------------------------------------------------------
+// Driving out the combinational signals
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Function outputs are assigned to its respective signals
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Number of transfers possible in the burst starting with information
+// from the internal arbiter
+// ArbPsble16 is signal indicating that the 16 transfers are possible in a
+// burst without crossing the boundary
+// -----------------------------------------------------------------------------
+assign ArbPsbleXfers    = CalcPossible(ArbHSIZE, ArbHADDR[9:0]);
+
+// 16 transfers are not possible in the burst
+assign ArbPsble16       = ArbPsbleXfers[4];
+
+// -----------------------------------------------------------------------------
+// Number of transfers possible in the burst starting with information
+// from the intermediate buffers
+// Buf1Psble16 is signal indicating that the 16 transfers not possible in a
+// burst without crossing the boundary
+// -----------------------------------------------------------------------------
+assign Buf1PsbleXfers   = CalcPossible(Buf1HSIZE, Buf1HADDR[9:0]);
+
+// 16 transfers are not possible in the burst
+assign Buf1Psble16      = Buf1PsbleXfers[4];
+
+// -----------------------------------------------------------------------------
+// Incremented version of the AHB Slave address
+// This incremented address is used for pipe lining the addresses in the burst
+// on AHB. The incremented address is either +1, +2 or +4 of the current
+// address depending on the width of the transfer i.e. HSIZE
+// -----------------------------------------------------------------------------
+assign IncrementedAddr  = AddrIncr(MADDR, MSIZE);
+
+// -----------------------------------------------------------------------------
+// Number of transfers possible in the burst starting with internal
+// information in the master interface for remaining transfers from the
+// total number of transfers requested by the internal arbiter
+// RemPsble16 is signal indicating that the 16 transfers not possible in a
+// burst without crossing the boundary
+// -----------------------------------------------------------------------------
+assign RemPsbleXfers    = CalcPossible(MSIZE, (IncrementedAddr[9:0]));
+
+// 16 transfers are not possible in the burst
+assign RemPsble16       = RemPsbleXfers[4];
+
+// -----------------------------------------------------------------------------
+// New burst which is started directly from the internal arbiter
+// This signal gives the type of new burst and the number of transfers in the
+// burst, if the burst has to be started newly from the internal arbiter.
+// -----------------------------------------------------------------------------
+assign NewBrstFrmArb    = StartNewBurst(ArbPsbleXfers[3:0], ArbPsble16,
+                           ArbIncrXfer, ArbNumOfXfers);
+
+
+// -----------------------------------------------------------------------------
+// Burst from the buffered information
+// -----------------------------------------------------------------------------
+assign NewBrstFrmBuf1   = StartNewBurst(Buf1PsbleXfers[3:0], Buf1Psble16,
+                           Buf1IncrXfer, Buf1NumOfXfers);
+
+// -----------------------------------------------------------------------------
+// New burst which is started from the currently remaining number of
+// transfers
+// This signal gives the type of new burst and the number of transfers in the
+// burst, if the burst is started from the remaining number of transfers out of
+// the total number of transfers requested by the internal arbiter
+// -----------------------------------------------------------------------------
+assign NewBrstFrmRem    = StartNewBurst(RemPsbleXfers[3:0], RemPsble16,
+                           IncrXfer, ((RemNumOfXfers) - 1'b1));
+
+// -----------------------------------------------------------------------------
+// DMAC AHB Lite Master Interface - Main state machine
+// ---------------------------------------------------
+// The State machine implements the master interface between the AHB and the
+// internal arbiter/channel.
+// This does the actual DMA transfers on the AHB through AHB wrapper.
+// The state machine has 4 states
+//
+// - ST_MASTER_INITIAL : This is the default state of the master
+//   a. On Reset the state machine moves to this state, and drives out the
+//      default signals on the AHB. The state machine does not do any valid
+//      address or data transfers in this state.
+//   b. On detecting the ArbXferReq from the internal arbiter
+//      1. If the internal arbiter is requesting for transfers FSM
+//         moves to the ST_MASTER_ADDRPHASE state if the MREADY is sampled
+//         high, and drives out all the control information on to the AHB which
+//         is directly registered from the internal arbiter. The new value of
+//         the committed burst on the AHB is determined by the current address
+//         and page address boundary calculated in the StartNewBurst() function.
+//
+// - ST_MASTER_ADDRPHASE : This state indicates that the valid transfer has
+//                         started on the AHB, the address for the first AHB
+//                         access address is put on the AHB, and no data
+//                         transfer of the previous transfer is pending.
+//     a. On detecting MREADY HIGH :
+//          - If the current transfer is single in the AHB access, state machine
+//            again samples the ArbXferReq.
+//            1. If the ArbXferReq is sampled HIGH
+//              If the Priority of the new channel requesting transfers, as well
+//              as the Priority of the previous channel is low, then the master
+//              inserts the IDLE cycles and move to ST_MASTER_LOWPRIO_IDLE state
+//              else it does the following:
+//              It starts the transfers requested by the internal arbiter with
+//              New value of the burst is calculated as explained earlier. The
+//              other control signals are driven directly by registering it from
+//              internal arbiter.
+//              The state machine moves to the ST_MASTER_DATAPHASE
+//
+//            2. If ArbXferReq is LOW, then drives out IDLE on the AHB and
+//               resets the both the counters. It moves to ST_MASTER_DATAPHASE
+//               with both the counters disabled
+//
+//          - If the current transfer is single in the current burst,
+//             If the AbortXfer request has come from the channel, then the
+//             master interface does not start with the remaining number of
+//             transfers from the previous request, it rather sees the new
+//             request from the internal arbiter and then proceeds accordingly
+//             in similar fashion as it had started new transfers on seeing the
+//             ArbXferReq in the ST_MASTER_INITIAL state.
+//
+//             Else in it continues with current transfers remaining from the
+//             previous request as follows:
+//             If the RemNumOfXfer are 2 (last but on transfer) then it makes
+//             ArbStopSeq LOW to re-arbitrate in the next clock cycle and
+//             decrements the RemNumOfXfer counter by 1.
+//            a. If the current ongoing transfer is for the priority channel-
+//               New burst is started for the remaining number of transfers.
+//               The value of the new burst is decided by the (address +
+//               transferwidth) and (RemNumOfXfers - 1) and the 1 KB address
+//               boundary.
+//            b. If the current ongoing transfer is for the LOW priority channel
+//               state machine moves to the ST_MASTER_LOWPRIO_IDLE state.
+//          - Else continues the current burst, decrements the counter values by
+//            one and moves to ST_MASTER_DATAPHASE
+//            If this is second last transfer from the total number of transfers
+//            requested by the internal arbiter or second last transfer in the
+//            burst(and is AbortXfer request has come), then makes ArbStopSeq
+//            LOW to allow the internal arbiter to rearbitrate in the next clock
+//            cycle. Also sets the signal to indicate whether this
+//            re-arbitration is due to Abort request from the channel
+//
+// - ST_MASTER_DATAPHASE : In this state the actual data transfer is happening.
+//     a. On detecting MREADY HIGH with MERROR LOW:
+//          - If the current transfer is last in the AHB access, state machine
+//            again samples the ArbXferReq.
+//            1. If the ArbXferReq is sampled HIGH
+//              If the Priority of the new channel requesting transfers, as well
+//              as the Priority of the previous channel is low, then the master
+//              inserts the IDLE cycles and move to ST_MASTER_LOWPRIO_IDLE state
+//              else it does the following:
+//              It starts the transfers requested by the internal arbiter with
+//              New value of the burst is calculated as explained earlier. The
+//              other control signals are driven directly by registering it from
+//              internal arbiter.
+//              The state machine remains in the ST_MASTER_DATAPHASE
+//
+//            2. If ArbXferReq is LOW, then drives out IDLE on the AHB and
+//               resets the both the counters. It remains in ST_MASTER_DATAPHASE
+//               with both the counters disabled
+//
+//          - If the RemNumOfXfers = 0 (the data transfer is in progress but the
+//            address is not put on the bus for next data transfer
+//            a. If the ArbXfer is not there state machine moves to
+//               ST_MASTER_INITIAL by resetting both the counters and puts IDLE
+//               on to the bus
+//            b. If ArbXferReq is high, it moves to
+//               ST_MASTER_ADDRPHASE similar to the transition from
+//               ST_MASTER_INITIAL to ST_MASTER_ADDRPHASE state.
+//               If the arbiter is requesting for just a single transfer or this
+//               is the single transfer in the current burst and AbortXfer
+//               request has come then it keeps ArbStopSeq LOW for arbitration
+//          - If the current transfer is last in the current burst,
+//            If the AbortXfer request has come from the channel, then the
+//            master interface does not start with the remaining number of
+//            transfers from the previous request, it rather sees the new
+//            request from the internal arbiter and then proceeds accordingly
+//            in similar fashion as it had started new transfers on seeing the
+//            ArbXferReq in the ST_MASTER_INITIAL state.
+//
+//            Else in it continues with current transfers remaining from the
+//            previous request as follows:
+//            If the RemNumOfXfer are 2 (last but on transfer) then it makes
+//            ArbStopSeq LOW to re-arbitrate in the next clock cycle and
+//            decrements the RemNumOfXfer counter by 1.
+//            a. If the current ongoing transfer is for the priority channel-
+//               New burst is started for the remaining number of transfers.
+//               The value of the new burst is decided by the (address +
+//               transferwidth) and (RemNumOfXfers - 1) and the 1 KB address
+//               boundary.
+//            b. If the current ongoing transfer is for the LOW priority channel
+//               state machine moves to the ST_MASTER_LOWPRIO_IDLE state.
+//          - Else continues the current burst, decrements the counter values by
+//            one and remains in the ST_MASTER_DATAPHASE
+//            If this is second last transfer from the total number of transfers
+//            requested by the internal arbiter or second last transfer in the
+//            burst(and is AbortXfer request has come), then makes ArbStopSeq
+//            LOW to allow the internal arbiter to rearbitrate in the next clock
+//            cycle. For this purpose if HBURST is put as UINCR then the current
+//            transfer is considered as the second last transfer for aborting
+//            the transfer. State machine also sets the signal to indicate
+//            whether this re-arbitration is due to Abort request from the
+//            channel
+//
+//     b. On detecting MERROR HIGH :
+//        - State machine goes to the ST_MASTER_INITIAL state. It puts on IDLE
+//          on to the AHB. resets the counters. The state machine additionally
+//          waits one clock for re-arbitration to happen in the channel
+//
+// - ST_MASTER_LOWPRIO_IDLE :
+//     When it samples MREADY HIGH
+//     It moves to ST_MASTER_ADDRPHASE and start the AHB access from the
+//     remaining number of transfers from the previous request from the internal
+//     arbiter.
+//     When it samples MERROR HIGH
+//        - State machine goes to the ST_MASTER_INITIAL state. It puts on IDLE
+//          on to the AHB. resets the counters. The state machine additionally
+//          waits one clock for re-arbitration to happen in the channel
+//
+//   N O T E : In all above description
+//             End of AHB Access means RemNumOfXfers = 1
+//             End of AHB Burst means RmnFrmBurst = 1
+// -----------------------------------------------------------------------------
+always @(DMAMasterState or MTRANS or MBURST or MWRITE or MSIZE or iMPROT or
+         MLOCK or MADDR or RemNumOfXfers or RmnFrmBurst or IncrXfer or
+         MERROR or ArbXferDir or ArbHSIZE or ArbHPROT or ArbHLOCK or ArbHADDR or
+         ArbNumOfXfers or ArbXferReq or ArbIncrXfer or ArbPriority or
+         AbortXfer or NewBrstFrmArb or NewBrstFrmRem or IncrementedAddr or
+         MasterAddr1 or ArbStopSeq or BuffPriority or RstDueToAbort or
+         Buf1XferDir or Buf1HSIZE or Buf1HPROT or Buf1HLOCK or Buf1HADDR or
+         Buf1NumOfXfers or Buf1IncrXfer or Buf1Priority or NewBrstFrmBuf1 or
+         StartFrmBuff or WaitOneClk or XferAborted)
+begin : p_AhbLiteISMComb
+  // Default assignments
+   InMTrans         = MTRANS;
+   InMBurst         = MBURST;
+   InMWrite         = MWRITE;
+   InMSize          = MSIZE;
+   InMProt          = iMPROT;
+   InMLock          = MLOCK;
+   InMAddr          = MADDR;
+   InXferAborted    = 1'b0;
+   InArbStopSeq     = ArbStopSeq;
+   InMasterAddr1    = MasterAddr1;
+   InMasterState    = DMAMasterState;
+   InNumOfXfers     = RemNumOfXfers;
+   InRmnFrmBurst    = RmnFrmBurst;
+   InIncrXfer       = IncrXfer;
+   InRstDueToAbort  = RstDueToAbort;
+   InBuffPriority   = BuffPriority;
+   InErrored        = 1'b0;
+   InWaitOneClk     = 1'b0;
+  if (DMAMasterState[0] == 1'b1)
+    begin
+      // When the request from the internal arbiter to the master interface
+      // comes, the master interface starts the burst of transfers requested by
+      // the internal arbiter
+      if (WaitOneClk == 1'b0)
+        begin
+          if (StartFrmBuff == 1'b0)
+            begin
+              if (ArbXferReq == 1'b1)
+                begin
+                  InMWrite         = ArbXferDir;
+                  InMSize          = ArbHSIZE;
+                  InMProt          = ArbHPROT;
+                  InMAddr          = ArbHADDR;
+                  InNumOfXfers     = ArbNumOfXfers;
+                  InBuffPriority   = ArbPriority;
+                  InIncrXfer       = ArbIncrXfer;
+                  InMasterState    = `ST_MASTER_ADDRPHASE;
+                  InMTrans         = `HTRANSM_NSEQ;
+                  InMLock          = ArbHLOCK;
+                 // New burst is started by taking into account the 1 KB page
+                 // boundary and the HSIZE information and the Address to be
+                 // put on the bus.
+                  InMBurst         = NewBrstFrmArb[7:5];
+                  InRmnFrmBurst    = NewBrstFrmArb[4:0];
+                 // If the arbiter is requesting for only one transfer then it
+                 // has to be re-arbitrated for the next phase also
+                 if ((ArbNumOfXfers == 5'b00001) && (ArbPriority == 1'b1))
+                   begin
+                     InArbStopSeq     = 1'b0;
+                   end
+                 else
+                   begin
+                     InArbStopSeq     = 1'b1;
+                   end
+                end
+            end
+          else
+            begin
+              InMWrite         = Buf1XferDir;
+              InMSize          = Buf1HSIZE;
+              InMProt          = Buf1HPROT;
+              InMAddr          = Buf1HADDR;
+              InNumOfXfers     = Buf1NumOfXfers;
+              InIncrXfer       = Buf1IncrXfer;
+              InBuffPriority   = Buf1Priority;
+              InMasterState    = `ST_MASTER_ADDRPHASE;
+              InMTrans         = `HTRANSM_NSEQ;
+              InMLock          = Buf1HLOCK;
+              InMBurst         = NewBrstFrmBuf1[7:5];
+              InRmnFrmBurst    = NewBrstFrmBuf1[4:0];
+             // If the arbiter is requesting for only one transfer then it has
+             // to be re-arbitrated for the next phase also
+             if ((Buf1NumOfXfers == 5'b00001) && (Buf1Priority == 1'b1))
+               begin
+                 InArbStopSeq     = 1'b0;
+               end
+             else
+               begin
+                 InArbStopSeq     = 1'b1;
+                end
+            end
+        end
+      else
+        begin
+          InWaitOneClk     = 1'b0;
+        end
+        // If the previous transfer was incrementing then put on incremented
+        // version of the address as a feedback to the internal arbiter
+      if (IncrXfer == 1'b1)
+        begin
+          InMasterAddr1    = IncrementedAddr;
+        end
+      else
+        begin
+          InMasterAddr1    = MADDR;
+        end
+      InXferAborted    = 1'b0;
+    end
+
+  if (DMAMasterState[1] == 1'b1)
+    begin
+      // If the previous transfer was incrementing then put on incremented
+      // version of the address as a feedback to the internal arbiter
+      if (IncrXfer == 1'b1)
+        begin
+         InMasterAddr1    = IncrementedAddr;
+        end
+      else
+        begin
+         InMasterAddr1    = MADDR;
+        end
+
+      // When the MREADY is high next state is always the data transfer phase
+      // Last transfer on the AHB access requested by internal arbiter
+      if ((RemNumOfXfers == 5'b00001) && (RstDueToAbort == 1'b0))
+        begin
+          InXferAborted    = 1'b0;
+          // BuffPriority information is used to to decide whether to add the
+          // IDLE before start of the next AHB access.
+          if (BuffPriority == 1'b0)
+            begin
+              InMasterState    = `ST_MASTER_LOWPRIO_IDLE;
+              InMTrans         = `HTRANSM_IDLE;
+              InMLock          = 1'b0;
+              InArbStopSeq     = 1'b0;
+            end
+          else
+            begin
+              if (StartFrmBuff == 1'b0)
+                begin
+                  if (ArbXferReq == 1'b1)
+                    begin
+                       InMWrite         = ArbXferDir;
+                       InMSize          = ArbHSIZE;
+                       InMProt          = ArbHPROT;
+                       InMAddr          = ArbHADDR;
+                       InNumOfXfers     = ArbNumOfXfers;
+                       InIncrXfer       = ArbIncrXfer;
+                       InBuffPriority   = ArbPriority;
+                       // Abort is expected to come from the channel when the
+                       // last or last but one transfer is in progress, so the
+                       // Abort is not seen when the total transfer from the
+                       // arbiter is over
+                       InMasterState    = `ST_MASTER_DATAPHASE;
+                       InMTrans         = `HTRANSM_NSEQ;
+                       InMLock          = ArbHLOCK;
+                       InMBurst         = NewBrstFrmArb[7:5];
+                       InRmnFrmBurst    = NewBrstFrmArb[4:0];
+                       // If the arbiter is requesting for only one transfer
+                       // then it has to be re-arbitrated for the next phase
+                       if ((ArbNumOfXfers == 5'b00001) && (ArbPriority == 1'b1))
+                         begin
+                           InArbStopSeq     = 1'b0;
+                         end
+                       else
+                         begin
+                           InArbStopSeq     = 1'b1;
+                         end
+                    end
+                  else
+                    begin
+                      InMasterState    = `ST_MASTER_DATAPHASE;
+                      InMTrans         = `HTRANSM_IDLE;
+                      InMWrite         = 1'b0;
+                      InNumOfXfers     = 5'b00000;
+                      InRmnFrmBurst    = 5'b00000;
+                      InArbStopSeq     = 1'b0;
+                    end
+                end
+              else
+                begin
+                  InMWrite         = Buf1XferDir;
+                  InMSize          = Buf1HSIZE;
+                  InMProt          = Buf1HPROT;
+                  InMAddr          = Buf1HADDR;
+                  InNumOfXfers     = Buf1NumOfXfers;
+                  InIncrXfer       = Buf1IncrXfer;
+                  InBuffPriority   = Buf1Priority;
+                  InMasterState    = `ST_MASTER_DATAPHASE;
+                  InMTrans         = `HTRANSM_NSEQ;
+                  InMLock          = Buf1HLOCK;
+                  InMBurst         = NewBrstFrmBuf1[7:5];
+                  InRmnFrmBurst    = NewBrstFrmBuf1[4:0];
+                  // If request is for only one transfer then it has to be
+                  // re-arbitrated for the next phase also
+                  if ((Buf1NumOfXfers == 5'b00001) && (Buf1Priority == 1'b1))
+                    begin
+                      InArbStopSeq     = 1'b0;
+                    end
+                  else
+                    begin
+                      InArbStopSeq     = 1'b1;
+                    end
+                end
+            end
+        end
+      else if (RmnFrmBurst == 5'b00001)
+        begin
+          // If abort request has not come then continue the previous request
+          // from the internal arbiter or else abort the current request from
+          // the internal arbiter and drive out IDLE on to the AHB
+          // Assumption here is that the AbortXfer is clocked out
+           InXferAborted    = 1'b0;
+           InNumOfXfers     = (RemNumOfXfers) - 1'b1;
+          // If It is the last but one xfer in the burst then make ArbStopSeq
+          // LOW for the last transfer if the high priority channel is doing the
+          // transfers on the bus
+          if ((RemNumOfXfers == 5'b00010) && (BuffPriority == 1'b1))
+            begin
+               InArbStopSeq     = 1'b0;
+            end
+          InMTrans         = `HTRANSM_NSEQ;
+          if (IncrXfer == 1'b1)
+            begin
+              InMAddr          = IncrementedAddr;
+            end
+          else
+            begin
+              InMAddr          = MADDR;
+            end
+          InMasterState    = `ST_MASTER_DATAPHASE;
+          InMBurst         = NewBrstFrmRem[7:5];
+          InRmnFrmBurst    = NewBrstFrmRem[4:0];
+        end
+      else
+        begin
+          InMasterState    = `ST_MASTER_DATAPHASE;
+          InXferAborted    = 1'b0;
+          InNumOfXfers     = (RemNumOfXfers) - 1'b1;
+          InRmnFrmBurst    = (RmnFrmBurst) - 1'b1;
+          if (IncrXfer == 1'b1)
+            begin
+              InMTrans         = `HTRANSM_SEQ;
+              InMAddr          = IncrementedAddr;
+            end
+          else
+            begin
+              InMTrans         = `HTRANSM_NSEQ;
+              InMAddr          = MADDR;
+            end
+          // If it is second last transfer in the burst then make ArbStopSeq LOW
+          // for the last transfer
+          // Or if the abort request has come for the last but one transfer of
+          // the AHB burst give signal for rearbitration
+          if ((RemNumOfXfers == 5'b00010) && (BuffPriority == 1'b1))
+            begin
+              InArbStopSeq     = 1'b0;
+            end
+    
+          if ((RmnFrmBurst == 5'b00010) && (AbortXfer == 1'b1) &&
+              (XferAborted == 1'b0))
+            begin
+              InRstDueToAbort  = 1'b1;
+            end
+          else
+            begin
+              InRstDueToAbort  = 1'b0;
+            end
+        end
+    end
+
+  if (DMAMasterState[2] == 1'b1)
+    begin
+      // Last Transfer in the AHB access
+      if ((RemNumOfXfers == 5'b00001) && (RstDueToAbort == 1'b0))
+        begin
+          if (BuffPriority == 1'b0)
+            begin
+              // IDLE is inserted for last transfer of low priority channel
+              InMasterState    = `ST_MASTER_LOWPRIO_IDLE;
+              InMTrans         = `HTRANSM_IDLE;
+              InMLock          = ArbHLOCK;
+              InArbStopSeq     = 1'b0;
+            end
+          else
+            begin
+              if (StartFrmBuff == 1'b0)
+                begin
+                  if (ArbXferReq == 1'b1)
+                    begin
+                      InMWrite         = ArbXferDir;
+                      InMSize          = ArbHSIZE;
+                      InMProt          = ArbHPROT;
+                      InMAddr          = ArbHADDR;
+                      InNumOfXfers     = ArbNumOfXfers;
+                      InIncrXfer       = ArbIncrXfer;
+                      InBuffPriority   = ArbPriority;
+                      // Abort is expected to come from the channel when the
+                      // last or last but one transfer is in progress, so the
+                      // Abort is not seen when the total transfer from the
+                      // arbiter is over
+                      InMasterState    = `ST_MASTER_DATAPHASE;
+                      InMTrans         = `HTRANSM_NSEQ;
+                      InMLock          = ArbHLOCK;
+                      InMBurst         = NewBrstFrmArb[7:5];
+                      InRmnFrmBurst    = NewBrstFrmArb[4:0];
+                      // If the arbiter is requesting for only one transfer then
+                      // it has to be re-arbitrated for the next phase also
+                      if ((ArbNumOfXfers == 5'b00001) && (ArbPriority == 1'b1))
+                        begin
+                          InArbStopSeq     = 1'b0;
+                        end
+                      else
+                        begin
+                          InArbStopSeq     = 1'b1;
+                        end
+                    end
+                  else
+                    begin
+                       InMasterState    = `ST_MASTER_DATAPHASE;
+                       InMTrans         = `HTRANSM_IDLE;
+                       InMWrite         = 1'b0;
+                       InNumOfXfers     = 5'b00000;
+                       InRmnFrmBurst    = 5'b00000;
+                    end
+                end
+              else
+                begin
+                  InMWrite         = Buf1XferDir;
+                  InMSize          = Buf1HSIZE;
+                  InMProt          = Buf1HPROT;
+                  InMAddr          = Buf1HADDR;
+                  InNumOfXfers     = Buf1NumOfXfers;
+                  InIncrXfer       = Buf1IncrXfer;
+                  InBuffPriority   = Buf1Priority;
+                  InMasterState    = `ST_MASTER_DATAPHASE;
+                  InMTrans         = `HTRANSM_NSEQ;
+                  InMLock          = Buf1HLOCK;
+                  InMBurst         = NewBrstFrmBuf1[7:5];
+                  InRmnFrmBurst    = NewBrstFrmBuf1[4:0];
+                  // If request is for only one transfer then it has to be
+                  // re-arbitrated for the next phase also
+                  if ((Buf1NumOfXfers == 5'b00001) && (Buf1Priority == 1'b1))
+                    begin
+                      InArbStopSeq     = 1'b0;
+                    end
+                  else
+                    begin
+                      InArbStopSeq     = 1'b1;
+                    end
+                end
+            end
+          // If the previous transfer was incrementing then put on incremented
+          // version of the address as a feedback to the internal arbiter
+          if (IncrXfer == 1'b1)
+            begin
+              InMasterAddr1    = IncrementedAddr;
+            end
+          else
+            begin
+              InMasterAddr1    = MADDR;
+            end
+        end
+      else if (RemNumOfXfers == 5'b00000)
+        begin
+          if (StartFrmBuff == 1'b0)
+            begin
+              if (ArbXferReq == 1'b1)
+                begin
+                   InMWrite         = ArbXferDir;
+                   InMSize          = ArbHSIZE;
+                   InMProt          = ArbHPROT;
+                   InMAddr          = ArbHADDR;
+                   InNumOfXfers     = ArbNumOfXfers;
+                   InIncrXfer       = ArbIncrXfer;
+                   InBuffPriority   = ArbPriority;
+                   InMasterState    = `ST_MASTER_ADDRPHASE;
+                   InMTrans         = `HTRANSM_NSEQ;
+                   InMLock          = ArbHLOCK;
+                   InMBurst         = NewBrstFrmArb[7:5];
+                   InRmnFrmBurst    = NewBrstFrmArb[4:0];
+                  // If the arbiter is requesting for only one transfer then it
+                  // has to be re-arbitrated for the next phase also
+                  if ((ArbNumOfXfers == 5'b00001) && (ArbPriority == 1'b1))
+                    begin
+                      InArbStopSeq     = 1'b0;
+                    end
+                  else
+                    begin
+                      InArbStopSeq     = 1'b1;
+                    end
+                end
+              else
+                begin
+                  InMasterState    = `ST_MASTER_INITIAL;
+                  InMTrans         = `HTRANSM_IDLE;
+                  InMWrite         = 1'b0;
+                  InNumOfXfers     = 5'b00000;
+                  InRmnFrmBurst    = 5'b00000;
+                  InMLock          = 1'b0;
+                  InArbStopSeq     = 1'b0;
+                end
+            end
+          else
+            begin
+               InMWrite         = Buf1XferDir;
+               InMSize          = Buf1HSIZE;
+               InMProt          = Buf1HPROT;
+               InMAddr          = Buf1HADDR;
+               InNumOfXfers     = Buf1NumOfXfers;
+               InIncrXfer       = Buf1IncrXfer;
+               InBuffPriority   = Buf1Priority;
+               InMasterState    = `ST_MASTER_ADDRPHASE;
+               InMTrans         = `HTRANSM_NSEQ;
+               InMLock          = Buf1HLOCK;
+               InMBurst         = NewBrstFrmBuf1[7:5];
+               InRmnFrmBurst    = NewBrstFrmBuf1[4:0];
+              // If request is for only one transfer then it has to be
+              // re-arbitrated for the next phase also
+              if ((Buf1NumOfXfers == 5'b00001) && (Buf1Priority == 1'b1))
+                begin
+                  InArbStopSeq     = 1'b0;
+                end
+              else
+                begin
+                  InArbStopSeq     = 1'b1;
+                end
+            end
+        end
+      else if (RmnFrmBurst == 5'b00001)
+        begin
+          // If abort request has not come then continue the previous request
+          // from the internal arbiter or else abort the current request from
+          // the internal arbiter and drive out IDLE on to the AHB
+          if (RstDueToAbort == 1'b0)
+            begin
+              InXferAborted    = 1'b0;
+              InNumOfXfers     = (RemNumOfXfers) - 1'b1;
+              InMasterState    = `ST_MASTER_DATAPHASE;
+              InMTrans         = `HTRANSM_NSEQ;
+              // If the previous transfer was incrementing then put on
+              // incremented version of the address as a feedback to the
+              // internal arbiter
+              if (IncrXfer == 1'b1)
+                begin
+                  InMAddr          = IncrementedAddr;
+                end
+              else
+                begin
+                  InMAddr          = MADDR;
+                end
+               InMBurst         = NewBrstFrmRem[7:5];
+               InRmnFrmBurst    = NewBrstFrmRem[4:0];
+              // If It is the last but one xfer in the burst then make
+              // ArbStopSeq LOW for the last transfer for re-arbitration
+              if ((RemNumOfXfers == 5'b00010) && (BuffPriority == 1'b1))
+                begin
+                  InArbStopSeq     = 1'b0;
+                end
+            end
+          else
+            begin
+              InXferAborted    = 1'b1;
+              if (StartFrmBuff == 1'b0)
+                begin
+                  if (ArbXferReq == 1'b1)
+                    begin
+                      InMWrite         = ArbXferDir;
+                      InMSize          = ArbHSIZE;
+                      InMProt          = ArbHPROT;
+                      InMAddr          = ArbHADDR;
+                      InNumOfXfers     = ArbNumOfXfers;
+                      InIncrXfer       = ArbIncrXfer;
+                      InBuffPriority   = ArbPriority;
+                      InMasterState    = `ST_MASTER_DATAPHASE;
+                      InMTrans         = `HTRANSM_NSEQ;
+                      InMLock          = ArbHLOCK;
+                      // If the arbiter is requesting for only one transfer then
+                      // it has to be re-arbitrated for the next phase also
+                      if ((ArbNumOfXfers == 5'b00001) && (ArbPriority == 1'b1))
+                        begin
+                          InArbStopSeq     = 1'b0;
+                        end
+                      else
+                        begin
+                          InArbStopSeq     = 1'b1;
+                        end
+                      InRstDueToAbort  = 1'b0;
+                      InMBurst         = NewBrstFrmArb[7:5];
+                      InRmnFrmBurst    = NewBrstFrmArb[4:0];
+                    end
+                  else
+                    begin
+                      InRstDueToAbort  = 1'b0;
+                      InMasterState    = `ST_MASTER_DATAPHASE;
+                      InMTrans         = `HTRANSM_IDLE;
+                      InMBurst         = `HBURSTM_INCR4;
+                      InMWrite         = 1'b0;
+                      InMSize          = `BYTE_ACCESS;
+                      InMProt          = 3'b000;
+                      InMLock          = 1'b0;
+                      InMAddr          = 32'h00000000;
+                      InNumOfXfers     = 5'b00000;
+                      InRmnFrmBurst    = 5'b00000;
+                    end
+                end
+              else
+                begin
+                  InMWrite         = Buf1XferDir;
+                  InMSize          = Buf1HSIZE;
+                  InMProt          = Buf1HPROT;
+                  InMAddr          = Buf1HADDR;
+                  InNumOfXfers     = Buf1NumOfXfers;
+                  InIncrXfer       = Buf1IncrXfer;
+                  InBuffPriority   = Buf1Priority;
+                  InMasterState    = `ST_MASTER_DATAPHASE;
+                  InMTrans         = `HTRANSM_NSEQ;
+                  InMLock          = Buf1HLOCK;
+                  InMBurst         = NewBrstFrmBuf1[7:5];
+                  InRmnFrmBurst    = NewBrstFrmBuf1[4:0];
+                  // If request is for only one transfer then it has to be
+                  // re-arbitrated for the next phase also
+                  if ((Buf1NumOfXfers == 5'b00001) && (Buf1Priority == 1'b1))
+                    begin
+                      InArbStopSeq     = 1'b0;
+                    end
+                  else
+                    begin
+                      InArbStopSeq     = 1'b1;
+                    end
+                  InRstDueToAbort  = 1'b0;
+                end
+            end
+          // If the previous transfer was incrementing then put on
+          // incremented version of the address as a feedback to the
+          // internal arbiter
+          if (IncrXfer == 1'b1)
+            begin
+              InMasterAddr1    = IncrementedAddr;
+            end
+          else
+            begin
+              InMasterAddr1    = MADDR;
+            end
+        end
+      else
+        begin
+          // The current burst is going on to the AHB
+          if ((MBURST == `HBURSTM_UINCR) & (RstDueToAbort == 1'b1))
+            begin
+              // And if the AbortXfer request comes from internal arbiter then
+              // if the current transfer is with undefined increment on the bus,
+              // do not start the next transfer and give rearbitration signal to
+              // the internal arbiter. Put on IDLE on to the bus.
+              // Non-incrementing AHB accesses are also done as the successive
+              // UINCR transfers with NSEQ's, this this also aborts the
+              // non-incrementing accesses
+              InXferAborted    = 1'b1;
+              // If the previous transfer was incrementing then put on
+              // incremented version of the address as a feedback to the
+              // internal arbiter
+              if (IncrXfer == 1'b1)
+                begin
+                  InMasterAddr1    = IncrementedAddr;
+                end
+              else
+                begin
+                  InMasterAddr1    = MADDR;
+                end
+      
+              if (StartFrmBuff == 1'b0)
+                begin
+                  if (ArbXferReq == 1'b1)
+                    begin
+                      InMWrite         = ArbXferDir;
+                      InMSize          = ArbHSIZE;
+                      InMProt          = ArbHPROT;
+                      InMAddr          = ArbHADDR;
+                      InNumOfXfers     = ArbNumOfXfers;
+                      InIncrXfer       = ArbIncrXfer;
+                      InBuffPriority   = ArbPriority;
+                      InMasterState    = `ST_MASTER_DATAPHASE;
+                      InMTrans         = `HTRANSM_NSEQ;
+                      InMLock          = ArbHLOCK;
+                      InRmnFrmBurst    = NewBrstFrmArb[4:0];
+                      InMBurst         = NewBrstFrmArb[7:5];
+                      // If the arbiter is requesting for only one transfer then
+                      // it has to be re-arbitrated for the next phase also
+                      if ((ArbNumOfXfers == 5'b00001) && (ArbPriority == 1'b1))
+                        begin
+                          InArbStopSeq     = 1'b0;
+                        end
+                      else
+                        begin
+                          InArbStopSeq     = 1'b1;
+                        end
+                      InRstDueToAbort  = 1'b0;
+                    end
+                  else
+                    begin
+                      // If the request is not there from the internal arbiter
+                      // after aborting the current transfer state machine goes
+                      // the ST_MASTER_DATAPHASE state but all the parameters
+                      // are loaded as if moving to ST_MASTER_INITIAL state
+                       InRstDueToAbort  = 1'b0;
+                       InMasterState    = `ST_MASTER_DATAPHASE;
+                       InMTrans         = `HTRANSM_IDLE;
+                       InMBurst         = `HBURSTM_INCR4;
+                       InMWrite         = 1'b0;
+                       InMSize          = `BYTE_ACCESS;
+                       InMProt          = 3'b000;
+                       InMLock          = 1'b0;
+                       InMAddr          = 32'h00000000;
+                       InNumOfXfers     = 5'b00000;
+                       InRmnFrmBurst    = 5'b00000;
+                    end
+                end
+              else
+                begin
+                  InMWrite         = Buf1XferDir;
+                  InMSize          = Buf1HSIZE;
+                  InMProt          = Buf1HPROT;
+                  InMAddr          = Buf1HADDR;
+                  InNumOfXfers     = Buf1NumOfXfers;
+                  InIncrXfer       = Buf1IncrXfer;
+                  InBuffPriority   = Buf1Priority;
+                  InMasterState    = `ST_MASTER_DATAPHASE;
+                  InMTrans         = `HTRANSM_NSEQ;
+                  InMLock          = Buf1HLOCK;
+                  InMBurst         = NewBrstFrmBuf1[7:5];
+                  InRmnFrmBurst    = NewBrstFrmBuf1[4:0];
+                  // If request is for only one transfer then it has to be
+                  // re-arbitrated for the next phase also
+                  if ((Buf1NumOfXfers == 5'b00001) && (Buf1Priority == 1'b1))
+                    begin
+                      InArbStopSeq     = 1'b0;
+                    end
+                  else
+                    begin
+                      InArbStopSeq     = 1'b1;
+                    end
+                  InRstDueToAbort  = 1'b0;
+                end
+            end
+          // Else continue the burst of transfers which is in progress
+          else
+            begin
+              if (IncrXfer == 1'b1)
+                begin
+                  // Incrementing address is put on the bus with SEQ on the
+                  // MTRANS/HTRANS lines
+                  InMTrans         = `HTRANSM_SEQ;
+                  InMAddr          = IncrementedAddr;
+                  InMasterAddr1    = IncrementedAddr;
+                end
+              else
+                begin
+                  // non-incrementing access to the slave.
+                  InMAddr          = MADDR;
+                  InMasterAddr1    = MADDR;
+                  InMTrans         = `HTRANSM_NSEQ;
+                end
+              InNumOfXfers     = (RemNumOfXfers) - 1'b1;
+              InRmnFrmBurst    = (RmnFrmBurst) - 1'b1;
+              // If It is the last but one xfer in the burst then make
+              // ArbStopSeq LOW for the last transfer Or if the abort request
+              // has come for the last but one transfer of the AHB burst give
+              // signal for rearbitration
+              if ((RemNumOfXfers == 5'b00010) && (BuffPriority == 1'b1))
+                begin
+                  InArbStopSeq     = 1'b0;
+                end
+              if (((MBURST == `HBURSTM_UINCR) && (XferAborted == 1'b0) &&
+                    (AbortXfer == 1'b1)) ||
+                   ((RmnFrmBurst == 5'b00010) && (AbortXfer == 1'b1)))
+                begin
+                  InRstDueToAbort  = 1'b1;
+                end
+            end
+        end
+      if (MERROR == 1'b1)
+        begin
+          // AHB Slave gives out Error response
+          // MREADY = 0 is not checked as by protocol first phase of the error
+          // response is supposed to be with MREADY low. Here only MERROR signal
+          // is checked for moving to the ST_MASTER_INITIAL state
+          InErrored        = 1'b1;
+          InWaitOneClk     = 1'b1;
+        end
+    end
+
+  if (DMAMasterState[3] == 1'b1)
+    begin
+      // The state machine checks the new request and moves to the
+      // ST_MASTER_ADDRPHASE state if it is active else it moves to the
+      // ST_MASTER_INITIAL state
+      if (StartFrmBuff == 1'b0)
+        begin
+          if (ArbXferReq == 1'b1)
+            begin
+              InMWrite         = ArbXferDir;
+              InMSize          = ArbHSIZE;
+              InMProt          = ArbHPROT;
+              InMAddr          = ArbHADDR;
+              InNumOfXfers     = ArbNumOfXfers;
+              InIncrXfer       = ArbIncrXfer;
+              InBuffPriority   = ArbPriority;
+              // New burst to be is started
+              InMBurst         = NewBrstFrmArb[7:5];
+              InRmnFrmBurst    = NewBrstFrmArb[4:0];
+              InMasterState    = `ST_MASTER_ADDRPHASE;
+              InMTrans         = `HTRANSM_NSEQ;
+              InMLock          = ArbHLOCK;
+              // If the arbiter is requesting for only one transfer then it has
+              // to be re-arbitrated for the next phase also
+              if ((ArbNumOfXfers == 5'b00001) && (ArbPriority == 1'b1))
+                begin
+                  InArbStopSeq     = 1'b0;
+                end
+              else
+                begin
+                  InArbStopSeq     = 1'b1;
+                end
+            end
+          else
+            begin
+              InMasterState    = `ST_MASTER_INITIAL;
+              InMTrans         = `HTRANSM_IDLE;
+              InMWrite         = 1'b0;
+              InNumOfXfers     = 5'b00000;
+              InRmnFrmBurst    = 5'b00000;
+              InMLock          = 1'b0;
+              InArbStopSeq     = 1'b0;
+            end
+        end
+      else
+      begin
+        InMWrite         = Buf1XferDir;
+        InMSize          = Buf1HSIZE;
+        InMProt          = Buf1HPROT;
+        InMAddr          = Buf1HADDR;
+        InNumOfXfers     = Buf1NumOfXfers;
+        InIncrXfer       = Buf1IncrXfer;
+        InBuffPriority   = Buf1Priority;
+        InMasterState    = `ST_MASTER_ADDRPHASE;
+        InMTrans         = `HTRANSM_NSEQ;
+        InMLock          = Buf1HLOCK;
+        InMBurst         = NewBrstFrmBuf1[7:5];
+        InRmnFrmBurst    = NewBrstFrmBuf1[4:0];
+        // If request is for only one transfer then it has to be
+        // re-arbitrated for the next phase also
+        if ((Buf1NumOfXfers == 5'b00001) && (Buf1Priority == 1'b1))
+          begin
+            InArbStopSeq     = 1'b0;
+          end
+        else
+          begin
+            InArbStopSeq     = 1'b1;
+          end
+      end
+      if (MERROR == 1'b1)
+        begin
+          // AHB Slave gives out Error response
+          // MREADY = 0 is not checked as by protocol first phase of the error
+          // response is supposed to be with MREADY low. Here only MERROR signal
+          // is checked for moving to the ST_MASTER_INITIAL state
+          InErrored        = 1'b1;
+          InWaitOneClk     = 1'b1;
+        end
+    end
+end // p_AhbLiteISMComb
+
+// -----------------------------------------------------------------------------
+// Second level of combinational logic for the state machine to isolate the
+// late-arriving signals such as MERROR and MREADY from other signals
+// -----------------------------------------------------------------------------
+always @(MTRANS or MBURST or MWRITE or MSIZE or iMPROT or MLOCK or
+         XferAborted or ArbStopSeq or DMAMasterState or RemNumOfXfers or
+         RmnFrmBurst or MADDR or InErrored)
+begin : p_ForErrRspComb
+  if (InErrored == 1'b1)
+    begin
+      ErrXferAborted   = 1'b0;
+      ErrMasterState   = `ST_MASTER_INITIAL;
+      ErrMTrans        = `HTRANSM_IDLE;
+      ErrMBurst        = `HBURSTM_INCR4;
+      ErrMWrite        = 1'b0;
+      ErrMSize         = `BYTE_ACCESS;
+      ErrMProt         = 3'b000;
+      ErrMLock         = 1'b0;
+      ErrNumOfXfers    = 5'b00000;
+      ErrRmnFrmBurst   = 5'b00000;
+      ErrArbStopSeq    = 1'b0;
+      ErrMAddr         = 32'h00000000;
+      ErrWaitOneClk    = 1'b1;
+    end
+  else
+    begin
+      ErrXferAborted   = XferAborted;
+      ErrMasterState   = DMAMasterState;
+      ErrMTrans        = MTRANS;
+      ErrMBurst        = MBURST;
+      ErrMWrite        = MWRITE;
+      ErrMSize         = MSIZE;
+      ErrMProt         = iMPROT;
+      ErrMLock         = MLOCK;
+      ErrNumOfXfers    = RemNumOfXfers;
+      ErrRmnFrmBurst   = RmnFrmBurst;
+      ErrArbStopSeq    = ArbStopSeq;
+      ErrMAddr         = MADDR;
+      ErrWaitOneClk    = 1'b0;
+    end
+end // p_ForErrRspComb
+
+// -----------------------------------------------------------------------------
+// The AHB Lite Master Interface state machine signals and some of the timing
+// critical signals are qualified with the MREADY signal
+// -----------------------------------------------------------------------------
+always @(ErrXferAborted or ErrArbStopSeq or ErrMasterState or InXferAborted or
+         InArbStopSeq or InMasterState or MREADY )
+begin : p_AhbLiteSMComb
+  if (MREADY == 1'b0)
+    begin
+      NxtXferAborted   = ErrXferAborted;
+      NxtArbStopSeq    = ErrArbStopSeq;
+      NxtMasterState   = ErrMasterState;
+    end
+  else
+    begin
+      NxtXferAborted   = InXferAborted;
+      NxtArbStopSeq    = InArbStopSeq;
+      NxtMasterState   = InMasterState;
+    end
+end // p_AhbLiteSMComb
+
+// -----------------------------------------------------------------------------
+// Registering of the Intermediate signals (corresponding to the AHB
+// signals) and other internal signals
+// -----------------------------------------------------------------------------
+always @(negedge HRESETn or posedge HCLK)
+begin : p_ErNInRegSeq
+  if (HRESETn == 1'b0)
+    begin
+      RgErMTrans       <= 2'b00;
+      RgErMBurst       <= 3'b000;
+      RgErMWrite       <= 1'b0;
+      RgErMSize        <= 3'b000;
+      RgErMProt        <= 3'b000;
+      RgErMLock        <= 1'b0;
+      RgErMAddr        <= 32'h00000000;
+      RgInMTrans       <= 2'b00;
+      RgInMBurst       <= 3'b000;
+      RgInMWrite       <= 1'b0;
+      RgInMSize        <= 3'b000;
+      RgInMProt        <= 3'b000;
+      RgInMLock        <= 1'b0;
+      RgInMAddr        <= 32'h00000000;
+      RgMasterAddr1    <= 32'h00000000;
+      RgInMasterAddr1  <= 32'h00000000;
+
+      RgErNumOfXfers   <= 5'b00000;
+      RgErRmnFrmBurst  <= 5'b00000;
+      RgErIncrXfer     <= 1'b0;
+      RgErRstDueToAb   <= 1'b0;
+      RgErBuffPrio     <= 1'b0;
+      RgErWaitOneClk   <= 1'b0;
+      RgInNumOfXfers   <= 5'b00000;
+      RgInRmnFrmBurst  <= 5'b00000;
+      RgInIncrXfer     <= 1'b0;
+      RgInRstDueToAb   <= 1'b0;
+      RgInBuffPrio     <= 1'b0;
+      RgInWaitOneClk   <= 1'b0;
+    end
+  else
+    begin
+      RgErMTrans       <= ErrMTrans;
+      RgErMBurst       <= ErrMBurst;
+      RgErMWrite       <= ErrMWrite;
+      RgErMSize        <= ErrMSize;
+      RgErMProt        <= ErrMProt;
+      RgErMLock        <= ErrMLock;
+      RgErMAddr        <= ErrMAddr;
+      RgInMTrans       <= InMTrans;
+      RgInMBurst       <= InMBurst;
+      RgInMWrite       <= InMWrite;
+      RgInMSize        <= InMSize;
+      RgInMProt        <= InMProt;
+      RgInMLock        <= InMLock;
+      RgInMAddr        <= InMAddr;
+      RgMasterAddr1    <= MasterAddr1;
+      RgInMasterAddr1  <= InMasterAddr1;
+
+      RgErNumOfXfers   <= ErrNumOfXfers;
+      RgErRmnFrmBurst  <= ErrRmnFrmBurst;
+      RgErIncrXfer     <= IncrXfer;
+      RgErRstDueToAb   <= RstDueToAbort;
+      RgErBuffPrio     <= BuffPriority;
+      RgErWaitOneClk   <= ErrWaitOneClk;
+      RgInNumOfXfers   <= InNumOfXfers;
+      RgInRmnFrmBurst  <= InRmnFrmBurst;
+      RgInIncrXfer     <= InIncrXfer;
+      RgInRstDueToAb   <= InRstDueToAbort;
+      RgInBuffPrio     <= InBuffPriority;
+      RgInWaitOneClk   <= InWaitOneClk;
+    end
+end // p_ErNInRegSeq
+
+// -----------------------------------------------------------------------------
+// Multiplexing the output signals depending on the MREADY value for the
+// previous cycle. Multiplexing is done with the duplicated version of the
+// BusAvlblM signal (registered MREADY)
+// -----------------------------------------------------------------------------
+always @(BusAvlblMV3 or RgErMTrans or RgErMBurst or RgErMWrite or RgErMSize or
+         RgErMProt or RgErMLock or RgErMAddr or RgInMTrans or RgInMBurst or
+         RgInMWrite or RgInMSize or RgInMProt or RgInMLock or RgInMAddr)
+begin : p_AhbMuxComb
+  if (BusAvlblMV3 == 1'b0)
+    begin
+      MTRANS           = RgErMTrans;
+      MBURST           = RgErMBurst;
+      MWRITE           = RgErMWrite;
+      MSIZE            = RgErMSize;
+      iMPROT           = RgErMProt;
+      MLOCK            = RgErMLock;
+      MADDR            = RgErMAddr;
+    end
+  else
+    begin
+      MTRANS           = RgInMTrans;
+      MBURST           = RgInMBurst;
+      MWRITE           = RgInMWrite;
+      MSIZE            = RgInMSize;
+      iMPROT           = RgInMProt;
+      MLOCK            = RgInMLock;
+      MADDR            = RgInMAddr;
+    end
+end // p_AhbMuxComb
+
+// -----------------------------------------------------------------------------
+// Generate MasterAddr1 by muxing based on the value of MREADY in the
+// previous cycle
+// -----------------------------------------------------------------------------
+always @(BusAvlblMV4 or RgMasterAddr1 or RgInMasterAddr1)
+begin : p_MAddr1Comb
+  if (BusAvlblMV4 == 1'b0)
+    MasterAddr1      = RgMasterAddr1;
+  else
+    MasterAddr1      = RgInMasterAddr1;
+end // p_MAddr1Comb
+
+// -----------------------------------------------------------------------------
+// Multiplexing the internal control signals depending on the MREADY value for
+// the previous cycle. Multiplexing is done with the duplicated version of the
+// BusAvlblM signal (registered MREADY)
+// -----------------------------------------------------------------------------
+always @(BusAvlblMV4 or RgErNumOfXfers or RgErRmnFrmBurst or
+         RgErIncrXfer or RgErRstDueToAb or RgErBuffPrio or
+         RgErWaitOneClk or RgInNumOfXfers or RgInRmnFrmBurst or RgInIncrXfer or
+         RgInRstDueToAb or RgInBuffPrio or RgInWaitOneClk)
+begin : p_IntSigMuxComb
+  if (BusAvlblMV4 == 1'b0)
+    begin
+      RemNumOfXfers    = RgErNumOfXfers;
+      RmnFrmBurst      = RgErRmnFrmBurst;
+      IncrXfer         = RgErIncrXfer;
+      RstDueToAbort    = RgErRstDueToAb;
+      BuffPriority     = RgErBuffPrio;
+      WaitOneClk       = RgErWaitOneClk;
+    end
+  else
+    begin
+      RemNumOfXfers    = RgInNumOfXfers;
+      RmnFrmBurst      = RgInRmnFrmBurst;
+      IncrXfer         = RgInIncrXfer;
+      RstDueToAbort    = RgInRstDueToAb;
+      BuffPriority     = RgInBuffPrio;
+      WaitOneClk       = RgInWaitOneClk;
+    end
+end // p_IntSigMuxComb
+
+// -----------------------------------------------------------------------------
+// Clocked process to infer storage elements for the DMAC AHB-Lite Master 
+// Interface Main state machine
+// -----------------------------------------------------------------------------
+always @(negedge HRESETn or posedge HCLK)
+begin : p_AhbLiteSMSeq
+  if (HRESETn == 1'b0)
+    begin
+      XferAborted      <= 1'b0;
+      ArbStopSeq       <= 1'b0;
+      DMAMasterState   <= `ST_MASTER_INITIAL;
+    end
+  else
+    begin
+      XferAborted      <= NxtXferAborted;
+      ArbStopSeq       <= NxtArbStopSeq;
+      DMAMasterState   <= NxtMasterState;
+    end
+end // p_AhbLiteSMSeq
+
+// -----------------------------------------------------------------------------
+// Buffering first level of pipelined Master address into the second buffer
+// -----------------------------------------------------------------------------
+always @(negedge HRESETn or posedge HCLK)
+begin : p_MastAddrSeq
+  if (HRESETn == 1'b0)
+    begin
+     MasterAddress    <= 32'h00000000;
+    end
+  else
+    begin
+     MasterAddress    <= MasterAddr1;
+    end
+end // p_MastAddrSeq
+
+// -----------------------------------------------------------------------------
+// Indicate to the Internal Arbiter, the validity of the Address/Data bus.
+// The BusAvlblM signal is a clocked version of the MREADY input.
+// The duplicate version of the BusAvlblM are also generated to reduce the
+// load on the single BusAvlblM signal
+// -----------------------------------------------------------------------------
+always @(MREADY)
+begin : p_BusAvlGenComb
+  if (MREADY == 1'b0)
+    begin
+      NxtBusAvlblM     = 1'b0;
+      NxtBusAvlblMV2   = 1'b0;
+      NxtBusAvlblMV3   = 1'b0;
+      NxtBusAvlblMV4   = 1'b0;
+    end
+  else
+    begin
+      NxtBusAvlblM     = 1'b1;
+      NxtBusAvlblMV2   = 1'b1;
+      NxtBusAvlblMV3   = 1'b1;
+      NxtBusAvlblMV4   = 1'b1;
+    end
+end // p_BusAvlGenComb
+
+// -----------------------------------------------------------------------------
+// Generating the clocked BusAvlbl and its duplicate signals
+// -----------------------------------------------------------------------------
+always @(posedge HCLK or negedge HRESETn)
+begin : p_BusAvlGenSeq
+  if (HRESETn == 1'b0)
+    begin
+      BusAvlblM       <= 1'b0;
+      BusAvlblMV2     <= 1'b0;
+      BusAvlblMV3     <= 1'b0;
+      BusAvlblMV4     <= 1'b0;
+    end
+  else
+    begin
+      BusAvlblM       <= NxtBusAvlblM;
+      BusAvlblMV2     <= NxtBusAvlblMV2;
+      BusAvlblMV3     <= NxtBusAvlblMV3;
+      BusAvlblMV4     <= NxtBusAvlblMV4;
+    end
+end // p_BusAvlGenSeq
+
+// -----------------------------------------------------------------------------
+// Register the information from the channel when BusAvlbl goes HIGH and the
+// request is active
+// -----------------------------------------------------------------------------
+always @(Buf1HLOCK or Buf1HPROT or Buf1HSIZE or Buf1HADDR or Buf1IncrXfer or
+         Buf1Priority or Buf1XferDir or Buf1NumOfXfers or ArbHLOCK or
+         ArbHPROT or ArbHSIZE or ArbHADDR or ArbIncrXfer or ArbPriority or
+         ArbXferDir or ArbNumOfXfers or BusAvlblMV2 or ArbXferReq or ArbStop or
+         LastXfer)
+begin : p_BuffChComb
+  if (((BusAvlblMV2 == 1'b1) || (LastXfer == 1'b1)) &&
+      ((ArbXferReq == 1'b1) && (ArbStop == 1'b0)))
+    begin
+      NxtBuf1HLOCK     = ArbHLOCK;
+      NxtBuf1HPROT     = ArbHPROT;
+      NxtBuf1HSIZE     = ArbHSIZE;
+      NxtBuf1HADDR     = ArbHADDR;
+      NxtBuf1IncrXfer  = ArbIncrXfer;
+      NxtBuf1Priority  = ArbPriority;
+      NxtBuf1XferDir   = ArbXferDir;
+      NxtBuf1NXfers    = ArbNumOfXfers;
+    end
+  else
+    begin
+      NxtBuf1HLOCK     = Buf1HLOCK;
+      NxtBuf1HPROT     = Buf1HPROT;
+      NxtBuf1HSIZE     = Buf1HSIZE;
+      NxtBuf1HADDR     = Buf1HADDR;
+      NxtBuf1IncrXfer  = Buf1IncrXfer;
+      NxtBuf1Priority  = Buf1Priority;
+      NxtBuf1XferDir   = Buf1XferDir;
+      NxtBuf1NXfers    = Buf1NumOfXfers;
+    end
+end // p_BuffChComb
+
+// -----------------------------------------------------------------------------
+// This process generates an intermediate signal which decides from which
+// source we have to start the transfer.
+// -----------------------------------------------------------------------------
+always @(BusAvlblMV2 or ArbXferReq or StartFrmBuff or ArbStopSeq or LastXfer)
+begin : p_InSetBuffSigComb
+  if (((BusAvlblMV2 == 1'b1) || (LastXfer == 1'b1)) &&
+      ((ArbXferReq == 1'b1) && (ArbStopSeq == 1'b0)))
+    begin
+      InStartFrmBuff  = 1'b1;
+    end
+  else
+    begin
+      InStartFrmBuff  = StartFrmBuff;
+    end
+end // p_InSetBuffSigComb
+
+// -----------------------------------------------------------------------------
+// Setting the control signal to decide from which source we have to start the
+// transfer
+// -----------------------------------------------------------------------------
+always @(MREADY or InStartFrmBuff)
+begin : p_SetBuffSigComb
+  if (MREADY == 1'b0)
+    begin
+      NxtStartFrmBuff  = InStartFrmBuff;
+    end
+  else
+    begin
+      NxtStartFrmBuff  = 1'b0;
+    end
+end // p_SetBuffSigComb
+
+// -----------------------------------------------------------------------------
+// Sequential process for the registering of the signals into the buffers
+// -----------------------------------------------------------------------------
+always @(negedge HRESETn or posedge HCLK)
+begin : p_BuffChSeq
+  if (HRESETn == 1'b0)
+    begin
+      Buf1HLOCK        <= 1'b0;
+      Buf1HPROT        <= 3'b000;
+      Buf1HSIZE        <= 3'b000;
+      Buf1HADDR        <= 32'h00000000;
+      Buf1IncrXfer     <= 1'b0;
+      Buf1Priority     <= 1'b0;
+      Buf1XferDir      <= 1'b0;
+      Buf1NumOfXfers   <= 5'b00000;
+      StartFrmBuff     <= 1'b0;
+    end
+  else
+    begin
+      Buf1HLOCK        <= NxtBuf1HLOCK;
+      Buf1HPROT        <= NxtBuf1HPROT;
+      Buf1HSIZE        <= NxtBuf1HSIZE;
+      Buf1HADDR        <= NxtBuf1HADDR;
+      Buf1IncrXfer     <= NxtBuf1IncrXfer;
+      Buf1Priority     <= NxtBuf1Priority;
+      Buf1XferDir      <= NxtBuf1XferDir;
+      Buf1NumOfXfers   <= NxtBuf1NXfers;
+      StartFrmBuff     <= NxtStartFrmBuff;
+    end
+end // p_BuffChSeq
+
+// -----------------------------------------------------------------------------
+// Detecting that the last transfer is in progress
+// -----------------------------------------------------------------------------
+assign NxtLastXfer      = (RemNumOfXfers[4:1] == 4'b0000) ? 1'b1     :
+                           1'b0;
+
+// -----------------------------------------------------------------------------
+// Sequential process for registering of the signal
+// -----------------------------------------------------------------------------
+always @(negedge HRESETn or posedge HCLK)
+begin : p_LastXferSeq
+  if (HRESETn == 1'b0)
+    begin
+      LastXfer         <= 1'b0;
+    end
+  else
+    begin
+      LastXfer         <= NxtLastXfer;
+    end
+end // p_LastXferSeq
+
+// -----------------------------------------------------------------------------
+// Registering the address and control information corresponding to the current
+// value of data on MRDATA
+// Here two levels of buffering are required because DATA phase starts one
+// MREADY(HREADY) after the address phase.
+// And HRDATA in the DATA phase is buffered into the buffer and in the next
+// phase it is endianised with this buffered control and address information
+// So the control information for this has to be 2 level buffered information
+// -----------------------------------------------------------------------------
+always @(MREADY or MADDR or MSIZE or FrstBuffAddr or FrstBuffSize or
+         AddrForData or SizeForData)
+begin : p_RegAddrComb
+  // If MREADY is asserted then register the addresses for use them in the
+  // endianization process
+  if (MREADY == 1'b1)
+    begin
+      NxtFrstBuffAddr  = MADDR[1:0];
+      NxtFrstBuffSize  = MSIZE;
+      NxtAddrForData   = FrstBuffAddr;
+      NxtSizeForData   = FrstBuffSize;
+    end
+  else
+    begin
+      NxtFrstBuffAddr  = FrstBuffAddr;
+      NxtFrstBuffSize  = FrstBuffSize;
+      NxtAddrForData   = AddrForData;
+      NxtSizeForData   = SizeForData;
+    end
+end // p_RegAddrComb
+
+// -----------------------------------------------------------------------------
+// Clocked process for above 2 buffer stage to infer registers
+// -----------------------------------------------------------------------------
+always @(posedge HCLK or negedge HRESETn)
+begin : p_RegAddrSeq
+  if (HRESETn == 1'b0)
+    begin
+      FrstBuffAddr     <= 2'b00;
+      FrstBuffSize     <= 3'b000;
+      AddrForData      <= 2'b00;
+      SizeForData      <= 3'b000;
+      BuffHRData       <= 32'h00000000;
+    end
+  else
+    begin
+      FrstBuffAddr     <= NxtFrstBuffAddr;
+      FrstBuffSize     <= NxtFrstBuffSize;
+      AddrForData      <= NxtAddrForData;
+      SizeForData      <= NxtSizeForData;
+      BuffHRData       <= MRDATA;
+    end
+end // p_RegAddrSeq
+
+// -----------------------------------------------------------------------------
+// Swapping the Byte lanes for the Big Endian mode as channel is by default
+// little Endian control logic
+// -----------------------------------------------------------------------------
+assign NdNsdBufRdData   = (BigEndianM == `BIG_ENDIAN) ?
+                          {BuffHRData[7:0], BuffHRData[15:8],
+                           BuffHRData[23:16], BuffHRData[31:24]} : BuffHRData;
+
+// -----------------------------------------------------------------------------
+// This block comes in HRDATA-FIFO data path. The block selects the valid data
+// lane from the 32 bit MRDATA bus (on the basis of Source address and
+// data-width) and places it on the lower-data-lane.
+// -----------------------------------------------------------------------------
+always @(NdNsdBufRdData or AddrForData or SizeForData)
+begin : p_SrcEndComb
+  case (SizeForData)
+    // When source is byte-wide, the appropriate bytelane of BuffHRData
+    // is routed to lowest bytelane i.e. (7:0) of ChWrData bus.
+    `BYTE_ACCESS :
+      case (AddrForData[1:0])
+        2'b00 :
+          ChWrData         = {24'b0, NdNsdBufRdData[7:0]};
+        2'b01 :
+          ChWrData         = {24'b0, NdNsdBufRdData[15:8]};
+        2'b10 :
+          ChWrData         = {24'b0, NdNsdBufRdData[23:16]};
+        2'b11 :
+          ChWrData         = {24'b0, NdNsdBufRdData[31:24]};
+        default :
+          ChWrData         = 32'b0;
+      endcase
+    // When source is halfword-wide, the appropriate "halfword-lane" of
+    // NdNsdBufRdData is routed to lowest "halfword-lane" of ChWrData bus.
+    `HWORD_ACCESS :
+      case (AddrForData[1])
+        1'b0 :
+          ChWrData         = {16'b0, NdNsdBufRdData[15:0]};
+        1'b1 :
+          ChWrData         = {16'b0, NdNsdBufRdData[31:16]};
+        default :
+          ChWrData         = 32'b0;
+      endcase
+    // When source is word-wide, the entire NdNsdBufRdData is routed as
+    // ChWrData bus of channel-FIFO.
+    `WORD_ACCESS :
+       ChWrData         = NdNsdBufRdData;
+    default :
+       ChWrData         =  32'b0;
+  endcase
+end // p_SrcEndComb
+
+// -----------------------------------------------------------------------------
+// Driving out the HWDATA, which is combined version of data from all the
+// channels
+// -----------------------------------------------------------------------------
+assign ChHWDATA         = Ch0HWDATA | Ch1HWDATA | Ch2HWDATA | Ch3HWDATA |
+                          Ch4HWDATA | Ch5HWDATA | Ch6HWDATA | Ch7HWDATA;
+
+// -----------------------------------------------------------------------------
+// In case of destination-writes by the DMAC, the endianization bit is not
+// required as the narrower-data is duplicated across all the lanes. The
+// duplication is done solely on the basis of HSIZE and the databus width.
+// This process computes the endianized data for HWDATA bus
+// -----------------------------------------------------------------------------
+always @(ChHWDATA or BigEndianM)
+begin : p_DestEndComb
+  if (BigEndianM == `BIG_ENDIAN)
+    IntHWDATAM = {ChHWDATA[7:0], ChHWDATA[15:8], ChHWDATA[23:16], 
+                   ChHWDATA[31:24]};
+  else
+    IntHWDATAM =  ChHWDATA;
+end // p_DestEndComb
+
+// -----------------------------------------------------------------------------
+// Driving out buffered data in case of waited transfers
+// -----------------------------------------------------------------------------
+assign MWDATA          = (BusAvlblMV2 == 1'b1) ? IntHWDATAM          :
+                           BuffHWData;
+
+// -----------------------------------------------------------------------------
+// Buffering the HWDATA from the channel for use in waited transfers
+// -----------------------------------------------------------------------------
+always @(posedge HCLK or negedge HRESETn)
+begin : p_BuffWDataSeq
+  if (HRESETn == 1'b0)
+    begin
+      BuffHWData       <= 32'h00000000;
+    end
+  else
+    begin
+      BuffHWData       <= MWDATA;
+    end
+end // p_BuffWDataSeq
+
+// -----------------------------------------------------------------------------
+// Driving out the internal versions of the outputs
+// -----------------------------------------------------------------------------
+assign MPROT            = ({iMPROT, 1'b1});
+
+// -----------------------------------------------------------------------------
+// The Requests from the Channels to the Arbiter have to be blocked out when the
+// waited transfers are going on
+// -----------------------------------------------------------------------------
+assign ArbStop         = ArbStopSeq | StartFrmBuff;
+
+// -----------------------------------------------------------------------------
+// If the AHB Master gets an error response from the Slave then it is given as
+// the Error signal to the internal arbiter.
+// This is phase 2 of the error response on the AHB. This is because the error
+// response has to be clocked out to the channel. The WaitOneClk is signal
+// signal is used to indicate this.
+// -----------------------------------------------------------------------------
+assign ArbDataError     = WaitOneClk;
+
+// synopsys translate_off
+// -----------------------------------------------------------------------------
+// START OF PROTOCOL CHECKERS
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Protocol check for checking whether the address is aligned as per HSIZE
+// information
+// -----------------------------------------------------------------------------
+always @(posedge HCLK)
+begin : p_NonAlignProt
+  if ((ArbStopSeq == 1'b0) && (BusAvlblM == 1'b1))
+    begin
+    if ((ArbHADDR[1:0] != 2'b00) && (ArbHSIZE == `WORD_ACCESS))
+      begin
+        $display($time," Warning: DmacLiteMaster3 : Address is not ",
+                 " word aligned for WORD-ACCESS \n");
+      end
+    if ((ArbHADDR[0] != 1'b0) && (ArbHSIZE == `HWORD_ACCESS))
+      begin
+        $display($time," Warning : DmacLiteMaster4 : Address is not ",
+                  " half word aligned for HALFWORD-ACCESS \n");
+      end
+    end
+end // process p_NonAlignProt
+
+// -----------------------------------------------------------------------------
+// END OF PROTOCOL CHECKERS
+// -----------------------------------------------------------------------------
+
+// synopsys translate_on
+
+endmodule
+// --================================== End ==================================--

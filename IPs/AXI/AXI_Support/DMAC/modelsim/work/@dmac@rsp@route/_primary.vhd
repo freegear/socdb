@@ -1,0 +1,48 @@
+library verilog;
+use verilog.vl_types.all;
+entity dmacrsproute is
+    port(
+        interrch0       : in     vl_logic;
+        interrch1       : in     vl_logic;
+        interrch2       : in     vl_logic;
+        interrch3       : in     vl_logic;
+        interrch4       : in     vl_logic;
+        interrch5       : in     vl_logic;
+        interrch6       : in     vl_logic;
+        interrch7       : in     vl_logic;
+        inttcch0        : in     vl_logic;
+        inttcch1        : in     vl_logic;
+        inttcch2        : in     vl_logic;
+        inttcch3        : in     vl_logic;
+        inttcch4        : in     vl_logic;
+        inttcch5        : in     vl_logic;
+        inttcch6        : in     vl_logic;
+        inttcch7        : in     vl_logic;
+        clearreq0       : in     vl_logic_vector(15 downto 0);
+        clearreq1       : in     vl_logic_vector(15 downto 0);
+        clearreq2       : in     vl_logic_vector(15 downto 0);
+        clearreq3       : in     vl_logic_vector(15 downto 0);
+        clearreq4       : in     vl_logic_vector(15 downto 0);
+        clearreq5       : in     vl_logic_vector(15 downto 0);
+        clearreq6       : in     vl_logic_vector(15 downto 0);
+        clearreq7       : in     vl_logic_vector(15 downto 0);
+        sigtc0          : in     vl_logic_vector(15 downto 0);
+        sigtc1          : in     vl_logic_vector(15 downto 0);
+        sigtc2          : in     vl_logic_vector(15 downto 0);
+        sigtc3          : in     vl_logic_vector(15 downto 0);
+        sigtc4          : in     vl_logic_vector(15 downto 0);
+        sigtc5          : in     vl_logic_vector(15 downto 0);
+        sigtc6          : in     vl_logic_vector(15 downto 0);
+        sigtc7          : in     vl_logic_vector(15 downto 0);
+        iten            : in     vl_logic;
+        dmacitop1       : in     vl_logic_vector(15 downto 0);
+        dmacitop2       : in     vl_logic_vector(15 downto 0);
+        dmacitop3       : in     vl_logic_vector(1 downto 0);
+        clearreq        : out    vl_logic_vector(15 downto 0);
+        dmacclr         : out    vl_logic_vector(15 downto 0);
+        dmactc          : out    vl_logic_vector(15 downto 0);
+        dmacinterr      : out    vl_logic;
+        dmacinttc       : out    vl_logic;
+        dmacintr        : out    vl_logic
+    );
+end dmacrsproute;

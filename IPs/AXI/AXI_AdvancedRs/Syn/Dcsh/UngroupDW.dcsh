@@ -1,0 +1,47 @@
+/*--========================================================================--*/
+/*    Save a top design name.                                                 */
+/*--========================================================================--*/
+SavePlace = current_design
+
+/*--========================================================================--*/
+/*    Find all designs.                                                       */
+/*--========================================================================--*/
+foreach (DesignName, find(design,"*")) {
+  current_design = DesignName
+
+/*--========================================================================--*/
+/*    In case of reading synopsys db                                          */
+/*    Comment out the following two lines, when reading netlist.              */
+/*--========================================================================--*/
+  DwCellList = filter(find(cell, "*"), "\@is_synlib_operator==true || \
+               \@is_dw_subblock==true || \@is_synlib_module==true") > /dev/null
+
+/*--========================================================================--*/
+/*   Note: If you have a cell name with *_DW* except DesignWare module,       */
+/*         you should read Synopsys db.                                       */
+/*   In case of reading netlist, uncomment the following line.                */
+/*--========================================================================--*/
+/*  DwCellList = find(cell, "*_DW*") > /dev/null                              */
+/*--========================================================================--*/
+
+/*--========================================================================--*/
+/*   Ungroup all DesignWare.                                                  */
+/*--========================================================================--*/
+  if (dc_shell_status != {} ) {
+    echo "Info: Found some DW hierarchy in " + DesignName + ". Ungrouping..."
+    ungroup -flatten DwCellList -simple
+  }
+}
+
+/*--========================================================================--*/
+/*    Return to top design.                                                   */
+/*--========================================================================--*/
+current_design = SavePlace
+
+/*--========================================================================--*/
+/*    Remove variables.                                                       */
+/*--========================================================================--*/
+remove_variable SavePlace
+remove_variable DwCellList
+
+/******************************* End of File **********************************/

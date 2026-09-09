@@ -1,0 +1,74 @@
+진행 사항 정리:::
+
+
+
+MASTER 측에서...
+
+ 	simple mode rtl은 있으나 generation에서 반영은 하지 않음
+	기본으로 advanced mode 지원으로 합니다.
+	
+	advanced mode라 함은 같은 아이디를 가지고 다른 slave에 접속을 막는 것을 뜻함
+	simple mode라 함은 한 slave에 접속이 마무리 될때 까지 다른 slave 접속을 제한함.
+
+
+Slave 측에서...
+
+	interleaving은 지원하지 않음.
+	모든 channel이 lock access를 지원함(generation에서 disable 적용 않됨)
+
+
+합성 결과:::
+
+236 server test 12 :: 결과 저정되었습니다. --> 다시진행...
+
+
+
+- Fanout등 기타 사항에 고려 없이 Area 정보(32bit bus / full reg. slice 일 경우)
+
+1. 주파수 설정 없을 경우 Total area :: 899105.937500 
+
+2. 25Mhz (Total cell area: 1346084.375000)
+
+3. 50Mhz (Total cell area: 1346104.250000)
+
+4. 100Mhz (Total cell area: 1352244.750000)
+
+5. 133Mhz (Total cell area: 1440550.750000)
+
+6. 166Mhz (Total cell area: 1557936.125000)
+
+
+
+1 regisger slice 4 master 5 slave include default slave :: 133Mhz
+
+****************************************
+Report : area
+Design : SBUS
+Version: V-2004.06
+Date   : Wed Aug 30 13:49:47 2006
+****************************************
+
+Library(s) Used:
+
+    slow (File: /home/kwoly/AXI_CGEN/TEST_syn/Syn/SynDB/slow.db)
+
+Number of ports:             1888
+Number of nets:              2144
+Number of cells:                3
+Number of references:           3
+
+Combinational area:       504809.375000
+Noncombinational area:    881668.312500
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:          1386332.750000
+Total area:                 undefined
+
+
+
+protocal checker
+
+http://www.arm.com/products/solutions/AMBA3AXI.html
+http://www.arm.com/products/solutions/amba_3_axi_pc.html
+
+http://www.arm.com/products/solutions/amba_3_axi_pc.html

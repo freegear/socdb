@@ -1,0 +1,14 @@
+rm -rf ./work/*
+
+ncvlog ../Rtl/TestSlave.v
+ncvlog ../Tb/TestMaster64.v
+ncvlog ../Tb/ChMergeTestMaster.v
+
+# TOP
+ncvlog ../Tb/tb.v
+
+### Elaboration
+ncelab -messages work.tb -access +rwc -timescale 1ns/10ps
+
+### Simulation
+ncsim  work.tb

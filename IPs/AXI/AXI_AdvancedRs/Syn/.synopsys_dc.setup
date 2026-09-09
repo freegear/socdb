@@ -1,0 +1,280 @@
+##########################################################################
+# Used by TSMC Reference Flow
+# Product : T025_A1_0_10
+# Date : 2000/03/31
+# Launch by: dc_shell and dc_shell-t
+##########################################################################
+set designer {CK LEE}
+set company {SMT}
+#set user_home [getenv {HOME}]
+#
+# Please source the file <your project root>/bin/cshrc.env before getting into
+#  Design Compiler. File cshrc.env is created by TSMC Evironment Manager 
+#  and will define the value of variable PROJ
+#
+# set proj_home [getenv {PROJ}]
+#set proj_home .
+#
+# select the process corner: worst, typical, best, or none
+# where none stands for no target_library and link_library are setup initially
+#
+set corner {worst}
+#
+# Define search paths to input file. Set "sh_source_uses_search_path" to "true"
+#   so that the search path for "include" in dc_shell is the same as "source'
+#   in dc_shell-t
+#
+set sh_source_uses_search_path {true}
+set search_path [list .]
+set search_path [concat $search_path [list {../../scripts}]]
+set search_path [concat $search_path [list {../const}]]
+set search_path [concat $search_path ./SynDB ]
+set search_path [concat $search_path [list [format "%s%s" $synopsys_root \
+  {/libraries/syn}]]]
+#
+# set link_library [list {*}]
+#
+# Please add your own libraries into the following settings for all corners
+#
+# Worst corner
+#
+if { $corner == {worst} } {
+set link_path [ list *   \
+	slow.db \
+	tpz973gwc.db \
+	tpz973g_analogwc.db \
+	RA1SH6144x32_8_slow_syn.db \
+	ARM7TDMI_CL018G_ss_max.db \
+	phv018_010a.db \
+	sfd64kx32m64p4_010a.db \
+	dw01.sldb dw02.sldb dw03.sldb dw04.sldb dw05.sldb dw06.sldb \
+	dw07.sldb dw08.sldb dw_foundation.sldb \
+]
+
+set target_library [ list    \
+	slow.db                      \
+	tpz973gwc.db                 \
+	tpz973g_analogwc.db \
+	RA1SH6144x32_8_slow_syn.db \
+	ARM7TDMI_CL018G_ss_max.db \
+	phv018_010a.db \
+	sfd64kx32m64p4_010a.db \
+]
+
+
+set symbol_library [list tpz973g.sdb ]
+}
+
+#if { $corner == {worst} } {
+#  set target_library [list {../../../libs/synopsys/tsmccore_110a/tsmccorewc.db}]
+#  set link_library [concat $link_library [list $target_library]]
+#  set link_library [concat $link_library [list \
+#      {../../../libs/synopsys/tsmcio_100a/tsmciowc.db}]]
+#  # Add the other your own worst-process libraries below
+#}
+#
+# Typical corner
+#
+if { $corner == {typical} } {
+  set target_library [list {../../../libs/synopsys/tsmccore_110a/tsmccoretc.db}]
+  set link_library [concat  $link_library [list $target_library]]
+  set link_library [concat  $link_library [list \
+      {../../../libs/synopsys/tsmcio_100a/tsmciotc.db}]]
+  # Add the other your own typical-process libraries below
+}
+#
+# Best corner
+#
+if { $corner == {best} } {
+  set target_library [list {../../../libs/synopsys/tsmccore_110a/tsmccorebc.db}]
+  set link_library [concat  $link_library [list $target_library]]
+  set link_library [concat  $link_library [list \
+      {../../../libs/synopsys/tsmcio_100a/tsmciobc.db}]]
+  # Add the other your own best-process libraries below
+}
+#
+# DesignWare Cache
+#
+set cache_read {/tmp}
+set cache_write {/tmp}
+#
+# Log file Variables
+#
+set command_log_file {./dc_shell_command.log}
+if { $dc_shell_mode == "tcl"} {
+  set sh_command_log_file {./dc_shell_command.log}
+}
+set view_command_log_file {./view_command.log}
+set reoptimize_design_changed_list_file_name {inplace_chg.lst}
+#
+# Site Specific Variables 
+#
+set synthetic_library [list]
+set plot_command {lpr -Plj}
+set text_print_command {lpr -Plj}
+set text_edit_command {vi}
+#
+# hdl variables 
+#
+set design_library_file {.synopsys_vss.setup} 
+set hdlin_auto_save_templates {FALSE}
+#define_design_lib {work} -path {./vhdl/work} <- redefine by vhdl user
+#
+# vhdlio variables 
+#
+# set vhdlout_use_packages [list IEEE.std_logic_1164 GATE_LIB.all WORK.all]
+#
+# Design Analyzer variables
+#
+set default_schematic_options {-size infinite}
+set view_read_file_suffix [list db sdb edf edif eqn fnc lsi mif NET pla st tdl v vhd vhdl xnf]
+set view_write_file_suffix [list db sdb do edf edif eqn fnc lsi NET neted pla st tdl v vhd vhdl xnf]
+#
+# Synopsys to EDIF interface 
+#
+# set edifin_ground_name {VSS} <- obsolete
+set edifin_ground_net_name {VSS}
+set edifin_ground_net_property_name {global}
+set edifin_ground_net_property_value {VSS}
+# set edifin_ground_pin_name {VSS} <- obsolete
+set edifin_ground_port_name {VSS}
+# set edifin_netlist_only {true} <- obsolete
+# set edifin_power_name {VDD} <- obsolete
+set edifin_power_net_name {VDD}
+set edifin_power_net_property_name {global}
+set edifin_power_net_property_value {VDD}
+# set edifin_power_pin_name {VDD} <- obsolete
+set edifin_power_port_name {VDD}
+# set edifin_power_and_ground_representation {net} <- obsolete
+set edifout_design_name {Synopsys_edif}
+set edifout_designs_library_name {DESIGN_LIB}
+set edifout_ground_name {VSS}
+set edifout_ground_net_name {VSS}
+set edifout_ground_net_property_name {global}
+set edifout_ground_net_property_value {VSS}
+set edifout_ground_pin_name {VSS}
+set edifout_ground_port_name {VSS}
+set edifout_power_name {VDD}
+set edifout_power_net_name {VDD}
+set edifout_power_net_property_name {global}
+set edifout_power_net_property_value {VDD}
+set edifout_power_pin_name {VDD}
+set edifout_power_port_name {VDD}
+set edifout_power_and_ground_representation {net}
+set edifout_no_array {true}
+set edifout_netlist_only {true}
+set write_name_nets_same_as_ports {false}
+set edifout_external {false}
+set edifout_target_system {cadence}
+set edifout_instantiate_ports {true}
+#
+# Bus Inference 
+#
+set bus_dimension_separator_style {][}
+set bus_extraction_style {%s[%d:%d]}
+set bus_inference_descending_sort {true}
+set bus_naming_style {%s[%d]}
+set bus_range_separator_style {:}
+#
+# Internal bus Inference
+#
+set hdlout_internal_busses {false}
+set bus_inference_style  {%s[%d]}
+#
+# Verilog Interface
+#
+set verilogout_higher_designs_first {true}
+set verilogout_no_tri {true}
+set verilogout_single_bit {false}
+
+set_dont_use "slow/CLK*"
+set_dont_use "slow/JK*"
+set_dont_use "slow/*XL"
+set_dont_use "slow/DLY*"
+
+#because of its poor driving ability.
+set_dont_use "slow/CMPR*"
+set_dont_use "slow/ADD*"
+set_dont_use "slow/SD*"
+set_dont_use "slow/*TL*"
+
+# Translation of script: eliminate_backslash.scr
+#
+
+set verilogout_single_bit false
+
+proc tsmc_naming_rule {} {
+# Bus manipulation 
+set bus_dimension_separator_style {][}
+set bus_extraction_style {%s[%d:%d]}
+set bus_inference_descending_sort {true}
+set bus_naming_style {%s[%d]}
+set bus_range_separator_style {:}
+set change_names_dont_change_bus_members {false}
+
+# Internal bus Inference #
+# Don't form internal bus #
+set hdlout_internal_busses {false}
+set bus_inference_style {%s[%d]}
+
+# Verilog Interface #
+set verilogout_higher_designs_first {true}
+set verilogout_no_tri {true}
+set verilogout_single_bit {false}
+
+# TSMC naming rules for Verilog netlist #
+define_name_rules TSMC_VERILOG_RULE -reserved_words {always, and, assign, \
+begin, buf, bufif0, bufif1, case, casex, casez, cmos, deassign, default, \
+defparam, disable, edge, else, end, endattribute, endcase, endfunction, \
+endmodule, endprimitive, endspecify, endtable, endtask, event, for, force, \
+forever, fork, function, highz0, highz1, if, initial, inout, input, integer, \
+join, large, macromodule, medium, module, nand, negedge, nmos, nor, not, \
+notif0, notif1, or, output, parameter, pmos, posedge, primitive, pull0, \
+pull1, pullup, pulldown, reg, rcmos, reg, release, repeat, rnmos, rpmos, \
+rtran, rtranif0, rtranif1, scalared, small, specify, specparam, strength, \
+strong0, strong1, supply0, supply1, table, task, time, tran, tranif0, tranif1, \
+tri, tri0, tri1, trinand, trior, trireg, use, vectored, wait, wand, weak0, \
+weak1, while, wire, wor, xor, xnor}
+#
+define_name_rules TSMC_VERILOG_RULE -allowed {a-zA-Z0-9_[]!} \
+-first_restricted {0-9\\[]/!} \
+-last_restricted {[/!} \
+-max_length 255 \
+-replacement_char {_} \
+-case_insensitive \
+-equal_ports_nets \
+-inout_ports_equal_nets 
+#
+define_name_rules TSMC_VERILOG_RULE -type port \
+-allowed {a-zA-Z0-9_[]} \
+-first_restricted {0-9 []} \
+-last_restricted {[} \
+-map {{{"[?*]?*$", ""}}} \
+-max_length 32
+
+redirect TSMC_VERILOG_RULE.log {change_names -verbose -hierarchy -rule TSMC_VERILOG_RULE}
+
+echo "/***************************************************************/"
+echo "/* Please check the log file TSMC_VERILOG_RULE.log for details */"
+echo "/***************************************************************/"
+}
+define_proc_attributes tsmc_naming_rule -hide_body -info "TSMC Verilog Naming Rule"
+
+# ALIASES 
+alias rt {report_timing -nets -input_pins -significant_digits 4 \
+-transition_time}
+alias r2o {rt -from [all_registers -clock_pins] -to}
+alias i2oe {rt -to [all_outputs] -path end -max_paths 100 -from}
+alias i2e {rt -path end -max_paths 100 -from}
+alias i2r {rt -to [all_registers -data_pins] -from}
+alias rn {report_net -verbose -connections}
+alias rp {report_port -verbose}
+alias rc {report_cell -connections -verbose}
+alias rv {report_constraint -all_violators -max_delay -max_capacitance \
+-max_transition -significant_digits 4}
+alias ac {all_connected}
+alias maxi {rt -path end -nosplit -max_paths 1000 -from}
+alias maxir {rt -path end -nosplit -max_paths 1000 -delay max_rise -from}
+alias maxif {rt -path end -nosplit -max_paths 1000 -delay max_fall -from}
+alias maxr {rt -delay max_rise -to}
+alias maxf {rt -delay max_fall -to}

@@ -1,0 +1,42 @@
+library verilog;
+use verilog.vl_types.all;
+entity dmac2ch is
+    port(
+        aclk            : in     vl_logic;
+        aresetn         : in     vl_logic;
+        dmareq          : in     vl_logic_vector(1 downto 0);
+        dmaack          : out    vl_logic_vector(1 downto 0);
+        interrupt       : out    vl_logic_vector(1 downto 0);
+        penable         : in     vl_logic;
+        psel            : in     vl_logic;
+        pwrite          : in     vl_logic;
+        paddr           : in     vl_logic_vector(5 downto 2);
+        pwdata          : in     vl_logic_vector(31 downto 0);
+        prdata          : out    vl_logic_vector(31 downto 0);
+        arvalid         : out    vl_logic;
+        arready         : in     vl_logic;
+        araddr          : out    vl_logic_vector(31 downto 0);
+        arlen           : out    vl_logic_vector(3 downto 0);
+        arsize          : out    vl_logic_vector(2 downto 0);
+        arburst         : out    vl_logic_vector(1 downto 0);
+        rdata           : in     vl_logic_vector(31 downto 0);
+        rresp           : in     vl_logic_vector(1 downto 0);
+        rlast           : in     vl_logic;
+        rvalid          : in     vl_logic;
+        rready          : out    vl_logic;
+        awvalid         : out    vl_logic;
+        awready         : in     vl_logic;
+        awaddr          : out    vl_logic_vector(31 downto 0);
+        awlen           : out    vl_logic_vector(3 downto 0);
+        awsize          : out    vl_logic_vector(2 downto 0);
+        awburst         : out    vl_logic_vector(1 downto 0);
+        wdata           : out    vl_logic_vector(31 downto 0);
+        wstrb           : out    vl_logic_vector(3 downto 0);
+        wlast           : out    vl_logic;
+        wvalid          : out    vl_logic;
+        wready          : in     vl_logic;
+        bresp           : in     vl_logic_vector(1 downto 0);
+        bvalid          : in     vl_logic;
+        bready          : out    vl_logic
+    );
+end dmac2ch;

@@ -1,0 +1,47 @@
+// =====  SYNTEST TURBODFT SRAMBIST CONNECTION FILE =====
+
+// TOOL : srambist V1.2.0 r01 (05/30/01 09:35:47)
+// TIME : Wed Jul 19 01:22:32 2000
+
+
+%BISTCTRL  0
+{
+   %NAME      BistCtrl_sram6144x32x8;
+
+   // Hierarchical location of the BIST controller
+   %LOCATION  MUST_SPECIFY!;
+
+   // Replace the memory instances with the new module
+   %REPLACE
+   {
+      sram6144x32x8  => sram6144x32x8_wrapper_sram6144x32x8;
+   }
+
+   // Define the memory instance mappings
+   %INSTANCE_MAPPING
+   {
+      BISTCTRL_0_MEM_0  =>  sram6144x32x8;
+   }
+
+   // Define connection of the BIST controller and memory instances
+   %CONNECTION
+   {
+      // Users should fill those empty fields for proper connection.
+      BISTCTRL_0{Tclk}  =>  {TCK};
+
+      BISTCTRL_0{BistMode}  => ;
+
+      BISTCTRL_0{Finish}  => ;
+
+      BISTCTRL_0{mem_ctrl}  => BISTCTRL_0_MEM_0{mem_ctrl};
+      BISTCTRL_0{Q_i} => BISTCTRL_0_MEM_0{Q};
+
+      BISTCTRL_0{bist_ctrl}  => BISTCTRL_0_MEM_0{bist_ctrl};
+
+      BISTCTRL_0{BistFail}  => ;
+      BISTCTRL_0{ErrMap}  => ;
+      
+      // Connections of the memory ports needed
+   }
+}
+

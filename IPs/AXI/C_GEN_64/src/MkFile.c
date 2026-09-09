@@ -1,0 +1,4420 @@
+// =================================================================
+// This confidential and proprietary software may be used only as
+// authorised by a licensing agreement from SiliconGear
+// ALL RIGHTS RESERVED SiliconGear 
+// -----------------------------------------------------------------
+// Version and Release information: NetWorkBus generator Ver 0.2 
+// File Name           : MkFile.c 
+// File Revision       : 0.1 
+//  ----------------------------------------------------------------
+//  Purpose            : generation code / and write function
+//  ----------------------------------------------------------------
+
+
+//  =================================================================
+//    Include 
+//  ----------------------------------------------------------------
+#include <stdlib.h>
+#include <string.h>
+#include "MkFile.h"
+#include "genDef.h"
+
+//  =================================================================
+//    Definistion  
+//  ----------------------------------------------------------------
+#define  COPY_SIZE 1024  
+ 
+const char *script = {"\
+#! /bin/sh\n\
+\n\
+action()\n\
+{\n\
+  $* || exit 1\n\
+}\n\
+\n\
+if [ -e work ]; then\n\
+    rm -fr work\n\
+fi\n\
+action vlib work\n" 
+};
+
+//  =================================================================
+//  Function declaration
+//  ----------------------------------------------------------------
+
+
+/* line dump wirte */
+static unsigned int fileDumpLine(char *, char *);
+
+
+//  ----------------------------------------------------------------
+//  modelsim run script generation
+//
+//  unsigned int genScript(char *fileName, char *DirFileName);
+//  
+//      [] fileName    ==> file list 
+//      [] DirFileName ==> scripts for model sim running script
+//  ----------------------------------------------------------------
+
+unsigned int genScript(char *fileName, char *DirFileName)
+{
+    char *buff;
+    char *buffOut;
+    struct codeLine *head_ptr = NULL;
+    FILE *Fp;
+    
+    head_ptr = (struct codeLine *)malloc(sizeof(struct codeLine));
+    head_ptr->code = (char *)malloc(sizeof(char) * 120);
+    head_ptr->next_ptr = NULL;
+    strcpy(head_ptr->code,"\n");
+
+    buff     = (char *)malloc(sizeof(char) *120);
+    buffOut  = (char *)malloc(sizeof(char) *320);
+
+    //__________________________________________________________ Open
+    if ( (Fp = fopen(fileName, "r" )) == NULL ) {
+        printf ("\nError opening file [%s]\n",fileName);
+        free(buff); 
+        return FILE_PROCESS_ERROR;
+    }
+
+    mkBeforeStr(Fp, head_ptr, "#RTL file list\n");
+
+    while(1)
+    {
+        fgets(buff, sizeof(char) * 120, Fp);
+        if(strcmp(buff,"#END\n")==0) 
+        {
+            fgets(buff, sizeof(char) * 120, Fp);
+            break;
+        }
+        if(strcmp(buff,"#TEST bench files\n")==0)
+        {
+            fgets(buff, sizeof(char) * 120, Fp);
+        }
+        sprintf(buffOut, "action vlog %s", buff);
+
+        inDataLink(head_ptr, buffOut);
+    }
+    
+
+    sprintf(buff, "vsim -c tb -do \"run -all\"\n");
+    inDataLink(head_ptr, buff);
+
+
+    fprintLink(head_ptr, (char *)script , DirFileName);
+
+    //__________________________________________________________ Close
+    if(fclose(Fp) !=0){
+        printf("Error Close file[%s] \n",fileName);
+        free(buff);
+        return FILE_PROCESS_ERROR;
+    }
+
+    free(buff);
+
+    return BUS_ERROR_NONE;
+}
+
+
+//  ----------------------------------------------------------------
+//  file copy
+//
+//  unsigned int fileCopy(const char *read_file_name, const char *dest_file_name )
+//  ----------------------------------------------------------------
+
+unsigned int fileCopy(const char *read_file_name, const char *dest_file_name )
+{
+     int  read_handle;
+     int  write_handle;
+     int  read_size;
+     int  write_size;
+     char *data;
+
+     read_handle = open(read_file_name, O_RDONLY);
+     if( read_handle == -1 )
+     {
+          printf("ERROR : %s can not open file\n", read_file_name);
+          return FILE_PROCESS_ERROR;
+     }
+
+ 
+     write_handle = open(dest_file_name, O_CREAT|O_TRUNC|O_RDWR,  S_IREAD|S_IWRITE);
+     if( write_handle == -1 )
+     {
+          printf("ERROR : %s can not open file\n", dest_file_name);
+          return FILE_PROCESS_ERROR;
+     }
+
+ 
+     data = (char *)malloc( COPY_SIZE );
+     if( data == NULL )
+     {
+          printf("ERROR :  not define the memory area (%d)\n", COPY_SIZE);
+          return FILE_PROCESS_ERROR;
+     }
+ 
+
+     while( 1 )
+     {
+         read_size = read(read_handle, data, COPY_SIZE);
+         if( read_size == 0 )
+             break;
+
+         write_size = write(write_handle, data, read_size);
+         if( read_size != write_size )
+        {
+            printf("ERROR : Write Error (%d/%d)\n", write_size, read_size);
+            return FILE_PROCESS_ERROR;
+        }
+     }
+
+     close(read_handle);
+     close(write_handle);
+     free(data);
+     return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//  getting Connect priority
+//
+//  
+//  unsigned int getConnectPriority(
+//                                  DefSlave *VAL_SLAVE,
+//                                  int *masterPriority)
+//
+//      [] materPriority :: output priority
+//  ----------------------------------------------------------------
+
+unsigned int getConnectPriority(int *masterPriority,
+                                DefSlave *VAL_SLAVE)
+{
+
+    //Priority value////////
+    int i,j;
+    int liveMasterCnt;
+    int tempMasterPriority[MAXMASTER];
+
+    j = 0;
+    liveMasterCnt = 0;
+    ///////////////////////
+
+    for(i=0; (int)ValMAIN.MasterNumber>i; i++)
+    {
+        for(j=0; (int)ValMAIN.MasterNumber>j; j++)
+        {
+
+            if(strcmp(VAL_SLAVE->OperateArbiter.PriorityMaster[i],
+               ValMASTER[j].name)==0) 
+            {
+                masterPriority[liveMasterCnt++] = j;
+            }
+        }
+    }
+
+    for(i=liveMasterCnt; (int)ValMAIN.MasterNumber>i; i++)
+    {
+        masterPriority[i] = j;
+    }
+
+    return liveMasterCnt;
+}
+
+
+
+
+//  ----------------------------------------------------------------
+//  getting Connect slave with master port 
+//
+//  unsigned int getConnectSlave(DefMaster *VAL_MASTER, int *Connect)
+//  ----------------------------------------------------------------
+
+unsigned int getConnectSlave(DefMaster *VAL_MASTER, int *Connect)
+{
+
+    int i, j, endi;
+
+    endi = (int)ValMAIN.SlaveNumber;
+    /*
+     * Connect[??] = 1 --> connect
+     * Connect[??] = 0 --> non-connect
+     * Connect[??] = 2 --> end
+     */
+    for(i=0;endi>i;i++)
+        Connect[i] = (int)0;
+
+    for(i=0;endi>i;i++)
+    {
+        for(j=0;endi>j;j++)
+            if((strcmp(ValSLAVE[i].name,VAL_MASTER->ConnectSlave[j])==0))
+            {
+                Connect[i] = (int)1;
+            }
+    }
+
+    Connect[endi] = 1; //end code
+
+    return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//  getting Connect master with slave port 
+//
+//  unsigned int getConnectMaster(DefSlave *VAL_SLAVE, int *Connect,
+//                                int ReadWrite)
+//
+//      [] return --> connect counter
+//      [] ReadWrite == 0  Write channel
+//      [] ReadWrite == 1  Read channel
+//
+//  ----------------------------------------------------------------
+
+
+unsigned int getConnectMaster(DefSlave *VAL_SLAVE, int *Connect,
+                              int ReadWrite)
+{
+
+    int i, j, endi;
+    unsigned int ConnectCNT=0;
+
+    endi = (int)ValMAIN.MasterNumber;
+    /*
+     * Connect[??] = 1 --> connect
+     * Connect[??] = 0 --> non-connect
+     * Connect[??] = 2 --> end
+     */
+    for(i=0;endi>i;i++)
+        Connect[i] = (int)0;
+
+    for(i=0;endi>i;i++)
+    {
+        for(j=0;endi>j;j++)
+            if((strcmp(ValMASTER[i].name,VAL_SLAVE->ConnectMaster[j])==0))
+            {
+
+                //Add-2006-9-5-Channel disable
+                if(ValMASTER[i].WriteChPort.ChannelEnable == ENABLE
+                    &&
+                   ReadWrite == 0
+                  )
+                {
+                    Connect[i] = (int)1;
+                    ConnectCNT++;
+                }
+                //Add-2006-9-6-Channel disable
+                else if(ValMASTER[i].ReadChPort.ChannelEnable == ENABLE
+                    &&
+                   ReadWrite == 1
+                  )
+                {
+                    Connect[i] = (int)1;
+                    ConnectCNT++;
+                }
+            }
+    }
+
+    Connect[endi] = 2; //end code
+
+    return ConnectCNT;
+}
+
+
+//  ----------------------------------------------------------------
+//  make module 
+//
+//  unsigned int mkModule(struct codeLine *head_ptr, int SlaveMaster)
+//  ----------------------------------------------------------------
+
+/*  
+ *  define SlaveMater number
+ *
+ *            Master               Slave
+ *           ------       |       -------
+ *           |    |       |       |     |
+ *           |    |  001  |  000  |     |
+ *           |    |       |       |     |
+ *           ------       |       -------       
+ *                                                  Write channel
+ *           ------------------------------------------------
+ *                                                  Read Channel
+ *            Master      |        Slave
+ *           ------       |       -------
+ *           |    |       |       |     |
+ *           |    |  011  |  010  |     |
+ *           |    |       |       |     |
+ *           ------       |       -------       
+ *
+ */
+
+// SlaveMaster == 0 -> WriteChannel Slave  (Master Interface)
+// SlaveMaster == 1 -> WriteChannel Master (Slave Interface)
+// SlaveMaster == 10-> ReadChannel Slave   (Master Interface)
+// SlaveMaster == 11-> ReadChannel Master  (Slave Interface)
+unsigned int mkModule(struct codeLine *head_ptr, int SlaveMaster)
+{
+    char *fileName;
+    char *buff;
+    char *Name;
+    FILE *Fp;
+    int  i, j, k, l,endMasterBuff, endResBuff; 
+    int  endEndBuff;
+    int  endi, endj;
+    int LockEnable, CacheEnable, ProtectEnable, WstrbEnable, IDEnable;
+
+
+    buff     = (char *)malloc(sizeof(char) *120);
+    fileName = (char *)malloc(sizeof(char) *120);
+    Name     = (char *)malloc(sizeof(char) *120);
+
+    if(SlaveMaster == 0)
+    {
+        strcpy(fileName, "./dataSample/WriteChannel/SlaveWire.v");
+        endj = (int)ValMAIN.MasterNumber;
+        endi = (int)ValMAIN.SlaveNumber+1;
+    }
+    else if(SlaveMaster == 1)
+    {
+        strcpy(fileName, "./dataSample/WriteChannel/MasterWire.v");
+        endi = (int)ValMAIN.MasterNumber;
+        endj = (int)ValMAIN.SlaveNumber+1;
+    }
+    else if(SlaveMaster == 10)
+    {
+        strcpy(fileName, "./dataSample/ReadChannel/SlaveWire.v");
+        endj = (int)ValMAIN.MasterNumber;
+        endi = (int)ValMAIN.SlaveNumber+1;
+    }
+    else if(SlaveMaster == 11)
+    {
+        strcpy(fileName, "./dataSample/ReadChannel/MasterWire.v");
+        endi = (int)ValMAIN.MasterNumber;
+        endj = (int)ValMAIN.SlaveNumber+1;
+    }
+    else
+        return 0; //Not support format
+
+
+
+    int *Connect;
+    Connect = (int *)malloc(sizeof(int) * (MAXSLAVE+MAXMASTER));
+
+    //__________________________________________________________ Open
+    if ( (Fp = fopen(fileName, "r" )) == NULL ) {
+        printf ("\nError opening file [%s]\n",fileName);
+        free(buff); 
+        free(fileName);
+        free(Connect);
+        return FILE_PROCESS_ERROR;
+    }
+
+    char BuffMaster[90][120];
+    char BuffRES[40][120];
+    char BuffEnd[40][120];
+
+    //////////////////////////////////////////////////////
+
+    endMasterBuff = 0;
+    endResBuff = 0;
+    endEndBuff = 0;
+
+    while(1)
+    {
+        fgets(BuffMaster[endMasterBuff], sizeof(char) * 120, Fp);
+        if(strcmp(BuffMaster[endMasterBuff], "//STATE00_START\n") == 0) break;
+        endMasterBuff++;
+    }
+
+    while(1)
+    {
+        fgets(BuffRES[endResBuff], sizeof(char) * 120, Fp);
+        if(strcmp(BuffRES[endResBuff], "//STATE_END\n") == 0) break;
+        endResBuff++;
+    }
+
+    while(1)
+    {
+        fgets(BuffEnd[endEndBuff], sizeof(char) * 120, Fp);
+        if(strcmp(BuffEnd[endEndBuff], "//Code_END\n") == 0) break;
+        endEndBuff++;
+    }
+
+    for(i=0; endi >i; i++)
+    {
+        char ReqNum[4];
+
+        sprintf(ReqNum, "%d", i);
+        if(SlaveMaster == 0)        //WriteChannel slave
+        {
+            LockEnable    = ValSLAVE[i].WriteChPort.LockEnable;
+            CacheEnable   = ValSLAVE[i].WriteChPort.CacheEnable;
+            ProtectEnable = ValSLAVE[i].WriteChPort.ProtectEnable;
+            WstrbEnable   = ValSLAVE[i].WriteChPort.WstrbEnable;
+        }
+        else if(SlaveMaster == 1)   //WriteChannel Master
+        {
+            while(1)
+            {
+                if(ValMASTER[i].WriteChPort.ChannelEnable == ENABLE) break;
+                else i++;
+
+                if(i == endi) break;
+            }
+            sprintf(ReqNum, "%d", i);
+            IDEnable      = ValMASTER[i].WriteChPort.IDEnable;
+            LockEnable    = ValMASTER[i].WriteChPort.LockEnable;
+            CacheEnable   = ValMASTER[i].WriteChPort.CacheEnable;
+            ProtectEnable = ValMASTER[i].WriteChPort.ProtectEnable;
+            WstrbEnable   = ValMASTER[i].WriteChPort.WstrbEnable;
+        }
+        else if(SlaveMaster == 10)  //ReadChannel Slave
+        {
+            LockEnable    = ValSLAVE[i].ReadChPort.LockEnable;
+            CacheEnable   = ValSLAVE[i].ReadChPort.CacheEnable;
+            ProtectEnable = ValSLAVE[i].ReadChPort.ProtectEnable;
+        }
+        else if(SlaveMaster == 11)  //ReadChannel Master
+        {
+            while(1)
+            {
+                if(ValMASTER[i].ReadChPort.ChannelEnable == ENABLE) break;
+                else i++;
+
+                if(i == endi) break;
+            }
+            sprintf(ReqNum, "%d", i);
+            IDEnable      = ValMASTER[i].ReadChPort.IDEnable;
+            LockEnable    = ValMASTER[i].ReadChPort.LockEnable;
+            CacheEnable   = ValMASTER[i].ReadChPort.CacheEnable;
+            ProtectEnable = ValMASTER[i].ReadChPort.ProtectEnable;
+        }
+
+        if(i == endi) break;
+
+        if(SlaveMaster == 0 || SlaveMaster == 10) 
+        {
+            if(SlaveMaster == 0)
+            {
+                getConnectMaster(&ValSLAVE[i], Connect, 0);
+                strcpy(Name, ValSLAVE[i].name);//Writech
+            }
+            else
+            {
+                getConnectMaster(&ValSLAVE[i], Connect, 1);
+                strcpy(Name, ValSLAVE[i].name);//Readch
+            }
+
+        } else if(SlaveMaster == 1 || SlaveMaster == 11){
+            getConnectSlave(&ValMASTER[i], Connect);
+            strcpy(Name, ValMASTER[i].name);
+        }
+
+        for(j=0; endMasterBuff >j ; j++)
+        {
+            if(changeStr(BuffMaster[j],buff, "??", (char *)ReqNum)==0)
+            {
+                if(changeStr(BuffMaster[j],buff, "?NAME?", Name)==1)
+                    inDataLink(head_ptr, buff);
+
+                //Add 2006-8-18-port disable______________start
+                else if(strcmp(BuffMaster[j],"//ENABLE_ID\n") == 0)
+                {
+                    if(IDEnable != ENABLE)
+                    {
+                        j++; inDataLink(head_ptr, "//Disable_id_port\n");
+                    }
+                }
+                else if(strcmp(BuffMaster[j],"//ENABLE_LOCK\n") == 0)
+                {
+                    if(LockEnable != ENABLE)
+                    {
+                        j++; inDataLink(head_ptr, "//Disable_lock_port\n");
+                    }
+                }
+
+                else if(strcmp(BuffMaster[j],"//ENABLE_CACHE\n") == 0)
+                {
+                    if(CacheEnable != ENABLE)
+                    {
+                       j++; inDataLink(head_ptr, "//Disable_cache_port\n");
+                    }
+                }
+
+                else if(strcmp(BuffMaster[j],"//ENABLE_PROT\n") == 0)
+                {
+                    if(ProtectEnable != ENABLE)
+                    {
+                        j++; 
+                        inDataLink(head_ptr, "//Disable_protect_port\n");
+                    }
+                }
+
+                else if(strcmp(BuffMaster[j],"//ENABLE_WSTRB\n") == 0)
+                {
+                    if(WstrbEnable != ENABLE)
+                    {
+                        j++; 
+                        inDataLink(head_ptr, "//Disable_WSTRB_port\n");
+                    }
+                }
+                //Add 2006-8-18-port disable______________end
+
+                else
+                    inDataLink(head_ptr, BuffMaster[j]);
+
+            } else {
+
+                while(changeStr(buff,buff, "??",(char *)ReqNum)==1);
+                changeStr(buff,buff, "?NAME?", Name);
+
+                inDataLink(head_ptr, buff);
+            }
+        }//end j loop
+
+        l = 0;
+        //_________________________________STATE00
+        for(j=0; endj >j; j++)
+        {
+            char ReqNum1[4];
+            char ReqNum2[4];
+            sprintf(ReqNum1, "%d", j);
+            sprintf(ReqNum2, "%d", l);
+
+            if(Connect[j] == 1)
+            {
+                for(k=0; endResBuff>k; k++)
+                {
+                    if(changeStr(BuffRES[k],buff, "??", 
+                                            (char *)ReqNum1)==0)
+                    {
+                        inDataLink(head_ptr, BuffRES[k]);
+                    } else {
+                        while(changeStr(buff,buff, "??",
+                                            (char *)ReqNum1)==1);
+                        while(changeStr(buff,buff, "?W?",
+                                            (char *)ReqNum)==1);
+                        changeStr(buff,buff, "?1?", (char *)ReqNum2);
+                        inDataLink(head_ptr, buff);
+                    }
+
+                }//endforloop k
+                l++;
+            }
+        }//endforloop j
+
+        sprintf(ReqNum, "%d", i);
+
+        for(j=0; endEndBuff >j; j++)
+        {
+            if(changeStr(BuffEnd[j],buff, "??", 
+                (char *)ReqNum)==0)
+            {
+                inDataLink(head_ptr, BuffEnd[j]);
+            } else {
+                while(changeStr(buff,buff, "??",
+                                            (char *)ReqNum)==1);
+                inDataLink(head_ptr, buff);
+            }
+
+        }//endforloop j
+    }//endforloop i
+
+    //__________________________________________________________ Close
+    if(fclose(Fp) !=0){
+        printf("Error Close file[%s] \n",fileName);
+        free(buff);
+        free(fileName);
+        free(Connect);
+        return FILE_PROCESS_ERROR;
+    }
+
+    free(Name);
+    free(buff);
+    free(fileName);
+    free(Connect);
+
+    return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//
+//  [Second STEP] LINK Ch.
+//
+//  wire link generation function 
+//      (VALID /READY signal generation from Salve to Master)
+//
+//  unsigned int mkChannelLinkMi2Si( FILE *Fp,struct codeLine *head_ptr, 
+//                                 int ReadWrite )
+//
+//      [] Fp :: reference base coding
+//      [] Output link list
+//
+//  ----------------------------------------------------------------
+
+/*  
+ *  define SlaveMater number
+ *
+ *            Master               Slave
+ *           ------       |       -------
+ *           |    |       |       |     |
+ *           |    |   <======     |     |
+ *           |    |       |       |     |
+ *           ------       |       -------       
+ *                                                  Write channel
+ *           ------------------------------------------------
+ *                                                  Read Channel
+ *            Master      |        Slave
+ *           ------       |       -------
+ *           |    |       |       |     |
+ *           |    |   <======     |     |
+ *           |    |       |       |     |
+ *           ------       |       -------       
+ *
+ * ReadWrite = 00 -> Write mode
+ * ReadWrite = 01 -> Read mode
+ */
+unsigned int mkChannelLinkMi2Si( FILE *Fp,struct codeLine *head_ptr, 
+                                 int ReadWrite )
+{
+    char *buff;
+    char *buffOut;
+    int i,j, endSlaveNum, endMasterNum;
+    int *Connect;
+
+    buff = (char *)malloc(sizeof(char) *120);
+    buffOut = (char *)malloc(sizeof(char) * 120);
+    endSlaveNum  = (int)ValMAIN.SlaveNumber+1;
+    endMasterNum = (int)ValMAIN.MasterNumber;
+    Connect= (int *)malloc(sizeof(int) * MAXSLAVE);
+
+    fgets(buff, sizeof(char)*120, Fp);
+    fgets(buffOut, sizeof(char)*120, Fp);
+    for(i=0; endMasterNum>i; i++)
+    {
+        
+//Add-2006-9-6-Channel disable
+if(
+ (ValMASTER[i].WriteChPort.ChannelEnable == ENABLE && ReadWrite == 0)
+    ||
+ (ValMASTER[i].ReadChPort.ChannelEnable == ENABLE && ReadWrite == 1)
+ )
+{
+        //Descripttion Master Number/////////////////////////////
+        sprintf(buffOut, "%s [%d]\n", "//MasterNum ",i); 
+        inDataLink(head_ptr, buffOut);
+        sprintf(buffOut, "%s\n", "/////////////////////////////"); 
+        inDataLink(head_ptr, buffOut);
+        ///////////////////////////////////////////////////////
+
+        char ReqNum0[4]; // Slave Number
+        char *tempBuff;
+        tempBuff = (char *)malloc(sizeof(char) *120);
+        sprintf(ReqNum0,"%d",i);
+        //Slave Number setting
+        //while(changeStr(buff,buffOut, "??",(char *)ReqNum0)==1);
+        changeStr(buff,tempBuff, "??",(char *)ReqNum0);
+        while(changeStr(tempBuff,tempBuff, "??",(char *)ReqNum0)==1);
+        //changeStr(tempBuff,tempBuff, "??",(char *)ReqNum0);
+        for(j=0; endSlaveNum>j; j++) // j==> Master Number
+        {
+            char ReqNum1[4];
+            sprintf(ReqNum1, "%d", j);  //Set Number
+
+            //changeStr(tempBuff,tempBuff, "?W0?",(char *)ReqNum1);
+            changeStr(tempBuff,buffOut, "?W0?",(char *)ReqNum1);
+            changeStr(buffOut,buffOut, "?W0?",(char *)ReqNum1);
+            inDataLink(head_ptr, buffOut);
+        } //endforloop j
+        free(tempBuff);
+}//Add-2006-9-6-Channel disable
+
+    }//endforloop i
+
+    free(buff);
+    free(buffOut);
+
+    return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//
+//  [Second STEP] LINK ch.
+//
+//  wire link generation function 
+//      (VALID /READY signal generation from Master to Slave)
+//
+//  unsigned int mkChannelLinkSi2Mi( FILE *Fp,struct codeLine *head_ptr,
+//                                int ReadWrite )
+//
+//      [] Fp :: reference base coding
+//      [] Output link list
+//
+//  ----------------------------------------------------------------
+
+/*  
+ *  define SlaveMater number
+ *
+ *            Master               Slave
+ *           ------       |       -------
+ *           |    |       |       |     |
+ *           |    |   ======>     |     |
+ *           |    |       |       |     |
+ *           ------       |       -------       
+ *                                                  Write channel
+ *           ------------------------------------------------
+ *                                                  Read Channel
+ *            Master      |        Slave
+ *           ------       |       -------
+ *           |    |       |       |     |
+ *           |    |   ======>     |     |
+ *           |    |       |       |     |
+ *           ------       |       -------       
+ *
+ * ReadWrite = 00 -> Write mode
+ * ReadWrite = 01 -> Read mode
+ */
+unsigned int mkChannelLinkSi2Mi( FILE *Fp,struct codeLine *head_ptr,
+                                 int ReadWrite )
+{
+    char *buff;
+    char *buffOut;
+    int i,j,k, endSlaveNum, endMasterNum;
+    int *Connect;
+
+    buff = (char *)malloc(sizeof(char) *120);
+    buffOut = (char *)malloc(sizeof(char) * 120);
+    endSlaveNum  = (int)ValMAIN.SlaveNumber;
+    endMasterNum = (int)ValMAIN.MasterNumber;
+    Connect= (int *)malloc(sizeof(int) * MAXSLAVE);
+
+
+    fgets(buff, sizeof(char)*120, Fp);
+    fgets(buffOut, sizeof(char)*120, Fp);
+    for(i=0; endSlaveNum+1>i; i++)
+    {
+
+        //Descripttion Slave Number/////////////////////////////
+        sprintf(buffOut, "%s [%d]\n", "//SlaveNum ",i); 
+        inDataLink(head_ptr, buffOut);
+        sprintf(buffOut, "%s\n", "/////////////////////////////"); 
+        inDataLink(head_ptr, buffOut);
+        ///////////////////////////////////////////////////////
+
+        char ReqNum0[4]; // Slave Number
+        char *tempBuff;
+        tempBuff = (char *)malloc(sizeof(char) *120);
+        sprintf(ReqNum0,"%d",i);
+        k = 0;
+        //Slave Number setting
+        //while(changeStr(buff,buffOut, "??",(char *)ReqNum0)==1);
+        getConnectMaster(&ValSLAVE[i], Connect, ReadWrite);
+        changeStr(buff,tempBuff, "?0?",(char *)ReqNum0);
+        while(changeStr(tempBuff,tempBuff, "?0?",(char *)ReqNum0)==1);
+        for(j=0; endMasterNum>j; j++) // j==> Master Number
+        {
+            char ReqNum1[4];
+            char ReqNum2[4];
+            sprintf(ReqNum1, "%d", j);  //Set Number
+
+            changeStr(tempBuff,buffOut, "?W0?",(char *)ReqNum1);
+
+            while(1)
+            {
+                if(k == endMasterNum+1) break;
+                else if(Connect[k] == 1) 
+                {
+                    sprintf(ReqNum2, "%d", k);  //in Number
+                    k++;
+                    break;
+                }
+                else k++;
+            }
+
+
+            if(k != endMasterNum+1)
+            {
+                changeStr(buffOut,buffOut, "?1?",(char *)ReqNum2);
+            } else {
+                changeDelStr(buffOut,buffOut, "=",(char *)"= 1'b0;");
+            }
+            inDataLink(head_ptr, buffOut);
+        } //endforloop j
+        free(tempBuff);
+    }//endforloop i
+    free(buff);
+    free(buffOut);
+
+    return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//
+//  [First STEP] LINK ch.
+
+//  wire link generation function 
+//      (VALID /READY signal generation) 
+//
+//  unsigned int mkChannelLink( FILE *Fp,struct codeLine *head_ptr, 
+//                            int ReadWrite )
+//
+//      [] Fp :: reference base coding
+//      [] Output link list
+//
+// * ReadWrite = 00 -> Write mode
+// * ReadWrite = 01 -> Read mode
+//  ----------------------------------------------------------------
+
+unsigned int mkChannelLink( FILE *Fp,struct codeLine *head_ptr, 
+                            int ReadWrite )
+{
+    char *buff;
+    char *buffOut;
+    int i,j,k, endSlaveNum, endMasterNum;
+    int *Connect;
+
+    buff = (char *)malloc(sizeof(char) *120);
+    buffOut = (char *)malloc(sizeof(char) * 120);
+    endSlaveNum  = (int)ValMAIN.SlaveNumber;
+    endMasterNum = (int)ValMAIN.MasterNumber;
+    Connect= (int *)malloc(sizeof(int) * MAXSLAVE);
+
+
+    fgets(buff, sizeof(char)*120, Fp);
+    fgets(buffOut, sizeof(char)*120, Fp);
+    for(i=0; endSlaveNum+1>i; i++)
+    {
+        
+        //Descripttion Slave Number/////////////////////////////
+        sprintf(buffOut, "%s [%d]\n", "//SlaveNum ",i); 
+        inDataLink(head_ptr, buffOut);
+        sprintf(buffOut, "%s\n", "/////////////////////////////"); 
+        inDataLink(head_ptr, buffOut);
+        ///////////////////////////////////////////////////////
+
+        char ReqNum0[4]; // Slave Number
+        char *tempBuff;
+        tempBuff = (char *)malloc(sizeof(char) *120);
+        sprintf(ReqNum0,"%d",i);
+        k = 0;
+        //Slave Number setting
+        //while(changeStr(buff,buffOut, "??",(char *)ReqNum0)==1);
+        getConnectMaster(&ValSLAVE[i], Connect, ReadWrite);
+        changeStr(buff,tempBuff, "??",(char *)ReqNum0);
+        while(changeStr(tempBuff,tempBuff, "??",(char *)ReqNum0)==1);
+        for(j=0; endMasterNum>j; j++) // j==> Master Number
+        {
+            char ReqNum1[4];
+            char ReqNum2[4];
+            sprintf(ReqNum1, "%d", j);  //Set Number
+            sprintf(ReqNum2, "%d", k);  //in Number
+
+            changeStr(tempBuff,buffOut, "?W0?",(char *)ReqNum1);
+
+            if(Connect[j] == 1)
+            {
+                changeStr(buffOut,buffOut, "?W1?",(char *)ReqNum2);
+                k++;
+            } else {
+                changeDelStr(buffOut,buffOut, "=",(char *)"= 1'b0;");
+            }
+            inDataLink(head_ptr, buffOut);
+        } //endforloop j
+        free(tempBuff);
+    }//endforloop i
+    free(buff);
+    free(buffOut);
+
+    return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//
+//  Lock port link wire function
+//
+//  unsigned int mkLockLink( FILE *Fp,struct codeLine *head_ptr, 
+//                            int ReadWrite )
+//      [] Fp :: reference base coding
+//      [] Output link list
+
+// * ReadWrite = 0 -> Write mode
+// * ReadWrite = 1 -> Read mode
+
+//  ----------------------------------------------------------------
+
+unsigned int mkLockLink( FILE *Fp,struct codeLine *head_ptr, 
+                            int ReadWrite )
+{
+    char TempBuff[30][120];
+    char *buff;
+    int i,j,k,l,m, endSlaveNum, endMasterNum;
+    int *Connect0;
+    int *Connect1;
+
+    buff = (char *)malloc(sizeof(char) *120);
+    endSlaveNum  = (int)ValMAIN.SlaveNumber;
+    endMasterNum = (int)ValMAIN.MasterNumber;
+    Connect0= (int *)malloc(sizeof(int) * MAXSLAVE);
+    Connect1= (int *)malloc(sizeof(int) * MAXSLAVE);
+
+    fgets(buff, sizeof(char)*120, Fp);
+
+    int endPoint, wirePoint;
+
+    endPoint = 0;
+    wirePoint = 0;
+    m = 0;
+    l = 0;
+
+    while(1)
+    {
+        fgets(TempBuff[endPoint], (sizeof(char)*120), Fp);
+        if(strcmp(TempBuff[endPoint],"//STATE_WIRE\n")==0)
+            wirePoint = endPoint+1;
+        if(strcmp(TempBuff[endPoint++],"//STATE_END\n")==0) 
+            break;
+    }
+
+    for(i=0; endSlaveNum+1>i; i++)
+    {
+        char ReqNum0[4];
+
+        //Slave Connecttion setting/////////////////////////
+        getConnectMaster(&ValSLAVE[i], Connect0, ReadWrite);
+        if(ReadWrite == 0)
+            getConnectMaster(&ValSLAVE[i], Connect1, 1);
+        else
+            getConnectMaster(&ValSLAVE[i], Connect1, 0);
+        ////////////////////////////////////////////////////
+
+        //Slave Number////////////
+        sprintf(ReqNum0, "%d", i);
+        //////////////////////////
+
+
+        //before STATE_WIRE change ?? ==> SlaveNumber
+        for(j=0; wirePoint-1>j; j++)
+        {
+            changeStr(TempBuff[j], buff, "??",(char *)ReqNum0)==1;
+            inDataLink(head_ptr, buff);
+        }
+        ///////////////////////////////////////////////////
+
+        char ReqNum1[50];
+        char ReqNum2[50];
+        char ReqNum3[4];
+        char ReqNum4[4];
+        int  TempNum;
+
+        m = 0;
+        for(j=0; endMasterNum>j; j++)     // j==> Master Number
+        {
+            if(Connect0[j] == 1 && Connect1[j] == 1)
+            {
+                l = 0;
+                //Connection counter for output part
+                for(k=0; j>k; k++) // k==> Master Number
+                {
+                    if(Connect1[k] == 1)
+                        l++;
+                }
+
+                //Connect Cnt Width settting//////
+                if(ReadWrite == 0)
+                {
+                    sprintf(ReqNum2, "%d",ValSLAVE[i].SelReadWid+1);
+                    sprintf(ReqNum1, "%d",ValSLAVE[i].SelWriteWid);
+                    TempNum = ValSLAVE[i].SelReadWid; 
+                }
+                else
+                {
+                    sprintf(ReqNum2, "%d",ValSLAVE[i].SelWriteWid+1);
+                    sprintf(ReqNum1, "%d",ValSLAVE[i].SelReadWid);
+                    TempNum = ValSLAVE[i].SelWriteWid; 
+                }
+                /////////////////////////////////
+
+                sprintf(ReqNum3, "%d", m);
+                sprintf(ReqNum4, "%d", l);
+
+                changeStr(TempBuff[wirePoint],buff, "??",(char *)ReqNum0);
+                changeStr(buff, buff, "?WID0?",(char *)ReqNum1);
+                changeStr(buff, buff, "?WID1?",(char *)ReqNum2);
+                changeStr(buff, buff, "?1?",(char *)ReqNum3);
+                changeStr(buff, buff, "?2?",(char *)ReqNum4);
+
+                m++;
+                inDataLink(head_ptr, buff);
+            }
+            else if (Connect0[j] == 1 && Connect1[j] != 1)
+            {
+                //Connect Cnt Width settting//////
+                if(ReadWrite == 0)
+                {
+                    sprintf(ReqNum2, "%d",ValSLAVE[i].SelReadWid+1);
+                    sprintf(ReqNum1, "%d",ValSLAVE[i].SelWriteWid);
+                    TempNum = ValSLAVE[i].SelReadWid; 
+                }
+                else
+                {
+                    sprintf(ReqNum2, "%d",ValSLAVE[i].SelWriteWid+1);
+                    sprintf(ReqNum1, "%d",ValSLAVE[i].SelReadWid);
+                    TempNum = ValSLAVE[i].SelWriteWid; 
+                }
+                /////////////////////////////////
+
+                sprintf(ReqNum3, "%d", m);
+                sprintf(ReqNum4, "%d", l);
+
+                changeStr(TempBuff[wirePoint],buff, "??",(char *)ReqNum0);
+
+                changeStr(buff, buff, "?WID0?",(char *)ReqNum1);
+                changeStr(buff, buff, "?WID1?",(char *)ReqNum2);
+                changeStr(buff, buff, "?1?",(char *)ReqNum3);
+                changeStr(buff, buff, "?2?",(char *)ReqNum4);
+
+                //Lock mode
+                sprintf(ReqNum1, "= {1'b1, {%d{1'b0}}};", TempNum);
+                changeDelStr(buff,buff, "=",(char *)ReqNum1);
+                sprintf(ReqNum1, "");
+                m++;
+                inDataLink(head_ptr, buff);
+            }
+        }//endforloop l
+
+        //Default process
+        /////////////////////////////////////////////////////////////////
+        sprintf(ReqNum1, "= {1'b1, {%d{1'b0}}};", TempNum);
+        changeStr(TempBuff[wirePoint+1],buff, "??",(char *)ReqNum0);
+        changeDelStr(buff,buff, "=",(char *)ReqNum1);
+        sprintf(ReqNum1, "");
+        inDataLink(head_ptr, buff);
+        /////////////////////////////////////////////////////////////////
+
+        //after STATE_WIRE change ?? ==> SlaveNumber
+        for(j=wirePoint+2; endPoint-1>j; j++)
+        {
+            changeStr(TempBuff[j],buff, "??",(char *)ReqNum0);
+            inDataLink(head_ptr, buff);
+        }
+        ///////////////////////////////////////////////////
+
+    }//endforloop i
+
+    free(buff);
+    free(Connect0);
+    free(Connect1);
+
+    return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//
+//  Test function
+//
+//  ----------------------------------------------------------------
+
+unsigned int fileDumpLine(char *Buffer, char *fileName){
+
+    FILE * Fp;
+
+    Fp = fopen(fileName, "a+");
+
+    if(Fp == NULL) 
+    {
+        printf("Can't open [%s]",fileName);
+        return 1;
+    }
+    fprintf(Fp, "%s", Buffer);
+    if(fclose(Fp) !=0)
+    {
+        printf("Error Close file[%s] \n",fileName);
+        return 1;
+    }
+    return 0;
+}
+
+//  ----------------------------------------------------------------
+//
+//  making directory
+//
+//  unsigned int initDir(void);
+//  
+//  ----------------------------------------------------------------
+
+unsigned int initDir(void) {
+
+    int doReturn;
+
+    char GenDir[300];
+
+    sprintf(GenDir, "../%s", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/rtl", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/msim", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/bench", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/rtl/BUS", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/rtl/BUS/TOP", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/rtl/BUS/WriteChannel", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/rtl/BUS/ReadChannel", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/rtl/BUS/WriteChannel/TOP", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/rtl/BUS/ReadChannel/TOP", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/rtl/BUS/WriteChannel/RegisterSlice", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/rtl/BUS/ReadChannel/RegisterSlice", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+
+    sprintf(GenDir, "../%s/rtl/BUS/protocol_checker", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/rtl/BUS/std_ovl", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/rtl/BUS/std_ovl/vlog95", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+    sprintf(GenDir, "../%s/parameter", ValMAIN.name);
+    doReturn = mkdir(GenDir,0777);
+
+    if(doReturn = 1)
+        printf("Ok mkdirectory  [../GEN....] \n");
+    else {
+        printf("Error mkdir\n");
+        return FILE_PROCESS_ERROR;        
+    }
+
+    return BUS_ERROR_NONE;
+}
+
+
+//  ----------------------------------------------------------------
+//
+//  Test function (print function)
+//
+//  ----------------------------------------------------------------
+void printLink(struct codeLine *first_ptr)
+{
+    struct codeLine *cur_ptr;
+
+#if 0
+    for(cur_ptr = first_ptr; cur_ptr != NULL; cur_ptr=cur_ptr->next_ptr)
+        printf("%s", cur_ptr->code);
+#endif
+
+}
+
+//  ----------------------------------------------------------------
+//  file generation function
+//
+//  unsigned int fprintLink(struct codeLine *first_ptr, char *header, 
+//                          char *fileName)
+//  
+//      [] first_ptr ==> src link list
+//      [] header    ==> header script
+//      [] fileName  ==> output file name
+//  ----------------------------------------------------------------
+unsigned int fprintLink(struct codeLine *first_ptr, char *header, char *fileName)
+{
+    struct codeLine *cur_ptr;
+    struct codeLine *nx_ptr;
+    FILE *Fp;
+
+   //__________________________________________________________ Open
+    if ( (Fp = fopen(fileName, "w" )) == NULL ) {
+        printf ("\nError opening file [%s]\n",fileName);
+        return FILE_PROCESS_ERROR;
+    }
+
+    if(header != NULL)
+        fprintf(Fp, "%s", header);
+
+    for(cur_ptr = first_ptr; cur_ptr != NULL; cur_ptr=cur_ptr->next_ptr)
+        fprintf(Fp, "%s", cur_ptr->code);
+
+    cur_ptr = first_ptr;
+    while(1)
+    {
+        nx_ptr = cur_ptr->next_ptr;
+        free(cur_ptr->code);
+        free(cur_ptr);
+        cur_ptr = nx_ptr;
+        if(cur_ptr == NULL) break;
+    }
+
+    //__________________________________________________________ Close
+    if(fclose(Fp) !=0){
+        printf("Error Close file[%s] \n",fileName);
+        return FILE_PROCESS_ERROR;
+    }
+
+    return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//  Add link list
+//
+//  unsigned int inDataLink(struct codeLine *first_ptr, char *value)
+//  
+//      [] first_ptr ==> link list point
+//      [] value     ==> add value
+//  ----------------------------------------------------------------
+unsigned int inDataLink(struct codeLine *first_ptr, char *value)
+{
+    struct codeLine *before_ptr;
+    struct codeLine *after_ptr;
+    struct codeLine *new_ptr;
+
+    before_ptr = first_ptr;
+    after_ptr = first_ptr->next_ptr;
+
+    while(1)
+    {
+        if(after_ptr == NULL) break;
+
+        after_ptr = after_ptr->next_ptr;
+        before_ptr = before_ptr->next_ptr;
+    }
+
+    new_ptr = (struct codeLine *)malloc(sizeof(struct codeLine));
+    new_ptr->code = (char *)malloc(sizeof(char) * 120);
+
+    strcpy(new_ptr->code, value);
+
+    before_ptr->next_ptr = new_ptr;
+    new_ptr->next_ptr = NULL;
+}
+
+//  ----------------------------------------------------------------
+//  change stringA to stringB and del after stringA
+//
+//  unsigned int changeDelStr(char *chString, char *outString, 
+//                            char *eqString, char *afterString)
+//  
+//      [] chString    ==> input String 
+//      [] outString   ==> output String
+//      [] eqString    ==> find sting(StringA)
+//      [] afterString ==> change sting(StringB)
+//
+//  return ==> find and change OK!!
+//  ----------------------------------------------------------------
+unsigned int changeDelStr(char *chString, char *outString, char *eqString, char *afterString)
+{
+    int i=0,j=0;
+    char *TempStr;
+    char *pt,*ptf;
+    char *chg;
+
+    /*
+    printf("inSTRInG[%s]", chString);
+    printf("beforeSt[%s]\n", eqString);
+    printf("afterSt [%s]\n", afterString);
+    */
+
+    TempStr=(char *)malloc(sizeof(char)*120);
+
+    chg = afterString;
+    pt  = chString;
+    ptf = strstr (chString, eqString);
+
+    if(ptf == NULL) {
+        strcpy(outString, chString);
+        return 0; // no search this string
+    }
+
+    while(1)
+    {
+        if(*pt=='\0') break;
+        if(pt==ptf) break;
+        TempStr[i++] = *pt++;
+    }
+
+    while(1)
+    {
+        if(*chg=='\0') break;
+        TempStr[i++] = *chg++;
+    }
+    
+    TempStr[i++] ='\n'; 
+    TempStr[i++] ='\0'; 
+
+    strcpy(outString, TempStr);
+
+    free(TempStr);
+
+    return 1; //search this string
+}
+
+//  ----------------------------------------------------------------
+//  change stringA to stringB 
+//
+//  unsigned int changeDelStr(char *chString, char *outString, 
+//                            char *eqString, char *afterString)
+//  
+//      [] chString    ==> input String 
+//      [] outString   ==> output String
+//      [] eqString    ==> find sting(StringA)
+//      [] afterString ==> change sting(StringB)
+//
+//  return ==> find and change OK!!
+//  ----------------------------------------------------------------
+
+unsigned int changeStr(char *chString, char *outString, char *beforeString, char *afterString)
+{
+    int i=0,j=0;
+    char *TempStr;
+    char *pt,*ptf;
+    char *chg;
+
+    /*
+    printf("inSTRInG[%s]", chString);
+    printf("beforeSt[%s]\n", beforeString);
+    printf("afterSt [%s]\n", afterString);
+    */
+
+    TempStr=(char *)malloc(sizeof(char)*120);
+
+    chg = afterString;
+    pt  = chString;
+    ptf = strstr (chString, beforeString);
+
+    if(ptf == NULL) {
+        strcpy(outString, chString);
+        return 0; // no search this string
+    }
+
+    while(1)
+    {
+        if(*pt=='\0') break;
+        if(pt==ptf) break;
+        TempStr[i++] = *pt++;
+    }
+
+    while(1)
+    {
+        if(*chg=='\0') break;
+        TempStr[i++] = *chg++;
+    }
+    
+    for(j=0;strlen(beforeString) >j;j++)
+        *pt++;
+
+    while(1)
+    {
+        if(*pt=='\n') 
+            break;
+
+        TempStr[i++] = *pt++;
+    }
+
+    TempStr[i++] ='\n'; 
+    TempStr[i++] ='\0'; 
+
+    strcpy(outString, TempStr);
+
+    /*
+    printf("outSTRInG[%s]", outString);
+    */
+    free(TempStr);
+
+    return 1; //search this string
+}
+
+
+//  ----------------------------------------------------------------
+//
+//  change string function
+//
+//  unsigned int mkBuffChange(FILE *Fp, struct codeLine *head_ptr, 
+//                          int endi, char *FINDSTR, 
+//                          int *Connect)
+//
+//      [] Fp :: reference base coding
+//      [] head_prt:: Output link list
+//      [] endi    :: repeat count end
+//      [] FINDSTR :: read end point
+//      [] Connect :: connection value '1' --> connection
+//
+//  ----------------------------------------------------------------
+//  if Connect == NULL, for MasterInterface
+//  ----------------------------------------------------------------
+
+unsigned int mkBuffChange(FILE *Fp, struct codeLine *head_ptr, 
+                          int endi, char *FINDSTR, 
+                          int *Connect)
+{
+
+    char *buff;
+    char *buffOut;
+    char STATE3Buff[50][120];
+    int i,j,k,endj;
+    endj = 0;
+
+    buff = (char *)malloc(sizeof(char) *120);
+    buffOut = (char *)malloc(sizeof(char) *120);
+
+    //Buff
+    if(FINDSTR == NULL)
+    {
+        fgets(buff, (sizeof(char)*100), Fp);
+        fgets(buffOut, (sizeof(char)*100), Fp);
+    }
+    else 
+    {
+        while(1)
+        {
+            fgets(STATE3Buff[endj], (sizeof(char)*100), Fp);
+            if(strcmp(STATE3Buff[endj],FINDSTR)==0) break;
+            endj++;
+        }
+    }
+
+    if(endi == 0)
+    {
+        free(buff); free(buffOut);
+        return BUS_ERROR_NONE;
+    }
+
+    i = 0;
+    //for(i=0; endi > i; i++)
+    while(endi>i)
+    {
+        int  temp;
+        char ReqNum[4];
+
+        if(Connect != NULL)
+            while(1) {
+                if((Connect[i] == 1) && Connect != NULL) break;
+                if(endi == i) break;
+                else i++; }
+   
+        if(Connect != NULL)
+            if(endi == i) break;
+
+        temp = sprintf(ReqNum, "%d", i);
+        if(temp == -1)
+        {
+            free(buff); free(buffOut); 
+            printf("Error sprintf process :: mkBuffChange function");
+            return FILE_PROCESS_ERROR;
+        }
+
+        if(endj !=0) {
+            for(j=0; endj >j; j++)
+            {
+
+                    if(changeStr(STATE3Buff[j],buffOut, "??",
+                                (char *)ReqNum)==0)
+                        inDataLink(head_ptr, STATE3Buff[j]);
+                    else {
+                        while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+                        inDataLink(head_ptr, buffOut);
+                    }
+
+            }
+        } else {
+            changeStr(buff,buffOut, "??",(char *)ReqNum);
+            while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+            inDataLink(head_ptr, buffOut);
+        }
+        i++;
+    }//forloop i
+
+    free(buff); free(buffOut); 
+    return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//
+//  Connetion number reapeat generation in SlaveInterface(SI)
+//
+//  unsigned int mkBuffChangeENSI(FILE *Fp, struct codeLine *head_ptr, 
+//                            int endi, char *FINDSTR, 
+//                            int *Connect,
+//                            int ReadWrite)
+//
+//      [] Fp :: reference base coding
+//      [] head_prt:: Output link list
+//      [] endi    :: repeat count end
+//      [] FINDSTR :: read end point
+//      [] Connect :: connection value '1' --> connection
+//      [] ReadWrite :: read ch / write ch
+
+// * ReadWrite = 0 -> Write mode
+// * ReadWrite = 1 -> Read mode
+
+//  ----------------------------------------------------------------
+
+unsigned int mkBuffChangeENSI(FILE *Fp, struct codeLine *head_ptr, 
+                          int endi, char *FINDSTR, 
+                          int *Connect,
+                          int ReadWrite)
+{
+
+    char *buff;
+    char *buffOut;
+    char STATE3Buff[40][120];
+    int i,j,k,endj;
+    endj = 0;
+
+    buff = (char *)malloc(sizeof(char) *120);
+    buffOut = (char *)malloc(sizeof(char) *120);
+
+    //Buff
+    if(FINDSTR == NULL)
+    {
+        fgets(buff, (sizeof(char)*100), Fp);
+        fgets(buffOut, (sizeof(char)*100), Fp);
+    }
+    else 
+    {
+        while(1)
+        {
+            fgets(STATE3Buff[endj], (sizeof(char)*100), Fp);
+            if(strcmp(STATE3Buff[endj],FINDSTR)==0) break;
+            endj++;
+        }
+    }
+
+    if(endi == 0)
+    {
+        free(buff); free(buffOut);
+        return BUS_ERROR_NONE;
+    }
+
+    i = 0;
+    //for(i=0; endi > i; i++)
+    while(endi>i)
+    {
+        int  temp;
+        char ReqNum[4];
+
+        if(Connect != NULL)
+            while(1) {
+                if((Connect[i] == 1) && Connect != NULL) break;
+                if(endi == i) break;
+                else i++; }
+   
+        if(Connect != NULL)
+            if(endi == i) break;
+
+
+        if(Connect == NULL)
+        {
+          while(1) {
+            if(ReadWrite == 0)
+            {
+                if(i==endi)break;
+                if(ValMASTER[i].WriteChPort.ChannelEnable == ENABLE) break;
+                else i++; 
+            }
+            else
+            {
+                if(i==endi)break;
+                if(ValMASTER[i].ReadChPort.ChannelEnable == ENABLE) break;
+                else i++; 
+            }
+          }
+        }
+
+        if(endi == i) break;
+
+        temp = sprintf(ReqNum, "%d", i);
+        if(temp == -1)
+        {
+            free(buff); free(buffOut); 
+            printf("Error sprintf process :: mkBuffChange function");
+            return FILE_PROCESS_ERROR;
+        }
+
+        if(endj !=0) {
+            for(j=0; endj >j; j++)
+            {
+
+                    if(changeStr(STATE3Buff[j],buffOut, "??",
+                                (char *)ReqNum)==0)
+                        inDataLink(head_ptr, STATE3Buff[j]);
+                    else {
+                        while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+                        inDataLink(head_ptr, buffOut);
+                    }
+
+            }
+        } else {
+            changeStr(buff,buffOut, "??",(char *)ReqNum);
+            while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+            inDataLink(head_ptr, buffOut);
+        }
+        i++;
+    }//forloop i
+
+    free(buff); free(buffOut); 
+    return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//
+//  Connetion number reapeat generation and change stringA to stringB
+//
+//  unsigned int mkBuffChangeENSI(FILE *Fp, struct codeLine *head_ptr, 
+//                            int endi, char *FINDSTR, 
+//                            int *Connect,
+//                            int ReadWrite)
+//
+//      [] Fp :: reference base coding
+//      [] head_prt:: Output link list
+//      [] endi    :: repeat count end
+//      [] FINDSTR :: read end point
+//      [] Connect :: connection value '1' --> connection
+//      [] St1     :: String A which is to want to change
+//      [] St2     :: replace stringA
+//
+//
+//  ----------------------------------------------------------------
+
+unsigned int mkBuffChangeSt2St(FILE *Fp, struct codeLine *head_ptr, 
+                               int endi, char *FINDSTR,
+                               char *st1, char *st2,
+                               int *Connect)
+{
+    char *buff;
+    char *buffOut;
+    char STATE3Buff[30][120];
+    //char (*STATE3Buff)[120];
+    int i,j,endj;
+    endj = 0;
+
+    buff = (char *)malloc(sizeof(char) * 120);
+    buffOut = (char *)malloc(sizeof(char) * 120);
+
+    //Buff
+    if(FINDSTR == NULL)
+    {
+        fgets(buff, (sizeof(char)*120), Fp);
+        fgets(buffOut, (sizeof(char)*120), Fp);
+    }
+    else 
+    {
+        while(1)
+        {
+            fgets(STATE3Buff[endj], (sizeof(char)*120), Fp);
+            if(strcmp(STATE3Buff[endj],FINDSTR)==0) break;
+            endj++;
+        }
+    }
+
+
+    i = 0;
+    //for(i=0; endi > i; i++)
+    while(endi>i)
+    {
+        int  temp;
+        char ReqNum[4];
+        
+        //for connecting Slave from Master
+        //Some Master connect to the several Slave
+        //________________________________________________________
+        if(Connect != NULL)
+            while(1) 
+            {
+                if((Connect[i] == 1) && Connect != NULL) break;
+                if(endi == i) break;
+                else i++; 
+            }
+        //________________________________________________________
+        if(Connect != NULL)
+            if(endi == i) break;
+
+        temp = sprintf(ReqNum, "%d", i);
+
+        if(temp == -1)
+        {
+            free(buff); free(buffOut); 
+            printf("Error sprintf process :: mkBuffChange function");
+            return FILE_PROCESS_ERROR;
+        }
+
+        //printf ("endj[%d]\n",endj);
+        if(endj !=0) {
+            for(j=0; endj >j; j++)
+            {
+                if(st1 == NULL) {
+                    if(changeStr(STATE3Buff[j],buffOut, "??",(char *)ReqNum)==0)
+                        inDataLink(head_ptr, STATE3Buff[j]);
+                    else {
+                        changeStr(STATE3Buff[j],buffOut, "??",(char *)ReqNum);
+                        while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+                        //changeStr(buffOut,buffOut, "??",(char *)ReqNum);
+                        inDataLink(head_ptr, buffOut);
+                    }
+                } else {
+                    if (changeStr(STATE3Buff[j],buffOut, st1,st2)==1) {
+                        changeStr(buffOut,buffOut, "??",(char *)ReqNum);
+                        changeStr(buffOut,buffOut, "??",(char *)ReqNum);
+                        inDataLink(head_ptr, buffOut);
+                    } else if (changeStr(STATE3Buff[j],buffOut, "??",(char *)ReqNum)==1) {
+                        changeStr(buffOut,buffOut, "??",(char *)ReqNum);
+                        inDataLink(head_ptr, buffOut);
+                    } else {
+                        inDataLink(head_ptr, STATE3Buff[j]);
+                    }
+                }
+            }//for loop j
+        }
+        else
+        {
+            if(st1 != NULL) {
+                changeStr(buff,buffOut, st1,st2);
+                while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+                inDataLink(head_ptr, buffOut);
+            } else {
+                changeStr(buff,buffOut, "??",(char *)ReqNum);
+                while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+                inDataLink(head_ptr, buffOut);
+            }
+        }
+
+        i++;
+    }
+
+    free(buffOut); free(buff);
+    return BUS_ERROR_NONE;
+}
+
+
+//  ----------------------------------------------------------------
+//
+//  Buffer copy to Link list point until In point
+//
+//  unsigned int mkBeforeStr(FILE *Fp, struct codeLine *start_ptr, char *In)
+//
+//      [] Fp       :: reference base coding
+//      [] head_prt :: Output link list
+//      [] In       :: the end of copy point
+//
+//  ----------------------------------------------------------------
+
+unsigned int mkBeforeStr(FILE *Fp, struct codeLine *start_ptr, char *In)
+{
+    char *buff;
+    buff = (char *)malloc(sizeof(char) *120);
+
+    while(1)
+    {
+        fgets(buff, (sizeof(char)*120), Fp);
+        if(strcmp(buff,In)==0) 
+        {
+            break;
+        }
+        inDataLink(start_ptr, buff);
+    }
+
+    free(buff);
+    return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//
+//  Slave Master in/output link generation
+//
+//  unsigned int mkSlaveMasterChange(FILE *Fp, 
+//                                 DefMaster *VAL_MASTER,
+//                                 DefSlave  *VAL_SLAVE,
+//                                 struct codeLine *head_ptr,
+//                                 int SlaveMaster
+//
+//      [] Fp :: reference base coding
+//      [] VAL_MASTER :: wriet config definition
+//      [] VAL_SLAVE  :: read config definition
+//      [] head_prt:: Output link list
+//
+//  ----------------------------------------------------------------
+
+/*  
+ *  define SlaveMater number
+ *
+ *             Master   RS       RS     Slave
+ *           ---------       |        ----------
+ *           |       |       |        |        |
+ *           |  000  |  010  |   011  |   001  |
+ *           |       |       |        |        |
+ *           ---------       |        ----------       
+ *                                                  Write channel
+ *           ------------------------------------------------
+ *                                                  Read Channel
+ *             Master        |           Slave
+ *           ---------       |        ----------
+ *           |       |       |        |        |
+ *           |  100  |  110  |   111  |   101  |
+ *           |       |       |        |        |
+ *           ---------       |        ----------       
+ *
+ */
+
+unsigned int mkSlaveMasterChange(FILE *Fp, 
+                                 DefMaster *VAL_MASTER,
+                                 DefSlave  *VAL_SLAVE,
+                                 struct codeLine *head_ptr,
+                                 int SlaveMaster
+                                 )
+{
+    char ReqNum[4];
+    char ReqNum1[4];
+
+    char buffOut[50][120];
+    char Tbuff[120];
+    int  endcheck=0;
+    int  i,j,k,l;
+    int  endi;
+    int  inSlaveMaster;
+    int LockEnable, CacheEnable, ProtectEnable, WstrbEnable;
+
+    inSlaveMaster = SlaveMaster;
+
+    if(SlaveMaster == 0 || SlaveMaster == 100)
+    {
+        inSlaveMaster = 0;
+        endi = (int)ValMAIN.SlaveNumber;
+    }
+    else if(SlaveMaster == 1 || SlaveMaster == 101)
+    {
+        inSlaveMaster = 1;
+        endi = (int)ValMAIN.MasterNumber;
+    }
+    else if(SlaveMaster == 10 || SlaveMaster == 110)
+    {
+        endi = (int)ValMAIN.SlaveNumber;
+        inSlaveMaster = 0;
+
+        if(VAL_MASTER->modeSitoMi == 0)//none resgister slice
+            sprintf(ReqNum1, " ");
+        else if(VAL_MASTER->RegisterSliceSitoMi == 0) 
+            sprintf(ReqNum1, " ");
+        else
+            sprintf(ReqNum1, "w%d", VAL_MASTER->RegisterSliceSitoMi-1);
+    }
+    else if(SlaveMaster == 11 || SlaveMaster == 111)
+    {
+        endi = (int)ValMAIN.MasterNumber;
+        inSlaveMaster = 1;
+
+        if(VAL_SLAVE->modeMitoSi == 0)//none resgister slice
+            sprintf(ReqNum1, " ");
+        else if(VAL_SLAVE->RegisterSliceMitoSi == 0) 
+            sprintf(ReqNum1, " ");
+        else
+            sprintf(ReqNum1, "w%d", VAL_SLAVE->RegisterSliceMitoSi-1);
+    }
+
+    while(1)
+    {
+        fgets(buffOut[endcheck++],  (sizeof(char)*100), Fp);    
+        if(strcmp(buffOut[endcheck-1],"//STATE_END\n") == 0) break;
+    }
+
+    l = 0;
+    for(i=0;endi>i;i++)
+    {
+        sprintf(ReqNum, "%d", i);
+        for(j=0;endi>j;j++)
+        {
+
+/////////////////////////////////////////////////////////////////////////////
+            if(inSlaveMaster == 0) { // Slave change (master port)
+/////////////////////////////////////////////////////////////////////////////
+
+
+                if(strcmp(ValSLAVE[i].name,VAL_MASTER->ConnectSlave[j])==0)
+                {//Connection____START 
+                    
+////////////////////////////////////////////////////////////////////////////
+//FOR LOOP START(k) line buffer counter/////////////////////////////////////
+                    for(k=0;endcheck-1>k;k++)
+                    {
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+
+//2006-8-23-port_disable____START
+//_________Write Channel modified
+//if(SlaveMaster == 11 || SlaveMaster == 10)
+if(SlaveMaster == 11  || SlaveMaster == 10 ||
+   SlaveMaster == 111 || SlaveMaster == 110)
+{//RS_slice_generation start______________________________________________
+
+            if(strcmp(buffOut[k], "//ENABLE_LOCK_Write\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.LockEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_LockPortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .AWLOCKsi2mi??  ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_CACHE_Write\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.CacheEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_CachePortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .AWCACHEsi2mi?? ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_PROT_Write\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.ProtectEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_ProtectPortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .AWPROTsi2mi??  ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_WSTRB_Write\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.WstrbEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_WSTRBPortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .WSTRBsi2mi??   ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+//_________READ Channel modified
+            
+            else if(strcmp(buffOut[k], "//ENABLE_LOCK_Read\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->ReadChPort.LockEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_LockPortReadChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .ARLOCKsi2mi??  ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_CACHE_Read\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->ReadChPort.CacheEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_CachePortReadChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .ARCACHEsi2mi?? ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_PROT_Read\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->ReadChPort.ProtectEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_ProtectPortReadChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .ARPROTsi2mi??  ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+            }
+
+//_________Write Channel modified
+            else if(strcmp(buffOut[k], "//ENABLE_LOCK_WriteOutput\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.LockEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_LockPortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    output  [AWLOCK_WID-1:0] AWLOCKsi2mi??;  \n");
+                    while(changeStr(Tbuff,Tbuff, "??",(char *)ReqNum)==1);
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    assign  AWLOCKsi2mi?? = {AWLOCK_WID{1'b0}};  \n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_CACHE_WriteOutput\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.CacheEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_CachePortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    output  [AWCACHE_WID-1:0] AWCACHEsi2mi??; \n");
+                    while(changeStr(Tbuff,Tbuff, "??",(char *)ReqNum)==1);
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    assign  AWCACHEsi2mi?? = {AWCACHE_WID{1'b0}};  \n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_PROT_WriteOutput\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.ProtectEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_ProtectPortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    output  [AWPROT_WID-1:0] AWPROTsi2mi??;  \n");
+                    while(changeStr(Tbuff,Tbuff, "??",(char *)ReqNum)==1);
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    assign  AWPROTsi2mi?? = {AWPROT_WID{1'b0}};  \n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_WSTRB_WriteOutput\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.WstrbEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_WSTRBPortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    output  [WSTRB_WID-1:0]WSTRBsi2mi??;   \n");
+                    while(changeStr(Tbuff,Tbuff, "??",(char *)ReqNum)==1);
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    assign  WSTRBsi2mi?? = {WSTRB_WID{1'b1}};  \n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+//_________READ Channel modified
+            
+            else if(strcmp(buffOut[k], "//ENABLE_LOCK_ReadOutput\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->ReadChPort.LockEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_LockPortReadChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    output  [ARLOCK_WID-1:0] ARLOCKsi2mi??;  \n");
+                    while(changeStr(Tbuff,Tbuff, "??",(char *)ReqNum)==1);
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    assign  ARLOCKsi2mi?? = {ARLOCK_WID{1'b0}};  \n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_CACHE_ReadOutput\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->ReadChPort.CacheEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_CachePortReadChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    output  [ARCACHE_WID-1:0] ARCACHEsi2mi??; \n");
+                    while(changeStr(Tbuff,Tbuff, "??",(char *)ReqNum)==1);
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    assign  ARCACHEsi2mi?? = {ARCACHE_WID{1'b0}};  \n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_PROT_ReadOutput\n")==0)
+            {
+                if(VAL_MASTER->ReadChPort.ProtectEnable!=ENABLE)
+                {
+                    k++;
+                    sprintf(Tbuff,"//Disable_ProtectPortReadChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    output  [ARPROT_WID-1:0] ARPROTsi2mi??;  \n");
+                    while(changeStr(Tbuff,Tbuff, "??",(char *)ReqNum)==1);
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    assign  ARPROTsi2mi?? = {ARPROT_WID{1'b0}};  \n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+            }
+            else
+                changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+}//RS_slice_generation end ______________________________________________
+
+else
+    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+//2006-8-23-port_disable____END
+
+                        while(changeStr(Tbuff,Tbuff, "??",(char *)ReqNum)==1);
+                        while(changeStr(Tbuff,Tbuff, "?0?",(char *)ReqNum1)==1);
+                        inDataLink(head_ptr, Tbuff);
+
+
+
+////////////////////////////////////////////////////////////////////////////
+//FOR LOOP END(k) line buffer counter  /////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+                    }//the end of k loop
+////////////////////////////////////////////////////////////////////////////
+                }
+
+
+/////////////////////////////////////////////////////////////////////////////
+            } else { //inSlaveMaster == 1 Master Change (Slave)
+/////////////////////////////////////////////////////////////////////////////
+
+                if(
+                  //Add-2006-9-5 Channel disable
+                  //Connect condition
+                  ((strcmp(ValMASTER[i].name,VAL_SLAVE->ConnectMaster[j])==0)
+                    &&
+                  //Write Channel Enable condition (in Slave)
+                  ((SlaveMaster == 11 || SlaveMaster == 1) && 
+                   ValMASTER[i].WriteChPort.ChannelEnable == ENABLE)
+                  )
+
+                    ||
+
+                  //Connect condition
+                  ((strcmp(ValMASTER[i].name,VAL_SLAVE->ConnectMaster[j])==0)
+                    &&
+                  //Read Channel Enable condition (in Slave)
+                  ((SlaveMaster == 111 || SlaveMaster == 101 )&& 
+                   ValMASTER[i].ReadChPort.ChannelEnable == ENABLE)
+                  ))
+
+                {
+                    sprintf(ReqNum, "%d", l);
+                    for(k=0;endcheck-1>k;k++)
+                    {
+////////////////////////////////////////////////////////////////////////////
+//FOR LOOP START(k) line buffer counter  ///////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+//2006-8-23-port_disable____START
+//_________Write Channel modified
+            
+            if(strcmp(buffOut[k], "//ENABLE_LOCK_Write\n")==0)
+            {
+                k++;
+                if(VAL_SLAVE->WriteChPort.LockEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_LockPortWriteChannel(slave)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .AWLOCKsi??2mi  ({AWLOCK_WID{1'b0}} ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_CACHE_Write\n")==0)
+            {
+                k++;
+                if(VAL_SLAVE->WriteChPort.CacheEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_CachePortWriteChannel(slave)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .AWCACHEsi??2mi ({AWCACHE_WID{1'b0}} ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_PROT_Write\n")==0)
+            {
+                k++;
+                if(VAL_SLAVE->WriteChPort.ProtectEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_ProtectPortWriteChannel(slave)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .AWPROTsi??2mi  ({AWPROT_WID{1'b0}} ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_WSTRB_Write\n")==0)
+            {
+                k++;
+                if(VAL_SLAVE->WriteChPort.WstrbEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_WSTRBPortWriteChannel(slave)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .WSTRBsi??2mi   ({WSTRB_WID{1'b1}} ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+//_________READ Channel modified
+            
+            else if(strcmp(buffOut[k], "//ENABLE_LOCK_Read\n")==0)
+            {
+                k++;
+                if(VAL_SLAVE->ReadChPort.LockEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_LockPortReadChannel(slave)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .ARLOCKsi??2mi  ({ARLOCK_WID{1'b0}} ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_CACHE_Read\n")==0)
+            {
+                k++;
+                if(VAL_SLAVE->ReadChPort.CacheEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_CachePortReadChannel(slave)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .ARCACHEsi??2mi ({ARCACHE_WID{1'b0}} ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_PROT_Read\n")==0)
+            {
+                k++;
+                if(VAL_SLAVE->ReadChPort.ProtectEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_ProtectPortReadChannel(slave)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .ARPROTsi??2mi  ({ARPROT_WID{1'b0}} ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+            }
+            else
+                changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+//2006-8-23-port_disable____END
+
+                        while(changeStr(Tbuff,Tbuff, "??",(char *)ReqNum)==1);
+                        while(changeStr(Tbuff,Tbuff, "?0?",(char *)ReqNum1)==1);
+                        inDataLink(head_ptr, Tbuff);
+                    }
+                    l++;
+                }
+            }
+        }
+    }
+
+    //insert default slave
+    if(inSlaveMaster == 0) {
+        //Defalt Slave
+        sprintf(ReqNum, "%d", endi);
+        sprintf(Tbuff, "\n//Default Slave Number = %d",endi); 
+        inDataLink(head_ptr, Tbuff);
+
+        for(k=0;endcheck-1>k;k++)
+        {
+
+//2006-8-23-port_disable____START
+
+//_________Write Channel modified
+            
+            if(strcmp(buffOut[k], "//ENABLE_LOCK_Write\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.LockEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_LockPortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .AWLOCKsi2mi??  ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_CACHE_Write\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.CacheEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_CachePortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .AWCACHEsi2mi?? ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_PROT_Write\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.ProtectEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_ProtectPortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .AWPROTsi2mi??  ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_WSTRB_Write\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->WriteChPort.WstrbEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_WSTRBPortWriteChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .WSTRBsi2mi??   ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+//_________READ Channel modified
+            
+            else if(strcmp(buffOut[k], "//ENABLE_LOCK_Read\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->ReadChPort.LockEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_LockPortReadChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .ARLOCKsi2mi??  ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_CACHE_Read\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->ReadChPort.CacheEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_CachePortReadChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .ARCACHEsi2mi?? ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+            }
+
+            else if(strcmp(buffOut[k], "//ENABLE_PROT_Read\n")==0)
+            {
+                k++;
+                if(VAL_MASTER->ReadChPort.ProtectEnable!=ENABLE)
+                {
+                    sprintf(Tbuff,"//Disable_ProtectPortReadChannel(master)\n");
+                    inDataLink(head_ptr, Tbuff);
+                    sprintf(Tbuff,"    .ARPROTsi2mi??  ( ),\n");
+                }
+                else
+                    changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+            }
+            else
+                changeStr(buffOut[k],Tbuff, "??",(char *)ReqNum);
+
+//2006-8-23-port_disable____END
+
+            while(changeStr(Tbuff,Tbuff, "??",(char *)ReqNum)==1);
+            while(changeStr(Tbuff,Tbuff, "?0?",(char *)ReqNum1)==1);
+            inDataLink(head_ptr, Tbuff);
+        }
+    }
+
+    sprintf(Tbuff, "////////////////////////////\n"); 
+    inDataLink(head_ptr, Tbuff);
+    return 1;
+}
+
+//  ----------------------------------------------------------------
+//
+//  Simple input ouput port generation
+//
+//  unsigned int mkSimpleInOutPort(char *fileName, 
+//                         struct codeLine *start_ptr, char *Name)
+
+//      [] fileName  :: reference base coding
+//      [] start_ptr :: Output link list
+//      [] Name      :: module mame
+
+//  ----------------------------------------------------------------
+
+unsigned int mkSimpleInOutPort(char *fileName, 
+                         struct codeLine *start_ptr, char *Name)
+{
+
+    char *buff;
+    FILE *Fp;
+    int  i;
+    buff = (char *)malloc(sizeof(char) *100);
+
+    //__________________________________________________________ Open
+    if ( (Fp = fopen(fileName, "r" )) == NULL ) {
+        printf ("\nError opening file [%s]\n",fileName);
+        free(buff);
+        return FILE_PROCESS_ERROR;
+    }
+
+    //__________________________________________________________ InOutPort
+    while(1)
+    {
+        fgets(buff, (sizeof(char)*100), Fp);
+        if(Name != NULL) changeStr(buff,buff, "?NAME?", Name);
+        inDataLink(start_ptr, buff);
+        if(strcmp(buff,");\n")==0) 
+            break;
+    }
+
+    //__________________________________________________________ Close
+    if(fclose(Fp) !=0){
+        printf("Error Close file[%s] \n",fileName);
+        free(buff);
+        return FILE_PROCESS_ERROR;
+    }
+
+
+    //__________________________________________________________ Def
+    for(i=0; MAX_PARAMETER > i; i++)
+    {
+        int temp;
+        temp = sprintf(buff, "%s %s;\n", PARA[i][0], PARA[i][1]);
+        if(temp == -1)
+        {
+            printf("Error sprintf process :: Buffer remove ");
+            free(buff);
+            return FILE_PROCESS_ERROR;
+        }
+        inDataLink(start_ptr, buff);
+    }
+
+    free(buff);
+    return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//
+//  Mux generation function
+//
+//  unsigned int mkMUX(FILE *InFp, struct codeLine *head_ptr, 
+//                   int endi, char *widTh,
+//                   int * Connect)
+//                         struct codeLine *start_ptr, char *Name)
+//
+//      [] InFp      :: reference base coding
+//      [] start_ptr :: Output link list
+//      [] endi      :: end repeat counter
+//      [] widTh     :: mux width(case)
+//      [] Connect   :: Connection infomation
+//
+//  ----------------------------------------------------------------
+
+unsigned int mkMUX(FILE *InFp, struct codeLine *head_ptr, 
+                   int endi, char *widTh,
+                   int * Connect)
+{
+    char *buff;
+    char *buffOut;
+    FILE *Fp;
+
+    buff    = (char *)malloc(sizeof(char) *120);
+    buffOut = (char *)malloc(sizeof(char) *120);
+
+    char *TYPE; 
+    char *SEL;
+    char *IN;
+    char *WID;
+    char *OUT; 
+    char *SEL2;
+
+    TYPE = (char *)malloc(sizeof(char) *120);
+    SEL  = (char *)malloc(sizeof(char) *120);
+    IN   = (char *)malloc(sizeof(char) *120);
+    WID  = (char *)malloc(sizeof(char) *120);
+    OUT  = (char *)malloc(sizeof(char) *120);
+    SEL2 = (char *)malloc(sizeof(char) *120);
+
+    while(strcmp(buff,"//Define_START\n") != 0)
+        fgets(buff, sizeof(char)*120, InFp);
+
+    // GET parameter
+    fgets(TYPE, sizeof(char)*120, InFp);
+    fgets(SEL , sizeof(char)*120, InFp);
+    fgets(IN  , sizeof(char)*120, InFp);
+    fgets(WID , sizeof(char)*120, InFp);
+    fgets(OUT , sizeof(char)*120, InFp);
+
+    rmNewLine(TYPE); rmNewLine(SEL); rmNewLine(IN); 
+    rmNewLine(WID); rmNewLine(OUT);
+
+    
+    int MUXTYPE;
+    char fileName[100];
+    if(strcmp(TYPE,"00")==0){
+        MUXTYPE =0;
+        strcpy(fileName,"./dataSample/MUX/MuxType00.v");
+    }else if(strcmp(TYPE,"01")==0){
+        MUXTYPE =1;
+        strcpy(fileName,"./dataSample/MUX/MuxType01.v");
+    }else if(strcmp(TYPE,"02")==0){
+        MUXTYPE =2;
+        strcpy(fileName,"./dataSample/MUX/MuxType02.v");
+        fgets(SEL2 , sizeof(char)*120, InFp);
+        rmNewLine(SEL2);
+    }
+
+
+    while(strcmp(buff,"//MUX_END\n") != 0)
+        fgets(buff, sizeof(char)*120, InFp);
+
+    //__________________________________________________________ Open
+    if ( (Fp = fopen(fileName, "r" )) == NULL ) {
+        printf ("\nError opening file [%s]\n",fileName);
+        free(buff);
+        free(buffOut);
+        free(TYPE);
+        free(SEL);
+        free(IN);
+        free(WID);
+        free(OUT);
+        free(SEL2);
+        return FILE_PROCESS_ERROR;
+    }
+
+    while(1)
+    {
+        fgets(buff, sizeof(char)*120, Fp);
+        if(strcmp(buff,"//CASE_START\n")==0) break;
+        changeStr(buff,buffOut, "?SEL?",(char *)SEL);
+        changeStr(buffOut,buffOut, "?IN?",(char *)IN);
+        changeStr(buffOut,buffOut, "?WID?",(char *)WID);
+        changeStr(buffOut,buffOut, "?SEL2?",(char *)SEL2);
+        inDataLink(head_ptr, buffOut);
+    }
+
+    //CASE_START_________________________________________________
+    char ReqNum[4];
+    char buffBe[30][120];
+    char Tbuff[120];
+    int  endcheck=0;
+    int  i,j,k,l;
+    int  endl = 0;
+
+    while(strcmp(buffBe[endcheck-1],"//END\n") != 0)
+    {
+        fgets(buffBe[endcheck++],  (sizeof(char)*100), Fp);    
+    }//while end
+
+
+    i = 0;
+    //for(i=0;endi>i;i++)
+    while(endi>i)
+    {
+        char ReqNum[4];
+
+        if(Connect != NULL)
+            while(1) {
+                if((Connect[i] == 1) && Connect != NULL) break;
+                else if((Connect[i] == 2) && Connect != NULL) break;
+                else i++; }
+        if(Connect != NULL)
+            if(Connect[i] == 2) break;
+
+        sprintf(ReqNum, "%d", i);
+        //if(Connect != NULL) 
+        //{
+                for(k=0;endcheck-1>k;k++)
+                {
+                //_____________________________k loop
+
+        if(changeStr(buffBe[k],buffOut,"?repeat?"," ")==1) {
+            //for(l=0;endi+1>l;l++)
+            l=0;
+            if(Connect == NULL)
+                endl = endi;
+            else
+                endl = endi+1;
+            while(endl>l) 
+            {
+                char Temp[4];
+                if(Connect != NULL)
+                while(1) 
+                {
+                    if((Connect[l] == 1) && Connect != NULL) break;
+                    else if((Connect[l] == 2) && Connect != NULL) break;
+                    else l++; 
+                }
+
+                if(Connect != NULL)
+                    if(Connect[l] == 2) break;
+
+                sprintf(Temp, "%d", l);
+                changeStr(buffOut,Tbuff,"?OUT?",OUT);
+                changeStr(Tbuff,Tbuff, "??",(char *)Temp);
+                if(l==i)
+                    changeStr(Tbuff,Tbuff, "?IN?",IN);
+                else
+                    changeStr(Tbuff,Tbuff, "?IN?","1'b0");
+
+                inDataLink(head_ptr, Tbuff);
+                l++;
+            }//forloop end
+        }//endif
+        else
+        {
+             char Temp[4];
+             changeStr(buffBe[k],Tbuff, "??",(char *)ReqNum);
+             while(changeStr(Tbuff,Tbuff, "??",(char *)ReqNum)==1);
+             changeStr(Tbuff,Tbuff, "?WID?",(char *)widTh);
+             changeStr(Tbuff,Tbuff, "?OUT?",(char *)OUT);
+             changeStr(Tbuff,Tbuff, "?IN?",(char *)IN);
+             inDataLink(head_ptr, Tbuff);
+        }//end else
+                //_____________________________k loop end
+                }//forloop k end
+            //}
+
+
+        i++;
+    }//forloop i end
+
+
+    mkBeforeStr(Fp, head_ptr, "//DEFAULT_START\n");
+
+    //default 
+    fgets(buff, sizeof(char)*120, Fp);
+    fgets(buffOut, sizeof(char)*120, Fp);
+
+    l=0;
+    if(Connect == NULL)
+        endl = endi;
+    else
+        endl = endi+1;
+    while(endl>l) {
+    //for(l=0;endi+1>l;l++){
+       char Temp[4];
+
+       if(Connect != NULL)
+       while(1) 
+       {
+           if((Connect[l] == 1) && Connect != NULL) break;
+           else if((Connect[l] == 2) && Connect != NULL) break;
+           else l++; 
+       }
+
+       if(Connect != NULL)
+           if(Connect[l] == 2) break;
+
+       sprintf(Temp, "%d", l);
+       changeStr(buff,Tbuff,"?OUT?",OUT);
+       changeStr(Tbuff,Tbuff, "??",(char *)Temp);
+       if(l==endi && Connect != NULL)
+           changeStr(Tbuff,Tbuff, "?IN?",IN);
+       else
+           changeStr(Tbuff,Tbuff, "?IN?","1'b0");
+
+       inDataLink(head_ptr, Tbuff);
+       l++;
+    }//forloop end
+
+    if(MUXTYPE==0){
+        mkBeforeStr(Fp, head_ptr, "//ELSE_START\n");
+        //else  
+        //mkBuffChange(Fp, head_ptr, endi+1, NULL, Connect);
+        mkBuffChangeSt2St(Fp, head_ptr, endi+1, NULL,  "?OUT?", 
+                      (char *)OUT, Connect);
+    }
+
+    mkBeforeStr(Fp, head_ptr, "//Code_End\n");
+
+    //__________________________________________________________ Close
+    if(fclose(Fp) !=0){
+        printf("Error Close file[%s] \n",fileName);
+        free(buff);
+        free(buffOut);
+        free(TYPE);
+        free(SEL);
+        free(IN);
+        free(WID);
+        free(OUT);
+        free(SEL2);
+        return FILE_PROCESS_ERROR;
+    }
+
+    free(buff);
+    free(buffOut);
+    free(TYPE);
+    free(SEL);
+    free(IN);
+    free(WID);
+    free(OUT);
+    free(SEL2);
+
+    return BUS_ERROR_NONE;
+} //mkMUX end
+
+//  ----------------------------------------------------------------
+//
+//  Arbiter generation function
+//
+//  unsigned int mkArbiter(FILE *InFp, 
+//                       struct codeLine *head_ptr, 
+//                       int endi,
+//                       DefMaster *VAL_MASTER,
+//                       char *slaveWid,
+//                       int *Connect,
+//                       int masterPriority[MAXMASTER],
+//                       int method)
+//
+//  ----------------------------------------------------------------
+// if Connect == NULL, it's for MasterInterface
+//  ----------------------------------------------------------------
+
+unsigned int mkArbiter(FILE *InFp, 
+                       struct codeLine *head_ptr, 
+                       int endi,
+                       DefMaster *VAL_MASTER,
+                       char *slaveWid,
+                       int *Connect,
+                       int masterPriority[MAXMASTER],
+                       int method)
+{
+    char *buff;
+    char *buffOut;
+    char *fileName;
+    FILE *Fp;
+    int i,j;
+
+    buff    = (char *)malloc(sizeof(char) *120);
+    buffOut = (char *)malloc(sizeof(char) *120);
+    fileName = (char *)malloc(sizeof(char) *120);
+
+    char *TYPE;
+    char *CLK; 
+    char *RESTn;
+    char *SEL;
+    char *IN;
+    char *IN1;
+    char ReqNum[4];
+
+    TYPE  = (char *)malloc(sizeof(char) *120);
+    CLK   = (char *)malloc(sizeof(char) *120);
+    RESTn = (char *)malloc(sizeof(char) *120);
+    SEL   = (char *)malloc(sizeof(char) *120);
+    IN    = (char *)malloc(sizeof(char) *120);
+    IN1   = (char *)malloc(sizeof(char) *120);
+
+    while(strcmp(buff,"//Define_START\n") != 0)
+        fgets(buff, sizeof(char)*120, InFp);
+
+    // Get parameter
+    fgets(TYPE , sizeof(char)*120, InFp);
+    fgets(CLK  , sizeof(char)*120, InFp);
+    fgets(RESTn, sizeof(char)*120, InFp);
+    fgets(SEL  , sizeof(char)*120, InFp);
+    fgets(IN   , sizeof(char)*120, InFp);
+    fgets(IN1  , sizeof(char)*120, InFp);
+
+    rmNewLine(CLK); rmNewLine(SEL); rmNewLine(IN); rmNewLine(RESTn); 
+    rmNewLine(TYPE); rmNewLine(IN1);
+
+    if(strcmp(TYPE,"00") == 0) {
+        strcpy(fileName,"./dataSample/Arbiter/Arbiter00.v");
+    } else { 
+        if(method == NORMAL) {
+            strcpy(fileName,"./dataSample/Arbiter/Arbiter01.v");
+        } else {
+            strcpy(fileName,"./dataSample/Arbiter/Arbiter01_adv.v");
+        }
+    }
+
+    while(strcmp(buff,"//ARBITER_GEN_END\n") != 0)
+        fgets(buff, sizeof(char)*120, InFp);
+
+    //__________________________________________________________ Open
+    if ( (Fp = fopen(fileName, "r" )) == NULL ) {
+        printf ("\nError opening file [%s]\n",fileName);
+        free(buff);
+        free(buffOut);
+        free(CLK);
+        free(RESTn);
+        free(SEL);
+        free(IN);
+        free(IN1);
+        return FILE_PROCESS_ERROR;
+    }
+
+    ////////////////////////////////////////////////////////////
+    while(1)
+    {
+        fgets(buff, sizeof(char)*120, Fp);
+        if(strcmp(buff,"//CASE_START\n")==0) break;
+        changeStr(buff,buffOut, "?SEL?",(char *)SEL);
+        changeStr(buffOut,buffOut, "?IN?",(char *)IN);
+        inDataLink(head_ptr, buffOut);
+    }
+
+
+    // Case Start process 
+    ////////////////////////////////////////////////////////////
+    
+    fgets(buff, sizeof(char)*120, Fp);
+
+    int loopEnd;
+
+    if(Connect == NULL)
+        loopEnd = endi;
+    else
+        loopEnd = endi + 1;
+
+    for(i=0;loopEnd>i;i++)
+    {
+
+        if(Connect != NULL)
+        while(1) {
+            if((Connect[i] == 1) && Connect != NULL) break;
+            else if(Connect[i] == 2) break;
+            else i++; }
+
+
+        if(Connect != NULL)
+            if(Connect[i] == 2) break;
+
+
+        sprintf(ReqNum, "%d", i);
+        changeStr(buff,buffOut, "?SEL?",(char *)SEL);
+        changeStr(buffOut,buffOut, "?IN?",(char *)IN);
+        changeStr(buffOut,buffOut, "?WID?",(char *)slaveWid);
+        while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+        inDataLink(head_ptr, buffOut);
+    }
+
+    fgets(buff, sizeof(char)*120, Fp);
+
+    if(method != NORMAL) {
+
+        mkBeforeStr(Fp, head_ptr, "//CASE_START\n");
+        fgets(buff, sizeof(char)*120, Fp);
+
+        for(i=0;loopEnd>i;i++)
+        {
+        
+            if(Connect != NULL)
+            while(1) {
+                if((Connect[i] == 1) && Connect != NULL) break;
+                else if(Connect[i] == 2) break;
+                else i++; }
+        
+        
+            if(Connect != NULL)
+                if(Connect[i] == 2) break;
+        
+            sprintf(ReqNum, "%d", i);
+            changeStr(buff,buffOut, "?SEL?",(char *)SEL);
+            changeStr(buffOut,buffOut, "?IN1?",(char *)IN1);
+            changeStr(buffOut,buffOut, "?WID?",(char *)slaveWid);
+            while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+            inDataLink(head_ptr, buffOut);
+        }
+
+        fgets(buff, sizeof(char)*120, Fp);
+    }
+
+    while(1)
+    {
+        fgets(buff, sizeof(char)*120, Fp);
+        if(strcmp(buff,"//IF_START\n")==0) break;
+        changeStr(buff,buffOut, "?SEL?",(char *)SEL);
+        changeStr(buffOut,buffOut, "?IN?",(char *)IN);
+        changeStr(buffOut,buffOut, "?CLK?",(char *)CLK);
+        changeStr(buffOut,buffOut, "?REST?",(char *)RESTn);
+        inDataLink(head_ptr, buffOut);
+    }
+
+    // IF Start process 
+    ////////////////////////////////////////////////////////////
+    int checkFirst = 0;
+    fgets(buff, sizeof(char)*120, Fp);
+
+    if(strcmp(TYPE,"02") == 0) {
+
+        for(i=0;endi>i;i++)
+        {
+            if(Connect != NULL)
+                while(1) {
+                    if((Connect[i] == 1) && Connect != NULL) break;
+                    else i++; }
+        
+            if(Connect != NULL)
+                if(endi <= i) break;
+        
+            sprintf(ReqNum, "%d", i);
+        
+            changeStr(buff,buffOut, "?SEL?",(char *)SEL);
+            changeStr(buffOut,buffOut, "?IN?",(char *)IN);
+            changeStr(buffOut,buffOut, "?REST?",(char *)RESTn);
+            changeStr(buffOut,buffOut, "?WID?",(char *)slaveWid);
+        
+            if(strcmp(TYPE,"02") == 0)
+            {
+                sprintf(ReqNum, "%d", masterPriority[i]);
+                while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+                sprintf(ReqNum, "%d", i);
+            }
+            else
+                while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+            if(checkFirst == 0){
+                        changeStr(buffOut,buffOut, "?else?"," ");
+                        checkFirst = 1;
+            } else
+                        changeStr(buffOut,buffOut, "?else?","  else");
+        
+            inDataLink(head_ptr, buffOut);
+            //}//forloop j
+        }//forloop i
+
+    } else {
+
+        for(i=0;endi>=i;i++)
+        {
+            if(Connect != NULL)
+                while(1) {
+                    if((Connect[i] == 1) && Connect != NULL) break;
+                    else i++; }
+        
+            //if(Connect != NULL) if(endi <= i) break;
+        
+            sprintf(ReqNum, "%d", i);
+        
+            changeStr(buff,buffOut, "?SEL?",(char *)SEL);
+            changeStr(buffOut,buffOut, "?IN?",(char *)IN);
+            changeStr(buffOut,buffOut, "?REST?",(char *)RESTn);
+            changeStr(buffOut,buffOut, "?WID?",(char *)slaveWid);
+        
+            while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+
+            if(checkFirst == 0){
+                        changeStr(buffOut,buffOut, "?else?"," ");
+                        checkFirst = 1;
+            } else
+                        changeStr(buffOut,buffOut, "?else?","  else");
+        
+            inDataLink(head_ptr, buffOut);
+            //}//forloop j
+        }//forloop i
+
+    }
+
+
+
+
+
+    fgets(buff, sizeof(char)*120, Fp);
+
+    if(Connect != NULL) {
+    //defalut slave
+    sprintf(ReqNum, "%d", endi);
+    changeStr(buff,buffOut, "?SEL?",(char *)SEL);
+    changeStr(buffOut,buffOut, "?IN?",(char *)IN);
+    changeStr(buffOut,buffOut, "?REST?",(char *)RESTn);
+    changeStr(buffOut,buffOut, "?WID?",(char *)slaveWid);
+    while(changeStr(buffOut,buffOut, "??",(char *)ReqNum)==1);
+    changeStr(buffOut,buffOut, "?else?","  else");
+    inDataLink(head_ptr, buffOut); }
+
+    while(1)
+    {
+        fgets(buff, sizeof(char)*120, Fp);
+        if(strcmp(buff,"//Code_End\n")==0) break;
+        changeStr(buff,buffOut, "?SEL?",(char *)SEL);
+        inDataLink(head_ptr, buffOut); 
+    }
+
+    // Code_End process 
+    ////////////////////////////////////////////////////////////
+    //mkBeforeStr(Fp, head_ptr, "//Code_End\n");
+
+    //__________________________________________________________ Close
+    if(fclose(Fp) !=0){
+        printf("Error Close file[%s] \n",fileName);
+        free(buff);
+        free(buffOut);
+        free(CLK);
+        free(RESTn);
+        free(SEL);
+        free(IN);
+        free(IN1);
+        return FILE_PROCESS_ERROR;
+    }
+
+    free(buff);
+    free(buffOut);
+    free(CLK);
+    free(RESTn);
+    free(SEL);
+    free(IN);
+    free(IN1);
+
+    return BUS_ERROR_NONE;
+} //end mkArbiter
+
+void rmNewLine(char *SEL)
+{
+    int pi = 0;
+    while(1)
+    {
+        if(SEL[pi]=='\n') 
+        {
+            SEL[pi] = '\0'; 
+            break;
+        }
+        pi++;
+    }
+}
+
+/*
+ * SlaveMaster == 0     Slave Write channel
+ * SlaveMaster == 1     Master Write channel
+ * SlaveMaster == 100   Slave Read channel
+ * SlaveMaster == 101   Master Read channel
+ */
+unsigned int mkBuffChangeWire(FILE *Fp, struct codeLine *head_ptr, 
+                          int endk,
+                          int endi, 
+                          char *FINDSTR,
+                          int SlaveMaster)
+{
+    char *buff;
+    char *buffOut;
+    char STATE3Buff[50][120];
+    int i,j,k,endj;
+    endj = 0;
+
+    buff = (char *)malloc(sizeof(char) *120);
+    buffOut = (char *)malloc(sizeof(char) *120);
+
+    //Buff
+    if(FINDSTR == NULL)
+    {
+        fgets(buff, (sizeof(char)*100), Fp);
+        fgets(buffOut, (sizeof(char)*100), Fp);
+    }
+    else 
+    {
+        while(1)
+        {
+            fgets(STATE3Buff[endj], (sizeof(char)*100), Fp);
+            if(strcmp(STATE3Buff[endj],FINDSTR)==0) break;
+            endj++;
+        }
+    }
+
+    int *Connect;
+
+    Connect = (int *)malloc(sizeof(int) * (MAXMASTER+10));
+
+char ReqNum0[4];
+int  temp;
+char ReqNum[4];
+
+k = 0;
+for(k=0;endk>k;k++)
+{
+    //Add-2006-9-5-Channel disable 
+    if(SlaveMaster == 1)
+    while(1)
+    {
+        if(ValMASTER[k].WriteChPort.ChannelEnable == ENABLE) break;
+        else k++;
+
+        if(k == endk) break;
+    }
+
+    /*
+if(k==12)
+    printf("---------DEBUG5-2-1[%d]/endk %d::%d\n",k,endk,SlaveMaster);
+    */
+
+    //Add-2006-9-6-Channel disable 
+    if(SlaveMaster == 101)
+    while(1)
+    {
+        if(ValMASTER[k].ReadChPort.ChannelEnable == ENABLE) break;
+        else k++;
+
+        if(k == endk) break;
+    }
+
+    if(k==endk) break;
+    ////////////////////////////// 
+
+    sprintf(ReqNum0, "%d", k);
+
+    //////////////////////////////
+    //  -> Write channel
+    //SlaveMaster == 1 :: master
+    //SlaveMaster == 0 :: slave
+    //////////////////////////////
+    //  -> Read channel
+    //SlaveMaster == 101 :: master
+    //SlaveMaster == 100 :: slave
+    //////////////////////////////
+
+    if(SlaveMaster == 1 || SlaveMaster == 101)
+    {
+        /* MASTER */
+        getConnectSlave(&ValMASTER[k], Connect);
+    }
+    else
+    {
+        /* SLAVE */
+        if(SlaveMaster == 0)
+            getConnectMaster(&ValSLAVE[k], Connect, 0); //WriteCh
+        else
+            getConnectMaster(&ValSLAVE[k], Connect, 1); //ReadCh
+    }
+
+
+    i = 0;
+    //for(i=0; endi > i; i++)
+    while(endi>i)
+    {
+        if(Connect != NULL)
+            while(1) {
+                if((Connect[i] == 1) && Connect != NULL) break;
+                else if(i == endi) break;
+                else i++; }
+        
+        if(Connect != NULL)
+            if(i >= endi) break;
+   
+        temp = sprintf(ReqNum, "%d", i);
+        if(temp == -1)
+        {
+            free(buff); free(buffOut); 
+            printf("Error sprintf process :: mkBuffChange function");
+            return FILE_PROCESS_ERROR;
+        }
+
+        if(endj !=0) {
+            for(j=0; endj >j; j++)
+            {
+                    if(changeStr(STATE3Buff[j],buffOut, "?1?",
+                                (char *)ReqNum)==0){
+                        changeStr(STATE3Buff[j],buffOut, "?3?",(char *)ReqNum0);
+                        inDataLink(head_ptr, buffOut);
+                        //inDataLink(head_ptr, STATE3Buff[j]);
+                    } else {
+                        while(changeStr(buffOut,buffOut, "?1?",(char *)ReqNum)==1);
+                        while(changeStr(buffOut,buffOut, "?0?",(char *)ReqNum0)==1);
+                        inDataLink(head_ptr, buffOut);
+                    }
+            }
+        } else {
+            changeStr(buff,buffOut, "?1?",(char *)ReqNum);
+            while(changeStr(buffOut,buffOut, "?1?",(char *)ReqNum)==1);
+            while(changeStr(buffOut,buffOut, "?0?",(char *)ReqNum0)==1);
+            inDataLink(head_ptr, buffOut);
+        }
+        i++;
+    }//forloop i
+
+
+}//forloop k
+
+    free(Connect);
+    free(buff); free(buffOut); 
+    return BUS_ERROR_NONE;
+}
+
+
+
+
+
+/*
+ *   mode == 0  None slice
+ *   mode == 1  Full slice
+ *   mode == 2  Foward slice
+ */
+unsigned int mkRegSlice(
+                        char *OutFileName,
+                        char *name, 
+                        char *sel, 
+                        int wid, 
+                        int mode)
+{
+    FILE *Fp;
+    char ReqNum0[4];
+    char *fileName;
+    char *buff;
+    struct codeLine *head_ptr = NULL;
+
+    buff = (char *)malloc(sizeof(char) *120);
+    fileName = (char *)malloc(sizeof(char) *220);
+
+    head_ptr = malloc(sizeof(struct codeLine));
+    head_ptr->code = (char *)malloc(sizeof(char) * 120);
+    head_ptr->next_ptr = NULL;
+    strcpy(head_ptr->code,"//START\n");
+
+    sprintf(ReqNum0, "%d", wid);
+    
+    if(mode == 0)
+        strcpy(fileName,"./dataSample/RegisterSlice/slicertl/none.v");
+    else if(mode == 1)
+        strcpy(fileName,"./dataSample/RegisterSlice/slicertl/fully_registered.v");
+    else if(mode == 2)
+        strcpy(fileName,"./dataSample/RegisterSlice/slicertl/registered_forward.v");
+
+
+    //__________________________________________________________ Open
+    if ( (Fp = fopen(fileName, "r" )) == NULL ) {
+        free(buff);
+        free(fileName);
+        printf ("\nError opening file [%s]\n",fileName);
+        return FILE_PROCESS_ERROR;
+    }
+
+    while(1)
+    {
+        fgets(buff,  (sizeof(char)*120), Fp);    
+        if(strcmp(buff,"//Code_END\n") == 0) break;
+        while(changeStr(buff,buff, "?NAME?",name)==1);
+        while(changeStr(buff,buff, "?SEL?",sel)==1);
+        while(changeStr(buff,buff, "?WID?",ReqNum0)==1);
+        inDataLink(head_ptr, buff);
+    }
+
+    //__________________________________________________________ Close
+    if(fclose(Fp) !=0){
+        printf("Error Close file[%s] \n",fileName);
+        free(buff);
+        free(fileName);
+        return FILE_PROCESS_ERROR;
+    }
+    fprintLink(head_ptr, NULL,  OutFileName);
+
+    free(buff);
+    free(fileName);
+
+    return BUS_ERROR_NONE;
+}
+
+
+/*
+ * SlaveMaster = 0 -> slave
+ * SlaveMaster = 1 -> master
+ */
+unsigned int mkWriteRS(
+                DefMaster *VAL_MASTER,
+                DefSlave  *VAL_SLAVE,
+                struct codeLine *head_ptr,
+                int SlaveMaster)
+{
+
+    int AWSI_WID;
+    int WDSI_WID;
+    int WRSI_WID;
+
+    int AWMImi2s_WID;
+    int WDMImi2s_WID;
+    int WRMImi2s_WID;
+    int AWMIsi2mi_WID;
+    int WDMIsi2mi_WID;
+    int WRMIsi2mi_WID;
+
+    char *inOutFileName;
+
+    inOutFileName = (char *)malloc(sizeof(char) * 300);
+
+
+    if(SlaveMaster == 1)
+    {
+        AWSI_WID = VAL_MASTER->writeidwid + ValMAIN.AddrWidth + 4 /* AWLEN */
+                 + 3 /* AWSIZE */ + 2 /* AWBURST */; 
+
+        WDSI_WID = VAL_MASTER->writeidwid + ValMAIN.BusWidth + 1; /* WLAST */
+
+        WRSI_WID = VAL_MASTER->writeidwid + 2; /* BRESP_WID */
+
+        if(VAL_MASTER->WriteChPort.LockEnable == ENABLE)
+            AWSI_WID = AWSI_WID + 2;
+
+        if(VAL_MASTER->WriteChPort.CacheEnable == ENABLE)
+            AWSI_WID = AWSI_WID + 4;
+
+        if(VAL_MASTER->WriteChPort.ProtectEnable == ENABLE)
+            AWSI_WID = AWSI_WID + 3;
+
+        if(VAL_MASTER->WriteChPort.WstrbEnable == ENABLE)
+            WDSI_WID = WDSI_WID + (ValMAIN.BusWidth/8);
+
+
+        //none resgister slice
+        if(VAL_MASTER->modeMtoSi != 0)
+        {
+
+            /* AWSIm2si register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_MASTER->name,"AWSIm2si");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_MASTER->name, "AWSIm2si",
+                        (int) AWSI_WID, 
+                        (int) VAL_MASTER->modeMtoSi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_MASTER->name,"AWSIm2si");
+            inDataLink(head_ptr, inOutFileName);
+
+            /* WDSIm2si register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_MASTER->name,"WDSIm2si");
+        
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_MASTER->name, "WDSIm2si",
+                        (int) WDSI_WID, 
+                        (int) VAL_MASTER->modeMtoSi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_MASTER->name,"WDSIm2si");
+            inDataLink(head_ptr, inOutFileName);
+
+
+
+            /* WRSIm2si register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_MASTER->name,"WRSIm2si");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_MASTER->name, "WRSIm2si",
+                        (int) WRSI_WID, 
+                        (int) VAL_MASTER->modeMtoSi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_MASTER->name,"WRSIm2si");
+            inDataLink(head_ptr, inOutFileName);
+
+        }
+
+        if (VAL_MASTER->modeSitoMi != 0)
+        {
+
+            /* AWSIm2si register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_MASTER->name,"AWSIsi2mi");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_MASTER->name, "AWSIsi2mi",
+                        (int) AWSI_WID, 
+                        (int) VAL_MASTER->modeSitoMi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_MASTER->name,"AWSIsi2mi");
+            inDataLink(head_ptr, inOutFileName);
+
+
+            /* WDSIm2si register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_MASTER->name,"WDSIsi2mi");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_MASTER->name, "WDSIsi2mi",
+                        (int) WDSI_WID, 
+                        (int) VAL_MASTER->modeSitoMi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_MASTER->name,"WDSIsi2mi");
+            inDataLink(head_ptr, inOutFileName);
+
+            /* WRSIm2si register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_MASTER->name,"WRSIsi2mi");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_MASTER->name, "WRSIsi2mi",
+                        (int) WRSI_WID, 
+                        (int) VAL_MASTER->modeSitoMi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_MASTER->name,"WRSIsi2mi");
+            inDataLink(head_ptr, inOutFileName);
+
+        }
+
+    }
+    else
+    {
+
+        AWMImi2s_WID = VAL_SLAVE->writeidwid + 
+                   ValMAIN.AddrWidth + 4 /* AWLEN */
+                   + 3 /* AWSIZE */ + 2 /* AWBURST */; 
+        WDMImi2s_WID = VAL_SLAVE->writeidwid + 
+                   ValMAIN.BusWidth + 1; /* WLAST */
+        WRMImi2s_WID = VAL_SLAVE->writeidwid + 2; /* BRESP_WID */
+
+
+    //2006-9-8-ID-WIDTH-FIXED
+    ///////////////////////////////////////////////////////////
+        AWMIsi2mi_WID = (VAL_SLAVE->writeidwid-VAL_SLAVE->SelWriteWid) + 
+                   ValMAIN.AddrWidth + 4 /* AWLEN */
+                   + 3 /* AWSIZE */ + 2 /* AWBURST */; 
+        WDMIsi2mi_WID = (VAL_SLAVE->writeidwid-VAL_SLAVE->SelWriteWid) + 
+                   ValMAIN.BusWidth + 1; /* WLAST */
+        WRMIsi2mi_WID = (VAL_SLAVE->writeidwid-VAL_SLAVE->SelWriteWid) + 2; /* BRESP_WID */
+
+    ///////////////////////////////////////////////////////////
+
+
+        if(VAL_SLAVE->WriteChPort.LockEnable == ENABLE)
+        {
+            AWMImi2s_WID = AWMImi2s_WID + 2;
+            AWMIsi2mi_WID = AWMIsi2mi_WID + 2;
+        }
+
+        if(VAL_SLAVE->WriteChPort.CacheEnable == ENABLE)
+        {
+            AWMImi2s_WID = AWMImi2s_WID + 4;
+            AWMIsi2mi_WID = AWMIsi2mi_WID + 4;
+        }
+
+        if(VAL_SLAVE->WriteChPort.ProtectEnable == ENABLE)
+        {
+            AWMImi2s_WID = AWMImi2s_WID + 3;
+            AWMIsi2mi_WID = AWMIsi2mi_WID + 3;
+        }
+    
+        if(VAL_SLAVE->WriteChPort.WstrbEnable == ENABLE)
+        {
+            WDMImi2s_WID = WDMImi2s_WID + (ValMAIN.BusWidth/8);
+            WDMIsi2mi_WID = WDMIsi2mi_WID + (ValMAIN.BusWidth/8);
+        }
+
+        //none resgister slice
+        if(VAL_SLAVE->modeStoMi != 0)
+        {
+            /* AWMImi2s register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_SLAVE->name,"AWMImi2s");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_SLAVE->name, "AWMImi2s",
+                        (int) AWMImi2s_WID, 
+                        (int) VAL_SLAVE->modeStoMi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_SLAVE->name,"AWMImi2s");
+            inDataLink(head_ptr, inOutFileName);
+
+            /* WDMImi2s register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_SLAVE->name,"WDMImi2s");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_SLAVE->name, "WDMImi2s",
+                    (int) WDMImi2s_WID, 
+                    (int) VAL_SLAVE->modeStoMi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_SLAVE->name,"WDMImi2s");
+            inDataLink(head_ptr, inOutFileName);
+
+
+
+            /* WRMImi2s register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_SLAVE->name,"WRMImi2s");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_SLAVE->name, "WRMImi2s",
+                    (int) WRMImi2s_WID, 
+                    (int) VAL_SLAVE->modeStoMi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_SLAVE->name,"WRMImi2s");
+            inDataLink(head_ptr, inOutFileName);
+
+
+        }
+
+        if (VAL_SLAVE->modeMitoSi != 0)
+        {
+
+            /* AWMIsi2mi register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_SLAVE->name,"AWMIsi2mi");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_SLAVE->name, "AWMIsi2mi",
+                    (int) AWMIsi2mi_WID, 
+                    (int) VAL_SLAVE->modeMitoSi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_SLAVE->name,"AWMIsi2mi");
+            inDataLink(head_ptr, inOutFileName);
+
+
+            /* WDMIsi2mi register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_SLAVE->name,"WDMIsi2mi");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_SLAVE->name, "WDMIsi2mi",
+                    (int) WDMIsi2mi_WID, 
+                    (int) VAL_SLAVE->modeMitoSi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_SLAVE->name,"WDMIsi2mi");
+            inDataLink(head_ptr, inOutFileName);
+
+
+            /* WRMIsi2mi register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_SLAVE->name,"WRMIsi2mi");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_SLAVE->name, "WRMIsi2mi",
+                    (int) WRMIsi2mi_WID, 
+                    (int) VAL_SLAVE->modeMitoSi);
+
+            sprintf(inOutFileName, "../rtl/BUS/WriteChannel/RegisterSlice/%s_%s_registered.v\n",VAL_SLAVE->name,"WRMIsi2mi");
+            inDataLink(head_ptr, inOutFileName);
+        }
+
+    }
+    free(inOutFileName);
+    return BUS_ERROR_NONE;
+}
+
+
+/*
+ * SlaveMaster = 0 -> slave
+ * SlaveMaster = 1 -> master
+ */
+unsigned int mkReadRS(
+                DefMaster *VAL_MASTER,
+                DefSlave *VAL_SLAVE,
+                struct codeLine *head_ptr,
+                int SlaveMaster)
+{
+
+    int ARSI_WID;
+    int RDSI_WID;
+
+    int ARMImi2s_WID;
+    int RDMImi2s_WID;
+    int ARMIsi2mi_WID;
+    int RDMIsi2mi_WID;
+
+    char *inOutFileName;
+
+    inOutFileName = (char *)malloc(sizeof(char) * 300);
+
+    if(SlaveMaster == 1)
+    {
+
+        ARSI_WID = VAL_MASTER->readidwid + ValMAIN.AddrWidth + 4 /* AWLEN */
+               + 3 /* AWSIZE */ + 2 /* AWBURST */; 
+        RDSI_WID = VAL_MASTER->readidwid + ValMAIN.BusWidth + 1 /* WLAST */
+               + 2 /* RRESP */;
+
+        if(VAL_MASTER->ReadChPort.LockEnable == ENABLE)
+            ARSI_WID = ARSI_WID + 2;
+        if(VAL_MASTER->ReadChPort.CacheEnable == ENABLE)
+            ARSI_WID = ARSI_WID + 4;
+        if(VAL_MASTER->ReadChPort.ProtectEnable == ENABLE)
+            ARSI_WID = ARSI_WID + 3;
+
+        //none resgister slice
+        if(VAL_MASTER->modeMtoSi != 0)
+        {
+
+            /* ARSIm2si register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_MASTER->name,"ARSIm2si");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_MASTER->name, "ARSIm2si",
+                        (int) ARSI_WID, 
+                        (int) VAL_MASTER->modeMtoSi);
+
+            sprintf(inOutFileName, "../rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v\n",VAL_MASTER->name,"ARSIm2si");
+            inDataLink(head_ptr, inOutFileName);
+
+            /* RDSIm2si register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_MASTER->name,"RDSIm2si");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_MASTER->name, "RDSIm2si",
+                        (int) RDSI_WID, 
+                        (int) VAL_MASTER->modeMtoSi);
+
+            sprintf(inOutFileName, "../rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v\n",VAL_MASTER->name,"RDSIm2si");
+            inDataLink(head_ptr, inOutFileName);
+
+        }
+
+        if (VAL_MASTER->modeSitoMi != 0)
+        {
+
+            /* ARSIsi2mi register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_MASTER->name,"ARSIsi2mi");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_MASTER->name, "ARSIsi2mi",
+                        (int) ARSI_WID, 
+                        (int) VAL_MASTER->modeSitoMi);
+
+            sprintf(inOutFileName, "../rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v\n",VAL_MASTER->name,"ARSIsi2mi");
+            inDataLink(head_ptr, inOutFileName);
+
+
+            /* RDSIm2si register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_MASTER->name,"RDSIsi2mi");
+    
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_MASTER->name, "RDSIsi2mi",
+                    (int) RDSI_WID, 
+                    (int) VAL_MASTER->modeSitoMi);
+
+            sprintf(inOutFileName, "../rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v\n",VAL_MASTER->name,"RDSIsi2mi");
+            inDataLink(head_ptr, inOutFileName);
+        }
+
+    } else {
+
+        ARMImi2s_WID = VAL_SLAVE->readidwid + ValMAIN.AddrWidth + 4 /* AWLEN */
+               + 3 /* AWSIZE */ + 2 /* AWBURST */; 
+        RDMImi2s_WID = VAL_SLAVE->readidwid + ValMAIN.BusWidth + 1 /* WLAST */
+               + 2 /* RRESP */;
+
+    //2006-9-8-ID-WIDTH-FIXED
+    ///////////////////////////////////////////////////////////
+        ARMIsi2mi_WID = (VAL_SLAVE->readidwid-VAL_SLAVE->SelReadWid)
+               + ValMAIN.AddrWidth + 4 /* AWLEN */
+               + 3 /* AWSIZE */ + 2 /* AWBURST */; 
+        RDMIsi2mi_WID = (VAL_SLAVE->readidwid-VAL_SLAVE->SelReadWid)
+               + ValMAIN.BusWidth + 1 /* WLAST */
+               + 2 /* RRESP */;
+    ///////////////////////////////////////////////////////////
+
+        if(VAL_SLAVE->ReadChPort.LockEnable == ENABLE)
+        {
+            ARMImi2s_WID  = ARMImi2s_WID  + 2;
+            ARMIsi2mi_WID = ARMIsi2mi_WID + 2;
+        }
+        if(VAL_SLAVE->ReadChPort.CacheEnable == ENABLE)
+        {
+            ARMImi2s_WID  = ARMImi2s_WID  + 4;
+            ARMIsi2mi_WID = ARMIsi2mi_WID + 4;
+        }
+        if(VAL_SLAVE->ReadChPort.ProtectEnable == ENABLE)
+        {
+            ARMImi2s_WID  = ARMImi2s_WID  + 3;
+            ARMIsi2mi_WID = ARMIsi2mi_WID + 3;
+        }
+
+        //none resgister slice
+        if(VAL_SLAVE->modeStoMi != 0)
+        {
+            /* ARMImi2s register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_SLAVE->name,"ARMImi2s");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_SLAVE->name, "ARMImi2s",
+                    (int) ARMImi2s_WID, 
+                    (int) VAL_SLAVE->modeStoMi);
+
+            sprintf(inOutFileName, "../rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v\n",VAL_SLAVE->name,"ARMImi2s");
+            inDataLink(head_ptr, inOutFileName);
+
+            /* RDMImi2s register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_SLAVE->name,"RDMImi2s");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_SLAVE->name, "RDMImi2s",
+                    (int) RDMImi2s_WID, 
+                    (int) VAL_SLAVE->modeStoMi);
+
+            sprintf(inOutFileName, "../rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v\n",VAL_SLAVE->name,"RDMImi2s");
+            inDataLink(head_ptr, inOutFileName);
+
+        }
+
+        if (VAL_SLAVE->modeMitoSi != 0)
+        {
+            /* ARMIsi2mi_WID register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_SLAVE->name,"ARMIsi2mi");
+
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_SLAVE->name, "ARMIsi2mi",
+                    (int) ARMIsi2mi_WID, 
+                    (int) VAL_SLAVE->modeMitoSi);
+
+            sprintf(inOutFileName, "../rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v\n",VAL_SLAVE->name,"ARMIsi2mi");
+            inDataLink(head_ptr, inOutFileName);
+
+            /* RDMIsi2mi register slice generation */
+            sprintf(inOutFileName, "../%s/rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v",
+                                    ValMAIN.name, VAL_SLAVE->name,"RDMIsi2mi");
+    
+            mkRegSlice( inOutFileName,
+                    (char *)VAL_SLAVE->name, "RDMIsi2mi",
+                    (int) RDMIsi2mi_WID, 
+                    (int) VAL_SLAVE->modeMitoSi);
+
+            sprintf(inOutFileName, "../rtl/BUS/ReadChannel/RegisterSlice/%s_%s_registered.v\n",VAL_SLAVE->name,"RDMIsi2mi");
+            inDataLink(head_ptr, inOutFileName);
+
+        }
+    }
+
+    free(inOutFileName);
+    return BUS_ERROR_NONE;
+}
+
+
+
+/*
+ * ReadWrite = 00 -> single Write mode
+ * ReadWrite = 01 -> single Read mode
+ * ReadWrite = 10 -> dual Write mode
+ * ReadWrite = 11 -> dual Read mode
+ */
+unsigned int mkRsModule(FILE *Fp, struct codeLine *head_ptr,
+                        DefMaster *VAL_MASTER,
+                        DefSlave  *VAL_SLAVE,
+                        int ReadWrite)
+{
+    char buffOut[100][120];
+    char buff[120];
+    int  Connect[MAXSLAVE];
+
+    int LockEnable, CacheEnable, ProtectEnable, WstrbEnable;
+    int i,j,k, endi,endj,endk;
+
+    endi =0; endj=0; i=0; j=0;
+
+    if((VAL_SLAVE == NULL) && (ReadWrite == 0))
+    {
+        LockEnable = VAL_MASTER->WriteChPort.LockEnable;
+        CacheEnable = VAL_MASTER->WriteChPort.CacheEnable;
+        ProtectEnable = VAL_MASTER->WriteChPort.ProtectEnable;
+        WstrbEnable = VAL_MASTER->WriteChPort.WstrbEnable;
+
+        //none register slice
+        if(VAL_MASTER->modeMtoSi == 0)
+            endj = 0;
+        else
+            endj = VAL_MASTER->RegisterSliceMtoSi;
+
+        endk = 1; Connect[0] = 1;
+    }
+    else if (VAL_SLAVE == NULL && ReadWrite == 1)
+    {
+        LockEnable = VAL_MASTER->ReadChPort.LockEnable;
+        CacheEnable = VAL_MASTER->ReadChPort.CacheEnable;
+        ProtectEnable = VAL_MASTER->ReadChPort.ProtectEnable;
+        WstrbEnable = VAL_MASTER->ReadChPort.WstrbEnable;
+
+        if(VAL_MASTER->modeMtoSi == 0)
+            endj = 0;
+        else
+            endj = VAL_MASTER->RegisterSliceMtoSi;
+
+        endk = 1; Connect[0] = 1;
+    }
+    else if((VAL_SLAVE == NULL) && (ReadWrite == 10))
+    {
+        LockEnable = VAL_MASTER->WriteChPort.LockEnable;
+        CacheEnable = VAL_MASTER->WriteChPort.CacheEnable;
+        ProtectEnable = VAL_MASTER->WriteChPort.ProtectEnable;
+        WstrbEnable = VAL_MASTER->WriteChPort.WstrbEnable;
+
+        if(VAL_MASTER->modeSitoMi == 0)
+            endj = 0;
+        else
+            endj = VAL_MASTER->RegisterSliceSitoMi;
+
+        endk = (int)ValMAIN.SlaveNumber + 1;
+        getConnectSlave(VAL_MASTER, Connect);
+    }
+    else if (VAL_SLAVE == NULL && ReadWrite == 11)
+    {
+        LockEnable = VAL_MASTER->ReadChPort.LockEnable;
+        CacheEnable = VAL_MASTER->ReadChPort.CacheEnable;
+        ProtectEnable = VAL_MASTER->ReadChPort.ProtectEnable;
+        WstrbEnable = VAL_MASTER->ReadChPort.WstrbEnable;
+
+        if(VAL_MASTER->modeSitoMi == 0)
+            endj = 0;
+        else
+            endj = VAL_MASTER->RegisterSliceSitoMi;
+
+        endk = (int)ValMAIN.SlaveNumber + 1;
+        getConnectSlave(VAL_MASTER, Connect);
+    }
+
+    else if(VAL_MASTER == NULL && ReadWrite == 0)
+    {
+        LockEnable = VAL_SLAVE->WriteChPort.LockEnable;
+        CacheEnable = VAL_SLAVE->WriteChPort.CacheEnable;
+        ProtectEnable = VAL_SLAVE->WriteChPort.ProtectEnable;
+        WstrbEnable = VAL_SLAVE->WriteChPort.WstrbEnable;
+
+        if(VAL_SLAVE->modeStoMi == 0)
+            endj = 0;
+        else
+            endj = VAL_SLAVE->RegisterSliceStoMi;
+
+        endk = 1; Connect[0] = 1;
+    }
+    else if(VAL_MASTER == NULL && ReadWrite == 1)
+    {
+        LockEnable = VAL_SLAVE->ReadChPort.LockEnable;
+        CacheEnable = VAL_SLAVE->ReadChPort.CacheEnable;
+        ProtectEnable = VAL_SLAVE->ReadChPort.ProtectEnable;
+        WstrbEnable = VAL_SLAVE->ReadChPort.WstrbEnable;
+
+        if(VAL_SLAVE->modeStoMi == 0)
+            endj = 0;
+        else
+            endj = VAL_SLAVE->RegisterSliceStoMi;
+
+        endk = 1; Connect[0] = 1;
+    }
+    else if(VAL_MASTER == NULL && ReadWrite == 10)
+    {
+        LockEnable = VAL_SLAVE->WriteChPort.LockEnable;
+        CacheEnable = VAL_SLAVE->WriteChPort.CacheEnable;
+        ProtectEnable = VAL_SLAVE->WriteChPort.ProtectEnable;
+        WstrbEnable = VAL_SLAVE->WriteChPort.WstrbEnable;
+
+        if(VAL_SLAVE->modeMitoSi == 0)
+            endj = 0;
+        else
+            endj = VAL_SLAVE->RegisterSliceMitoSi;
+
+/*
+ * ReadWrite = 00 -> single Write mode
+ * ReadWrite = 01 -> single Read mode
+ * ReadWrite = 10 -> dual Write mode
+ * ReadWrite = 11 -> dual Read mode
+ */
+        endk = (int)getConnectMaster(VAL_SLAVE, Connect, 0); //WriteChannel
+        for(i=0; ValMAIN.MasterNumber>i; i++)
+            Connect[i] = 1;
+
+        //endk = (int)ValMAIN.MasterNumber;
+        //getConnectMaster(VAL_SLAVE, Connect);
+    }
+    else if(VAL_MASTER == NULL && ReadWrite == 11)
+    {
+        LockEnable = VAL_SLAVE->ReadChPort.LockEnable;
+        CacheEnable = VAL_SLAVE->ReadChPort.CacheEnable;
+        ProtectEnable = VAL_SLAVE->ReadChPort.ProtectEnable;
+        WstrbEnable = VAL_SLAVE->ReadChPort.WstrbEnable;
+
+        if(VAL_SLAVE->modeMitoSi == 0)
+            endj = 0;
+        else
+            endj = VAL_SLAVE->RegisterSliceMitoSi;
+
+/*
+ * ReadWrite = 00 -> single Write mode
+ * ReadWrite = 01 -> single Read mode
+ * ReadWrite = 10 -> dual Write mode
+ * ReadWrite = 11 -> dual Read mode
+ */
+        endk = (int)getConnectMaster(VAL_SLAVE, Connect, 1); //ReadChannel
+        for(i=0; ValMAIN.MasterNumber>i; i++)
+            Connect[i] = 1;
+
+        //endk = (int)ValMAIN.MasterNumber;
+        //getConnectMaster(VAL_SLAVE, Connect);
+    }
+
+
+
+    endi = 0;
+    while(1)
+    {
+        fgets(buff, (sizeof(char)*120), Fp);
+
+        //Lockport generation
+        if(strcmp(buff,"//ENABLE_LOCK\n") == 0)
+        {
+            if(LockEnable == ENABLE)
+            {
+                fgets(buff, (sizeof(char)*120), Fp);
+                strcpy(buffOut[endi], buff);
+            }
+            else
+            {
+                strcpy(buffOut[endi], "");
+                fgets(buff, (sizeof(char)*120), Fp);
+            }
+        }
+
+        //CACHE port generation
+        else if(strcmp(buff, "//ENABLE_CACHE\n") == 0)
+        {
+            if(CacheEnable== ENABLE)
+            {
+                fgets(buff, (sizeof(char)*120), Fp);
+                strcpy(buffOut[endi], buff);
+            }
+            else
+            {
+                strcpy(buffOut[endi], "");
+                fgets(buff, (sizeof(char)*120), Fp);
+            }
+        }
+
+        //PROT port generation
+        else if(strcmp(buff,"//ENABLE_PROT\n") == 0)
+        {
+            if(ProtectEnable== ENABLE)
+            {
+                fgets(buff, (sizeof(char)*120), Fp);
+                strcpy(buffOut[endi], buff);
+            }
+            else
+            {
+                strcpy(buffOut[endi], "");
+                fgets(buff, (sizeof(char)*120), Fp);
+            }
+        }
+
+        //WSTRB port generation
+        else if(strcmp(buff,"//ENABLE_WSTRB\n") == 0)
+        {
+            if(WstrbEnable== ENABLE)
+            {
+                fgets(buff, (sizeof(char)*120), Fp);
+                strcpy(buffOut[endi], buff);
+            }
+            else
+            {
+                strcpy(buffOut[endi], "");
+                fgets(buff, (sizeof(char)*120), Fp);
+            }
+        }
+        else if(strcmp(buff,"//STATE_END\n")==0) 
+            break;
+        else
+            strcpy(buffOut[endi], buff);
+
+        endi++;
+    }
+
+    if(endj == 0)
+        return BUS_ERROR_NONE;
+
+for(k=0; endk > k ; k++)
+{
+    char ReqNum3[4];
+    sprintf(ReqNum3,"%d",k);
+
+    if(Connect[k] == 1) 
+    {
+
+    for(j=0; endj>j ; j++)
+    {
+        char ReqNum0[4];
+        sprintf(ReqNum0,"%d",j);
+
+        for(i=0; endi>i ; i++)
+        {
+            char ReqNum1[4];
+            char ReqNum2[4];
+
+            if(j == 0)
+                strcpy(ReqNum1, " ");
+            else
+                sprintf(ReqNum1, "w%d", (j-1));
+
+            sprintf(ReqNum2, "w%d", j);
+
+            strcpy(buff, buffOut[i]);
+
+            while(changeStr(buff,buff, "??",(char *)ReqNum3)==1);
+
+            if(VAL_SLAVE == NULL)
+                changeStr(buff,buff, "?NAME?", VAL_MASTER->name);
+            else
+                changeStr(buff,buff, "?NAME?", VAL_SLAVE->name);
+
+            changeStr(buff,buff, "?NUM?", ReqNum0);
+            while(changeStr(buff,buff, "?0?", ReqNum1)==1);
+            while(changeStr(buff,buff, "?1?", ReqNum2)==1);
+            inDataLink(head_ptr, buff);
+        }
+    }
+    }
+}
+    return 0;
+}
+
+/*
+ * ReadWrite = 00 -> single Write mode
+ * ReadWrite = 01 -> single Read mode
+ * ReadWrite = 10 -> dual Write mode
+ * ReadWrite = 11 -> dual Read mode
+ */
+unsigned int mkRsWire(FILE *Fp, struct codeLine *head_ptr,
+                        DefMaster *VAL_MASTER,
+                        DefSlave  *VAL_SLAVE,
+                        int ReadWrite)
+{
+    char buffOut[100][90];
+    char buff[90];
+    int  Connect[MAXSLAVE];
+
+    int LockEnable, CacheEnable, ProtectEnable, WstrbEnable;
+    int i,j,k, endi,endj,endk;
+
+    if((VAL_SLAVE == NULL) && (ReadWrite == 0)) // Write MASTER
+    {
+        LockEnable = VAL_MASTER->WriteChPort.LockEnable;
+        CacheEnable = VAL_MASTER->WriteChPort.CacheEnable;
+        ProtectEnable = VAL_MASTER->WriteChPort.ProtectEnable;
+        WstrbEnable = VAL_MASTER->WriteChPort.WstrbEnable;
+        
+        //none register slice
+        if(VAL_MASTER->modeMtoSi == 0)
+            endj = 0;
+        else
+            endj = VAL_MASTER->RegisterSliceMtoSi;
+
+        endk = 1;//(int)ValMAIN.SlaveNumber;
+        Connect[0] = 1 ;
+    }
+    else if (VAL_SLAVE == NULL && ReadWrite == 1) //Read MASTER
+    {
+        LockEnable = VAL_MASTER->ReadChPort.LockEnable;
+        CacheEnable = VAL_MASTER->ReadChPort.CacheEnable;
+        ProtectEnable = VAL_MASTER->ReadChPort.ProtectEnable;
+        WstrbEnable = VAL_MASTER->ReadChPort.WstrbEnable;
+
+        if(VAL_MASTER->modeMtoSi == 0)
+            endj = 0;
+        else
+            endj = VAL_MASTER->RegisterSliceMtoSi;
+
+        endk = 1;//(int)ValMAIN.SlaveNumber;
+        Connect[0] = 1 ;
+    }
+    else if((VAL_SLAVE == NULL) && (ReadWrite == 10)) // Write MASTER
+    {
+        LockEnable = VAL_MASTER->WriteChPort.LockEnable;
+        CacheEnable = VAL_MASTER->WriteChPort.CacheEnable;
+        ProtectEnable = VAL_MASTER->WriteChPort.ProtectEnable;
+        WstrbEnable = VAL_MASTER->WriteChPort.WstrbEnable;
+
+        if(VAL_MASTER->modeSitoMi == 0)
+            endj = 0;
+        else
+            endj = VAL_MASTER->RegisterSliceSitoMi;
+
+        endk = (int)ValMAIN.SlaveNumber + 1;
+        getConnectSlave(VAL_MASTER, Connect);
+    }
+    else if (VAL_SLAVE == NULL && ReadWrite == 11) //Read MASTER
+    {
+        LockEnable = VAL_MASTER->ReadChPort.LockEnable;
+        CacheEnable = VAL_MASTER->ReadChPort.CacheEnable;
+        ProtectEnable = VAL_MASTER->ReadChPort.ProtectEnable;
+        WstrbEnable = VAL_MASTER->ReadChPort.WstrbEnable;
+
+        if(VAL_MASTER->modeSitoMi == 0)
+            endj = 0;
+        else
+            endj = VAL_MASTER->RegisterSliceSitoMi;
+
+        endk = (int)ValMAIN.SlaveNumber + 1;
+        getConnectSlave(VAL_MASTER, Connect);
+    }
+
+    else if(ReadWrite == 0)
+    {
+        LockEnable = VAL_SLAVE->WriteChPort.LockEnable;
+        CacheEnable = VAL_SLAVE->WriteChPort.CacheEnable;
+        ProtectEnable = VAL_SLAVE->WriteChPort.ProtectEnable;
+        WstrbEnable = VAL_SLAVE->WriteChPort.WstrbEnable;
+
+        if(VAL_SLAVE->modeStoMi == 0)
+            endj = 0;
+        else
+            endj = VAL_SLAVE->RegisterSliceStoMi;
+
+        endk = 0;//(int)ValMAIN.MasterNumber;
+        Connect[0] = 1 ;
+    }
+    else if(ReadWrite == 1)
+    {
+        LockEnable = VAL_SLAVE->ReadChPort.LockEnable;
+        CacheEnable = VAL_SLAVE->ReadChPort.CacheEnable;
+        ProtectEnable = VAL_SLAVE->ReadChPort.ProtectEnable;
+        WstrbEnable = VAL_SLAVE->ReadChPort.WstrbEnable;
+
+        if(VAL_SLAVE->modeMitoSi == 0)
+            endj = 0;
+        else
+            endj = VAL_SLAVE->RegisterSliceMitoSi;
+
+        endk = 0;//(int)ValMAIN.MasterNumber;
+        Connect[0] = 1 ;
+    }
+    else if(ReadWrite == 10)
+    {
+        LockEnable = VAL_SLAVE->WriteChPort.LockEnable;
+        CacheEnable = VAL_SLAVE->WriteChPort.CacheEnable;
+        ProtectEnable = VAL_SLAVE->WriteChPort.ProtectEnable;
+        WstrbEnable = VAL_SLAVE->WriteChPort.WstrbEnable;
+
+        if(VAL_SLAVE->modeMitoSi == 0)
+            endj = 0;
+        else
+            endj = VAL_SLAVE->RegisterSliceMitoSi;
+
+/*
+ * ReadWrite = 00 -> single Write mode
+ * ReadWrite = 01 -> single Read mode
+ * ReadWrite = 10 -> dual Write mode
+ * ReadWrite = 11 -> dual Read mode
+ */
+        endk = (int)getConnectMaster(VAL_SLAVE, Connect, 0); //WriteCh
+        for(i=0; ValMAIN.MasterNumber>i; i++)
+            Connect[i] = 1;
+        //getConnectMaster(VAL_SLAVE, Connect);
+    }
+    else if(ReadWrite == 11)
+    {
+        LockEnable = VAL_SLAVE->ReadChPort.LockEnable;
+        CacheEnable = VAL_SLAVE->ReadChPort.CacheEnable;
+        ProtectEnable = VAL_SLAVE->ReadChPort.ProtectEnable;
+        WstrbEnable = VAL_SLAVE->ReadChPort.WstrbEnable;
+
+        if(VAL_SLAVE->modeMitoSi == 0)
+            endj = 0;
+        else
+            endj = VAL_SLAVE->RegisterSliceMitoSi;
+
+/*
+ * ReadWrite = 00 -> single Write mode
+ * ReadWrite = 01 -> single Read mode
+ * ReadWrite = 10 -> dual Write mode
+ * ReadWrite = 11 -> dual Read mode
+ */
+        endk = (int)getConnectMaster(VAL_SLAVE, Connect, 1); //ReadCh
+        for(i=0; ValMAIN.MasterNumber>i; i++)
+            Connect[i] = 1;
+
+        //endk = (int)ValMAIN.MasterNumber;
+        //getConnectMaster(VAL_SLAVE, Connect);
+    }
+
+
+
+    endi = 0; i = 0 ; j=0;k = 0;
+    while(1)
+    {
+        fgets(buff, (sizeof(char)*80), Fp);
+
+        //lockport generation
+        if(strcmp(buff,"//ENABLE_LOCK\n") == 0)
+        {
+            if(LockEnable == ENABLE)
+            {
+                fgets(buff, (sizeof(char)*80), Fp);
+                strcpy(buffOut[endi], buff);
+            }
+            else
+            {
+                strcpy(buffOut[endi], "");
+                fgets(buff, (sizeof(char)*80), Fp);
+            }
+        }
+
+        //CACHE port generation
+        else if(strcmp(buff, "//ENABLE_CACHE\n") == 0)
+        {
+            if(CacheEnable== ENABLE)
+            {
+                fgets(buff, (sizeof(char)*80), Fp);
+                strcpy(buffOut[endi], buff);
+            }
+            else
+            {
+                strcpy(buffOut[endi], "");
+                fgets(buff, (sizeof(char)*80), Fp);
+            }
+        }
+
+        //PROT port generation
+        else if(strcmp(buff,"//ENABLE_PROT\n") == 0)
+        {
+            if(ProtectEnable== ENABLE)
+            {
+                fgets(buff, (sizeof(char)*80), Fp);
+                strcpy(buffOut[endi], buff);
+            }
+            else
+            {
+                strcpy(buffOut[endi], "");
+                fgets(buff, (sizeof(char)*80), Fp);
+            }
+        }
+
+        //PROT port generation
+        else if(strcmp(buff,"//ENABLE_WSTRB\n") == 0)
+        {
+            if(WstrbEnable== ENABLE)
+            {
+                fgets(buff, (sizeof(char)*80), Fp);
+                strcpy(buffOut[endi], buff);
+            }
+            else
+            {
+                strcpy(buffOut[endi], "");
+                fgets(buff, (sizeof(char)*80), Fp);
+            }
+        }
+        else if(strcmp(buff,"//STATE_END\n")==0) 
+            break;
+        else
+            strcpy(buffOut[endi], buff);
+
+        endi++;
+    }
+
+    /* none Register sliece */
+    if(endj == 0)
+        return BUS_ERROR_NONE;
+
+for(k=0; endk>k; k++)
+{
+
+    if(Connect[k] == 1) 
+    {
+
+    char ReqNum0[4];
+    sprintf(ReqNum0,"%d",k);
+
+    //for(j=0; endj+1>j ; j++)
+    for(j=0; endj>j ; j++)
+    {
+        for(i=0; endi>i ; i++)
+        {
+            char ReqNum1[4];
+
+            sprintf(ReqNum1, "w%d", j);
+
+            strcpy(buff, buffOut[i]);
+
+            while(changeStr(buff,buff, "w??", ReqNum1)==1);
+            while(changeStr(buff,buff, "??",(char *)ReqNum0)==1);
+            inDataLink(head_ptr, buff);
+        }//forloop i
+    } //forloop j
+
+    }
+}//forloop k
+
+        return BUS_ERROR_NONE;
+}
+
+//  ----------------------------------------------------------------
+//  unsigned int MkZero(char *inFileName)
+//  ----------------------------------------------------------------
+//  Write == 1
+//  Read  == 0
+//  ----------------------------------------------------------------
+unsigned int MkZero(char *inFileName, char *OutFileName,int WriteRead)
+{
+    FILE *Fp;
+    struct codeLine *head_ptr = NULL;
+    int    endSlaveNum, endMasterNum;
+    int    *MaxZero;
+    int     i;
+    char    buff[120];
+    int     MAXID;
+    int     IDV;
+    char    ID[10];
+
+    head_ptr = malloc(sizeof(struct codeLine));
+    head_ptr->code = (char *)malloc(sizeof(char) * 120);
+    head_ptr->next_ptr = NULL;
+    strcpy(head_ptr->code,"//START MkZero\n");
+
+    endSlaveNum  = (int)ValMAIN.SlaveNumber;
+    endMasterNum = (int)ValMAIN.MasterNumber;
+    MaxZero      = (int *)malloc(sizeof(int) * endMasterNum);
+
+    //__________________________________________________ Zero Find
+    MAXID = 0;
+    for(i=0; endMasterNum >i; i++)
+    {
+        if(WriteRead == 1) { 
+            if(ValMASTER[i].writeidwid>MAXID) MAXID = ValMASTER[i].writeidwid;
+        } else {
+            if(ValMASTER[i].readidwid>MAXID) MAXID = ValMASTER[i].readidwid;
+        }
+    }
+
+    for(i=0; endMasterNum >i; i++)
+    {
+        if(WriteRead == 1) {
+            if((MAXID - ValMASTER[i].writeidwid) == 0) MaxZero[i] = 1;
+            else                                       MaxZero[i] = 0;
+        } else {
+            if((MAXID - ValMASTER[i].readidwid) == 0)  MaxZero[i] = 1;
+            else                                       MaxZero[i] = 0;
+        }
+    }
+
+    //__________________________________________________________ Open
+    if ( (Fp = fopen(inFileName, "r" )) == NULL ) {
+        printf ("\nError opening file [%s]\n",inFileName);
+        return FILE_PROCESS_ERROR;
+    }
+
+    while(1) {
+        mkBeforeStr(Fp, head_ptr, "//Zero\n");
+        fgets(ID , sizeof(char)*10, Fp);
+        if(strcmp(ID,"//END\n")==0) break;
+
+        IDV =(unsigned int)(strtoul(ID,NULL,10));
+
+        if(MaxZero[IDV] == 1) {
+            fgets(buff, sizeof(char)*120, Fp);
+            fgets(buff, sizeof(char)*120, Fp);
+            inDataLink(head_ptr, buff);
+        } else {
+            fgets(buff, sizeof(char)*120, Fp);
+            inDataLink(head_ptr, buff);
+            fgets(buff, sizeof(char)*120, Fp);
+        }
+    }
+
+    free(MaxZero);
+    fprintLink(head_ptr, (char *)" ",  OutFileName);
+    return BUS_ERROR_NONE;
+}
