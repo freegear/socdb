@@ -1,0 +1,1238 @@
+Release  - xst I.31
+Copyright (c) 1995-2006 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 0.50 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.50 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Reading design: DE2_TOP.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "DE2_TOP.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "DE2_TOP"
+Output Format                      : NGC
+Target Device                      : xc4vlx200-10-ff1513
+
+---- Source Options
+Top Module Name                    : DE2_TOP
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 32
+Number of Regional Clock Buffers   : 48
+Register Duplication               : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+DSP48 Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : DE2_TOP.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+use_dsp48                          : auto
+Optimize Instantiated Primitives   : NO
+use_clock_enable                   : Auto
+use_sync_set                       : Auto
+use_sync_reset                     : Auto
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "decode_656.v" in library work
+Compiling verilog file "YUV422TO444.v" in library work
+Module <decode_656> compiled
+Compiling verilog file "I2S_Controller.v" in library work
+Module <YUV422TO444> compiled
+WARNING:HDLCompilers:301 - "I2S_Controller.v" line 107 Too many digits specified in hex constant
+WARNING:HDLCompilers:301 - "I2S_Controller.v" line 136 Too many digits specified in hex constant
+Compiling verilog file "I2C_Controller.v" in library work
+Module <I2S_Controller> compiled
+Compiling verilog file "TV_SET.v" in library work
+Module <I2C_Controller> compiled
+Compiling verilog file "I2S_LCM_Config.v" in library work
+Module <TV_SET> compiled
+Compiling verilog file "I2C_AV_Config.v" in library work
+Module <I2S_LCM_Config> compiled
+Compiling verilog file "DE2_TOP.v" in library work
+Module <I2C_AV_Config> compiled
+Module <DE2_TOP> compiled
+WARNING:HDLCompilers:258 - "YUV422TO444.v" line 26 Range on redeclaration of 'COUNTER' overrides range on output declaration at "YUV422TO444.v" line 19 
+No errors in compilation
+Analysis of file <"DE2_TOP.prj"> succeeded.
+ 
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for module <DE2_TOP> in library <work> with parameters.
+	H_SYNC_ACT = "00000000000000000000001111000000"
+	H_SYNC_BACK = "00000000000000000000000010010111"
+	H_SYNC_CYC = "00000000000000000000000000000001"
+	H_SYNC_FRONT = "00000000000000000000000000111011"
+	H_SYNC_TOTAL = "00000000000000000000010010010011"
+	V_SYNC_ACT = "00000000000000000000000011110000"
+	V_SYNC_BACK = "00000000000000000000000000001101"
+	V_SYNC_CYC = "00000000000000000000000000000001"
+	V_SYNC_FRONT = "00000000000000000000000000001000"
+	V_SYNC_TOTAL = "00000000000000000000000100000110"
+
+Analyzing hierarchy for module <TV_SET> in library <work>.
+
+Analyzing hierarchy for module <I2S_LCM_Config> in library <work> with parameters.
+	LUT_SIZE = "00000000000000000000000000001111"
+
+Analyzing hierarchy for module <I2C_AV_Config> in library <work> with parameters.
+	A_PATH_CTRL = "00000000000000000000000000000101"
+	CLK_Freq = "00000001011111010111100001000000"
+	D_PATH_CTRL = "00000000000000000000000000000110"
+	Dummy_DATA = "00000000000000000000000000000000"
+	I2C_Freq = "00000000000000000010011100010000"
+	LUT_SIZE = "00000000000000000000000000110011"
+	POWER_ON = "00000000000000000000000000000111"
+	SAMPLE_CTRL = "00000000000000000000000000001001"
+	SET_ACTIVE = "00000000000000000000000000001010"
+	SET_FORMAT = "00000000000000000000000000001000"
+	SET_HEAD_L = "00000000000000000000000000000011"
+	SET_HEAD_R = "00000000000000000000000000000100"
+	SET_LIN_L = "00000000000000000000000000000001"
+	SET_LIN_R = "00000000000000000000000000000010"
+	SET_VIDEO = "00000000000000000000000000001011"
+
+Analyzing hierarchy for module <decode_656> in library <work>.
+
+Analyzing hierarchy for module <YUV422TO444> in library <work>.
+
+Analyzing hierarchy for module <I2S_Controller> in library <work> with parameters.
+	CLK_Freq = "00000001011111010111100001000000"
+	I2S_Freq = "00000000000000000010011100010000"
+
+Analyzing hierarchy for module <I2C_Controller> in library <work>.
+
+Building hierarchy successfully finished.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing top module <DE2_TOP>.
+	H_SYNC_CYC = 32'sb00000000000000000000000000000001
+	H_SYNC_BACK = 32'sb00000000000000000000000010010111
+	H_SYNC_ACT = 32'sb00000000000000000000001111000000
+	H_SYNC_FRONT = 32'sb00000000000000000000000000111011
+	H_SYNC_TOTAL = 32'sb00000000000000000000010010010011
+	V_SYNC_CYC = 32'sb00000000000000000000000000000001
+	V_SYNC_BACK = 32'sb00000000000000000000000000001101
+	V_SYNC_ACT = 32'sb00000000000000000000000011110000
+	V_SYNC_FRONT = 32'sb00000000000000000000000000001000
+	V_SYNC_TOTAL = 32'sb00000000000000000000000100000110
+Module <DE2_TOP> is correct for synthesis.
+ 
+Analyzing module <TV_SET> in library <work>.
+WARNING:Xst:852 - "TV_SET.v" line 122: Unconnected input port 'fi' of instance 'yuv1' is tied to GND.
+Module <TV_SET> is correct for synthesis.
+ 
+Analyzing module <decode_656> in library <work>.
+Module <decode_656> is correct for synthesis.
+ 
+Analyzing module <YUV422TO444> in library <work>.
+Module <YUV422TO444> is correct for synthesis.
+ 
+Analyzing module <I2S_LCM_Config> in library <work>.
+	LUT_SIZE = 32'sb00000000000000000000000000001111
+WARNING:Xst:905 - "I2S_LCM_Config.v" line 89: The signals <LUT_INDEX> are missing in the sensitivity list of always block.
+Module <I2S_LCM_Config> is correct for synthesis.
+ 
+Analyzing module <I2S_Controller> in library <work>.
+	CLK_Freq = 32'sb00000001011111010111100001000000
+	I2S_Freq = 32'sb00000000000000000010011100010000
+Module <I2S_Controller> is correct for synthesis.
+ 
+Analyzing module <I2C_AV_Config> in library <work>.
+	CLK_Freq = 32'sb00000001011111010111100001000000
+	I2C_Freq = 32'sb00000000000000000010011100010000
+	LUT_SIZE = 32'sb00000000000000000000000000110011
+	Dummy_DATA = 32'sb00000000000000000000000000000000
+	SET_LIN_L = 32'sb00000000000000000000000000000001
+	SET_LIN_R = 32'sb00000000000000000000000000000010
+	SET_HEAD_L = 32'sb00000000000000000000000000000011
+	SET_HEAD_R = 32'sb00000000000000000000000000000100
+	A_PATH_CTRL = 32'sb00000000000000000000000000000101
+	D_PATH_CTRL = 32'sb00000000000000000000000000000110
+	POWER_ON = 32'sb00000000000000000000000000000111
+	SET_FORMAT = 32'sb00000000000000000000000000001000
+	SAMPLE_CTRL = 32'sb00000000000000000000000000001001
+	SET_ACTIVE = 32'sb00000000000000000000000000001010
+	SET_VIDEO = 32'sb00000000000000000000000000001011
+WARNING:Xst:905 - "I2C_AV_Config.v" line 118: The signals <LUT_INDEX> are missing in the sensitivity list of always block.
+WARNING:Xst:852 - "I2C_AV_Config.v" line 66: Unconnected input port 'W_R' of instance 'u0' is tied to GND.
+Module <I2C_AV_Config> is correct for synthesis.
+ 
+Analyzing module <I2C_Controller> in library <work>.
+Module <I2C_Controller> is correct for synthesis.
+ 
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <decode_656>.
+    Related source file is "decode_656.v".
+    Found 1-bit register for signal <START>.
+    Found 1-bit register for signal <Field>.
+    Found 8-bit register for signal <STATUS>.
+    Found 1-bit register for signal <VS>.
+    Found 8-bit register for signal <R1>.
+    Found 8-bit register for signal <R2>.
+    Found 8-bit register for signal <R3>.
+    Found 8-bit register for signal <RR1>.
+    Found 8-bit register for signal <RR2>.
+    Found 8-bit register for signal <RR3>.
+    Summary:
+	inferred  59 D-type flip-flop(s).
+Unit <decode_656> synthesized.
+
+
+Synthesizing Unit <YUV422TO444>.
+    Related source file is "YUV422TO444.v".
+WARNING:Xst:647 - Input <fi> is never used.
+WARNING:Xst:1780 - Signal <CCb2> is never used or assigned.
+WARNING:Xst:1780 - Signal <YY2> is never used or assigned.
+WARNING:Xst:1780 - Signal <Crr2> is never used or assigned.
+WARNING:Xst:1780 - Signal <CCr2> is never used or assigned.
+WARNING:Xst:1780 - Signal <Cbb2> is never used or assigned.
+    Found 8x1-bit ROM for signal <$mux0001> created at line 42.
+    Found 3-bit up counter for signal <COUNTER>.
+    Found 1-bit register for signal <Ypix_clock>.
+    Found 8-bit 4-to-1 multiplexer for signal <$mux0000> created at line 42.
+    Found 8-bit 4-to-1 multiplexer for signal <$mux0005> created at line 42.
+    Found 8-bit register for signal <Cbb>.
+    Found 8-bit register for signal <CCb>.
+    Found 8-bit register for signal <CCr>.
+    Found 8-bit register for signal <Crr>.
+    Found 8-bit register for signal <YY>.
+    Summary:
+	inferred   1 ROM(s).
+	inferred   1 Counter(s).
+	inferred  41 D-type flip-flop(s).
+	inferred  16 Multiplexer(s).
+Unit <YUV422TO444> synthesized.
+
+
+Synthesizing Unit <I2S_Controller>.
+    Related source file is "I2S_Controller.v".
+    Found 1-bit tristate buffer for signal <I2S_DATA>.
+    Found 5-bit adder for signal <$addsub0000> created at line 114.
+    Found 5-bit comparator less for signal <$cmp_lt0000> created at line 127.
+    Found 5-bit comparator less for signal <$cmp_lt0001> created at line 113.
+    Found 16-bit comparator less for signal <$cmp_lt0002> created at line 89.
+    Found 1-bit 16-to-1 multiplexer for signal <$COND_8>.
+    Found 1-bit register for signal <mACK>.
+    Found 1-bit register for signal <mI2S_CLK>.
+    Found 16-bit up counter for signal <mI2S_CLK_DIV>.
+    Found 1-bit register for signal <mSCLK>.
+    Found 1-bit tristate buffer for signal <mSDATA>.
+    Found 1-bit register for signal <mSEN>.
+    Found 5-bit register for signal <mST>.
+    Found 1-bit register for signal <Mtridata_mSDATA>.
+    Found 1-bit register for signal <Mtrien_mSDATA>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  11 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   3 Comparator(s).
+	inferred   1 Multiplexer(s).
+	inferred   2 Tristate(s).
+Unit <I2S_Controller> synthesized.
+
+
+Synthesizing Unit <I2C_Controller>.
+    Related source file is "I2C_Controller.v".
+WARNING:Xst:647 - Input <W_R> is never used.
+    Found 6-bit up counter for signal <SD_COUNTER>.
+    Found 1-bit register for signal <END>.
+    Found 1-bit register for signal <SDO>.
+    Found 1-bit tristate buffer for signal <I2C_SDAT>.
+    Found 6-bit comparator greatequal for signal <$cmp_ge0000> created at line 77.
+    Found 6-bit comparator lessequal for signal <$cmp_le0000> created at line 77.
+    Found 6-bit comparator less for signal <$cmp_lt0000> created at line 90.
+    Found 1-bit register for signal <ACK1>.
+    Found 1-bit register for signal <ACK2>.
+    Found 1-bit register for signal <ACK3>.
+    Found 1-bit register for signal <SCLK>.
+    Found 24-bit register for signal <SD>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  30 D-type flip-flop(s).
+	inferred   3 Comparator(s).
+	inferred   1 Tristate(s).
+Unit <I2C_Controller> synthesized.
+
+
+Synthesizing Unit <TV_SET>.
+    Related source file is "TV_SET.v".
+    Found 8-bit subtractor for signal <$addsub0000> created at line 95.
+    Found 8-bit adder carry out for signal <$addsub0001>.
+    Found 9-bit comparator greatequal for signal <$cmp_ge0000> created at line 103.
+    Found 8-bit comparator greatequal for signal <$cmp_ge0001> created at line 95.
+    Found 12-bit comparator greatequal for signal <$cmp_ge0002> created at line 61.
+    Found 9-bit comparator lessequal for signal <$cmp_le0000> created at line 82.
+    Found 8-bit comparator lessequal for signal <$cmp_le0001> created at line 57.
+    Found 8-bit comparator lessequal for signal <$cmp_le0002> created at line 48.
+    Found 8-bit comparator lessequal for signal <$cmp_le0003> created at line 47.
+    Found 12-bit comparator lessequal for signal <$cmp_le0004> created at line 61.
+    Found 8-bit comparator less for signal <$cmp_lt0000> created at line 53.
+    Found 8-bit comparator less for signal <$cmp_lt0001> created at line 75.
+    Found 8-bit comparator less for signal <$cmp_lt0002> created at line 62.
+    Found 8-bit up counter for signal <delay>.
+    Found 8-bit up counter for signal <Fcnt>.
+    Found 11-bit up counter for signal <h_c>.
+    Found 11-bit up counter for signal <hhh>.
+    Found 11-bit up counter for signal <L_COUNTER>.
+    Found 11-bit register for signal <RL_COUNTER>.
+    Found 8-bit up counter for signal <syst>.
+    Found 9-bit up counter for signal <vvv>.
+    Summary:
+	inferred   7 Counter(s).
+	inferred  11 D-type flip-flop(s).
+	inferred   2 Adder/Subtractor(s).
+	inferred  11 Comparator(s).
+Unit <TV_SET> synthesized.
+
+
+Synthesizing Unit <I2S_LCM_Config>.
+    Related source file is "I2S_LCM_Config.v".
+    Found finite state machine <FSM_0> for signal <mSetup_ST>.
+    -----------------------------------------------------------------------
+    | States             | 3                                              |
+    | Transitions        | 5                                              |
+    | Inputs             | 2                                              |
+    | Outputs            | 4                                              |
+    | Clock              | mI2S_CLK (rising_edge)                         |
+    | Clock enable       | $cmp_lt0000 (positive)                         |
+    | Reset              | iRST_N (negative)                              |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | 0000                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 16x16-bit ROM for signal <$mux0001>.
+    Found 6-bit comparator greatequal for signal <$cmp_ge0000> created at line 60.
+    Found 6-bit comparator less for signal <$cmp_lt0000> created at line 60.
+    Found 6-bit up counter for signal <LUT_INDEX>.
+    Found 16-bit register for signal <mI2S_DATA>.
+    Found 1-bit register for signal <mI2S_STR>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred   1 ROM(s).
+	inferred   1 Counter(s).
+	inferred  17 D-type flip-flop(s).
+	inferred   2 Comparator(s).
+Unit <I2S_LCM_Config> synthesized.
+
+
+Synthesizing Unit <I2C_AV_Config>.
+    Related source file is "I2C_AV_Config.v".
+    Found finite state machine <FSM_1> for signal <mSetup_ST>.
+    -----------------------------------------------------------------------
+    | States             | 3                                              |
+    | Transitions        | 5                                              |
+    | Inputs             | 2                                              |
+    | Outputs            | 4                                              |
+    | Clock              | mI2C_CTRL_CLK (rising_edge)                    |
+    | Clock enable       | $cmp_lt0000 (positive)                         |
+    | Reset              | iRST_N (negative)                              |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | 0000                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 52x16-bit ROM for signal <$mux0002>.
+WARNING:Xst:737 - Found 16-bit latch for signal <LUT_DATA>.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+    Found 7-bit comparator greatequal for signal <$cmp_ge0000> created at line 86.
+    Found 7-bit comparator less for signal <$cmp_lt0000> created at line 86.
+    Found 6-bit comparator less for signal <$cmp_lt0001> created at line 90.
+    Found 16-bit comparator less for signal <$cmp_lt0002> created at line 56.
+    Found 6-bit up counter for signal <LUT_INDEX>.
+    Found 16-bit up counter for signal <mI2C_CLK_DIV>.
+    Found 1-bit register for signal <mI2C_CTRL_CLK>.
+    Found 24-bit register for signal <mI2C_DATA>.
+    Found 1-bit register for signal <mI2C_GO>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred   1 ROM(s).
+	inferred   2 Counter(s).
+	inferred  26 D-type flip-flop(s).
+	inferred   4 Comparator(s).
+Unit <I2C_AV_Config> synthesized.
+
+
+Synthesizing Unit <DE2_TOP>.
+    Related source file is "DE2_TOP.v".
+WARNING:Xst:647 - Input <EXT_CLOCK> is never used.
+WARNING:Xst:647 - Input <SW> is never used.
+WARNING:Xst:1306 - Output <LCM_DCLK> is never assigned.
+WARNING:Xst:647 - Input <KEY> is never used.
+WARNING:Xst:646 - Signal <I2C_SCLK> is assigned but never used.
+    Found 11-bit comparator greater for signal <$cmp_gt0000> created at line 141.
+    Found 11-bit comparator greater for signal <$cmp_gt0001> created at line 141.
+    Found 12-bit comparator less for signal <$cmp_lt0000> created at line 154.
+    Found 11-bit comparator less for signal <$cmp_lt0001> created at line 174.
+    Found 11-bit comparator less for signal <$cmp_lt0002> created at line 141.
+    Found 11-bit comparator less for signal <$cmp_lt0003> created at line 141.
+    Found 11-bit up counter for signal <H_Cont>.
+    Found 11-bit up counter for signal <V_Cont>.
+    Summary:
+	inferred   2 Counter(s).
+	inferred   6 Comparator(s).
+Unit <DE2_TOP> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 3
+ 16x16-bit ROM                                         : 1
+ 52x16-bit ROM                                         : 1
+ 8x1-bit ROM                                           : 1
+# Adders/Subtractors                                   : 3
+ 5-bit adder                                           : 1
+ 8-bit adder carry out                                 : 1
+ 8-bit subtractor                                      : 1
+# Counters                                             : 15
+ 11-bit up counter                                     : 5
+ 16-bit up counter                                     : 2
+ 3-bit up counter                                      : 1
+ 6-bit up counter                                      : 3
+ 8-bit up counter                                      : 3
+ 9-bit up counter                                      : 1
+# Registers                                            : 36
+ 1-bit register                                        : 19
+ 11-bit register                                       : 1
+ 16-bit register                                       : 1
+ 24-bit register                                       : 2
+ 5-bit register                                        : 1
+ 8-bit register                                        : 12
+# Latches                                              : 1
+ 16-bit latch                                          : 1
+# Comparators                                          : 29
+ 11-bit comparator greater                             : 2
+ 11-bit comparator less                                : 3
+ 12-bit comparator greatequal                          : 1
+ 12-bit comparator less                                : 1
+ 12-bit comparator lessequal                           : 1
+ 16-bit comparator less                                : 2
+ 5-bit comparator less                                 : 2
+ 6-bit comparator greatequal                           : 2
+ 6-bit comparator less                                 : 3
+ 6-bit comparator lessequal                            : 1
+ 7-bit comparator greatequal                           : 1
+ 7-bit comparator less                                 : 1
+ 8-bit comparator greatequal                           : 1
+ 8-bit comparator less                                 : 3
+ 8-bit comparator lessequal                            : 3
+ 9-bit comparator greatequal                           : 1
+ 9-bit comparator lessequal                            : 1
+# Multiplexers                                         : 3
+ 1-bit 16-to-1 multiplexer                             : 1
+ 8-bit 4-to-1 multiplexer                              : 2
+# Tristates                                            : 3
+ 1-bit tristate buffer                                 : 3
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_1> for best encoding.
+Optimizing FSM <u3/mSetup_ST> on signal <mSetup_ST[1:2]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ 0000  | 00
+ 0001  | 01
+ 0010  | 11
+-------------------
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <u2/mSetup_ST> on signal <mSetup_ST[1:2]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ 0000  | 00
+ 0001  | 01
+ 0010  | 11
+-------------------
+Loading device for application Rf_Device from file '4vlx200.nph' in environment C:\Xilinx.
+WARNING:Xst:2404 -  FFs/Latches <mI2C_DATA<23:23>> (without init value) have a constant value of 0 in block <I2C_AV_Config>.
+INFO:Xst:1647 - Data output of ROM <Mrom__mux0001> is tied to register <Ypix_clock>.
+INFO:Xst:2506 - In order to maximize performance and save block RAM resources, this small ROM will be implemented on LUT. If you want to force its implementation on block, use option/constraint rom_style.
+INFO:Xst:2261 - The FF/Latch <VS> in Unit <decode_656> is equivalent to the following FF/Latch, which will be removed : <STATUS_5> 
+INFO:Xst:2261 - The FF/Latch <START> in Unit <decode_656> is equivalent to the following FF/Latch, which will be removed : <STATUS_4> 
+INFO:Xst:2261 - The FF/Latch <Field> in Unit <decode_656> is equivalent to the following FF/Latch, which will be removed : <STATUS_6> 
+WARNING:Xst:1710 - FF/Latch  <mI2C_DATA_6> (without init value) has a constant value of 0 in block <I2C_AV_Config>.
+WARNING:Xst:1710 - FF/Latch  <mI2C_DATA_5> (without init value) has a constant value of 0 in block <I2C_AV_Config>.
+WARNING:Xst:1710 - FF/Latch  <mI2C_DATA_3> (without init value) has a constant value of 0 in block <I2C_AV_Config>.
+INFO:Xst:2261 - The FF/Latch <mI2C_DATA_4> in Unit <I2C_AV_Config> is equivalent to the following 2 FFs/Latches, which will be removed : <mI2C_DATA_2> <mI2C_DATA_1> 
+WARNING:Xst:1291 - FF/Latch <Field> is unconnected in block <decoMAIN>.
+WARNING:Xst:1291 - FF/Latch <STATUS_0> is unconnected in block <decoMAIN>.
+WARNING:Xst:1291 - FF/Latch <STATUS_1> is unconnected in block <decoMAIN>.
+WARNING:Xst:1291 - FF/Latch <STATUS_2> is unconnected in block <decoMAIN>.
+WARNING:Xst:1291 - FF/Latch <STATUS_3> is unconnected in block <decoMAIN>.
+WARNING:Xst:1291 - FF/Latch <STATUS_7> is unconnected in block <decoMAIN>.
+WARNING:Xst:1291 - FF/Latch <Ypix_clock> is unconnected in block <yuv1>.
+WARNING:Xst:1291 - FF/Latch <SCLK> is unconnected in block <u0>.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 2
+# ROMs                                                 : 3
+ 16x16-bit ROM                                         : 1
+ 52x16-bit ROM                                         : 1
+ 8x1-bit ROM                                           : 1
+# Adders/Subtractors                                   : 3
+ 5-bit adder                                           : 1
+ 8-bit adder carry out                                 : 1
+ 8-bit subtractor                                      : 1
+# Counters                                             : 15
+ 11-bit up counter                                     : 5
+ 16-bit up counter                                     : 2
+ 3-bit up counter                                      : 1
+ 6-bit up counter                                      : 3
+ 8-bit up counter                                      : 3
+ 9-bit up counter                                      : 1
+# Registers                                            : 190
+ Flip-Flops                                            : 190
+# Latches                                              : 1
+ 16-bit latch                                          : 1
+# Comparators                                          : 29
+ 11-bit comparator greater                             : 2
+ 11-bit comparator less                                : 3
+ 12-bit comparator greatequal                          : 1
+ 12-bit comparator less                                : 1
+ 12-bit comparator lessequal                           : 1
+ 16-bit comparator less                                : 2
+ 5-bit comparator less                                 : 2
+ 6-bit comparator greatequal                           : 2
+ 6-bit comparator less                                 : 3
+ 6-bit comparator lessequal                            : 1
+ 7-bit comparator greatequal                           : 1
+ 7-bit comparator less                                 : 1
+ 8-bit comparator greatequal                           : 1
+ 8-bit comparator less                                 : 3
+ 8-bit comparator lessequal                            : 3
+ 9-bit comparator greatequal                           : 1
+ 9-bit comparator lessequal                            : 1
+# Multiplexers                                         : 3
+ 1-bit 16-to-1 multiplexer                             : 1
+ 8-bit 4-to-1 multiplexer                              : 2
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1988 - Unit <I2S_LCM_Config>: instances <Mcompar__cmp_lt0000>, <Mcompar__cmp_ge0000> of unit <LPM_COMPARE_18> and unit <LPM_COMPARE_19> are dual, second instance is removed
+WARNING:Xst:1988 - Unit <I2C_AV_Config>: instances <Mcompar__cmp_lt0000>, <Mcompar__cmp_ge0000> of unit <LPM_COMPARE_20> and unit <LPM_COMPARE_22> are dual, second instance is removed
+INFO:Xst:2261 - The FF/Latch <SD_18> in Unit <I2C_Controller> is equivalent to the following 2 FFs/Latches, which will be removed : <SD_20> <SD_21> 
+INFO:Xst:2261 - The FF/Latch <SD_16> in Unit <I2C_Controller> is equivalent to the following 3 FFs/Latches, which will be removed : <SD_17> <SD_19> <SD_23> 
+WARNING:Xst:1710 - FF/Latch  <SD_16> (without init value) has a constant value of 0 in block <I2C_Controller>.
+WARNING:Xst:1710 - FF/Latch  <mI2S_DATA_6> (without init value) has a constant value of 0 in block <I2S_LCM_Config>.
+WARNING:Xst:1710 - FF/Latch  <mI2S_DATA_7> (without init value) has a constant value of 0 in block <I2S_LCM_Config>.
+WARNING:Xst:1710 - FF/Latch  <mI2S_DATA_8> (without init value) has a constant value of 0 in block <I2S_LCM_Config>.
+WARNING:Xst:1710 - FF/Latch  <mI2S_DATA_9> (without init value) has a constant value of 0 in block <I2S_LCM_Config>.
+WARNING:Xst:1710 - FF/Latch  <mI2S_DATA_15> (without init value) has a constant value of 0 in block <I2S_LCM_Config>.
+WARNING:Xst:2041 - Unit DE2_TOP: 1 internal tristate is replaced by logic (pull-up yes): u2/u0/mSDATA.
+WARNING:Xst:2041 - Unit I2C_Controller: 1 internal tristate is replaced by logic (pull-up yes): I2C_SDAT.
+
+Optimizing unit <DE2_TOP> ...
+WARNING:Xst:1710 - FF/Latch  <V_Cont_10> (without init value) has a constant value of 0 in block <DE2_TOP>.
+WARNING:Xst:1710 - FF/Latch  <V_Cont_10> (without init value) has a constant value of 0 in block <DE2_TOP>.
+WARNING:Xst:1710 - FF/Latch  <V_Cont_10> (without init value) has a constant value of 0 in block <DE2_TOP>.
+WARNING:Xst:1710 - FF/Latch  <V_Cont_10> (without init value) has a constant value of 0 in block <DE2_TOP>.
+
+Optimizing unit <I2C_Controller> ...
+
+Optimizing unit <decode_656> ...
+
+Optimizing unit <TV_SET> ...
+
+Optimizing unit <YUV422TO444> ...
+
+Optimizing unit <I2C_AV_Config> ...
+
+Mapping all equations...
+WARNING:Xst:1291 - FF/Latch <NTSC/RL_COUNTER_0> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/RL_COUNTER_1> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/RL_COUNTER_2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/RL_COUNTER_3> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/RL_COUNTER_4> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/RL_COUNTER_5> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/RL_COUNTER_6> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/RL_COUNTER_7> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/RL_COUNTER_8> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/RL_COUNTER_9> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/RL_COUNTER_10> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/L_COUNTER_0> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/L_COUNTER_1> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/L_COUNTER_2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/L_COUNTER_3> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/L_COUNTER_4> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/L_COUNTER_5> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/L_COUNTER_6> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/L_COUNTER_7> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/L_COUNTER_8> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/L_COUNTER_9> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/L_COUNTER_10> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/delay_0> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/delay_1> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/delay_2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/delay_3> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/delay_4> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/delay_5> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/delay_6> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/delay_7> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/decoMAIN/Field> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/decoMAIN/STATUS_0> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/decoMAIN/STATUS_1> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/decoMAIN/STATUS_2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/decoMAIN/STATUS_3> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/decoMAIN/STATUS_7> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/yuv1/Ypix_clock> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <NTSC/yuv1/COUNTER_2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CTRL_CLK> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_GO> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_22> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_21> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_20> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_19> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_18> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_17> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_16> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_15> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_14> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_13> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_12> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_11> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_10> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_9> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_8> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_7> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_4> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_DATA_0> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_15> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_14> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_13> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_12> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_11> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_10> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_9> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_8> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_7> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_6> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_5> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_4> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_3> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_1> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_DATA_0> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mSetup_ST_FFd1> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mSetup_ST_FFd2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_0> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_1> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_3> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_4> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_5> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_6> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_7> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_8> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_9> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_10> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_11> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_12> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_13> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_14> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/mI2C_CLK_DIV_15> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_INDEX_0> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_INDEX_1> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_INDEX_2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_INDEX_3> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_INDEX_4> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/LUT_INDEX_5> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SDO> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SCLK> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/ACK3> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/ACK1> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/ACK2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/END> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_0> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_1> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_3> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_4> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_5> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_6> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_7> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_8> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_9> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_10> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_11> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_12> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_13> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_14> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_15> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_18> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_22> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_COUNTER_0> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_COUNTER_1> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_COUNTER_2> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_COUNTER_3> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_COUNTER_4> is unconnected in block <DE2_TOP>.
+WARNING:Xst:1291 - FF/Latch <u3/u0/SD_COUNTER_5> is unconnected in block <DE2_TOP>.
+Building and optimizing final netlist ...
+INFO:Xst:2261 - The FF/Latch <u2/mI2S_DATA_1> in Unit <DE2_TOP> is equivalent to the following FF/Latch, which will be removed : <u2/mI2S_DATA_2> 
+Found area constraint ratio of 100 (+ 5) on block DE2_TOP, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 206
+ Flip-Flops                                            : 206
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : DE2_TOP.ngr
+Top Level Output File Name         : DE2_TOP
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 70
+
+Cell Usage :
+# BELS                             : 465
+#      GND                         : 1
+#      INV                         : 13
+#      LUT1                        : 48
+#      LUT2                        : 58
+#      LUT3                        : 45
+#      LUT3_L                      : 1
+#      LUT4                        : 104
+#      LUT4_L                      : 1
+#      MULT_AND                    : 3
+#      MUXCY                       : 100
+#      MUXF5                       : 12
+#      MUXF6                       : 2
+#      MUXF7                       : 1
+#      VCC                         : 1
+#      XORCY                       : 75
+# FlipFlops/Latches                : 206
+#      FD                          : 42
+#      FD_1                        : 24
+#      FDC                         : 27
+#      FDC_1                       : 1
+#      FDCE                        : 28
+#      FDCE_1                      : 6
+#      FDE                         : 42
+#      FDE_1                       : 1
+#      FDP_1                       : 1
+#      FDPE_1                      : 1
+#      FDR                         : 33
+# Clock Buffers                    : 4
+#      BUFG                        : 1
+#      BUFGP                       : 3
+# IO Buffers                       : 56
+#      IBUF                        : 9
+#      IOBUF                       : 1
+#      OBUF                        : 46
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 4vlx200ff1513-10 
+
+ Number of Slices:                     156  out of  89088     0%  
+ Number of Slice Flip Flops:           206  out of  178176     0%  
+ Number of 4 input LUTs:               270  out of  178176     0%  
+ Number of IOs:                         70
+ Number of bonded IOBs:                 59  out of    960     6%  
+ Number of GCLKs:                        4  out of     32    12%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLOCK_27                           | BUFGP                  | 135   |
+u2/u0/mI2S_CLK1                    | BUFG                   | 29    |
+CLOCK_25                           | BUFGP                  | 25    |
+NTSC/decoMAIN/START                | NONE(NTSC/vvv_5)       | 9     |
+TD_VS                              | BUFGP                  | 8     |
+-----------------------------------+------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+-----------------------------------------------------+------------------------+-------+
+Control Signal                                       | Buffer(FF name)        | Load  |
+-----------------------------------------------------+------------------------+-------+
+NTSC/orst_tvdecoder_inv(NTSC/orst_tvdecoder_inv135:O)| NONE(H_Cont_2)         | 29    |
+u2/iRST_N_inv(u2/iRST_N_inv1:O)                      | NONE(u2/LUT_INDEX_1)   | 35    |
+-----------------------------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -10
+
+   Minimum period: 6.823ns (Maximum Frequency: 146.563MHz)
+   Minimum input arrival time before clock: 2.341ns
+   Maximum output required time after clock: 12.829ns
+   Maximum combinational path delay: 12.062ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLOCK_27'
+  Clock period: 6.823ns (frequency: 146.563MHz)
+  Total number of paths / destination ports: 1989 / 177
+-------------------------------------------------------------------------
+Delay:               3.411ns (Levels of Logic = 8)
+  Source:            NTSC/decoMAIN/R2_0 (FF)
+  Destination:       NTSC/decoMAIN/VS (FF)
+  Source Clock:      CLOCK_27 falling
+  Destination Clock: CLOCK_27 rising
+
+  Data Path: NTSC/decoMAIN/R2_0 to NTSC/decoMAIN/VS
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD_1:C->Q             2   0.307   0.783  NTSC/decoMAIN/R2_0 (NTSC/decoMAIN/R2_0)
+     LUT4:I0->O            1   0.195   0.000  NTSC/decoMAIN/_and0000_wg_lut<0> (N8)
+     MUXCY:S->O            1   0.366   0.000  NTSC/decoMAIN/_and0000_wg_cy<0> (NTSC/decoMAIN/_and0000_wg_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  NTSC/decoMAIN/_and0000_wg_cy<1> (NTSC/decoMAIN/_and0000_wg_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  NTSC/decoMAIN/_and0000_wg_cy<2> (NTSC/decoMAIN/_and0000_wg_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  NTSC/decoMAIN/_and0000_wg_cy<3> (NTSC/decoMAIN/_and0000_wg_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  NTSC/decoMAIN/_and0000_wg_cy<4> (NTSC/decoMAIN/_and0000_wg_cy<4>)
+     MUXCY:CI->O           2   0.369   0.627  NTSC/decoMAIN/_and0000_wg_cy<5> (NTSC/decoMAIN/_and0000_wg_cy<5>)
+     LUT3:I2->O            1   0.195   0.000  NTSC/decoMAIN/VS_rstpot (N811)
+     FD:D                      0.391          NTSC/decoMAIN/VS
+    ----------------------------------------
+    Total                      3.411ns (2.001ns logic, 1.410ns route)
+                                       (58.7% logic, 41.3% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'u2/u0/mI2S_CLK1'
+  Clock period: 5.965ns (frequency: 167.645MHz)
+  Total number of paths / destination ports: 333 / 56
+-------------------------------------------------------------------------
+Delay:               2.983ns (Levels of Logic = 3)
+  Source:            u2/u0/mST_0 (FF)
+  Destination:       u2/mI2S_STR (FF)
+  Source Clock:      u2/u0/mI2S_CLK1 falling
+  Destination Clock: u2/u0/mI2S_CLK1 rising
+
+  Data Path: u2/u0/mST_0 to u2/mI2S_STR
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE_1:C->Q          13   0.307   0.959  u2/u0/mST_0 (u2/u0/mST_0)
+     LUT4:I0->O            1   0.195   0.000  u2/u0/_cmp_eq00001 (N822)
+     MUXF5:I1->O           4   0.374   0.562  u2/u0/_cmp_eq0000_f5 (u2/mI2S_RDY)
+     LUT4:I3->O            1   0.195   0.000  u2/_mux00001 (u2/_mux0000)
+     FDCE:D                    0.391          u2/mI2S_STR
+    ----------------------------------------
+    Total                      2.983ns (1.462ns logic, 1.521ns route)
+                                       (49.0% logic, 51.0% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLOCK_25'
+  Clock period: 6.038ns (frequency: 165.616MHz)
+  Total number of paths / destination ports: 2379 / 33
+-------------------------------------------------------------------------
+Delay:               6.038ns (Levels of Logic = 25)
+  Source:            u2/u0/mI2S_CLK_DIV_2 (FF)
+  Destination:       u2/u0/mI2S_CLK_DIV_15 (FF)
+  Source Clock:      CLOCK_25 rising
+  Destination Clock: CLOCK_25 rising
+
+  Data Path: u2/u0/mI2S_CLK_DIV_2 to u2/u0/mI2S_CLK_DIV_15
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              2   0.360   0.783  u2/u0/mI2S_CLK_DIV_2 (u2/u0/mI2S_CLK_DIV_2)
+     LUT1:I0->O            1   0.195   0.000  u2/u0/mI2S_CLK_DIV_2_rt (u2/u0/mI2S_CLK_DIV_2_rt)
+     MUXCY:S->O            1   0.366   0.000  u2/u0/Mcompar__cmp_lt0002_cy<0> (u2/u0/Mcompar__cmp_lt0002_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcompar__cmp_lt0002_cy<1> (u2/u0/Mcompar__cmp_lt0002_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcompar__cmp_lt0002_cy<2> (u2/u0/Mcompar__cmp_lt0002_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcompar__cmp_lt0002_cy<3> (u2/u0/Mcompar__cmp_lt0002_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcompar__cmp_lt0002_cy<4> (u2/u0/Mcompar__cmp_lt0002_cy<4>)
+     MUXCY:CI->O           2   0.264   0.552  u2/u0/Mcompar__cmp_lt0002_cy<5> (u2/u0/Mcompar__cmp_lt0002_cy<5>)
+     INV:I->O             16   0.426   0.980  u2/u0/Mcompar__cmp_lt0002_cy<5>_inv_INV_0 (u2/u0/mI2S_CLK_DIV_Eqn_bis_0)
+     LUT2:I1->O            2   0.195   0.000  u2/u0/Mcount_mI2S_CLK_DIV_lut<0> (u2/u0/Result<0>)
+     MUXCY:S->O            1   0.366   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<0> (u2/u0/Mcount_mI2S_CLK_DIV_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<1> (u2/u0/Mcount_mI2S_CLK_DIV_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<2> (u2/u0/Mcount_mI2S_CLK_DIV_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<3> (u2/u0/Mcount_mI2S_CLK_DIV_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<4> (u2/u0/Mcount_mI2S_CLK_DIV_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<5> (u2/u0/Mcount_mI2S_CLK_DIV_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<6> (u2/u0/Mcount_mI2S_CLK_DIV_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<7> (u2/u0/Mcount_mI2S_CLK_DIV_cy<7>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<8> (u2/u0/Mcount_mI2S_CLK_DIV_cy<8>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<9> (u2/u0/Mcount_mI2S_CLK_DIV_cy<9>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<10> (u2/u0/Mcount_mI2S_CLK_DIV_cy<10>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<11> (u2/u0/Mcount_mI2S_CLK_DIV_cy<11>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<12> (u2/u0/Mcount_mI2S_CLK_DIV_cy<12>)
+     MUXCY:CI->O           1   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<13> (u2/u0/Mcount_mI2S_CLK_DIV_cy<13>)
+     MUXCY:CI->O           0   0.044   0.000  u2/u0/Mcount_mI2S_CLK_DIV_cy<14> (u2/u0/Mcount_mI2S_CLK_DIV_cy<14>)
+     XORCY:CI->O           1   0.360   0.000  u2/u0/Mcount_mI2S_CLK_DIV_xor<15> (u2/u0/Result<15>)
+     FDC:D                     0.391          u2/u0/mI2S_CLK_DIV_15
+    ----------------------------------------
+    Total                      6.038ns (3.723ns logic, 2.315ns route)
+                                       (61.7% logic, 38.3% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'NTSC/decoMAIN/START'
+  Clock period: 2.748ns (frequency: 363.888MHz)
+  Total number of paths / destination ports: 45 / 9
+-------------------------------------------------------------------------
+Delay:               2.748ns (Levels of Logic = 10)
+  Source:            NTSC/vvv_0 (FF)
+  Destination:       NTSC/vvv_8 (FF)
+  Source Clock:      NTSC/decoMAIN/START rising
+  Destination Clock: NTSC/decoMAIN/START rising
+
+  Data Path: NTSC/vvv_0 to NTSC/vvv_8
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDR:C->Q              1   0.360   0.534  NTSC/vvv_0 (NTSC/vvv_0)
+     INV:I->O              2   0.426   0.000  NTSC/Mcount_vvv_lut<0>_INV_0 (NTSC/Result<0>4)
+     MUXCY:S->O            1   0.366   0.000  NTSC/Mcount_vvv_cy<0> (NTSC/Mcount_vvv_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  NTSC/Mcount_vvv_cy<1> (NTSC/Mcount_vvv_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  NTSC/Mcount_vvv_cy<2> (NTSC/Mcount_vvv_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  NTSC/Mcount_vvv_cy<3> (NTSC/Mcount_vvv_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  NTSC/Mcount_vvv_cy<4> (NTSC/Mcount_vvv_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  NTSC/Mcount_vvv_cy<5> (NTSC/Mcount_vvv_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  NTSC/Mcount_vvv_cy<6> (NTSC/Mcount_vvv_cy<6>)
+     MUXCY:CI->O           0   0.044   0.000  NTSC/Mcount_vvv_cy<7> (NTSC/Mcount_vvv_cy<7>)
+     XORCY:CI->O           1   0.360   0.000  NTSC/Mcount_vvv_xor<8> (NTSC/Result<8>2)
+     FDR:D                     0.391          NTSC/vvv_8
+    ----------------------------------------
+    Total                      2.748ns (2.214ns logic, 0.534ns route)
+                                       (80.6% logic, 19.4% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'TD_VS'
+  Clock period: 3.461ns (frequency: 288.946MHz)
+  Total number of paths / destination ports: 92 / 16
+-------------------------------------------------------------------------
+Delay:               3.461ns (Levels of Logic = 2)
+  Source:            NTSC/Fcnt_3 (FF)
+  Destination:       NTSC/Fcnt_0 (FF)
+  Source Clock:      TD_VS rising
+  Destination Clock: TD_VS rising
+
+  Data Path: NTSC/Fcnt_3 to NTSC/Fcnt_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             5   0.360   0.790  NTSC/Fcnt_3 (NTSC/Fcnt_3)
+     LUT4:I0->O            1   0.195   0.547  NTSC/_cmp_lt00011_SW0 (N591)
+     LUT4:I3->O            8   0.195   0.631  NTSC/_cmp_lt00011 (NTSC/_cmp_lt0001)
+     FDCE:CE                   0.743          NTSC/Fcnt_0
+    ----------------------------------------
+    Total                      3.461ns (1.493ns logic, 1.968ns route)
+                                       (43.1% logic, 56.9% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'u2/u0/mI2S_CLK1'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              2.263ns (Levels of Logic = 2)
+  Source:            LCM_SDAT (PAD)
+  Destination:       u2/u0/mACK (FF)
+  Destination Clock: u2/u0/mI2S_CLK1 falling
+
+  Data Path: LCM_SDAT to u2/u0/mACK
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IOBUF:IO->O           1   0.965   0.712  LCM_SDAT_IOBUF (N764)
+     LUT2:I1->O            1   0.195   0.000  u2/u0/_mux00021 (u2/u0/_mux0002)
+     FDCE_1:D                  0.391          u2/u0/mACK
+    ----------------------------------------
+    Total                      2.263ns (1.551ns logic, 0.712ns route)
+                                       (68.5% logic, 31.5% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK_27'
+  Total number of paths / destination ports: 34 / 34
+-------------------------------------------------------------------------
+Offset:              2.341ns (Levels of Logic = 2)
+  Source:            TD_DATA<5> (PAD)
+  Destination:       NTSC/decoMAIN/VS (FF)
+  Destination Clock: CLOCK_27 rising
+
+  Data Path: TD_DATA<5> to NTSC/decoMAIN/VS
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             5   0.965   0.790  TD_DATA_5_IBUF (TD_DATA_5_IBUF)
+     LUT3:I0->O            1   0.195   0.000  NTSC/decoMAIN/VS_rstpot (N811)
+     FD:D                      0.391          NTSC/decoMAIN/VS
+    ----------------------------------------
+    Total                      2.341ns (1.551ns logic, 0.790ns route)
+                                       (66.3% logic, 33.7% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'u2/u0/mI2S_CLK1'
+  Total number of paths / destination ports: 14 / 3
+-------------------------------------------------------------------------
+Offset:              7.300ns (Levels of Logic = 4)
+  Source:            u2/u0/mST_0 (FF)
+  Destination:       LCM_SDAT (PAD)
+  Source Clock:      u2/u0/mI2S_CLK1 falling
+
+  Data Path: u2/u0/mST_0 to LCM_SDAT
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE_1:C->Q          13   0.307   0.959  u2/u0/mST_0 (u2/u0/mST_0)
+     LUT4:I0->O            1   0.195   0.000  u2/u0/_cmp_eq00001 (N822)
+     MUXF5:I1->O           4   0.374   0.780  u2/u0/_cmp_eq0000_f5 (u2/mI2S_RDY)
+     LUT4:I0->O            1   0.195   0.534  u2/u0/_xor00061 (u2/u0/_xor0006)
+     IOBUF:T->IO               3.957          LCM_SDAT_IOBUF (LCM_SDAT)
+    ----------------------------------------
+    Total                      7.300ns (5.028ns logic, 2.272ns route)
+                                       (68.9% logic, 31.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'TD_VS'
+  Total number of paths / destination ports: 14 / 2
+-------------------------------------------------------------------------
+Offset:              6.732ns (Levels of Logic = 3)
+  Source:            NTSC/Fcnt_5 (FF)
+  Destination:       LCM_VSYNC (PAD)
+  Source Clock:      TD_VS rising
+
+  Data Path: NTSC/Fcnt_5 to LCM_VSYNC
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             4   0.360   0.780  NTSC/Fcnt_5 (NTSC/Fcnt_5)
+     LUT4:I0->O            1   0.195   0.712  NTSC/otv_vs_SW0 (N31)
+     LUT4:I1->O            1   0.195   0.534  NTSC/otv_vs (LCM_VSYNC_OBUF)
+     OBUF:I->O                 3.957          LCM_VSYNC_OBUF (LCM_VSYNC)
+    ----------------------------------------
+    Total                      6.732ns (4.707ns logic, 2.025ns route)
+                                       (69.9% logic, 30.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK_25'
+  Total number of paths / destination ports: 9 / 2
+-------------------------------------------------------------------------
+Offset:              7.711ns (Levels of Logic = 4)
+  Source:            NTSC/syst_2 (FF)
+  Destination:       TD_RESET (PAD)
+  Source Clock:      CLOCK_25 rising
+
+  Data Path: NTSC/syst_2 to TD_RESET
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              3   0.360   0.781  NTSC/syst_2 (NTSC/syst_2)
+     LUT4:I0->O            1   0.195   0.765  NTSC/orst_tvdecoder_inv123 (NTSC/orst_tvdecoder_inv1_map374)
+     LUT3:I0->O            2   0.195   0.730  NTSC/orst_tvdecoder_inv126 (NTSC/orst_tvdecoder_inv1_map375)
+     LUT3:I1->O            1   0.195   0.534  NTSC/orst_tvdecoder1 (TD_RESET_OBUF)
+     OBUF:I->O                 3.957          TD_RESET_OBUF (TD_RESET)
+    ----------------------------------------
+    Total                      7.711ns (4.902ns logic, 2.809ns route)
+                                       (63.6% logic, 36.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK_27'
+  Total number of paths / destination ports: 1811 / 37
+-------------------------------------------------------------------------
+Offset:              12.829ns (Levels of Logic = 10)
+  Source:            NTSC/hhh_7 (FF)
+  Destination:       LCM_DATA<3> (PAD)
+  Source Clock:      CLOCK_27 rising
+
+  Data Path: NTSC/hhh_7 to LCM_DATA<3>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDR:C->Q              2   0.360   0.783  NTSC/hhh_7 (NTSC/hhh_7)
+     LUT4:I0->O            2   0.195   0.783  NTSC/_cmp_le0000249_SW0 (N766)
+     LUT4:I0->O            1   0.195   0.000  NTSC/_cmp_le00002116_SW02 (N824)
+     MUXF5:I0->O           4   0.382   0.780  NTSC/_cmp_le00002116_SW0_f5 (N768)
+     LUT3:I0->O            2   0.195   0.627  NTSC/_cmp_le00002116 (NTSC/_cmp_le0000)
+     LUT4:I2->O            4   0.195   0.727  NTSC/Yt<6> (NTSC/Yt<6>)
+     LUT2:I1->O            2   0.195   0.783  NTSC/_cmp_ge0000119 (NTSC/_cmp_ge00001_map383)
+     LUT4:I0->O            5   0.195   0.790  NTSC/_cmp_ge0000122 (NTSC/_cmp_ge0000)
+     LUT3:I0->O            1   0.195   0.765  NTSC/otv_data<2>32_SW1 (N792)
+     LUT4:I0->O            1   0.195   0.534  NTSC/otv_data<2>32 (LCM_DATA_2_OBUF)
+     OBUF:I->O                 3.957          LCM_DATA_2_OBUF (LCM_DATA<2>)
+    ----------------------------------------
+    Total                     12.829ns (6.259ns logic, 6.570ns route)
+                                       (48.8% logic, 51.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'NTSC/decoMAIN/START'
+  Total number of paths / destination ports: 325 / 8
+-------------------------------------------------------------------------
+Offset:              12.671ns (Levels of Logic = 10)
+  Source:            NTSC/vvv_4 (FF)
+  Destination:       LCM_DATA<3> (PAD)
+  Source Clock:      NTSC/decoMAIN/START rising
+
+  Data Path: NTSC/vvv_4 to LCM_DATA<3>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDR:C->Q              3   0.360   0.625  NTSC/vvv_4 (NTSC/vvv_4)
+     LUT4:I2->O            2   0.195   0.783  NTSC/_cmp_le0000249_SW0 (N766)
+     LUT4:I0->O            1   0.195   0.000  NTSC/_cmp_le00002116_SW02 (N824)
+     MUXF5:I0->O           4   0.382   0.780  NTSC/_cmp_le00002116_SW0_f5 (N768)
+     LUT3:I0->O            2   0.195   0.627  NTSC/_cmp_le00002116 (NTSC/_cmp_le0000)
+     LUT4:I2->O            4   0.195   0.727  NTSC/Yt<6> (NTSC/Yt<6>)
+     LUT2:I1->O            2   0.195   0.783  NTSC/_cmp_ge0000119 (NTSC/_cmp_ge00001_map383)
+     LUT4:I0->O            5   0.195   0.790  NTSC/_cmp_ge0000122 (NTSC/_cmp_ge0000)
+     LUT3:I0->O            1   0.195   0.765  NTSC/otv_data<2>32_SW1 (N792)
+     LUT4:I0->O            1   0.195   0.534  NTSC/otv_data<2>32 (LCM_DATA_2_OBUF)
+     OBUF:I->O                 3.957          LCM_DATA_2_OBUF (LCM_DATA<2>)
+    ----------------------------------------
+    Total                     12.671ns (6.259ns logic, 6.412ns route)
+                                       (49.4% logic, 50.6% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 73 / 8
+-------------------------------------------------------------------------
+Delay:               12.062ns (Levels of Logic = 9)
+  Source:            SW0 (PAD)
+  Destination:       LCM_DATA<3> (PAD)
+
+  Data Path: SW0 to LCM_DATA<3>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            15   0.965   0.977  SW0_IBUF (SW0_IBUF)
+     LUT4:I1->O            6   0.195   0.653  NTSC/otv_data<0>1 (NTSC/N1)
+     LUT4:I2->O            1   0.195   0.547  NTSC/Yt<6>_SW0 (N116)
+     LUT4:I3->O            4   0.195   0.727  NTSC/Yt<6> (NTSC/Yt<6>)
+     LUT2:I1->O            2   0.195   0.783  NTSC/_cmp_ge0000119 (NTSC/_cmp_ge00001_map383)
+     LUT4:I0->O            5   0.195   0.790  NTSC/_cmp_ge0000122 (NTSC/_cmp_ge0000)
+     LUT3:I0->O            1   0.195   0.765  NTSC/otv_data<2>32_SW1 (N792)
+     LUT4:I0->O            1   0.195   0.534  NTSC/otv_data<2>32 (LCM_DATA_2_OBUF)
+     OBUF:I->O                 3.957          LCM_DATA_2_OBUF (LCM_DATA<2>)
+    ----------------------------------------
+    Total                     12.062ns (6.287ns logic, 5.775ns route)
+                                       (52.1% logic, 47.9% route)
+
+=========================================================================
+CPU : 52.70 / 53.27 s | Elapsed : 53.00 / 54.00 s
+ 
+--> 
+
+Total memory usage is 433712 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :  176 (   0 filtered)
+Number of infos    :   11 (   0 filtered)
+

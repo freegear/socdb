@@ -1,0 +1,611 @@
+Release  - xst I.31
+Copyright (c) 1995-2006 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 0.17 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.17 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Reading design: I2C_AV_Config.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "I2C_AV_Config.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "I2C_AV_Config"
+Output Format                      : NGC
+Target Device                      : xc4vlx200-10-ff1513
+
+---- Source Options
+Top Module Name                    : I2C_AV_Config
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 32
+Number of Regional Clock Buffers   : 48
+Register Duplication               : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+DSP48 Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : I2C_AV_Config.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+use_dsp48                          : auto
+Optimize Instantiated Primitives   : NO
+use_clock_enable                   : Auto
+use_sync_set                       : Auto
+use_sync_reset                     : Auto
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "I2C_Controller.v" in library work
+Compiling verilog file "I2C_AV_Config.v" in library work
+Module <I2C_Controller> compiled
+Module <I2C_AV_Config> compiled
+No errors in compilation
+Analysis of file <"I2C_AV_Config.prj"> succeeded.
+ 
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for module <I2C_AV_Config> in library <work> with parameters.
+	A_PATH_CTRL = "00000000000000000000000000000101"
+	CLK_Freq = "00000010111110101111000010000000"
+	D_PATH_CTRL = "00000000000000000000000000000110"
+	Dummy_DATA = "00000000000000000000000000000000"
+	I2C_Freq = "00000000000000000100111000100000"
+	LUT_SIZE = "00000000000000000000000000110100"
+	POWER_ON = "00000000000000000000000000000111"
+	SAMPLE_CTRL = "00000000000000000000000000001001"
+	SET_ACTIVE = "00000000000000000000000000001010"
+	SET_FORMAT = "00000000000000000000000000001000"
+	SET_HEAD_L = "00000000000000000000000000000011"
+	SET_HEAD_R = "00000000000000000000000000000100"
+	SET_LIN_L = "00000000000000000000000000000001"
+	SET_LIN_R = "00000000000000000000000000000010"
+	SET_VIDEO = "00000000000000000000000000001011"
+
+Analyzing hierarchy for module <I2C_Controller> in library <work>.
+
+Building hierarchy successfully finished.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing top module <I2C_AV_Config>.
+	CLK_Freq = 32'sb00000010111110101111000010000000
+	I2C_Freq = 32'sb00000000000000000100111000100000
+	LUT_SIZE = 32'sb00000000000000000000000000110100
+	Dummy_DATA = 32'sb00000000000000000000000000000000
+	SET_LIN_L = 32'sb00000000000000000000000000000001
+	SET_LIN_R = 32'sb00000000000000000000000000000010
+	SET_HEAD_L = 32'sb00000000000000000000000000000011
+	SET_HEAD_R = 32'sb00000000000000000000000000000100
+	A_PATH_CTRL = 32'sb00000000000000000000000000000101
+	D_PATH_CTRL = 32'sb00000000000000000000000000000110
+	POWER_ON = 32'sb00000000000000000000000000000111
+	SET_FORMAT = 32'sb00000000000000000000000000001000
+	SAMPLE_CTRL = 32'sb00000000000000000000000000001001
+	SET_ACTIVE = 32'sb00000000000000000000000000001010
+	SET_VIDEO = 32'sb00000000000000000000000000001011
+WARNING:Xst:905 - "I2C_AV_Config.v" line 183: The signals <LUT_INDEX> are missing in the sensitivity list of always block.
+WARNING:Xst:852 - "I2C_AV_Config.v" line 129: Unconnected input port 'W_R' of instance 'u0' is tied to GND.
+Module <I2C_AV_Config> is correct for synthesis.
+ 
+Analyzing module <I2C_Controller> in library <work>.
+Module <I2C_Controller> is correct for synthesis.
+ 
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <I2C_Controller>.
+    Related source file is "I2C_Controller.v".
+WARNING:Xst:647 - Input <W_R> is never used.
+    Found 6-bit up counter for signal <SD_COUNTER>.
+    Found 1-bit register for signal <END>.
+    Found 1-bit register for signal <SDO>.
+    Found 1-bit tristate buffer for signal <I2C_SDAT>.
+    Found 6-bit comparator greatequal for signal <$cmp_ge0000> created at line 66.
+    Found 6-bit comparator lessequal for signal <$cmp_le0000> created at line 66.
+    Found 6-bit comparator less for signal <$cmp_lt0000> created at line 79.
+    Found 1-bit register for signal <ACK1>.
+    Found 1-bit register for signal <ACK2>.
+    Found 1-bit register for signal <ACK3>.
+    Found 1-bit register for signal <SCLK>.
+    Found 24-bit register for signal <SD>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  30 D-type flip-flop(s).
+	inferred   3 Comparator(s).
+	inferred   1 Tristate(s).
+Unit <I2C_Controller> synthesized.
+
+
+Synthesizing Unit <I2C_AV_Config>.
+    Related source file is "I2C_AV_Config.v".
+    Found finite state machine <FSM_0> for signal <mSetup_ST>.
+    -----------------------------------------------------------------------
+    | States             | 3                                              |
+    | Transitions        | 5                                              |
+    | Inputs             | 2                                              |
+    | Outputs            | 4                                              |
+    | Clock              | mI2C_CTRL_CLK (rising_edge)                    |
+    | Clock enable       | $cmp_lt0000 (positive)                         |
+    | Reset              | iRST_N (negative)                              |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | 0000                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 51x16-bit ROM for signal <$mux0002>.
+WARNING:Xst:737 - Found 16-bit latch for signal <LUT_DATA>.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+    Found 7-bit comparator greatequal for signal <$cmp_ge0000> created at line 149.
+    Found 7-bit comparator less for signal <$cmp_lt0000> created at line 149.
+    Found 6-bit comparator less for signal <$cmp_lt0001> created at line 153.
+    Found 16-bit comparator less for signal <$cmp_lt0002> created at line 119.
+    Found 49-bit register for signal <HQ>.
+    Found 6-bit up counter for signal <LUT_INDEX>.
+    Found 16-bit up counter for signal <mI2C_CLK_DIV>.
+    Found 1-bit register for signal <mI2C_CTRL_CLK>.
+    Found 24-bit register for signal <mI2C_DATA>.
+    Found 1-bit register for signal <mI2C_GO>.
+    Found 49-bit register for signal <VQ>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred   1 ROM(s).
+	inferred   2 Counter(s).
+	inferred 124 D-type flip-flop(s).
+	inferred   4 Comparator(s).
+Unit <I2C_AV_Config> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 51x16-bit ROM                                         : 1
+# Counters                                             : 3
+ 16-bit up counter                                     : 1
+ 6-bit up counter                                      : 2
+# Registers                                            : 12
+ 1-bit register                                        : 8
+ 24-bit register                                       : 2
+ 49-bit register                                       : 2
+# Latches                                              : 1
+ 16-bit latch                                          : 1
+# Comparators                                          : 7
+ 16-bit comparator less                                : 1
+ 6-bit comparator greatequal                           : 1
+ 6-bit comparator less                                 : 2
+ 6-bit comparator lessequal                            : 1
+ 7-bit comparator greatequal                           : 1
+ 7-bit comparator less                                 : 1
+# Tristates                                            : 1
+ 1-bit tristate buffer                                 : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <mSetup_ST> on signal <mSetup_ST[1:2]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ 0000  | 00
+ 0001  | 01
+ 0010  | 11
+-------------------
+Loading device for application Rf_Device from file '4vlx200.nph' in environment D:\Xilinx.
+WARNING:Xst:2404 -  FFs/Latches <mI2C_DATA<23:23>> (without init value) have a constant value of 0 in block <I2C_AV_Config>.
+WARNING:Xst:1710 - FF/Latch  <mI2C_DATA_6> (without init value) has a constant value of 0 in block <I2C_AV_Config>.
+WARNING:Xst:1710 - FF/Latch  <mI2C_DATA_5> (without init value) has a constant value of 0 in block <I2C_AV_Config>.
+WARNING:Xst:1710 - FF/Latch  <mI2C_DATA_3> (without init value) has a constant value of 0 in block <I2C_AV_Config>.
+INFO:Xst:2261 - The FF/Latch <mI2C_DATA_4> in Unit <I2C_AV_Config> is equivalent to the following 2 FFs/Latches, which will be removed : <mI2C_DATA_2> <mI2C_DATA_1> 
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 1
+# ROMs                                                 : 1
+ 51x16-bit ROM                                         : 1
+# Counters                                             : 3
+ 16-bit up counter                                     : 1
+ 6-bit up counter                                      : 2
+# Registers                                            : 150
+ Flip-Flops                                            : 150
+# Latches                                              : 1
+ 16-bit latch                                          : 1
+# Comparators                                          : 7
+ 16-bit comparator less                                : 1
+ 6-bit comparator greatequal                           : 1
+ 6-bit comparator less                                 : 2
+ 6-bit comparator lessequal                            : 1
+ 7-bit comparator greatequal                           : 1
+ 7-bit comparator less                                 : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1988 - Unit <I2C_AV_Config>: instances <Mcompar__cmp_lt0000>, <Mcompar__cmp_ge0000> of unit <LPM_COMPARE_4> and unit <LPM_COMPARE_6> are dual, second instance is removed
+INFO:Xst:2261 - The FF/Latch <SD_16> in Unit <I2C_Controller> is equivalent to the following 3 FFs/Latches, which will be removed : <SD_17> <SD_19> <SD_23> 
+INFO:Xst:2261 - The FF/Latch <SD_18> in Unit <I2C_Controller> is equivalent to the following 2 FFs/Latches, which will be removed : <SD_20> <SD_21> 
+WARNING:Xst:1710 - FF/Latch  <SD_16> (without init value) has a constant value of 0 in block <I2C_Controller>.
+
+Optimizing unit <I2C_AV_Config> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block I2C_AV_Config, actual ratio is 0.
+FlipFlop u0/SD_COUNTER_0 has been replicated 2 time(s)
+FlipFlop u0/SD_COUNTER_1 has been replicated 1 time(s)
+FlipFlop u0/SD_COUNTER_2 has been replicated 3 time(s)
+FlipFlop u0/SD_COUNTER_3 has been replicated 2 time(s)
+FlipFlop u0/SD_COUNTER_4 has been replicated 2 time(s)
+
+Final Macro Processing ...
+
+Processing Unit <I2C_AV_Config> :
+INFO:Xst:2387 - HDL ADVISOR - A 49-bit shift register was found for signal <HQ_48> and currently occupies 49 logic cells (24 slices). Removing the set/reset logic would take advantage of SRL16 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
+INFO:Xst:2387 - HDL ADVISOR - A 49-bit shift register was found for signal <VQ_48> and currently occupies 49 logic cells (24 slices). Removing the set/reset logic would take advantage of SRL16 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
+Unit <I2C_AV_Config> processed.
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 182
+ Flip-Flops                                            : 182
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : I2C_AV_Config.ngr
+Top Level Output File Name         : I2C_AV_Config
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 11
+
+Cell Usage :
+# BELS                             : 237
+#      GND                         : 1
+#      INV                         : 4
+#      LUT1                        : 2
+#      LUT2                        : 23
+#      LUT2_L                      : 1
+#      LUT3                        : 19
+#      LUT3_L                      : 3
+#      LUT4                        : 93
+#      LUT4_D                      : 1
+#      LUT4_L                      : 14
+#      MULT_AND                    : 1
+#      MUXCY                       : 21
+#      MUXF5                       : 25
+#      MUXF6                       : 13
+#      VCC                         : 1
+#      XORCY                       : 15
+# FlipFlops/Latches                : 198
+#      FDC                         : 117
+#      FDCE                        : 10
+#      FDE                         : 36
+#      FDP                         : 3
+#      FDPE                        : 16
+#      LD                          : 16
+# Clock Buffers                    : 2
+#      BUFG                        : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 10
+#      IBUF                        : 3
+#      IOBUF                       : 1
+#      OBUF                        : 6
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 4vlx200ff1513-10 
+
+ Number of Slices:                     156  out of  89088     0%  
+ Number of Slice Flip Flops:           198  out of  178176     0%  
+ Number of 4 input LUTs:               160  out of  178176     0%  
+ Number of IOs:                         11
+ Number of bonded IOBs:                 11  out of    960     1%  
+ Number of GCLKs:                        2  out of     32     6%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+iCLK                               | BUFGP                  | 115   |
+mI2C_CTRL_CLK1                     | BUFG                   | 67    |
+_or0000(_or00002:O)                | NONE(*)(LUT_DATA_9)    | 16    |
+-----------------------------------+------------------------+-------+
+(*) This 1 clock signal(s) are generated by combinatorial logic,
+and XST is not able to identify which are the primary clock signals.
+Please use the CLOCK_SIGNAL constraint to specify the clock signal(s) generated by combinatorial logic.
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+-----------------------------------+------------------------+-------+
+Control Signal                     | Buffer(FF name)        | Load  |
+-----------------------------------+------------------------+-------+
+iRST_N_inv(iRST_N_inv1_INV_0:O)    | NONE(VQ_44)            | 146   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -10
+
+   Minimum period: 6.038ns (Maximum Frequency: 165.616MHz)
+   Minimum input arrival time before clock: 3.637ns
+   Maximum output required time after clock: 7.832ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'iCLK'
+  Clock period: 6.038ns (frequency: 165.616MHz)
+  Total number of paths / destination ports: 2375 / 113
+-------------------------------------------------------------------------
+Delay:               6.038ns (Levels of Logic = 25)
+  Source:            mI2C_CLK_DIV_2 (FF)
+  Destination:       mI2C_CLK_DIV_15 (FF)
+  Source Clock:      iCLK rising
+  Destination Clock: iCLK rising
+
+  Data Path: mI2C_CLK_DIV_2 to mI2C_CLK_DIV_15
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              2   0.360   0.783  mI2C_CLK_DIV_2 (mI2C_CLK_DIV_2)
+     LUT1:I0->O            1   0.195   0.000  mI2C_CLK_DIV_2_rt (mI2C_CLK_DIV_2_rt)
+     MUXCY:S->O            1   0.366   0.000  Mcompar__cmp_lt0002_cy<0> (Mcompar__cmp_lt0002_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<1> (Mcompar__cmp_lt0002_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<2> (Mcompar__cmp_lt0002_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<3> (Mcompar__cmp_lt0002_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<4> (Mcompar__cmp_lt0002_cy<4>)
+     MUXCY:CI->O           2   0.264   0.552  Mcompar__cmp_lt0002_cy<5> (Mcompar__cmp_lt0002_cy<5>)
+     INV:I->O             16   0.426   0.980  Mcompar__cmp_lt0002_cy<5>_inv_INV_0 (mI2C_CLK_DIV_Eqn_bis_0)
+     LUT2:I1->O            2   0.195   0.000  Mcount_mI2C_CLK_DIV_lut<0> (Result<0>)
+     MUXCY:S->O            1   0.366   0.000  Mcount_mI2C_CLK_DIV_cy<0> (Mcount_mI2C_CLK_DIV_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<1> (Mcount_mI2C_CLK_DIV_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<2> (Mcount_mI2C_CLK_DIV_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<3> (Mcount_mI2C_CLK_DIV_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<4> (Mcount_mI2C_CLK_DIV_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<5> (Mcount_mI2C_CLK_DIV_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<6> (Mcount_mI2C_CLK_DIV_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<7> (Mcount_mI2C_CLK_DIV_cy<7>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<8> (Mcount_mI2C_CLK_DIV_cy<8>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<9> (Mcount_mI2C_CLK_DIV_cy<9>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<10> (Mcount_mI2C_CLK_DIV_cy<10>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<11> (Mcount_mI2C_CLK_DIV_cy<11>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<12> (Mcount_mI2C_CLK_DIV_cy<12>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<13> (Mcount_mI2C_CLK_DIV_cy<13>)
+     MUXCY:CI->O           0   0.044   0.000  Mcount_mI2C_CLK_DIV_cy<14> (Mcount_mI2C_CLK_DIV_cy<14>)
+     XORCY:CI->O           1   0.360   0.000  Mcount_mI2C_CLK_DIV_xor<15> (Result<15>)
+     FDC:D                     0.391          mI2C_CLK_DIV_15
+    ----------------------------------------
+    Total                      6.038ns (3.723ns logic, 2.315ns route)
+                                       (61.7% logic, 38.3% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'mI2C_CTRL_CLK1'
+  Clock period: 4.736ns (frequency: 211.144MHz)
+  Total number of paths / destination ports: 657 / 112
+-------------------------------------------------------------------------
+Delay:               4.736ns (Levels of Logic = 5)
+  Source:            u0/SD_COUNTER_3_1 (FF)
+  Destination:       u0/SDO (FF)
+  Source Clock:      mI2C_CTRL_CLK1 rising
+  Destination Clock: mI2C_CTRL_CLK1 rising
+
+  Data Path: u0/SD_COUNTER_3_1 to u0/SDO
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDPE:C->Q             5   0.360   0.790  u0/SD_COUNTER_3_1 (u0/SD_COUNTER_3_1)
+     LUT2:I0->O            2   0.195   0.783  u0/_mux00012521 (N461)
+     LUT4:I0->O            1   0.195   0.000  u0/_mux0001105_G (N561)
+     MUXF5:I1->O           1   0.374   0.547  u0/_mux0001105 (u0/_mux0001_map110)
+     LUT4:I3->O            1   0.195   0.712  u0/_mux0001167 (u0/_mux0001_map121)
+     LUT4:I1->O            1   0.195   0.000  u0/_mux0001386 (u0/_mux0001)
+     FDP:D                     0.391          u0/SDO
+    ----------------------------------------
+    Total                      4.736ns (1.905ns logic, 2.831ns route)
+                                       (40.2% logic, 59.8% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'iCLK'
+  Total number of paths / destination ports: 2 / 2
+-------------------------------------------------------------------------
+Offset:              1.890ns (Levels of Logic = 1)
+  Source:            TD_HQ (PAD)
+  Destination:       HQ_0 (FF)
+  Destination Clock: iCLK rising
+
+  Data Path: TD_HQ to HQ_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   0.965   0.534  TD_HQ_IBUF (TD_HQ_IBUF)
+     FDC:D                     0.391          HQ_0
+    ----------------------------------------
+    Total                      1.890ns (1.356ns logic, 0.534ns route)
+                                       (71.8% logic, 28.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'mI2C_CTRL_CLK1'
+  Total number of paths / destination ports: 39 / 39
+-------------------------------------------------------------------------
+Offset:              3.637ns (Levels of Logic = 3)
+  Source:            iRST_N (PAD)
+  Destination:       u0/SD_0 (FF)
+  Destination Clock: mI2C_CTRL_CLK1 rising
+
+  Data Path: iRST_N to u0/SD_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             3   0.965   0.625  iRST_N_IBUF (iRST_N_IBUF)
+     LUT4_L:I2->LO         1   0.195   0.113  u0/_and0000_SW0 (N554)
+     LUT4:I3->O           18   0.195   0.802  u0/_and0000 (u0/_and0000)
+     FDE:CE                    0.743          u0/SD_0
+    ----------------------------------------
+    Total                      3.637ns (2.098ns logic, 1.539ns route)
+                                       (57.7% logic, 42.3% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'mI2C_CTRL_CLK1'
+  Total number of paths / destination ports: 9 / 2
+-------------------------------------------------------------------------
+Offset:              7.832ns (Levels of Logic = 4)
+  Source:            u0/SD_COUNTER_0 (FF)
+  Destination:       I2C_SCLK (PAD)
+  Source Clock:      mI2C_CTRL_CLK1 rising
+
+  Data Path: u0/SD_COUNTER_0 to I2C_SCLK
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDPE:C->Q            26   0.360   1.222  u0/SD_COUNTER_0 (u0/SD_COUNTER_0)
+     LUT3:I2->O            2   0.195   0.565  u0/I2C_SCLK112 (N261)
+     LUT4:I3->O            1   0.195   0.609  u0/I2C_SCLK33_SW0 (N526)
+     LUT4:I2->O            1   0.195   0.534  u0/I2C_SCLK33 (I2C_SCLK_OBUF)
+     OBUF:I->O                 3.957          I2C_SCLK_OBUF (I2C_SCLK)
+    ----------------------------------------
+    Total                      7.832ns (4.902ns logic, 2.930ns route)
+                                       (62.6% logic, 37.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'iCLK'
+  Total number of paths / destination ports: 3 / 3
+-------------------------------------------------------------------------
+Offset:              5.757ns (Levels of Logic = 2)
+  Source:            mI2C_CTRL_CLK (FF)
+  Destination:       I2C_SCLK (PAD)
+  Source Clock:      iCLK rising
+
+  Data Path: mI2C_CTRL_CLK to I2C_SCLK
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             1   0.360   0.712  mI2C_CTRL_CLK (mI2C_CTRL_CLK1)
+     LUT4:I1->O            1   0.195   0.534  u0/I2C_SCLK33 (I2C_SCLK_OBUF)
+     OBUF:I->O                 3.957          I2C_SCLK_OBUF (I2C_SCLK)
+    ----------------------------------------
+    Total                      5.757ns (4.512ns logic, 1.245ns route)
+                                       (78.4% logic, 21.6% route)
+
+=========================================================================
+CPU : 12.42 / 12.63 s | Elapsed : 12.00 / 13.00 s
+ 
+--> 
+
+Total memory usage is 416584 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   10 (   0 filtered)
+Number of infos    :    7 (   0 filtered)
+

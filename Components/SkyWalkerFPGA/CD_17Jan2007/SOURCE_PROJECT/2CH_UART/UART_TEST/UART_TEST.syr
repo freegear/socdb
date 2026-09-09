@@ -1,0 +1,589 @@
+Release  - xst I.31
+Copyright (c) 1995-2006 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 0.16 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.16 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Reading design: UART_TEST.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "UART_TEST.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "UART_TEST"
+Output Format                      : NGC
+Target Device                      : xc4vlx200-10-ff1513
+
+---- Source Options
+Top Module Name                    : UART_TEST
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 32
+Number of Regional Clock Buffers   : 48
+Register Duplication               : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+DSP48 Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : UART_TEST.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+use_dsp48                          : auto
+Optimize Instantiated Primitives   : NO
+use_clock_enable                   : Auto
+use_sync_set                       : Auto
+use_sync_reset                     : Auto
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "E:/RTL_COMPLETE/SOURCE_PROJECT/2CH_UART/UART_TEST/UART_TEST.vhd" in Library work.
+Architecture rtl of Entity uart_test is up to date.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <UART_TEST> in library <work> (architecture <rtl>).
+
+Building hierarchy successfully finished.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <UART_TEST> in library <work> (Architecture <rtl>).
+Entity <UART_TEST> analyzed. Unit <UART_TEST> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <UART_TEST>.
+    Related source file is "E:/RTL_COMPLETE/SOURCE_PROJECT/2CH_UART/UART_TEST/UART_TEST.vhd".
+    Register <TXD1> equivalent to <TXD> has been removed
+    Found finite state machine <FSM_0> for signal <STATE>.
+    -----------------------------------------------------------------------
+    | States             | 11                                             |
+    | Transitions        | 15                                             |
+    | Inputs             | 3                                              |
+    | Outputs            | 12                                             |
+    | Clock              | TX_CLK (rising_edge)                           |
+    | Reset              | nRST (negative)                                |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | idle                                           |
+    | Power Up State     | idle                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found finite state machine <FSM_1> for signal <RX_STATE>.
+    -----------------------------------------------------------------------
+    | States             | 11                                             |
+    | Transitions        | 12                                             |
+    | Inputs             | 1                                              |
+    | Outputs            | 9                                              |
+    | Clock              | TX_CLK (rising_edge)                           |
+    | Reset              | nRST (negative)                                |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | rx_idle                                        |
+    | Power Up State     | rx_idle                                        |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 64x8-bit ROM for signal <FONT>.
+    Found 16x8-bit ROM for signal <SEG_DATA>.
+    Found 1-bit register for signal <TXD>.
+    Found 6-bit adder for signal <$addsub0000> created at line 368.
+    Found 6-bit comparator greatequal for signal <$cmp_ge0000> created at line 418.
+    Found 6-bit comparator less for signal <$cmp_lt0000> created at line 418.
+    Found 25-bit comparator less for signal <$cmp_lt0001> created at line 213.
+    Found 6-bit comparator less for signal <$cmp_lt0002> created at line 366.
+    Found 25-bit up counter for signal <CNT>.
+    Found 17-bit up counter for signal <CNT0>.
+    Found 6-bit up counter for signal <COUNT>.
+    Found 14-bit up counter for signal <DELAY>.
+    Found 1-bit register for signal <EN>.
+    Found 8-bit register for signal <RXD_DATA>.
+    Found 8-bit register for signal <RXD_DATA_BUF>.
+    Found 1-bit register for signal <SEG_CLK>.
+    Found 4-bit register for signal <SEG_DAT>.
+    Found 4-bit register for signal <SEG_SCAN_SIG>.
+    Found 1-bit register for signal <TX_CLK>.
+    Summary:
+	inferred   2 Finite State Machine(s).
+	inferred   2 ROM(s).
+	inferred   4 Counter(s).
+	inferred  28 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   4 Comparator(s).
+Unit <UART_TEST> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 2
+ 16x8-bit ROM                                          : 1
+ 64x8-bit ROM                                          : 1
+# Adders/Subtractors                                   : 1
+ 6-bit adder                                           : 1
+# Counters                                             : 4
+ 14-bit up counter                                     : 1
+ 17-bit up counter                                     : 1
+ 25-bit up counter                                     : 1
+ 6-bit up counter                                      : 1
+# Registers                                            : 15
+ 1-bit register                                        : 12
+ 4-bit register                                        : 2
+ 8-bit register                                        : 1
+# Comparators                                          : 4
+ 25-bit comparator less                                : 1
+ 6-bit comparator greatequal                           : 1
+ 6-bit comparator less                                 : 2
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_1> for best encoding.
+Optimizing FSM <RX_STATE> on signal <RX_STATE[1:4]> with gray encoding.
+----------------------
+ State    | Encoding
+----------------------
+ rx_idle  | 0000
+ rx_start | 0001
+ rx_bit0  | 0011
+ rx_bit1  | 0010
+ rx_bit2  | 0110
+ rx_bit3  | 0111
+ rx_bit4  | 0101
+ rx_bit5  | 0100
+ rx_bit6  | 1100
+ rx_bit7  | 1101
+ rx_stop  | 1111
+----------------------
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <STATE> on signal <STATE[1:4]> with sequential encoding.
+-------------------
+ State | Encoding
+-------------------
+ idle  | 0000
+ start | 0001
+ bit0  | 0010
+ bit1  | 0011
+ bit2  | 0100
+ bit3  | 0101
+ bit4  | 0110
+ bit5  | 0111
+ bit6  | 1000
+ bit7  | 1001
+ stop  | 1010
+-------------------
+Loading device for application Rf_Device from file '4vlx200.nph' in environment D:\Xilinx.
+INFO:Xst:1651 - Address input of ROM <Mrom_SEG_DATA> is tied to register <SEG_DAT>.
+INFO:Xst:2506 - In order to maximize performance and save block RAM resources, this small ROM will be implemented on LUT. If you want to force its implementation on block, use option/constraint rom_style.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 2
+# ROMs                                                 : 2
+ 16x8-bit ROM                                          : 1
+ 64x8-bit ROM                                          : 1
+# Adders/Subtractors                                   : 1
+ 6-bit adder                                           : 1
+# Counters                                             : 4
+ 14-bit up counter                                     : 1
+ 17-bit up counter                                     : 1
+ 25-bit up counter                                     : 1
+ 6-bit up counter                                      : 1
+# Registers                                            : 36
+ Flip-Flops                                            : 36
+# Comparators                                          : 4
+ 25-bit comparator less                                : 1
+ 6-bit comparator greatequal                           : 1
+ 6-bit comparator less                                 : 2
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1988 - Unit <UART_TEST>: instances <Mcompar__cmp_lt0000>, <Mcompar__cmp_ge0000> of unit <LPM_COMPARE_1> and unit <LPM_COMPARE_4> are dual, second instance is removed
+
+Optimizing unit <UART_TEST> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block UART_TEST, actual ratio is 0.
+FlipFlop COUNT_0 has been replicated 2 time(s)
+FlipFlop COUNT_1 has been replicated 2 time(s)
+FlipFlop COUNT_2 has been replicated 2 time(s)
+FlipFlop COUNT_3 has been replicated 1 time(s)
+FlipFlop COUNT_4 has been replicated 1 time(s)
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 106
+ Flip-Flops                                            : 106
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : UART_TEST.ngr
+Top Level Output File Name         : UART_TEST
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 17
+
+Cell Usage :
+# BELS                             : 377
+#      GND                         : 1
+#      INV                         : 10
+#      LUT1                        : 32
+#      LUT2                        : 69
+#      LUT3                        : 17
+#      LUT4                        : 78
+#      LUT4_D                      : 1
+#      LUT4_L                      : 2
+#      MULT_AND                    : 6
+#      MUXCY                       : 74
+#      MUXF5                       : 21
+#      MUXF6                       : 7
+#      VCC                         : 1
+#      XORCY                       : 58
+# FlipFlops/Latches                : 106
+#      FD                          : 4
+#      FDC                         : 50
+#      FDCE                        : 47
+#      FDP                         : 1
+#      FDS                         : 4
+# Clock Buffers                    : 2
+#      BUFG                        : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 16
+#      IBUF                        : 2
+#      OBUF                        : 14
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 4vlx200ff1513-10 
+
+ Number of Slices:                     114  out of  89088     0%  
+ Number of Slice Flip Flops:           106  out of  178176     0%  
+ Number of 4 input LUTs:               209  out of  178176     0%  
+ Number of IOs:                         17
+ Number of bonded IOBs:                 17  out of    960     1%  
+ Number of GCLKs:                        2  out of     32     6%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLK                                | BUFGP                  | 44    |
+TX_CLK1                            | BUFG                   | 54    |
+SEG_CLK                            | NONE(SEG_DAT_3)        | 8     |
+-----------------------------------+------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+-----------------------------------+------------------------+-------+
+Control Signal                     | Buffer(FF name)        | Load  |
+-----------------------------------+------------------------+-------+
+nRST_inv(nRST_inv1_INV_0:O)        | NONE(CNT_8)            | 98    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -10
+
+   Minimum period: 6.489ns (Maximum Frequency: 154.118MHz)
+   Minimum input arrival time before clock: 2.604ns
+   Maximum output required time after clock: 5.922ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLK'
+  Clock period: 6.489ns (frequency: 154.118MHz)
+  Total number of paths / destination ports: 9209 / 45
+-------------------------------------------------------------------------
+Delay:               6.489ns (Levels of Logic = 39)
+  Source:            CNT_1 (FF)
+  Destination:       CNT_24 (FF)
+  Source Clock:      CLK rising
+  Destination Clock: CLK rising
+
+  Data Path: CNT_1 to CNT_24
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              2   0.360   0.783  CNT_1 (CNT_1)
+     LUT2:I0->O            1   0.195   0.000  Mcompar__cmp_lt0001_lut<0> (N37)
+     MUXCY:S->O            1   0.366   0.000  Mcompar__cmp_lt0001_cy<0> (Mcompar__cmp_lt0001_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<1> (Mcompar__cmp_lt0001_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<2> (Mcompar__cmp_lt0001_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<3> (Mcompar__cmp_lt0001_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<4> (Mcompar__cmp_lt0001_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<5> (Mcompar__cmp_lt0001_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<6> (Mcompar__cmp_lt0001_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<7> (Mcompar__cmp_lt0001_cy<7>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<8> (Mcompar__cmp_lt0001_cy<8>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<9> (Mcompar__cmp_lt0001_cy<9>)
+     MUXCY:CI->O           3   0.264   0.550  Mcompar__cmp_lt0001_cy<10> (Mcompar__cmp_lt0001_cy<10>)
+     INV:I->O              8   0.426   0.809  Mcompar__cmp_lt0001_cy<10>_inv_1_INV_0 (Mcompar__cmp_lt0001_cy<10>_inv)
+     LUT2:I1->O            2   0.195   0.000  Mcount_CNT_lut<0> (Result<0>)
+     MUXCY:S->O            1   0.366   0.000  Mcount_CNT_cy<0> (Mcount_CNT_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<1> (Mcount_CNT_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<2> (Mcount_CNT_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<3> (Mcount_CNT_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<4> (Mcount_CNT_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<5> (Mcount_CNT_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<6> (Mcount_CNT_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<7> (Mcount_CNT_cy<7>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<8> (Mcount_CNT_cy<8>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<9> (Mcount_CNT_cy<9>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<10> (Mcount_CNT_cy<10>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<11> (Mcount_CNT_cy<11>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<12> (Mcount_CNT_cy<12>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<13> (Mcount_CNT_cy<13>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<14> (Mcount_CNT_cy<14>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<15> (Mcount_CNT_cy<15>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<16> (Mcount_CNT_cy<16>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<17> (Mcount_CNT_cy<17>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<18> (Mcount_CNT_cy<18>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<19> (Mcount_CNT_cy<19>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<20> (Mcount_CNT_cy<20>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<21> (Mcount_CNT_cy<21>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<22> (Mcount_CNT_cy<22>)
+     MUXCY:CI->O           0   0.044   0.000  Mcount_CNT_cy<23> (Mcount_CNT_cy<23>)
+     XORCY:CI->O           1   0.360   0.000  Mcount_CNT_xor<24> (Result<24>)
+     FDC:D                     0.391          CNT_24
+    ----------------------------------------
+    Total                      6.489ns (4.346ns logic, 2.142ns route)
+                                       (67.0% logic, 33.0% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'TX_CLK1'
+  Clock period: 5.408ns (frequency: 184.920MHz)
+  Total number of paths / destination ports: 1174 / 90
+-------------------------------------------------------------------------
+Delay:               5.408ns (Levels of Logic = 7)
+  Source:            COUNT_3_1 (FF)
+  Destination:       TXD (FF)
+  Source Clock:      TX_CLK1 rising
+  Destination Clock: TX_CLK1 rising
+
+  Data Path: COUNT_3_1 to TXD
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             4   0.360   0.780  COUNT_3_1 (COUNT_3_1)
+     LUT4:I0->O            1   0.195   0.000  Mrom_FONT4 (N12)
+     MUXF5:I0->O           1   0.382   0.000  Mrom_FONT_f5_1 (Mrom_FONT_f52)
+     MUXF6:I1->O           2   0.395   0.565  Mrom_FONT_f6_0 (Mrom_FONT_f61)
+     LUT4:I3->O            1   0.195   0.765  _mux001324 (_mux0013_map80)
+     LUT3:I0->O            1   0.195   0.000  _mux001349_F (N410)
+     MUXF5:I0->O           1   0.382   0.609  _mux001349 (_mux0013_map85)
+     LUT4:I2->O            1   0.195   0.000  _mux0013183 (_mux0013)
+     FDP:D                     0.391          TXD
+    ----------------------------------------
+    Total                      5.408ns (2.690ns logic, 2.718ns route)
+                                       (49.7% logic, 50.3% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'SEG_CLK'
+  Clock period: 4.117ns (frequency: 242.907MHz)
+  Total number of paths / destination ports: 80 / 12
+-------------------------------------------------------------------------
+Delay:               4.117ns (Levels of Logic = 2)
+  Source:            SEG_SCAN_SIG_3 (FF)
+  Destination:       SEG_DAT_0 (FF)
+  Source Clock:      SEG_CLK rising
+  Destination Clock: SEG_CLK rising
+
+  Data Path: SEG_SCAN_SIG_3 to SEG_DAT_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               7   0.360   0.831  SEG_SCAN_SIG_3 (SEG_SCAN_SIG_3)
+     LUT4:I0->O            5   0.195   0.737  _mux0015<1>1 (_mux0015<1>)
+     LUT2:I1->O            1   0.195   0.534  _mux0012<1>2 (_mux0012<1>_map23)
+     FDS:S                     1.265          SEG_DAT_1
+    ----------------------------------------
+    Total                      4.117ns (2.015ns logic, 2.102ns route)
+                                       (48.9% logic, 51.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'TX_CLK1'
+  Total number of paths / destination ports: 9 / 9
+-------------------------------------------------------------------------
+Offset:              2.604ns (Levels of Logic = 3)
+  Source:            RXD1 (PAD)
+  Destination:       RX_STATE_FFd4 (FF)
+  Destination Clock: TX_CLK1 rising
+
+  Data Path: RXD1 to RX_STATE_FFd4
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             9   0.965   0.671  RXD1_IBUF (RXD1_IBUF)
+     LUT4:I3->O            1   0.195   0.000  RX_STATE_FFd4-In_F (N406)
+     MUXF5:I0->O           1   0.382   0.000  RX_STATE_FFd4-In (RX_STATE_FFd4-In)
+     FDC:D                     0.391          RX_STATE_FFd4
+    ----------------------------------------
+    Total                      2.604ns (1.933ns logic, 0.671ns route)
+                                       (74.2% logic, 25.8% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'TX_CLK1'
+  Total number of paths / destination ports: 2 / 2
+-------------------------------------------------------------------------
+Offset:              4.867ns (Levels of Logic = 1)
+  Source:            TXD (FF)
+  Destination:       TXD (PAD)
+  Source Clock:      TX_CLK1 rising
+
+  Data Path: TXD to TXD
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDP:C->Q              3   0.360   0.550  TXD (TXD1_OBUF)
+     OBUF:I->O                 3.957          TXD_OBUF (TXD)
+    ----------------------------------------
+    Total                      4.867ns (4.317ns logic, 0.550ns route)
+                                       (88.7% logic, 11.3% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'SEG_CLK'
+  Total number of paths / destination ports: 44 / 11
+-------------------------------------------------------------------------
+Offset:              5.922ns (Levels of Logic = 2)
+  Source:            SEG_SCAN_SIG_3 (FF)
+  Destination:       SEG_COM<0> (PAD)
+  Source Clock:      SEG_CLK rising
+
+  Data Path: SEG_SCAN_SIG_3 to SEG_COM<0>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               7   0.360   0.831  SEG_SCAN_SIG_3 (SEG_SCAN_SIG_3)
+     LUT4:I0->O            6   0.195   0.578  SEG_COM<0>1 (SEG_COM_0_OBUF)
+     OBUF:I->O                 3.957          SEG_COM_0_OBUF (SEG_COM<0>)
+    ----------------------------------------
+    Total                      5.922ns (4.512ns logic, 1.410ns route)
+                                       (76.2% logic, 23.8% route)
+
+=========================================================================
+CPU : 13.66 / 13.84 s | Elapsed : 14.00 / 14.00 s
+ 
+--> 
+
+Total memory usage is 416584 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    3 (   0 filtered)
+

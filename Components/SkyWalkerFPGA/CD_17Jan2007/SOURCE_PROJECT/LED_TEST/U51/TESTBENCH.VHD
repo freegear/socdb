@@ -1,0 +1,28 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+ENTITY TESTBENCH IS
+END TESTBENCH;
+
+ARCHITECTURE RTL OF TESTBENCH IS
+    COMPONENT U51
+        Generic ( LED_SPEED_Freq : INTEGER := 8;
+	           CLK_Freq        : INTEGER := 25000000);
+        Port ( CLOCK : in  STD_LOGIC;
+               nRESET : in  STD_LOGIC;
+               LED : out  STD_LOGIC_VECTOR (3 downto 0));
+    end COMPONENT;
+    
+    SIGNAL CLOCK : STD_LOGIC:='0';
+    SIGNAL nRESET : STD_LOGIC;
+    SIGNAL LED : STD_LOGIC_VECTOR( 3 DOWNTO 0);
+BEGIN
+    U0 : U51 GENERIC MAP ( 8, 25000000 )
+             PORT MAP ( CLOCK, nRESET, LED );
+
+    CLOCK <= (NOT CLOCK) AFTER 20ns;
+    
+    nRESET <= '0', '1' AFTER 5ns;
+    
+END RTL;

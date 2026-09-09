@@ -1,0 +1,607 @@
+Release  - xst I.31
+Copyright (c) 1995-2006 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 0.17 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.17 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Reading design: audio.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "audio.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "audio"
+Output Format                      : NGC
+Target Device                      : xc4vlx200-10-ff1513
+
+---- Source Options
+Top Module Name                    : audio
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 32
+Number of Regional Clock Buffers   : 48
+Register Duplication               : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+DSP48 Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : audio.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+use_dsp48                          : auto
+Optimize Instantiated Primitives   : NO
+use_clock_enable                   : Auto
+use_sync_set                       : Auto
+use_sync_reset                     : Auto
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "E:/RTL_COMPLETE/SOURCE_PROJECT/I2S_AUDIO/common.vhd" in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file "E:/RTL_COMPLETE/SOURCE_PROJECT/I2S_AUDIO/L3_CONTROLL.VHD" in Library work.
+Architecture rtl of Entity l3_controller is up to date.
+Compiling vhdl file "E:/RTL_COMPLETE/SOURCE_PROJECT/I2S_AUDIO/audio.vhd" in Library work.
+Package <stereo_codec> compiled.
+Entity <codec_intfc> compiled.
+Entity <codec_intfc> (Architecture <arch>) compiled.
+Entity <audio> compiled.
+Entity <audio> (Architecture <arch>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <audio> in library <work> (architecture <arch>).
+
+Analyzing hierarchy for entity <L3_CONTROLLER> in library <work> (architecture <rtl>).
+
+Analyzing hierarchy for entity <codec_intfc> in library <work> (architecture <arch>) with generics.
+	DIVISOR = 4
+	RESOLUTION = 20
+	XSB_300E = false
+	XST_1_3_X = false
+	XST_2_0_X = false
+	XST_2_1_X = true
+
+Building hierarchy successfully finished.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <audio> in library <work> (Architecture <arch>).
+Entity <audio> analyzed. Unit <audio> generated.
+
+Analyzing Entity <L3_CONTROLLER> in library <work> (Architecture <rtl>).
+Entity <L3_CONTROLLER> analyzed. Unit <L3_CONTROLLER> generated.
+
+Analyzing generic Entity <codec_intfc> in library <work> (Architecture <arch>).
+	XST_1_3_X = false
+	XST_2_0_X = false
+	XST_2_1_X = true
+	XSB_300E = false
+	DIVISOR = 4
+	RESOLUTION = 20
+Entity <codec_intfc> analyzed. Unit <codec_intfc> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <L3_CONTROLLER>.
+    Related source file is "E:/RTL_COMPLETE/SOURCE_PROJECT/I2S_AUDIO/L3_CONTROLL.VHD".
+WARNING:Xst:1780 - Signal <L3_DA> is never used or assigned.
+    Found 32x8-bit ROM for signal <LUT_DATA>.
+    Found 5-bit adder for signal <$addsub0000>.
+    Found 5-bit comparator greatequal for signal <$cmp_ge0000> created at line 97.
+    Found 5-bit comparator greater for signal <$cmp_gt0000> created at line 128.
+    Found 5-bit comparator less for signal <$cmp_lt0000> created at line 97.
+    Found 5-bit comparator less for signal <$cmp_lt0001> created at line 100.
+    Found 5-bit comparator less for signal <$cmp_lt0002> created at line 101.
+    Found 6-bit comparator less for signal <$cmp_lt0003> created at line 81.
+    Found 26-bit comparator less for signal <$cmp_lt0004> created at line 62.
+    Found 16-bit 4-to-1 multiplexer for signal <$mux0003>.
+    Found 5-bit 4-to-1 multiplexer for signal <$mux0004>.
+    Found 1-bit 4-to-1 multiplexer for signal <$mux0006>.
+    Found 1-bit 4-to-1 multiplexer for signal <$mux0007>.
+    Found 1-bit register for signal <L3_CK>.
+    Found 1-bit register for signal <L3_CTRL_CLK>.
+    Found 26-bit up counter for signal <L3_DIV_CLK>.
+    Found 1-bit register for signal <L3_EN>.
+    Found 5-bit register for signal <LUT_INDEX>.
+    Found 6-bit up counter for signal <SD_COUNTER>.
+    Found 1-bit register for signal <SD_COUNTER_CTRL>.
+    Found 16-bit register for signal <SD_DATA>.
+    Found 8-bit register for signal <SD_DATA1>.
+    Found 1-bit register for signal <SDO>.
+    Summary:
+	inferred   1 ROM(s).
+	inferred   2 Counter(s).
+	inferred  34 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   7 Comparator(s).
+	inferred  23 Multiplexer(s).
+Unit <L3_CONTROLLER> synthesized.
+
+
+Synthesizing Unit <codec_intfc>.
+    Related source file is "E:/RTL_COMPLETE/SOURCE_PROJECT/I2S_AUDIO/audio.vhd".
+WARNING:Xst:646 - Signal <left_chan_cnt<8:4>> is assigned but never used.
+    Found 31-bit comparator greatequal for signal <$cmp_ge0000> created at line 180.
+    Found 31-bit comparator less for signal <$cmp_lt0000> created at line 165.
+    Found 20-bit register for signal <ADC_r>.
+    Found 10-bit up counter for signal <cnt_r>.
+    Found 20-bit register for signal <DAC_r>.
+    Found 6-bit adder for signal <left_chan_cnt>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  40 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   2 Comparator(s).
+Unit <codec_intfc> synthesized.
+
+
+Synthesizing Unit <audio>.
+    Related source file is "E:/RTL_COMPLETE/SOURCE_PROJECT/I2S_AUDIO/audio.vhd".
+WARNING:Xst:646 - Signal <DAC_rdy> is assigned but never used.
+    Found 20-bit register for signal <left_ADC>.
+    Found 20-bit register for signal <right_ADC>.
+    Summary:
+	inferred  40 D-type flip-flop(s).
+Unit <audio> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 32x8-bit ROM                                          : 1
+# Adders/Subtractors                                   : 2
+ 5-bit adder                                           : 1
+ 6-bit adder                                           : 1
+# Counters                                             : 3
+ 10-bit up counter                                     : 1
+ 26-bit up counter                                     : 1
+ 6-bit up counter                                      : 1
+# Registers                                            : 12
+ 1-bit register                                        : 5
+ 16-bit register                                       : 1
+ 20-bit register                                       : 4
+ 5-bit register                                        : 1
+ 8-bit register                                        : 1
+# Comparators                                          : 9
+ 26-bit comparator less                                : 1
+ 31-bit comparator greatequal                          : 1
+ 31-bit comparator less                                : 1
+ 5-bit comparator greatequal                           : 1
+ 5-bit comparator greater                              : 1
+ 5-bit comparator less                                 : 3
+ 6-bit comparator less                                 : 1
+# Multiplexers                                         : 4
+ 1-bit 4-to-1 multiplexer                              : 2
+ 16-bit 4-to-1 multiplexer                             : 1
+ 5-bit 4-to-1 multiplexer                              : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Loading device for application Rf_Device from file '4vlx200.nph' in environment D:\Xilinx.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 32x8-bit ROM                                          : 1
+# Adders/Subtractors                                   : 2
+ 5-bit adder                                           : 1
+ 6-bit adder                                           : 1
+# Counters                                             : 3
+ 10-bit up counter                                     : 1
+ 26-bit up counter                                     : 1
+ 6-bit up counter                                      : 1
+# Registers                                            : 114
+ Flip-Flops                                            : 114
+# Comparators                                          : 9
+ 26-bit comparator less                                : 1
+ 31-bit comparator greatequal                          : 1
+ 31-bit comparator less                                : 1
+ 5-bit comparator greatequal                           : 1
+ 5-bit comparator greater                              : 1
+ 5-bit comparator less                                 : 3
+ 6-bit comparator less                                 : 1
+# Multiplexers                                         : 4
+ 1-bit 4-to-1 multiplexer                              : 2
+ 16-bit 4-to-1 multiplexer                             : 1
+ 5-bit 4-to-1 multiplexer                              : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1988 - Unit <L3_CONTROLLER>: instances <Mcompar__cmp_lt0000>, <Mcompar__cmp_ge0000> of unit <LPM_COMPARE_1> and unit <LPM_COMPARE_4> are dual, second instance is removed
+WARNING:Xst:1426 - The value init of the FF/Latch SD_DATA_10 hinder the constant cleaning in the block L3_CONTROLLER.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch SD_DATA_12 hinder the constant cleaning in the block L3_CONTROLLER.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1710 - FF/Latch  <SD_DATA_11> (without init value) has a constant value of 0 in block <L3_CONTROLLER>.
+WARNING:Xst:1710 - FF/Latch  <SD_DATA_13> (without init value) has a constant value of 0 in block <L3_CONTROLLER>.
+WARNING:Xst:1710 - FF/Latch  <SD_DATA_14> (without init value) has a constant value of 0 in block <L3_CONTROLLER>.
+WARNING:Xst:1710 - FF/Latch  <SD_DATA_15> (without init value) has a constant value of 0 in block <L3_CONTROLLER>.
+INFO:Xst:2261 - The FF/Latch <SD_DATA_10> in Unit <L3_CONTROLLER> is equivalent to the following FF/Latch, which will be removed : <SD_DATA_12> 
+
+Optimizing unit <audio> ...
+
+Optimizing unit <codec_intfc> ...
+
+Optimizing unit <L3_CONTROLLER> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block audio, actual ratio is 0.
+FlipFlop UL3/SD_COUNTER_0 has been replicated 1 time(s)
+FlipFlop UL3/SD_COUNTER_1 has been replicated 1 time(s)
+FlipFlop UL3/SD_COUNTER_2 has been replicated 2 time(s)
+FlipFlop UL3/SD_COUNTER_3 has been replicated 2 time(s)
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 157
+ Flip-Flops                                            : 157
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : audio.ngr
+Top Level Output File Name         : audio
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 14
+
+Cell Usage :
+# BELS                             : 285
+#      GND                         : 1
+#      INV                         : 5
+#      LUT1                        : 11
+#      LUT2                        : 33
+#      LUT2_L                      : 1
+#      LUT3                        : 35
+#      LUT3_D                      : 3
+#      LUT3_L                      : 20
+#      LUT4                        : 66
+#      LUT4_D                      : 2
+#      LUT4_L                      : 13
+#      MULT_AND                    : 1
+#      MUXCY                       : 43
+#      MUXF5                       : 16
+#      VCC                         : 1
+#      XORCY                       : 34
+# FlipFlops/Latches                : 157
+#      FDC                         : 41
+#      FDCE                        : 54
+#      FDE                         : 59
+#      FDP                         : 3
+# Clock Buffers                    : 2
+#      BUFG                        : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 13
+#      IBUF                        : 3
+#      OBUF                        : 10
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 4vlx200ff1513-10 
+
+ Number of Slices:                     131  out of  89088     0%  
+ Number of Slice Flip Flops:           157  out of  178176     0%  
+ Number of 4 input LUTs:               189  out of  178176     0%  
+ Number of IOs:                         14
+ Number of bonded IOBs:                 14  out of    960     1%  
+ Number of GCLKs:                        2  out of     32     6%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 117   |
+UL3/L3_CTRL_CLK1                   | BUFG                   | 40    |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+---------------------------------------+------------------------+-------+
+Control Signal                         | Buffer(FF name)        | Load  |
+---------------------------------------+------------------------+-------+
+UL3/nRESET_inv(UL3/nRESET_inv1_INV_0:O)| NONE(UL3/L3_DIV_CLK_0) | 98    |
+---------------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -10
+
+   Minimum period: 6.444ns (Maximum Frequency: 155.182MHz)
+   Minimum input arrival time before clock: 3.699ns
+   Maximum output required time after clock: 5.810ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 6.444ns (frequency: 155.182MHz)
+  Total number of paths / destination ports: 10697 / 196
+-------------------------------------------------------------------------
+Delay:               6.444ns (Levels of Logic = 38)
+  Source:            UL3/L3_DIV_CLK_2 (FF)
+  Destination:       UL3/L3_DIV_CLK_25 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: UL3/L3_DIV_CLK_2 to UL3/L3_DIV_CLK_25
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              2   0.360   0.783  UL3/L3_DIV_CLK_2 (UL3/L3_DIV_CLK_2)
+     LUT1:I0->O            1   0.195   0.000  UL3/L3_DIV_CLK_2_rt (UL3/L3_DIV_CLK_2_rt)
+     MUXCY:S->O            1   0.366   0.000  UL3/Mcompar__cmp_lt0004_cy<0> (UL3/Mcompar__cmp_lt0004_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcompar__cmp_lt0004_cy<1> (UL3/Mcompar__cmp_lt0004_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcompar__cmp_lt0004_cy<2> (UL3/Mcompar__cmp_lt0004_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcompar__cmp_lt0004_cy<3> (UL3/Mcompar__cmp_lt0004_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcompar__cmp_lt0004_cy<4> (UL3/Mcompar__cmp_lt0004_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcompar__cmp_lt0004_cy<5> (UL3/Mcompar__cmp_lt0004_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcompar__cmp_lt0004_cy<6> (UL3/Mcompar__cmp_lt0004_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcompar__cmp_lt0004_cy<7> (UL3/Mcompar__cmp_lt0004_cy<7>)
+     MUXCY:CI->O           3   0.264   0.550  UL3/Mcompar__cmp_lt0004_cy<8> (UL3/Mcompar__cmp_lt0004_cy<8>)
+     INV:I->O              8   0.426   0.809  UL3/Mcompar__cmp_lt0004_cy<8>_inv_1_INV_0 (UL3/Mcompar__cmp_lt0004_cy<8>_inv)
+     LUT2:I1->O            2   0.195   0.000  UL3/Mcount_L3_DIV_CLK_lut<0> (UL3/Result<0>1)
+     MUXCY:S->O            1   0.366   0.000  UL3/Mcount_L3_DIV_CLK_cy<0> (UL3/Mcount_L3_DIV_CLK_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<1> (UL3/Mcount_L3_DIV_CLK_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<2> (UL3/Mcount_L3_DIV_CLK_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<3> (UL3/Mcount_L3_DIV_CLK_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<4> (UL3/Mcount_L3_DIV_CLK_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<5> (UL3/Mcount_L3_DIV_CLK_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<6> (UL3/Mcount_L3_DIV_CLK_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<7> (UL3/Mcount_L3_DIV_CLK_cy<7>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<8> (UL3/Mcount_L3_DIV_CLK_cy<8>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<9> (UL3/Mcount_L3_DIV_CLK_cy<9>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<10> (UL3/Mcount_L3_DIV_CLK_cy<10>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<11> (UL3/Mcount_L3_DIV_CLK_cy<11>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<12> (UL3/Mcount_L3_DIV_CLK_cy<12>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<13> (UL3/Mcount_L3_DIV_CLK_cy<13>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<14> (UL3/Mcount_L3_DIV_CLK_cy<14>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<15> (UL3/Mcount_L3_DIV_CLK_cy<15>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<16> (UL3/Mcount_L3_DIV_CLK_cy<16>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<17> (UL3/Mcount_L3_DIV_CLK_cy<17>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<18> (UL3/Mcount_L3_DIV_CLK_cy<18>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<19> (UL3/Mcount_L3_DIV_CLK_cy<19>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<20> (UL3/Mcount_L3_DIV_CLK_cy<20>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<21> (UL3/Mcount_L3_DIV_CLK_cy<21>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<22> (UL3/Mcount_L3_DIV_CLK_cy<22>)
+     MUXCY:CI->O           1   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<23> (UL3/Mcount_L3_DIV_CLK_cy<23>)
+     MUXCY:CI->O           0   0.044   0.000  UL3/Mcount_L3_DIV_CLK_cy<24> (UL3/Mcount_L3_DIV_CLK_cy<24>)
+     XORCY:CI->O           1   0.360   0.000  UL3/Mcount_L3_DIV_CLK_xor<25> (UL3/Result<25>)
+     FDC:D                     0.391          UL3/L3_DIV_CLK_25
+    ----------------------------------------
+    Total                      6.444ns (4.302ns logic, 2.142ns route)
+                                       (66.8% logic, 33.2% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'UL3/L3_CTRL_CLK1'
+  Clock period: 4.454ns (frequency: 224.497MHz)
+  Total number of paths / destination ports: 689 / 71
+-------------------------------------------------------------------------
+Delay:               4.454ns (Levels of Logic = 4)
+  Source:            UL3/SD_COUNTER_2 (FF)
+  Destination:       UL3/SDO (FF)
+  Source Clock:      UL3/L3_CTRL_CLK1 rising
+  Destination Clock: UL3/L3_CTRL_CLK1 rising
+
+  Data Path: UL3/SD_COUNTER_2 to UL3/SDO
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q            20   0.360   1.038  UL3/SD_COUNTER_2 (UL3/SD_COUNTER_2)
+     LUT3:I1->O            2   0.195   0.627  UL3/_mux000621 (UL3/_mux0006_map8)
+     LUT4:I2->O            1   0.195   0.547  UL3/_mux000849 (UL3/_mux0008_map112)
+     LUT4:I3->O            1   0.195   0.712  UL3/_mux0008137 (UL3/_mux0008_map128)
+     LUT3:I1->O            1   0.195   0.000  UL3/_mux0008502 (UL3/_mux0008)
+     FDP:D                     0.391          UL3/SDO
+    ----------------------------------------
+    Total                      4.454ns (1.531ns logic, 2.923ns route)
+                                       (34.4% logic, 65.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 2 / 1
+-------------------------------------------------------------------------
+Offset:              2.316ns (Levels of Logic = 2)
+  Source:            sdto (PAD)
+  Destination:       u0/ADC_r_0 (FF)
+  Destination Clock: clk rising
+
+  Data Path: sdto to u0/ADC_r_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   0.965   0.765  sdto_IBUF (sdto_IBUF)
+     LUT2:I0->O            1   0.195   0.000  SERIAL_BUF1 (SERIAL_BUF)
+     FDCE:D                    0.391          u0/ADC_r_0
+    ----------------------------------------
+    Total                      2.316ns (1.551ns logic, 0.765ns route)
+                                       (67.0% logic, 33.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'UL3/L3_CTRL_CLK1'
+  Total number of paths / destination ports: 19 / 19
+-------------------------------------------------------------------------
+Offset:              3.699ns (Levels of Logic = 3)
+  Source:            reset_n (PAD)
+  Destination:       UL3/SD_DATA_0 (FF)
+  Destination Clock: UL3/L3_CTRL_CLK1 rising
+
+  Data Path: reset_n to UL3/SD_DATA_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             3   0.965   0.728  reset_n_IBUF (reset_n_IBUF)
+     LUT3_L:I1->LO         1   0.195   0.175  UL3/_and0000_SW1 (N634)
+     LUT4:I2->O           11   0.195   0.698  UL3/_and0000 (UL3/_and0000)
+     FDE:CE                    0.743          UL3/SD_DATA_0
+    ----------------------------------------
+    Total                      3.699ns (2.098ns logic, 1.601ns route)
+                                       (56.7% logic, 43.3% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'UL3/L3_CTRL_CLK1'
+  Total number of paths / destination ports: 3 / 3
+-------------------------------------------------------------------------
+Offset:              5.776ns (Levels of Logic = 2)
+  Source:            UL3/L3_CK (FF)
+  Destination:       L3_SCLK (PAD)
+  Source Clock:      UL3/L3_CTRL_CLK1 rising
+
+  Data Path: UL3/L3_CK to L3_SCLK
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDP:C->Q              2   0.360   0.730  UL3/L3_CK (UL3/L3_CK)
+     LUT2:I1->O            1   0.195   0.534  UL3/L3_SCLK1 (L3_SCLK_OBUF)
+     OBUF:I->O                 3.957          L3_SCLK_OBUF (L3_SCLK)
+    ----------------------------------------
+    Total                      5.776ns (4.512ns logic, 1.264ns route)
+                                       (78.1% logic, 21.9% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 5 / 5
+-------------------------------------------------------------------------
+Offset:              5.810ns (Levels of Logic = 2)
+  Source:            UL3/L3_CTRL_CLK (FF)
+  Destination:       L3_SCLK (PAD)
+  Source Clock:      clk rising
+
+  Data Path: UL3/L3_CTRL_CLK to L3_SCLK
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             1   0.360   0.765  UL3/L3_CTRL_CLK (UL3/L3_CTRL_CLK1)
+     LUT2:I0->O            1   0.195   0.534  UL3/L3_SCLK1 (L3_SCLK_OBUF)
+     OBUF:I->O                 3.957          L3_SCLK_OBUF (L3_SCLK)
+    ----------------------------------------
+    Total                      5.810ns (4.512ns logic, 1.298ns route)
+                                       (77.7% logic, 22.3% route)
+
+=========================================================================
+CPU : 14.08 / 14.28 s | Elapsed : 14.00 / 14.00 s
+ 
+--> 
+
+Total memory usage is 416584 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   10 (   0 filtered)
+Number of infos    :    2 (   0 filtered)
+

@@ -1,0 +1,617 @@
+Release  Map I.31
+Xilinx Mapping Report File for Design 'U60'
+
+Design Information
+------------------
+Command Line   : C:\Xilinx\bin\nt\map.exe -ise
+D:/SH_HDL_SOURCE/PROJECT_FOLDER/P_FPGA_TO_FPGA/u60/u60.ise -intstyle ise -p
+xc4vlx200-ff1513-10 -cm area -pr b -k 4 -c 100 -o U60_map.ncd U60.ngd U60.pcf 
+Target Device  : xc4vlx200
+Target Package : ff1513
+Target Speed   : -10
+Mapper Version : virtex4 -- $Revision: 1.34.32.1 $
+Mapped Date    : Mon Dec 18 09:38:54 2006
+
+Design Summary
+--------------
+Number of errors:      0
+Number of warnings:    0
+Logic Utilization:
+  Number of Slice Flip Flops:       1,532 out of 178,176    1%
+  Number of 4 input LUTs:           2,948 out of 178,176    1%
+Logic Distribution:
+  Number of occupied Slices:                        1,553 out of  89,088    1%
+    Number of Slices containing only related logic:   1,553 out of   1,553  100%
+    Number of Slices containing unrelated logic:          0 out of   1,553    0%
+      *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:          3,026 out of 178,176    1%
+  Number used as logic:              2,948
+  Number used as a route-thru:          78
+  Number of bonded IOBs:              468 out of     960   48%
+  Number of BUFG/BUFGCTRLs:             1 out of      32    3%
+    Number used as BUFGs:                1
+    Number used as BUFGCTRLs:            0
+
+Total equivalent gate count for design:  31,878
+Additional JTAG gate count for IOBs:  22,464
+Peak Memory Usage:  431 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity - e.g. two
+   LUTs are "related" if they share common inputs.  When assembling slices,
+   Map gives priority to combine logic that is related.  Doing so results in
+   the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin packing
+   unrelated logic into a slice once 99% of the slices are occupied through
+   related logic packing.
+
+   Note that once logic distribution reaches the 99% level through related
+   logic packing, this does not mean the device is completely utilized.
+   Unrelated logic packing will then begin, continuing until all usable LUTs
+   and FFs are occupied.  Depending on your timing budget, increased levels of
+   unrelated logic packing may adversely affect the overall timing performance
+   of your design.
+
+Table of Contents
+-----------------
+Section 1 - Errors
+Section 2 - Warnings
+Section 3 - Informational
+Section 4 - Removed Logic Summary
+Section 5 - Removed Logic
+Section 6 - IOB Properties
+Section 7 - RPMs
+Section 8 - Guide Report
+Section 9 - Area Group and Partition Summary
+Section 10 - Modular Design Summary
+Section 11 - Timing Report
+Section 12 - Configuration String Information
+
+Section 1 - Errors
+------------------
+
+Section 2 - Warnings
+--------------------
+
+Section 3 - Informational
+-------------------------
+INFO:MapLib:562 - No environment variables are currently set.
+INFO:MapLib:797 - Your design is targeting LX/SX Production Step 0/1/ES devices.
+   Please note that there are new specifications for the DCMs to guarantee
+   maximum frequency performance. If the DCM input clock might stop or if the
+   DCM reset might be asserted for an extended time, then use of the dcm_standby
+   macro may be required. Please see Answer Record 21127.
+INFO:LIT:244 - All of the single ended outputs in this design are using slew
+   rate limited output drivers. The delay on speed critical single ended outputs
+   can be dramatically reduced by designating them as fast outputs in the
+   schematic.
+
+Section 4 - Removed Logic Summary
+---------------------------------
+   2 block(s) optimized away
+
+Section 5 - Removed Logic
+-------------------------
+
+Optimized Block(s):
+TYPE 		BLOCK
+GND 		XST_GND
+VCC 		XST_VCC
+
+To enable printing of redundant blocks removed and signals merged, set the
+detailed map report option and rerun map.
+
+Section 6 - IOB Properties
+--------------------------
+
++----------------------------------------------------------------------------------------------------------------------------------------+
+| IOB Name                           | Type             | Direction | IO Standard | Drive    | Slew | Reg (s)      | Resistor | IOB      |
+|                                    |                  |           |             | Strength | Rate |              |          | Delay    |
++----------------------------------------------------------------------------------------------------------------------------------------+
+| CLK                                | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<0>                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<1>                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<2>                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<3>                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<4>                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<5>                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<6>                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<7>                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<8>                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<9>                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<10>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<11>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<12>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<13>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<14>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<15>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<16>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<17>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<18>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<19>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<20>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<21>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<22>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<23>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<24>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<25>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<26>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<27>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<28>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<29>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<30>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<31>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<32>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<33>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<34>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<35>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<36>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<37>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<38>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<39>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<40>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<41>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<42>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<43>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<44>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<45>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<46>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<47>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<48>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<49>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<50>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<51>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<52>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<53>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<54>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<55>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<56>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<57>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<58>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<59>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<60>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<61>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<62>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<63>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<64>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<65>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<66>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<67>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<68>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<69>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<70>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<71>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<72>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<73>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<74>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<75>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<76>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<77>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<78>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<79>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<80>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<81>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<82>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<83>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<84>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<85>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<86>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<87>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<88>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<89>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<90>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<91>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<92>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<93>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<94>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<95>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<96>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<97>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<98>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<99>                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<100>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<101>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<102>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<103>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<104>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<105>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<106>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<107>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<108>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<109>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<110>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<111>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<112>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<113>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<114>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<115>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<116>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<117>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<118>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<119>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<120>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<121>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<122>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<123>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<124>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<125>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<126>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<127>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<128>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<129>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<130>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<131>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<132>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<133>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<134>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<135>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<136>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<137>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<138>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<139>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<140>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<141>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<142>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<143>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<144>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<145>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<146>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<147>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<148>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<149>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<150>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<151>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<152>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<153>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<154>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<155>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<156>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<157>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<158>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<159>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<160>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<161>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<162>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<163>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<164>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<165>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<166>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<167>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<168>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<169>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<170>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<171>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<172>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<173>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<174>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<175>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<176>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<177>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<178>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<179>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<180>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<181>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<182>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<183>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<184>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<185>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<186>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<187>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<188>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<189>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<190>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<191>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<192>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<193>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<194>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<195>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<196>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<197>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<198>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<199>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<200>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<201>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<202>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<203>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<204>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<205>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<206>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<207>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<208>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<209>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<210>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<211>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<212>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<213>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<214>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<215>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<216>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<217>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<218>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<219>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<220>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<221>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<222>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<223>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<224>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<225>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<226>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<227>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<228>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<229>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<230>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<231>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<232>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<233>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<234>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<235>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<236>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<237>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<238>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<239>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<240>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<241>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<242>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<243>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<244>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<245>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<246>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<247>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<248>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<249>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<250>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<251>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<252>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<253>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<254>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<255>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<256>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<257>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<258>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<259>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<260>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<261>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<262>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<263>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<264>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<265>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<266>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<267>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<268>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<269>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<270>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<271>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<272>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<273>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<274>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<275>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<276>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<277>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<278>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<279>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<280>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<281>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<282>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<283>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<284>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<285>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<286>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<287>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<288>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<289>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<290>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<291>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<292>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<293>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<294>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<295>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<296>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<297>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<298>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<299>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<300>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<301>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<302>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<303>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<304>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<305>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<306>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<307>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<308>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<309>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<310>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<311>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<312>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<313>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<314>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<315>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<316>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<317>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<318>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<319>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<320>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<321>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<322>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<323>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<324>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<325>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<326>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<327>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<328>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<329>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<330>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<331>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<332>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<333>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<334>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<335>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<336>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<337>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<338>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<339>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<340>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<341>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<342>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<343>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<344>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<345>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<346>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<347>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<348>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<349>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<350>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<351>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<352>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<353>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<354>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<355>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<356>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<357>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<358>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<359>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<360>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<361>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<362>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<363>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<364>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<365>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<366>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<367>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<368>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<369>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<370>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<371>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<372>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<373>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<374>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<375>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<376>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<377>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<378>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<379>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<380>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<381>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<382>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<383>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<384>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<385>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<386>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<387>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<388>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<389>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<390>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<391>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<392>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<393>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<394>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<395>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<396>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<397>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<398>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<399>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<400>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<401>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<402>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<403>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<404>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<405>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<406>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<407>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<408>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<409>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<410>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<411>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<412>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<413>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<414>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<415>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<416>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<417>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<418>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<419>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<420>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<421>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<422>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<423>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<424>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<425>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<426>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<427>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<428>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<429>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<430>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<431>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<432>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<433>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<434>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<435>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<436>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<437>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<438>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<439>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<440>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<441>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<442>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<443>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<444>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<445>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_CON<446>                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| FPGA_EN                            | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LED<0>                             | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LED<1>                             | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LED<2>                             | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LED<3>                             | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| PORST                              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SEG_COMM<0>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SEG_COMM<1>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SEG_COMM<2>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SEG_COMM<3>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SEG_DATA<0>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SEG_DATA<1>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SEG_DATA<2>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SEG_DATA<3>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SEG_DATA<4>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SEG_DATA<5>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SEG_DATA<6>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SEG_DATA<7>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| USER_SW                            | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| nRST                               | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
++----------------------------------------------------------------------------------------------------------------------------------------+
+
+Section 7 - RPMs
+----------------
+
+Section 8 - Guide Report
+------------------------
+Guide not run on this design.
+
+Section 9 - Area Group and Partition Summary
+--------------------------------------------
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+Area Group Information
+----------------------
+
+  No area groups were found in this design.
+
+----------------------
+
+Section 10 - Modular Design Summary
+-----------------------------------
+Modular Design not used for this design.
+
+Section 11 - Timing Report
+--------------------------
+This design was not run using timing mode.
+
+Section 12 - Configuration String Details
+-----------------------------------------
+Use the "-detail" map option to print out Configuration Strings

@@ -1,0 +1,567 @@
+Release  - xst I.31
+Copyright (c) 1995-2006 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 0.44 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.44 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Reading design: ADC.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "ADC.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "ADC"
+Output Format                      : NGC
+Target Device                      : xc4vlx200-10-ff1513
+
+---- Source Options
+Top Module Name                    : ADC
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 32
+Number of Regional Clock Buffers   : 48
+Register Duplication               : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+DSP48 Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : ADC.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+use_dsp48                          : auto
+Optimize Instantiated Primitives   : NO
+use_clock_enable                   : Auto
+use_sync_set                       : Auto
+use_sync_reset                     : Auto
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "D:/ADV/A/adc/adc.vhd" in Library work.
+Entity <adc> compiled.
+Entity <adc> (Architecture <rtl>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <ADC> in library <work> (architecture <rtl>).
+
+Building hierarchy successfully finished.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <ADC> in library <work> (Architecture <rtl>).
+INFO:Xst:1739 - HDL ADVISOR - "D:/ADV/A/adc/adc.vhd" line 7: declaration of a buffer port will make it difficult for you to validate this design by simulation. It is preferable to declare it as output.
+INFO:Xst:1304 - Contents of register <ADC_WnB> in unit <ADC> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <ADC_D> in unit <ADC> never changes during circuit operation. The register is replaced by logic.
+Entity <ADC> analyzed. Unit <ADC> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <ADC>.
+    Related source file is "D:/ADV/A/adc/adc.vhd".
+WARNING:Xst:1780 - Signal <CONV_CLK> is never used or assigned.
+    Found 16x8-bit ROM for signal <SEG_DAT>.
+    Found 1-bit register for signal <nCS>.
+    Found 1-bit register for signal <nRD>.
+    Found 1-bit register for signal <nCONVST>.
+    Found 1-bit register for signal <ADC_nWR>.
+    Found 4-bit register for signal <LED>.
+    Found 5-bit comparator less for signal <$cmp_lt0000> created at line 160.
+    Found 11-bit comparator less for signal <$cmp_lt0001> created at line 146.
+    Found 4-bit 4-to-1 multiplexer for signal <$mux0003> created at line 125.
+    Found 1-bit 4-to-1 multiplexer for signal <$mux0008> created at line 182.
+    Found 1-bit register for signal <BUSY_EN>.
+    Found 7-bit up counter for signal <CNT>.
+    Found 11-bit up counter for signal <CNT0>.
+    Found 5-bit up counter for signal <COUNT>.
+    Found 12-bit register for signal <DAT_BUF>.
+    Found 1-bit register for signal <EN>.
+    Found 4-bit register for signal <LED_B>.
+    Found 1-bit register for signal <LED_CLK>.
+    Found 4-bit register for signal <SEG_BUF>.
+    Found 1-bit register for signal <SEG_CLK>.
+    Found 4-bit register for signal <SEG_COM_B>.
+    Found 1-bit register for signal <SMP_CLK>.
+    Summary:
+	inferred   1 ROM(s).
+	inferred   3 Counter(s).
+	inferred  37 D-type flip-flop(s).
+	inferred   2 Comparator(s).
+	inferred   5 Multiplexer(s).
+Unit <ADC> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 16x8-bit ROM                                          : 1
+# Counters                                             : 3
+ 11-bit up counter                                     : 1
+ 5-bit up counter                                      : 1
+ 7-bit up counter                                      : 1
+# Registers                                            : 14
+ 1-bit register                                        : 9
+ 12-bit register                                       : 1
+ 4-bit register                                        : 4
+# Comparators                                          : 2
+ 11-bit comparator less                                : 1
+ 5-bit comparator less                                 : 1
+# Multiplexers                                         : 2
+ 1-bit 4-to-1 multiplexer                              : 1
+ 4-bit 4-to-1 multiplexer                              : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+WARNING:Xst:79 - Model 'ADC' has different characteristics in destination library
+WARNING:Xst:80 - Model name has been changed to 'ADC1'
+Loading device for application Rf_Device from file '4vlx200.nph' in environment C:\Xilinx.
+WARNING:Xst:2404 -  FFs/Latches <DAT_BUF<11:1>> (without init value) have a constant value of 0 in block <ADC1>.
+WARNING:Xst:2404 -  FFs/Latches <SEG_BUF<3:1>> (without init value) have a constant value of 0 in block <ADC1>.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 16x8-bit ROM                                          : 1
+# Counters                                             : 3
+ 11-bit up counter                                     : 1
+ 5-bit up counter                                      : 1
+ 7-bit up counter                                      : 1
+# Registers                                            : 23
+ Flip-Flops                                            : 23
+# Comparators                                          : 2
+ 11-bit comparator less                                : 1
+ 5-bit comparator less                                 : 1
+# Multiplexers                                         : 2
+ 1-bit 4-to-1 multiplexer                              : 1
+ 4-bit 4-to-1 multiplexer                              : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <ADC1> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block ADC1, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 46
+ Flip-Flops                                            : 46
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : ADC.ngr
+Top Level Output File Name         : ADC
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 37
+
+Cell Usage :
+# BELS                             : 110
+#      GND                         : 1
+#      INV                         : 5
+#      LUT1                        : 1
+#      LUT2                        : 15
+#      LUT3                        : 11
+#      LUT3_D                      : 2
+#      LUT3_L                      : 2
+#      LUT4                        : 32
+#      LUT4_D                      : 4
+#      LUT4_L                      : 2
+#      MULT_AND                    : 2
+#      MUXCY                       : 16
+#      VCC                         : 1
+#      XORCY                       : 16
+# FlipFlops/Latches                : 46
+#      FD                          : 1
+#      FDC                         : 23
+#      FDCE                        : 5
+#      FDE                         : 4
+#      FDP                         : 1
+#      FDPE                        : 7
+#      FDR                         : 2
+#      FDS                         : 3
+# Clock Buffers                    : 2
+#      BUFG                        : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 36
+#      IBUF                        : 2
+#      OBUF                        : 34
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 4vlx200ff1513-10 
+
+ Number of Slices:                      38  out of  89088     0%  
+ Number of Slice Flip Flops:            46  out of  178176     0%  
+ Number of 4 input LUTs:                74  out of  178176     0%  
+ Number of IOs:                         37
+ Number of bonded IOBs:                 37  out of    960     3%  
+ Number of GCLKs:                        2  out of     32     6%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLK                                | BUFGP                  | 12    |
+SMP_CLK1                           | BUFG                   | 21    |
+LED_CLK                            | NONE(LED_B_1)          | 8     |
+SEG_CLK                            | NONE(SEG_COM_B_2)      | 5     |
+-----------------------------------+------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+-----------------------------------+------------------------+-------+
+Control Signal                     | Buffer(FF name)        | Load  |
+-----------------------------------+------------------------+-------+
+nRST_inv(nRST_inv1_INV_0:O)        | NONE(CNT0_7)           | 36    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -10
+
+   Minimum period: 4.729ns (Maximum Frequency: 211.461MHz)
+   Minimum input arrival time before clock: 3.241ns
+   Maximum output required time after clock: 5.893ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLK'
+  Clock period: 4.729ns (frequency: 211.461MHz)
+  Total number of paths / destination ports: 828 / 12
+-------------------------------------------------------------------------
+Delay:               4.729ns (Levels of Logic = 14)
+  Source:            CNT0_9 (FF)
+  Destination:       CNT0_10 (FF)
+  Source Clock:      CLK rising
+  Destination Clock: CLK rising
+
+  Data Path: CNT0_9 to CNT0_10
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              2   0.360   0.783  CNT0_9 (CNT0_9)
+     LUT2:I0->O            2   0.195   0.627  CNT0_Eqn_bis_0235 (CNT0_Eqn_bis_02_map57)
+     LUT4:I2->O           10   0.195   0.856  CNT0_Eqn_bis_0253 (CNT0_Eqn_bis_0)
+     LUT2:I1->O            2   0.195   0.000  Mcount_CNT0_lut<0> (Result<0>2)
+     MUXCY:S->O            1   0.366   0.000  Mcount_CNT0_cy<0> (Mcount_CNT0_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT0_cy<1> (Mcount_CNT0_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT0_cy<2> (Mcount_CNT0_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT0_cy<3> (Mcount_CNT0_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT0_cy<4> (Mcount_CNT0_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT0_cy<5> (Mcount_CNT0_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT0_cy<6> (Mcount_CNT0_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT0_cy<7> (Mcount_CNT0_cy<7>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT0_cy<8> (Mcount_CNT0_cy<8>)
+     MUXCY:CI->O           0   0.044   0.000  Mcount_CNT0_cy<9> (Mcount_CNT0_cy<9>)
+     XORCY:CI->O           1   0.360   0.000  Mcount_CNT0_xor<10> (Result<10>)
+     FDC:D                     0.391          CNT0_10
+    ----------------------------------------
+    Total                      4.729ns (2.463ns logic, 2.266ns route)
+                                       (52.1% logic, 47.9% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'SMP_CLK1'
+  Clock period: 4.254ns (frequency: 235.087MHz)
+  Total number of paths / destination ports: 385 / 26
+-------------------------------------------------------------------------
+Delay:               4.254ns (Levels of Logic = 10)
+  Source:            CNT_3 (FF)
+  Destination:       CNT_6 (FF)
+  Source Clock:      SMP_CLK1 rising
+  Destination Clock: SMP_CLK1 rising
+
+  Data Path: CNT_3 to CNT_6
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              3   0.360   0.781  CNT_3 (CNT_3)
+     LUT4_D:I0->O          4   0.195   0.562  _cmp_eq0004_SW0 (N167)
+     LUT4:I3->O            2   0.195   0.627  _cmp_eq0004 (_cmp_eq0004)
+     LUT3:I2->O            2   0.195   0.000  Mcount_CNT_lut<0> (Result<0>)
+     MUXCY:S->O            1   0.366   0.000  Mcount_CNT_cy<0> (Mcount_CNT_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<1> (Mcount_CNT_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<2> (Mcount_CNT_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<3> (Mcount_CNT_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<4> (Mcount_CNT_cy<4>)
+     MUXCY:CI->O           0   0.044   0.000  Mcount_CNT_cy<5> (Mcount_CNT_cy<5>)
+     XORCY:CI->O           1   0.360   0.000  Mcount_CNT_xor<6> (Result<6>)
+     FDC:D                     0.391          CNT_6
+    ----------------------------------------
+    Total                      4.254ns (2.285ns logic, 1.969ns route)
+                                       (53.7% logic, 46.3% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'LED_CLK'
+  Clock period: 3.109ns (frequency: 321.600MHz)
+  Total number of paths / destination ports: 35 / 12
+-------------------------------------------------------------------------
+Delay:               3.109ns (Levels of Logic = 2)
+  Source:            LED_B_0 (FF)
+  Destination:       LED_B_0 (FF)
+  Source Clock:      LED_CLK rising
+  Destination Clock: LED_CLK rising
+
+  Data Path: LED_B_0 to LED_B_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDPE:C->Q             5   0.360   0.790  LED_B_0 (LED_B_0)
+     LUT4_D:I0->LO         1   0.195   0.278  _cmp_eq00051 (N227)
+     LUT2:I1->O            4   0.195   0.549  _not00141 (_not0014)
+     FDPE:CE                   0.743          LED_B_0
+    ----------------------------------------
+    Total                      3.109ns (1.493ns logic, 1.616ns route)
+                                       (48.0% logic, 52.0% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'SEG_CLK'
+  Clock period: 3.201ns (frequency: 312.402MHz)
+  Total number of paths / destination ports: 20 / 8
+-------------------------------------------------------------------------
+Delay:               3.201ns (Levels of Logic = 1)
+  Source:            SEG_COM_B_3 (FF)
+  Destination:       SEG_BUF (FF)
+  Source Clock:      SEG_CLK rising
+  Destination Clock: SEG_CLK rising
+
+  Data Path: SEG_COM_B_3 to SEG_BUF
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDS:C->Q              7   0.360   0.831  SEG_COM_B_3 (SEG_COM_B_3)
+     LUT4:I0->O            3   0.195   0.550  SEG_COM<3>1 (SEG_COM_3_OBUF)
+     FDR:R                     1.265          SEG_BUF
+    ----------------------------------------
+    Total                      3.201ns (1.820ns logic, 1.381ns route)
+                                       (56.9% logic, 43.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'LED_CLK'
+  Total number of paths / destination ports: 12 / 12
+-------------------------------------------------------------------------
+Offset:              3.241ns (Levels of Logic = 2)
+  Source:            BUSY (PAD)
+  Destination:       LED_B_0 (FF)
+  Destination Clock: LED_CLK rising
+
+  Data Path: BUSY to LED_B_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             5   0.965   0.790  BUSY_IBUF (BUSY_IBUF)
+     LUT2:I0->O            4   0.195   0.549  _not00141 (_not0014)
+     FDPE:CE                   0.743          LED_B_0
+    ----------------------------------------
+    Total                      3.241ns (1.903ns logic, 1.338ns route)
+                                       (58.7% logic, 41.3% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'SMP_CLK1'
+  Total number of paths / destination ports: 5 / 5
+-------------------------------------------------------------------------
+Offset:              5.829ns (Levels of Logic = 2)
+  Source:            BUSY_EN (FF)
+  Destination:       ADC_CLK (PAD)
+  Source Clock:      SMP_CLK1 rising
+
+  Data Path: BUSY_EN to ADC_CLK
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             2   0.360   0.783  BUSY_EN (BUSY_EN)
+     LUT2:I0->O            1   0.195   0.534  ADC_CLK1 (ADC_CLK_OBUF)
+     OBUF:I->O                 3.957          ADC_CLK_OBUF (ADC_CLK)
+    ----------------------------------------
+    Total                      5.829ns (4.512ns logic, 1.317ns route)
+                                       (77.4% logic, 22.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLK'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              5.757ns (Levels of Logic = 2)
+  Source:            SMP_CLK (FF)
+  Destination:       ADC_CLK (PAD)
+  Source Clock:      CLK rising
+
+  Data Path: SMP_CLK to ADC_CLK
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             1   0.360   0.712  SMP_CLK (SMP_CLK1)
+     LUT2:I1->O            1   0.195   0.534  ADC_CLK1 (ADC_CLK_OBUF)
+     OBUF:I->O                 3.957          ADC_CLK_OBUF (ADC_CLK)
+    ----------------------------------------
+    Total                      5.757ns (4.512ns logic, 1.245ns route)
+                                       (78.4% logic, 21.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'SEG_CLK'
+  Total number of paths / destination ports: 20 / 8
+-------------------------------------------------------------------------
+Offset:              5.893ns (Levels of Logic = 2)
+  Source:            SEG_COM_B_3 (FF)
+  Destination:       SEG_COM<3> (PAD)
+  Source Clock:      SEG_CLK rising
+
+  Data Path: SEG_COM_B_3 to SEG_COM<3>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDS:C->Q              7   0.360   0.831  SEG_COM_B_3 (SEG_COM_B_3)
+     LUT4:I0->O            3   0.195   0.550  SEG_COM<3>1 (SEG_COM_3_OBUF)
+     OBUF:I->O                 3.957          SEG_COM_3_OBUF (SEG_COM<3>)
+    ----------------------------------------
+    Total                      5.893ns (4.512ns logic, 1.381ns route)
+                                       (76.6% logic, 23.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'LED_CLK'
+  Total number of paths / destination ports: 4 / 4
+-------------------------------------------------------------------------
+Offset:              4.851ns (Levels of Logic = 1)
+  Source:            LED_3 (FF)
+  Destination:       LED<3> (PAD)
+  Source Clock:      LED_CLK rising
+
+  Data Path: LED_3 to LED<3>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              1   0.360   0.534  LED_3 (LED_3)
+     OBUF:I->O                 3.957          LED_3_OBUF (LED<3>)
+    ----------------------------------------
+    Total                      4.851ns (4.317ns logic, 0.534ns route)
+                                       (89.0% logic, 11.0% route)
+
+=========================================================================
+CPU : 40.34 / 40.84 s | Elapsed : 40.00 / 41.00 s
+ 
+--> 
+
+Total memory usage is 431280 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    5 (   0 filtered)
+Number of infos    :    4 (   0 filtered)
+

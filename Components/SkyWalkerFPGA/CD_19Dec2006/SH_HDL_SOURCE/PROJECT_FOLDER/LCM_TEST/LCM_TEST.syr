@@ -1,0 +1,649 @@
+Release  - xst I.31
+Copyright (c) 1995-2006 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 2.97 s | Elapsed : 0.00 / 3.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 2.97 s | Elapsed : 0.00 / 3.00 s
+ 
+--> Reading design: LCM_TEST.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "LCM_TEST.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "LCM_TEST"
+Output Format                      : NGC
+Target Device                      : xc4vlx200-10-ff1513
+
+---- Source Options
+Top Module Name                    : LCM_TEST
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 32
+Number of Regional Clock Buffers   : 48
+Register Duplication               : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+DSP48 Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : LCM_TEST.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+use_dsp48                          : auto
+Optimize Instantiated Primitives   : NO
+use_clock_enable                   : Auto
+use_sync_set                       : Auto
+use_sync_reset                     : Auto
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "D:/SH_HDL_SOURCE/PROJECT_FOLDER/P_LCM_TEST/I2S_CONTROLLER.vhd" in Library work.
+Architecture i2s of Entity i2s_controller is up to date.
+Compiling vhdl file "D:/SH_HDL_SOURCE/PROJECT_FOLDER/P_LCM_TEST/I2S_LCM_CONFIG.vhd" in Library work.
+Architecture i2s of Entity i2s_lcm_config is up to date.
+Compiling vhdl file "D:/SH_HDL_SOURCE/PROJECT_FOLDER/P_LCM_TEST/LCM_TEST.vhd" in Library work.
+Entity <lcm_test> compiled.
+Entity <lcm_test> (Architecture <rtl>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <LCM_TEST> in library <work> (architecture <rtl>).
+
+Analyzing hierarchy for entity <I2S_LCM_CONFIG> in library <work> (architecture <i2s>).
+
+Analyzing hierarchy for entity <I2S_CONTROLLER> in library <work> (architecture <i2s>).
+
+Building hierarchy successfully finished.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <LCM_TEST> in library <work> (Architecture <rtl>).
+Entity <LCM_TEST> analyzed. Unit <LCM_TEST> generated.
+
+Analyzing Entity <I2S_LCM_CONFIG> in library <work> (Architecture <i2s>).
+Entity <I2S_LCM_CONFIG> analyzed. Unit <I2S_LCM_CONFIG> generated.
+
+Analyzing Entity <I2S_CONTROLLER> in library <work> (Architecture <i2s>).
+Entity <I2S_CONTROLLER> analyzed. Unit <I2S_CONTROLLER> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <I2S_CONTROLLER>.
+    Related source file is "D:/SH_HDL_SOURCE/PROJECT_FOLDER/P_LCM_TEST/I2S_CONTROLLER.vhd".
+    Found 16x1-bit ROM for signal <$mux0007>.
+    Found 1-bit tristate buffer for signal <I2S_DATA>.
+    Found 5-bit comparator greatequal for signal <$cmp_ge0000> created at line 71.
+    Found 5-bit comparator less for signal <$cmp_lt0000> created at line 59.
+    Found 17-bit comparator less for signal <$cmp_lt0001> created at line 40.
+    Found 1-bit 4-to-1 multiplexer for signal <$mux0006> created at line 59.
+    Found 1-bit register for signal <mACK>.
+    Found 1-bit register for signal <mI2S_CLK>.
+    Found 17-bit up counter for signal <mI2S_CLK_DIV>.
+    Found 1-bit register for signal <mSCLK>.
+    Found 1-bit tristate buffer for signal <mSDATA>.
+    Found 1-bit register for signal <mSEN>.
+    Found 5-bit up counter for signal <mST>.
+    Found 1-bit register for signal <Mtridata_mSDATA> created at line 54.
+    Found 1-bit register for signal <Mtrien_mSDATA> created at line 54.
+    Summary:
+	inferred   1 ROM(s).
+	inferred   2 Counter(s).
+	inferred   6 D-type flip-flop(s).
+	inferred   3 Comparator(s).
+	inferred   1 Multiplexer(s).
+	inferred   2 Tristate(s).
+Unit <I2S_CONTROLLER> synthesized.
+
+
+Synthesizing Unit <I2S_LCM_CONFIG>.
+    Related source file is "D:/SH_HDL_SOURCE/PROJECT_FOLDER/P_LCM_TEST/I2S_LCM_CONFIG.vhd".
+    Found finite state machine <FSM_0> for signal <mSetup_ST>.
+    -----------------------------------------------------------------------
+    | States             | 3                                              |
+    | Transitions        | 5                                              |
+    | Inputs             | 2                                              |
+    | Outputs            | 4                                              |
+    | Clock              | mI2S_CLK (rising_edge)                         |
+    | Clock enable       | $cmp_lt0000 (positive)                         |
+    | Reset              | iRST_N (negative)                              |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | 0000                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 7-bit comparator greatequal for signal <$cmp_ge0000> created at line 56.
+    Found 7-bit comparator less for signal <$cmp_lt0000> created at line 56.
+    Found 6-bit up counter for signal <LUT_INDEX>.
+    Found 16-bit register for signal <mI2S_DATA>.
+    Found 1-bit register for signal <mI2S_STR>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred   1 Counter(s).
+	inferred  17 D-type flip-flop(s).
+	inferred   2 Comparator(s).
+Unit <I2S_LCM_CONFIG> synthesized.
+
+
+Synthesizing Unit <LCM_TEST>.
+    Related source file is "D:/SH_HDL_SOURCE/PROJECT_FOLDER/P_LCM_TEST/LCM_TEST.vhd".
+WARNING:Xst:647 - Input <nPORST> is never used.
+WARNING:Xst:1780 - Signal <BLUE_EN> is never used or assigned.
+WARNING:Xst:1780 - Signal <GREEN_EN> is never used or assigned.
+WARNING:Xst:1780 - Signal <RED_EN> is never used or assigned.
+    Found 4x2-bit ROM for signal <MSEL>.
+    Found 4x2-bit ROM for signal <$mux0008> created at line 200.
+    Found 8-bit register for signal <LCD_D>.
+    Found 2-bit adder for signal <$addsub0000> created at line 167.
+    Found 2-bit comparator equal for signal <$cmp_eq0004> created at line 107.
+    Found 2-bit comparator equal for signal <$cmp_eq0006> created at line 113.
+    Found 2-bit comparator equal for signal <$cmp_eq0010> created at line 123.
+    Found 9-bit comparator greatequal for signal <$cmp_ge0000> created at line 189.
+    Found 9-bit comparator greatequal for signal <$cmp_ge0001> created at line 197.
+    Found 11-bit comparator greater for signal <$cmp_gt0000> created at line 165.
+    Found 9-bit comparator less for signal <$cmp_lt0000> created at line 156.
+    Found 11-bit comparator less for signal <$cmp_lt0001> created at line 200.
+    Found 11-bit comparator less for signal <$cmp_lt0002> created at line 185.
+    Found 9-bit comparator less for signal <$cmp_lt0003> created at line 258.
+    Found 11-bit comparator less for signal <$cmp_lt0004> created at line 235.
+    Found 9-bit comparator less for signal <$cmp_lt0005> created at line 183.
+    Found 9-bit comparator less for signal <$cmp_lt0006> created at line 189.
+    Found 9-bit comparator less for signal <$cmp_lt0007> created at line 197.
+    Found 2-bit comparator less for signal <$cmp_lt0008> created at line 166.
+    Found 11-bit comparator less for signal <$cmp_lt0009> created at line 165.
+    Found 9-bit comparator less for signal <$cmp_lt0010> created at line 252.
+    Found 11-bit comparator less for signal <$cmp_lt0011> created at line 229.
+    Found 9-bit comparator less for signal <$cmp_lt0012> created at line 156.
+    Found 2-bit 4-to-1 multiplexer for signal <$mux0015>.
+    Found 24-bit up counter for signal <CNT>.
+    Found 24-bit up counter for signal <CNT0>.
+    Found 11-bit up counter for signal <H_CNT>.
+    Found 2-bit register for signal <MOD_3>.
+    Found 1-bit register for signal <OP>.
+    Found 1-bit register for signal <oVGA_H_SYNC>.
+    Found 1-bit register for signal <oVGA_V_SYNC>.
+    Found 8-bit register for signal <Tmp_DATA>.
+    Found 9-bit up counter for signal <V_CNT>.
+    Found 2-bit up counter for signal <VAR_SIG>.
+    Summary:
+	inferred   2 ROM(s).
+	inferred   5 Counter(s).
+	inferred  21 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred  19 Comparator(s).
+	inferred   2 Multiplexer(s).
+Unit <LCM_TEST> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 3
+ 16x1-bit ROM                                          : 1
+ 4x2-bit ROM                                           : 2
+# Adders/Subtractors                                   : 1
+ 2-bit adder                                           : 1
+# Counters                                             : 8
+ 11-bit up counter                                     : 1
+ 17-bit up counter                                     : 1
+ 2-bit up counter                                      : 1
+ 24-bit up counter                                     : 2
+ 5-bit up counter                                      : 1
+ 6-bit up counter                                      : 1
+ 9-bit up counter                                      : 1
+# Registers                                            : 14
+ 1-bit register                                        : 10
+ 16-bit register                                       : 1
+ 2-bit register                                        : 1
+ 8-bit register                                        : 2
+# Comparators                                          : 24
+ 11-bit comparator greater                             : 1
+ 11-bit comparator less                                : 5
+ 17-bit comparator less                                : 1
+ 2-bit comparator equal                                : 3
+ 2-bit comparator less                                 : 1
+ 5-bit comparator greatequal                           : 1
+ 5-bit comparator less                                 : 1
+ 7-bit comparator greatequal                           : 1
+ 7-bit comparator less                                 : 1
+ 9-bit comparator greatequal                           : 2
+ 9-bit comparator less                                 : 7
+# Multiplexers                                         : 2
+ 1-bit 4-to-1 multiplexer                              : 1
+ 2-bit 4-to-1 multiplexer                              : 1
+# Tristates                                            : 2
+ 1-bit tristate buffer                                 : 2
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <U1/mSetup_ST> on signal <mSetup_ST[1:2]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ 0000  | 00
+ 0001  | 01
+ 0010  | 11
+-------------------
+Loading device for application Rf_Device from file '4vlx200.nph' in environment C:\Xilinx.
+WARNING:Xst:2404 -  FFs/Latches <mI2S_DATA<15:15>> (without init value) have a constant value of 0 in block <I2S_LCM_CONFIG>.
+WARNING:Xst:1710 - FF/Latch  <mI2S_DATA_8> (without init value) has a constant value of 0 in block <I2S_LCM_CONFIG>.
+WARNING:Xst:1710 - FF/Latch  <mI2S_DATA_7> (without init value) has a constant value of 0 in block <I2S_LCM_CONFIG>.
+WARNING:Xst:1710 - FF/Latch  <mI2S_DATA_6> (without init value) has a constant value of 0 in block <I2S_LCM_CONFIG>.
+WARNING:Xst:1710 - FF/Latch  <mI2S_DATA_5> (without init value) has a constant value of 0 in block <I2S_LCM_CONFIG>.
+INFO:Xst:2261 - The FF/Latch <mI2S_DATA_12> in Unit <I2S_LCM_CONFIG> is equivalent to the following FF/Latch, which will be removed : <mI2S_DATA_11> 
+INFO:Xst:2261 - The FF/Latch <Tmp_DATA_0> in Unit <LCM_TEST> is equivalent to the following 7 FFs/Latches, which will be removed : <Tmp_DATA_1> <Tmp_DATA_2> <Tmp_DATA_3> <Tmp_DATA_4> <Tmp_DATA_5> <Tmp_DATA_6> <Tmp_DATA_7> 
+INFO:Xst:2261 - The FF/Latch <LCD_D_0> in Unit <LCM_TEST> is equivalent to the following 6 FFs/Latches, which will be removed : <LCD_D_1> <LCD_D_2> <LCD_D_3> <LCD_D_4> <LCD_D_5> <LCD_D_6> 
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 1
+# ROMs                                                 : 3
+ 16x1-bit ROM                                          : 1
+ 4x2-bit ROM                                           : 2
+# Adders/Subtractors                                   : 1
+ 2-bit adder                                           : 1
+# Counters                                             : 8
+ 11-bit up counter                                     : 1
+ 17-bit up counter                                     : 1
+ 2-bit up counter                                      : 1
+ 24-bit up counter                                     : 2
+ 5-bit up counter                                      : 1
+ 6-bit up counter                                      : 1
+ 9-bit up counter                                      : 1
+# Registers                                            : 27
+ Flip-Flops                                            : 27
+# Comparators                                          : 24
+ 11-bit comparator greater                             : 1
+ 11-bit comparator less                                : 5
+ 17-bit comparator less                                : 1
+ 2-bit comparator equal                                : 3
+ 2-bit comparator less                                 : 1
+ 5-bit comparator greatequal                           : 1
+ 5-bit comparator less                                 : 1
+ 7-bit comparator greatequal                           : 1
+ 7-bit comparator less                                 : 1
+ 9-bit comparator greatequal                           : 2
+ 9-bit comparator less                                 : 7
+# Multiplexers                                         : 2
+ 1-bit 4-to-1 multiplexer                              : 1
+ 2-bit 4-to-1 multiplexer                              : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1988 - Unit <LCM_TEST>: instances <Mcompar__cmp_lt0000>, <Mcompar__cmp_ge0000> of unit <LPM_COMPARE_6> and unit <LPM_COMPARE_12> are dual, second instance is removed
+WARNING:Xst:1988 - Unit <I2S_LCM_CONFIG>: instances <Mcompar__cmp_lt0000>, <Mcompar__cmp_ge0000> of unit <LPM_COMPARE_4> and unit <LPM_COMPARE_5> are dual, second instance is removed
+WARNING:Xst:2041 - Unit LCM_TEST: 1 internal tristate is replaced by logic (pull-up yes): U1/U1/mSDATA.
+
+Optimizing unit <LCM_TEST> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block LCM_TEST, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 125
+ Flip-Flops                                            : 125
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : LCM_TEST.ngr
+Top Level Output File Name         : LCM_TEST
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 22
+
+Cell Usage :
+# BELS                             : 486
+#      GND                         : 1
+#      INV                         : 8
+#      LUT1                        : 52
+#      LUT2                        : 102
+#      LUT2_L                      : 3
+#      LUT3                        : 31
+#      LUT3_D                      : 5
+#      LUT3_L                      : 3
+#      LUT4                        : 72
+#      LUT4_D                      : 2
+#      LUT4_L                      : 12
+#      MULT_AND                    : 3
+#      MUXCY                       : 110
+#      MUXF5                       : 1
+#      VCC                         : 1
+#      XORCY                       : 80
+# FlipFlops/Latches                : 125
+#      FDC                         : 79
+#      FDCE                        : 24
+#      FDCE_1                      : 7
+#      FDE                         : 10
+#      FDE_1                       : 1
+#      FDP                         : 2
+#      FDPE_1                      : 2
+# Clock Buffers                    : 2
+#      BUFG                        : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 20
+#      IBUF                        : 5
+#      IOBUF                       : 1
+#      OBUF                        : 14
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 4vlx200ff1513-10 
+
+ Number of Slices:                     155  out of  89088     0%  
+ Number of Slice Flip Flops:           125  out of  178176     0%  
+ Number of 4 input LUTs:               290  out of  178176     0%  
+ Number of IOs:                         22
+ Number of bonded IOBs:                 21  out of    960     2%  
+ Number of GCLKs:                        2  out of     32     6%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLK                                | BUFGP                  | 96    |
+U1/U1/mI2S_CLK1                    | BUFG                   | 29    |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+-----------------------------------+---------------------------+-------+
+Control Signal                     | Buffer(FF name)           | Load  |
+-----------------------------------+---------------------------+-------+
+nRST_inv(nRST_inv1_INV_0:O)        | NONE(CNT0_15)             | 56    |
+RST_inv(RST_inv1:O)                | NONE(U1/U1/mI2S_CLK_DIV_7)| 58    |
+-----------------------------------+---------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -10
+
+   Minimum period: 6.537ns (Maximum Frequency: 152.985MHz)
+   Minimum input arrival time before clock: 5.805ns
+   Maximum output required time after clock: 7.071ns
+   Maximum combinational path delay: 6.407ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLK'
+  Clock period: 6.537ns (frequency: 152.985MHz)
+  Total number of paths / destination ports: 6386 / 109
+-------------------------------------------------------------------------
+Delay:               6.537ns (Levels of Logic = 7)
+  Source:            V_CNT_8 (FF)
+  Destination:       LCD_D_0 (FF)
+  Source Clock:      CLK rising
+  Destination Clock: CLK rising
+
+  Data Path: V_CNT_8 to LCD_D_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q            12   0.360   0.898  V_CNT_8 (V_CNT_8)
+     LUT2:I1->O            1   0.195   0.547  _cmp_lt0000134 (_cmp_lt00001_map107)
+     LUT4:I3->O            3   0.195   0.728  _cmp_lt0000139 (_cmp_lt0000)
+     LUT2:I1->O            1   0.195   0.547  MSEL_T<1>1114 (MSEL_T<1>1_map156)
+     LUT4_D:I3->O          1   0.195   0.547  MSEL_T<1>1161 (N37)
+     LUT4:I3->O            1   0.195   0.609  _mux0016<6>1212 (_mux0016<6>1_map226)
+     LUT3_D:I2->O          1   0.195   0.547  _mux0016<6>1233 (N0)
+     LUT4:I3->O            1   0.195   0.000  _mux0016<6> (_mux0016<6>)
+     FDP:D                     0.391          LCD_D_0
+    ----------------------------------------
+    Total                      6.537ns (2.116ns logic, 4.421ns route)
+                                       (32.4% logic, 67.6% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'U1/U1/mI2S_CLK1'
+  Clock period: 6.406ns (frequency: 156.113MHz)
+  Total number of paths / destination ports: 308 / 58
+-------------------------------------------------------------------------
+Delay:               3.203ns (Levels of Logic = 3)
+  Source:            U1/mI2S_DATA_12 (FF)
+  Destination:       U1/U1/Mtridata_mSDATA (FF)
+  Source Clock:      U1/U1/mI2S_CLK1 rising
+  Destination Clock: U1/U1/mI2S_CLK1 falling
+
+  Data Path: U1/mI2S_DATA_12 to U1/U1/Mtridata_mSDATA
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              1   0.360   0.712  U1/mI2S_DATA_12 (U1/mI2S_DATA_12)
+     LUT2:I1->O            1   0.195   0.547  U1/U1/_mux00044 (U1/U1/_mux0004_map232)
+     LUT4:I3->O            1   0.195   0.609  U1/U1/_mux000444 (U1/U1/_mux0004_map243)
+     LUT4:I2->O            1   0.195   0.000  U1/U1/_mux0004184 (U1/U1/_mux0004)
+     FDE_1:D                   0.391          U1/U1/Mtridata_mSDATA
+    ----------------------------------------
+    Total                      3.203ns (1.336ns logic, 1.867ns route)
+                                       (41.7% logic, 58.3% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'CLK'
+  Total number of paths / destination ports: 32 / 2
+-------------------------------------------------------------------------
+Offset:              5.805ns (Levels of Logic = 6)
+  Source:            USER_SW<3> (PAD)
+  Destination:       LCD_D_0 (FF)
+  Destination Clock: CLK rising
+
+  Data Path: USER_SW<3> to LCD_D_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             5   0.965   0.790  USER_SW_3_IBUF (USER_SW_3_IBUF)
+     LUT3:I0->O            1   0.195   0.765  _xor000911 (N23)
+     LUT4:I0->O            1   0.195   0.609  _mux0016<6>127 (_mux0016<6>1_map178)
+     LUT4:I2->O            1   0.195   0.765  _mux0016<6>1142 (_mux0016<6>1_map203)
+     LUT3_D:I0->O          1   0.195   0.547  _mux0016<6>1233 (N0)
+     LUT4:I3->O            1   0.195   0.000  _mux0016<6> (_mux0016<6>)
+     FDP:D                     0.391          LCD_D_0
+    ----------------------------------------
+    Total                      5.805ns (2.331ns logic, 3.474ns route)
+                                       (40.2% logic, 59.8% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'U1/U1/mI2S_CLK1'
+  Total number of paths / destination ports: 11 / 11
+-------------------------------------------------------------------------
+Offset:              3.173ns (Levels of Logic = 2)
+  Source:            nRST (PAD)
+  Destination:       U1/mI2S_DATA_14 (FF)
+  Destination Clock: U1/U1/mI2S_CLK1 rising
+
+  Data Path: nRST to U1/mI2S_DATA_14
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             6   0.965   0.591  nRST_IBUF (nRST_IBUF)
+     LUT4:I3->O           10   0.195   0.678  U1/_and00001 (U1/_and0000)
+     FDE:CE                    0.743          U1/mI2S_DATA_14
+    ----------------------------------------
+    Total                      3.173ns (1.903ns logic, 1.270ns route)
+                                       (60.0% logic, 40.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'U1/U1/mI2S_CLK1'
+  Total number of paths / destination ports: 14 / 3
+-------------------------------------------------------------------------
+Offset:              7.071ns (Levels of Logic = 4)
+  Source:            U1/U1/mST_1 (FF)
+  Destination:       LCD_SDA (PAD)
+  Source Clock:      U1/U1/mI2S_CLK1 falling
+
+  Data Path: U1/U1/mST_1 to LCD_SDA
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE_1:C->Q           9   0.307   0.889  U1/U1/mST_1 (U1/U1/mST_1)
+     LUT3_D:I0->LO         1   0.195   0.175  U1/U1/_mux000431 (N868)
+     LUT3:I2->O            3   0.195   0.625  U1/U1/_cmp_eq00001 (U1/mI2S_RDY)
+     LUT3:I2->O            1   0.195   0.534  U1/U1/_xor00071 (U1/U1/_xor0007)
+     IOBUF:T->IO               3.957          LCD_SDA_IOBUF (LCD_SDA)
+    ----------------------------------------
+    Total                      7.071ns (4.849ns logic, 2.222ns route)
+                                       (68.6% logic, 31.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLK'
+  Total number of paths / destination ports: 14 / 12
+-------------------------------------------------------------------------
+Offset:              5.835ns (Levels of Logic = 2)
+  Source:            OP (FF)
+  Destination:       LCD_CLK (PAD)
+  Source Clock:      CLK rising
+
+  Data Path: OP to LCD_CLK
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             5   0.360   0.790  OP (OP)
+     LUT3:I0->O            1   0.195   0.534  LCD_VSYNC1 (LCD_VSYNC_OBUF)
+     OBUF:I->O                 3.957          LCD_VSYNC_OBUF (LCD_VSYNC)
+    ----------------------------------------
+    Total                      5.835ns (4.512ns logic, 1.323ns route)
+                                       (77.3% logic, 22.7% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 4 / 3
+-------------------------------------------------------------------------
+Delay:               6.407ns (Levels of Logic = 3)
+  Source:            nRST (PAD)
+  Destination:       LCD_CLK (PAD)
+
+  Data Path: nRST to LCD_CLK
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             6   0.965   0.756  nRST_IBUF (nRST_IBUF)
+     LUT3:I1->O            1   0.195   0.534  LCD_VSYNC1 (LCD_VSYNC_OBUF)
+     OBUF:I->O                 3.957          LCD_VSYNC_OBUF (LCD_VSYNC)
+    ----------------------------------------
+    Total                      6.407ns (5.117ns logic, 1.290ns route)
+                                       (79.9% logic, 20.1% route)
+
+=========================================================================
+CPU : 56.98 / 60.28 s | Elapsed : 57.00 / 60.00 s
+ 
+--> 
+
+Total memory usage is 432240 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   12 (   0 filtered)
+Number of infos    :    3 (   0 filtered)
+

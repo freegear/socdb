@@ -1,0 +1,458 @@
+Release  - xst I.31
+Copyright (c) 1995-2006 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 0.17 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.17 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Reading design: U60.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "U60.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "U60"
+Output Format                      : NGC
+Target Device                      : xc4vlx200-10-ff1513
+
+---- Source Options
+Top Module Name                    : U60
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 32
+Number of Regional Clock Buffers   : 48
+Register Duplication               : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+DSP48 Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : U60.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+use_dsp48                          : auto
+Optimize Instantiated Primitives   : NO
+use_clock_enable                   : Auto
+use_sync_set                       : Auto
+use_sync_reset                     : Auto
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "E:/ENCODER/LED_TEST/U60/U60.vhd" in Library work.
+Architecture behavioral of Entity u60 is up to date.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <U60> in library <work> (architecture <behavioral>) with generics.
+	CLK_Freq = 25000000
+	LED_SPEED_Freq = 16
+
+Building hierarchy successfully finished.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing generic Entity <U60> in library <work> (Architecture <behavioral>).
+	LED_SPEED_Freq = 16
+	CLK_Freq = 25000000
+Entity <U60> analyzed. Unit <U60> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <U60>.
+    Related source file is "E:/ENCODER/LED_TEST/U60/U60.vhd".
+    Found finite state machine <FSM_0> for signal <LED_MODE_COUNT>.
+    -----------------------------------------------------------------------
+    | States             | 7                                              |
+    | Transitions        | 7                                              |
+    | Inputs             | 0                                              |
+    | Outputs            | 5                                              |
+    | Clock              | DIV_CTRL_CLK (rising_edge)                     |
+    | Clock enable       | $not0000 (positive)                            |
+    | Reset              | nRESET (negative)                              |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | 000                                            |
+    | Power Up State     | 000                                            |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 5-bit adder for signal <$addsub0000>.
+    Found 5-bit comparator greatequal for signal <$cmp_ge0000> created at line 100.
+    Found 5-bit comparator less for signal <$cmp_lt0000> created at line 150.
+    Found 5-bit comparator less for signal <$cmp_lt0001> created at line 100.
+    Found 25-bit comparator less for signal <$cmp_lt0002> created at line 81.
+    Found 25-bit up counter for signal <CLK_DIV_COUNT>.
+    Found 3-bit up counter for signal <DELAY>.
+    Found 1-bit register for signal <DIV_CTRL_CLK>.
+    Found 4-bit register for signal <LED_BUFFER>.
+    Found 5-bit register for signal <LED_MODE_DELAY>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred   2 Counter(s).
+	inferred  10 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   4 Comparator(s).
+Unit <U60> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 1
+ 5-bit adder                                           : 1
+# Counters                                             : 2
+ 25-bit up counter                                     : 1
+ 3-bit up counter                                      : 1
+# Registers                                            : 3
+ 1-bit register                                        : 1
+ 4-bit register                                        : 1
+ 5-bit register                                        : 1
+# Comparators                                          : 4
+ 25-bit comparator less                                : 1
+ 5-bit comparator greatequal                           : 1
+ 5-bit comparator less                                 : 2
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <LED_MODE_COUNT> on signal <LED_MODE_COUNT[1:3]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ 000   | 000
+ 001   | 011
+ 010   | 001
+ 011   | 010
+ 100   | 110
+ 101   | 111
+ 110   | 101
+-------------------
+Loading device for application Rf_Device from file '4vlx200.nph' in environment D:\Xilinx.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 1
+# Adders/Subtractors                                   : 1
+ 5-bit adder                                           : 1
+# Counters                                             : 2
+ 25-bit up counter                                     : 1
+ 3-bit up counter                                      : 1
+# Registers                                            : 13
+ Flip-Flops                                            : 13
+# Comparators                                          : 4
+ 25-bit comparator less                                : 1
+ 5-bit comparator greatequal                           : 1
+ 5-bit comparator less                                 : 2
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1988 - Unit <U60>: instances <Mcompar__cmp_lt0001>, <Mcompar__cmp_ge0000> of unit <LPM_COMPARE_2> and unit <LPM_COMPARE_3> are dual, second instance is removed
+
+Optimizing unit <U60> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block U60, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 41
+ Flip-Flops                                            : 41
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : U60.ngr
+Top Level Output File Name         : U60
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 6
+
+Cell Usage :
+# BELS                             : 127
+#      GND                         : 1
+#      INV                         : 9
+#      LUT1                        : 4
+#      LUT2                        : 28
+#      LUT3                        : 10
+#      LUT4                        : 12
+#      LUT4_D                      : 1
+#      MULT_AND                    : 1
+#      MUXCY                       : 36
+#      VCC                         : 1
+#      XORCY                       : 24
+# FlipFlops/Latches                : 41
+#      FDC                         : 25
+#      FDCE                        : 12
+#      FDPE                        : 4
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 5
+#      IBUF                        : 1
+#      OBUF                        : 4
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 4vlx200ff1513-10 
+
+ Number of Slices:                      31  out of  89088     0%  
+ Number of Slice Flip Flops:            41  out of  178176     0%  
+ Number of 4 input LUTs:                64  out of  178176     0%  
+ Number of IOs:                          6
+ Number of bonded IOBs:                  6  out of    960     0%  
+ Number of GCLKs:                        1  out of     32     3%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLOCK                              | BUFGP                  | 26    |
+DIV_CTRL_CLK                       | NONE(LED_BUFFER_2)     | 15    |
+-----------------------------------+------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+-----------------------------------+------------------------+-------+
+Control Signal                     | Buffer(FF name)        | Load  |
+-----------------------------------+------------------------+-------+
+nRESET_inv(nRESET_inv1_INV_0:O)    | NONE(CLK_DIV_COUNT_9)  | 41    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -10
+
+   Minimum period: 6.533ns (Maximum Frequency: 153.068MHz)
+   Minimum input arrival time before clock: No path found
+   Maximum output required time after clock: 4.851ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLOCK'
+  Clock period: 6.533ns (frequency: 153.068MHz)
+  Total number of paths / destination ports: 8750 / 27
+-------------------------------------------------------------------------
+Delay:               6.533ns (Levels of Logic = 40)
+  Source:            CLK_DIV_COUNT_1 (FF)
+  Destination:       CLK_DIV_COUNT_24 (FF)
+  Source Clock:      CLOCK rising
+  Destination Clock: CLOCK rising
+
+  Data Path: CLK_DIV_COUNT_1 to CLK_DIV_COUNT_24
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              2   0.360   0.783  CLK_DIV_COUNT_1 (CLK_DIV_COUNT_1)
+     LUT1:I0->O            1   0.195   0.000  CLK_DIV_COUNT_1_rt (CLK_DIV_COUNT_1_rt)
+     MUXCY:S->O            1   0.366   0.000  Mcompar__cmp_lt0002_cy<0> (Mcompar__cmp_lt0002_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<1> (Mcompar__cmp_lt0002_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<2> (Mcompar__cmp_lt0002_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<3> (Mcompar__cmp_lt0002_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<4> (Mcompar__cmp_lt0002_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<5> (Mcompar__cmp_lt0002_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<6> (Mcompar__cmp_lt0002_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<7> (Mcompar__cmp_lt0002_cy<7>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<8> (Mcompar__cmp_lt0002_cy<8>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<9> (Mcompar__cmp_lt0002_cy<9>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0002_cy<10> (Mcompar__cmp_lt0002_cy<10>)
+     MUXCY:CI->O           3   0.264   0.550  Mcompar__cmp_lt0002_cy<11> (Mcompar__cmp_lt0002_cy<11>)
+     INV:I->O              8   0.426   0.809  Mcompar__cmp_lt0002_cy<11>_inv_1_INV_0 (Mcompar__cmp_lt0002_cy<11>_inv)
+     LUT2:I1->O            2   0.195   0.000  Mcount_CLK_DIV_COUNT_lut<0> (Result<0>)
+     MUXCY:S->O            1   0.366   0.000  Mcount_CLK_DIV_COUNT_cy<0> (Mcount_CLK_DIV_COUNT_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<1> (Mcount_CLK_DIV_COUNT_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<2> (Mcount_CLK_DIV_COUNT_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<3> (Mcount_CLK_DIV_COUNT_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<4> (Mcount_CLK_DIV_COUNT_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<5> (Mcount_CLK_DIV_COUNT_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<6> (Mcount_CLK_DIV_COUNT_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<7> (Mcount_CLK_DIV_COUNT_cy<7>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<8> (Mcount_CLK_DIV_COUNT_cy<8>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<9> (Mcount_CLK_DIV_COUNT_cy<9>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<10> (Mcount_CLK_DIV_COUNT_cy<10>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<11> (Mcount_CLK_DIV_COUNT_cy<11>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<12> (Mcount_CLK_DIV_COUNT_cy<12>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<13> (Mcount_CLK_DIV_COUNT_cy<13>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<14> (Mcount_CLK_DIV_COUNT_cy<14>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<15> (Mcount_CLK_DIV_COUNT_cy<15>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<16> (Mcount_CLK_DIV_COUNT_cy<16>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<17> (Mcount_CLK_DIV_COUNT_cy<17>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<18> (Mcount_CLK_DIV_COUNT_cy<18>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<19> (Mcount_CLK_DIV_COUNT_cy<19>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<20> (Mcount_CLK_DIV_COUNT_cy<20>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<21> (Mcount_CLK_DIV_COUNT_cy<21>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<22> (Mcount_CLK_DIV_COUNT_cy<22>)
+     MUXCY:CI->O           0   0.044   0.000  Mcount_CLK_DIV_COUNT_cy<23> (Mcount_CLK_DIV_COUNT_cy<23>)
+     XORCY:CI->O           1   0.360   0.000  Mcount_CLK_DIV_COUNT_xor<24> (Result<24>)
+     FDC:D                     0.391          CLK_DIV_COUNT_24
+    ----------------------------------------
+    Total                      6.533ns (4.391ns logic, 2.142ns route)
+                                       (67.2% logic, 32.8% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'DIV_CTRL_CLK'
+  Clock period: 4.192ns (frequency: 238.550MHz)
+  Total number of paths / destination ports: 200 / 30
+-------------------------------------------------------------------------
+Delay:               4.192ns (Levels of Logic = 3)
+  Source:            LED_MODE_DELAY_1 (FF)
+  Destination:       LED_MODE_DELAY_0 (FF)
+  Source Clock:      DIV_CTRL_CLK rising
+  Destination Clock: DIV_CTRL_CLK rising
+
+  Data Path: LED_MODE_DELAY_1 to LED_MODE_DELAY_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             5   0.360   0.790  LED_MODE_DELAY_1 (LED_MODE_DELAY_1)
+     LUT4:I0->O            1   0.195   0.547  _not00061_SW0 (N25)
+     LUT4_D:I3->O          1   0.195   0.609  _not00061 (N0)
+     LUT4:I2->O            5   0.195   0.559  _not0006 (_not0006)
+     FDCE:CE                   0.743          LED_MODE_DELAY_0
+    ----------------------------------------
+    Total                      4.192ns (1.688ns logic, 2.504ns route)
+                                       (40.3% logic, 59.7% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'DIV_CTRL_CLK'
+  Total number of paths / destination ports: 4 / 4
+-------------------------------------------------------------------------
+Offset:              4.851ns (Levels of Logic = 1)
+  Source:            LED_BUFFER_3 (FF)
+  Destination:       LED<3> (PAD)
+  Source Clock:      DIV_CTRL_CLK rising
+
+  Data Path: LED_BUFFER_3 to LED<3>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDPE:C->Q             1   0.360   0.534  LED_BUFFER_3 (LED_BUFFER_3)
+     OBUF:I->O                 3.957          LED_3_OBUF (LED<3>)
+    ----------------------------------------
+    Total                      4.851ns (4.317ns logic, 0.534ns route)
+                                       (89.0% logic, 11.0% route)
+
+=========================================================================
+CPU : 11.47 / 11.67 s | Elapsed : 12.00 / 12.00 s
+ 
+--> 
+
+Total memory usage is 415560 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    2 (   0 filtered)
+

@@ -1,0 +1,378 @@
+Release  - xst I.31
+Copyright (c) 1995-2006 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 0.52 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.52 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Reading design: LED_TEST.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "LED_TEST.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "LED_TEST"
+Output Format                      : NGC
+Target Device                      : xc4vlx200-10-ff1513
+
+---- Source Options
+Top Module Name                    : LED_TEST
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 32
+Number of Regional Clock Buffers   : 48
+Register Duplication               : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+DSP48 Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : LED_TEST.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+use_dsp48                          : auto
+Optimize Instantiated Primitives   : NO
+use_clock_enable                   : Auto
+use_sync_set                       : Auto
+use_sync_reset                     : Auto
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "D:/LCM/LED_TEST/LED_TEST.vhd" in Library work.
+Architecture behavioral of Entity led_test is up to date.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <LED_TEST> in library <work> (architecture <behavioral>).
+
+Building hierarchy successfully finished.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <LED_TEST> in library <work> (Architecture <behavioral>).
+Entity <LED_TEST> analyzed. Unit <LED_TEST> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <LED_TEST>.
+    Related source file is "D:/LCM/LED_TEST/LED_TEST.vhd".
+    Found 1-bit register for signal <CK>.
+    Found 24-bit up counter for signal <CNT>.
+    Found 4-bit register for signal <LED_SIG>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred   1 D-type flip-flop(s).
+Unit <LED_TEST> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Counters                                             : 1
+ 24-bit up counter                                     : 1
+# Registers                                            : 2
+ 1-bit register                                        : 1
+ 4-bit register                                        : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Loading device for application Rf_Device from file '4vlx200.nph' in environment C:\Xilinx.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Counters                                             : 1
+ 24-bit up counter                                     : 1
+# Registers                                            : 5
+ Flip-Flops                                            : 5
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <LED_TEST> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block LED_TEST, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 29
+ Flip-Flops                                            : 29
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : LED_TEST.ngr
+Top Level Output File Name         : LED_TEST
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 6
+
+Cell Usage :
+# BELS                             : 110
+#      GND                         : 1
+#      INV                         : 3
+#      LUT1                        : 23
+#      LUT2                        : 24
+#      LUT4                        : 6
+#      MUXCY                       : 29
+#      VCC                         : 1
+#      XORCY                       : 23
+# FlipFlops/Latches                : 29
+#      FDC                         : 25
+#      FDCE                        : 1
+#      FDP                         : 3
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 5
+#      IBUF                        : 1
+#      OBUF                        : 4
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 4vlx200ff1513-10 
+
+ Number of Slices:                      32  out of  89088     0%  
+ Number of Slice Flip Flops:            29  out of  178176     0%  
+ Number of 4 input LUTs:                56  out of  178176     0%  
+ Number of IOs:                          6
+ Number of bonded IOBs:                  6  out of    960     0%  
+ Number of GCLKs:                        1  out of     32     3%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLK                                | BUFGP                  | 25    |
+CK                                 | NONE(LED_SIG_2)        | 4     |
+-----------------------------------+------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+-----------------------------------+------------------------+-------+
+Control Signal                     | Buffer(FF name)        | Load  |
+-----------------------------------+------------------------+-------+
+nRST_inv(nRST_inv1_INV_0:O)        | NONE(CNT_22)           | 29    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -10
+
+   Minimum period: 4.338ns (Maximum Frequency: 230.505MHz)
+   Minimum input arrival time before clock: No path found
+   Maximum output required time after clock: 4.869ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLK'
+  Clock period: 4.338ns (frequency: 230.505MHz)
+  Total number of paths / destination ports: 901 / 26
+-------------------------------------------------------------------------
+Delay:               4.338ns (Levels of Logic = 26)
+  Source:            CNT_0 (FF)
+  Destination:       CNT_23 (FF)
+  Source Clock:      CLK rising
+  Destination Clock: CLK rising
+
+  Data Path: CNT_0 to CNT_23
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              3   0.360   0.550  CNT_0 (CNT_0)
+     INV:I->O              1   0.426   0.000  Mcount_CNT_lut<0>_INV_0 (Result<0>)
+     MUXCY:S->O            1   0.366   0.000  Mcount_CNT_cy<0> (Mcount_CNT_cy<0>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<1> (Mcount_CNT_cy<1>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<2> (Mcount_CNT_cy<2>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<3> (Mcount_CNT_cy<3>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<4> (Mcount_CNT_cy<4>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<5> (Mcount_CNT_cy<5>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<6> (Mcount_CNT_cy<6>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<7> (Mcount_CNT_cy<7>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<8> (Mcount_CNT_cy<8>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<9> (Mcount_CNT_cy<9>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<10> (Mcount_CNT_cy<10>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<11> (Mcount_CNT_cy<11>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<12> (Mcount_CNT_cy<12>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<13> (Mcount_CNT_cy<13>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_CNT_cy<14> (Mcount_CNT_cy<14>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<15> (Mcount_CNT_cy<15>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<16> (Mcount_CNT_cy<16>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<17> (Mcount_CNT_cy<17>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<18> (Mcount_CNT_cy<18>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<19> (Mcount_CNT_cy<19>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<20> (Mcount_CNT_cy<20>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CNT_cy<21> (Mcount_CNT_cy<21>)
+     MUXCY:CI->O           0   0.044   0.000  Mcount_CNT_cy<22> (Mcount_CNT_cy<22>)
+     XORCY:CI->O           1   0.360   0.712  Mcount_CNT_xor<23> (Result<23>)
+     LUT2:I1->O            1   0.195   0.000  CNT_Eqn_231 (CNT_Eqn_23)
+     FDC:D                     0.391          CNT_23
+    ----------------------------------------
+    Total                      4.338ns (3.077ns logic, 1.261ns route)
+                                       (70.9% logic, 29.1% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CK'
+  Clock period: 1.303ns (frequency: 767.460MHz)
+  Total number of paths / destination ports: 4 / 4
+-------------------------------------------------------------------------
+Delay:               1.303ns (Levels of Logic = 0)
+  Source:            LED_SIG_3 (FF)
+  Destination:       LED_SIG_0 (FF)
+  Source Clock:      CK rising
+  Destination Clock: CK rising
+
+  Data Path: LED_SIG_3 to LED_SIG_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDP:C->Q              2   0.360   0.552  LED_SIG_3 (LED_SIG_3)
+     FDC:D                     0.391          LED_SIG_0
+    ----------------------------------------
+    Total                      1.303ns (0.751ns logic, 0.552ns route)
+                                       (57.6% logic, 42.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CK'
+  Total number of paths / destination ports: 4 / 4
+-------------------------------------------------------------------------
+Offset:              4.869ns (Levels of Logic = 1)
+  Source:            LED_SIG_3 (FF)
+  Destination:       LED<3> (PAD)
+  Source Clock:      CK rising
+
+  Data Path: LED_SIG_3 to LED<3>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDP:C->Q              2   0.360   0.552  LED_SIG_3 (LED_SIG_3)
+     OBUF:I->O                 3.957          LED_3_OBUF (LED<3>)
+    ----------------------------------------
+    Total                      4.869ns (4.317ns logic, 0.552ns route)
+                                       (88.7% logic, 11.3% route)
+
+=========================================================================
+CPU : 36.30 / 36.89 s | Elapsed : 36.00 / 37.00 s
+ 
+--> 
+
+Total memory usage is 431280 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    1 (   0 filtered)
+

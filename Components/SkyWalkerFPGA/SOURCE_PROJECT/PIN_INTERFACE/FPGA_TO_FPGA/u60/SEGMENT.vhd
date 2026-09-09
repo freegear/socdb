@@ -1,0 +1,378 @@
+-- --------------------------------------------------------------------
+-- Copyright (c) 2006 by You-Will Inc. 
+-- --------------------------------------------------------------------
+--           
+--                     You-Will Inc
+--                     978-8, Yeongtong-Dong, Yeongtong-Gu
+--                     Suwon-City, Gyeonggi-Do, 443-812 Korea
+--                     email: niosii@you-will.co.kr
+--
+-- --------------------------------------------------------------------
+--
+-- Major Functions: FPGA to FPGA interface 
+--
+-----------------------------------------------------------------------
+--
+-- Referance : 
+--
+-- --------------------------------------------------------------------
+--
+-- Revision History :
+-- --------------------------------------------------------------------
+--   Ver  :| Author            :| Mod. Date :| Changes Made:
+--   V2.0 :| TAE-JIN KIM       :| 06/12/18  :| Initial Revision
+-- --------------------------------------------------------------------
+-- P.S ) This file is COMPONENT-file of U60(FPGA_to_FPGA_interface)
+-----------------------------------------------------------------------
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_UNSIGNED.ALL;
+-------------------------------
+--========== INPUT =========
+-- FPGA_PIN_NUM : INPUT IS ONLY 3WAY-BCD CODE.
+-- FPGA_ERR_NUM : INPUT IS ONLY 3WAY-BCD CODE.
+-------------------------------
+-- MODE-SIGNAL
+-- [00] : STAN_BY
+-- [01] : PIN-CHECKING
+-- [10] : ERROR-DECTING
+-- [11] : ERROR-DETECT
+-------------------------------
+-- END_SIG-SIGNAL
+-- [1] = CHECKING COMPLETE
+-- [0] = PROCESSING
+-------------------------------
+--========== OUTPUT =========
+-- SEG_DATA_SIG = MSB[ A B C D E F G dp ]LSB
+-- SEG_COMM_SIG = MSB[ 3 2 1 0 ]LSB * SCANN-LEFT
+----------------------------------------------------------
+
+ENTITY SEGMENT IS
+	PORT ( CLK, nRST : IN STD_LOGIC;
+		   MODE  : IN STD_LOGIC_VECTOR( 1 DOWNTO 0 );
+			   			 --STAN_BY   : 01
+			   			 --PROCSSING : 00
+                         --ERROR_CHECKING : 10
+                         --ERROR_DETECTING : 11
+			END_SIG : IN STD_LOGIC;
+		FPGA_PIN_NUM : IN STD_LOGIC_VECTOR( 11 DOWNTO 0 );  --PIN NUMBER
+		FPGA_ERR_NUM : IN STD_LOGIC_VECTOR( 11 DOWNTO 0 );
+		
+		SEG_DATA_SIG : OUT STD_LOGIC_VECTOR( 7 DOWNTO 0 );
+		SEG_COMM_SIG : OUT STD_LOGIC_VECTOR( 3 DOWNTO 0 )
+		);  --ERROR-PIN MUNBER
+END SEGMENT;
+
+ARCHITECTURE BEHAVIORAL OF SEGMENT IS
+	SIGNAL COMMON_SCAN_COUNT : STD_LOGIC_VECTOR( 3 DOWNTO 0 );
+	
+	SIGNAL SCAN_CLK : STD_LOGIC;  --SEGMENT_SCAN_CLOCK
+	SIGNAL DIS_CLK1, DIS_CLK2 : STD_LOGIC;   --DISPLAY-CLOCK
+	
+	SIGNAL SEG_DATA3, SEG_DATA2, SEG_DATA1, SEG_DATA0 : STD_LOGIC_VECTOR( 7 DOWNTO 0 );
+	
+	SIGNAL COUNT : INTEGER RANGE 0 TO 10;
+	
+	SIGNAL SEG_DCLK : STD_LOGIC;
+	
+	
+	SIGNAL FPGA_PIN_DATA0, FPGA_PIN_DATA1, FPGA_PIN_DATA2,
+	       FPGA_ERR_DATA0, FPGA_ERR_DATA1, FPGA_ERR_DATA2 : STD_LOGIC_VECTOR( 7 DOWNTO 0 );
+BEGIN
+-- SYS_CLK = 25[MHz]
+-- OUT_CLK = 160[Hz] * 40 flame * 4EA = 160[Hz]
+-- CNT = ( 25[MHz] / 160[Hz] ) / 2 = 78125
+	PROCESS( CLK, nRST )
+		VARIABLE CNT : INTEGER RANGE 0 TO 78124;  
+	BEGIN
+		IF (nRST='0') THEN
+			CNT := 0;
+			SCAN_CLK <= '0';
+		ELSIF RISING_EDGE(CLK) THEN
+			IF ( CNT = 78124 ) THEN
+				CNT := 0;
+				SCAN_CLK <= NOT SCAN_CLK;
+			ELSE
+				CNT := CNT + 1;
+			END IF;
+		END IF;
+	END PROCESS;
+	
+	PROCESS( SCAN_CLK, nRST )
+	BEGIN
+		IF ( nRST='0' ) THEN
+			COMMON_SCAN_COUNT <= ( OTHERS => '1' );
+		ELSIF RISING_EDGE(SCAN_CLK) THEN
+			IF COMMON_SCAN_COUNT="1111" THEN
+				COMMON_SCAN_COUNT <= "1110";
+			ELSE
+				COMMON_SCAN_COUNT <= COMMON_SCAN_COUNT( 2 DOWNTO 0 ) & COMMON_SCAN_COUNT(3);
+			END IF;
+		END IF;
+	END PROCESS;
+	
+	PROCESS( COMMON_SCAN_COUNT )
+	BEGIN
+		CASE COMMON_SCAN_COUNT IS
+			WHEN "1110" => SEG_DATA_SIG <= SEG_DATA0;
+			WHEN "1101" => SEG_DATA_SIG <= SEG_DATA1;
+			WHEN "1011" => SEG_DATA_SIG <= SEG_DATA2;
+			WHEN "0111" => SEG_DATA_SIG <= SEG_DATA3;
+			WHEN OTHERS => SEG_DATA_SIG <= ( OTHERS => '0' );
+		END CASE;
+	END PROCESS;
+	
+	SEG_COMM_SIG <= COMMON_SCAN_COUNT;
+			
+	PROCESS( CLK, nRST )
+	BEGIN
+		IF nRST='0' THEN
+			SEG_DATA0 <=( OTHERS => '1' );
+			SEG_DATA1 <= ( OTHERS => '1' );
+			SEG_DATA2 <= ( OTHERS => '1' );
+			SEG_DATA3 <= ( OTHERS => '1' );
+		ELSIF RISING_EDGE(CLK) THEN
+			IF END_SIG='0' THEN
+				CASE MODE IS
+					WHEN "00" => IF ( DIS_CLK1='1') THEN
+									SEG_DATA0 <= "00000010";
+									SEG_DATA1 <= "00000010";
+									SEG_DATA2 <= "00000010";
+									SEG_DATA3 <= "00000010";
+							     ELSE
+							     	SEG_DATA0 <= ( OTHERS => '0' );
+							     	SEG_DATA1 <= ( OTHERS => '0' );
+							     	SEG_DATA2 <= ( OTHERS => '0' );
+							     	SEG_DATA3 <= ( OTHERS => '0' );
+							    END IF;
+					WHEN "01" => IF ( COUNT = 0 ) THEN
+									SEG_DATA0 <= FPGA_PIN_DATA0;
+							     	SEG_DATA1 <= FPGA_PIN_DATA1;
+							     	SEG_DATA2 <= FPGA_PIN_DATA2;
+							     	SEG_DATA3 <= "10000000";
+							     ELSIF ( COUNT = 1 ) THEN
+							     SEG_DATA0 <= FPGA_PIN_DATA0;
+							     	SEG_DATA1 <= FPGA_PIN_DATA1;
+							     	SEG_DATA2 <= FPGA_PIN_DATA2;
+							     	SEG_DATA3 <= "01000000";
+							     ELSIF ( COUNT = 2 ) THEN
+							     SEG_DATA0 <= FPGA_PIN_DATA0;
+							     	SEG_DATA1 <= FPGA_PIN_DATA1;
+							     	SEG_DATA2 <= FPGA_PIN_DATA2;
+							     	SEG_DATA3 <= "00100000";
+							     ELSIF ( COUNT = 3 ) THEN
+							     	SEG_DATA0 <= FPGA_PIN_DATA0;
+							     	SEG_DATA1 <= FPGA_PIN_DATA1;
+							     	SEG_DATA2 <= FPGA_PIN_DATA2;
+							     	SEG_DATA3 <= "00010000";
+							     ELSIF ( COUNT = 4 ) THEN
+							     	SEG_DATA0 <= FPGA_PIN_DATA0;
+							     	SEG_DATA1 <= FPGA_PIN_DATA1;
+							     	SEG_DATA2 <= FPGA_PIN_DATA2;
+							     	SEG_DATA3 <= "00001000";
+							     ELSE 
+							     	SEG_DATA0 <= FPGA_PIN_DATA0;
+							     	SEG_DATA1 <= FPGA_PIN_DATA1;
+							     	SEG_DATA2 <= FPGA_PIN_DATA2;
+							     	SEG_DATA3 <= "00000100";
+							     END IF;
+					WHEN "10" => IF DIS_CLK1='1' THEN
+									SEG_DATA3 <= "10011111";
+									SEG_DATA2 <= "10110110";
+									SEG_DATA1 <= "10011100";
+									SEG_DATA0 <= "11101110";
+							     ELSE
+							     	SEG_DATA3 <= ( OTHERS => '0' );
+							     	SEG_DATA2 <= ( OTHERS => '0' );
+							     	SEG_DATA1 <= ( OTHERS => '0' );
+							     	SEG_DATA0 <= ( OTHERS => '0' );
+							    END IF;
+					WHEN "11" => IF DIS_CLK2='1' THEN
+									SEG_DATA3 <= "11001111";  --PIN => [P.]
+									SEG_DATA2 <= FPGA_PIN_DATA2;
+									SEG_DATA1 <= FPGA_PIN_DATA1;
+									SEG_DATA0 <= FPGA_PIN_DATA0;
+							     ELSE
+							     	SEG_DATA3 <= "10011111";  --ERROR => [E.]
+							     	SEG_DATA2 <= FPGA_ERR_DATA2;
+							     	SEG_DATA1 <= FPGA_ERR_DATA1;
+							     	SEG_DATA0 <= FPGA_ERR_DATA0;
+							     END IF;
+					WHEN OTHERS => SEG_DATA3 <= ( OTHERS => '0' );
+								SEG_DATA2 <= ( OTHERS => '0' );
+								SEG_DATA1 <= ( OTHERS => '0' );
+								SEG_DATA0 <= ( OTHERS => '0' );
+					END CASE;
+			ELSE
+				IF DIS_CLK1='1' THEN
+					SEG_DATA3 <= "11001111";
+					SEG_DATA2 <= "10011110";
+					SEG_DATA1 <= "00101010";
+					SEG_DATA0 <= "01111010";
+				ELSE
+					SEG_DATA3 <= ( OTHERS => '0' );
+					SEG_DATA2 <= ( OTHERS => '0' );
+					SEG_DATA1 <= ( OTHERS => '0' );
+					SEG_DATA0 <= ( OTHERS => '0' );
+				END IF;
+			END IF;	
+		END IF;
+	END PROCESS;
+		
+		
+	PROCESS( 	SCAN_CLK, nRST )
+		VARIABLE CNT : INTEGER RANGE 0 TO 15;
+	BEGIN
+		IF nRST='0' THEN
+			CNT := 0;
+			SEG_DCLK <= '0';
+		ELSIF RISING_EDGE(SCAN_CLK) THEN
+			IF CNT=13 THEN
+				SEG_DCLK <= NOT SEG_DCLK;
+				CNT := 0;
+			ELSE
+				CNT := CNT + 1;
+			END IF;
+		END IF;
+	END PROCESS;
+	
+	PROCESS( SEG_DCLK, nRST )
+	BEGIN
+		IF nRST='0' THEN
+			COUNT <= 0;
+		ELSIF RISING_EDGE(SEG_DCLK) THEN
+			IF COUNT=5 THEN
+				COUNT <= 0;
+			ELSE
+				COUNT <= COUNT + 1;
+			END IF;
+		END IF;
+	END PROCESS;
+	
+	
+	PROCESS( FPGA_PIN_NUM )
+	BEGIN
+		CASE FPGA_PIN_NUM( 3 DOWNTO 0 ) IS
+			WHEN "0000" => FPGA_PIN_DATA0 <= "11111100";
+			WHEN "0001" => FPGA_PIN_DATA0 <= "01100000";
+			WHEN "0010" => FPGA_PIN_DATA0 <= "11011010";
+			WHEN "0011" => FPGA_PIN_DATA0 <= "11110010";
+			WHEN "0100" => FPGA_PIN_DATA0 <= "01100110";
+			WHEN "0101" => FPGA_PIN_DATA0 <= "10110110";
+			WHEN "0110" => FPGA_PIN_DATA0 <= "00111110";
+			WHEN "0111" => FPGA_PIN_DATA0 <= "11100000";
+			WHEN "1000" => FPGA_PIN_DATA0 <= "11111110";
+			WHEN "1001" => FPGA_PIN_DATA0 <= "11100110";
+			WHEN OTHERS => FPGA_PIN_DATA0 <= ( OTHERS => '0' );
+		END CASE;
+	END PROCESS;
+	PROCESS( FPGA_PIN_NUM )
+	BEGIN
+		CASE FPGA_PIN_NUM( 7 DOWNTO 4 ) IS
+			WHEN "0000" => FPGA_PIN_DATA1 <= "11111100";
+			WHEN "0001" => FPGA_PIN_DATA1 <= "01100000";
+			WHEN "0010" => FPGA_PIN_DATA1 <= "11011010";
+			WHEN "0011" => FPGA_PIN_DATA1 <= "11110010";
+			WHEN "0100" => FPGA_PIN_DATA1 <= "01100110";
+			WHEN "0101" => FPGA_PIN_DATA1 <= "10110110";
+			WHEN "0110" => FPGA_PIN_DATA1 <= "00111110";
+			WHEN "0111" => FPGA_PIN_DATA1 <= "11100000";
+			WHEN "1000" => FPGA_PIN_DATA1 <= "11111110";
+			WHEN "1001" => FPGA_PIN_DATA1 <= "11100110";
+			WHEN OTHERS => FPGA_PIN_DATA1 <= ( OTHERS => '0' );
+		END CASE;
+	END PROCESS;
+	
+	PROCESS( FPGA_PIN_NUM )
+	BEGIN
+		CASE FPGA_PIN_NUM( 11 DOWNTO 8 ) IS
+			WHEN "0000" => FPGA_PIN_DATA2 <= "11111100";
+			WHEN "0001" => FPGA_PIN_DATA2 <= "01100000";
+			WHEN "0010" => FPGA_PIN_DATA2 <= "11011010";
+			WHEN "0011" => FPGA_PIN_DATA2 <= "11110010";
+			WHEN "0100" => FPGA_PIN_DATA2 <= "01100110";
+			WHEN "0101" => FPGA_PIN_DATA2 <= "10110110";
+			WHEN "0110" => FPGA_PIN_DATA2 <= "00111110";
+			WHEN "0111" => FPGA_PIN_DATA2 <= "11100000";
+			WHEN "1000" => FPGA_PIN_DATA2 <= "11111110";
+			WHEN "1001" => FPGA_PIN_DATA2 <= "11100110";
+			WHEN OTHERS => FPGA_PIN_DATA2 <= ( OTHERS => '0' );
+		END CASE;
+	END PROCESS;
+	
+	PROCESS( FPGA_ERR_NUM )
+	BEGIN
+		CASE FPGA_ERR_NUM( 3 DOWNTO 0 ) IS
+			WHEN "0000" => FPGA_ERR_DATA0 <= "11111100";
+			WHEN "0001" => FPGA_ERR_DATA0 <= "01100000";
+			WHEN "0010" => FPGA_ERR_DATA0 <= "11011010";
+			WHEN "0011" => FPGA_ERR_DATA0 <= "11110010";
+			WHEN "0100" => FPGA_ERR_DATA0 <= "01100110";
+			WHEN "0101" => FPGA_ERR_DATA0 <= "10110110";
+			WHEN "0110" => FPGA_ERR_DATA0 <= "00111110";
+			WHEN "0111" => FPGA_ERR_DATA0 <= "11100000";
+			WHEN "1000" => FPGA_ERR_DATA0 <= "11111110";
+			WHEN "1001" => FPGA_ERR_DATA0 <= "11100110";
+			WHEN OTHERS => FPGA_ERR_DATA0 <= ( OTHERS => '0' );
+		END CASE;
+	END PROCESS;
+	PROCESS( FPGA_ERR_NUM )
+	BEGIN
+		CASE FPGA_ERR_NUM( 7 DOWNTO 4 ) IS
+			WHEN "0000" => FPGA_ERR_DATA1 <= "11111100";
+			WHEN "0001" => FPGA_ERR_DATA1 <= "01100000";
+			WHEN "0010" => FPGA_ERR_DATA1 <= "11011010";
+			WHEN "0011" => FPGA_ERR_DATA1 <= "11110010";
+			WHEN "0100" => FPGA_ERR_DATA1 <= "01100110";
+			WHEN "0101" => FPGA_ERR_DATA1 <= "10110110";
+			WHEN "0110" => FPGA_ERR_DATA1 <= "00111110";
+			WHEN "0111" => FPGA_ERR_DATA1 <= "11100000";
+			WHEN "1000" => FPGA_ERR_DATA1 <= "11111110";
+			WHEN "1001" => FPGA_ERR_DATA1 <= "11100110";
+			WHEN OTHERS => FPGA_ERR_DATA1 <= ( OTHERS => '0' );
+		END CASE;
+	END PROCESS;
+	
+	PROCESS( FPGA_ERR_NUM )
+	BEGIN
+		CASE FPGA_ERR_NUM( 11 DOWNTO 8 ) IS
+			WHEN "0000" => FPGA_ERR_DATA2 <= "11111100";
+			WHEN "0001" => FPGA_ERR_DATA2 <= "01100000";
+			WHEN "0010" => FPGA_ERR_DATA2 <= "11011010";
+			WHEN "0011" => FPGA_ERR_DATA2 <= "11110010";
+			WHEN "0100" => FPGA_ERR_DATA2 <= "01100110";
+			WHEN "0101" => FPGA_ERR_DATA2 <= "10110110";
+			WHEN "0110" => FPGA_ERR_DATA2 <= "00111110";
+			WHEN "0111" => FPGA_ERR_DATA2 <= "11100000";
+			WHEN "1000" => FPGA_ERR_DATA2 <= "11111110";
+			WHEN "1001" => FPGA_ERR_DATA2 <= "11100110";
+			WHEN OTHERS => FPGA_ERR_DATA2 <= ( OTHERS => '0' );
+		END CASE;
+	END PROCESS;
+-----------------------------------------------------------	
+	PROCESS( SCAN_CLK, nRST )
+		VARIABLE CNT : INTEGER RANGE 0 TO 80;
+	BEGIN
+		IF nRST='0' THEN
+			CNT := 0;
+			DIS_CLK1 <= '0';
+		ELSIF RISING_EDGE(SCAN_CLK) THEN
+			IF ( CNT = 79 ) THEN
+				CNT := 0;
+				DIS_CLK1 <= NOT DIS_CLK1;
+			ELSE
+				CNT := CNT + 1;
+			END IF;
+		END IF;
+	END PROCESS;
+	
+	PROCESS ( DIS_CLK1, nRST )
+	BEGIN
+		IF nRST='0' THEN
+			DIS_CLK2 <= '0';
+		ELSIF RISING_EDGE(DIS_CLK1) THEN
+			DIS_CLK2 <= NOT DIS_CLK2;
+		END IF;
+	END PROCESS;
+----------------------------------------------------------------	
+END BEHAVIORAL;

@@ -1,0 +1,699 @@
+Release  - xst I.31
+Copyright (c) 1995-2006 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 3.05 s | Elapsed : 0.00 / 3.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 3.06 s | Elapsed : 0.00 / 3.00 s
+ 
+--> Reading design: I2S_TEST.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "I2S_TEST.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "I2S_TEST"
+Output Format                      : NGC
+Target Device                      : xc4vlx200-10-ff1513
+
+---- Source Options
+Top Module Name                    : I2S_TEST
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 32
+Number of Regional Clock Buffers   : 48
+Register Duplication               : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+DSP48 Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : I2S_TEST.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+use_dsp48                          : auto
+Optimize Instantiated Primitives   : NO
+use_clock_enable                   : Auto
+use_sync_set                       : Auto
+use_sync_reset                     : Auto
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "D:/I2S/I2S/I2S_TEST.vhd" in Library work.
+Entity <i2s_test> compiled.
+Entity <i2s_test> (Architecture <rtl>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <I2S_TEST> in library <work> (architecture <rtl>).
+
+Building hierarchy successfully finished.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <I2S_TEST> in library <work> (Architecture <rtl>).
+WARNING:Xst:819 - "D:/I2S/I2S/I2S_TEST.vhd" line 152: The following signals are missing in the process sensitivity list:
+   LUT_INDEX, STATUS, LUT_DATA.
+Entity <I2S_TEST> analyzed. Unit <I2S_TEST> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <I2S_TEST>.
+    Related source file is "D:/I2S/I2S/I2S_TEST.vhd".
+WARNING:Xst:1780 - Signal <L3EN> is never used or assigned.
+WARNING:Xst:737 - Found 5-bit latch for signal <LUT_INDEX>.
+WARNING:Xst:736 - Found 1-bit latch for signal <Mtridata_L3DATA> created at line 156.
+    Found 32x16-bit ROM for signal <LUT_DATA>.
+WARNING:Xst:736 - Found 1-bit latch for signal <Mtrien_L3DATA> created at line 156.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+    Found 1-bit tristate buffer for signal <L3DATA>.
+    Found 5-bit adder for signal <$addsub0000> created at line 181.
+    Found 4-bit comparator greatequal for signal <$cmp_ge0000> created at line 62.
+    Found 5-bit comparator greatequal for signal <$cmp_ge0001> created at line 156.
+    Found 4-bit comparator lessequal for signal <$cmp_le0000> created at line 62.
+    Found 4-bit comparator lessequal for signal <$cmp_le0001> created at line 53.
+    Found 5-bit comparator less for signal <$cmp_lt0000> created at line 156.
+    Found 25-bit comparator less for signal <$cmp_lt0001> created at line 124.
+    Found 4-bit comparator less for signal <$cmp_lt0002> created at line 139.
+    Found 8-bit up counter for signal <BIT_CLK_CNT>.
+    Found 1-bit register for signal <BITCLK>.
+    Found 8-bit register for signal <DATA_BUF>.
+    Found 1-bit register for signal <L3_DIV_CLK>.
+    Found 25-bit up counter for signal <L3_DIV_CNT>.
+    Found 4-bit up counter for signal <L3_STEP_CNT>.
+    Found 1-bit register for signal <STATUS<0>>.
+    Found 1-bit register for signal <SYSCLK>.
+    Found 1-bit register for signal <WS_CLK>.
+    Found 5-bit up counter for signal <WS_CLK_CNT>.
+    Summary:
+	inferred   1 ROM(s).
+	inferred   4 Counter(s).
+	inferred  13 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   7 Comparator(s).
+	inferred   1 Tristate(s).
+Unit <I2S_TEST> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 32x16-bit ROM                                         : 1
+# Adders/Subtractors                                   : 1
+ 5-bit adder                                           : 1
+# Counters                                             : 4
+ 25-bit up counter                                     : 1
+ 4-bit up counter                                      : 1
+ 5-bit up counter                                      : 1
+ 8-bit up counter                                      : 1
+# Registers                                            : 5
+ 1-bit register                                        : 4
+ 8-bit register                                        : 1
+# Latches                                              : 3
+ 1-bit latch                                           : 2
+ 5-bit latch                                           : 1
+# Comparators                                          : 7
+ 25-bit comparator less                                : 1
+ 4-bit comparator greatequal                           : 1
+ 4-bit comparator less                                 : 1
+ 4-bit comparator lessequal                            : 2
+ 5-bit comparator greatequal                           : 1
+ 5-bit comparator less                                 : 1
+# Tristates                                            : 1
+ 1-bit tristate buffer                                 : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Loading device for application Rf_Device from file '4vlx200.nph' in environment C:\Xilinx.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 32x16-bit ROM                                         : 1
+# Adders/Subtractors                                   : 1
+ 5-bit adder                                           : 1
+# Counters                                             : 3
+ 25-bit up counter                                     : 1
+ 4-bit up counter                                      : 1
+ 8-bit up counter                                      : 1
+# Registers                                            : 12
+ Flip-Flops                                            : 12
+# Latches                                              : 3
+ 1-bit latch                                           : 2
+ 5-bit latch                                           : 1
+# Comparators                                          : 7
+ 25-bit comparator less                                : 1
+ 4-bit comparator greatequal                           : 1
+ 4-bit comparator less                                 : 1
+ 4-bit comparator lessequal                            : 2
+ 5-bit comparator greatequal                           : 1
+ 5-bit comparator less                                 : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1988 - Unit <I2S_TEST>: instances <Mcompar__cmp_lt0000>, <Mcompar__cmp_ge0001> of unit <LPM_COMPARE_1> and unit <LPM_COMPARE_7> are dual, second instance is removed
+
+Optimizing unit <I2S_TEST> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block I2S_TEST, actual ratio is 0.
+Latch LUT_INDEX_1 has been replicated 1 time(s)
+
+Final Macro Processing ...
+
+Processing Unit <I2S_TEST> :
+	Found 8-bit shift register for signal <DATA_BUF_7>.
+Unit <I2S_TEST> processed.
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 41
+ Flip-Flops                                            : 41
+# Shift Registers                                      : 1
+ 8-bit shift register                                  : 1
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : I2S_TEST.ngr
+Top Level Output File Name         : I2S_TEST
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 11
+
+Cell Usage :
+# BELS                             : 205
+#      GND                         : 1
+#      INV                         : 9
+#      LUT1                        : 9
+#      LUT2                        : 31
+#      LUT3                        : 20
+#      LUT3_L                      : 1
+#      LUT4                        : 44
+#      LUT4_L                      : 1
+#      MULT_AND                    : 1
+#      MUXCY                       : 40
+#      MUXF5                       : 16
+#      VCC                         : 1
+#      XORCY                       : 31
+# FlipFlops/Latches                : 50
+#      FD_1                        : 1
+#      FDC                         : 38
+#      FDCE                        : 3
+#      LD                          : 2
+#      LDCE                        : 6
+# Shift Registers                  : 1
+#      SRL16_1                     : 1
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 10
+#      IBUF                        : 3
+#      OBUF                        : 6
+#      OBUFT                       : 1
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 4vlx200ff1513-10 
+
+ Number of Slices:                      59  out of  89088     0%  
+ Number of Slice Flip Flops:            49  out of  178176     0%  
+ Number of 4 input LUTs:               116  out of  178176     0%  
+    Number used as logic:              115
+    Number used as Shift registers:      1
+ Number of IOs:                         11
+ Number of bonded IOBs:                 11  out of    960     1%  
+    IOB Flip Flops:                      1
+ Number of GCLKs:                        1  out of     32     3%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+-------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)   | Load  |
+-----------------------------------+-------------------------+-------+
+CLK                                | BUFGP                   | 27    |
+L3_DIV_CLK                         | NONE(L3_STEP_CNT_1)     | 5     |
+SYSCLK                             | NONE(BIT_CLK_CNT_6)     | 9     |
+_not0016(_not00161:O)              | NONE(*)(Mtrien_L3DATA)  | 1     |
+_cmp_lt0000(_cmp_lt00001_f5:O)     | NONE(*)(Mtridata_L3DATA)| 7     |
+BITCLK                             | NONE(Mshreg_DATA_BUF_7) | 2     |
+-----------------------------------+-------------------------+-------+
+(*) These 2 clock signal(s) are generated by combinatorial logic,
+and XST is not able to identify which are the primary clock signals.
+Please use the CLOCK_SIGNAL constraint to specify the clock signal(s) generated by combinatorial logic.
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+-----------------------------------+------------------------+-------+
+Control Signal                     | Buffer(FF name)        | Load  |
+-----------------------------------+------------------------+-------+
+RESET_inv(RESET_inv1:O)            | NONE(L3_DIV_CNT_6)     | 37    |
+nRST_inv(nRST_inv1_INV_0:O)        | NONE(SYSCLK)           | 10    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -10
+
+   Minimum period: 6.400ns (Maximum Frequency: 156.261MHz)
+   Minimum input arrival time before clock: 2.332ns
+   Maximum output required time after clock: 7.063ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLK'
+  Clock period: 6.400ns (frequency: 156.261MHz)
+  Total number of paths / destination ports: 8401 / 28
+-------------------------------------------------------------------------
+Delay:               6.400ns (Levels of Logic = 37)
+  Source:            L3_DIV_CNT_2 (FF)
+  Destination:       L3_DIV_CNT_24 (FF)
+  Source Clock:      CLK rising
+  Destination Clock: CLK rising
+
+  Data Path: L3_DIV_CNT_2 to L3_DIV_CNT_24
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              2   0.360   0.783  L3_DIV_CNT_2 (L3_DIV_CNT_2)
+     LUT1:I0->O            1   0.195   0.000  L3_DIV_CNT_2_rt (L3_DIV_CNT_2_rt)
+     MUXCY:S->O            1   0.366   0.000  Mcompar__cmp_lt0001_cy<0> (Mcompar__cmp_lt0001_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<1> (Mcompar__cmp_lt0001_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<2> (Mcompar__cmp_lt0001_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<3> (Mcompar__cmp_lt0001_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<4> (Mcompar__cmp_lt0001_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<5> (Mcompar__cmp_lt0001_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<6> (Mcompar__cmp_lt0001_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  Mcompar__cmp_lt0001_cy<7> (Mcompar__cmp_lt0001_cy<7>)
+     MUXCY:CI->O           3   0.264   0.550  Mcompar__cmp_lt0001_cy<8> (Mcompar__cmp_lt0001_cy<8>)
+     INV:I->O              8   0.426   0.809  Mcompar__cmp_lt0001_cy<8>_inv_1_INV_0 (Mcompar__cmp_lt0001_cy<8>_inv)
+     LUT2:I1->O            2   0.195   0.000  Mcount_L3_DIV_CNT_lut<0> (Result<0>1)
+     MUXCY:S->O            1   0.366   0.000  Mcount_L3_DIV_CNT_cy<0> (Mcount_L3_DIV_CNT_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<1> (Mcount_L3_DIV_CNT_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<2> (Mcount_L3_DIV_CNT_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<3> (Mcount_L3_DIV_CNT_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<4> (Mcount_L3_DIV_CNT_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<5> (Mcount_L3_DIV_CNT_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<6> (Mcount_L3_DIV_CNT_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<7> (Mcount_L3_DIV_CNT_cy<7>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<8> (Mcount_L3_DIV_CNT_cy<8>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<9> (Mcount_L3_DIV_CNT_cy<9>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<10> (Mcount_L3_DIV_CNT_cy<10>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<11> (Mcount_L3_DIV_CNT_cy<11>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<12> (Mcount_L3_DIV_CNT_cy<12>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<13> (Mcount_L3_DIV_CNT_cy<13>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<14> (Mcount_L3_DIV_CNT_cy<14>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<15> (Mcount_L3_DIV_CNT_cy<15>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<16> (Mcount_L3_DIV_CNT_cy<16>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<17> (Mcount_L3_DIV_CNT_cy<17>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<18> (Mcount_L3_DIV_CNT_cy<18>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<19> (Mcount_L3_DIV_CNT_cy<19>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<20> (Mcount_L3_DIV_CNT_cy<20>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<21> (Mcount_L3_DIV_CNT_cy<21>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_L3_DIV_CNT_cy<22> (Mcount_L3_DIV_CNT_cy<22>)
+     MUXCY:CI->O           0   0.044   0.000  Mcount_L3_DIV_CNT_cy<23> (Mcount_L3_DIV_CNT_cy<23>)
+     XORCY:CI->O           1   0.360   0.000  Mcount_L3_DIV_CNT_xor<24> (Result<24>)
+     FDC:D                     0.391          L3_DIV_CNT_24
+    ----------------------------------------
+    Total                      6.400ns (4.257ns logic, 2.142ns route)
+                                       (66.5% logic, 33.5% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'L3_DIV_CLK'
+  Clock period: 2.809ns (frequency: 356.018MHz)
+  Total number of paths / destination ports: 20 / 6
+-------------------------------------------------------------------------
+Delay:               2.809ns (Levels of Logic = 1)
+  Source:            L3_STEP_CNT_1 (FF)
+  Destination:       STATUS_0 (FF)
+  Source Clock:      L3_DIV_CLK rising
+  Destination Clock: L3_DIV_CLK rising
+
+  Data Path: L3_STEP_CNT_1 to STATUS_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q             15   0.360   0.977  L3_STEP_CNT_1 (L3_STEP_CNT_1)
+     LUT3:I1->O            1   0.195   0.534  _not00121 (_not0012)
+     FDCE:CE                   0.743          STATUS_0
+    ----------------------------------------
+    Total                      2.809ns (1.298ns logic, 1.511ns route)
+                                       (46.2% logic, 53.8% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'SYSCLK'
+  Clock period: 3.678ns (frequency: 271.876MHz)
+  Total number of paths / destination ports: 109 / 10
+-------------------------------------------------------------------------
+Delay:               3.678ns (Levels of Logic = 10)
+  Source:            BIT_CLK_CNT_0 (FF)
+  Destination:       BIT_CLK_CNT_7 (FF)
+  Source Clock:      SYSCLK rising
+  Destination Clock: SYSCLK rising
+
+  Data Path: BIT_CLK_CNT_0 to BIT_CLK_CNT_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              4   0.360   0.549  BIT_CLK_CNT_0 (BIT_CLK_CNT_0)
+     INV:I->O              1   0.426   0.000  Mcount_BIT_CLK_CNT_lut<0>_INV_0 (Result<0>2)
+     MUXCY:S->O            1   0.366   0.000  Mcount_BIT_CLK_CNT_cy<0> (Mcount_BIT_CLK_CNT_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_BIT_CLK_CNT_cy<1> (Mcount_BIT_CLK_CNT_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_BIT_CLK_CNT_cy<2> (Mcount_BIT_CLK_CNT_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_BIT_CLK_CNT_cy<3> (Mcount_BIT_CLK_CNT_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_BIT_CLK_CNT_cy<4> (Mcount_BIT_CLK_CNT_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_BIT_CLK_CNT_cy<5> (Mcount_BIT_CLK_CNT_cy<5>)
+     MUXCY:CI->O           0   0.044   0.000  Mcount_BIT_CLK_CNT_cy<6> (Mcount_BIT_CLK_CNT_cy<6>)
+     XORCY:CI->O           1   0.360   0.765  Mcount_BIT_CLK_CNT_xor<7> (Result<7>1)
+     LUT3:I0->O            1   0.195   0.000  BIT_CLK_CNT_Eqn_71 (BIT_CLK_CNT_Eqn_7)
+     FDC:D                     0.391          BIT_CLK_CNT_7
+    ----------------------------------------
+    Total                      3.678ns (2.365ns logic, 1.313ns route)
+                                       (64.3% logic, 35.7% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock '_cmp_lt0000'
+  Clock period: 5.688ns (frequency: 175.824MHz)
+  Total number of paths / destination ports: 115 / 7
+-------------------------------------------------------------------------
+Delay:               5.688ns (Levels of Logic = 6)
+  Source:            LUT_INDEX_3 (LATCH)
+  Destination:       Mtridata_L3DATA (LATCH)
+  Source Clock:      _cmp_lt0000 falling
+  Destination Clock: _cmp_lt0000 falling
+
+  Data Path: LUT_INDEX_3 to Mtridata_L3DATA
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LDCE:G->Q            17   0.473   0.965  LUT_INDEX_3 (LUT_INDEX_3)
+     LUT4:I1->O            3   0.195   0.728  Mrom_LUT_DATA14 (N15)
+     LUT2:I1->O            2   0.195   0.565  Mrom_LUT_DATA_f5_71 (Mrom_LUT_DATA_f58)
+     LUT4:I3->O            1   0.195   0.000  _mux0010231_G (N318)
+     MUXF5:I1->O           1   0.374   0.609  _mux0010231 (_mux0010_map84)
+     LUT3:I2->O            1   0.195   0.609  _mux0010256 (_mux0010_map86)
+     LUT4:I2->O            1   0.195   0.000  _mux0010300 (_mux0010)
+     LD:D                      0.391          Mtridata_L3DATA
+    ----------------------------------------
+    Total                      5.688ns (2.213ns logic, 3.475ns route)
+                                       (38.9% logic, 61.1% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'BITCLK'
+  Clock period: 2.541ns (frequency: 393.546MHz)
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Delay:               2.541ns (Levels of Logic = 0)
+  Source:            Mshreg_DATA_BUF_7 (FF)
+  Destination:       DATA_BUF_7 (FF)
+  Source Clock:      BITCLK falling
+  Destination Clock: BITCLK falling
+
+  Data Path: Mshreg_DATA_BUF_7 to DATA_BUF_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     SRL16_1:CLK->Q        1   2.150   0.000  Mshreg_DATA_BUF_7 (Mshreg_DATA_BUF_7)
+     FD_1:D                    0.391          DATA_BUF_7
+    ----------------------------------------
+    Total                      2.541ns (2.541ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock '_not0016'
+  Total number of paths / destination ports: 2 / 1
+-------------------------------------------------------------------------
+Offset:              2.332ns (Levels of Logic = 2)
+  Source:            PORESET (PAD)
+  Destination:       Mtrien_L3DATA (LATCH)
+  Destination Clock: _not0016 falling
+
+  Data Path: PORESET to Mtrien_L3DATA
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             3   0.965   0.781  PORESET_IBUF (PORESET_IBUF)
+     LUT4:I0->O            1   0.195   0.000  _mux00111 (_mux0011)
+     LD:D                      0.391          Mtrien_L3DATA
+    ----------------------------------------
+    Total                      2.332ns (1.551ns logic, 0.781ns route)
+                                       (66.5% logic, 33.5% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'BITCLK'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              1.732ns (Levels of Logic = 1)
+  Source:            DATA_I (PAD)
+  Destination:       Mshreg_DATA_BUF_7 (FF)
+  Destination Clock: BITCLK falling
+
+  Data Path: DATA_I to Mshreg_DATA_BUF_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   0.965   0.534  DATA_I_IBUF (DATA_I_IBUF)
+     SRL16_1:D                 0.233          Mshreg_DATA_BUF_7
+    ----------------------------------------
+    Total                      1.732ns (1.198ns logic, 0.534ns route)
+                                       (69.2% logic, 30.8% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock '_cmp_lt0000'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              4.980ns (Levels of Logic = 1)
+  Source:            Mtridata_L3DATA (LATCH)
+  Destination:       L3DATA (PAD)
+  Source Clock:      _cmp_lt0000 falling
+
+  Data Path: Mtridata_L3DATA to L3DATA
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LD:G->Q               3   0.473   0.550  Mtridata_L3DATA (Mtridata_L3DATA)
+     OBUFT:I->O                3.957          L3DATA_OBUFT (L3DATA)
+    ----------------------------------------
+    Total                      4.980ns (4.430ns logic, 0.550ns route)
+                                       (89.0% logic, 11.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock '_not0016'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              4.964ns (Levels of Logic = 1)
+  Source:            Mtrien_L3DATA (LATCH)
+  Destination:       L3DATA (PAD)
+  Source Clock:      _not0016 falling
+
+  Data Path: Mtrien_L3DATA to L3DATA
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LD:G->Q               1   0.473   0.534  Mtrien_L3DATA (Mtrien_L3DATA)
+     OBUFT:T->O                3.957          L3DATA_OBUFT (L3DATA)
+    ----------------------------------------
+    Total                      4.964ns (4.430ns logic, 0.534ns route)
+                                       (89.2% logic, 10.8% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLK'
+  Total number of paths / destination ports: 2 / 2
+-------------------------------------------------------------------------
+Offset:              5.659ns (Levels of Logic = 2)
+  Source:            L3_DIV_CLK (FF)
+  Destination:       L3CLOCK (PAD)
+  Source Clock:      CLK rising
+
+  Data Path: L3_DIV_CLK to L3CLOCK
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             7   0.360   0.613  L3_DIV_CLK (L3_DIV_CLK)
+     LUT4:I3->O            1   0.195   0.534  L3CLOCK1 (L3CLOCK_OBUF)
+     OBUF:I->O                 3.957          L3CLOCK_OBUF (L3CLOCK)
+    ----------------------------------------
+    Total                      5.659ns (4.512ns logic, 1.147ns route)
+                                       (79.7% logic, 20.3% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'L3_DIV_CLK'
+  Total number of paths / destination ports: 11 / 2
+-------------------------------------------------------------------------
+Offset:              7.063ns (Levels of Logic = 3)
+  Source:            L3_STEP_CNT_2 (FF)
+  Destination:       L3MODE (PAD)
+  Source Clock:      L3_DIV_CLK rising
+
+  Data Path: L3_STEP_CNT_2 to L3MODE
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q             18   0.360   1.033  L3_STEP_CNT_2 (L3_STEP_CNT_2)
+     LUT4:I0->O            5   0.195   0.790  _mux001021 (N51)
+     LUT2:I0->O            1   0.195   0.534  L3MODE1 (L3MODE_OBUF)
+     OBUF:I->O                 3.957          L3MODE_OBUF (L3MODE)
+    ----------------------------------------
+    Total                      7.063ns (4.707ns logic, 2.356ns route)
+                                       (66.6% logic, 33.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'BITCLK'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              4.798ns (Levels of Logic = 1)
+  Source:            DATA_BUF_7 (FF)
+  Destination:       DATA_O (PAD)
+  Source Clock:      BITCLK falling
+
+  Data Path: DATA_BUF_7 to DATA_O
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD_1:C->Q             1   0.307   0.534  DATA_BUF_7 (DATA_BUF_7)
+     OBUF:I->O                 3.957          DATA_O_OBUF (DATA_O)
+    ----------------------------------------
+    Total                      4.798ns (4.264ns logic, 0.534ns route)
+                                       (88.9% logic, 11.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'SYSCLK'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              4.866ns (Levels of Logic = 1)
+  Source:            BITCLK (FF)
+  Destination:       BCLK (PAD)
+  Source Clock:      SYSCLK rising
+
+  Data Path: BITCLK to BCLK
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             4   0.360   0.549  BITCLK (BITCLK)
+     OBUF:I->O                 3.957          BCLK_OBUF (BCLK)
+    ----------------------------------------
+    Total                      4.866ns (4.317ns logic, 0.549ns route)
+                                       (88.7% logic, 11.3% route)
+
+=========================================================================
+CPU : 47.13 / 50.50 s | Elapsed : 47.00 / 51.00 s
+ 
+--> 
+
+Total memory usage is 431280 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    6 (   0 filtered)
+Number of infos    :    2 (   0 filtered)
+

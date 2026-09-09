@@ -1,0 +1,120 @@
+-- --------------------------------------------------------------------
+-- Copyright (c) 2006 by You-Will Inc. 
+-- --------------------------------------------------------------------
+--           
+--                     You-Will Inc
+--                     978-8, Yeongtong-Dong, Yeongtong-Gu
+--                     Suwon-City, Gyeonggi-Do, 443-812 Korea
+--                     email: niosii@you-will.co.kr
+--
+-- --------------------------------------------------------------------
+--
+-- Major Functions: FPGA to FPGA interface 
+--
+-----------------------------------------------------------------------
+--
+-- Referance : 
+--
+-- --------------------------------------------------------------------
+--
+-- Revision History :
+-- --------------------------------------------------------------------
+--   Ver  :| Author            :| Mod. Date :| Changes Made:
+--   V2.0 :| TAE-JIN KIM       :| 06/12/18  :| Initial Revision
+-- --------------------------------------------------------------------
+-- P.S ) This file is COMPONENT-file of U60(FPGA_to_FPGA_interface)
+-----------------------------------------------------------------------
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+-- CLK : sys_clk 
+-- PIN_CLK : PIN_COUNT CLOCK
+-- ERR_CLK : ERROR_PIN COUNT CLOCK
+-- MODE_SIG : STATE_MACHINE STEP MONITORING LED
+--		[00] : PROGRAM STAN BY
+--		[01] : PROGRAM RUNNING ( COMPARE MODE )
+--		[10] : ERROR DETECTOR ( ERROR DETECTTING )
+--		[11] : ERROR DETECTOR ( ERROR DETECTE ) 
+-- CMPL_SIG : PROGRAM COMPLETE SIGNAL
+--	 	CMPL_SIG = '1' : PROGRAM COMPLETE
+--	  	CMPL_SIG = '0' : PROGRAM PROCESSING		
+-- SEG_D : SEGMENT-DATA ( MONITORRING ) 
+-- SEG_C : SEGMENT_COMMON ( MONITORRING
+-------------------------------------------------------------------------
+ENTITY SEG_BLOCK IS
+	PORT( CLK, nRST : IN STD_LOGIC;
+		PIN_CLK : IN STD_LOGIC;
+		CHK_CLK : IN STD_LOGIC;
+		
+		MODE_SIG : IN STD_LOGIC_VECTOR( 1 DOWNTO 0 );
+		CMPL_SIG : IN STD_LOGIC;
+		
+		
+		STATE_LED : OUT STD_LOGIC_VECTOR( 3 DOWNTO 0 );
+		 SEG_D   : OUT STD_LOGIC_VECTOR( 7 DOWNTO 0 );
+		 SEG_C   : OUT STD_LOGIC_VECTOR( 3 DOWNTO 0 );
+		 ERR_CLR : IN STD_LOGIC);
+END SEG_BLOCK;		
+		
+ARCHITECTURE BEHAVIORAL OF SEG_BLOCK IS
+	COMPONENT SEG_COUNT
+		PORT ( CLK, nRST : IN STD_LOGIC;
+		       SEG2,
+		       SEG1,
+		       SEG0 : OUT STD_LOGIC_VECTOR( 3 DOWNTO 0 ));
+	END COMPONENT;
+	
+	COMPONENT SEGMENT
+		PORT ( CLK, nRST : IN STD_LOGIC;
+		   MODE  : IN STD_LOGIC_VECTOR( 1 DOWNTO 0 );
+			   			 --STAN_BY   : 01
+			   			 --PROCSSING : 00
+                         --ERROR_CHECKING : 10
+                         --ERROR_DETECTING : 11
+			END_SIG : IN STD_LOGIC;
+		FPGA_PIN_NUM : IN STD_LOGIC_VECTOR( 11 DOWNTO 0 );  --PIN NUMBER
+		FPGA_ERR_NUM : IN STD_LOGIC_VECTOR( 11 DOWNTO 0 );
+		
+		SEG_DATA_SIG : OUT STD_LOGIC_VECTOR( 7 DOWNTO 0 );
+		SEG_COMM_SIG : OUT STD_LOGIC_VECTOR( 3 DOWNTO 0 )
+		);  --ERROR-PIN MUNBER
+	END COMPONENT;
+	
+	SIGNAL FPGA_PIN_NUM, FPGA_ERR_NUM : STD_LOGIC_VECTOR( 11 DOWNTO 0 );
+	SIGNAL RST : STD_LOGIC;
+BEGIN
+	U1 : SEG_COUNT PORT MAP ( PIN_CLK, RST, 
+				  FPGA_PIN_NUM( 11 DOWNTO 8 ),
+				  FPGA_PIN_NUM( 7 DOWNTO 4 ),
+				  FPGA_PIN_NUM( 3 DOWNTO 0 ));
+	U2 : SEG_COUNT PORT MAP ( CHK_CLK, RST,
+				  FPGA_ERR_NUM( 11 DOWNTO 8 ),
+				  FPGA_ERR_NUM( 7 DOWNTO 4 ),
+				  FPGA_ERR_NUM( 3 DOWNTO 0 ));
+	U3 : SEGMENT PORT MAP ( CLK, nRST,
+				MODE_SIG, CMPL_SIG,
+				FPGA_PIN_NUM, FPGA_ERR_NUM,
+				SEG_D, SEG_C);
+	PROCESS(nRST,ERR_CLR)
+	BEGIN
+		IF nRST='0' THEN
+			RST <= '0';
+		ELSIF ERR_CLR='1' THEN
+			RST <= '0';
+		ELSE
+			RST <= '1';
+		END IF;
+	END PROCESS;
+
+	PROCESS( MODE_SIG )
+	BEGIN
+		CASE MODE_SIG IS
+			WHEN "00" => STATE_LED <= "1110";
+			WHEN "01" => STATE_LED <= "1101";
+			WHEN "10" => STATE_LED <= "1011";
+			WHEN "11" => STATE_LED <= "0111";
+			WHEN OTHERS => STATE_LED <= ( OTHERS => '1' );
+		END CASE;
+	END PROCESS;
+END BEHAVIORAL;

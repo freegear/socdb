@@ -1,0 +1,329 @@
+Release  Map I.31
+Xilinx Mapping Report File for Design 'EXP_SOCKET'
+
+Design Information
+------------------
+Command Line   : D:\Xilinx\bin\nt\map.exe -ise
+E:/ENCODER/EXP_SOCKET/EXP_SOCKET.ise -intstyle ise -p xc4vlx200-ff1513-10 -cm
+area -pr b -k 4 -c 100 -o EXP_SOCKET_map.ncd EXP_SOCKET.ngd EXP_SOCKET.pcf 
+Target Device  : xc4vlx200
+Target Package : ff1513
+Target Speed   : -10
+Mapper Version : virtex4 -- $Revision: 1.34.32.1 $
+Mapped Date    : Wed Dec 27 02:23:09 2006
+
+Design Summary
+--------------
+Number of errors:      0
+Number of warnings:    0
+Logic Utilization:
+  Number of Slice Flip Flops:          11 out of 178,176    1%
+  Number of 4 input LUTs:               1 out of 178,176    1%
+Logic Distribution:
+  Number of occupied Slices:                            6 out of  89,088    1%
+    Number of Slices containing only related logic:       6 out of       6  100%
+    Number of Slices containing unrelated logic:          0 out of       6    0%
+      *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:             10 out of 178,176    1%
+  Number used as logic:                  1
+  Number used as a route-thru:           9
+  Number of bonded IOBs:              180 out of     960   18%
+  Number of BUFG/BUFGCTRLs:             1 out of      32    3%
+    Number used as BUFGs:                1
+    Number used as BUFGCTRLs:            0
+
+Total equivalent gate count for design:  148
+Additional JTAG gate count for IOBs:  8,640
+Peak Memory Usage:  403 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity - e.g. two
+   LUTs are "related" if they share common inputs.  When assembling slices,
+   Map gives priority to combine logic that is related.  Doing so results in
+   the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin packing
+   unrelated logic into a slice once 99% of the slices are occupied through
+   related logic packing.
+
+   Note that once logic distribution reaches the 99% level through related
+   logic packing, this does not mean the device is completely utilized.
+   Unrelated logic packing will then begin, continuing until all usable LUTs
+   and FFs are occupied.  Depending on your timing budget, increased levels of
+   unrelated logic packing may adversely affect the overall timing performance
+   of your design.
+
+Table of Contents
+-----------------
+Section 1 - Errors
+Section 2 - Warnings
+Section 3 - Informational
+Section 4 - Removed Logic Summary
+Section 5 - Removed Logic
+Section 6 - IOB Properties
+Section 7 - RPMs
+Section 8 - Guide Report
+Section 9 - Area Group and Partition Summary
+Section 10 - Modular Design Summary
+Section 11 - Timing Report
+Section 12 - Configuration String Information
+
+Section 1 - Errors
+------------------
+
+Section 2 - Warnings
+--------------------
+
+Section 3 - Informational
+-------------------------
+INFO:MapLib:562 - No environment variables are currently set.
+INFO:MapLib:797 - Your design is targeting LX/SX Production Step 0/1/ES devices.
+   Please note that there are new specifications for the DCMs to guarantee
+   maximum frequency performance. If the DCM input clock might stop or if the
+   DCM reset might be asserted for an extended time, then use of the dcm_standby
+   macro may be required. Please see Answer Record 21127.
+INFO:LIT:244 - All of the single ended outputs in this design are using slew
+   rate limited output drivers. The delay on speed critical single ended outputs
+   can be dramatically reduced by designating them as fast outputs in the
+   schematic.
+
+Section 4 - Removed Logic Summary
+---------------------------------
+   2 block(s) optimized away
+
+Section 5 - Removed Logic
+-------------------------
+
+Optimized Block(s):
+TYPE 		BLOCK
+GND 		XST_GND
+VCC 		XST_VCC
+
+To enable printing of redundant blocks removed and signals merged, set the
+detailed map report option and rerun map.
+
+Section 6 - IOB Properties
+--------------------------
+
++----------------------------------------------------------------------------------------------------------------------------------------+
+| IOB Name                           | Type             | Direction | IO Standard | Drive    | Slew | Reg (s)      | Resistor | IOB      |
+|                                    |                  |           |             | Strength | Rate |              |          | Delay    |
++----------------------------------------------------------------------------------------------------------------------------------------+
+| CLK                                | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| EXP_IO<0>                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<1>                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<2>                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<3>                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<4>                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<5>                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<6>                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<7>                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<8>                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<9>                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<10>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<11>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<12>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<13>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<14>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<15>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<16>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<17>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<18>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<19>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<20>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<21>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<22>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<23>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<24>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<25>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<26>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<27>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<28>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<29>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<30>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<31>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<32>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<33>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<34>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<35>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<36>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<37>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<38>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<39>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<40>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<41>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<42>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<43>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<44>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<45>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<46>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<47>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<48>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<49>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<50>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<51>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<52>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<53>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<54>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<55>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<56>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<57>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<58>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<59>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<60>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<61>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<62>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<63>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<64>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<65>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<66>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<67>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<68>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<69>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<70>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<71>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<72>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<73>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<74>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<75>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<76>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<77>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<78>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<79>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<80>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<81>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<82>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<83>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<84>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<85>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<86>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<87>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<88>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<89>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<90>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<91>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<92>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<93>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<94>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<95>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<96>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<97>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<98>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<99>                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<100>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<101>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<102>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<103>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<104>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<105>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<106>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<107>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<108>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<109>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<110>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<111>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<112>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<113>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<114>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<115>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<116>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<117>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<118>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<119>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<120>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<121>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<122>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<123>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<124>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<125>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<126>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<127>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<128>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<129>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<130>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<131>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<132>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<133>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<134>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<135>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<136>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<137>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<138>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<139>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<140>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<141>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<142>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<143>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<144>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<145>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<146>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<147>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<148>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<149>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<150>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<151>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<152>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<153>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<154>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<155>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<156>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<157>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<158>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<159>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<160>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<161>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<162>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<163>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<164>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<165>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<166>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<167>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<168>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<169>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<170>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<171>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<172>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| EXP_IO<173>                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LED<0>                             | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LED<1>                             | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LED<2>                             | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LED<3>                             | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| nRST                               | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
++----------------------------------------------------------------------------------------------------------------------------------------+
+
+Section 7 - RPMs
+----------------
+
+Section 8 - Guide Report
+------------------------
+Guide not run on this design.
+
+Section 9 - Area Group and Partition Summary
+--------------------------------------------
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+Area Group Information
+----------------------
+
+  No area groups were found in this design.
+
+----------------------
+
+Section 10 - Modular Design Summary
+-----------------------------------
+Modular Design not used for this design.
+
+Section 11 - Timing Report
+--------------------------
+This design was not run using timing mode.
+
+Section 12 - Configuration String Details
+-----------------------------------------
+Use the "-detail" map option to print out Configuration Strings

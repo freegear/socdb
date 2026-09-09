@@ -1,0 +1,326 @@
+Release  - xst I.31
+Copyright (c) 1995-2006 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.01 / 0.17 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.17 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Reading design: USB_20.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "USB_20.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "USB_20"
+Output Format                      : NGC
+Target Device                      : xc4vlx200-10-ff1513
+
+---- Source Options
+Top Module Name                    : USB_20
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 32
+Number of Regional Clock Buffers   : 48
+Register Duplication               : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Write Timing Constraints           : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+DSP48 Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : USB_20.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+safe_implementation                : No
+use_dsp48                          : auto
+Optimize Instantiated Primitives   : NO
+use_clock_enable                   : Auto
+use_sync_set                       : Auto
+use_sync_reset                     : Auto
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "E:/ENCODER/USC_CONNECTION/USB_CONNECTION/USB_20.VHD" in Library work.
+Architecture rtl of Entity usb_20 is up to date.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <USB_20> in library <work> (architecture <rtl>).
+
+Building hierarchy successfully finished.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <USB_20> in library <work> (Architecture <rtl>).
+Entity <USB_20> analyzed. Unit <USB_20> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <USB_20>.
+    Related source file is "E:/ENCODER/USC_CONNECTION/USB_CONNECTION/USB_20.VHD".
+    Found 8-bit up counter for signal <CLK_BUFFER>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <USB_20> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Counters                                             : 1
+ 8-bit up counter                                      : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Loading device for application Rf_Device from file '4vlx200.nph' in environment D:\Xilinx.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Counters                                             : 1
+ 8-bit up counter                                      : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <USB_20> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block USB_20, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 8
+ Flip-Flops                                            : 8
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : USB_20.ngr
+Top Level Output File Name         : USB_20
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 35
+
+Cell Usage :
+# BELS                             : 25
+#      GND                         : 1
+#      INV                         : 2
+#      LUT1                        : 7
+#      MUXCY                       : 7
+#      VCC                         : 1
+#      XORCY                       : 7
+# FlipFlops/Latches                : 8
+#      FDC                         : 8
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 34
+#      IBUF                        : 1
+#      OBUF                        : 33
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 4vlx200ff1513-10 
+
+ Number of Slices:                       4  out of  89088     0%  
+ Number of Slice Flip Flops:             8  out of  178176     0%  
+ Number of 4 input LUTs:                 9  out of  178176     0%  
+ Number of IOs:                         35
+ Number of bonded IOBs:                 35  out of    960     3%  
+ Number of GCLKs:                        1  out of     32     3%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CLOCK_50                           | BUFGP                  | 8     |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+-----------------------------------+------------------------+-------+
+Control Signal                     | Buffer(FF name)        | Load  |
+-----------------------------------+------------------------+-------+
+nRESET_inv(nRESET_inv1_INV_0:O)    | NONE(CLK_BUFFER_3)     | 8     |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -10
+
+   Minimum period: 2.748ns (Maximum Frequency: 363.841MHz)
+   Minimum input arrival time before clock: No path found
+   Maximum output required time after clock: 4.895ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CLOCK_50'
+  Clock period: 2.748ns (frequency: 363.841MHz)
+  Total number of paths / destination ports: 36 / 8
+-------------------------------------------------------------------------
+Delay:               2.748ns (Levels of Logic = 9)
+  Source:            CLK_BUFFER_0 (FF)
+  Destination:       CLK_BUFFER_7 (FF)
+  Source Clock:      CLOCK_50 rising
+  Destination Clock: CLOCK_50 rising
+
+  Data Path: CLK_BUFFER_0 to CLK_BUFFER_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              6   0.360   0.578  CLK_BUFFER_0 (CLK_BUFFER_0)
+     INV:I->O              2   0.426   0.000  Mcount_CLK_BUFFER_lut<0>_INV_0 (Result<0>)
+     MUXCY:S->O            1   0.366   0.000  Mcount_CLK_BUFFER_cy<0> (Mcount_CLK_BUFFER_cy<0>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_BUFFER_cy<1> (Mcount_CLK_BUFFER_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_BUFFER_cy<2> (Mcount_CLK_BUFFER_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_BUFFER_cy<3> (Mcount_CLK_BUFFER_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_BUFFER_cy<4> (Mcount_CLK_BUFFER_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_CLK_BUFFER_cy<5> (Mcount_CLK_BUFFER_cy<5>)
+     MUXCY:CI->O           0   0.044   0.000  Mcount_CLK_BUFFER_cy<6> (Mcount_CLK_BUFFER_cy<6>)
+     XORCY:CI->O           1   0.360   0.000  Mcount_CLK_BUFFER_xor<7> (Result<7>)
+     FDC:D                     0.391          CLK_BUFFER_7
+    ----------------------------------------
+    Total                      2.748ns (2.170ns logic, 0.578ns route)
+                                       (79.0% logic, 21.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK_50'
+  Total number of paths / destination ports: 33 / 33
+-------------------------------------------------------------------------
+Offset:              4.895ns (Levels of Logic = 1)
+  Source:            CLK_BUFFER_3 (FF)
+  Destination:       USB_TXREADY (PAD)
+  Source Clock:      CLOCK_50 rising
+
+  Data Path: CLK_BUFFER_3 to USB_TXREADY
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              6   0.360   0.578  CLK_BUFFER_3 (CLK_BUFFER_3)
+     OBUF:I->O                 3.957          USB_RXVALID_OBUF (USB_RXVALID)
+    ----------------------------------------
+    Total                      4.895ns (4.317ns logic, 0.578ns route)
+                                       (88.2% logic, 11.8% route)
+
+=========================================================================
+CPU : 9.22 / 9.41 s | Elapsed : 9.00 / 9.00 s
+ 
+--> 
+
+Total memory usage is 415560 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

@@ -1,0 +1,79 @@
+#
+# Synplicity Verification Interface File
+# Generated using Synplify-pro
+#
+# Copyright (c) 1996-2005 Synplicity, Inc.
+# All rights reserved
+#
+
+# Set logfile options
+vif_set_result_file  FPGATop.vlf
+
+# Set technology for TCL script
+vif_set_technology -architecture FPGA -vendor Xilinx
+
+# RTL and technology files
+vif_add_library -original $XILINX/verilog/verification/unisims
+vif_add_library -original $XILINX/verilog/verification/simprims
+vif_add_file -original -verilog ../../rtl/SevenSegment.v
+vif_add_file -original -verilog ../../rtl/FPGATop.v
+vif_set_top_module -original -top FPGATop
+ 
+vif_add_library -translated $XILINX/verilog/verification/unisims
+vif_add_library -translated $XILINX/verilog/verification/simprims
+vif_add_file -translated -verilog FPGATop.vm
+vif_set_top_module -translated -top FPGATop 
+# Read FSM encoding
+vif_set_fsm -fsm fsm_0
+vif_set_fsmreg -original -fsm fsm_0 SevenSegment/CommonOut[3:0]
+vif_set_fsmreg -translated -fsm  fsm_0 SevenSegment/CommonOut_1[1:0]
+vif_set_state_map -fsm fsm_0 -original "0001" -translated "00"
+vif_set_state_map -fsm fsm_0 -original "0010" -translated "01"
+vif_set_state_map -fsm fsm_0 -original "0100" -translated "10"
+vif_set_state_map -fsm fsm_0 -original "1000" -translated "11"
+
+# Memory map points
+
+# SRL map points
+
+# Compiler constant registers
+
+# Compiler constant latches
+
+# Compiler RTL sequential redundancies
+
+# RTL sequential redundancies
+
+# Technology sequential redundancies
+vif_set_equiv -translated counter_Z[0] counter_fast_Z[0]
+vif_set_equiv -translated counter_Z[17] counter_iso_Z[17]
+
+# Inversion map points
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut[7] -translated SevenSegment/ControlOut_i_Z[7]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut[6] -translated SevenSegment/ControlOut_i_Z[6]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut[5] -translated SevenSegment/ControlOut_i_Z[5]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut[4] -translated SevenSegment/ControlOut_i_Z[4]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut[3] -translated SevenSegment/ControlOut_i_Z[3]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut[2] -translated SevenSegment/ControlOut_i_Z[2]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut[1] -translated SevenSegment/ControlOut_i_Z[1]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut[0] -translated SevenSegment/ControlOut_i_Z[0]
+
+# Port mappping and directions
+
+# Black box mapping
+
+
+# Other sequential cells, including multidimensional arrays
+
+# Constant Registers
+vif_set_constant -original 1 SevenSegment/Data_temp[7]
+vif_set_constant -original 1 SevenSegment/Data_temp[15]
+vif_set_constant -original 1 SevenSegment/Data_temp[23]
+vif_set_constant -original 1 SevenSegment/Data_temp[31]
+vif_set_constant -original 1 SevenSegment/Data_reg[7]
+vif_set_constant -original 1 SevenSegment/Data_reg[15]
+vif_set_constant -original 1 SevenSegment/Data_reg[23]
+vif_set_constant -original 1 SevenSegment/Data_reg[31]
+
+# Retimed Registers
+

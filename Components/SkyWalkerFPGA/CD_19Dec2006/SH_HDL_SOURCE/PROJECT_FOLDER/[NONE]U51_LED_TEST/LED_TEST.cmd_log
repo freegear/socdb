@@ -1,0 +1,9 @@
+xst -ise "D:/LCM/LED_TEST/LED_TEST.ise" -intstyle ise -ifn LED_TEST.xst -ofn LED_TEST.syr
+xst -ise "D:/LCM/LED_TEST/LED_TEST.ise" -intstyle ise -ifn LED_TEST.xst -ofn LED_TEST.syr
+ngdbuild -ise "D:/LCM/LED_TEST/LED_TEST.ise" -intstyle ise -dd _ngo -nt timestamp -i -p xc4vlx200-ff1513-10 "LED_TEST.ngc" LED_TEST.ngd
+xst -ise "D:/LCM/LED_TEST/LED_TEST.ise" -intstyle ise -ifn LED_TEST.xst -ofn LED_TEST.syr
+ngdbuild -ise "D:/LCM/LED_TEST/LED_TEST.ise" -intstyle ise -dd _ngo -nt timestamp -uc "LED_TEST.ucf" -p xc4vlx200-ff1513-10 "LED_TEST.ngc" LED_TEST.ngd
+map -ise "D:/LCM/LED_TEST/LED_TEST.ise" -intstyle ise -p xc4vlx200-ff1513-10 -cm area -pr b -k 4 -c 100 -o LED_TEST_map.ncd LED_TEST.ngd LED_TEST.pcf
+par -ise "D:/LCM/LED_TEST/LED_TEST.ise" -w -intstyle ise -ol std -t 1 LED_TEST_map.ncd LED_TEST.ncd LED_TEST.pcf
+trce -ise "D:/LCM/LED_TEST/LED_TEST.ise" -intstyle ise -e 3 -l 3 -s 10 -xml LED_TEST LED_TEST.ncd -o LED_TEST.twr LED_TEST.pcf -ucf LED_TEST.ucf
+bitgen -ise "D:/LCM/LED_TEST/LED_TEST.ise" -intstyle ise -f LED_TEST.ut LED_TEST.ncd

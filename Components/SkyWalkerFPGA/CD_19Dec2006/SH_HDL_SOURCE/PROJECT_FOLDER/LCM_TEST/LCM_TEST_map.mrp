@@ -1,0 +1,183 @@
+Release  Map I.31
+Xilinx Mapping Report File for Design 'LCM_TEST'
+
+Design Information
+------------------
+Command Line   : C:\Xilinx\bin\nt\map.exe -ise
+D:/SH_HDL_SOURCE/PROJECT_FOLDER/P_LCM_TEST/LCM_TEST.ise -intstyle ise -p
+xc4vlx200-ff1513-10 -cm area -pr b -k 4 -c 100 -o LCM_TEST_map.ncd LCM_TEST.ngd
+LCM_TEST.pcf 
+Target Device  : xc4vlx200
+Target Package : ff1513
+Target Speed   : -10
+Mapper Version : virtex4 -- $Revision: 1.34.32.1 $
+Mapped Date    : Mon Dec 18 03:05:47 2006
+
+Design Summary
+--------------
+Number of errors:      0
+Number of warnings:    4
+Logic Utilization:
+  Number of Slice Flip Flops:         124 out of 178,176    1%
+  Number of 4 input LUTs:             235 out of 178,176    1%
+Logic Distribution:
+  Number of occupied Slices:                          153 out of  89,088    1%
+    Number of Slices containing only related logic:     153 out of     153  100%
+    Number of Slices containing unrelated logic:          0 out of     153    0%
+      *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:            287 out of 178,176    1%
+  Number used as logic:                235
+  Number used as a route-thru:          52
+  Number of bonded IOBs:               22 out of     960    2%
+  Number of BUFG/BUFGCTRLs:             2 out of      32    6%
+    Number used as BUFGs:                2
+    Number used as BUFGCTRLs:            0
+
+Total equivalent gate count for design:  2,992
+Additional JTAG gate count for IOBs:  1,056
+Peak Memory Usage:  407 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity - e.g. two
+   LUTs are "related" if they share common inputs.  When assembling slices,
+   Map gives priority to combine logic that is related.  Doing so results in
+   the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin packing
+   unrelated logic into a slice once 99% of the slices are occupied through
+   related logic packing.
+
+   Note that once logic distribution reaches the 99% level through related
+   logic packing, this does not mean the device is completely utilized.
+   Unrelated logic packing will then begin, continuing until all usable LUTs
+   and FFs are occupied.  Depending on your timing budget, increased levels of
+   unrelated logic packing may adversely affect the overall timing performance
+   of your design.
+
+Table of Contents
+-----------------
+Section 1 - Errors
+Section 2 - Warnings
+Section 3 - Informational
+Section 4 - Removed Logic Summary
+Section 5 - Removed Logic
+Section 6 - IOB Properties
+Section 7 - RPMs
+Section 8 - Guide Report
+Section 9 - Area Group and Partition Summary
+Section 10 - Modular Design Summary
+Section 11 - Timing Report
+Section 12 - Configuration String Information
+
+Section 1 - Errors
+------------------
+
+Section 2 - Warnings
+--------------------
+WARNING:LIT:243 - Logical network nPORST_IBUF has no load.
+WARNING:LIT:176 - Clock buffer is designated to drive clock loads. BUFG symbol
+   "CLK_BUFGP/BUFG" (output signal=CLK_BUFGP) has a mix of clock and non-clock
+   loads. The non-clock loads are:
+   Pin I2 of LCD_CLK1
+WARNING:LIT:176 - Clock buffer is designated to drive clock loads. BUFG symbol
+   "U1/U1/mI2S_CLK_BUFG" (output signal=U1/U1/mI2S_CLK) has a mix of clock and
+   non-clock loads. The non-clock loads are:
+   Pin D of U1/U1/mI2S_CLK
+WARNING:PhysDesignRules:367 - The signal <nPORST_IBUF> is incomplete. The signal
+   does not drive any load pins in the design.
+
+Section 3 - Informational
+-------------------------
+INFO:MapLib:562 - No environment variables are currently set.
+INFO:MapLib:797 - Your design is targeting LX/SX Production Step 0/1/ES devices.
+   Please note that there are new specifications for the DCMs to guarantee
+   maximum frequency performance. If the DCM input clock might stop or if the
+   DCM reset might be asserted for an extended time, then use of the dcm_standby
+   macro may be required. Please see Answer Record 21127.
+INFO:LIT:244 - All of the single ended outputs in this design are using slew
+   rate limited output drivers. The delay on speed critical single ended outputs
+   can be dramatically reduced by designating them as fast outputs in the
+   schematic.
+
+Section 4 - Removed Logic Summary
+---------------------------------
+   2 block(s) optimized away
+
+Section 5 - Removed Logic
+-------------------------
+
+Optimized Block(s):
+TYPE 		BLOCK
+GND 		XST_GND
+VCC 		XST_VCC
+
+To enable printing of redundant blocks removed and signals merged, set the
+detailed map report option and rerun map.
+
+Section 6 - IOB Properties
+--------------------------
+
++----------------------------------------------------------------------------------------------------------------------------------------+
+| IOB Name                           | Type             | Direction | IO Standard | Drive    | Slew | Reg (s)      | Resistor | IOB      |
+|                                    |                  |           |             | Strength | Rate |              |          | Delay    |
++----------------------------------------------------------------------------------------------------------------------------------------+
+| CLK                                | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| LCD_CLK                            | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_D<0>                           | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_D<1>                           | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_D<2>                           | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_D<3>                           | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_D<4>                           | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_D<5>                           | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_D<6>                           | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_D<7>                           | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1         |          |          |
+| LCD_ENAB                           | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_HSYNC                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_SCEN                           | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_SCL                            | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_SDA                            | IOB              | BIDIR     | LVCMOS25    | 12       | SLOW |              |          |          |
+| LCD_VSYNC                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| USER_SW<0>                         | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| USER_SW<1>                         | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| USER_SW<2>                         | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| USER_SW<3>                         | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| nPORST                             | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| nRST                               | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
++----------------------------------------------------------------------------------------------------------------------------------------+
+
+Section 7 - RPMs
+----------------
+
+Section 8 - Guide Report
+------------------------
+Guide not run on this design.
+
+Section 9 - Area Group and Partition Summary
+--------------------------------------------
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+Area Group Information
+----------------------
+
+  No area groups were found in this design.
+
+----------------------
+
+Section 10 - Modular Design Summary
+-----------------------------------
+Modular Design not used for this design.
+
+Section 11 - Timing Report
+--------------------------
+This design was not run using timing mode.
+
+Section 12 - Configuration String Details
+-----------------------------------------
+Use the "-detail" map option to print out Configuration Strings
