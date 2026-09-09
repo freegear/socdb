@@ -1,0 +1,188 @@
+#  -------------------------------------------------------------------------
+#  This confidential and proprietary software may be used only as authorised
+#  by a licensing agreement from ARM Limited
+#                 (c) COPYRIGHT 2003 ARM Limited
+#                 ALL RIGHTS RESERVED
+#  The entire notice above must be reproduced on all authorised copies and
+#  copies may only be made to the extent permitted by a licensing agreement
+#  from ARM Limited.
+#  -------------------------------------------------------------------------
+#  Version and Release Control Information:
+# 
+#  File Name           : ram-config,v
+#  File Revision       : 1.5
+# 
+#  Release Information : ARM926EJS_r0p5-00rel0
+#  -------------------------------------------------------------------------
+
+# automem ram configuration file.
+
+# This file describes the Rams avaliable, which Rams to use for each
+# memory and how large the memories should be.
+
+# This is an example file. It must be updated to reflect the ram
+# devices avaliable and the choice of cache size.
+
+##############################################################################
+# The ram devices available, defining the names and widths of their pins:
+##############################################################################
+
+# Use misc_ports and misc_pins to add ports to a ram other than those
+# required. misc_ports is a comma seperated list of ports (of the
+# ram). misc_pins is a comma seperated list of the corresponding
+# signals (or constants) to attach to the ports defined in misc_ports.
+# Items are comma seperated. An item can contain a comma if it is
+# contained in inverted commas, eg misc_pins = pin1, "{pin2a, pin2b}",
+# pin3
+
+# MMU RAM
+ram_definition MMURam30
+   clock = CLK
+   chip_select = CS
+   address = ADDR[4:0]
+   read_data = DATAOUT[29:0]
+   write_data = DATAIN[29:0]
+   write_enable = WE
+   misc_ports = OE
+   misc_pins = 1'b1
+end_ram_definition
+
+ram_definition MMURam26
+   clock = CLK
+   chip_select = CS
+   address = ADDR[4:0]
+   read_data = DATAOUT[26:0]
+   write_data = DATAIN[26:0]
+   write_enable = WE
+   misc_ports = OE
+   misc_pins = 1'b1
+end_ram_definition
+
+# I-Cache Data RAM
+ram_definition IDataRam8k
+   clock = CLK
+   chip_select = CE
+   address = A[8:0]
+   read_data = Q[31:0]
+   write_data = D[31:0]
+   write_enable = WE
+end_ram_definition
+
+# D-Cache Data RAM
+ram_definition DDataRam8k
+   clock = CLK
+   chip_select = CE
+   address = A[8:0]
+   read_data = Q[31:0]
+   write_data = D[31:0]
+   write_enable = WE[3:0]
+end_ram_definition
+
+# I-Cache TAG RAM
+ram_definition ITagRam8k
+   clock = CLK
+   chip_select = CE
+   address = A[5:0]
+   read_data = Q[21:0]
+   write_data = D[21:0]
+   write_enable = WE
+end_ram_definition
+
+# D-Cache TAG RAM
+ram_definition DTagRam8k
+   clock = CLK
+   chip_select = CE
+   address = A[6:0]
+   read_data = Q[21:0]
+   write_data = D[21:0]
+   write_enable = WE
+end_ram_definition
+
+# I/D-Cache Valid RAM
+ram_definition ValidRam8k
+   clock = CLK
+   chip_select = CE
+   address = A[3:0]
+   read_data = Q[23:0]
+   write_data = D[23:0]
+   write_enable = WE
+end_ram_definition
+
+# D-Cache Dirty RAM
+ram_definition DirtyRam8k
+   clock = CLK
+   chip_select = CE
+   address = A[5:0]
+   read_data = Q[7:0]
+   write_data = D[7:0]
+   write_enable = WE[7:0]
+end_ram_definition
+
+
+##############################################################################
+# Global options:
+##############################################################################
+
+# When multiple banks of ram are required (because individual rams are
+# not deep enough) there are two methods used to select the rams:
+#
+# 1) Gating chip select. This reduces the power used but may cause
+# timing problems if the chip select setup time is large. Use "optimise
+# power" to select this option.
+#
+# 2) Gating write enable. This uses more power but reduces timing
+# problems. Use "optimise speed" to select this option.
+
+optimise power
+# optimise speed
+
+# Cache replacement algorithm. Set to either "random" or
+# "round-robin". For random the width of the valid rams should be 16
+# bits and for round-robin the width should be 24 bits.
+
+#replacement random
+replacement round-robin
+
+# "clockgating" is used to enable block-level clock gating. Set to
+# "true" or "false".
+
+#clockgating true
+clockgating false
+
+#testchip true 
+testchip false 
+
+##############################################################################
+# Data Cache:
+##############################################################################
+dcsize     8k
+dcdata     DDataRam8k
+dctag      DTagRam8k
+dcvalid    ValidRam8k
+dcdirty    DirtyRam8k
+
+##############################################################################
+# Instruction Cache:
+##############################################################################
+icsize     8k
+icdata     IDataRam8k
+ictag      ITagRam8k
+icvalid    ValidRam8k
+
+##############################################################################
+# MMU:
+##############################################################################
+# For the MMU ram(s) either:
+# (1) define a 112 bit wide ram with bit write enables, or
+# (2) define a 128 bit wide ram with word write enables (32, 16 or 8 bit), or
+# (3) define 30 bit and 26 bit rams.
+
+# For option (1) define mmu112bit, for option (2) define mmu128bit and for
+# option (3) define mmu30bit and mmu26bit.
+
+mmu112bit none
+mmu128bit none
+mmu30bit  MMURam30
+mmu26bit  MMURam26
+
+# There is no mmusize option as the MMU depth is always 32.

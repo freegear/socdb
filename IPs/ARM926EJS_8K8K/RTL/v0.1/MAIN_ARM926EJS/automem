@@ -1,0 +1,1300 @@
+#!/usr/bin/env perl
+#  -------------------------------------------------------------------------
+#  This confidential and proprietary software may be used only as authorised
+#  by a licensing agreement from ARM Limited
+#                 (c) COPYRIGHT 2003 ARM Limited
+#                 ALL RIGHTS RESERVED
+#  The entire notice above must be reproduced on all authorised copies and
+#  copies may only be made to the extent permitted by a licensing agreement
+#  from ARM Limited.
+#  -------------------------------------------------------------------------
+#  Version and Release Control Information:
+# 
+#  File Name           : automem,v
+#  File Revision       : 1.11
+# 
+#  Release Information : ARM926EJS_r0p5-00rel0
+#  -------------------------------------------------------------------------
+
+# global: $clockgating         Set clock gating in .vh file
+# global: $testchip            Set testchip in .vh file
+# global: @expected_types      The memory types expected to be in the input file.
+# global: %invert              Which signals to invert.
+# global: %mem_defns           The memory definitions (as strings).
+# global: %mem_sigs            The memory signals for the current memory type.
+# global: %mem_width           The widths of the above signals.
+# global: $poweropt            Optimise for power.
+# global: %ram_defns           The ram definitions (as strings).
+# global: %ram_sigs            The ram signals for the current ram.
+# global: %ram_width           The widths of the above signals.
+# global: %rams                Which rams to use for which memory types.
+# global: @required_sigs       The sigs that ram definitions must define.
+# global: $roundrobin          Use a round-robin valid ram.
+# global: %sizes               The sizes of the D and I caches.
+# global: $space               Indent.
+# global: $verilog_al          Verilog code: Always blocks.
+# global: $verilog_ass         Verilog code: Assigns.
+# global: $verilog_dec         Verilog code: Signal declarations.
+# global: $verilog_inst        Verilog code: module (ram) instantiations.
+# global: $inhibitreg
+
+require POSIX;
+
+#############################################################################
+#                         Misc declarations                                 #
+#############################################################################
+
+$space = "   ";
+@required_sigs = ("clock", "chip_select", "address", "read_data",
+                  "write_data", "write_enable");
+@expected_types = ("dcdata0", "dcdata1", "dcdata2", "dcdata3", "dctag",
+                   "dcvalid", "mmu", "icdata0", "icdata1", "icdata2",
+                   "icdata3", "ictag", "icvalid");
+
+sub log2 {
+  my $x = shift;
+  $x = log($x) / log(2);
+  $x = int($x + 0.5);
+  return $x;
+}
+sub my_die {
+  my $text = shift;
+  print STDERR "Fatal Error: ";
+  print STDERR $text;
+  print STDERR "\n";
+  exit(1);
+}
+sub my_warn {
+  my $text = shift;
+  print STDERR "Warning: ";
+  print STDERR $text;
+  print STDERR "\n";
+}
+sub my_info {
+  my $text = shift;
+#  print STDERR "Information: ";
+  print STDERR "   ";
+  print STDERR $text;
+  print STDERR "\n";
+}
+sub my_help {
+  print "
+$0: Auto memory generator. Instantiate the required rams for the ARM926EJS.
+
+Usage: $0 [-h] [source top level] [destination top level] [ram-config]
+
+The [source top level] is processed, replacing the rams with those
+defined in ram-config. It relies on hooks in the [source top level] in
+order to know where to place the rams. The results are placed in
+[destination top level]. If no [destination top level] is given
+[source top level] is used for the output.
+
+There are two configuration files. \"memory-config\" defines the core
+interface to the memories. This would not normally be modified unless
+extra logic is to be inserted between the core and the memories.
+\"ram-config\" is the main configuration file which defines a set of
+rams, lists which rams to be used for each memory and also the size of
+the instruction and data caches.
+
+A .vh and a .vc file are also written out to the same file as
+[destination top level] with a \"h\" and \"c\" appended.
+
+After the top level and the .vh file have been written out you will
+probably need to link then to ARM926EJS.v and ARM926EJS.vh in the
+MAIN_ARM926EJS directory.
+
+";
+}
+#############################################################################
+#          Declare the procedures to instantiate the Ram module             #
+#############################################################################
+
+#
+# Generate the wires for chip select signals.
+#
+sub gen_CS_wires {
+  my $prefix = shift;
+  my $num = shift;
+  my $i = 0;
+  my $cs_name;
+  while ($i < $num)
+    {
+      $cs_name = $prefix . "CSab$i";
+      $verilog_dec .= $space . "wire " . fmt("") . $cs_name .
+        "; // Address bank $i\n";
+      $i++;
+    }
+}
+
+#
+# Generate the chip select that incorporate partial address decoding for.
+# multple address banks.
+sub gen_CS_assigns {
+  my $prefix = shift;
+  my $num = shift;
+  my $index_min = $ram_width{address};
+  my $index_max = $mem_width{address} - 1;
+  my $i = 0;
+  my ($addr, $max, $min, $cs_name, $index_i, $accumulate, $adder);
+  my @cs_addrs;
+  ($addr, $max, $min) = split_sig($mem_sigs{address});
+  while ($i < $num)
+    {
+      $cs_name = $prefix . "CSab$i";
+      $index_i = $index_max;
+      @cs_addrs = ();
+      $accumulate = 0;
+      $adder = 2**($index_max - $index_min);
+      while ($index_i >= $index_min)
+        {
+          if (($accumulate + $adder) > $i) {
+            push(@cs_addrs, "~$addr\[$index_i\]");
+          } else {
+            push(@cs_addrs, "$addr\[$index_i\]");
+            $accumulate += $adder;
+          }
+          $index_i--;
+          $adder = $adder/2;
+        }
+      $verilog_ass .= $space . "assign $cs_name = $mem_sigs{chip_select} & " .
+                                        join(" & ", @cs_addrs) . ";\n";
+      $i++;
+    }
+}
+
+# As for gen_CS_wires but switching WE instead of CS.
+
+sub gen_WE_wires {
+  my $prefix = shift;
+  my $num = shift;
+  my $i = 0;
+  my ($range, $cs_name);
+  while ($i < $num)
+    {
+      $cs_name = $prefix . "WEab$i";
+      $range =  "[" . ($mem_width{write_enable} - 1) . ":0]";
+      $verilog_dec .= $space . "wire " . fmt($range) . $cs_name .
+        "; // Address bank $i\n";
+      $i++;
+    }
+}
+
+# As for gen_CS_assigns but switching WE instead of CS.
+sub gen_WE_assigns {
+  my $prefix = shift;
+  my $num = shift;
+  my $index_min = $ram_width{address};
+  my $index_max = $mem_width{address} - 1;
+  my $i = 0;
+  my ($addr, $max, $min, $cs_name, $index_i, $accumulate, $adder, @cs_addrs);
+  ($addr, $max, $min) = split_sig($mem_sigs{address});
+  while ($i < $num)
+    {
+      $cs_name = $prefix . "WEab$i";
+      $index_i = $index_max;
+      @cs_addrs = ();
+      $accumulate = 0;
+      $adder = 2**($index_max - $index_min);
+      while ($index_i >= $index_min)
+        {
+          if (($accumulate + $adder) > $i) {
+            push(@cs_addrs, "~$addr\[$index_i\]");
+          } else {
+            push(@cs_addrs, "$addr\[$index_i\]");
+            $accumulate += $adder;
+          }
+          $index_i--;
+          $adder = $adder/2;
+        }
+      $verilog_ass .= $space . "assign $cs_name = (" .
+                      join(" & ", @cs_addrs) . ") ? " . $mem_sigs{write_enable} .
+                      " : " . $mem_width{write_enable} . "\'d0;\n";
+      $i++;
+    }
+}
+
+# Generate the MUX logic for selecting read data from multiple address banks.
+# Called from gen_inst_ab_db.
+
+sub gen_RD_MUX {
+  my $prefix = shift;
+  my $num = shift;
+  my $index_min = $ram_width{address};
+  my $index_max = $mem_width{address} - 1;
+  my $i = 0;
+  my $ifelse = "";
+  my %signals;
+  my $arange;
+  my $drange = "[" . ($mem_width{read_data} - 1) . ":0]";
+  my $ret = $prefix . "RDmux"."ab$i";
+  my $addr;
+  my ($addr, $max, $min, $rd_name, $signals, $index_i);
+  my ($accumulate, $adder, @cs_addrs);
+  ($addr, $max, $min) = split_sig($mem_sigs{address});
+  $arange = "[$index_max\:$index_min\]";
+  while ($i < $num)
+    {
+      $rd_name = $prefix . "RD"."ab$i";
+      $signals{$rd_name} = 1;
+      $index_i = $index_max;
+      @cs_addrs = ();
+      $accumulate = 0;
+      $adder = 2**($index_max - $index_min);
+      while ($index_i >= $index_min)
+        {
+          if (($accumulate + $adder) > $i) {
+            push(@cs_addrs, "~$addr\Pipe[$index_i\]");
+          } else {
+            push(@cs_addrs, "$addr\Pipe[$index_i\]");
+            $accumulate += $adder;
+          }
+          $signals{"$addr\Pipe\[$index_i\]"} = 1;
+          $index_i--;
+          $adder = $adder/2;
+        }
+      $ifelse .= $space . "    ";
+      $ifelse .= "else " if ($i > 0);
+      $ifelse .= "if (" . join(" & ", @cs_addrs) .
+                                   ")\n$space      $ret = $rd_name;\n"; 
+      $verilog_dec .= $space . "wire " . fmt($drange) .
+        "$rd_name; // Read data for address bank $i\n";
+      $i++;
+    }
+
+  if (!$inhibitreg)
+    {
+      $verilog_dec .= $space . "reg  " . fmt($arange) . $addr .
+                                        "Pipe; // Pipelined address\n";
+      $verilog_al .= $space . "always @(posedge $mem_sigs{clock}\)\n";
+      $verilog_al .= $space . "  begin\n";
+      $verilog_al .= $space . "    " . $addr . "Pipe$arange <= $addr$arange;\n";
+      $verilog_al .= $space . "  end\n\n";
+
+      $inhibitreg = 1;
+    }
+
+  $verilog_ass .= $space . "assign $mem_sigs{read_data} = $ret;\n";
+  
+  $verilog_dec .= $space . "reg  " . fmt($drange) . $ret .
+                                        "; // Output of the read data mux\n";
+  $verilog_al .= $space . "always \@(" . join(" or ", keys(%signals)) . ")\n";
+  $verilog_al .= $space . "  begin\n";
+  # Remove last if to leave a default clause:
+  $ifelse =~ s/\n$space    else if \([^\)]*\)\n(.*)\n$/\n$space    else\n$1\n/;
+  $verilog_al .= $ifelse;
+  $verilog_al .= $space . "  end\n";
+
+}
+
+# Write out a ram or multiple ram instances. If the Ram is not deep
+# enough multiple "address banks" are used. Multiple chip select (or
+# write enable) signals are generated so that only one address bank is
+# active (for writes) at a time. The read data muxing is also
+# generated so that read data comes from the correct address bank.
+
+sub gen_inst_ab_db {
+  my $prefix = shift;
+  my $inst_name = shift;
+  my $mod_name = shift;
+  my $max;
+  my $i;
+  my $num_addr_banks;
+  my %local_mem_sigs;
+  my %local_mem_width;
+  my ($sig, $max, $min, $div, $range);
+
+#  print "gen_inst_ab_db : $prefix $inst_name $mod_name\n";
+
+  if ($mem_width{address} == $ram_width{address})
+    {
+      gen_inst_db($prefix, $inst_name, $mod_name);
+    }
+  elsif ($mem_width{address} < $ram_width{address})
+    {
+     my_warn("$mod_name Ram too large (deep) for $prefix, you must fix this manually");
+     gen_inst_db($prefix, $inst_name, $mod_name);
+    }
+  else
+    {
+      $num_addr_banks = 2**($mem_width{address} - $ram_width{address});
+      if ($num_addr_banks > 4) {
+        my_warn("Adding large number ($num_addr_banks) of address banks for $prefix");
+        my_warn(" -- is something wrong?");
+      }
+      if ($poweropt)
+        {
+          gen_CS_wires($prefix, $num_addr_banks);
+          gen_CS_assigns($prefix, $num_addr_banks);
+        }
+      else
+        {
+          gen_WE_wires($prefix, $num_addr_banks);
+          gen_WE_assigns($prefix, $num_addr_banks);
+        }
+      gen_RD_MUX($prefix, $num_addr_banks);
+      ($sig, $max, $min) = split_sig($mem_sigs{address});
+      $max = $min + $ram_width{address} - 1;
+      $mem_sigs{address} = $sig . "[" . $max . ":" . $min . "]";
+      $mem_width{address} = $ram_width{address};
+      $max = $num_addr_banks - 1;
+      for $i (0..$max)
+        {
+          if ($poweropt) {
+            $mem_sigs{chip_select} = $prefix . "CSab$i";
+            # chip_select stays the same width.
+          } else {
+            $range =  "[" . ($mem_width{write_enable} - 1) . ":0]";
+            $mem_sigs{write_enable} = $prefix . "WEab$i" . $range;
+            # write enable stays the same width.
+          }
+          $mem_sigs{read_data} = $prefix . "RDab$i\[" .
+                                           ($mem_width{read_data} - 1) . ":0]";
+          # read_data stays the same width.
+          %local_mem_sigs = %mem_sigs;
+          %local_mem_width = %mem_width;
+          gen_inst_db($prefix, $inst_name . "ab$i", $mod_name);
+          %mem_sigs = %local_mem_sigs;
+          %mem_width = %local_mem_width;
+        }
+    }
+}
+
+# Helper function for gen_inst_db. Increases the width of the write enable
+# signal by repeating elements. This is necessary if the Ram has a wider write
+# enable port than the core.
+
+sub increase_we {
+  my $prefix = shift;
+  my $req_width = $ram_width{write_enable};
+  my $we_width = $mem_width{write_enable};
+  my ($i, $newsig, $div, $div, $sig, $max, $min, $newsig);
+
+  if ($req_width == $we_width) {
+    return; # nothing to do
+  }
+  if ($req_width < $we_width) {
+    # For the case of ICData only, we can just OR all the WE bits together.
+    # But only if we have all four bits of WE.
+    if (($prefix =~ /^ICData/) && ($we_width == 4))
+      {
+        my_die "Cannot handle the case of the number of write enable inputs " .
+          "to the ICData Ram not equal to 1 or n*4" if ($req_width != 1);
+        $newsig = "(|$mem_sigs{write_enable})";
+        $mem_sigs{write_enable} = $newsig;
+        $mem_width{write_enable} = 1;
+        return 0;
+      }
+    # Otherwise it is a fatal error.
+    my_die "Not enough Ram write enable signals for $prefix";
+  }
+
+  my_die "Cannot duplicate write enable signals evenly" if
+    (($req_width % $we_width) != 0);
+  $div=POSIX::ceil($req_width / $we_width);
+  ($sig, $max, $min) = split_sig($mem_sigs{write_enable});
+  if ($mem_sigs{write_enable} =~ /\[/)
+    {
+      $newsig = "{";
+      for $i ($min .. $max)
+        {
+          $newsig .= "{$div\{$sig\[" . ($min+$max-$i) . "]}}, ";
+        }
+      # replace trailing comma with close curly bracket
+      $newsig =~ s/, $/\}/;
+    }
+  else
+    {
+      $newsig = "{$div\{$sig\}}";
+    }
+  $mem_sigs{write_enable} = $newsig;
+  $mem_width{write_enable} = $req_width;
+}
+
+# Generate an instance or instances of a Ram, using multiple data banks if
+# necessary. The data width is split up and each Ram holds a fraction of the
+# total data width.
+
+sub gen_inst_db {
+  my $prefix = shift;
+  my $inst_name = shift;
+  my $mod_name = shift;
+  my ($i, $wd, $rd, $rmem_max, $rmem_base, $wmem_max, $wmem_base);
+  my ($ram_base, $sig, $we, $we_max, $we_base, $weperram, $num_rams, $we_width);
+  my ($bot, $top);
+
+#  print "$mem_width{read_data} == $ram_width{read_data}\n";
+  if ($mem_width{read_data} == $ram_width{read_data})
+    {
+      increase_we($prefix);
+      gen_inst($prefix, $inst_name, $mod_name);
+    }
+  else
+    {
+      $wd = $mem_sigs{write_data};
+      $rd = $mem_sigs{read_data};
+      $we = $mem_sigs{write_enable};
+      $we_width = $mem_width{write_enable};
+      ($wd, $wmem_max, $wmem_base) = split_sig($wd);
+      ($rd, $rmem_max, $rmem_base) = split_sig($rd);
+      ($we, $we_max, $we_base) = split_sig($we);
+      $num_rams = POSIX::ceil($mem_width{read_data} / $ram_width{read_data});
+      my_warn "Large number of ram banks ($num_rams) -- is something wrong?" if
+        ($num_rams > 4);
+
+      if ($mem_width{write_enable} == 1)
+        {
+          $weperram = 0;
+        }
+      else
+        {
+          my_die "More ram banks than there are write enables for $prefix.\n" .
+                 " -- cannot cope with this situation." if 
+                   ($num_rams > $mem_width{write_enable});
+          my_die "Cannot disribute write enable signals evenly for $prefix" if 
+            (($mem_width{write_enable} % $num_rams) != 0);
+          $weperram = $mem_width{write_enable} / $num_rams;
+        }
+      $i = 0;
+      $ram_base = 0;
+      while ($ram_base < $mem_width{read_data})
+        {
+
+          $bot = $rmem_base + $ram_base;
+          $top = $bot + $ram_width{read_data} - 1;
+          $mem_sigs{read_data} = "$rd\[$top\:$bot\]";
+          # read_data stays the same width.
+          if ($top > $rmem_max) {
+            $mem_sigs{read_data} = "$rd\[$rmem_max\:$bot\]";
+            $mem_width{read_data} = 1 + $rmem_max - $bot;
+          }
+
+          $bot = $wmem_base + $ram_base;
+          $top = $bot + $ram_width{read_data} - 1;
+          # insert zeros here if we want to support mismatched memory.
+          $mem_sigs{write_data} = "$wd\[$top\:$bot\]";
+          # write_data stays the same width.
+          if ($top > $wmem_max) {
+            # Tie off extra data bits
+            my_warn("Unused data bits for memory $prefix");
+            my_warn(" -- tying extra write data bits to zero");
+            $mem_sigs{write_data} = "{" . ($top - $rmem_max) . "\'d0, " .
+                                    "$wd\[$wmem_max\:$bot\]}";
+            # write_data stays the same width.
+          }
+          
+#          print "$prefix     $mem_width{write_enable} \n";
+          if ($we_width == 1)
+            {
+              increase_we($prefix);
+              gen_inst($prefix, $inst_name . "db$i", $mod_name);
+            }
+          else
+            {
+              $bot = $we_base;
+              $top = $bot + $weperram - 1;
+              $mem_sigs{write_enable} = "$we\[$top\:$bot\]";
+              $mem_width{write_enable} = $weperram;
+              increase_we($prefix);
+              gen_inst($prefix, $inst_name . "db$i", $mod_name);
+            }
+          $ram_base += $ram_width{read_data};
+          $we_base += $weperram;
+          $i++;
+        }
+    }
+}
+
+# Used to aid in formatting of the code. It makes a sting a standard width by
+# postfixing spaces.
+sub fmt {
+  my $a = shift;
+  my $w = "        ";
+  return $a if (length($a) > length($w));
+  return substr($a . $w, 0, length($w));
+}
+
+# Generate ICTag ram.
+sub gen_ictag_ram {
+  my $prefix = shift;
+  my $inst = shift;
+  my $ram;
+
+  my_die("can not find a ram for the ICTag") unless (exists($rams{ictag}));
+  $ram = $rams{"ictag"};
+  parse_ram($ram); # -> %ram_sigs
+
+  parse_memory("ictag", "0"); # -> %mem_sigs
+  gen_inst_ab_db($prefix . "0", $inst . "0", $ram);
+
+  parse_memory("ictag", "1"); # -> %mem_sigs
+  gen_inst_ab_db($prefix . "1", $inst . "1", $ram);
+  
+  parse_memory("ictag", "2"); # -> %mem_sigs
+  gen_inst_ab_db($prefix . "2", $inst . "2", $ram);
+  
+  parse_memory("ictag", "3"); # -> %mem_sigs
+  gen_inst_ab_db($prefix . "3", $inst . "3", $ram);
+}
+
+# Fix the top bit of the address to be 10 instead of X.
+# For the data cache tag only.
+sub fix_addr_top_bit {
+  my $x;
+  my $min;
+  my $max;
+  ($x, $max, $min) = split_sig($mem_sigs{address});
+  $verilog_dec .= $space . "wire " . fmt("[" . $max . ":" . $min . "]") .
+                  "DCTagAddr;\n";
+  $verilog_ass .= $space . "assign DCTagAddr = {" . $x . "[" . ($min+10) .
+                  "], " . $x . "[" . ($max-1) . ":" . $min . "]};\n";
+  return "DCTagAddr[" . $max . ":" . $min . "]";
+}
+
+# Generate Dctag ram.
+sub gen_dctag_ram {
+  my $prefix = shift;
+  my $inst = shift;
+  my $ram;
+  my $addr;
+
+  my_die("can not find a ram for the DCTag") unless (exists($rams{dctag}));
+  $ram = $rams{"dctag"};
+  parse_ram($ram); # -> %ram_sigs
+
+  parse_memory("dctag", "0"); # -> %mem_sigs
+  $addr = fix_addr_top_bit;
+  $mem_sigs{address} = $addr;
+  gen_inst_ab_db($prefix . "0", $inst . "0", $ram);
+  
+  parse_memory("dctag", "1"); # -> %mem_sigs
+  $mem_sigs{address} = $addr;
+  gen_inst_ab_db($prefix . "1", $inst . "1", $ram);
+  
+  parse_memory("dctag", "2"); # -> %mem_sigs
+  $mem_sigs{address} = $addr;
+  gen_inst_ab_db($prefix . "2", $inst . "2", $ram);
+  
+  parse_memory("dctag", "3"); # -> %mem_sigs
+  $mem_sigs{address} = $addr;
+  gen_inst_ab_db($prefix . "3", $inst . "3", $ram);
+}
+  
+# Generate the MMU ram using one of three methods.
+sub gen_mmu_ram {
+  my $prefix = shift;
+  my $inst = shift;
+  my ($rd, $rd_max, $rd_min);
+  my ($wd, $wd_max, $wd_min);
+  my ($we, $we_max, $we_min);
+  my ($mmu_we, $max, $min);
+  my $ram;
+  my ($mmu_rd, $max, $min);
+  
+  parse_memory("mmu", ""); # -> %mem_sigs
+
+  if (exists($rams{mmu112bit}) && ($rams{mmu112bit} ne "none"))
+    {
+      # Use a 112 bit wide ram with bit write enables:
+      $verilog_dec .= $space . "wire " . fmt("[111:0]") . "MMU112WE;\n";
+      ($mmu_we, $max, $min) = split_sig($mem_sigs{write_enable});
+      $verilog_ass .= $space . "assign MMU112WE = {{26{$mmu_we\[" .
+        ($min + 3) . "]}}, {30{$mmu_we\[" .
+          ($min + 2) . "]}},\n$space                   {26{$mmu_we\[" .
+            ($min + 1) . "]}}, {30{$mmu_we\[" .
+              $min . "]}}};\n";
+      $mem_sigs{write_enable} = "MMU112WE[111:0]";
+      $mem_width{write_enable} = 112;
+      $ram = $rams{"mmu112bit"};
+      my_info "Adding 112 bit wide MMU Ram";
+      parse_ram($ram); # -> %ram_sigs
+      gen_inst_ab_db($prefix, $inst, $ram);
+    }
+  elsif (exists($rams{mmu128bit}) && ($rams{mmu128bit} ne "none"))
+    {
+      # Use a 128 bit wide ram with 32-bit write enables:
+      ($mmu_rd, $max, $min) = split_sig($mem_sigs{read_data});
+      $verilog_dec .= $space . "wire " . fmt("[127:0]") . "MMU128RD;\n";
+      $verilog_dec .= $space . "wire " . fmt("[127:0]") . "MMU128WD;\n";
+      $mem_sigs{read_data} = "MMU128RD[127:0]";
+      $mem_sigs{write_data} = "MMU128WD[127:0]";
+      $mem_width{read_data} = 128;
+      $mem_width{write_data} = 128;
+      $verilog_ass .= $space . "assign MMU128WD = {6'b000000, ";
+      $verilog_ass .= "MMUxWD[111:86], 2'b00, MMUxWD[85:56],\n";
+      $verilog_ass .= "$space                   6'b000000, MMUxWD[55:30],";
+      $verilog_ass .= " 2'b00, MMUxWD[29:0]};\n";
+      $verilog_ass .= $space . "assign $mmu_rd\[29:0] = MMU128RD[29:0];\n";
+      $verilog_ass .= $space . "assign $mmu_rd\[55:30] = MMU128RD[57:32];\n";
+      $verilog_ass .= $space . "assign $mmu_rd\[85:56] = MMU128RD[93:64];\n";
+      $verilog_ass .= $space . "assign $mmu_rd\[111:86] = MMU128RD[121:96];\n";
+      $ram = $rams{"mmu128bit"};
+      my_info "Adding 128 bit wide MMU Ram";
+      parse_ram($ram); # -> %ram_sigs
+      gen_inst_ab_db($prefix, $inst, $ram);
+    }
+  elsif (exists($rams{mmu30bit}) && exists($rams{mmu26bit}) &&
+         ($rams{mmu30bit} ne "none") && ($rams{mmu26bit} ne "none"))
+    {
+      ($wd, $wd_max, $wd_min) = split_sig($mem_sigs{write_data});
+      ($rd, $rd_max, $rd_min) = split_sig($mem_sigs{read_data});
+      ($we, $we_max, $we_min) = split_sig($mem_sigs{write_enable});
+      %saved_mem_sigs = %mem_sigs;
+      %saved_mem_width = %mem_width;
+      
+      $mem_sigs{read_data} = $rd .
+        "[" . ($rd_min + 29) . ":" . $rd_min . "]";
+      $mem_sigs{write_data} = $wd .
+        "[" . ($wd_min + 29) . ":" . $wd_min . "]";
+      $mem_sigs{write_enable} = $we. "[" . $we_min . "]";
+      $mem_width{read_data} = 30;
+      $mem_width{write_data} = 30;
+      $mem_width{write_enable} = 1;
+      $ram = $rams{"mmu30bit"};
+      parse_ram($ram);          # -> %mem_sigs
+      gen_inst_ab_db($prefix . "3", $inst . "3", $ram);
+      
+      %mem_sigs = %saved_mem_sigs;
+      %mem_width = %saved_mem_width;
+      
+      $mem_sigs{read_data} = $rd .
+        "[" . ($rd_min + 55) . ":" . ($rd_min + 30) . "]";
+      $mem_sigs{write_data} = $wd .
+        "[" . ($wd_min + 55) . ":" . ($wd_min + 30) . "]";
+      $mem_sigs{write_enable} = $we. "[" . ($we_min + 1) . "]";
+      $mem_width{read_data} = 26;
+      $mem_width{write_data} = 26;
+      $mem_width{write_enable} = 1;
+      $ram = $rams{"mmu26bit"};
+      parse_ram($ram);          # -> %mem_sigs
+      gen_inst_ab_db($prefix . "2", $inst . "2", $ram);
+      
+      %mem_sigs = %saved_mem_sigs;
+      %mem_width = %saved_mem_width;
+      
+      $mem_sigs{read_data} = $rd .
+        "[" . ($rd_min + 85) . ":" . ($rd_min + 56) . "]";
+      $mem_sigs{write_data} = $wd .
+        "[" . ($wd_min + 85) . ":" . ($wd_min + 56) . "]";
+      $mem_sigs{write_enable} = $we. "[" . ($we_min + 2) . "]";
+      $mem_width{read_data} = 30;
+      $mem_width{write_data} = 30;
+      $mem_width{write_enable} = 1;
+      $ram = $rams{"mmu30bit"};
+      parse_ram($ram);          # -> %mem_sigs
+      gen_inst_ab_db($prefix . "1", $inst . "1", $ram);
+      
+      %mem_sigs = %saved_mem_sigs;
+      %mem_width = %saved_mem_width;
+      
+      $mem_sigs{read_data} = $rd .
+        "[" . ($rd_min + 111) . ":" . ($rd_min + 86) . "]";
+      $mem_sigs{write_data} = $wd .
+        "[" . ($wd_min + 111) . ":" . ($wd_min + 86) . "]";
+      $mem_sigs{write_enable} = $we. "[" . ($we_min + 3) . "]";
+      $mem_width{read_data} = 26;
+      $mem_width{write_data} = 26;
+      $mem_width{write_enable} = 1;
+      $ram = $rams{"mmu26bit"};
+      parse_ram($ram);          # -> %mem_sigs
+      gen_inst_ab_db($prefix . "0", $inst . "0", $ram);
+      
+      my_info "Adding 30 and 26 bit wide MMU Rams";
+    }
+  else
+    {
+      my_die("can not find a ram for the MMU");
+    }
+}
+
+# split a string at commas except when quoted in "s
+sub comma_split {
+  my $x = shift;
+  my @res = ();
+
+  while ($x =~ /,/)
+    {
+      $x =~ s/^\s*([^\,]*)\s*\,// unless ($x =~ s/^\s*\"([^\"]*)\"\s*\,//);
+      push @res, $1;
+    }
+  $x =~ s/^\s*\"?//;
+  $x =~ s/\"?\s*$//;
+  push @res, $x unless ($x eq "");
+
+  return @res;
+}
+
+# Generate an instance of a Ram.
+sub gen_inst {
+  my $prefix = shift;
+  my $inst_name = shift;
+  my $mod_name = shift;
+  my (@l, $m, $wire, $s, @ports, @pins, $i, @ports, @pins);
+  
+  # We can assume that these hashes exist because that was checked when the
+  # config was parsed.
+
+  my_die "Something has gone wrong: more write enable bits than data bits."
+    if ($mem_width{write_enable} > $mem_width{write_data});
+  # The read data width might be less than the write data width if the rams
+  # are too wide.
+  my_die "Something has gone wrong: read data wider than write data"
+    if ($mem_width{read_data} > $mem_width{write_data});
+
+  $verilog_inst .= "$space$mod_name $inst_name (\n";
+  foreach $s (@required_sigs)
+    {
+      $verilog_inst .= "$space   ." . fmt($ram_sigs{$s}) . "(";
+      $verilog_inst .= "~" if ($invert{$s});
+      $verilog_inst .= $mem_sigs{$s} . "),\n";
+    }
+  # add optional output_enable
+  if (exists($ram_sigs{output_enable}))
+    {
+      $verilog_inst .= "$space   ." . fmt($ram_sigs{output_enable}) . "(";
+      if ($invert{output_enable}) {
+        $verilog_inst .= "1\'b0),\n";
+      } else {
+        $verilog_inst .= "1\'b1),\n";
+      }
+    }
+  if (exists($ram_sigs{misc_ports}))
+    {
+      my_die "misc ports declared but no misc pins (memory $prefix)"
+        if (!exists($ram_sigs{misc_pins}));
+      @ports = comma_split $ram_sigs{misc_ports};
+      @pins = comma_split $ram_sigs{misc_pins};
+      my_die "different number of misc ports and misc pins (memory $prefix)"
+        if ($#ports != $#pins);
+      for $i (0 .. $#ports)
+        {
+          $verilog_inst .= "$space   ." . fmt($ports[$i]);
+          $verilog_inst .= "(" . $pins[$i] . "),\n";
+        }
+    }
+  $verilog_inst .= "$space);\n\n";
+  # remove last comma:
+  $verilog_inst =~ s/\,([^\,]*)$/$1/ || my_die "remove comma error";
+}
+
+# Split a signal up into its name and its max and min indices.
+
+sub split_sig {
+  my $in = shift;
+  if ($in =~ /^(.*)\[(.*)\:(.*)\]/) {
+    return ($1, $2, $3);
+  } elsif ($in =~ /^(.*)\[(.*)\]/) {
+    return ($1, $2, $2);
+  } else {
+    return ($in, "0", "0");
+  }
+}
+
+# Parse a ram definition from the ram-config file.
+
+sub parse_ram {
+  my $ram = shift;
+  my ($param, $value, $sig, $max, $min, $s);
+  %ram_sigs = ();
+  %ram_width = ();
+
+  my_die "Ram $ram has not been defined" if (!exists($ram_defns{$ram}));
+
+  foreach (split(/\n/, $ram_defns{$ram}))
+  {
+    /^\s*([a-z_]+)\s\=\s*(.*)\n?/ || my_die "can not parse $_";
+    $param = $1;
+    $value = $2;
+    if ($param =~ s/^not_//) {
+      $invert{$param} = 1;
+    } else {
+      $invert{$param} = 0;
+    }
+    ($sig, $max, $min) = split_sig($value);
+    $ram_width{$param} = 1 + $max - $min;
+    $ram_sigs{$param} = $sig;
+  }
+  foreach $s (@required_sigs)
+    {
+      my_die "required signal \"$s\" not found in ram \"$ram\""
+        unless (exists($ram_sigs{$s}));
+    }
+  my_die "Read and write data widths are not the same for ram \"$ram\""
+    if ($ram_width{read_data} != $ram_width{write_data});
+  my_die "More write enable bits than data bits for ram \"$ram\""
+    if ($ram_width{write_enable} > $ram_width{write_data});
+}
+
+# Parse a memory definition from the memory-config file.
+
+sub parse_memory {
+  my $type = shift;
+  my $bank = shift;
+  my ($param, $value, $s, $sig, $max, $min, $addr_width);
+  %mem_sigs = ();
+  %mem_width = ();
+
+  foreach (split(/\n/, $mem_defns{$type}))
+  {
+    s/\$bank/$bank/g;
+    /^\s*([a-z_]+)\s\=\s*(.*)\n?/ || my_die "can not parse $_";
+    $param = $1;
+    $value = $2;
+#    print "$param $value\n";
+    $mem_sigs{$param} = $value;
+    if ($param ne "assigns" && $param ne "name" && $param ne "definitions" &&
+        $param ne "addr_width")
+      {
+        ($sig, $max, $min) = split_sig($value);
+        $mem_width{$param} = 1 + $max - $min;
+#        print "$sig, $max, $min, $mem_width{$param}\n";
+      }
+  }
+  foreach $s (@required_sigs)
+    {
+      my_die "required signal \"$s\" not found in memory \"$type\""
+        unless (exists($mem_sigs{$s}));
+    }
+  my_die "Read and write data widths are not the same for memory \"$type\""
+    if ($mem_width{read_data} != $mem_width{write_data});
+
+  # fix $mem_sigs{address} range:
+  if (exists($mem_sigs{addr_width}))
+    {
+      $addr_width = eval($mem_sigs{addr_width});
+      ($sig, $max, $min) = split_sig($mem_sigs{address});
+      $max = $min + $addr_width - 1;
+      $mem_sigs{address} = "$sig\[$max\:$min\]";
+      $mem_width{address} = $addr_width;
+    }
+}
+
+# Correct the width of the valid rams for random replacement:
+
+sub fix_valid_width {
+  my $type = shift;
+  my ($ram, $name, $max, $min);
+  
+  # dcvalid can be either 16 bits wide (random replacement) or
+  # 24 bits wide (round robin replacement).
+  if ($roundrobin)
+    {
+      my_info "Using 24 bits wide (round robin replacement) DCValid";
+      my_die "$prefix memory not wide enough" if ($mem_width{read_data} < 24);
+      my_die "No ram defined for dcvalid memory"
+        unless (exists($rams{$type}));
+      $ram = $rams{$type};
+      my_die "No norrgen signal defined for $type"
+        if (!exists($mem_sigs{norrgen}));
+      $verilog_ass .= $space . "assign " . $mem_sigs{norrgen} . " = 1'b0;\n";
+    }
+  else
+    {
+      my_info "Using 16 bits wide (random replacement) DCValid";
+      my_die "$prefix memory not wide enough" if ($mem_width{read_data} < 16);
+      my_die "No ram defined for dcvalid memory"
+        unless (exists($rams{$type}));
+      $ram = $rams{$type};
+      # fix data width:
+      my_die "No norrgen signal defined for $type"
+        if (!exists($mem_sigs{norrgen}));
+      $verilog_ass .= $space . "assign " . $mem_sigs{norrgen} . " = 1'b1;\n";
+      ($name, $max, $min) = split_sig($mem_sigs{read_data});
+      $verilog_ass .= $space . "assign " . $name . "[" . ($min + 23) . ":" .
+                      ($min + 16) . "] = 8'b00000000;\n";
+      $mem_sigs{read_data} = $name . "[" . ($min + 15) . ":" . $min . "]";
+      $mem_width{read_data} = 16;
+      ($name, $max, $min) = split_sig($mem_sigs{write_data});
+      $mem_sigs{write_data} = $name . "[" . ($min + 15) . ":" . $min . "]";
+      $mem_width{write_data} = 16;
+    }
+}
+
+# Generate a memory given it's "type".
+
+sub gen_ram {
+  my $type = shift;
+  my ($bank, $ram, $verilog_all, $uppertype, $inst, $prefix);
+  $verilog_inst = "";
+  $verilog_dec = "";
+  $verilog_al = "";
+  $verilog_ass = "";
+  $inhibitreg = 0;
+
+  if ($type =~ s/([0-9]+)$//) {
+    $bank = $1;
+  } else {
+    $bank = "";
+  }
+  $uppertype = $type;
+  $uppertype =~ y/a-z/A-Z/;
+  $inst = "u" . substr($uppertype, 0, 3) . substr($type, 3) . $bank;
+  $prefix = substr($uppertype, 0, 3) . substr($type, 3) . $bank;
+
+  if ($type eq "mmu")
+    {
+      gen_mmu_ram($prefix, $inst);
+    }
+  elsif ($type eq "ictag")
+    {
+      gen_ictag_ram($prefix, $inst);
+    }
+  elsif ($type eq "dctag")
+    {
+      gen_dctag_ram($prefix, $inst);
+    }
+  else # Deduce the ram in the "normal" manner.
+    {
+      parse_memory($type, $bank); # -> %mem_sigs
+      if ($type eq "dcvalid" || $type eq "icvalid")
+        {
+          fix_valid_width($type);
+        }
+
+      my_die "can not find a ram for \"$type\"" if (!exists($rams{$type}));
+      $ram = $rams{$type};
+      parse_ram($ram); # -> %ram_sigs
+      gen_inst_ab_db($prefix, $inst, $ram);
+    }
+
+  # Remove singular ranges like [9:9] and replace with [9]:
+#  $verilog_all =~ s/\[([0-9])\:\1\]/\[$1\]  /g;
+#  $verilog_all =~ s/\[([0-9][0-9])\:\1\]/\[$1\]   /g;
+  $verilog_all = "\n";
+  $verilog_all .= $verilog_dec . "\n" if ($verilog_dec ne "");
+  $verilog_all .= $verilog_ass . "\n" if ($verilog_ass ne "");
+  $verilog_all .= $verilog_al . "\n" if ($verilog_al ne "");
+  $verilog_all .= $verilog_inst;
+  return $verilog_all;
+}
+
+# Parse the config files. Each definition is stored as one string to
+# be further parsed when needed.
+sub parse_configs {
+  my ($name, $mul);
+
+  open(c, $ram_config) || my_die "Could not open $ram_config";
+  $name = "";
+  while (<c>)
+    {
+      next if (/^\s*\#/ || /^\s*\n?$/);
+      if (/^\s*ram_definition\s+(.*)\s*\n?$/)
+        {
+          $name = $1;
+          my_info "Found ram definition $name";
+          if (exists($ram_defns{$name})) {
+            my_warn "ram $mod_name being redefined";
+          }
+        }
+      elsif (/^\s*end_ram_definition/)
+        {
+          # join extended lines
+          $ram_defns{$name} =~ s/\\\n//g;
+          $name = "";
+        }
+      elsif ($name ne "")
+        {
+          $ram_defns{$name} .= $_;
+        }
+      elsif (/^\s*([di]csize)\s+([0-9]+)([kK]?)/)
+        {
+          $mul = 1;
+          $mul = 1024 if ($3 eq "k");
+          $mul = 1024 if ($3 eq "K");
+          $sizes{$1} = $2 * $mul;
+        }
+      elsif (/^\s*optimi[sz]e\s+power/) {
+        $poweropt = 1;
+      } elsif (/^\s*optimi[sz]e\s+speed/) {
+        $poweropt = 0;
+      } elsif (/^\s*replacement\s+random/) {
+        $roundrobin = 0;
+      } elsif (/^\s*replacement\s+round-robin/) {
+        $roundrobin = 1;
+      } elsif (/^\s*clockgating\s+true/) {
+        $clockgating = 1;
+      } elsif (/^\s*clockgating\s+false/) {
+        $clockgating = 0;
+      } elsif (/^\s*testchip\s+true/) {
+        $testchip = 1;
+      } elsif (/^\s*testchip\s+false/) {
+        $testchip = 0;
+      } elsif (/^\s*([a-z0-9]*)\s+(.*)\n?$/) {
+        $rams{$1} = $2;
+      } else {
+        my_warn "Can not parse line in $ram_config, ignoring: $_";
+      }
+    }
+  open(c, "memory-config") || my_die "Could not open memory-config";
+  $name = "";
+  while (<c>)
+    {
+      next if (/^\s*\#/ || /^\s*\n?$/);
+      if (/^\s*memory_definition\s+(.*)\s*\n?$/)
+        {
+          $name = $1;
+          my_info "Found memory definition $name";
+          if (exists($mem_defns{$name})) {
+            my_warn "memory $mod_name being redefined";
+          }
+        }
+      elsif (/^\s*end_memory_definition/)
+        {
+          # join extended lines
+          $mem_defns{$name} =~ s/\\\n//g;
+          $name = "";
+        }
+      elsif ($name ne "")
+        {
+          $mem_defns{$name} .= $_;
+        }
+      else
+        {
+          my_warn "ignoring line in memory-config: $_";
+        }
+    }
+}
+
+$infile = "";
+$outfile = "";
+$ram_config = "";
+
+if (@ARGV != 3) {
+    my_help;
+    exit;
+}
+
+# Parse the command-line arguments.
+foreach (@ARGV)
+  {
+    if (/\-h/i) {
+      my_help;
+      exit 0;
+    } elsif ($infile eq "") {
+      $infile = $_;
+    } elsif ($outfile eq "") {
+      $outfile = $_;
+    } elsif ($ram_config eq "") {
+      $ram_config = $_;
+    } else {
+      my_die "Too many arguments";
+    }
+  }
+my_die "No source file argument given" if ($infile eq "");
+if (($outfile eq "") || ($outfile eq $infile)) {
+    $outfile = $infile . ".out";
+    $copyback = 1;
+  } else {
+    $copyback = 0;
+  }
+
+
+$poweropt = 1;
+$clockgating = 0;
+$testchip = 0;
+parse_configs;
+
+# Cache size encoding:
+$dcachesize = "";
+$dcachesize = "4'b0011" if ($sizes{dcsize} == 2**12);
+$dcachesize = "4'b0100" if ($sizes{dcsize} == 2**13);
+$dcachesize = "4'b0101" if ($sizes{dcsize} == 2**14);
+$dcachesize = "4'b0110" if ($sizes{dcsize} == 2**15);
+$dcachesize = "4'b0111" if ($sizes{dcsize} == 2**16);
+$dcachesize = "4'b1000" if ($sizes{dcsize} == 2**17);
+my_die "Data cache illegal size $sizes{dcsize}" if ($dcachesize eq "");
+
+$icachesize = "";
+$icachesize = "4'b0011" if ($sizes{icsize} == 2**12);
+$icachesize = "4'b0100" if ($sizes{icsize} == 2**13);
+$icachesize = "4'b0101" if ($sizes{icsize} == 2**14);
+$icachesize = "4'b0110" if ($sizes{icsize} == 2**15);
+$icachesize = "4'b0111" if ($sizes{icsize} == 2**16);
+$icachesize = "4'b1000" if ($sizes{icsize} == 2**17);
+my_die "Instr cache illegal size $sizes{icsize}" if ($icachesize eq "");
+
+
+$type = "";
+$size_settings = 0;
+$ifdef = 0;
+$remove = 0;
+@types_done = ();
+open (in, $infile) || my_die "Could not open file $infile";
+open (out, ">$outfile") || my_die "Could not open file $outfile";
+
+while (<in>)
+  {
+    if ($type ne "")
+      {
+        if (/^\s*\/\/ end $type instantiation here/)
+          {
+            $endline = $_;
+            print out gen_ram($type);
+            print out $endline;
+            push(@types_done, $type);
+            my_info("Added memory $type");
+            $type = "";
+          }
+      }
+    elsif ($ifdef)
+      {
+        if (/^\`endif/)
+          {
+            $ifdef = 0;
+          }
+      }
+    elsif ($remove)
+      {
+        if (/^\s*\/\/ remove end \(this line required for automem/)
+          {
+            $remove = 0;
+          }
+      }
+    elsif ($size_settings)
+      {
+        if (/^\s*\/\/ end cache size settings/)
+          {
+            $endline = $_;
+            print out $space, "assign DCACHESIZE = $dcachesize\;\n";
+            print out $space, "assign ICACHESIZE = $icachesize\;\n";
+            print out $endline;
+            my_info("Added cache size settings");
+            $size_settings = 0;
+          }
+      }
+    else
+      {
+        if (/^\s*\/\/ start ([a-z]+[0-9]*) instantiation here/)
+          {
+            # DC Dirty ram is optional.
+            $type = $1 unless (($1 eq "dcdirty") && ((!exists($rams{dcdirty}))
+                                         || ($rams{dcdirty} eq "none")));
+            print out;
+          }
+        elsif (/^\`ifdef\s+TESTCHIP/ && ($testchip == 0))
+          {
+            $ifdef = 1;
+          }
+        elsif (/^\`ifdef\s+FPGA/)
+          {
+            $ifdef = 1;
+          }
+        elsif (/^\`ifdef\s+defNC/)
+          {
+            $ifdef = 1;
+          }
+        elsif (/^\s*\/\/ remove start \(this line required for automem/)
+          {
+            $remove = 1;
+          }
+        elsif (/^\s*\/\/ state cache size settings/)
+          {
+	    if ($testchip == 1) {
+	      $size_settings = 0;
+            } else {
+              $size_settings = 1;
+	    }
+            print out;
+          }
+        else
+          {
+            print out;
+          }
+      }
+  }
+close(in);
+close(out);
+
+foreach $t (@expected_types)
+  {
+    if (!(grep /$t/, @types_done))
+      {
+        my_warn "Did not add memory type $t";
+      }
+  }
+
+if ($copyback) {
+  $vhfilename = $infile  . "h";
+} else {
+  $vhfilename = $outfile  . "h";
+}
+my_info "Writing out $vhfilename";
+open (out, ">$vhfilename") || my_die "Could not open $vhfilename";
+print out "
+// Automatically generated by $0
+
+\`ifdef ARM926EJS_vh_already_included
+\`else
+   \`define ARM926EJS_vh_already_included
+
+";
+print out "
+// block level clock gating on by default
+
+   \`define BLOCK_LEVEL_CLOCK_GATING
+
+" if ($clockgating);
+print out "
+// TESTCHIP configuration. This ensures CACHESIZE pins
+// are brought out to top-level.
+
+   \`define TESTCHIP
+
+" if ($testchip);
+print out "
+// for vanilla implementations DATA_CACHE_SIZE, and INSTR_CACHE size
+// will be defined to be numeric values. For the default validation model
+// the cache sizes can be changed dynamically using the coprocessor trickbox,
+// and the ARM926EJS.v has D/ICACHESIZE inputs, which are mapped onto the
+// D/ICACHESIZE inputs to the ARM926EJSCore module
+//
+
+  \`define DATA_CACHE_SIZE DCACHESIZE[3:0]
+
+  \`define INSTR_CACHE_SIZE ICACHESIZE[3:0]
+
+\`endif
+";
+close out;
+
+if ($copyback) {
+  $vcfilename = $infile  . "c";
+} else {
+  $vcfilename = $outfile  . "c";
+}
+if (-e $vcfilename)
+  {
+    my_info "File $vcfilename already exists -- will not overwrite";
+  }
+else
+  {
+    my_info "Writing out $vcfilename";
+    open (out, ">$vcfilename") || my_die "Could not open $vcfilename";
+    print out "
+// -------------------------------------------------------------------------
+// This confidential and proprietary software may be used only as authorised
+// by a licensing agreement from ARM Limited
+//                (c) COPYRIGHT 2003 ARM Limited
+//                ALL RIGHTS RESERVED
+// The entire notice above must be reproduced on all authorised copies and
+// copies may only be made to the extent permitted by a licensing agreement
+// from ARM Limited.
+// -------------------------------------------------------------------------
+//
+// Purpose : Defines the implementation specific source files used for the
+//           default implementation of ARM926EJS.
+//           
+//           
+// -------------------------------------------------------------------------
+
+// Automatically generated by $0.
+
+// Currently empty.
+";
+    close out;
+  }
+
+my_info "Completed";
+if ($copyback) {
+  rename $outfile, $infile ||
+  my_die "Could not rename $outfile to $infile, $infile is probably inchanged.";
+}

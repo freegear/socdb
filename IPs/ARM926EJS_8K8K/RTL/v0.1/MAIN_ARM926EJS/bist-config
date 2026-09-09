@@ -1,0 +1,109 @@
+#  -------------------------------------------------------------------------
+#  This confidential and proprietary software may be used only as authorised
+#  by a licensing agreement from ARM Limited
+#                 (c) COPYRIGHT 2003 ARM Limited
+#                 ALL RIGHTS RESERVED
+#  The entire notice above must be reproduced on all authorised copies and
+#  copies may only be made to the extent permitted by a licensing agreement
+#  from ARM Limited.
+#  -------------------------------------------------------------------------
+#  Version and Release Control Information:
+# 
+#  File Name           : bist-config,v
+#  File Revision       : 1.1
+# 
+#  Release Information : ARM926EJS_r0p5-00rel0
+#  -------------------------------------------------------------------------
+
+# automem ram configuration file.
+
+# This file is used instead of memory-config when using the example top-level
+# 926 with BIST (ARM926EJS_BIST.v). It describes the memory interface between
+# core/BIST signals and the memories.
+
+# $bank is replaced with a bank number.
+# addr_width is a fragment of Perl used to deduce the address depth from
+# the cache size.
+
+memory_definition dcdata
+        clock = CLK
+        chip_select = DCDATACS[$bank]
+        address = DCDataAddr$bank[12:0]
+        write_enable = DCDATACombWE[3:0]
+        read_data = DCDATARD$bank[31:0]
+        write_data = DCDATACombWD$bank[31:0]
+        addr_width = log2($sizes{dcsize}) - 4
+end_memory_definition
+
+memory_definition dctag
+        clock = CLK
+        chip_select = DCTAGCS[$bank]
+        address = DCTAGCombA[10:0]
+        write_enable = DCTAGCombWE[$bank]
+        read_data = DCTAGRD$bank[21:0]
+        write_data = DCTAGCombWD[21:0]
+        addr_width = log2($sizes{dcsize}) - 6
+end_memory_definition
+
+memory_definition dcvalid
+        clock = CLK
+        chip_select = DCVALIDCS
+        address = DCVALIDA[7:0]
+        write_enable = DCVALIDCombWE
+        read_data = DCVALIDRD[23:0]
+        write_data = DCVALIDCombWD[23:0]
+        norrgen = DCNoRRgen
+        addr_width = log2($sizes{dcsize}) - 9
+end_memory_definition
+
+memory_definition dcdirty
+        clock = CLK
+        chip_select = DCDIRTYCS
+        address = DCDIRTYA[9:0]
+        write_enable = DCDIRTYCombWE[7:0]
+        read_data = DCDIRTYRD[7:0]
+        write_data = DCDIRTYCombWD[7:0]
+        addr_width = log2($sizes{dcsize}) - 7
+end_memory_definition
+
+memory_definition icdata
+        clock = CLK
+        chip_select = ICDATACS[$bank]
+        address = ICDataAddr$bank[12:0]
+        write_enable = ICDATACombWE[3:0]
+        read_data = ICDATARD$bank[31:0]
+        write_data = ICDATACombWD$bank[31:0]
+        addr_width = log2($sizes{icsize}) - 4
+end_memory_definition
+
+memory_definition ictag
+        clock = CLK
+        chip_select = ICTAGCS[$bank]
+        address = ICTAGA[10:0]
+        write_enable = ICTAGCombWE[$bank]
+        read_data = ICTAGRD$bank[21:0]
+        write_data = ICTAGCombWD[21:0]
+        addr_width = log2($sizes{icsize}) - 7
+end_memory_definition
+
+memory_definition icvalid
+        clock = CLK
+        chip_select = ICVALIDCS
+        address = ICVALIDA[7:0]
+        write_enable = ICVALIDCombWE
+        read_data = ICVALIDRD[23:0]
+        write_data = ICVALIDCombWD[23:0]
+        norrgen = ICNoRRgen
+        addr_width = log2($sizes{icsize}) - 9
+end_memory_definition
+
+memory_definition mmu
+        clock = CLK
+        chip_select = MMUCombCS
+        address = MMUCombADDR[4:0]
+        write_enable = MMUCombWE[3:0]
+        read_data = MMUxRD[111:0]
+        write_data = MMUCombWD[111:0]
+        addr_width = 5
+end_memory_definition
+
