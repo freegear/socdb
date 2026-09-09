@@ -1,0 +1,12 @@
+#!/bin/csh -fx
+
+dc_shell-t -f pmcon_APBIF.tcl | tee /dev/tty >&! ./Log/pmcon_APBIF.log
+
+#----========================================================================----
+#-- Proper Sdf Generaion Fitted to TSMC 
+#----========================================================================----
+./pt_postprocessor.pl -s ./Sdf/temp.sdf -o ./Sdf/pmcon_APBIF.noscan.sdf
+
+\rm -rf *.log ./Sdf/temp.sdf
+
+exit
