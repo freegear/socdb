@@ -1,0 +1,248 @@
+C51 COMPILER V8.05a   FTL_O_LOWINIT                                                        06/28/2007 17:29:23 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL_O_LOWINIT
+OBJECT MODULE PLACED IN .\ftl_o_lowinit.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_ftl\ftl_o_lowinit.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..
+                    -\..\sys;..\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl_o_lowinit.lst) OBJECT(.\ftl_o_lowinit.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include <string.h>
+  39          #include "../lib_nand/ftl_l_layer.h"
+  40          #include "ftl_t_define.h"
+  41          #include "ftl_w_wear.h"
+  42          #include "ftl_c_core.h"
+  43          #include "ftl_o_lowinit.h"
+  44          #include "ftl_o_rw.h"
+  45          /*
+  46          /////////////////////////////////////////////////////////
+  47                  DEFINITION
+  48          ///////////////////////////////////////////////////////// 
+  49          */
+  50          /*
+  51          /////////////////////////////////////////////////////////
+  52                  GLOBAL VARIABLE
+  53          ///////////////////////////////////////////////////////// 
+  54          */
+C51 COMPILER V8.05a   FTL_O_LOWINIT                                                        06/28/2007 17:29:23 PAGE 2   
+
+  55          /*
+  56          /////////////////////////////////////////////////////////
+  57                  STATIC VARIABLE
+  58          ///////////////////////////////////////////////////////// 
+  59          */
+  60          /*
+  61          /////////////////////////////////////////////////////////
+  62                  FUNCTIONS 
+  63          ///////////////////////////////////////////////////////// 
+  64          */
+  65           /*----------------------------------------------------------
+  66                  Function name   : FTL_O_LowInit
+  67                  Prototype               : 
+  68                  Return                  : 
+  69                  Argument                : 
+  70                  Comments                : low level initialize, this must be called 
+  71                                                    from FTL_O_Init and FTL_O_Format 
+  72          -----------------------------------------------------------*/
+  73          smtBoolean              // SMT_TRUE/SMT_FALSE, ok/any error
+  74          FTL_O_LowInit(
+  75          void
+  76          )
+  77          {
+  78   1              smtUint8 mapBlkIdx;
+  79   1      
+  80   1              gpFlush->freeBlkNum                     = FTL_FREEBLK_MAXNUM;
+  81   1              gDevInfo.blks                           = 0;
+  82   1              gDevInfo.pagePerBlks            = 0;
+  83   1              gDevInfo.pageSize                       = 0;
+  84   1      
+  85   1              printf("[FTL_O_LowInit]+\n");
+  86   1      
+  87   1              if(FTL_L_Init() == FTL_L_ERROR) 
+  88   1              {
+  89   2                      return SMT_FALSE;
+  90   2              }
+  91   1      
+  92   1              SMT_ASSERT(gDevInfo.blks                        != 0);
+  93   1              SMT_ASSERT(gDevInfo.pagePerBlks         != 0);
+  94   1              SMT_ASSERT(gDevInfo.pageSize            != 0);
+  95   1              SMT_ASSERT(gDevInfo.blks                        <= FTL_BLOCK_MAXNUM);
+  96   1              SMT_ASSERT(gDevInfo.pagePerBlks         <= FTL_PAGEPERBLOCK_MAXNUM);
+  97   1              SMT_ASSERT(gDevInfo.pageSize            <= FTL_DATA_MAXSIZE);
+  98   1              SMT_ASSERT(gpFlush->freeBlkNum          <= FTL_FREEBLK_MAXNUM);
+  99   1              SMT_ASSERT(gDevInfo.pageSize/32         >= sizeof(ST_SPARE));
+ 100   1              
+ 101   1      
+ 102   1              //      maxFragPerMapBlk 
+ 103   1              gpMapBlocks->maxFragPerMapBlk
+ 104   1              = (smtFrag)((gDevInfo.blks/FTL_FRAG_POOLPERNUM)/FTL_MAPBLOCK_NUM);
+ 105   1              
+ 106   1              // max frag per block cannot be zero 
+ 107   1              if(!gpMapBlocks->maxFragPerMapBlk)
+ 108   1              {
+ 109   2                      //maxFragPerMapBlk = 2; 
+ 110   2                      gpMapBlocks->maxFragPerMapBlk = 2;
+ 111   2              }
+ 112   1              
+ 113   1              // max frag per block must be even number 
+ 114   1              if(gpMapBlocks->maxFragPerMapBlk & 1)
+ 115   1              {
+ 116   2                      gpMapBlocks->maxFragPerMapBlk++;
+C51 COMPILER V8.05a   FTL_O_LOWINIT                                                        06/28/2007 17:29:23 PAGE 3   
+
+ 117   2              }
+ 118   1      
+ 119   1              gpLogCache->curLog                      = 0;
+ 120   1              gpLogCache->lockedCnt                   = 0;
+ 121   1              gpLogCache->nextIdx                     = 0;
+ 122   1              gpLogCache->num                         = FTL_LOG_MAXNUM;
+ 123   1              memset(gpLogCache->logs, 0xFF, sizeof(gpLogCache->logs));
+ 124   1              SMT_ASSERT(gpLogCache->num <= FTL_LOG_MAXNUM);
+ 125   1              
+ 126   1      
+ 127   1              //-------------------------------------------------------
+ 128   1              //      ml_basebuff's memory  lock
+ 129   1              //      -> static_wear/mapInfo/gl_freetable
+ 130   1              //-------------------------------------------------------
+ 131   1              gpFlush->fragBuf                        = (smtBlkAddr*)(ml_basebuff);
+ 132   1              gpFlush->staticInfo             = (ST_STATIC*)(ml_basebuff+1024);
+ 133   1              gpFlush->mapInfo                        = (ST_MAPINFO*)(ml_basebuff+1024+sizeof(ST_STATIC));
+ 134   1              gpFlush->freeBlks                       = (smtBlkAddr*)(ml_basebuff+1024+sizeof(ST_STATIC)+sizeof(ST_MAPINFO));
+ 135   1      
+ 136   1              gpFragCache->ppba                       = gpFlush->fragBuf;
+ 137   1              gpFragCache->num                        = FRAG_NA;               
+ 138   1      
+ 139   1              gpMapBlocks->maxMapCntL = 0;
+ 140   1              gpMapBlocks->maxMapCntH = 0;
+ 141   1      
+ 142   1              gDevInfo.dataBlks               = 0;
+ 143   1              gfSaveMapNeed                   = SMT_FALSE;
+ 144   1      
+ 145   1      
+ 146   1              {
+ 147   2                      int i;
+ 148   2      
+ 149   2                      for(i = 0; i < FTL_FRAG_MAXNUM; i++)
+ 150   2                      {
+ 151   3                              gpMapDir[i].PBA = (smtBlkAddr)0xFFFFFFFF;
+ 152   3                              gpMapDir[i].PPO = (smtPageAddr)0xFFFFFFFF;
+ 153   3                              gpMapDir[i].index = (smtUint8)0xFF;
+ 154   3                      }
+ 155   2              }
+ 156   1      
+ 157   1              FTL_W_Init(gpFlush->staticInfo);
+ 158   1      
+ 159   1              //-------------------------------------------------------
+ 160   1              // reset fragment cache 
+ 161   1              // gFragCache variable initialize
+ 162   1              //-------------------------------------------------------
+ 163   1              // set current frag also NA 
+ 164   1              
+ 165   1      
+ 166   1              // filling variables of mapblocks 
+ 167   1              for (mapBlkIdx = 0; mapBlkIdx < FTL_MAPBLOCK_NUM; mapBlkIdx++)
+ 168   1              {
+ 169   2                      ST_MAPBLOCK     *mapblock       = &gpMapBlocks->mapBlks[mapBlkIdx];
+ 170   2      
+ 171   2                      mapblock->LastPBA               = BLK_NA;
+ 172   2                      mapblock->LastPPO               = INDEX_NA;
+ 173   2                      mapblock->blockType             = (smtUint8)(FTL_BTYPE_MAPBLK|mapBlkIdx);
+ 174   2                      mapblock->curPBA                = BLK_NA;
+ 175   2                      mapblock->curPPO                = INDEX_NA;
+ 176   2                      mapblock->ref_count             = 0;
+ 177   2                      mapblock->startFragIdx  = (smtFrag)(mapBlkIdx*gpMapBlocks->maxFragPerMapBlk);
+ 178   2                      mapblock->endFragIdx    = (smtFrag)(mapblock->startFragIdx+gpMapBlocks->maxFragPerMapBlk);
+C51 COMPILER V8.05a   FTL_O_LOWINIT                                                        06/28/2007 17:29:23 PAGE 4   
+
+ 179   2                      mapblock->depthIdx              = 0;
+ 180   2                      memset(mapblock->mapPageBlk,INDEX_NA,FTL_MAPBLOCK_DEPTH);
+ 181   2      
+ 182   2                      /*
+ 183   2                      printf("[FTL_O_LowInit] ------------------------------\n");
+ 184   2                      printf("[FTL_O_LowInit] mapblock %d info\n", mapBlkIdx);
+ 185   2                      printf("[FTL_O_LowInit] ------------------------------\n");
+ 186   2                      printf("[FTL_O_LowInit] %20s: %d \n", "blockType", mapblock->blockType);
+ 187   2                      printf("[FTL_O_LowInit] %20s: %d \n", "startFragIdx", mapblock->startFragIdx);
+ 188   2                      printf("[FTL_O_LowInit] %20s: %d \n", "endFragIdx", mapblock->endFragIdx);
+ 189   2                      */
+ 190   2                      
+ 191   2              }
+ 192   1      
+ 193   1              /*
+ 194   1              printf("[FTL_O_LowInit] ------------------------------\n");
+ 195   1              printf("[FTL_O_LowInit] FTL information\n");
+ 196   1              printf("[FTL_O_LowInit] ------------------------------\n");
+ 197   1              printf("[FTL_O_LowInit] %20s: %d \n", "max main size"           ,FTL_DATA_MAXSIZE);
+ 198   1              printf("[FTL_O_LowInit] %20s: %d \n", "max spare size"          ,FTL_SPARE_MAXSIZE);
+ 199   1              printf("[FTL_O_LowInit] %20s: %d \n", "max page size"           ,FTL_PAGE_MAXSIZE);
+ 200   1              printf("[FTL_O_LowInit] %20s: %d \n", "max block num"           ,FTL_BLOCK_MAXNUM);
+ 201   1              printf("[FTL_O_LowInit] %20s: %d \n", "max page / block"        ,FTL_PAGEPERBLOCK_MAXNUM);
+ 202   1              printf("[FTL_O_LowInit] %20s: %d \n", "max free block"          ,FTL_FREEBLK_MAXNUM);
+ 203   1              printf("[FTL_O_LowInit] %20s: %d \n", "max mapblock"            ,FTL_MAPBLOCK_NUM);
+ 204   1              printf("[FTL_O_LowInit] %20s: %d \n", "max mapblock depth"      ,FTL_MAPBLOCK_DEPTH);
+ 205   1      
+ 206   1              printf("[FTL_O_LowInit] ------------------------------\n");
+ 207   1              printf("[FTL_O_LowInit] Fragment information\n");
+ 208   1              printf("[FTL_O_LowInit] ------------------------------\n");
+ 209   1              printf("[FTL_O_LowInit] %20s: %d \n", "max fragment number"     ,FTL_FRAG_MAXNUM);
+ 210   1              printf("[FTL_O_LowInit] %20s: %d \n", "fragment size"           ,FTL_FRAG_POOLSIZE);
+ 211   1              printf("[FTL_O_LowInit] %20s: %d \n", "mapping/fragment"        ,FTL_FRAG_POOLPERNUM);
+ 212   1              */
+ 213   1              
+ 214   1              
+ 215   1              printf("[FTL_O_LowInit]-\n");
+ 216   1              
+ 217   1              return SMT_TRUE;
+ 218   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    646    ----
+   CONSTANT SIZE    =     36    ----
+   XDATA SIZE       =   ----       4
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

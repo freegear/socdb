@@ -1,0 +1,60 @@
+library verilog;
+use verilog.vl_types.all;
+entity Two_NFTop is
+    generic(
+        IOWidthPinIn    : integer := 0
+    );
+    port(
+        PCLK            : in     vl_logic;
+        PRESETn         : in     vl_logic;
+        EXT_SFR_ADDR    : in     vl_logic_vector(3 downto 0);
+        EXT_SFR_WR      : in     vl_logic;
+        EXT_SFR_DOUT    : in     vl_logic_vector(7 downto 0);
+        EXT_SFR_DIN_0   : out    vl_logic_vector(7 downto 0);
+        CS_0            : in     vl_logic;
+        WDATA_0         : in     vl_logic_vector(7 downto 0);
+        RDATA_0         : out    vl_logic_vector(7 downto 0);
+        We_0            : in     vl_logic;
+        Oe_0            : in     vl_logic;
+        NFDMAReqOut_0   : in     vl_logic;
+        NFINTOut_0      : in     vl_logic;
+        NFDataIn_0      : in     vl_logic_vector(7 downto 0);
+        NFDataOut_0     : out    vl_logic_vector(7 downto 0);
+        NFDataOutEn_0   : out    vl_logic;
+        CLE_0           : out    vl_logic;
+        ALE_0           : out    vl_logic;
+        nNFCE3_0        : out    vl_logic;
+        nNFCE2_0        : out    vl_logic;
+        nNFCE1_0        : out    vl_logic;
+        nNFCE0_0        : out    vl_logic;
+        nNFRE_0         : out    vl_logic;
+        nNFWE_0         : out    vl_logic;
+        RnB3_0          : in     vl_logic;
+        RnB2_0          : in     vl_logic;
+        RnB1_0          : in     vl_logic;
+        RnB0_0          : in     vl_logic;
+        EXT_SFR_DIN_1   : out    vl_logic_vector(7 downto 0);
+        CS_1            : in     vl_logic;
+        WDATA_1         : in     vl_logic_vector(7 downto 0);
+        RDATA_1         : out    vl_logic_vector(7 downto 0);
+        We_1            : in     vl_logic;
+        Oe_1            : in     vl_logic;
+        NFDMAReqOut_1   : in     vl_logic;
+        NFINTOut_1      : in     vl_logic;
+        NFDataIn_1      : in     vl_logic_vector(7 downto 0);
+        NFDataOut_1     : out    vl_logic_vector(7 downto 0);
+        NFDataOutEn_1   : out    vl_logic;
+        CLE_1           : out    vl_logic;
+        ALE_1           : out    vl_logic;
+        nNFCE3_1        : out    vl_logic;
+        nNFCE2_1        : out    vl_logic;
+        nNFCE1_1        : out    vl_logic;
+        nNFCE0_1        : out    vl_logic;
+        nNFRE_1         : out    vl_logic;
+        nNFWE_1         : out    vl_logic;
+        RnB3_1          : in     vl_logic;
+        RnB2_1          : in     vl_logic;
+        RnB1_1          : in     vl_logic;
+        RnB0_1          : in     vl_logic
+    );
+end Two_NFTop;

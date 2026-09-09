@@ -1,0 +1,68 @@
+library verilog;
+use verilog.vl_types.all;
+entity nand_model_0 is
+    generic(
+        tRC_min         : integer := 50;
+        tRP_min         : integer := 25;
+        tRPRE_max       : integer := 25;
+        tRR_min         : integer := 20;
+        tWC_min         : integer := 45;
+        tWP_min         : integer := 25;
+        tCEA_max        : integer := 45;
+        tCLS_min        : integer := 25;
+        tCLH_min        : integer := 10;
+        tCS_min         : integer := 35;
+        tCH_min         : integer := 10;
+        tDS_min         : integer := 20;
+        tDH_min         : integer := 10;
+        tALS_min        : integer := 25;
+        tALH_min        : integer := 10;
+        tAR_min         : integer := 10;
+        tDCBSYR1_min    : integer := 0;
+        tDCBSYR1_max    : integer := 2500;
+        tDCBSYR2_min    : integer := 2500;
+        tDCBSYR2_max    : integer := 25000;
+        tOH_min         : integer := 15;
+        tREA_max        : integer := 30;
+        tREH_min        : integer := 15;
+        tRHZ_max        : integer := 30;
+        tRPRE1_max      : integer := 25000;
+        tR_max          : integer := 25000;
+        tRST_read       : integer := 5000;
+        tRST_prog       : integer := 10000;
+        tRST_erase      : integer := 500000;
+        tWB_max         : integer := 100;
+        tWH_min         : integer := 15;
+        tWHR_min        : integer := 60;
+        num_page        : integer := 64;
+        page_bits       : integer := 6;
+        tBERS_min       : integer := 2000000;
+        tBERS_max       : integer := 3000000;
+        tCBSY_min       : integer := 3000;
+        tCBSY_max       : integer := 700000;
+        tPROG_typ       : integer := 300000;
+        tPROG_max       : integer := 700000;
+        col_bits        : integer := 12;
+        data_bits       : integer := 16;
+        num_col         : integer := 1056;
+        row_bits        : integer := 17;
+        blck_bits       : integer := 11;
+        num_row         : integer := 1024;
+        MLC             : integer := 0;
+        read_id_byte0   : integer := 44;
+        read_id_byte1   : integer := 202;
+        read_id_byte2   : integer := 105;
+        read_id_byte3   : integer := 85
+    );
+    port(
+        Io              : inout  vl_logic_vector;
+        Cle             : in     vl_logic;
+        Ale             : in     vl_logic;
+        Ce_n            : in     vl_logic;
+        We_n            : in     vl_logic;
+        Re_n            : in     vl_logic;
+        Wp_n            : in     vl_logic;
+        Pre             : in     vl_logic;
+        Rb_n            : out    vl_logic
+    );
+end nand_model_0;

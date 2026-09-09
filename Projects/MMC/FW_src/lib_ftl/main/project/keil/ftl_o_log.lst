@@ -1,0 +1,327 @@
+C51 COMPILER V8.05a   FTL_O_LOG                                                            06/28/2007 17:29:22 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL_O_LOG
+OBJECT MODULE PLACED IN .\ftl_o_log.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_ftl\ftl_o_log.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..\..\
+                    -sys;..\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl_o_log.lst) OBJECT(.\ftl_o_log.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include <string.h>
+  39          #include "../lib_nand/ftl_l_layer.h"
+  40          #include "ftl_t_define.h"
+  41          #include "ftl_w_wear.h"
+  42          #include "ftl_c_core.h"
+  43          #include "ftl_o_lowinit.h"
+  44          #include "ftl_o_rw.h"
+  45          /*
+  46          /////////////////////////////////////////////////////////
+  47                  DEFINITION
+  48          ///////////////////////////////////////////////////////// 
+  49          */
+  50          /*
+  51          /////////////////////////////////////////////////////////
+  52                  GLOBAL VARIABLE
+  53          ///////////////////////////////////////////////////////// 
+  54          */
+C51 COMPILER V8.05a   FTL_O_LOG                                                            06/28/2007 17:29:22 PAGE 2   
+
+  55          /*
+  56          /////////////////////////////////////////////////////////
+  57                  STATIC VARIABLE
+  58          ///////////////////////////////////////////////////////// 
+  59          */
+  60          /*
+  61          /////////////////////////////////////////////////////////
+  62                  FUNCTIONS 
+  63          ///////////////////////////////////////////////////////// 
+  64          */
+  65          /*----------------------------------------------------------
+  66                  Function name   : buildLog
+  67                  Prototype               : 
+  68                  Return                  : 
+  69                  Argument                : 
+  70                  Comments                : rebuilding log cache information
+  71          -----------------------------------------------------------*/
+  72          void 
+  73          BuildLog(
+  74          void
+  75          )
+  76          {
+  77   1              
+  78   1              ST_LOG          *log;
+  79   1              smtUint8        idx;
+  80   1              smtBlkAddr      pba;
+  81   1              smtPageAddr po,lastpo;
+  82   1              ST_SPARE        *sptr;
+  83   1              
+  84   1              sptr=GET_SPARE_AREA(ml_buffer);
+  85   1              
+  86   1              //-------------------------------------------------------
+  87   1              // building log blocks 
+  88   1              //-------------------------------------------------------
+  89   1              gpLogCache->lockedCnt                   = 0;
+  90   1              log                                                     = gpLogCache->logs;
+  91   1              for(idx = 0; idx < gpFlush->freeBlkNum; idx++)
+  92   1              {
+  93   2      
+  94   2                      if((gpFlush->freeBlks[idx]&(FTL_FBTYPE_MAP|FTL_FBTYPE_LOG))==FTL_FBTYPE_LOG)
+  95   2                      {
+  96   3                              pba                             = (smtBlkAddr)(gpFlush->freeBlks[idx]&FTL_BLKADDR_MASK);
+  97   3                              log->lastppo    = gDevInfo.pagePerBlks;
+  98   3                              log->pba                = pba;
+  99   3                              log->switchable = 1;
+ 100   3                              log->index              = idx;
+ 101   3      
+ 102   3                              // searching the last page from top 
+ 103   3                              lastpo = gDevInfo.pagePerBlks;
+ 104   3                              for(po = 0;po < gDevInfo.pagePerBlks; po++)
+ 105   3                              { 
+ 106   4                                      int ret=FTL_L_Read(
+ 107   4                                                      pba,
+ 108   4                                                      (smtUint8)(gDevInfo.pagePerBlks-po-1),
+ 109   4                                                      ml_buffer
+ 110   4                                              );
+ 111   4                                      if (ret==FTL_L_ERASED) 
+ 112   4                                      {
+ 113   5                                              lastpo = (smtUint8)(gDevInfo.pagePerBlks-po-1);
+ 114   5                                      }
+ 115   4                                      else 
+ 116   4                                      {
+C51 COMPILER V8.05a   FTL_O_LOG                                                            06/28/2007 17:29:22 PAGE 3   
+
+ 117   5                                              break;
+ 118   5                                      }
+ 119   4                              }
+ 120   3      
+ 121   3                              // building log blk 
+ 122   3                              log->lastppo = lastpo;
+ 123   3                              for(po = 0; po < lastpo; po++)
+ 124   3                              {               
+ 125   4                                      int ret = FTL_L_Read(pba,po,ml_buffer);
+ 126   4                                      if (ret == FTL_L_OK) 
+ 127   4                                      {
+ 128   5                                              log->ppo[sptr->u.log.lpo]       = po;
+ 129   5                                              log->lba                                        = sptr->u.log.lba;
+ 130   5                                              if (po != sptr->u.log.lpo) 
+ 131   5                                              {
+ 132   6                                                      log->switchable = 0;
+ 133   6                                              }
+ 134   5      
+ 135   5                                              if(!po)
+ 136   5                                              {
+ 137   6                                                      log->wear = sptr->wear;
+ 138   6                                              }
+ 139   5                                      }
+ 140   4                                      else 
+ 141   4                                      {
+ 142   5                                              // if error or hole in the log block 
+ 143   5                                              log->switchable = 0; 
+ 144   5                                      }
+ 145   4                              }
+ 146   3      
+ 147   3                              if (log->lastppo != 0)
+ 148   3                              {
+ 149   4                                      log++;
+ 150   4                                      gpLogCache->lockedCnt++;
+ 151   4                              }
+ 152   3                              else
+ 153   3                              {
+ 154   4                                      // nothing was written, so remove log block flag
+ 155   4                                      // reset data in not used log blk  
+ 156   4                                      gpFlush->freeBlks[idx]             &= (~FTL_FBTYPE_LOG);
+ 157   4                                      log->lastppo                                    = INDEX_NA;             
+ 158   4                                      log->pba                                                = BLK_NA;
+ 159   4                              }
+ 160   3                      }
+ 161   2              }
+ 162   1              
+ 163   1      }
+ 164          /*----------------------------------------------------------
+ 165                  Function name   : FTL_O_BuildLog
+ 166                  Prototype               : 
+ 167                  Return                  : 
+ 168                  Argument                : 
+ 169                  Comments                : build top for log, wear, map directory
+ 170          -----------------------------------------------------------*/
+ 171          smtBoolean                      // SMT_TRUE/SMT_FALSE, ok/error
+ 172          FTL_O_BuildLog(
+ 173          void
+ 174          )
+ 175          {
+ 176   1              
+ 177   1              smtUint32       wear_sum                = 0;    // summary of wears 
+ 178   1              smtUint32       wear_count              = 0;    // counting number of wears  
+C51 COMPILER V8.05a   FTL_O_LOG                                                            06/28/2007 17:29:22 PAGE 4   
+
+ 179   1              smtUint32       wear_average    = 0;
+ 180   1              smtUint8        idx;
+ 181   1              smtBlkAddr      pba,lba;
+ 182   1              ST_SPARE        *sptr;
+ 183   1      
+ 184   1              smtUint8        mapBlkIdx;
+ 185   1              
+ 186   1              sptr=GET_SPARE_AREA(ml_buffer);
+ 187   1      
+ 188   1      
+ 189   1              // counting blocks 
+ 190   1              for(lba = 0; lba < (gDevInfo.blks - gpFlush->freeBlkNum); lba++)
+ 191   1              {
+ 192   2                      pba = FTL_C_GetPhy(lba);
+ 193   2              if (pba == BLK_NA) 
+ 194   2              {
+ 195   3                      break;
+ 196   3              }
+ 197   2              gDevInfo.dataBlks++;
+ 198   2              }
+ 199   1              
+ 200   1      
+ 201   1              // Check if step back is requested 
+ 202   1              if (gpMapBlocks->stepback)
+ 203   1              {
+ 204   2                      gpMapBlocks->stepback->curPPO           = gDevInfo.pagePerBlks;
+ 205   2                      gpMapBlocks->stepback->depthIdx = FTL_MAPBLOCK_DEPTH; // Force map merge 
+ 206   2      
+ 207   2                      if(!FTL_C_LoadFrag(gpMapBlocks->stepback->startFragIdx)) 
+ 208   2                      {
+ 209   3                              return SMT_FALSE;
+ 210   3                      }
+ 211   2                      
+ 212   2                      if(FTL_C_SaveMap()) 
+ 213   2                      {
+ 214   3                              return SMT_FALSE;
+ 215   3                      }
+ 216   2              }
+ 217   1              
+ 218   1              {
+ 219   2                      // finding last fltable 
+ 220   2                      smtUint32               mapCntL         = 0;
+ 221   2                      smtUint32               mapCntH         = 0;
+ 222   2                      ST_MAPBLOCK             *lastMap        = &gpMapBlocks->mapBlks[0];
+ 223   2      
+ 224   2                      for (mapBlkIdx = 0; mapBlkIdx < FTL_MAPBLOCK_NUM; mapBlkIdx++)
+ 225   2                      {
+ 226   3                              if(gpMapBlocks->mapBlks[mapBlkIdx].mapCntH > mapCntH)
+ 227   3                              {
+ 228   4                                      mapCntL = gpMapBlocks->mapBlks[mapBlkIdx].mapCntL;
+ 229   4                                      mapCntH = gpMapBlocks->mapBlks[mapBlkIdx].mapCntH;
+ 230   4                                      lastMap = &gpMapBlocks->mapBlks[mapBlkIdx];
+ 231   4                              }
+ 232   3                              else if(
+ 233   3                                      (gpMapBlocks->mapBlks[mapBlkIdx].mapCntH == mapCntH)
+ 234   3                               && (gpMapBlocks->mapBlks[mapBlkIdx].mapCntL > mapCntL)
+ 235   3                              )
+ 236   3                              {
+ 237   4                                      mapCntL = gpMapBlocks->mapBlks[mapBlkIdx].mapCntL;
+ 238   4                                      mapCntH = gpMapBlocks->mapBlks[mapBlkIdx].mapCntH;
+ 239   4                                      lastMap = &gpMapBlocks->mapBlks[mapBlkIdx];
+ 240   4                              }
+C51 COMPILER V8.05a   FTL_O_LOG                                                            06/28/2007 17:29:22 PAGE 5   
+
+ 241   3                      }
+ 242   2      
+ 243   2                      // check ml_basebuff
+ 244   2                      if (FTL_L_Read(
+ 245   2                              lastMap->LastPBA,
+ 246   2                              lastMap->LastPPO,
+ 247   2                              ml_basebuff)
+ 248   2                              ) 
+ 249   2                      {
+ 250   3                              // fatal 
+ 251   3                              return SMT_FALSE;
+ 252   3                      }
+ 253   2      
+ 254   2      
+ 255   2                      // read the last freelog table 
+ 256   2                      gpFlush->mapInfo->mapCntL = gpMapBlocks->maxMapCntL;
+ 257   2                      gpFlush->mapInfo->mapCntH = gpMapBlocks->maxMapCntH;
+ 258   2              }       
+ 259   1      
+ 260   1              
+ 261   1              // calculate current average for dynamic 
+ 262   1              if(wear_count) 
+ 263   1              {
+ 264   2                      wear_average = (wear_sum/wear_count); 
+ 265   2              }
+ 266   1      
+ 267   1              //-------------------------------------------------------------------------
+ 268   1              // fill dynamic wear info table 
+ 269   1              //-------------------------------------------------------------------------
+ 270   1              for(idx=0; idx < gpFlush->freeBlkNum; idx++)
+ 271   1              {
+ 272   2                      if((gpFlush->freeBlks[idx]&FTL_FBTYPE_BAD) != FTL_FBTYPE_BAD)
+ 273   2                      {
+ 274   3                              pba = (smtBlkAddr)(gpFlush->freeBlks[idx]&FTL_BLKADDR_MASK);
+ 275   3                              if (FTL_L_Read(pba,0,ml_buffer)==FTL_L_OK)
+ 276   3                              {
+ 277   4                                      FTL_W_UpdateDInfo(idx,sptr->wear);
+ 278   4                              }
+ 279   3                              else
+ 280   3                              {
+ 281   4                                      FTL_W_UpdateDInfo(idx,wear_average);
+ 282   4                              }
+ 283   3                      }
+ 284   2              }
+ 285   1      
+ 286   1              FTL_W_ReleaseDLock();   
+ 287   1      
+ 288   1              BuildLog();
+ 289   1      
+ 290   1      
+ 291   1              return SMT_TRUE;
+ 292   1      
+ 293   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1196    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----      35
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V8.05a   FTL_O_LOG                                                            06/28/2007 17:29:22 PAGE 6   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

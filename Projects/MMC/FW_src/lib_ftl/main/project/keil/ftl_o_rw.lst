@@ -1,0 +1,296 @@
+C51 COMPILER V8.05a   FTL_O_RW                                                             06/28/2007 17:29:24 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL_O_RW
+OBJECT MODULE PLACED IN .\ftl_o_rw.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_ftl\ftl_o_rw.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..\..\s
+                    -ys;..\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl_o_rw.lst) OBJECT(.\ftl_o_rw.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include <string.h>
+  39          #include "../lib_nand/ftl_l_layer.h"
+  40          #include "ftl_t_define.h"
+  41          #include "ftl_o_rw.h"
+  42          #include "ftl_w_wear.h"
+  43          #include "ftl_c_core.h"
+  44          /*
+  45          /////////////////////////////////////////////////////////
+  46                  DEFINITION
+  47          ///////////////////////////////////////////////////////// 
+  48          */
+  49          /*
+  50          /////////////////////////////////////////////////////////
+  51                  GLOBAL VARIABLE
+  52          ///////////////////////////////////////////////////////// 
+  53          */
+  54          /*
+C51 COMPILER V8.05a   FTL_O_RW                                                             06/28/2007 17:29:24 PAGE 2   
+
+  55          /////////////////////////////////////////////////////////
+  56                  STATIC VARIABLE
+  57          ///////////////////////////////////////////////////////// 
+  58          */
+  59          /*
+  60          /////////////////////////////////////////////////////////
+  61                  FUNCTIONS 
+  62          ///////////////////////////////////////////////////////// 
+  63          */
+  64          /*----------------------------------------------------------
+  65                  Function name   : FTL_O_GetMaxSector
+  66                  Prototype               : 
+  67                  Return                  : none
+  68                  Argument                : 
+  69                  Comments                : retreives the maximum number of sectors 
+  70                                                    can be used in the system
+  71          -----------------------------------------------------------*/
+  72          smtUint32 
+  73          FTL_O_GetMaxSector(
+  74          void
+  75          ) 
+  76          {
+  77   1              return gDevInfo.dataBlks*gDevInfo.pagePerBlks;
+  78   1      }
+  79          /*----------------------------------------------------------
+  80                  Function name   : FTL_O_GetBuffer
+  81                  Prototype               : 
+  82                  Return                  : 
+  83                  Argument                : 
+  84                  Comments                : 
+  85          -----------------------------------------------------------*/
+  86          smtUint32
+  87          FTL_O_GetRWBuffer(
+  88          void
+  89          )
+  90          {
+  91   1              return (smtUint32)ml_buffer;
+  92   1      }
+  93          
+  94          /*----------------------------------------------------------
+  95                  Function name   : FTL_O_Write
+  96                  Prototype               : 
+  97                  Return                  : none
+  98                  Argument                : 
+  99                  Comments                : Writing sector data
+ 100          -----------------------------------------------------------*/
+ 101          smtUint8                        // 0/other, success/any error
+ 102          FTL_O_Write(
+ 103          smtUint32       sector
+ 104          ) 
+ 105          {
+ 106   1              
+ 107   1              ST_SPARE        *sptr;
+ 108   1              smtBlkAddr      lba;
+ 109   1              smtPageAddr     lpo;
+ 110   1              ST_LOG          *pcurLog;
+ 111   1      
+ 112   1              // make sector  
+ 113   1              lba     = (smtBlkAddr)(sector/gDevInfo.pagePerBlks);
+ 114   1              lpo     = (smtPageAddr)(sector%gDevInfo.pagePerBlks);
+ 115   1      
+ 116   1      
+C51 COMPILER V8.05a   FTL_O_RW                                                             06/28/2007 17:29:24 PAGE 3   
+
+ 117   1              if(lpo >= gDevInfo.pagePerBlks)
+ 118   1              {
+ 119   2                      lba++;
+ 120   2                      lpo = 0;
+ 121   2                      SMT_ASSERT(lba < gDevInfo.dataBlks);
+ 122   2              }
+ 123   1              
+ 124   1              pcurLog = FTL_C_FindLog(lba);
+ 125   1              if(pcurLog == SMT_NULL)
+ 126   1              {
+ 127   2                      SMT_ASSERT(gpLogCache->lockedCnt <= gpLogCache->num);
+ 128   2                      
+ 129   2                      pcurLog = FTL_C_FindLog(BLK_NA);
+ 130   2                      if(pcurLog == SMT_NULL)
+ 131   2                      {
+ 132   3                              gpLogCache->curLog = &gpLogCache->logs[gpLogCache->nextIdx++];
+ 133   3                              if(gpLogCache->nextIdx >= gpLogCache->num)
+ 134   3                              {
+ 135   4                                      gpLogCache->nextIdx = 0;
+ 136   4                              }               
+ 137   3                      
+ 138   3                              // do merge                                             
+ 139   3                              return 2;
+ 140   3                      }
+ 141   2                      else
+ 142   2                      {
+ 143   3                              FTL_C_AllocLog(pcurLog, lba);
+ 144   3                      }
+ 145   2              }
+ 146   1              else
+ 147   1              {
+ 148   2                      // do merge
+ 149   2                      if(pcurLog->lastppo >= gDevInfo.pagePerBlks)
+ 150   2                      {
+ 151   3                              return 2;
+ 152   3                      }
+ 153   2      
+ 154   2              }
+ 155   1      
+ 156   1              
+ 157   1      
+ 158   1              //memcpy (ml_buffer,datap, 512);//(smtInt32)gDevInfo.pageSize);
+ 159   1              sptr = GET_SPARE_AREA(ml_buffer);
+ 160   1                      
+ 161   1              if(pcurLog->lastppo == 0)
+ 162   1              {
+ 163   2                      sptr->wear                              = pcurLog->wear;
+ 164   2                      sptr->u.map.block_type  = FTL_BTYPE_DAT;
+ 165   2              }
+ 166   1              sptr->u.log.lba = lba;
+ 167   1              sptr->u.log.lpo = lpo;
+ 168   1                      
+ 169   1              FTL_L_Write(
+ 170   1                      pcurLog->pba,
+ 171   1                      pcurLog->lastppo,
+ 172   1                      ml_buffer
+ 173   1              );
+ 174   1                      
+ 175   1      
+ 176   1              // log cache update
+ 177   1              if(lpo != pcurLog->lastppo)
+ 178   1              {
+C51 COMPILER V8.05a   FTL_O_RW                                                             06/28/2007 17:29:24 PAGE 4   
+
+ 179   2                      pcurLog->switchable = 0;
+ 180   2              }
+ 181   1              pcurLog->ppo[lpo] = pcurLog->lastppo++;
+ 182   1      
+ 183   1              // save map
+ 184   1              if (gfSaveMapNeed)
+ 185   1              {
+ 186   2                      if (FTL_C_SaveMap()) 
+ 187   2                      {
+ 188   3                              return 1;
+ 189   3                      }
+ 190   2              }
+ 191   1      
+ 192   1              return 0;
+ 193   1      }
+ 194          /*----------------------------------------------------------
+ 195                  Function name   : FTL_O_Read
+ 196                  Prototype               : 
+ 197                  Return                  : none
+ 198                  Argument                : 
+ 199                  Comments                : Read sector data
+ 200          -----------------------------------------------------------*/
+ 201          smtUint8                // 0/other success/any error
+ 202          FTL_O_Read(
+ 203          smtUint32       sector
+ 204          )
+ 205          {
+ 206   1              smtBlkAddr              ba, lba, pba;
+ 207   1              smtPageAddr     po, lpo;
+ 208   1              smtInt32                ret;
+ 209   1              ST_LOG                  *pcurLog;
+ 210   1              
+ 211   1              // Make address
+ 212   1              lba     = (smtBlkAddr)(sector/gDevInfo.pagePerBlks);
+ 213   1              lpo     = (smtPageAddr)(sector%gDevInfo.pagePerBlks);
+ 214   1              
+ 215   1              // Check block boundary
+ 216   1              if(lpo   >= gDevInfo.pagePerBlks)
+ 217   1              {
+ 218   2                      lba++;
+ 219   2                      lpo = 0;
+ 220   2                      SMT_ASSERT(lba < gDevInfo.dataBlks);
+ 221   2              }
+ 222   1              pba = FTL_C_GetPhy(lba);
+ 223   1              SMT_ASSERT(pba != BLK_NA);
+ 224   1              
+ 225   1      
+ 226   1              // real block address and page address
+ 227   1              pcurLog = (ST_LOG*)FTL_C_FindLog(lba);
+ 228   1              if(pcurLog == NULL)
+ 229   1              {
+ 230   2                      ba = pba;
+ 231   2                      po = lpo;
+ 232   2              }
+ 233   1              else
+ 234   1              {
+ 235   2                      if(pcurLog->ppo[lpo] != INDEX_NA)
+ 236   2                      {
+ 237   3                              ba = gpLogCache->curLog->pba;
+ 238   3                              po = gpLogCache->curLog->ppo[lpo];
+ 239   3                      }
+ 240   2                      else
+C51 COMPILER V8.05a   FTL_O_RW                                                             06/28/2007 17:29:24 PAGE 5   
+
+ 241   2                      {
+ 242   3                              ba = pba;
+ 243   3                              po = lpo;
+ 244   3                      }
+ 245   2              }
+ 246   1      
+ 247   1              // Read operation
+ 248   1              ret = FTL_L_Read(
+ 249   1                      ba,             // block address
+ 250   1                      po,             // page address
+ 251   1                      ml_buffer);     // read buffer
+ 252   1              if (ret == FTL_L_OK) 
+ 253   1              {
+ 254   2                      return 0;
+ 255   2              }
+ 256   1              else if (ret == FTL_L_ERASED) 
+ 257   1              {
+ 258   2                      // erased 
+ 259   2                      return 0; 
+ 260   2              }
+ 261   1      
+ 262   1              return 1;
+ 263   1              
+ 264   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    659    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----      20
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

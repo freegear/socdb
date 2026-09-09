@@ -1,0 +1,494 @@
+C51 COMPILER V8.05a   FTL_L_MEMORYNAND                                                     06/28/2007 17:29:24 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL_L_MEMORYNAND
+OBJECT MODULE PLACED IN .\ftl_l_memorynand.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_nand\ftl_l_memorynand.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(.
+                    -.\..\..\sys;..\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl_l_memorynand.lst) OBJECT(.\ftl_l_memorynand.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include <string.h>
+  39          #include <stdlib.h>
+  40          #include "../lib_nand/ftl_l_layer.h"
+  41          /*
+  42          /////////////////////////////////////////////////////////
+  43                  DEFINITION
+  44          ///////////////////////////////////////////////////////// 
+  45          */
+  46          #define MAX_DLEN                        (gDevInfo.pageSize + FTL_SPARE_MAXSIZE)
+  47          #define MAX_BLOCK_SIZE          (MAX_DLEN*gDevInfo.pagePerBlks)
+  48          #define MAX_SIZE                        (gDevInfo.blks * MAX_BLOCK_SIZE)
+  49          /*
+  50          /////////////////////////////////////////////////////////
+  51                  GLOBAL VARIABLE
+  52          ///////////////////////////////////////////////////////// 
+  53          */
+  54          /*
+C51 COMPILER V8.05a   FTL_L_MEMORYNAND                                                     06/28/2007 17:29:24 PAGE 2   
+
+  55          /////////////////////////////////////////////////////////
+  56                  STATIC VARIABLE
+  57          ///////////////////////////////////////////////////////// 
+  58          */
+  59          static smtUint32        allocated       = 0;
+  60          static smtUint8         *gl_data        = 0;
+  61          static smtUint32        *gl_wear        = 0;
+  62          static smtInt32         onceinit        = 0;
+  63          /*
+  64          /////////////////////////////////////////////////////////
+  65                  FUNCTIONS 
+  66          ///////////////////////////////////////////////////////// 
+  67          */
+  68          /*----------------------------------------------------------
+  69                  Function name   : FTL_L_Init
+  70                  Prototype               : 
+  71                  Return                  : 
+  72                  Argument                : 
+  73                  Comments                : Low level init function, this is called from
+  74                                                    core FTL layer, only once
+  75          ----------------------------------------------------------*/ 
+  76          smtUint8        // FTL_L_OK/FTL_L_ERROR
+  77          FTL_L_Init(
+  78          void
+  79          ) 
+  80          {
+  81   1              gDevInfo.blks                   = 8192;         
+  82   1              gDevInfo.pagePerBlks    = 64;           
+  83   1              gDevInfo.pageSize               = 2048;
+  84   1      
+  85   1      
+  86   1              if (!allocated) 
+  87   1              {
+  88   2                      gl_data=malloc(MAX_SIZE);
+  89   2                      allocated=1;
+  90   2                      printf("data address: 0x%08x\n", gl_data);
+  91   2              }
+  92   1      
+  93   1              if (!gl_wear) 
+  94   1              {
+  95   2                      gl_wear = malloc(sizeof(smtInt32)*gDevInfo.blks);
+  96   2              }
+  97   1      
+  98   1              if ((!gl_data) || (!gl_wear)) 
+  99   1              {
+ 100   2                      return FTL_L_ERROR;
+ 101   2              }
+ 102   1      
+ 103   1              if (!onceinit) 
+ 104   1              {
+ 105   2                      memset(gl_data, 0xFF, MAX_SIZE);
+ 106   2                      onceinit=1;
+ 107   2              }
+ 108   1      
+ 109   1              return FTL_L_OK;
+ 110   1      }
+ 111          
+ 112          /*----------------------------------------------------------
+ 113                  Function name   : FTL_L_Erase
+ 114                  Prototype               : 
+ 115                  Return                  : 
+ 116                  Argument                : 
+C51 COMPILER V8.05a   FTL_L_MEMORYNAND                                                     06/28/2007 17:29:24 PAGE 3   
+
+ 117                  Comments                : NAND erase function
+ 118          ----------------------------------------------------------*/
+ 119          smtUint8                                // FTL_L_OK/FTL_L_ERROR
+ 120          FTL_L_Erase(    
+ 121          smtBlkAddr pba
+ 122          ) 
+ 123          {
+ 124   1              smtUint32 pos = pba;
+ 125   1      
+ 126   1              if(pba >= gDevInfo.blks) 
+ 127   1              {
+ 128   2                      return FTL_L_ERROR;
+ 129   2              }
+ 130   1      
+ 131   1              pos     *= MAX_BLOCK_SIZE;
+ 132   1              memset((gl_data+pos),0xFF,MAX_BLOCK_SIZE);
+ 133   1      
+ 134   1              return FTL_L_OK;
+ 135   1      }
+ 136          
+ 137          /*----------------------------------------------------------
+ 138                  Function name   : FTL_L_Write
+ 139                  Prototype               : 
+ 140                  Return                  : 
+ 141                  Argument                : 
+ 142                  Comments                : NAND write function
+ 143          ----------------------------------------------------------*/
+ 144          smtUint8                                // FTL_L_OK/FTL_L_ERROR
+ 145          FTL_L_Write(
+ 146          smtBlkAddr      pba,            // block address
+ 147          smtPageAddr ppo,                // page address
+ 148          smtUint8        *buffer         // source gbuffer
+ 149          ) 
+ 150          {
+ 151   1              smtUint32       page    = ppo;
+ 152   1              smtUint32       pos             = pba;
+ 153   1              smtUint8        *dest;
+ 154   1              smtUint32       a;
+ 155   1      
+ 156   1              dest = gl_data;
+ 157   1      
+ 158   1              if(pba >= gDevInfo.blks) 
+ 159   1              {
+ 160   2                      return FTL_L_ERROR;
+ 161   2              }
+ 162   1      
+ 163   1              if(ppo >= gDevInfo.pagePerBlks)
+ 164   1              {
+ 165   2                      return FTL_L_ERROR;
+ 166   2              }
+ 167   1      
+ 168   1              pos             *= MAX_BLOCK_SIZE;
+ 169   1              page    *= MAX_DLEN;
+ 170   1      
+ 171   1              dest+=(pos+page);
+ 172   1      
+ 173   1              if (!ppo) 
+ 174   1              {
+ 175   2                      smtUint32 newwear=GET_SPARE_AREA(buffer)->wear;
+ 176   2                      if(gl_wear[pba]+1 != newwear) 
+ 177   2                      {
+ 178   3                              a=10;
+C51 COMPILER V8.05a   FTL_L_MEMORYNAND                                                     06/28/2007 17:29:24 PAGE 4   
+
+ 179   3                      }
+ 180   2                      gl_wear[pba]=newwear;
+ 181   2              }
+ 182   1      
+ 183   1              for (a = 0; a < MAX_DLEN; a++) 
+ 184   1              {
+ 185   2                      smtInt8 ch      =* dest;
+ 186   2                      smtInt8 ch2     =* buffer++;
+ 187   2                      *dest++=(smtUint8)(ch&ch2);
+ 188   2              }
+ 189   1      
+ 190   1              return FTL_L_OK;
+ 191   1      }
+ 192          
+ 193          /*----------------------------------------------------------
+ 194                  Function name   : FTL_L_Read
+ 195                  Prototype               : 
+ 196                  Return                  : 
+ 197                  Argument                : 
+ 198                  Comments                : NAND read operation by page unit
+ 199          ----------------------------------------------------------*/
+ 200          smtUint8                        // FTL_L_OK/FTL_L_ERASED/FTL_L_ERROR
+ 201          FTL_L_Read(
+ 202          smtBlkAddr      pba,    // block address
+ 203          smtPageAddr ppo,        // page address
+ 204          smtUint8        *buffer // target buffer
+ 205          ) 
+ 206          {
+ 207   1              smtUint8        *sou;
+ 208   1              smtUint32       a;
+ 209   1              smtUint32       page            = ppo;
+ 210   1              smtUint32       pos                     = pba;
+ 211   1              smtInt8         iserased        =       1;
+ 212   1      
+ 213   1              sou=gl_data;
+ 214   1      
+ 215   1      
+ 216   1              if(pba >= gDevInfo.blks) 
+ 217   1              {
+ 218   2                      return FTL_L_ERROR;
+ 219   2              }
+ 220   1      
+ 221   1              if(ppo >= gDevInfo.pagePerBlks)
+ 222   1              {
+ 223   2                      return FTL_L_ERROR;
+ 224   2              }
+ 225   1      
+ 226   1              pos             *= MAX_BLOCK_SIZE;
+ 227   1              page    *= MAX_DLEN;
+ 228   1              sou             += (pos+page);
+ 229   1      
+ 230   1      
+ 231   1      
+ 232   1              // we should go throught on all data+spare
+ 233   1              for(a = 0; a < MAX_DLEN; a++) 
+ 234   1              { 
+ 235   2                      smtUint8 ch=*sou++;
+ 236   2                      if(ch != 0xFF) 
+ 237   2                      {
+ 238   3                              // simple erase chk 
+ 239   3                              iserased = 0; 
+ 240   3                      }
+C51 COMPILER V8.05a   FTL_L_MEMORYNAND                                                     06/28/2007 17:29:24 PAGE 5   
+
+ 241   2      
+ 242   2                      // if there is given buffer then store 
+ 243   2                      // the data into it 
+ 244   2                      if (buffer) 
+ 245   2                      {
+ 246   3                              *buffer++ = ch;
+ 247   3                      }
+ 248   2              }
+ 249   1      
+ 250   1              // if flasg is still set, returns with 
+ 251   1              // erased page 
+ 252   1              if(iserased) 
+ 253   1              {
+ 254   2                      return FTL_L_ERASED;     
+ 255   2              }
+ 256   1      
+ 257   1              return FTL_L_OK;
+ 258   1      }
+ 259          
+ 260          /*----------------------------------------------------------
+ 261                  Function name   : FTL_L_ReadPart
+ 262                  Prototype               : 
+ 263                  Return                  : 
+ 264                  Argument                : 
+ 265                  Comments                : NAND read operation by page unit
+ 266          ----------------------------------------------------------*/
+ 267          smtUint8                                // FTL_L_OK/FTL_L_ERASED/FTL_L_ERROR
+ 268          FTL_L_ReadPart(
+ 269          smtBlkAddr      pba,            // block address
+ 270          smtPageAddr ppo,                // page address
+ 271          smtUint8        *buffer,        // age data pointer where to store data (data+spare)
+ 272          smtUint8        index           // which part need to be stored (FTL_L_1ST/
+ 273                                                          // FTL_L_2ND/FTL_L_SP)
+ 274          ) 
+ 275          {
+ 276   1              
+ 277   1              smtUint32       a;
+ 278   1              smtInt8         iserased        = 1;
+ 279   1              smtUint32       page            = ppo;
+ 280   1              smtUint32       pos                     = pba;
+ 281   1              smtUint8        *sou            = gl_data;
+ 282   1      
+ 283   1      
+ 284   1              if (pba >= gDevInfo.blks) 
+ 285   1              {
+ 286   2                      return FTL_L_ERROR;
+ 287   2              }
+ 288   1      
+ 289   1              if(ppo >= gDevInfo.pagePerBlks) 
+ 290   1              {
+ 291   2                      return FTL_L_ERROR;
+ 292   2              }
+ 293   1      
+ 294   1              pos             *= MAX_BLOCK_SIZE;
+ 295   1              page    *= MAX_DLEN;
+ 296   1      
+ 297   1              sou+=(pos+page);
+ 298   1      
+ 299   1              // we should go throught on all data+spare
+ 300   1              for (a=0; a<MAX_DLEN; a++) 
+ 301   1              { 
+ 302   2                      smtUint8 ch     = *sou++;
+C51 COMPILER V8.05a   FTL_L_MEMORYNAND                                                     06/28/2007 17:29:24 PAGE 6   
+
+ 303   2                      // simple erase chk 
+ 304   2                      if(ch != 0xFF) iserased=0; 
+ 305   2      
+ 306   2                      // if 1st half is requested 
+ 307   2                      if(index == FTL_L_M0_0) 
+ 308   2                      { 
+ 309   3                              if(a < 256) 
+ 310   3                              {
+ 311   4                                      *buffer++=ch;
+ 312   4                              }
+ 313   3                      }
+ 314   2                      else 
+ 315   2                      if(index == FTL_L_M0_1) 
+ 316   2                      { 
+ 317   3                              if ((a >= 256*1) 
+ 318   3                               && (a  < 256*2))
+ 319   3                              {
+ 320   4                                      *buffer++=ch;
+ 321   4                              }
+ 322   3                      }
+ 323   2                      else 
+ 324   2                      if(index == FTL_L_M1_0) 
+ 325   2                      { 
+ 326   3                              if ((a >= 256*2) 
+ 327   3                               && (a  < 256*3))
+ 328   3                              {
+ 329   4                                      *buffer++=ch;
+ 330   4                              }
+ 331   3                      }
+ 332   2                      else 
+ 333   2                      if(index == FTL_L_M1_1) 
+ 334   2                      { 
+ 335   3                              if ((a >= 256*3) 
+ 336   3                               && (a  < 256*4))
+ 337   3                              {
+ 338   4                                      *buffer++=ch;
+ 339   4                              }
+ 340   3                      }
+ 341   2                      else 
+ 342   2                      if(index == FTL_L_M2_0) 
+ 343   2                      { 
+ 344   3                              if ((a >= 256*4) 
+ 345   3                               && (a  < 256*5))
+ 346   3                              {
+ 347   4                                      *buffer++=ch;
+ 348   4                              }
+ 349   3                      }
+ 350   2                      else 
+ 351   2                      if(index == FTL_L_M2_1) 
+ 352   2                      { 
+ 353   3                              if ((a >= 256*5) 
+ 354   3                               && (a  < 256*6))
+ 355   3                              {
+ 356   4                                      *buffer++=ch;
+ 357   4                              }
+ 358   3                      }
+ 359   2                              else 
+ 360   2                      if(index == FTL_L_M3_0) 
+ 361   2                      { 
+ 362   3                              if ((a >= 256*6) 
+ 363   3                               && (a  < 256*7))
+ 364   3                              {
+C51 COMPILER V8.05a   FTL_L_MEMORYNAND                                                     06/28/2007 17:29:24 PAGE 7   
+
+ 365   4                                      *buffer++=ch;
+ 366   4                              }
+ 367   3                      }
+ 368   2                      else 
+ 369   2                      if(index == FTL_L_M3_1) 
+ 370   2                      { 
+ 371   3                              if ((a >= 256*8) 
+ 372   3                               && (a  < 256*9))
+ 373   3                              {
+ 374   4                                      *buffer++=ch;
+ 375   4                              }
+ 376   3                      }
+ 377   2                      // spare only is requested 
+ 378   2                      else 
+ 379   2                      if((index&FTL_L_S0) == FTL_L_S0)
+ 380   2                      { 
+ 381   3                              if((a >= gDevInfo.pageSize) 
+ 382   3                              && (a  < gDevInfo.pageSize+16*1))
+ 383   3                              {
+ 384   4                                      *buffer++=ch;
+ 385   4                              }
+ 386   3                      }
+ 387   2                      else
+ 388   2                      if((index&FTL_L_S1) == FTL_L_S1)
+ 389   2                      { 
+ 390   3                              if((a >= gDevInfo.pageSize+16*1) 
+ 391   3                              && (a  < gDevInfo.pageSize+16*2))
+ 392   3                              {
+ 393   4                                      *buffer++=ch;
+ 394   4                              }
+ 395   3                      }
+ 396   2                      else
+ 397   2                      if((index&FTL_L_S2) == FTL_L_S2)
+ 398   2                      { 
+ 399   3                              if((a >= gDevInfo.pageSize+16*2) 
+ 400   3                              && (a  < gDevInfo.pageSize+16*3))
+ 401   3                              {
+ 402   4                                      *buffer++=ch;
+ 403   4                              }
+ 404   3                      }
+ 405   2                      else
+ 406   2                      if((index&FTL_L_S3) == FTL_L_S3) 
+ 407   2                      { 
+ 408   3                              if((a >= gDevInfo.pageSize+16*3) 
+ 409   3                              && (a  < gDevInfo.pageSize+16*4))
+ 410   3                              {
+ 411   4                                      *buffer++=ch;
+ 412   4                              }
+ 413   3                      }
+ 414   2                      else 
+ 415   2                      {
+ 416   3                              return FTL_L_ERROR;
+ 417   3                      }
+ 418   2      
+ 419   2              }
+ 420   1      
+ 421   1              // if flasg is still set, returns with erased page 
+ 422   1              if(iserased) 
+ 423   1              {
+ 424   2                      return FTL_L_ERASED;     
+ 425   2              }
+ 426   1      
+C51 COMPILER V8.05a   FTL_L_MEMORYNAND                                                     06/28/2007 17:29:24 PAGE 8   
+
+ 427   1              return FTL_L_OK;
+ 428   1      }
+ 429          /*----------------------------------------------------------
+ 430                  Function name   : FTL_L_IsBadBlk
+ 431                  Prototype               : 
+ 432                  Return                  : 
+ 433                  Argument                : 
+ 434                  Comments                : check if a block is manufactured as 
+ 435                                                    bad block
+ 436          ----------------------------------------------------------*/
+ 437          smtUint8                //  FTL_L_OK/FTL_L_ERROR
+ 438          FTL_L_IsBadBlk(
+ 439          smtBlkAddr pba  // block address
+ 440          ) 
+ 441          {
+ 442   1              smtBlkAddr warn = pba;
+ 443   1      
+ 444   1              /*
+ 445   1              // in the simulation we simulate only 2 badblock 
+ 446   1              // 10 and 200 only for test purpose 
+ 447   1              if (pba == 10 || pba == 200) 
+ 448   1              {
+ 449   1                      // signal as bad block 
+ 450   1                      return 1; 
+ 451   1              }
+ 452   1              */
+ 453   1      
+ 454   1              // no bad block signalled 
+ 455   1              return FTL_L_OK; 
+ 456   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1484    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =     10      52
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

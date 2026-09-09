@@ -1,0 +1,12 @@
+#!/bin/csh -fx
+
+dc_shell-t -f SMC1000Core.tcl | tee /dev/tty >&! ./Log/SMC1000Core.log
+
+#----========================================================================----
+#-- Proper Sdf Generaion Fitted to TSMC 
+#----========================================================================----
+./pt_postprocessor.pl -s ./Sdf/temp.sdf -o ./Sdf/SMC1000Core.noscan.sdf
+
+\rm -rf *.log ./Sdf/temp.sdf
+
+exit

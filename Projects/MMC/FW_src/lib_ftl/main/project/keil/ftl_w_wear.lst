@@ -1,0 +1,547 @@
+C51 COMPILER V8.05a   FTL_W_WEAR                                                           06/28/2007 17:29:24 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL_W_WEAR
+OBJECT MODULE PLACED IN .\ftl_w_wear.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_ftl\ftl_w_wear.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..\..
+                    -\sys;..\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl_w_wear.lst) OBJECT(.\ftl_w_wear.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include "ftl_o_rw.h"
+  39          #include "ftl_w_wear.h"
+  40          #include "ftl_c_core.h"
+  41          /*
+  42          /////////////////////////////////////////////////////////
+  43                  DEFINITION
+  44          ///////////////////////////////////////////////////////// 
+  45          */
+  46          /*
+  47          /////////////////////////////////////////////////////////
+  48                  GLOBAL VARIABLE
+  49          ///////////////////////////////////////////////////////// 
+  50          */
+  51          /*
+  52          /////////////////////////////////////////////////////////
+  53                  STATIC VARIABLE
+  54          ///////////////////////////////////////////////////////// 
+C51 COMPILER V8.05a   FTL_W_WEAR                                                           06/28/2007 17:29:24 PAGE 2   
+
+  55          */
+  56          static ST_STATIC        *gl_static;
+  57          
+  58          // dynamic wear info is here 
+  59          static smtUint32        gl_dynamic_wear_info[FTL_FREEBLK_MAXNUM]; 
+  60          
+  61          // bitfield for locking mechanism 
+  62          static smtUint8         gl_dynamic_lock[(FTL_FREEBLK_MAXNUM+7) >> 3];
+  63          
+  64          // optimalized table for fast masking 
+  65          static const smtUint8 gl_lookup_mask[8]= 
+  66                  {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
+  67          
+  68          /*
+  69          /////////////////////////////////////////////////////////
+  70                  FUNCTIONS 
+  71          ///////////////////////////////////////////////////////// 
+  72          */
+  73          /*----------------------------------------------------------
+  74                  Function name   : FTL_W_Init
+  75                  Prototype               : 
+  76                  Return                  : none
+  77                  Argument                : 
+  78                  Comments                : initiate wear leveling, this function 
+  79                                                    must be called at power on
+  80          -----------------------------------------------------------*/
+  81          void 
+  82          FTL_W_Init(
+  83          ST_STATIC *ptr  // Static info for wear contoller
+  84          ) 
+  85          {
+  86   1              smtUint8 idx;
+  87   1              
+  88   1              // Initialize static data pointer
+  89   1              gl_static = ptr;
+  90   1      
+  91   1              // Reset dynamic wear info
+  92   1              for (idx = 0; idx < gpFlush->freeBlkNum; idx++) 
+  93   1              {
+  94   2                      gl_dynamic_wear_info[idx] = WEAR_NA;
+  95   2              }
+  96   1                      
+  97   1              // Reset dynamic wear lock info
+  98   1              for(idx = 0; idx < sizeof(gl_dynamic_lock); idx++)
+  99   1              {
+ 100   2                      gl_dynamic_lock[idx] = 0x0;
+ 101   2              }
+ 102   1              
+ 103   1              // Reset static block information
+ 104   1              for (idx =0; idx<MAXSTATICWEAR; idx++) 
+ 105   1              {
+ 106   2                      gl_static->wear_info[idx].lba   = BLK_NA;
+ 107   2              gl_static->wear_info[idx].wear  = WEAR_NA;
+ 108   2              }
+ 109   1      
+ 110   1              // Reset static LBA, Count, Current dynamic index
+ 111   1              gl_static->lba                          = 0;    
+ 112   1          gl_static->cnt                              = 2;    
+ 113   1              gl_static->dynamic_index        = 0;    
+ 114   1      }
+ 115          /*----------------------------------------------------------
+ 116                  Function name   : FTL_W_GetStaticLBA
+C51 COMPILER V8.05a   FTL_W_WEAR                                                           06/28/2007 17:29:24 PAGE 3   
+
+ 117                  Prototype               : 
+ 118                  Return                  : lba of static block
+ 119                  Argument                : 
+ 120                  Comments                : retreive the current lba of the static wear
+ 121          -----------------------------------------------------------*/
+ 122          smtBlkAddr 
+ 123          FTL_W_GetStaticLBA(
+ 124          void
+ 125          ) 
+ 126          {
+ 127   1              return gl_static->lba;
+ 128   1      }
+ 129          /*----------------------------------------------------------
+ 130                  Function name   : wear_setstatic_lba
+ 131                  Prototype               : 
+ 132                  Return                  : none
+ 133                  Argument                : 
+ 134                  Comments                : update the current lba of the static wear
+ 135          -----------------------------------------------------------*/
+ 136          void 
+ 137          FTL_W_SetStaticLBA(
+ 138          smtBlkAddr lba  // new static LBA 
+ 139          ) 
+ 140          {
+ 141   1              gl_static->lba=lba;
+ 142   1      }
+ 143          /*----------------------------------------------------------
+ 144                  Function name   : FTL_W_CheckDPeak
+ 145                  Prototype               : 
+ 146                  Return                  : 0/other, Not found/ other found peek in dynamic area
+ 147                  Argument                : 
+ 148                  Comments                : searching in dynamic area if there is any 
+ 149                                                    wear which is bigger than the average
+ 150          -----------------------------------------------------------*/
+ 151          static 
+ 152          smtBoolean 
+ 153          FTL_W_CheckDPeak(
+ 154          void
+ 155          ) 
+ 156          {
+ 157   1              smtUint32       average = 0;
+ 158   1              smtUint32       avecou  = 0;
+ 159   1              smtUint8        idx;
+ 160   1              smtBlkAddr              *free_table;
+ 161   1      
+ 162   1              // get free table 
+ 163   1              free_table = gpFlush->freeBlks;
+ 164   1              for(idx = 0; idx < gpFlush->freeBlkNum; idx++,free_table++) 
+ 165   1              {
+ 166   2                      // check if block is not used (free) 
+ 167   2                      if (!((*free_table)&FTL_FBTYPE_BAD))      
+ 168   2                      {
+ 169   3                              // check if there is dynamic lock set 
+ 170   3                              if (!(gl_dynamic_lock[idx>>3]&gl_lookup_mask[idx&7]))  
+ 171   3                              {
+ 172   4                                      smtUint32 wear=gl_dynamic_wear_info[idx];
+ 173   4                                      if (wear!=WEAR_NA) 
+ 174   4                                      {
+ 175   5                                              average+=wear;
+ 176   5                                              avecou++;
+ 177   5                                      }
+ 178   4                              }
+C51 COMPILER V8.05a   FTL_W_WEAR                                                           06/28/2007 17:29:24 PAGE 4   
+
+ 179   3                      }
+ 180   2              }
+ 181   1      
+ 182   1              // Check and caculate average 
+ 183   1              if (!avecou) return SMT_TRUE;
+ 184   1              average/=avecou;
+ 185   1      
+ 186   1              // get free table 
+ 187   1              free_table = gpFlush->freeBlks;
+ 188   1              for(idx = 0; idx < gpFlush->freeBlkNum; idx++, free_table++) 
+ 189   1              {
+ 190   2                      // check if block is not used (free) 
+ 191   2                      if(!((*free_table)&FTL_FBTYPE_BAD))       
+ 192   2                      {
+ 193   3                              // check if there is dynamic lock set 
+ 194   3                              if (!(gl_dynamic_lock[idx>>3]&gl_lookup_mask[idx&7]))  
+ 195   3                              {
+ 196   4                                      smtUint32 wear=gl_dynamic_wear_info[idx];
+ 197   4                                      if (wear!=WEAR_NA) 
+ 198   4                                      {
+ 199   5                                              // 75% of distance 
+ 200   5                                              if (wear>average+((3*WEAR_STATIC_LIMIT)/4))  
+ 201   5                                              {
+ 202   6                                                      return SMT_TRUE;
+ 203   6                                              }
+ 204   5                                      }
+ 205   4                              }
+ 206   3                      }
+ 207   2              }
+ 208   1      
+ 209   1              return SMT_FALSE;
+ 210   1      } 
+ 211          /*----------------------------------------------------------
+ 212                  Function name   : FTL_W_ChkStatic
+ 213                  Prototype               : 
+ 214                  Return                  : 0/1, If not needed/static wear necessary
+ 215                  Argument                : 
+ 216                  Comments                : checking if static wear is needed
+ 217          -----------------------------------------------------------*/
+ 218          smtBoolean 
+ 219          FTL_W_ChkStatic(
+ 220          void
+ 221          ) 
+ 222          {
+ 223   1              smtUint8        a;
+ 224   1              smtBlkAddr      static_lba      = BLK_NA;
+ 225   1              smtUint32       static_wear     = WEAR_NA;
+ 226   1      
+ 227   1              // search the lowest static 
+ 228   1              if ((!gl_static->cnt) || FTL_W_CheckDPeak())    
+ 229   1              {
+ 230   2                      for (a=0; a<MAXSTATICWEAR; a++) 
+ 231   2                      {
+ 232   3                              smtUint32 wear=gl_static->wear_info[a].wear;
+ 233   3                              smtBlkAddr lba=gl_static->wear_info[a].lba;
+ 234   3      
+ 235   3                              if ((wear!=WEAR_NA) && (lba!=BLK_NA)) 
+ 236   3                              {
+ 237   4                                      if (static_lba!=BLK_NA) 
+ 238   4                                      {
+ 239   5                                              // if its bigger continue 
+ 240   5                                              if (wear>=static_wear) 
+C51 COMPILER V8.05a   FTL_W_WEAR                                                           06/28/2007 17:29:24 PAGE 5   
+
+ 241   5                                              {
+ 242   6                                                      continue;       
+ 243   6                                              }
+ 244   5                                      }
+ 245   4      
+ 246   4                                      static_lba=lba;
+ 247   4                                      static_wear=wear;
+ 248   4                              }
+ 249   3                      }
+ 250   2              }
+ 251   1      
+ 252   1          if(static_lba != BLK_NA)
+ 253   1              {
+ 254   2                      smtUint8                *lookup_mask    = (smtUint8 *)gl_lookup_mask;
+ 255   2                      smtUint8                *dynamic_lock   = gl_dynamic_lock;
+ 256   2                      smtBlkAddr              *free_table     = gpFlush->freeBlks;
+ 257   2                      smtUint8                find_index              = INDEX_NA;
+ 258   2                      smtUint32               find_wear               = WEAR_NA;
+ 259   2      
+ 260   2                      for (a=0; a < gpFlush->freeBlkNum; a++)
+ 261   2                      {
+ 262   3                              // search for the highest dynamic 
+ 263   3                              if (!( (*dynamic_lock) & (*lookup_mask) ) )
+ 264   3                              { // check if locked 
+ 265   4                                      
+ 266   4                                      if (!((*free_table) & FTL_FBTYPE_BAD))
+ 267   4                                      {       // if it is realy free 
+ 268   5                                              smtUint32 wear=gl_dynamic_wear_info[a];
+ 269   5      
+ 270   5                                              if (wear != WEAR_NA)
+ 271   5                                              {
+ 272   6                                                      if (find_index == INDEX_NA)
+ 273   6                                                      {
+ 274   7                                                              find_index      = a;
+ 275   7                                                              find_wear       = wear;
+ 276   7                                                      }
+ 277   6                                                      else if (wear>find_wear)
+ 278   6                                                      {       // if its bigger 
+ 279   7                                                              find_index      = a;
+ 280   7                                                              find_wear       = wear;
+ 281   7                                                      }
+ 282   6                                              }
+ 283   5                                      }
+ 284   4      
+ 285   4                                      free_table++;
+ 286   4                                      lookup_mask++;
+ 287   4      
+ 288   4                                      if ((a&7)==7)
+ 289   4                                      {
+ 290   5                                              // reset look up 
+ 291   5                                              lookup_mask=(smtUint8*)gl_lookup_mask; 
+ 292   5                                              // goto next bitfield; 
+ 293   5                                              dynamic_lock++;                         
+ 294   5                                      }
+ 295   4                              }
+ 296   3                      }
+ 297   2      
+ 298   2                      if (find_index!=INDEX_NA)
+ 299   2                      {
+ 300   3                              if (find_wear>static_wear+WEAR_STATIC_LIMIT)
+ 301   3                              {
+ 302   4                                      // incremented by 1! 
+C51 COMPILER V8.05a   FTL_W_WEAR                                                           06/28/2007 17:29:24 PAGE 6   
+
+ 303   4                                      gpWearAllocData->free_index=find_index;
+ 304   4                                      gpWearAllocData->free_wear=find_wear+1; 
+ 305   4      
+ 306   4                                      gpWearAllocData->static_lba=static_lba;
+ 307   4                                      gpWearAllocData->static_wear=static_wear;
+ 308   4      
+ 309   4                                      gl_static->cnt=WEAR_STATIC_COUNT;
+ 310   4                                      // static wear successfully 
+ 311   4                                      return SMT_TRUE;         
+ 312   4                              }
+ 313   3                      }
+ 314   2              }
+ 315   1              else 
+ 316   1              {
+ 317   2                      gl_static->cnt--;
+ 318   2              }
+ 319   1      
+ 320   1              gpWearAllocData->free_index     = INDEX_NA;
+ 321   1              gpWearAllocData->static_lba     = BLK_NA;
+ 322   1              gpWearAllocData->static_wear    = WEAR_NA;
+ 323   1      
+ 324   1              // no static wear needed 
+ 325   1              return SMT_FALSE;
+ 326   1      }
+ 327          /*----------------------------------------------------------
+ 328                  Function name   : FTL_W_AllocWear
+ 329                  Prototype               : 
+ 330                  Return                  : none
+ 331                  Argument                : 
+ 332                  Comments                : 
+ 333                  
+ 334                          allocates a block from free table list according to theirs wear 
+ 335                          level info datas will be unchanged in all table (calling twice 
+ 336                          it returns with same values) if static_lba is not equal with 
+ 337                          BLK_NA then static wear heandler has to be called immediately. 
+ 338                          gl_wear_allocstruct holds all the information                                                           
+             -       
+ 339                  
+ 340          -----------------------------------------------------------*/
+ 341          void 
+ 342          FTL_W_AllocWear(
+ 343          void
+ 344          )
+ 345          {
+ 346   1              smtUint8        index;
+ 347   1              smtUint8        num;
+ 348   1              smtBlkAddr      *free_table;
+ 349   1              
+ 350   1              
+ 351   1              // Initialize all varaible(last counter, maxium cycle, free table)
+ 352   1              index           = gl_static->dynamic_index;
+ 353   1              num                     = (smtUint8)gpFlush->freeBlkNum;
+ 354   1              free_table      = &gpFlush->freeBlks[index];
+ 355   1      
+ 356   1              while (num--)
+ 357   1              {       
+ 358   2                      // cycle for all entries and goto next entry
+ 359   2                      free_table++;
+ 360   2                  index++;            
+ 361   2                      if (index >= gpFlush->freeBlkNum)
+ 362   2                      {
+ 363   3                              // Reset
+C51 COMPILER V8.05a   FTL_W_WEAR                                                           06/28/2007 17:29:24 PAGE 7   
+
+ 364   3                              index           = 0;                            
+ 365   3                              free_table      = gpFlush->freeBlks;    
+ 366   3                      }
+ 367   2      
+ 368   2                      // Check if block is not used (free) 
+ 369   2                      if (!((*free_table)&FTL_FBTYPE_BAD))
+ 370   2                      {       
+ 371   3                              // Check if block is not used (free) 
+ 372   3                              if (!(gl_dynamic_lock[index>>3]&gl_lookup_mask[index&7]))
+ 373   3                              { 
+ 374   4                                      
+ 375   4                                      gl_static->dynamic_index                = index;        
+ 376   4                                      gpWearAllocData->free_index     = index; 
+ 377   4                                      gpWearAllocData->free_wear      = gl_dynamic_wear_info[index]+1; 
+ 378   4                                      // Allocation is success 
+ 379   4                                      return;  
+ 380   4                              }
+ 381   3                      }
+ 382   2              }
+ 383   1      
+ 384   1              // Restore index 
+ 385   1              gl_static->dynamic_index                = index;                
+ 386   1              gpWearAllocData->free_index     = INDEX_NA;
+ 387   1              gpWearAllocData->free_wear      = WEAR_NA;              
+ 388   1              
+ 389   1              // Fatal error! no free block in the table 
+ 390   1      }
+ 391          /*----------------------------------------------------------
+ 392                  Function name   : FTL_W_UpdateDInfo
+ 393                  Prototype               : 
+ 394                  Return                  : none
+ 395                  Argument                : 
+ 396                  Comments                : 
+ 397                  
+ 398                          updating dynamic wear level info of an 
+ 399                          indexed block (free block)                                                
+ 400                  
+ 401          -----------------------------------------------------------*/
+ 402          void 
+ 403          FTL_W_UpdateDInfo(
+ 404          smtUint8        index,  // index of the block in free table entry
+ 405          smtUint32       wear    // wear info of given block
+ 406          ) 
+ 407          {
+ 408   1         if (index<gpFlush->freeBlkNum) 
+ 409   1         {
+ 410   2                      // Keep original data inside <e.g. for log,map blocks> 
+ 411   2                      if (wear<WEAR_NA)  
+ 412   2                      {
+ 413   3                              gl_dynamic_wear_info[index] = wear;
+ 414   3                      }
+ 415   2      
+ 416   2                      // optimalized! 
+ 417   2                      gl_dynamic_lock[index>>3] |= gl_lookup_mask[index&7]; 
+ 418   2              }
+ 419   1      }
+ 420          /*----------------------------------------------------------
+ 421                  Function name   : FTL_W_ReleaseDLock
+ 422                  Prototype               : 
+ 423                  Return                  : none
+ 424                  Argument                : 
+ 425                  Comments                : 
+C51 COMPILER V8.05a   FTL_W_WEAR                                                           06/28/2007 17:29:24 PAGE 8   
+
+ 426                  
+ 427                          Releasing newly added free blocks (enabled for allocation)
+ 428                          Must be called when a MAP dir or entry is stored
+ 429                  
+ 430          -----------------------------------------------------------*/
+ 431          void 
+ 432          FTL_W_ReleaseDLock(
+ 433          void
+ 434          ) 
+ 435          {
+ 436   1              smtUint8        idx;
+ 437   1      
+ 438   1              for (idx = 0; idx < sizeof(gl_dynamic_lock); idx++) 
+ 439   1              {
+ 440   2                      // set all bits to 0 
+ 441   2                      gl_dynamic_lock[idx] = 0; 
+ 442   2              }
+ 443   1      }
+ 444          /*----------------------------------------------------------
+ 445                  Function name   : FTL_W_UpdateSInfo
+ 446                  Prototype               : 
+ 447                  Return                  : none
+ 448                  Argument                : 
+ 449                  Comments                : 
+ 450                  
+ 451                          updating static wear info of a static block (used block)
+ 452                  
+ 453          -----------------------------------------------------------*/
+ 454          void 
+ 455          FTL_W_UpdateSInfo(
+ 456          smtBlkAddr      lba, 
+ 457          smtUint32       wear
+ 458          ) 
+ 459          {
+ 460   1              smtUint32       max_wear                = WEAR_NA;
+ 461   1              smtUint8        idx,max_index   = INDEX_NA;
+ 462   1      
+ 463   1              if (lba == BLK_NA) return;
+ 464   1      
+ 465   1              // check if its already existed 
+ 466   1              for(idx = 0; idx < MAXSTATICWEAR; idx++)   
+ 467   1              {
+ 468   2                      if (gl_static->wear_info[idx].lba==lba) 
+ 469   2                      {
+ 470   3                              gl_static->wear_info[idx].wear=wear;
+ 471   3                              return;
+ 472   3                      }
+ 473   2              }
+ 474   1      
+ 475   1              // search maximum or empty entry 
+ 476   1              for(idx = 0; idx < MAXSTATICWEAR; idx++)    
+ 477   1              {
+ 478   2                      smtUint32 twear = gl_static->wear_info[idx].wear;
+ 479   2                      if(twear != WEAR_NA) 
+ 480   2                      {
+ 481   3                              if(max_index != INDEX_NA) 
+ 482   3                              {
+ 483   4                                      if (twear < max_wear) continue;
+ 484   4                              }
+ 485   3      
+ 486   3                              max_wear        = twear;
+ 487   3                              max_index       = idx;
+C51 COMPILER V8.05a   FTL_W_WEAR                                                           06/28/2007 17:29:24 PAGE 9   
+
+ 488   3                      }
+ 489   2                      else  
+ 490   2                      {// if entry is empty put immediatelly 
+ 491   3                              gl_static->wear_info[idx].wear  = wear;
+ 492   3                              gl_static->wear_info[idx].lba   = lba;
+ 493   3                              return;
+ 494   3                      }
+ 495   2              }
+ 496   1      
+ 497   1              if(max_index != INDEX_NA) 
+ 498   1              {
+ 499   2                      if(wear < max_wear) 
+ 500   2                      {
+ 501   3                              gl_static->wear_info[max_index].wear    = wear;
+ 502   3                              gl_static->wear_info[max_index].lba             = lba;
+ 503   3                      }
+ 504   2              }
+ 505   1      }
+ 506          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1675    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     75      48
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

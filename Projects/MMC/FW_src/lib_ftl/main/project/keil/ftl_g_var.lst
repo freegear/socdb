@@ -1,0 +1,109 @@
+C51 COMPILER V8.05a   FTL_G_VAR                                                            06/28/2007 17:29:23 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL_G_VAR
+OBJECT MODULE PLACED IN .\ftl_g_var.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_ftl\ftl_g_var.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..\..\
+                    -sys;..\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl_g_var.lst) OBJECT(.\ftl_g_var.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include <string.h>
+  39          #include "../lib_nand/ftl_l_layer.h"
+  40          #include "ftl_t_define.h"
+  41          #include "ftl_o_rw.h"
+  42          #include "ftl_w_wear.h"
+  43          #include "ftl_c_core.h"
+  44          /*
+  45          /////////////////////////////////////////////////////////
+  46                  DEFINITION
+  47          ///////////////////////////////////////////////////////// 
+  48          */
+  49          #define FTL_WEARDATA_OFFSET             (256)
+  50          #define FTL_FRAGCACHE_OFFSET    ((1024+256))
+  51          #define FTL_LOGCACHE_OFFSET             (FTL_FRAGCACHE_OFFSET+sizeof(ST_FRAG))
+  52          #define FTL_FLUSHDATA_OFFSET    (FTL_LOGCACHE_OFFSET+sizeof(ST_LOG_CACHE))
+  53          #define FTL_MAPBLOCK_OFFSET             (FTL_FLUSHDATA_OFFSET+sizeof(ST_MAP_BLOCKS))
+  54          #define FTL_MAPDIR_OFFSET               (FTL_MAPBLOCK_OFFSET+sizeof(ST_MAP_BLOCKS))
+C51 COMPILER V8.05a   FTL_G_VAR                                                            06/28/2007 17:29:23 PAGE 2   
+
+  55          
+  56          /*
+  57          /////////////////////////////////////////////////////////
+  58                  GLOBAL VARIABLE
+  59          ///////////////////////////////////////////////////////// 
+  60          */
+  61          // NAND device information
+  62          smtUint8                        ml_basebuff[FTL_DATA_MAXSIZE+FTL_SPARE_MAXSIZE];
+  63          smtUint8                        ml_buffer[FTL_PAGE_MAXSIZE]; 
+  64          FTL_DEV_INFO            gDevInfo;       
+  65          smtBoolean                      gfSaveMapNeed;
+  66          WEAR_ALLOCSTRUCT        *gpWearAllocData        = (WEAR_ALLOCSTRUCT*)&ml_basebuff[FTL_WEARDATA_OFFSET];
+  67          ST_FRAG                         *gpFragCache            = (ST_FRAG*)&ml_basebuff[FTL_FRAGCACHE_OFFSET];
+  68          ST_LOG_CACHE            *gpLogCache                     = (ST_LOG_CACHE*)&ml_basebuff[FTL_LOGCACHE_OFFSET];
+  69          ST_FLUSH_DATA           *gpFlush                        = (ST_FLUSH_DATA*)&ml_basebuff[FTL_FLUSHDATA_OFFSET];
+  70          ST_MAP_BLOCKS           *gpMapBlocks            = (ST_MAP_BLOCKS*)&ml_basebuff[FTL_MAPBLOCK_OFFSET];
+  71          ST_MAPDIR                       *gpMapDir                       = (ST_MAPDIR*)&ml_basebuff[FTL_MAPDIR_OFFSET];
+  72          
+  73          /*
+  74          /////////////////////////////////////////////////////////
+  75                  STATIC VARIABLE
+  76          ///////////////////////////////////////////////////////// 
+  77          */
+  78          /*
+  79          /////////////////////////////////////////////////////////
+  80                  FUNCTIONS 
+  81          ///////////////////////////////////////////////////////// 
+  82          */
+  83          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   4146    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

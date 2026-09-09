@@ -1,0 +1,214 @@
+#include <stdio.h>
+#include <string.h>
+#include "../inc/ftl.h"
+
+unsigned char 	buffer[2048*100];
+
+#ifndef WIN32	
+xdata char	memoryPool[20*1024];
+#endif
+/*----------------------------------------------------------
+	Function name	: 
+	Prototype		: 
+	Return			: 
+	Argument		: 
+	Comments		: 
+-----------------------------------------------------------*/
+int MakePattern(unsigned int seed, unsigned int buffer, unsigned int size)
+{
+	unsigned int 	i;//, j;
+	unsigned int	*pbuffer = (unsigned int*)buffer;
+	
+	for(i = 0; i < size/sizeof(int); i++)
+	{
+		pbuffer[i] = ((seed<<16) | i);
+	}
+	
+	return 0;
+}
+/*----------------------------------------------------------
+	Function name	: 
+	Prototype		: 
+	Return			: 
+	Argument		: 
+	Comments		: 
+-----------------------------------------------------------*/
+int CheckPattern(unsigned int seed, unsigned int buffer, unsigned int size)
+{
+	unsigned int 	i;//, j;
+	unsigned int	pattern;
+	unsigned int	*pbuffer = (unsigned int*)buffer;
+
+	for(i = 0; i < size/4; i++)
+	{
+		
+		pattern = ((seed<<16) | i);
+		if(pbuffer[i] != pattern)
+		{
+			SMT_FTL_DPRINTF("[%05d] estimated:real = 0x%08x: 0x%08x\n",
+				i*4, pattern, pbuffer[i]);
+			return 0;
+		}
+	}
+	
+	return 1;
+}
+/*----------------------------------------------------------
+	Function name	: 
+	Prototype		: 
+	Return			: 
+	Argument		: 
+	Comments		: 
+-----------------------------------------------------------*/
+void HexDump(unsigned int buffer, unsigned int size)
+{
+	unsigned int 	i, j = 0;
+	unsigned char	*pbuffer = (unsigned char*)buffer;
+	for(i = 0; i < size/16; i++)
+	{
+		SMT_FTL_DPRINTF("0x%08x : ", &pbuffer[i*16+j]);
+		for(j = 0; j < 16; j++) 
+		 	SMT_FTL_DPRINTF("%02x ", pbuffer[i*16+j]);
+		 
+		SMT_FTL_DPRINTF(" | ");
+		 
+		for(j = 0; j < 16; j++) 
+		{
+			if( (pbuffer[i*16+j] >= 0x00)
+			 && (pbuffer[i*16+j] <= 0x1F))
+				SMT_FTL_DPRINTF(" ");
+		 	else
+				SMT_FTL_DPRINTF("%c", pbuffer[i*16+j]);
+		}
+		
+		SMT_FTL_DPRINTF("\n");
+		
+	}	
+	SMT_FTL_DPRINTF("\n");
+}
+/*----------------------------------------------------------
+	Function name	: 
+	Prototype		: 
+	Return			: 
+	Argument		: 
+	Comments		: 
+-----------------------------------------------------------*/
+void main()
+{
+
+	smtUint32	ret;
+	smtUint32	testIdx, loop;
+	smtUint32	multi		= 3;
+	smtUint32	sector_size	= 512;
+	smtUint32	sector;
+
+#ifndef WIN32	
+	init_mempool(memoryPool, sizeof(memoryPool));
+#endif	
+
+
+	ret = FTL_Format();
+	if(ret == SMT_FALSE) {
+		SMT_FTL_DPRINTF("FTL_Format fail!!!\n");
+		SMT_ASSERT(0);
+	}
+	
+
+	ret = FTL_Init();
+	if(ret == SMT_FALSE) {
+		SMT_FTL_DPRINTF("flt_init fail!!!\n");
+		SMT_ASSERT(0);
+	}
+		
+	
+	SMT_FTL_DPRINTF("flt_max sectors: %d\n", 
+		FTL_GetMaxSectors());
+
+
+	for(
+		testIdx = 0; 
+		testIdx < 1000; 
+		testIdx++)
+	{
+		
+		
+		// Single sector ramdon test
+		if(!testIdx%3){
+	
+			for(loop = 0; loop < 100; loop++)
+			{
+		
+				srand(testIdx);
+				multi	= rand()%99 + 1;
+				sector	= rand()%100000;
+				SMT_FTL_DPRINTF("sector: %d multi: %d\n", sector, multi);
+	
+	
+				SMT_FTL_DPRINTF("---------------------------------------------------------------\n");
+				SMT_FTL_DPRINTF("[MAIN] same sector write data to sector : %d\n", sector);
+				SMT_FTL_DPRINTF("---------------------------------------------------------------\n");
+				
+				MakePattern(sector, (smtUint32)buffer, sector_size*multi);
+				ret = FTL_Write((smtUint32)sector, multi, (smtUint32)buffer);
+				if(ret == SMT_FALSE) {
+					SMT_FTL_DPRINTF("ftl_write fail!!!\n");
+				}
+	
+	
+				memset(buffer, 0, sizeof(char)*sector_size*multi);
+	
+				ret = FTL_Read((smtUint32)sector, multi, (smtUint32)buffer);
+				if(ret == SMT_FALSE) {
+					SMT_FTL_DPRINTF("ftl_read fail!!!\n");
+				}
+				ret = CheckPattern((smtUint32)sector, (smtUint32)buffer, sector_size*multi);
+				if(!ret)
+				{	
+					SMT_FTL_DPRINTF("error !!!\n");
+					while(1);
+				}
+			}
+		}
+		// Sequence sector random test
+		else
+		{
+			srand(testIdx);
+			multi	= rand()%99 + 1;
+			sector	= rand()%100000;
+			SMT_FTL_DPRINTF("sector: %d multi: %d\n", sector, multi);
+			
+			
+			SMT_FTL_DPRINTF("---------------------------------------------------------------\n");
+			SMT_FTL_DPRINTF("[MAIN]w data to sector : %d\n", sector);
+			SMT_FTL_DPRINTF("---------------------------------------------------------------\n");
+			
+			
+			
+			MakePattern(sector, (smtUint32)buffer, sector_size*multi);
+			ret = FTL_Write(sector, multi, (unsigned int)buffer);
+			if(ret == SMT_FALSE) {
+				SMT_FTL_DPRINTF("ftl_write fail!!!\n");
+			}
+			
+			memset(buffer, 0, sizeof(char)*sector_size*multi);
+			
+			ret = FTL_Read(sector, multi, (unsigned int)buffer);
+			if(ret == SMT_FALSE) {
+				SMT_FTL_DPRINTF("ftl_read fail!!!\n");
+			}
+			ret = CheckPattern(sector, (unsigned int)buffer, sector_size*multi);
+			if(!ret)
+			{	
+				SMT_FTL_DPRINTF("error !!!\n");
+				while(1);
+			}
+		}
+	}
+	
+	ret = FTL_Deinit();
+	if(ret == SMT_FALSE)
+	{
+		SMT_FTL_DPRINTF("ftl_deinit fail!!!\n");
+	}
+	
+}

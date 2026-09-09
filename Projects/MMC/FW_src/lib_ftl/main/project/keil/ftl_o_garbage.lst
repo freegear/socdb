@@ -1,0 +1,347 @@
+C51 COMPILER V8.05a   FTL_O_GARBAGE                                                        06/28/2007 17:29:23 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL_O_GARBAGE
+OBJECT MODULE PLACED IN .\ftl_o_garbage.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_ftl\ftl_o_garbage.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..
+                    -\..\sys;..\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl_o_garbage.lst) OBJECT(.\ftl_o_garbage.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include <string.h>
+  39          #include "../lib_nand/ftl_l_layer.h"
+  40          #include "ftl_t_define.h"
+  41          #include "ftl_o_rw.h"
+  42          #include "ftl_w_wear.h"
+  43          #include "ftl_c_core.h"
+  44          
+  45          
+  46          /*
+  47          /////////////////////////////////////////////////////////
+  48                  GLOBAL VARIABLE DECLARE
+  49          ///////////////////////////////////////////////////////// 
+  50          */
+  51          
+  52          /*
+  53          /////////////////////////////////////////////////////////
+  54                  FUNCTIONS 
+C51 COMPILER V8.05a   FTL_O_GARBAGE                                                        06/28/2007 17:29:23 PAGE 2   
+
+  55          ///////////////////////////////////////////////////////// 
+  56          */
+  57          /*----------------------------------------------------------
+  58                  Function name   : DoStatic
+  59                  Prototype               : 
+  60                  Return                  : none
+  61                  Argument                : 
+  62                  Comments                : does static wear leveling, its read logical
+  63                                                    block, updates static wear info, and if static
+  64                                                    request is comming, then copy the block
+  65          -----------------------------------------------------------*/
+  66          static 
+  67          void 
+  68          DoStatic(
+  69          void
+  70          )
+  71          {
+  72   1              smtUint32               wear;
+  73   1              smtBlkAddr              pba;
+  74   1              smtBlkAddr              static_lba;
+  75   1      
+  76   1              //-------------------------------------------------------
+  77   1              // Get next static LBA
+  78   1              //-------------------------------------------------------
+  79   1              static_lba      = FTL_W_GetStaticLBA();
+  80   1              for (;;)
+  81   1              {
+  82   2                      static_lba++;
+  83   2                      if (static_lba >= gDevInfo.dataBlks) 
+  84   2                      {
+  85   3                              static_lba = 0;
+  86   3                      }
+  87   2      
+  88   2                      pba = FTL_C_GetPhy(static_lba);
+  89   2                      if (pba != BLK_NA) 
+  90   2                      {
+  91   3                              break;
+  92   3                      }
+  93   2      
+  94   2                      static_lba = 0;
+  95   2                      pba = FTL_C_GetPhy(static_lba);
+  96   2                      if (pba != BLK_NA) 
+  97   2                      {
+  98   3                              break;
+  99   3                      }
+ 100   2              }
+ 101   1              FTL_W_SetStaticLBA(static_lba);
+ 102   1      
+ 103   1      
+ 104   1              //-------------------------------------------------------
+ 105   1              // Copy block ?? 
+ 106   1              //-------------------------------------------------------
+ 107   1              if(!FTL_L_Read(
+ 108   1                      pba,
+ 109   1                      0,
+ 110   1                      ml_buffer)      // 
+ 111   1              )
+ 112   1              { // get original 
+ 113   2                      
+ 114   2                      wear = GET_SPARE_AREA(ml_buffer)->wear;
+ 115   2                      if (wear<WEAR_NA) 
+ 116   2                      {
+C51 COMPILER V8.05a   FTL_O_GARBAGE                                                        06/28/2007 17:29:23 PAGE 3   
+
+ 117   3                              FTL_W_UpdateSInfo(static_lba,wear);
+ 118   3                      }
+ 119   2                      else 
+ 120   2                      {
+ 121   3                              FTL_W_UpdateSInfo(static_lba,0);
+ 122   3                      }
+ 123   2              }
+ 124   1              else 
+ 125   1              {
+ 126   2                      FTL_W_UpdateSInfo(static_lba,0);
+ 127   2              }
+ 128   1      
+ 129   1              if(FTL_W_ChkStatic())
+ 130   1              {
+ 131   2                      smtPageAddr             po;
+ 132   2                      smtBlkAddr              d_pba,lba;
+ 133   2                      smtBlkAddr              s_pba;
+ 134   2                      smtUint8        index = gpWearAllocData->free_index;
+ 135   2      
+ 136   2                      if(index == INDEX_NA) 
+ 137   2                      {
+ 138   3                              return;
+ 139   3                      }
+ 140   2                      //d_pba = gl_freetable[index];
+ 141   2                      d_pba = gpFlush->freeBlks[index]&FTL_BLKADDR_MASK;
+ 142   2      
+ 143   2                      if(FTL_L_Erase(d_pba) ==  FTL_L_ERROR)
+ 144   2                      {
+ 145   3                              // signal it and set as BAD 
+ 146   3                              gpFlush->freeBlks[index] |= FTL_FBTYPE_BAD;
+ 147   3                              return;
+ 148   3                      }
+ 149   2      
+ 150   2                      lba             = gpWearAllocData->static_lba;
+ 151   2                      s_pba   = FTL_C_GetPhy(lba);
+ 152   2                      if (s_pba == BLK_NA) 
+ 153   2                      {
+ 154   3                              // nothing to do 
+ 155   3                              return; 
+ 156   3                      }
+ 157   2      
+ 158   2                      for (po = 0; po < gDevInfo.pagePerBlks; po++)
+ 159   2                      {
+ 160   3                              int ret=FTL_L_Read(s_pba,po,ml_buffer);
+ 161   3                              if (!po)
+ 162   3                              {
+ 163   4                                      ST_SPARE *sptr                  = GET_SPARE_AREA(ml_buffer);
+ 164   4                                      sptr->wear                              = gpWearAllocData->free_wear;
+ 165   4                                      sptr->u.map.block_type  = FTL_BTYPE_DAT;
+ 166   4                              }
+ 167   3                              else if (ret) 
+ 168   3                              {
+ 169   4                                      continue;
+ 170   4                              }
+ 171   3      
+ 172   3                              if (FTL_L_Write(
+ 173   3                                      d_pba,
+ 174   3                                      po,
+ 175   3                                      ml_buffer
+ 176   3                                      ) == FTL_L_ERROR) 
+ 177   3                              {
+ 178   4                                      // we can stop static swap 
+C51 COMPILER V8.05a   FTL_O_GARBAGE                                                        06/28/2007 17:29:23 PAGE 4   
+
+ 179   4                                      return; 
+ 180   4                              }
+ 181   3                      }
+ 182   2      
+ 183   2                      FTL_C_SetPhy(lba,d_pba);
+ 184   2                      FTL_W_UpdateSInfo(lba,gpWearAllocData->free_wear);
+ 185   2      
+ 186   2                      gpFlush->freeBlks[index] = s_pba;
+ 187   2                      FTL_W_UpdateDInfo(index,gpWearAllocData->static_wear);
+ 188   2      
+ 189   2                      FTL_C_SaveMap();
+ 190   2              }
+ 191   1      }
+ 192          /*----------------------------------------------------------
+ 193                  Function name   : FTL_O_GCollect
+ 194                  Prototype               : 
+ 195                  Return                  : 
+ 196                  Argument                : 
+ 197                  Comments                : does log block and logical block merge
+ 198          -----------------------------------------------------------*/
+ 199          smtBoolean                      // 0/other, success/any error
+ 200          FTL_O_GCollect(
+ 201          void
+ 202          ) 
+ 203          {
+ 204   1              smtUint32       wear=WEAR_NA;
+ 205   1              smtUint8        po,lpo,index;
+ 206   1              smtBlkAddr      pba;
+ 207   1              smtBlkAddr      orig_pba;
+ 208   1              ST_LOG          *log;
+ 209   1              
+ 210   1              printf("[FTL_O_GCollect]+\n");
+ 211   1      
+ 212   1              log = gpLogCache->curLog;
+ 213   1      
+ 214   1              DoStatic();
+ 215   1      
+ 216   1              gfSaveMapNeed   = SMT_TRUE;
+ 217   1      
+ 218   1              orig_pba                = FTL_C_GetPhy(log->lba);
+ 219   1              SMT_ASSERT(orig_pba != BLK_NA);
+ 220   1              
+ 221   1              //-------------------------------------------------------
+ 222   1              // Check  switch enable!!! and switch block
+ 223   1              //-------------------------------------------------------
+ 224   1              if ((log->lastppo == gDevInfo.pagePerBlks)      
+ 225   1            && log->switchable)
+ 226   1              { //  check if switchable 
+ 227   2      
+ 228   2                      // Switch log block
+ 229   2                      FTL_C_SetPhy(log->lba, log->pba);               
+ 230   2                      FTL_W_UpdateSInfo(log->lba, log->wear);
+ 231   2      
+ 232   2                      // Update free table
+ 233   2                      if (FTL_L_ERROR != FTL_L_Read(orig_pba, 0, ml_buffer))
+ 234   2                      {
+ 235   3                              wear = GET_SPARE_AREA(ml_buffer)->wear;
+ 236   3                              if(wear == WEAR_NA) wear = 0;
+ 237   3                      }
+ 238   2                      else
+ 239   2                      {
+ 240   3                              SMT_ASSERT(0);
+C51 COMPILER V8.05a   FTL_O_GARBAGE                                                        06/28/2007 17:29:23 PAGE 5   
+
+ 241   3                      }
+ 242   2      
+ 243   2                      // Release log and alloc log
+ 244   2                      gpFlush->freeBlks[log->index] = orig_pba;
+ 245   2                      FTL_W_UpdateDInfo(log->index, wear);
+ 246   2                      log->lba = BLK_NA;
+ 247   2                      gpLogCache->lockedCnt--;
+ 248   2      
+ 249   2                      printf("[FTL_O_GCollect]-\n");
+ 250   2                      return SMT_TRUE;
+ 251   2              }
+ 252   1              
+ 253   1              
+ 254   1              
+ 255   1              index = FTL_C_AllocBlk();
+ 256   1              SMT_ASSERT(index != INDEX_NA);
+ 257   1              pba = gpFlush->freeBlks[index]&FTL_BLKADDR_MASK;
+ 258   1      
+ 259   1              //-------------------------------------------------------
+ 260   1              // Get log cache data to orignal block
+ 261   1              //-------------------------------------------------------
+ 262   1              for (po = 0; po < gDevInfo.pagePerBlks; po++)
+ 263   1              {
+ 264   2                      lpo = log->ppo[po];
+ 265   2                      if(lpo == INDEX_NA)
+ 266   2                      {
+ 267   3                              FTL_L_Read(orig_pba, po, ml_buffer);
+ 268   3                      }
+ 269   2                      else
+ 270   2                      {
+ 271   3                              FTL_L_Read(log->pba,lpo,ml_buffer);     
+ 272   3                      }
+ 273   2                      
+ 274   2      
+ 275   2                      if (po == 0)
+ 276   2                      {
+ 277   3                              ST_SPARE *sptr                  = GET_SPARE_AREA(ml_buffer);
+ 278   3                              sptr->wear                              = gpWearAllocData->free_wear;
+ 279   3                              sptr->u.map.block_type  = FTL_BTYPE_DAT;
+ 280   3                      }
+ 281   2      
+ 282   2                      if (FTL_L_Write(pba, po, ml_buffer) == FTL_L_ERROR) 
+ 283   2                      {
+ 284   3                              SMT_ASSERT(0);
+ 285   3                      }
+ 286   2              }
+ 287   1      
+ 288   1      
+ 289   1              // Wear update
+ 290   1              if (FTL_L_ERROR != FTL_L_Read(orig_pba, 0 ,ml_buffer))
+ 291   1              {
+ 292   2                      wear = GET_SPARE_AREA(ml_buffer)->wear;
+ 293   2                      if(wear == WEAR_NA) wear = 0;
+ 294   2              }
+ 295   1              
+ 296   1              // Update orignal block 
+ 297   1              gpFlush->freeBlks[index] = orig_pba;
+ 298   1              FTL_W_UpdateDInfo(index, wear);
+ 299   1      
+ 300   1              // Update static
+ 301   1              FTL_C_SetPhy(log->lba, pba);            
+ 302   1              FTL_W_UpdateSInfo(log->lba, gpWearAllocData->free_wear);
+C51 COMPILER V8.05a   FTL_O_GARBAGE                                                        06/28/2007 17:29:23 PAGE 6   
+
+ 303   1              
+ 304   1              // Release current log
+ 305   1              log->lba = BLK_NA;
+ 306   1              gpLogCache->lockedCnt--;        
+ 307   1              gpFlush->freeBlks[log->index] &= ~FTL_FBTYPE_LOG;
+ 308   1              FTL_W_UpdateDInfo(log->index, WEAR_NA);
+ 309   1              
+ 310   1      
+ 311   1              printf("[FTL_O_GCollect]-\n");
+ 312   1              return SMT_TRUE;
+ 313   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1213    ----
+   CONSTANT SIZE    =     38    ----
+   XDATA SIZE       =   ----      34
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

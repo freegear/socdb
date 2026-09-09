@@ -1,0 +1,410 @@
+C51 COMPILER V8.05a   FTL                                                                  06/28/2007 17:29:22 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL
+OBJECT MODULE PLACED IN .\ftl.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_ftl\ftl.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..\..\sys;..
+                    -\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl.lst) OBJECT(.\ftl.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include <stdio.h>
+  39          #include <string.h>
+  40          #include "ftl_o_gabarge.h"
+  41          #include "ftl_o_rw.h"
+  42          /*
+  43          /////////////////////////////////////////////////////////
+  44                  DEFINITION
+  45          ///////////////////////////////////////////////////////// 
+  46          */
+  47          /*
+  48          /////////////////////////////////////////////////////////
+  49                  GLOBAL VARIABLE
+  50          ///////////////////////////////////////////////////////// 
+  51          */
+  52          /*
+  53          /////////////////////////////////////////////////////////
+  54                  STATIC VARIABLE
+C51 COMPILER V8.05a   FTL                                                                  06/28/2007 17:29:22 PAGE 2   
+
+  55          ///////////////////////////////////////////////////////// 
+  56          */
+  57          /*
+  58          /////////////////////////////////////////////////////////
+  59                  FUNCTIONS 
+  60          ///////////////////////////////////////////////////////// 
+  61          */
+  62          extern smtUint8 ml_buffer[FTL_PAGE_MAXSIZE]; 
+  63          
+  64          /*----------------------------------------------------------
+  65                  Function name   :       FTL_Format
+  66                  Prototype               : 
+  67                  Return                  : 
+  68                  Argument                : 
+  69                  Comments                : 
+  70          -----------------------------------------------------------*/
+  71          smtBoolean 
+  72          FTL_Format(
+  73          void
+  74          )
+  75          {
+  76   1              smtBoolean ret;
+  77   1      
+  78   1              // loading..
+  79   1              ret = FTL_O_LowInit(); 
+  80   1              if(ret == SMT_FALSE) {
+  81   2                      printf("FTL_LowInit fail!!!\n");
+  82   2                      return SMT_FALSE;
+  83   2              }
+  84   1      
+  85   1      
+  86   1              ret = FTL_O_Format();
+  87   1              if(ret == SMT_FALSE) {
+  88   2                      printf("FTL_O_Format fail!!!\n");
+  89   2                      return SMT_FALSE;
+  90   2              }
+  91   1      
+  92   1              return SMT_TRUE;
+  93   1      }
+  94          
+  95          /*----------------------------------------------------------
+  96                  Function name   :       FTL_Init
+  97                  Prototype               : 
+  98                  Return                  : 
+  99                  Argument                : 
+ 100                  Comments                : 
+ 101          -----------------------------------------------------------*/
+ 102          smtBoolean 
+ 103          FTL_Init(
+ 104          void
+ 105          )
+ 106          {
+ 107   1              
+ 108   1              smtBoolean ret;
+ 109   1      
+ 110   1              ret = FTL_O_LowInit();
+ 111   1              if(ret == SMT_FALSE) {
+ 112   2                      printf("FTL_O_LowInit fail!!!\n");
+ 113   2                      return SMT_FALSE;
+ 114   2              }
+ 115   1      
+ 116   1              ret = FTL_O_Init();
+C51 COMPILER V8.05a   FTL                                                                  06/28/2007 17:29:22 PAGE 3   
+
+ 117   1              if(ret == SMT_FALSE){
+ 118   2                      printf("FTL_O_Init fail!!!\n");
+ 119   2                      return SMT_FALSE;
+ 120   2              }
+ 121   1      
+ 122   1              ret = FTL_O_BuildMap();
+ 123   1              if(ret == SMT_FALSE){
+ 124   2                      printf("FTL_O_BuildMap fail!!!\n");
+ 125   2                      return SMT_FALSE;
+ 126   2              }
+ 127   1      
+ 128   1              ret = FTL_O_BuildLog();
+ 129   1              if(ret == SMT_FALSE){
+ 130   2                      printf("FTL_O_BuildLog fail!!!\n");
+ 131   2                      return SMT_FALSE;
+ 132   2              }
+ 133   1      
+ 134   1      
+ 135   1              return SMT_TRUE;
+ 136   1      }
+ 137          /*----------------------------------------------------------
+ 138                  Function name   :       FTL_Deinit
+ 139                  Prototype               : 
+ 140                  Return                  : 
+ 141                  Argument                : 
+ 142                  Comments                : 
+ 143          -----------------------------------------------------------*/
+ 144          smtBoolean
+ 145          FTL_Deinit(
+ 146          void
+ 147          )
+ 148          {
+ 149   1              return SMT_TRUE;
+ 150   1      }
+ 151          
+ 152          /*----------------------------------------------------------
+ 153                  Function name   :       FTL_Write
+ 154                  Prototype               : 
+ 155                  Return                  : 
+ 156                  Argument                : 
+ 157                  Comments                : 
+ 158          -----------------------------------------------------------*/
+ 159          smtBoolean
+ 160          FTL_Write(
+ 161          smtUint32       sector, // sector address
+ 162          smtUint32       num,    // number of sector
+ 163          smtUint32       buffer  // source buffer
+ 164          )
+ 165          {
+ 166   1      
+ 167   1      #define SS_PER_SN       4       
+ 168   1      
+ 169   1              smtUint32       so, sn;
+ 170   1              smtUint32       sso, ssi, ssn;
+ 171   1              smtUint8        *pbufInternal;
+ 172   1              int     ret;
+ 173   1      
+ 174   1      
+ 175   1              
+ 176   1              // make super sector offset
+ 177   1              sso = sector/SS_PER_SN;
+ 178   1      
+C51 COMPILER V8.05a   FTL                                                                  06/28/2007 17:29:22 PAGE 4   
+
+ 179   1              // clip forward
+ 180   1              if(sector%SS_PER_SN) 
+ 181   1              {
+ 182   2                      so      = sector%SS_PER_SN;
+ 183   2                      sn      = SS_PER_SN - sector%SS_PER_SN;
+ 184   2                      if(num < sn) sn = num;
+ 185   2                      
+ 186   2                              
+ 187   2      retry0: 
+ 188   2              
+ 189   2                      ret = FTL_O_Read(sso);
+ 190   2                      if(ret) return SMT_FALSE;
+ 191   2                              
+ 192   2                      pbufInternal = (smtUint8*)FTL_O_GetRWBuffer();
+ 193   2                      memcpy((void*)(pbufInternal + so*512),
+ 194   2                                      (void*)buffer,
+ 195   2                                      512*sn);
+ 196   2                      
+ 197   2                      ret = FTL_O_Write(sso);
+ 198   2                      if(ret == 2) 
+ 199   2                      {
+ 200   3                              FTL_O_GCollect();
+ 201   3                              goto retry0;
+ 202   3                      }
+ 203   2                      if(ret == 1) return SMT_FALSE;          
+ 204   2      
+ 205   2      
+ 206   2                      buffer  += 512*sn;
+ 207   2                      sso             += 1;   
+ 208   2                      num             -= sn;
+ 209   2              }
+ 210   1              
+ 211   1              // center super sector
+ 212   1              if(num/SS_PER_SN)
+ 213   1              {
+ 214   2                      ssn = num/SS_PER_SN;
+ 215   2                      for(ssi = 0; ssi < ssn; ssi++)
+ 216   2                      {
+ 217   3      
+ 218   3      retry1:
+ 219   3                              pbufInternal = (smtUint8*)FTL_O_GetRWBuffer();
+ 220   3                              memcpy((void*)pbufInternal
+ 221   3                                        ,(void*)buffer 
+ 222   3                                        ,2048);
+ 223   3      
+ 224   3                              ret = FTL_O_Write(sso+ssi);
+ 225   3                              if(ret == 2) 
+ 226   3                              {
+ 227   4                                      FTL_O_GCollect();
+ 228   4                                      goto retry1;
+ 229   4                              }
+ 230   3                              if(ret == 1) return SMT_FALSE;
+ 231   3                                                                                        
+ 232   3                              buffer  += 2048;
+ 233   3                      }
+ 234   2                      sso += ssn;
+ 235   2                      num -= ssn*SS_PER_SN;
+ 236   2              }
+ 237   1      
+ 238   1              // clip backward
+ 239   1              if(num%SS_PER_SN)
+ 240   1              {
+C51 COMPILER V8.05a   FTL                                                                  06/28/2007 17:29:22 PAGE 5   
+
+ 241   2                      sn      = num%SS_PER_SN;
+ 242   2      
+ 243   2      retry3: 
+ 244   2                      ret = FTL_O_Read(sso);
+ 245   2                      if(ret) return SMT_FALSE;
+ 246   2                              
+ 247   2                      pbufInternal = (smtUint8*)FTL_O_GetRWBuffer();          
+ 248   2                      memcpy((void*)pbufInternal
+ 249   2                                ,(void*)buffer
+ 250   2                                ,512*sn);
+ 251   2                                
+ 252   2                      ret = FTL_O_Write(sso);
+ 253   2                      if(ret == 2) 
+ 254   2                      {
+ 255   3                              FTL_O_GCollect();
+ 256   3                              goto retry3;
+ 257   3                      }
+ 258   2                      if(ret == 1) return SMT_FALSE;                                    
+ 259   2                                
+ 260   2                      buffer  += 512*sn;
+ 261   2                      num     -= sn;
+ 262   2      
+ 263   2              }
+ 264   1              
+ 265   1      
+ 266   1              return SMT_TRUE;
+ 267   1      }
+ 268          /*----------------------------------------------------------
+ 269                  Function name   :       FTL_Read
+ 270                  Prototype               : 
+ 271                  Return                  : 
+ 272                  Argument                : 
+ 273                  Comments                : 
+ 274          -----------------------------------------------------------*/
+ 275          smtBoolean
+ 276          FTL_Read(
+ 277          smtUint32       sector, // sector address
+ 278          smtUint32       num,    // number of sector
+ 279          smtUint32       buffer  // target buffer
+ 280          )
+ 281          {
+ 282   1              
+ 283   1      #define SS_PER_SN       4       
+ 284   1              
+ 285   1              smtUint32       so, si, sn;
+ 286   1              smtUint32       sso, ssi, ssn;
+ 287   1              smtUint8        *pbufInternal;
+ 288   1              smtBoolean      ret;
+ 289   1      
+ 290   1              // make super sector offset
+ 291   1              sso = sector/SS_PER_SN;
+ 292   1      
+ 293   1              // clip forward
+ 294   1              if(sector%SS_PER_SN) 
+ 295   1              {
+ 296   2                      so      = sector%SS_PER_SN;
+ 297   2                      sn      = SS_PER_SN - sector%SS_PER_SN;
+ 298   2                      if(num < sn) sn = num;
+ 299   2                      
+ 300   2                      ret = FTL_O_Read(sso);
+ 301   2                      if(ret) return SMT_FALSE;
+ 302   2      
+C51 COMPILER V8.05a   FTL                                                                  06/28/2007 17:29:22 PAGE 6   
+
+ 303   2                      pbufInternal = (smtUint8*)FTL_O_GetRWBuffer();          
+ 304   2                      memcpy((void*)buffer,
+ 305   2                                 (void*)(pbufInternal + so*512),
+ 306   2                                  512*sn);
+ 307   2      
+ 308   2                      buffer  += 512*sn;
+ 309   2                      sso             += 1;   
+ 310   2                      num             -= sn;
+ 311   2              }
+ 312   1              
+ 313   1              // center super sector
+ 314   1              if(num/SS_PER_SN)
+ 315   1              {
+ 316   2                      ssn = num/SS_PER_SN;
+ 317   2                      for(ssi = 0; ssi < ssn; ssi++)
+ 318   2                      {
+ 319   3                              ret = FTL_O_Read(sso+ssi);
+ 320   3                              if(ret) return SMT_FALSE;
+ 321   3      
+ 322   3                              pbufInternal = (smtUint8*)FTL_O_GetRWBuffer();
+ 323   3                              memcpy((void*)buffer 
+ 324   3                                        ,(void*)pbufInternal
+ 325   3                                        ,2048);
+ 326   3                              buffer  += 2048;
+ 327   3                      }
+ 328   2                      sso += ssn;
+ 329   2                      num -= ssn*SS_PER_SN;
+ 330   2              }
+ 331   1      
+ 332   1              // clip backward
+ 333   1              if(num%SS_PER_SN)
+ 334   1              {
+ 335   2                      sn      = num%SS_PER_SN;
+ 336   2      
+ 337   2                      ret = FTL_O_Read(sso);
+ 338   2                      if(ret) return SMT_FALSE;
+ 339   2                      pbufInternal = (smtUint8*)FTL_O_GetRWBuffer();          
+ 340   2      
+ 341   2                      for(si = 0; si <sn; si++)
+ 342   2                      {
+ 343   3                              
+ 344   3                              memcpy((void*)buffer
+ 345   3                                        ,(void*)pbufInternal
+ 346   3                                        ,512*sn);
+ 347   3                              buffer += 512*sn;
+ 348   3                              num -= sn;
+ 349   3      
+ 350   3                      }       
+ 351   2      
+ 352   2              }
+ 353   1              
+ 354   1      
+ 355   1              
+ 356   1              return SMT_TRUE;
+ 357   1      }
+ 358          /*----------------------------------------------------------
+ 359                  Function name   :       FTL_GetMaxSectors
+ 360                  Prototype               : 
+ 361                  Return                  : 
+ 362                  Argument                : 
+ 363                  Comments                : 
+ 364          -----------------------------------------------------------*/
+C51 COMPILER V8.05a   FTL                                                                  06/28/2007 17:29:22 PAGE 7   
+
+ 365          smtUint32 
+ 366          FTL_GetMaxSectors(
+ 367          void
+ 368          )
+ 369          {
+ 370   1              smtUint32 totalSec = FTL_O_GetMaxSector();
+ 371   1              
+ 372   1      
+ 373   1              return totalSec;
+ 374   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1245    ----
+   CONSTANT SIZE    =    134    ----
+   XDATA SIZE       =   ----      45
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

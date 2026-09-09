@@ -1,0 +1,705 @@
+C51 COMPILER V8.05a   FTL_C_CORE                                                           06/28/2007 17:29:23 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL_C_CORE
+OBJECT MODULE PLACED IN .\ftl_c_core.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_ftl\ftl_c_core.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..\..
+                    -\sys;..\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl_c_core.lst) OBJECT(.\ftl_c_core.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include <string.h>
+  39          #include "ftl_c_core.h"
+  40          #include "ftl_w_wear.h"
+  41          /*
+  42          /////////////////////////////////////////////////////////
+  43                  GLOBAL VARIABLE
+  44          ///////////////////////////////////////////////////////// 
+  45          */
+  46          /*
+  47          /////////////////////////////////////////////////////////
+  48                  DEFINITION
+  49          ///////////////////////////////////////////////////////// 
+  50          */
+  51          #define FTL_COM_FRAGCACHE_GETPBA(l)             (gpFragCache->ppba[(l)%FTL_FRAG_POOLPERNUM])
+  52          #define FTL_COM_FRAGCACHE_SETPBA(l, p)  (gpFragCache->ppba[(l)%FTL_FRAG_POOLPERNUM] = (p))
+  53          #define FTL_COM_FRAGCACHE_GETFRAGNUM(l) ((smtFrag)((l)/FTL_FRAG_POOLPERNUM))
+  54          #define FTL_COM_MAPBLOCK_GETIDX(f)              ((f)/gpMapBlocks->maxFragPerMapBlk)
+C51 COMPILER V8.05a   FTL_C_CORE                                                           06/28/2007 17:29:23 PAGE 2   
+
+  55          /*----------------------------------------------------------
+  56                  Function name   : FTL_C_LoadFrag
+  57                  Prototype               : 
+  58                  Return                  : 
+  59                  Argument                : 
+  60                  Comments                : load frag into RAM and set as current frag
+  61          -----------------------------------------------------------*/
+  62          smtBoolean                      // SMT_TRUE/SMT_FALSE, success/error
+  63          FTL_C_LoadFrag(
+  64          smtFrag num                     // fragment number to load
+  65          )
+  66          {
+  67   1              ST_MAPDIR       *pfragMap;
+  68   1              smtUint8        ret;
+  69   1      
+  70   1              // load if not cached 
+  71   1              if(gpFragCache->num != num)
+  72   1              {
+  73   2                      FTL_C_SaveMap();
+  74   2      
+  75   2                      // get cache entry buffer's and current frag map pointer
+  76   2                      pfragMap = &gpMapDir[num];                      
+  77   2                      
+  78   2                      // read that half part 
+  79   2                      if (ret = FTL_L_ReadPart(
+  80   2                              pfragMap->PBA,                          // Target fragment pba
+  81   2                              pfragMap->PPO,                          // Target fragment ppo
+  82   2                              (smtUint8*)gpFragCache->ppba,// Target buffer for pbas
+  83   2                              pfragMap->index)                        // Nand region index
+  84   2                      ) 
+  85   2                      {
+  86   3                              gpFragCache->num = FRAG_NA;
+  87   3                              SMT_ASSERT(0);
+  88   3                              return SMT_FALSE;
+  89   3                      
+  90   3                      }
+  91   2      
+  92   2                      // set cache field to current fragnumber and pointer
+  93   2                      gpFragCache->num        = num;          
+  94   2              }
+  95   1      
+  96   1              return SMT_TRUE;
+  97   1      }
+  98          /*----------------------------------------------------------
+  99                  Function name   : FTL_C_WriteFrag
+ 100                  Prototype               : 
+ 101                  Return                  : 
+ 102                  Argument                : 
+ 103                  Comments                : subfunction for formatting to write current 
+ 104                                                    fragments in fragbuff
+ 105          -----------------------------------------------------------*/
+ 106          smtBoolean                      // SMT_TRUE/SMT_FALSE, success/other error
+ 107          FTL_C_WriteFrag(
+ 108          smtFrag         frag,   // current frag number
+ 109          smtUint8        *buff   // fragment cache buffer
+ 110          )
+ 111          {
+ 112   1              ST_MAPBLOCK             *mapblock       = FTL_C_GetfMapBlk(frag);
+ 113   1              ST_SPARE                *sptr;
+ 114   1              ST_MAPDIR               *mapdir;
+ 115   1      
+ 116   1      
+C51 COMPILER V8.05a   FTL_C_CORE                                                           06/28/2007 17:29:23 PAGE 3   
+
+ 117   1              // FATAL, out of range 
+ 118   1              if (!mapblock) 
+ 119   1              {
+ 120   2                      return SMT_FALSE;       
+ 121   2              }
+ 122   1      
+ 123   1              // Check if there is any space 
+ 124   1              if (mapblock->curPPO == gDevInfo.pagePerBlks) 
+ 125   1              {
+ 126   2                      // allocate another block 
+ 127   2                      FTL_C_AllocMapBlk(mapblock);
+ 128   2              }
+ 129   1      
+ 130   1              // check if this is the 1st page of the mapblock 
+ 131   1              // here this is the 1st write of the block and
+ 132   1              // write reference counter 
+ 133   1              sptr = GET_SPARE_AREA(buff);
+ 134   1              if (mapblock->curPPO == 0) 
+ 135   1              {
+ 136   2                      sptr->wear                              = 1;                                    
+ 137   2                      sptr->u.map.ref_count   = mapblock->ref_count;  
+ 138   2              }
+ 139   1              // signal original fragments here, store the fragment number
+ 140   1              sptr->u.map.block_type  = mapblock->blockType;          
+ 141   1              sptr->u.map.frag                = frag;                                         
+ 142   1      
+ 143   1              if (FTL_L_Write(
+ 144   1                      mapblock->curPBA, 
+ 145   1                      mapblock->curPPO, 
+ 146   1                      buff) != FTL_L_OK) 
+ 147   1              {
+ 148   2                      SMT_ASSERT(0);
+ 149   2                      // Fatal 
+ 150   2                      return SMT_FALSE; 
+ 151   2              }
+ 152   1      
+ 153   1              // store mapdir info 2 frags are a pair in the fragment area 
+ 154   1              mapdir                  = &gpMapDir[frag];      
+ 155   1              mapdir->PBA             = mapblock->curPBA;
+ 156   1              mapdir->PPO             = mapblock->curPPO;
+ 157   1              mapdir->index   = FTL_L_M0_0;
+ 158   1      
+ 159   1              // goto the next mapdir (2nd frag) 
+ 160   1              mapdir++;                                       
+ 161   1              mapdir->PBA             = mapblock->curPBA;
+ 162   1              mapdir->PPO             = mapblock->curPPO;
+ 163   1              mapdir->index   = FTL_L_M0_1;
+ 164   1      
+ 165   1              // goto next available 
+ 166   1              mapblock->curPPO++;     
+ 167   1      
+ 168   1              /*
+ 169   1              printf("[FTL_C_WriteFrag] -----------------------------\n");
+ 170   1              printf("[FTL_C_WriteFrag] %15s %d(%5d~%5d) - %d(%5d~%5d)\n", 
+ 171   1                                                              "Write fragment"
+ 172   1                                                              ,frag 
+ 173   1                                                              ,FTL_FRAG_POOLPERNUM*frag 
+ 174   1                                                              ,FTL_FRAG_POOLPERNUM*frag + FTL_FRAG_POOLPERNUM-1
+ 175   1                                                              ,frag+1
+ 176   1                                                              ,FTL_FRAG_POOLPERNUM*(frag+1)
+ 177   1                                                              ,FTL_FRAG_POOLPERNUM*(frag+1) + FTL_FRAG_POOLPERNUM-1
+ 178   1                                                              );
+C51 COMPILER V8.05a   FTL_C_CORE                                                           06/28/2007 17:29:23 PAGE 4   
+
+ 179   1              printf("[FTL_C_WriteFrag] -----------------------------\n");
+ 180   1              printf("[FTL_C_WriteFrag] %30s : %d\n", "MAP block block address", mapblock->curPBA);
+ 181   1              printf("[FTL_C_WriteFrag] %30s : %d\n", "MAP block page address", (mapblock->curPPO-1));
+ 182   1              */
+ 183   1      
+ 184   1              return SMT_TRUE;
+ 185   1      }
+ 186          
+ 187          /*----------------------------------------------------------
+ 188                  Function name   : FTL_C_GetFrag
+ 189                  Prototype               : 
+ 190                  Return                  : 
+ 191                  Argument                : 
+ 192                  Comments                : function copy the requested frag content 
+ 193                                                    to destionation buffer if its cached then 
+ 194                                                    it copies other case it reads
+ 195          -----------------------------------------------------------*/
+ 196          void                            // None
+ 197          FTL_C_GetFrag(
+ 198          smtFrag                 frag,   // Requested fragment number
+ 199          smtUint8        *dest   // Destination buffer
+ 200          ) 
+ 201          {
+ 202   1              FTL_C_LoadFrag(frag);
+ 203   1              
+ 204   1              // simple copy 
+ 205   1              memcpy(
+ 206   1                      dest,
+ 207   1                      gpFragCache->ppba,
+ 208   1                      512/2//(smtInt32)gDevInfo.pageSize/2
+ 209   1              ); 
+ 210   1              
+ 211   1              
+ 212   1      }
+ 213          /*----------------------------------------------------------
+ 214                  Function name   : FTL_C_CollectFrag
+ 215                  Prototype               : 
+ 216                  Return                  : 
+ 217                  Argument                : 
+ 218                  Comments                : function collects store or cached fragments
+ 219          -----------------------------------------------------------*/
+ 220          smtBoolean                              // SMT_TRUE/SMT_FALSE, success/other error
+ 221          FTL_C_CollectFrag(
+ 222          ST_MAPBLOCK     *mapblock       // mapblock which contains fragtments
+ 223          )
+ 224          {
+ 225   1              smtFrag         cou;            
+ 226   1              smtFrag         frag;                                   
+ 227   1              smtUint8        *dest;
+ 228   1      
+ 229   1      //      printf("[FTL_C_CollectFrag]+\n");
+ 230   1      
+ 231   1      
+ 232   1              cou             = (smtFrag)(gpMapBlocks->maxFragPerMapBlk/2);
+ 233   1              frag    = mapblock->startFragIdx;                                       
+ 234   1      
+ 235   1              //-------------------------------------------------------
+ 236   1              // collect all fragments 
+ 237   1              //-------------------------------------------------------
+ 238   1              while (cou--)                                   
+ 239   1              {
+ 240   2      
+C51 COMPILER V8.05a   FTL_C_CORE                                                           06/28/2007 17:29:23 PAGE 5   
+
+ 241   2                      // collect 1st half is for even frags and get fragment
+ 242   2                      dest = ml_buffer;                                                       
+ 243   2                      FTL_C_GetFrag(frag, dest);                              
+ 244   2      
+ 245   2                      // collect 2nd half is for odd frags and get fragment
+ 246   2                      //dest += gDevInfo.pageSize/2;                                  
+ 247   2                      dest += 512/2;
+ 248   2                      FTL_C_GetFrag((smtFrag)(frag+1),dest);  
+ 249   2      
+ 250   2                      // simple writes them 
+ 251   2                      if (!FTL_C_WriteFrag(frag, ml_buffer)) 
+ 252   2                      {
+ 253   3                              SMT_ASSERT(0);
+ 254   3                              return SMT_FALSE;
+ 255   3                      }
+ 256   2      
+ 257   2                      // 2 fragment per page 
+ 258   2                      frag += 2;                                                              
+ 259   2              }
+ 260   1      //      printf("[FTL_C_CollectFrag]-\n");
+ 261   1      
+ 262   1              return SMT_TRUE;
+ 263   1      }
+ 264          /*----------------------------------------------------------
+ 265                  Function name   : FTL_C_GetPhy
+ 266                  Prototype               : 
+ 267                  Return                  : 
+ 268                  Argument                : 
+ 269                  Comments                : convert logical address to physical
+ 270          -----------------------------------------------------------*/
+ 271          smtBlkAddr                              // Physical address or BLK_NA if address is invalid
+ 272          FTL_C_GetPhy(
+ 273          smtBlkAddr lba                  // Logical block address
+ 274          )
+ 275          {
+ 276   1              
+ 277   1              smtBlkAddr pba;
+ 278   1              
+ 279   1              // check if it is in valid range 
+ 280   1              SMT_ASSERT(lba <= (gDevInfo.blks - gpFlush->freeBlkNum));
+ 281   1      
+ 282   1              // load current fragment 
+ 283   1              if (!FTL_C_LoadFrag(FTL_COM_FRAGCACHE_GETFRAGNUM(lba)))
+ 284   1              {
+ 285   2                      SMT_ASSERT(0);
+ 286   2                      return BLK_NA;  
+ 287   2              }
+ 288   1      
+ 289   1              // return it's physical address           
+ 290   1              pba = FTL_COM_FRAGCACHE_GETPBA(lba);
+ 291   1      
+ 292   1      
+ 293   1              //pba = gpMapDir[lba/FTL_FRAG_POOLPERNUM].frag.pba[(lba)%FTL_FRAG_POOLPERNUM];
+ 294   1      
+ 295   1              //printf("[FTL_C_GetPhy]: lba: %d pba: %d\n", lba, pba);
+ 296   1              return pba;
+ 297   1      }
+ 298          /*----------------------------------------------------------
+ 299                  Function name   : FTL_C_SetPhyo
+ 300                  Prototype               : 
+ 301                  Return                  : 
+ 302                  Argument                : 
+C51 COMPILER V8.05a   FTL_C_CORE                                                           06/28/2007 17:29:23 PAGE 6   
+
+ 303                  Comments                : set logical block's physical address, 
+ 304                                                    1st ml_get_log2phy function has to set 
+ 305                                                    logical block's physical address, 1st 
+ 306                                                    ml_get_log2phy function has to be called 
+ 307                                                    to get the fragments into the cached 
+ 308                                                    area and ppba must be set
+ 309          -----------------------------------------------------------*/
+ 310          smtBlkAddr                              // 
+ 311          FTL_C_SetPhy(
+ 312          smtBlkAddr      lba,            // Logical block address
+ 313          smtBlkAddr      pba                     // Physical block address
+ 314          )
+ 315          {
+ 316   1      
+ 317   1              // check if lba is valid 
+ 318   1              SMT_ASSERT(lba < (gDevInfo.blks - gpFlush->freeBlkNum));
+ 319   1      
+ 320   1              // load current fragment 
+ 321   1              if (!FTL_C_LoadFrag(FTL_COM_FRAGCACHE_GETFRAGNUM(lba))) 
+ 322   1              {
+ 323   2                      SMT_ASSERT(0);
+ 324   2                      return BLK_NA;  
+ 325   2              }
+ 326   1      
+ 327   1              
+ 328   1              FTL_COM_FRAGCACHE_SETPBA(lba, pba);
+ 329   1      
+ 330   1              //gpMapDir[lba/FTL_FRAG_POOLPERNUM].frag.pba[lba%FTL_FRAG_POOLPERNUM] = pba;
+ 331   1      
+ 332   1              
+ 333   1      
+ 334   1              return 0;
+ 335   1      }
+ 336          /*----------------------------------------------------------
+ 337                  Function name   : FTL_C_AllocBlk
+ 338                  Prototype               : 
+ 339                  Return                  : 
+ 340                  Argument                : 
+ 341                  Comments                : allocate a block from free table and erases it
+ 342          -----------------------------------------------------------*/
+ 343          smtUint8                // index in free table of INDEX_NA if any error
+ 344          FTL_C_AllocBlk(
+ 345          void
+ 346          )
+ 347          {
+ 348   1              smtUint8 index;
+ 349   1      
+ 350   1              for (;;)
+ 351   1              {// loop for alloc 
+ 352   2                      
+ 353   2                      smtBlkAddr pba;
+ 354   2      
+ 355   2                      FTL_W_AllocWear();
+ 356   2                      index=gpWearAllocData->free_index;
+ 357   2      
+ 358   2                      if (index==INDEX_NA)
+ 359   2                      {
+ 360   3                              // FATAL error no free blocks are available 
+ 361   3                          return INDEX_NA; 
+ 362   3                      }
+ 363   2      
+ 364   2                      pba     = gpFlush->freeBlks[index];
+C51 COMPILER V8.05a   FTL_C_CORE                                                           06/28/2007 17:29:23 PAGE 7   
+
+ 365   2      
+ 366   2      
+ 367   2                      if (FTL_L_Erase(pba) == FTL_L_OK)
+ 368   2                      {
+ 369   3                              // erase is ok, so return with the index 
+ 370   3                              return index; 
+ 371   3                      }
+ 372   2      
+ 373   2      
+ 374   2                      // signal it and locked as BAD 
+ 375   2                      //gpFlush->freeBlks[index] |= FTL_FBTYPE_BAD;
+ 376   2      
+ 377   2                      // lets allocate another one from freetable
+ 378   2              }
+ 379   1      }
+ 380          /*----------------------------------------------------------
+ 381                  Function name   : FTL_C_AllocLog
+ 382                  Prototype               : 
+ 383                  Return                  : 
+ 384                  Argument                : 
+ 385                  Comments                : alloc log block and initiate it
+ 386          -----------------------------------------------------------*/
+ 387          void                    // None
+ 388          FTL_C_AllocLog(
+ 389          ST_LOG  *log,           // Pointer where to alloc to
+ 390          smtBlkAddr      lba             // Which logical block is connected to log block
+ 391          ) 
+ 392          {
+ 393   1              smtUint8        index;
+ 394   1              smtBlkAddr      pba;
+ 395   1              smtUint32       wear;
+ 396   1      
+ 397   1              index = FTL_C_AllocBlk();
+ 398   1              SMT_ASSERT(index != INDEX_NA);
+ 399   1              pba     = gpFlush->freeBlks[index]&FTL_BLKADDR_MASK;
+ 400   1              gpFlush->freeBlks[index] |= FTL_FBTYPE_LOG;
+ 401   1              wear = gpWearAllocData->free_wear;
+ 402   1              FTL_W_UpdateDInfo(index, wear); /* locked now */
+ 403   1      
+ 404   1              log->index              = index;
+ 405   1              log->lastppo    = 0;
+ 406   1              log->lba                = lba;
+ 407   1              log->pba                = pba;
+ 408   1              log->wear               = wear;
+ 409   1              log->switchable = 1;
+ 410   1              memset(log->ppo, INDEX_NA, sizeof(log->ppo));
+ 411   1      
+ 412   1              gpLogCache->lockedCnt++;        
+ 413   1              gfSaveMapNeed = SMT_TRUE;
+ 414   1      }
+ 415          
+ 416          
+ 417          /*----------------------------------------------------------
+ 418                  Function name   : FTL_C_AllocMapBlk
+ 419                  Prototype               : 
+ 420                  Return                  : 
+ 421                  Argument                : 
+ 422                  Comments                : allocate a new map block
+ 423          -----------------------------------------------------------*/
+ 424          void 
+ 425          FTL_C_AllocMapBlk(
+ 426          ST_MAPBLOCK *mapblock   // mapblock need to be allocated
+C51 COMPILER V8.05a   FTL_C_CORE                                                           06/28/2007 17:29:23 PAGE 8   
+
+ 427          )
+ 428          {
+ 429   1      
+ 430   1              // allocate a block 
+ 431   1              smtUint8 index;
+ 432   1              
+ 433   1              index = FTL_C_AllocBlk();
+ 434   1              SMT_ASSERT(index != INDEX_NA);
+ 435   1              
+ 436   1              // set new pba and reset ppo and MAP flag in FLT
+ 437   1              mapblock->curPBA        = gpFlush->freeBlks[index]&FTL_BLKADDR_MASK;
+ 438   1              mapblock->curPPO        = 0;
+ 439   1              gpFlush->freeBlks[index] |= FTL_FBTYPE_MAP;
+ 440   1      
+ 441   1                      
+ 442   1              // update wear info 
+ 443   1              FTL_W_UpdateDInfo(
+ 444   1                      index,
+ 445   1                      gpWearAllocData->free_wear
+ 446   1              ); 
+ 447   1      
+ 448   1              // set mapblock info
+ 449   1              mapblock->ref_count++;                                                  
+ 450   1              mapblock->ref_count&=255;                                               
+ 451   1              mapblock->mapPageBlk[mapblock->depthIdx++]=index; 
+ 452   1              
+ 453   1       
+ 454   1      }
+ 455          /*----------------------------------------------------------
+ 456                  Function name   : FTL_C_GetfMapBlk
+ 457                  Prototype               : 
+ 458                  Return                  : 
+ 459                  Argument                : 
+ 460                  Comments                : Function for retreiving the map according 
+ 461                                                    fragment counter
+ 462          -----------------------------------------------------------*/
+ 463          ST_MAPBLOCK*            // None NULL/NULL, success/fail
+ 464          FTL_C_GetfMapBlk(
+ 465          smtFrag frag                    // Fragment number
+ 466          )
+ 467          {
+ 468   1      
+ 469   1              smtInt8 index = FTL_COM_MAPBLOCK_GETIDX(frag);
+ 470   1              SMT_ASSERT(index < FTL_MAPBLOCK_NUM);
+ 471   1      
+ 472   1              /*
+ 473   1              printf("[FTL_C_GetfMapBlk] ----------------------------------------\n");
+ 474   1              printf("[FTL_C_GetfMapBlk] Get mapblock index by fragment num\n");
+ 475   1              printf("[FTL_C_GetfMapBlk] ----------------------------------------\n");
+ 476   1              printf("[FTL_C_GetfMapBlk] %20s : %d\n", "fragment number" ,frag);
+ 477   1              printf("[FTL_C_GetfMapBlk] %20s : %d\n", "mapblock index" ,index);
+ 478   1              */
+ 479   1              return &gpMapBlocks->mapBlks[index];
+ 480   1      }
+ 481          /*----------------------------------------------------------
+ 482                  Function name   : FTL_C_FindLog
+ 483                  Prototype               : 
+ 484                  Return                  : 
+ 485                  Argument                : 
+ 486                  Comments                : Searching for a log block (check if logical 
+ 487                                                    block is logged) it sets ml_curlog to a log 
+ 488                                                    block or set it to NULL
+C51 COMPILER V8.05a   FTL_C_CORE                                                           06/28/2007 17:29:23 PAGE 9   
+
+ 489          -----------------------------------------------------------*/
+ 490          ST_LOG*                         // SMT_TRUE/SMT_FALSE, found/ not found
+ 491          FTL_C_FindLog(
+ 492          smtBlkAddr lba                  // target Logical block address
+ 493          )
+ 494          {
+ 495   1      
+ 496   1              
+ 497   1              smtUint32       logIdx;
+ 498   1              
+ 499   1              for(logIdx = 0; logIdx < gpLogCache->num; logIdx++)
+ 500   1              {
+ 501   2                      if(gpLogCache->logs[logIdx].lba == lba)
+ 502   2                      {
+ 503   3                              gpLogCache->curLog = &gpLogCache->logs[logIdx];
+ 504   3                              return &gpLogCache->logs[logIdx];
+ 505   3                      }
+ 506   2              }
+ 507   1              
+ 508   1              gpLogCache->curLog = SMT_NULL;
+ 509   1              return SMT_NULL;
+ 510   1      }
+ 511          /*----------------------------------------------------------
+ 512                  Function name   : FTL_C_StoreMappage
+ 513                  Prototype               : 
+ 514                  Return                  : 
+ 515                  Argument                : 
+ 516                  Comments                : mapblock which contains fragments
+ 517          -----------------------------------------------------------*/
+ 518          t_bit                                   // 0/other, success/any error
+ 519          FTL_C_StoreMappage(     
+ 520          ST_MAPBLOCK *mapblock   // mapblock which contains fragments
+ 521          )
+ 522          {
+ 523   1              smtUint8        cou;
+ 524   1              ST_SPARE        *sptr;
+ 525   1      
+ 526   1              // special spare_area pointer, only half buffer is used in write double! 
+ 527   1              sptr = ((ST_SPARE*)(((smtUint8*)(ml_basebuff))+(gDevInfo.pageSize)));
+ 528   1      
+ 529   1              // setting spare information about mappage 
+ 530   1              // set map page here only! 
+ 531   1              sptr->u.map.block_type  = (smtUint8)(mapblock->blockType | FTL_BTYPE_MAPPAGE); 
+ 532   1              sptr->u.map.frag                = gpFragCache->num;
+ 533   1      
+ 534   1              // if we are in the 1st page then set special variable 
+ 535   1              if(mapblock->curPPO == 0)
+ 536   1              {
+ 537   2                      // wear level and reference counter information 
+ 538   2                      sptr->wear                              = gpWearAllocData->free_wear;   
+ 539   2                      sptr->u.map.ref_count   = mapblock->ref_count;                          
+ 540   2              }
+ 541   1      
+ 542   1              // update mapinfo about map blocks 
+ 543   1              for(cou = 0; cou < FTL_MAPBLOCK_DEPTH; cou++)
+ 544   1              {
+ 545   2                      // copy shadow block's index 
+ 546   2                      gpFlush->mapInfo->mapPageBlk[cou] = mapblock->mapPageBlk[cou];
+ 547   2              }
+ 548   1      
+ 549   1              // update mapinfo about last success mappage 
+ 550   1              gpFlush->mapInfo->LastPBA = mapblock->LastPBA;
+C51 COMPILER V8.05a   FTL_C_CORE                                                           06/28/2007 17:29:23 PAGE 10  
+
+ 551   1              gpFlush->mapInfo->LastPPO = mapblock->LastPPO;
+ 552   1      
+ 553   1      
+ 554   1              // increase mappage counter 
+ 555   1              gpFlush->mapInfo->mapCntL++;
+ 556   1              if(!gpFlush->mapInfo->mapCntL)
+ 557   1              {
+ 558   2                      gpFlush->mapInfo->mapCntH++;
+ 559   2              }
+ 560   1      
+ 561   1              
+ 562   1              // check if current fragment is cached (it has to be) 
+ 563   1              SMT_ASSERT(gpFragCache->num != FRAG_NA);
+ 564   1              
+ 565   1      
+ 566   1              return FTL_L_Write(
+ 567   1                              mapblock->curPBA,
+ 568   1                              mapblock->curPPO,
+ 569   1                              ml_basebuff);
+ 570   1      }
+ 571           /*----------------------------------------------------------
+ 572                  Function name   : FTL_C_SaveMap
+ 573                  Prototype               : 
+ 574                  Return                  : 
+ 575                  Argument                : 
+ 576                  Comments                : Save map informations (fragments, free 
+ 577                                                    table modification)
+ 578          -----------------------------------------------------------*/
+ 579          t_bit                   // 0/other, success/any error
+ 580          FTL_C_SaveMap(
+ 581          void
+ 582          )
+ 583          {
+ 584   1              ST_MAPBLOCK     *mapblock;
+ 585   1              ST_MAPDIR       *pfragMap;
+ 586   1              smtUint8        cou;
+ 587   1      
+ 588   1              if(gpFragCache->num == 0xFF) 
+ 589   1              {
+ 590   2                      return 0;
+ 591   2              }
+ 592   1      
+ 593   1              // get current map block 
+ 594   1              mapblock        = FTL_C_GetfMapBlk(gpFragCache->num);
+ 595   1              SMT_ASSERT(mapblock);
+ 596   1      
+ 597   1              //-------------------------------------------------------
+ 598   1              // Check write space
+ 599   1              //-------------------------------------------------------
+ 600   1              if (mapblock->curPPO == gDevInfo.pagePerBlks)
+ 601   1              {
+ 602   2                      // Need gabarge collection
+ 603   2                      if(mapblock->depthIdx < FTL_MAPBLOCK_DEPTH) 
+ 604   2                      {               
+ 605   3                              FTL_C_AllocMapBlk(mapblock);
+ 606   3                      }
+ 607   2                      else
+ 608   2                      {
+ 609   3      
+ 610   3                              // release mapblock allocation block
+ 611   3                              for (cou = 0; cou < FTL_MAPBLOCK_DEPTH; cou++)
+ 612   3                              {
+C51 COMPILER V8.05a   FTL_C_CORE                                                           06/28/2007 17:29:23 PAGE 11  
+
+ 613   4                                      smtUint8 midx   = mapblock->mapPageBlk[cou];
+ 614   4                                      if(midx != INDEX_NA)
+ 615   4                                      {
+ 616   5                                              gpFlush->freeBlks[midx] &= ~FTL_FBTYPE_MAP;
+ 617   5                                              FTL_W_UpdateDInfo(midx,WEAR_NA);        
+ 618   5                                              mapblock->mapPageBlk[cou]=INDEX_NA;             
+ 619   5                                      }
+ 620   4                              }
+ 621   3                              
+ 622   3                              // allocate new map block
+ 623   3                              mapblock->depthIdx = 0;
+ 624   3                              FTL_C_AllocMapBlk(mapblock);
+ 625   3      
+ 626   3                              // collecting fragments 
+ 627   3                              if(FTL_C_CollectFrag(mapblock))         
+ 628   3                              {                                                                       
+ 629   4                                      FTL_W_ReleaseDLock();           
+ 630   4                              }               
+ 631   3                      }
+ 632   2              }
+ 633   1              //-------------------------------------------------------
+ 634   1              // Check write space
+ 635   1              //-------------------------------------------------------
+ 636   1              if(FTL_C_StoreMappage(mapblock) == FTL_L_ERROR)
+ 637   1              {
+ 638   2                      SMT_ASSERT(0);
+ 639   2                      return 1;
+ 640   2              }
+ 641   1              
+ 642   1              // get current frag mapdir 
+ 643   1              pfragMap= &gpMapDir[gpFragCache->num]; 
+ 644   1              
+ 645   1              // Update map directory
+ 646   1              pfragMap->PBA           = mapblock->curPBA;     
+ 647   1              pfragMap->PPO           = mapblock->curPPO;     
+ 648   1              pfragMap->index         = FTL_L_M0_0;                           
+ 649   1              
+ 650   1              // Update mappblock information
+ 651   1              mapblock->LastPBA       = mapblock->curPBA;     
+ 652   1              mapblock->LastPPO       = mapblock->curPPO;     
+ 653   1              mapblock->curPPO++;                                             
+ 654   1              
+ 655   1              // release dynamic lock 
+ 656   1              FTL_W_ReleaseDLock();                           
+ 657   1              gfSaveMapNeed = SMT_FALSE;                              
+ 658   1      
+ 659   1              return 0;                                                       
+ 660   1                      
+ 661   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1940    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----      71
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

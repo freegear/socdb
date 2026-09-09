@@ -1,0 +1,442 @@
+C51 COMPILER V8.05a   MAIN                                                                 06/28/2007 17:29:24 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\main.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\main.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..\..\sys;..\..\..\inc
+                    -) DEBUG OBJECTEXTEND PRINT(.\main.lst) OBJECT(.\main.obj)
+
+line level    source
+
+   1          #include <stdio.h>
+   2          #include <string.h>
+   3          #include "../inc/ftl.h"
+   4          
+   5          unsigned char   buffer[2048*100];
+   6          
+   7          #ifndef WIN32   
+   8          xdata char      memoryPool[20*1024];
+   9          #endif
+  10          /*----------------------------------------------------------
+  11                  Function name   : 
+  12                  Prototype               : 
+  13                  Return                  : 
+  14                  Argument                : 
+  15                  Comments                : 
+  16          -----------------------------------------------------------*/
+  17          int MakePattern(unsigned int seed, unsigned int buffer, unsigned int size)
+  18          {
+  19   1              unsigned int    i;//, j;
+  20   1              unsigned int    *pbuffer = (unsigned int*)buffer;
+  21   1              
+  22   1              //printf("make-show seed: 0x%04x\n", seed);
+  23   1              for(i = 0; i < size/sizeof(int); i++)
+  24   1              {
+  25   2                      pbuffer[i] = ((seed<<16) | i);
+  26   2              }
+  27   1              
+  28   1              return 0;
+  29   1      }
+  30          /*----------------------------------------------------------
+  31                  Function name   : 
+  32                  Prototype               : 
+  33                  Return                  : 
+  34                  Argument                : 
+  35                  Comments                : 
+  36          -----------------------------------------------------------*/
+  37          int CheckPattern(unsigned int seed, unsigned int buffer, unsigned int size)
+  38          {
+  39   1              unsigned int    i;//, j;
+  40   1              unsigned int    pattern;
+  41   1              unsigned int    *pbuffer = (unsigned int*)buffer;
+  42   1              //printf("check-show seed: 0x%04x\n", seed);
+  43   1              for(i = 0; i < size/4; i++)
+  44   1              {
+  45   2                      
+  46   2                      pattern = ((seed<<16) | i);
+  47   2                      if(pbuffer[i] != pattern)
+  48   2                      {
+  49   3                              printf("[%05d] estimated:real = 0x%08x: 0x%08x\n",
+  50   3                                      i*4, pattern, pbuffer[i]);
+  51   3                              return 0;
+  52   3                      }
+  53   2              }
+  54   1              
+C51 COMPILER V8.05a   MAIN                                                                 06/28/2007 17:29:24 PAGE 2   
+
+  55   1              return 1;
+  56   1      }
+  57          /*----------------------------------------------------------
+  58                  Function name   : 
+  59                  Prototype               : 
+  60                  Return                  : 
+  61                  Argument                : 
+  62                  Comments                : 
+  63          -----------------------------------------------------------*/
+  64          void HexDump(unsigned int buffer, unsigned int size)
+  65          {
+  66   1              unsigned int    i, j = 0;
+  67   1              unsigned char   *pbuffer = (unsigned char*)buffer;
+  68   1              for(i = 0; i < size/16; i++)
+  69   1              {
+  70   2                      printf("0x%08x : ", &pbuffer[i*16+j]);
+  71   2                      for(j = 0; j < 16; j++) 
+  72   2                              printf("%02x ", pbuffer[i*16+j]);
+  73   2                       
+  74   2                      printf(" | ");
+  75   2                       
+  76   2                      for(j = 0; j < 16; j++) 
+  77   2                      {
+  78   3                              if( (pbuffer[i*16+j] >= 0x00)
+  79   3                               && (pbuffer[i*16+j] <= 0x1F))
+  80   3                                      printf(" ");
+  81   3                              else
+  82   3                                      printf("%c", pbuffer[i*16+j]);
+  83   3                      }
+  84   2                      
+  85   2                      printf("\n");
+  86   2                      
+  87   2              }       
+  88   1              printf("\n");
+  89   1      }
+  90          /*----------------------------------------------------------
+  91                  Function name   : 
+  92                  Prototype               : 
+  93                  Return                  : 
+  94                  Argument                : 
+  95                  Comments                : 
+  96          -----------------------------------------------------------*/
+  97          void main()
+  98          {
+  99   1      
+ 100   1              smtUint32       ret;
+ 101   1      
+ 102   1      #ifndef WIN32   
+ 103   1              init_mempool(memoryPool, sizeof(memoryPool));
+ 104   1      #endif  
+ 105   1      
+ 106   1      
+ 107   1              ret = FTL_Format();
+ 108   1              if(ret == SMT_FALSE) {
+ 109   2                      printf("FTL_Format fail!!!\n");
+ 110   2                      SMT_ASSERT(0);
+ 111   2              }
+ 112   1              
+ 113   1      
+ 114   1              ret = FTL_Init();
+ 115   1              if(ret == SMT_FALSE) {
+ 116   2                      printf("flt_init fail!!!\n");
+C51 COMPILER V8.05a   MAIN                                                                 06/28/2007 17:29:24 PAGE 3   
+
+ 117   2                      SMT_ASSERT(0);
+ 118   2              }
+ 119   1                      
+ 120   1              
+ 121   1              printf("flt_max sectors: %d\n", 
+ 122   1                      FTL_GetMaxSectors());
+ 123   1      
+ 124   1              /*
+ 125   1              {
+ 126   1                      
+ 127   1                      int testIdx, loop;
+ 128   1                      int multi = 3;
+ 129   1                      int sector_size = 2048;
+ 130   1                      int sector;
+ 131   1                              
+ 132   1                      for(
+ 133   1                              testIdx = 0; 
+ 134   1                              testIdx < 1000000; 
+ 135   1                              testIdx++)
+ 136   1                      {
+ 137   1      
+ 138   1                              if(!testIdx%3){
+ 139   1      
+ 140   1                                      for(loop = 0; loop < 10000; loop++)
+ 141   1                                      {
+ 142   1                                              srand(testIdx);
+ 143   1                                              multi   = rand()%100;
+ 144   1                                              sector  = rand()%200000;
+ 145   1      
+ 146   1                                              printf("---------------------------------------------------------------\n");
+ 147   1                                              printf("[MAIN] same sector write data to sector : %d\n", sector);
+ 148   1                                              printf("---------------------------------------------------------------\n");
+ 149   1                                              
+ 150   1                                              MakePattern(sector, (smtUint32)buffer, sector_size*multi);
+ 151   1                                              ret = FTL_Write((smtUint32)sector, multi, (smtUint32)buffer);
+ 152   1                                              if(ret == SMT_FALSE) {
+ 153   1                                                      printf("ftl_write fail!!!\n");
+ 154   1                                              }
+ 155   1      
+ 156   1      
+ 157   1                                              memset(buffer, 0, sizeof(char)*sector_size*multi);
+ 158   1              
+ 159   1                                              ret = FTL_Read((smtUint32)sector, multi, (smtUint32)buffer);
+ 160   1                                              if(ret == SMT_FALSE) {
+ 161   1                                                      printf("ftl_read fail!!!\n");
+ 162   1                                              }
+ 163   1                                              ret = CheckPattern((smtUint32)sector, (smtUint32)buffer, sector_size*multi);
+ 164   1                                              if(!ret)
+ 165   1                                              {       
+ 166   1                                                      printf("error !!!\n");
+ 167   1                                                      while(1);
+ 168   1                                              }
+ 169   1                                      }
+ 170   1                              }
+ 171   1                              else
+ 172   1                              {
+ 173   1                              
+ 174   1                                      {
+ 175   1      
+ 176   1                                              srand(testIdx);
+ 177   1                                              multi   = rand()%100;
+ 178   1                                              sector  = rand()%200000;
+C51 COMPILER V8.05a   MAIN                                                                 06/28/2007 17:29:24 PAGE 4   
+
+ 179   1      
+ 180   1                                              printf("---------------------------------------------------------------\n");
+ 181   1                                              printf("[MAIN]w data to sector : %d\n", sector);
+ 182   1                                              printf("---------------------------------------------------------------\n");
+ 183   1      
+ 184   1      
+ 185   1          
+ 186   1                                              MakePattern(sector, (smtUint32)buffer, sector_size*multi);
+ 187   1                                              ret = FTL_Write(sector, multi, (unsigned int)buffer);
+ 188   1                                              if(ret == SMT_FALSE) {
+ 189   1                                                      printf("ftl_write fail!!!\n");
+ 190   1                                              }
+ 191   1      
+ 192   1                                              memset(buffer, 0, sizeof(char)*sector_size*multi);
+ 193   1              
+ 194   1                                              ret = FTL_Read(sector, multi, (unsigned int)buffer);
+ 195   1                                              if(ret == SMT_FALSE) {
+ 196   1                                                      printf("ftl_read fail!!!\n");
+ 197   1                                              }
+ 198   1                                              ret = CheckPattern(sector, (unsigned int)buffer, sector_size*multi);
+ 199   1                                              if(!ret)
+ 200   1                                              {       
+ 201   1                                                      printf("error !!!\n");
+ 202   1                                                      while(1);
+ 203   1                                              }
+ 204   1                                      }
+ 205   1                              }
+ 206   1                      }
+ 207   1              }
+ 208   1              */
+ 209   1      
+ 210   1      
+ 211   1              /*
+ 212   1              {
+ 213   1                      {
+ 214   1                              int i;
+ 215   1                              int seed;
+ 216   1      
+ 217   1                              seed = 1;
+ 218   1                              for(i = 0; i < 4; i++)
+ 219   1                              {
+ 220   1                                      memset(
+ 221   1                                              (buffer+i*512), 
+ 222   1                                              seed++, 
+ 223   1                                              512*sizeof(char)
+ 224   1                                      );
+ 225   1                              }
+ 226   1                      }
+ 227   1                      ret = FTL_Write((smtUint32)0, 1, (smtUint32)buffer);
+ 228   1                      if(ret == SMT_FALSE) {
+ 229   1                              printf("ftl_write fail!!!\n");
+ 230   1                      }
+ 231   1              }
+ 232   1      
+ 233   1              {
+ 234   1                      {
+ 235   1                              int i;
+ 236   1                              int seed;
+ 237   1      
+ 238   1                              seed = 5;
+ 239   1                              for(i = 0; i < 4; i++)
+ 240   1                              {
+C51 COMPILER V8.05a   MAIN                                                                 06/28/2007 17:29:24 PAGE 5   
+
+ 241   1                                      memset(
+ 242   1                                              (buffer+i*512), 
+ 243   1                                              seed++, 
+ 244   1                                              512*sizeof(char)
+ 245   1                                      );
+ 246   1                              }
+ 247   1                      }
+ 248   1                      ret = FTL_Write((smtUint32)1, 1, (smtUint32)buffer);
+ 249   1                      if(ret == SMT_FALSE) {
+ 250   1                              printf("ftl_write fail!!!\n");
+ 251   1                      }
+ 252   1              }
+ 253   1      
+ 254   1      
+ 255   1              {
+ 256   1                      {
+ 257   1                              int i;
+ 258   1                              int seed;
+ 259   1      
+ 260   1                              seed = 9;
+ 261   1                              for(i = 0; i < 4; i++)
+ 262   1                              {
+ 263   1                                      memset(
+ 264   1                                              (buffer+i*512), 
+ 265   1                                              seed++, 
+ 266   1                                              512*sizeof(char)
+ 267   1                                      );
+ 268   1                              }
+ 269   1                      }
+ 270   1                      ret = FTL_Write((smtUint32)2, 1, (smtUint32)buffer);
+ 271   1                      if(ret == SMT_FALSE) {
+ 272   1                              printf("ftl_write fail!!!\n");
+ 273   1                      }
+ 274   1              }
+ 275   1              */
+ 276   1              
+ 277   1      #ifdef UNIT_TEST
+                      {
+                              int i;
+              
+                              for(i = 0; i < 0xc; i++)
+                              {
+                                      memset((void*)(buffer+i*512),
+                                                 i+1,
+                                                 sizeof(char)*512);
+                              }
+                              ret = FTL_Write((smtUint32)0, 12, (smtUint32)buffer);
+                      }
+                      
+              
+              
+                      memset(buffer, 0x00, sizeof(buffer));
+                      ret = FTL_Read(0, 12, (unsigned int)buffer);
+                      if(ret == SMT_FALSE) {
+                              printf("ftl_read fail!!!\n");
+                      }       
+                      
+                      HexDump(buffer+(512*0) ,512);
+                      HexDump(buffer+(512*1) ,512);
+                      HexDump(buffer+(512*2) ,512);
+                      HexDump(buffer+(512*3) ,512);
+                      HexDump(buffer+(512*4) ,512);
+C51 COMPILER V8.05a   MAIN                                                                 06/28/2007 17:29:24 PAGE 6   
+
+                      HexDump(buffer+(512*5) ,512);
+                      HexDump(buffer+(512*6) ,512);
+                      HexDump(buffer+(512*7) ,512);
+                      HexDump(buffer+(512*8) ,512);
+                      HexDump(buffer+(512*9) ,512);
+                      HexDump(buffer+(512*10) ,512);
+                      HexDump(buffer+(512*11) ,512);
+              #endif
+ 311   1      
+ 312   1              {
+ 313   2                      
+ 314   2                      int testIdx, loop;
+ 315   2                      int multi = 3;
+ 316   2                      int sector_size = 512;
+ 317   2                      int sector;
+ 318   2                              
+ 319   2                      for(
+ 320   2                              testIdx = 0; 
+ 321   2                              testIdx < 2000000; 
+ 322   2                              testIdx++)
+ 323   2                      {
+ 324   3      
+ 325   3                              if(!testIdx%3){
+ 326   4      
+ 327   4                                      for(loop = 0; loop < 1000; loop++)
+ 328   4                                      {
+ 329   5                              
+ 330   5                                              srand(testIdx);
+ 331   5                                              multi   = rand()%99 + 1;
+ 332   5                                              sector  = rand()%100000;
+ 333   5                                              printf("sector: %d multi: %d\n", sector, multi);
+ 334   5              
+ 335   5      
+ 336   5                                              printf("---------------------------------------------------------------\n");
+ 337   5                                              printf("[MAIN] same sector write data to sector : %d\n", sector);
+ 338   5                                              printf("---------------------------------------------------------------\n");
+ 339   5                                              
+ 340   5                                              MakePattern(sector, (smtUint32)buffer, sector_size*multi);
+ 341   5                                              ret = FTL_Write((smtUint32)sector, multi, (smtUint32)buffer);
+ 342   5                                              if(ret == SMT_FALSE) {
+ 343   6                                                      printf("ftl_write fail!!!\n");
+ 344   6                                              }
+ 345   5      
+ 346   5      
+ 347   5                                              memset(buffer, 0, sizeof(char)*sector_size*multi);
+ 348   5              
+ 349   5                                              ret = FTL_Read((smtUint32)sector, multi, (smtUint32)buffer);
+ 350   5                                              if(ret == SMT_FALSE) {
+ 351   6                                                      printf("ftl_read fail!!!\n");
+ 352   6                                              }
+ 353   5                                              ret = CheckPattern((smtUint32)sector, (smtUint32)buffer, sector_size*multi);
+ 354   5                                              if(!ret)
+ 355   5                                              {       
+ 356   6                                                      printf("error !!!\n");
+ 357   6                                                      while(1);
+ 358   6                                              }
+ 359   5                                      }
+ 360   4                              }
+ 361   3                              else
+ 362   3                              {
+ 363   4                              
+ 364   4                                      {
+C51 COMPILER V8.05a   MAIN                                                                 06/28/2007 17:29:24 PAGE 7   
+
+ 365   5                                              srand(testIdx);
+ 366   5                                              multi   = rand()%99 + 1;
+ 367   5                                              sector  = rand()%100000;
+ 368   5                                              printf("sector: %d multi: %d\n", sector, multi);
+ 369   5                      
+ 370   5      
+ 371   5                                              printf("---------------------------------------------------------------\n");
+ 372   5                                              printf("[MAIN]w data to sector : %d\n", sector);
+ 373   5                                              printf("---------------------------------------------------------------\n");
+ 374   5      
+ 375   5      
+ 376   5          
+ 377   5                                              MakePattern(sector, (smtUint32)buffer, sector_size*multi);
+ 378   5                                              ret = FTL_Write(sector, multi, (unsigned int)buffer);
+ 379   5                                              if(ret == SMT_FALSE) {
+ 380   6                                                      printf("ftl_write fail!!!\n");
+ 381   6                                              }
+ 382   5      
+ 383   5                                              memset(buffer, 0, sizeof(char)*sector_size*multi);
+ 384   5              
+ 385   5                                              ret = FTL_Read(sector, multi, (unsigned int)buffer);
+ 386   5                                              if(ret == SMT_FALSE) {
+ 387   6                                                      printf("ftl_read fail!!!\n");
+ 388   6                                              }
+ 389   5                                              ret = CheckPattern(sector, (unsigned int)buffer, sector_size*multi);
+ 390   5                                              if(!ret)
+ 391   5                                              {       
+ 392   6                                                      printf("error !!!\n");
+ 393   6                                                      while(1);
+ 394   6                                              }
+ 395   5                                      }
+ 396   4                              }
+ 397   3                      }
+ 398   2              }
+ 399   1              
+ 400   1              ret = FTL_Deinit();
+ 401   1              if(ret == SMT_FALSE)
+ 402   1              {
+ 403   2                      printf("ftl_deinit fail!!!\n");
+ 404   2              }
+ 405   1              
+ 406   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1252    ----
+   CONSTANT SIZE    =    356    ----
+   XDATA SIZE       =  28672      36
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

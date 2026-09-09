@@ -1,0 +1,23 @@
+vlib work
+vlog ../../Rtl/slim/NFCtrl.v
+vlog ../../Rtl/slim/NFAPBIF.v
+
+vlog ../../Rtl/slim/NFCmdQ.v
+vlog ../../Rtl/slim/NFDFIFO.v
+vlog ../../Rtl/slim/NFRnBFilter.v
+
+vlog ../../Rtl/slim/NFTop.v
+
+vlog +define+dual ../../Rtl/slim/tb_NFTop.v
+vlog +incdir+../../Model +define+x8 +define+V33 +define+G2 ../../Model/nand_model_0.v 
+
+vsim tb_NFTop
+
+#do wave.do
+destroy .wave
+view wave
+
+do io8wave.do
+
+
+run 15ms

@@ -1,0 +1,409 @@
+C51 COMPILER V8.05a   FTL_O_MAP                                                            06/28/2007 17:29:24 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL_O_MAP
+OBJECT MODULE PLACED IN .\ftl_o_map.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_ftl\ftl_o_map.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..\..\
+                    -sys;..\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl_o_map.lst) OBJECT(.\ftl_o_map.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include <string.h>
+  39          #include "../lib_nand/ftl_l_layer.h"
+  40          #include "ftl_t_define.h"
+  41          #include "ftl_w_wear.h"
+  42          #include "ftl_c_core.h"
+  43          #include "ftl_o_lowinit.h"
+  44          #include "ftl_o_rw.h"
+  45          /*
+  46          /////////////////////////////////////////////////////////
+  47                  DEFINITION
+  48          ///////////////////////////////////////////////////////// 
+  49          */
+  50          /*
+  51          /////////////////////////////////////////////////////////
+  52                  GLOBAL VARIABLE
+  53          ///////////////////////////////////////////////////////// 
+  54          */
+C51 COMPILER V8.05a   FTL_O_MAP                                                            06/28/2007 17:29:24 PAGE 2   
+
+  55          /*
+  56          /////////////////////////////////////////////////////////
+  57                  STATIC VARIABLE
+  58          ///////////////////////////////////////////////////////// 
+  59          */
+  60          /*
+  61          /////////////////////////////////////////////////////////
+  62                  FUNCTIONS 
+  63          ///////////////////////////////////////////////////////// 
+  64          */
+  65          /*----------------------------------------------------------
+  66                  Function name   : BuildMap
+  67                  Prototype               : 
+  68                  Return                  : 
+  69                  Argument                : 
+  70                  Comments                : function for rebuilding mapdir
+  71          -----------------------------------------------------------*/
+  72          smtBoolean                      // SMT_TRUE/SMT_FALSE, ok/fail
+  73          BuildMap(
+  74          ST_MAPBLOCK     *map    // map block to be build
+  75          )
+  76          {
+  77   1              ST_SPARE        *sptr=GET_SPARE_AREA(ml_buffer);
+  78   1              smtUint8        mappage;
+  79   1              smtUint8        cou;
+  80   1              smtUint8        index;
+  81   1              smtUint8        idxcou;
+  82   1              ST_MAPDIR       *pfragMap;
+  83   1              smtFrag         frag,fragcou;
+  84   1              smtBlkAddr      pba;
+  85   1              smtPageAddr ppo;
+  86   1      
+  87   1      
+  88   1              // label for step back 
+  89   1      again: 
+  90   1      
+  91   1              //-------------------------------------------------------
+  92   1              // go through on all index entry 
+  93   1              //-------------------------------------------------------
+  94   1              map->depthIdx = INDEX_NA;
+  95   1              for (cou = 0; cou < FTL_MAPBLOCK_DEPTH; cou++)
+  96   1              {
+  97   2                      index = gpFlush->mapInfo->mapPageBlk[cou];
+  98   2                      map->mapPageBlk[cou] = index;                                                           
+  99   2      
+ 100   2                      // If valid index, then update indexcou 
+ 101   2                      if (index != INDEX_NA)                          
+ 102   2                      {
+ 103   3                              map->depthIdx = cou;                                            
+ 104   3                      }
+ 105   2              }
+ 106   1              SMT_ASSERT(map->depthIdx != INDEX_NA);
+ 107   1      
+ 108   1              //-------------------------------------------------------
+ 109   1              // goto the next entry 
+ 110   1              //-------------------------------------------------------
+ 111   1              map->depthIdx++; 
+ 112   1              map->mapCntH    = gpFlush->mapInfo->mapCntH;    // get last map cntH
+ 113   1              map->mapCntL    = gpFlush->mapInfo->mapCntL;    // get last map cntL
+ 114   1      
+ 115   1              // check if this is the maximum counter 
+ 116   1              if(gpFlush->mapInfo->mapCntH > gpMapBlocks->maxMapCntH)
+C51 COMPILER V8.05a   FTL_O_MAP                                                            06/28/2007 17:29:24 PAGE 3   
+
+ 117   1              {
+ 118   2                      gpMapBlocks->maxMapCntL = gpFlush->mapInfo->mapCntL;
+ 119   2                      gpMapBlocks->maxMapCntH = gpFlush->mapInfo->mapCntH;
+ 120   2              }
+ 121   1              else
+ 122   1              {
+ 123   2                      if((gpFlush->mapInfo->mapCntH == gpMapBlocks->maxMapCntH)
+ 124   2                      && (gpFlush->mapInfo->mapCntL  > gpMapBlocks->maxMapCntL))
+ 125   2                      {
+ 126   3                              gpMapBlocks->maxMapCntL = gpFlush->mapInfo->mapCntL;
+ 127   3                              gpMapBlocks->maxMapCntH = gpFlush->mapInfo->mapCntH;
+ 128   3                      }
+ 129   2              }
+ 130   1              
+ 131   1      
+ 132   1              //-------------------------------------------------------
+ 133   1              // First mapPageBlk is aligned mappage + frags or frags
+ 134   1              //-------------------------------------------------------
+ 135   1              mappage         = 0;                                            // signal we didn't find any map page 
+ 136   1              idxcou          = 0;                                            // reset index counter 
+ 137   1              index           = map->mapPageBlk[idxcou];      // get its value 
+ 138   1              SMT_ASSERT(index != INDEX_NA);                  // 1st index cannot be not available
+ 139   1      
+ 140   1              pba                     = (smtBlkAddr)(gpFlush->freeBlks[index]&FTL_BLKADDR_MASK);
+ 141   1              ppo                     = 0;
+ 142   1              frag            = map->startFragIdx;
+ 143   1              pfragMap        = &gpMapDir[frag];
+ 144   1              fragcou         = (smtFrag)(gpMapBlocks->maxFragPerMapBlk/2);                   
+ 145   1              while(fragcou)
+ 146   1              {
+ 147   2      
+ 148   2                      // read page's spare area 
+ 149   2                      if (!FTL_L_ReadPart(
+ 150   2                                      pba,
+ 151   2                                      ppo,
+ 152   2                                      (smtUint8*)sptr,
+ 153   2                                      FTL_L_S0)
+ 154   2                              ) 
+ 155   2                      {
+ 156   3      
+ 157   3                              // check stored fragment pair 
+ 158   3                              SMT_ASSERT(sptr->u.map.frag == frag);
+ 159   3      
+ 160   3                              // fill first frag information
+ 161   3                              pfragMap->PBA   = pba;  
+ 162   3                              pfragMap->PPO   = ppo;  
+ 163   3                              pfragMap->index = FTL_L_M0_0;   
+ 164   3                              pfragMap++;                             
+ 165   3      
+ 166   3                              // fill second frag information
+ 167   3                              pfragMap->PBA   = pba;  
+ 168   3                              pfragMap->PPO   = ppo;  
+ 169   3                              pfragMap->index = FTL_L_M0_1;   
+ 170   3                              pfragMap++;                             
+ 171   3      
+ 172   3                              frag+=2;                                // go to next 2 fragment 
+ 173   3                              fragcou--;                              // decrementing pair counter 
+ 174   3      
+ 175   3                              // goto next page 
+ 176   3                              ppo++; 
+ 177   3                      }
+ 178   2                      else
+C51 COMPILER V8.05a   FTL_O_MAP                                                            06/28/2007 17:29:24 PAGE 4   
+
+ 179   2                      {
+ 180   3                              // broken mapdir, so step back check if there was any step back 
+ 181   3                              // and set step back value to the current map block 
+ 182   3                              SMT_ASSERT(gpMapBlocks->stepback == 0);
+ 183   3                              gpMapBlocks->stepback = map;               
+ 184   3                              
+ 185   3                              // check if pba and ppo valid for step back
+ 186   3                              SMT_ASSERT(gpFlush->mapInfo->LastPBA != BLK_NA);
+ 187   3                              SMT_ASSERT(gpFlush->mapInfo->LastPPO != INDEX_NA);
+ 188   3      
+ 189   3                              // get last stored pba and ppo of mappage 
+ 190   3                              map->curPBA = gpFlush->mapInfo->LastPBA;
+ 191   3                              map->curPPO = gpFlush->mapInfo->LastPPO;
+ 192   3      
+ 193   3                              //-----------------------------------------------
+ 194   3                              // read Flush Data and goto again label
+ 195   3                              //-----------------------------------------------
+ 196   3                              if (FTL_L_Read(
+ 197   3                                      map->curPBA,
+ 198   3                                      map->curPPO,
+ 199   3                                      ml_basebuff)
+ 200   3                              )
+ 201   3                              {
+ 202   4                                      // Fatal
+ 203   4                                      return SMT_FALSE; 
+ 204   4                              }
+ 205   3      
+ 206   3                              // update last information of pba , ppo
+ 207   3                              // And seek to next ppo
+ 208   3                              map->LastPBA    = map->curPBA; 
+ 209   3                              map->LastPPO    = map->curPPO;  
+ 210   3                              map->curPPO++;                          
+ 211   3      
+ 212   3                              goto again;
+ 213   3                      }
+ 214   2              }
+ 215   1      
+ 216   1              //-------------------------------------------------------
+ 217   1              // remain mapPageBlk is not aligned
+ 218   1              //-------------------------------------------------------
+ 219   1              while(SMT_TRUE)
+ 220   1              {
+ 221   2                      //---------------------------------------------------
+ 222   2                      // Check next block (shadow)
+ 223   2                      //---------------------------------------------------
+ 224   2                      if(ppo == gDevInfo.pagePerBlks) 
+ 225   2                      {
+ 226   3                              // goto next shadow index 
+ 227   3                              idxcou++;                                                                                          
+ 228   3                              if(idxcou == FTL_MAPBLOCK_DEPTH) break; 
+ 229   3      
+ 230   3                              // get its value 
+ 231   3                              index = map->mapPageBlk[idxcou];        
+ 232   3                              if(index == INDEX_NA) break;    
+ 233   3      
+ 234   3                              // get pba from index  and ppo set to zero
+ 235   3                              //pba   = (smtBlkAddr)(gpFlush->freeBlks[index]&FTL_BTYPE_MAPPAGE);     
+ 236   3                              pba     = (smtBlkAddr)(gpFlush->freeBlks[index]&FTL_BLKADDR_MASK);      
+ 237   3                              ppo     = 0;                                                                                            
+ 238   3                      }
+ 239   2      
+ 240   2                      //---------------------------------------------------
+C51 COMPILER V8.05a   FTL_O_MAP                                                            06/28/2007 17:29:24 PAGE 5   
+
+ 241   2                      // read spare area for mapdir
+ 242   2                      //---------------------------------------------------
+ 243   2                      if (!FTL_L_ReadPart(
+ 244   2                              pba,                    
+ 245   2                              ppo,
+ 246   2                              (smtUint8*)sptr,
+ 247   2                              FTL_L_S0))      
+ 248   2                      {
+ 249   3                              // check if it is a map page
+ 250   3                              if (sptr->u.map.block_type & FTL_BTYPE_MAPPAGE) 
+ 251   3                              {
+ 252   4                                      pfragMap                = &gpMapDir[sptr->u.map.frag];
+ 253   4                                      pfragMap->PBA   = pba;                                  
+ 254   4                                      pfragMap->PPO   = ppo;                                  
+ 255   4                                      pfragMap->index = FTL_L_M0_0;                           
+ 256   4                                      
+ 257   4                                      mappage = 1;                                            
+ 258   4                              }
+ 259   3                      }
+ 260   2      
+ 261   2                      // go to next page 
+ 262   2                      ppo++;  
+ 263   2              }
+ 264   1              
+ 265   1      
+ 266   1              // check if any mappage found 
+ 267   1              if (!mappage)
+ 268   1              {
+ 269   2                      // no mappage found, eg. FLT missing after format 
+ 270   2                      return SMT_FALSE; 
+ 271   2              }
+ 272   1      
+ 273   1              // successfuly built 
+ 274   1              return SMT_TRUE; 
+ 275   1      }
+ 276          /*----------------------------------------------------------
+ 277                  Function name   : FTL_O_BuildMap
+ 278                  Prototype               : 
+ 279                  Return                  : 
+ 280                  Argument                : 
+ 281                  Comments                : build top for log, wear, map directory
+ 282          -----------------------------------------------------------*/
+ 283          smtBoolean                      // SMT_TRUE/SMT_FALSE, ok/error
+ 284          FTL_O_BuildMap(
+ 285          void
+ 286          )
+ 287          {
+ 288   1              
+ 289   1              smtUint32       wear_sum                = 0;    // summary of wears 
+ 290   1              smtUint32       wear_count              = 0;    // counting number of wears  
+ 291   1              smtUint32       wear_average    = 0;
+ 292   1              smtPageAddr po,lastPO, mappagePO;
+ 293   1              ST_SPARE        *sptr;
+ 294   1      
+ 295   1              smtUint8        mapBlkIdx;
+ 296   1              ST_MAPBLOCK     *map;
+ 297   1              
+ 298   1              sptr=GET_SPARE_AREA(ml_buffer);
+ 299   1      
+ 300   1              // reset stepback 
+ 301   1              gpMapBlocks->stepback = 0; 
+ 302   1              
+C51 COMPILER V8.05a   FTL_O_MAP                                                            06/28/2007 17:29:24 PAGE 6   
+
+ 303   1              for(mapBlkIdx = 0; mapBlkIdx < FTL_MAPBLOCK_NUM; mapBlkIdx++)
+ 304   1              {
+ 305   2                      map = &gpMapBlocks->mapBlks[mapBlkIdx];
+ 306   2                      SMT_ASSERT(map->curPBA != BLK_NA);      
+ 307   2                      
+ 308   2                      //---------------------------------------------------
+ 309   2                      // Search last erased only page, (lastpo)
+ 310   2                      //---------------------------------------------------
+ 311   2                      for(po = gDevInfo.pagePerBlks-1; po >= 0; po--)
+ 312   2                      {
+ 313   3                              smtInt32 ret = FTL_L_Read(
+ 314   3                                      map->curPBA,
+ 315   3                                      (smtUint8)po,
+ 316   3                                      ml_buffer
+ 317   3                              );
+ 318   3                                              
+ 319   3                              lastPO = (smtUint8)po;
+ 320   3                              if (ret != FTL_L_ERASED) break;
+ 321   3                      }
+ 322   2                      //---------------------------------------------------
+ 323   2                      // Search last po in block 
+ 324   2                      //---------------------------------------------------
+ 325   2                      map->curPPO = INDEX_NA;
+ 326   2                      for(po = 0; po <= lastPO; po++)
+ 327   2                      {
+ 328   3                              smtInt32 ret = FTL_L_Read(
+ 329   3                                      map->curPBA, 
+ 330   3                                      po, 
+ 331   3                                      ml_buffer
+ 332   3                              );
+ 333   3                              if (ret == FTL_L_OK)
+ 334   3                              {
+ 335   4                                      if (sptr->u.map.block_type & FTL_BTYPE_MAPPAGE)
+ 336   4                                      {
+ 337   5                                              mappagePO = po;
+ 338   5                                      }
+ 339   4                              }
+ 340   3                      }
+ 341   2                      // fatal, no map page in blk found 
+ 342   2                      SMT_ASSERT(mappagePO != INDEX_NA);      
+ 343   2      
+ 344   2      
+ 345   2                      // read it 
+ 346   2                      if (FTL_L_Read(
+ 347   2                              map->curPBA,
+ 348   2                              mappagePO,
+ 349   2                              ml_basebuff)
+ 350   2                      ) 
+ 351   2                      {
+ 352   3                              // Fatal
+ 353   3                              return SMT_FALSE;
+ 354   3                      }
+ 355   2      
+ 356   2                      //---------------------------------------------------
+ 357   2                      // update map block information
+ 358   2                      //---------------------------------------------------
+ 359   2                      map->curPPO             = lastPO;               
+ 360   2                      map->LastPBA    = map->curPBA;  
+ 361   2                      map->LastPPO    = mappagePO;            
+ 362   2      
+ 363   2                      if (BuildMap(map) == SMT_FALSE)
+ 364   2                      {
+C51 COMPILER V8.05a   FTL_O_MAP                                                            06/28/2007 17:29:24 PAGE 7   
+
+ 365   3                              // Fatal
+ 366   3                              return SMT_FALSE;
+ 367   3                      }
+ 368   2      
+ 369   2              }       
+ 370   1              
+ 371   1              return SMT_TRUE;
+ 372   1      
+ 373   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1092    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----      36
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

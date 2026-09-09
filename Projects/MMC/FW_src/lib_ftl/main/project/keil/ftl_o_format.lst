@@ -1,0 +1,301 @@
+C51 COMPILER V8.05a   FTL_O_FORMAT                                                         06/28/2007 17:29:23 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL_O_FORMAT
+OBJECT MODULE PLACED IN .\ftl_o_format.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_ftl\ftl_o_format.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..\
+                    -..\sys;..\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl_o_format.lst) OBJECT(.\ftl_o_format.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include <string.h>
+  39          #include "../lib_nand/ftl_l_layer.h"
+  40          #include "ftl_t_define.h"
+  41          #include "ftl_w_wear.h"
+  42          #include "ftl_c_core.h"
+  43          #include "ftl_o_rw.h"
+  44          #include "ftl_o_lowinit.h"
+  45          /*
+  46          /////////////////////////////////////////////////////////
+  47                  DEFINITION
+  48          ///////////////////////////////////////////////////////// 
+  49          */
+  50          /*
+  51          /////////////////////////////////////////////////////////
+  52                  GLOBAL VARIABLE
+  53          ///////////////////////////////////////////////////////// 
+  54          */
+C51 COMPILER V8.05a   FTL_O_FORMAT                                                         06/28/2007 17:29:23 PAGE 2   
+
+  55          /*
+  56          /////////////////////////////////////////////////////////
+  57                  STATIC VARIABLE
+  58          ///////////////////////////////////////////////////////// 
+  59          */
+  60          /*
+  61          /////////////////////////////////////////////////////////
+  62                  FUNCTIONS 
+  63          ///////////////////////////////////////////////////////// 
+  64          */
+  65          /*----------------------------------------------------------
+  66                  Function name   : FTL_O_Format
+  67                  Prototype               : 
+  68                  Return                  : 
+  69                  Argument                : 
+  70                  Comments                : Formatting the layer, this function must 
+  71                                                    be called once at manufacturing This is important 
+  72                                                    that this function can be called only once!
+  73          -----------------------------------------------------------*/
+  74          smtBoolean                      // SMT_TRUE/SMT_FALSE, success/any error
+  75          FTL_O_Format(
+  76          void
+  77          ) 
+  78          {
+  79   1              smtUint16       fidx;
+  80   1              smtUint8        index;
+  81   1              smtUint8        cou;
+  82   1              smtFrag         frag;
+  83   1              smtBlkAddr      pba;
+  84   1              smtBlkAddr      *ppba;
+  85   1              ST_SPARE        *sptr;
+  86   1              ST_MAPBLOCK *mapblock;
+  87   1      
+  88   1              printf("[FTL_O_Format]+\n");
+  89   1      
+  90   1              // here we can set up a local spare ptr 
+  91   1              // <gDevInfo.pageSize is requested for it>
+  92   1              sptr=GET_SPARE_AREA(ml_buffer); 
+  93   1      
+  94   1              //-------------------------------------------------------
+  95   1              // Erase all
+  96   1              //-------------------------------------------------------
+  97   1              for (pba = 0;pba < gDevInfo.blks; pba++)
+  98   1              {
+  99   2      
+ 100   2                      // Check Erase
+ 101   2                      if (FTL_L_Read(pba,0,0)!= FTL_L_ERASED)  
+ 102   2                      {
+ 103   3                              if (FTL_L_Erase(pba) == FTL_L_ERROR) 
+ 104   3                              {
+ 105   4                                      continue; 
+ 106   4                              }
+ 107   3                      }
+ 108   2      
+ 109   2              }
+ 110   1      
+ 111   1              //-------------------------------------------------------
+ 112   1              // Allocating free table 
+ 113   1              //-------------------------------------------------------
+ 114   1              for(index=0, pba=0; index < gpFlush->freeBlkNum; pba++)
+ 115   1              {
+ 116   2      
+C51 COMPILER V8.05a   FTL_O_FORMAT                                                         06/28/2007 17:29:23 PAGE 3   
+
+ 117   2                      // Check data block 
+ 118   2                      SMT_ASSERT(pba   <  (gDevInfo.blks-1));
+ 119   2                      SMT_ASSERT(index <  gpFlush->freeBlkNum);
+ 120   2      
+ 121   2                      // Check bad
+ 122   2                      if (FTL_L_IsBadBlk(pba)) 
+ 123   2                      {
+ 124   3                              continue; 
+ 125   3                      }
+ 126   2      
+ 127   2                      // Set free table
+ 128   2                      gpFlush->freeBlks[index++] = pba;
+ 129   2      
+ 130   2                      printf("[FTL_O_Format] ------------------------------\n");
+ 131   2                      printf("[FTL_O_Format] Allocation free block\n");
+ 132   2                      printf("[FTL_O_Format] ------------------------------\n");
+ 133   2                      printf("[FTL_O_Format] %20s[%02d] : %d\n", "freeBlks", index-1, pba);
+ 134   2              }
+ 135   1      
+ 136   1      
+ 137   1              //-------------------------------------------------------
+ 138   1              // Allocate MAP block 
+ 139   1              //-------------------------------------------------------
+ 140   1              for(cou = 0; cou < FTL_MAPBLOCK_NUM; cou++)
+ 141   1              {
+ 142   2                      
+ 143   2                      mapblock = &gpMapBlocks->mapBlks[cou];  // get the given map block 
+ 144   2                      mapblock->depthIdx      = 0;                            // reset index 
+ 145   2                      mapblock->ref_count     = 0;                            // reset reference counter 
+ 146   2      
+ 147   2                      
+ 148   2      
+ 149   2                      // allocate 1st block in map block 
+ 150   2                      FTL_C_AllocMapBlk(mapblock); 
+ 151   2      
+ 152   2                      /*
+ 153   2                      printf("[FTL_O_Format] ------------------------------\n");
+ 154   2                      printf("[FTL_O_Format] Allocate MAP block %d\n", cou);
+ 155   2                      printf("[FTL_O_Format] ------------------------------\n");
+ 156   2                      printf("[FTL_O_Format] %30s : %d\n","ST_MAPBLOCK::curPBA"                       ,mapblock->curPBA);
+ 157   2                      printf("[FTL_O_Format] %30s : %d\n", "ST_MAPBLOCK::curPPO"                      ,mapblock->curPPO);
+ 158   2                      printf("[FTL_O_Format] %30s : %d\n", "ST_MAPBLOCK::LastPBA"                     ,mapblock->LastPBA);
+ 159   2                      printf("[FTL_O_Format] %30s : %d\n", "ST_MAPBLOCK::LastPPO"                     ,mapblock->LastPPO);
+ 160   2                      printf("[FTL_O_Format] %30s : %d\n", "ST_MAPBLOCK::ref_count"           ,mapblock->ref_count);
+ 161   2                      printf("[FTL_O_Format] %30s : %d\n", "ST_MAPBLOCK::startFragIdx"        ,mapblock->endFragIdx);
+ 162   2                      printf("[FTL_O_Format] %30s : %d\n", "ST_MAPBLOCK::depthIdx"            ,mapblock->depthIdx);
+ 163   2                      */
+ 164   2      
+ 165   2      
+ 166   2              }
+ 167   1              //-------------------------------------------------------
+ 168   1              // Write fragment map to nand
+ 169   1              //-------------------------------------------------------
+ 170   1              
+ 171   1              // create MAP dir from remaining blocks 
+ 172   1              // ml_buffer data area is for fragments, spare is 
+ 173   1              // for reading new phy block
+ 174   1              ppba    = (smtBlkAddr *)ml_buffer; 
+ 175   1              fidx    = 0;
+ 176   1              frag    = 0;
+ 177   1      
+ 178   1              
+C51 COMPILER V8.05a   FTL_O_FORMAT                                                         06/28/2007 17:29:23 PAGE 4   
+
+ 179   1              for (; pba < gDevInfo.blks; pba++)
+ 180   1              {
+ 181   2                      
+ 182   2                      // if a block is bad it is left out from the system 
+ 183   2                      if (FTL_L_IsBadBlk(pba)) 
+ 184   2                      {
+ 185   3                              continue; 
+ 186   3                      }
+ 187   2              
+ 188   2      
+ 189   2                      // counting data blocks 
+ 190   2                      ppba[fidx++] = pba;
+ 191   2      
+ 192   2                      {
+ 193   3                              int                     seg;
+ 194   3      
+ 195   3                              seg = (fidx-1)%FTL_FRAG_POOLPERNUM;
+ 196   3      
+ 197   3                              if(!seg)
+ 198   3                              {
+ 199   4                                      /*
+ 200   4                                      printf("[FTL_O_Format] ------------------------------\n");
+ 201   4                                      printf("[FTL_O_Format] Write fragment %d\n", fragmentNum++);
+ 202   4                                      printf("[FTL_O_Format] ------------------------------\n");
+ 203   4                                      */
+ 204   4                              }
+ 205   3                              //printf("[FTL_O_Format] %20s[%03d] : %05d -(v)-> %05d\n", "ppba", seg, pba, (fragmentNum-1)*FTL_FRAG_P
+             -OOLPERNUM+seg);
+ 206   3                      }
+ 207   2      
+ 208   2                      // if reach the end of fragpair then write it 
+ 209   2                      if (fidx == FTL_FRAG_POOLPERNUM*2)
+ 210   2                      {
+ 211   3                              if (!FTL_C_WriteFrag(frag, (smtUint8*)ppba)) 
+ 212   3                              {
+ 213   4                                      // Fatal 
+ 214   4                                      return SMT_FALSE;
+ 215   4                              }
+ 216   3                              fidx =  0;
+ 217   3                              frag += 2;
+ 218   3      
+ 219   3                      }
+ 220   2      
+ 221   2                      
+ 222   2              }
+ 223   1      
+ 224   1              //-------------------------------------------------------
+ 225   1              // Remain fragment
+ 226   1              //-------------------------------------------------------
+ 227   1              for(; 
+ 228   1                      frag < (gpMapBlocks->maxFragPerMapBlk*FTL_MAPBLOCK_NUM); 
+ 229   1                      frag+=2)
+ 230   1              {
+ 231   2                      memset(ppba, 0xFF, sizeof(ppba));
+ 232   2                      if (!FTL_C_WriteFrag(frag, (smtUint8*)ppba)) 
+ 233   2                      {
+ 234   3                              // fatal 
+ 235   3                              return SMT_FALSE;
+ 236   3                      }
+ 237   2              }
+ 238   1      
+ 239   1      
+C51 COMPILER V8.05a   FTL_O_FORMAT                                                         06/28/2007 17:29:23 PAGE 5   
+
+ 240   1      
+ 241   1              // reset mapInfo
+ 242   1              memset(gpFlush->mapInfo, 0xFF, sizeof(ST_MAPINFO));
+ 243   1              gpFlush->mapInfo->mapCntH       = 0;
+ 244   1              gpFlush->mapInfo->mapCntL       = 0;
+ 245   1      
+ 246   1              //-------------------------------------------------------
+ 247   1              // store FLT to the top of MAP BLKS 
+ 248   1              //-------------------------------------------------------
+ 249   1              for(cou = 0; cou < FTL_MAPBLOCK_NUM; cou++)
+ 250   1              {
+ 251   2                      // setting global mapblock 
+ 252   2                      if(!FTL_C_LoadFrag(gpMapBlocks->mapBlks[cou].startFragIdx))
+ 253   2                      {
+ 254   3                              // FATAL 
+ 255   3                              return SMT_FALSE;
+ 256   3                      }
+ 257   2      
+ 258   2                      // Store information 
+ 259   2                      if (FTL_C_SaveMap()) 
+ 260   2                      {
+ 261   3                              return SMT_FALSE;
+ 262   3                      }
+ 263   2              }
+ 264   1      
+ 265   1              printf("[FTL_O_Format]-\n");
+ 266   1      
+ 267   1              return SMT_TRUE;
+ 268   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    656    ----
+   CONSTANT SIZE    =    160    ----
+   XDATA SIZE       =   ----      18
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

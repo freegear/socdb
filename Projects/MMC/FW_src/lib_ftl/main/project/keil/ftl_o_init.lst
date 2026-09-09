@@ -1,0 +1,220 @@
+C51 COMPILER V8.05a   FTL_O_INIT                                                           06/28/2007 17:29:23 PAGE 1   
+
+
+C51 COMPILER V8.05a, COMPILATION OF MODULE FTL_O_INIT
+OBJECT MODULE PLACED IN .\ftl_o_init.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\..\..\lib_ftl\ftl_o_init.c LARGE OPTIMIZE(9,SIZE) BROWSE INCDIR(..\..\..
+                    -\sys;..\..\..\inc) DEBUG OBJECTEXTEND PRINT(.\ftl_o_init.lst) OBJECT(.\ftl_o_init.obj)
+
+line level    source
+
+   1          /****************************************************************************
+   2           *
+   3           *            Copyright (c) 2005-2006 by HCC Embedded
+   4           *
+   5           * This software is copyrighted by and is the sole property of
+   6           * HCC.  All rights, title, ownership, or other interests
+   7           * in the software remain the property of HCC.  This
+   8           * software may only be used in accordance with the corresponding
+   9           * license agreement.  Any unauthorized use, duplication, transmission,
+  10           * distribution, or disclosure of this software is expressly forbidden.
+  11           *
+  12           * This Copyright notice may not be removed or modified without prior
+  13           * written consent of HCC.
+  14           *
+  15           * HCC reserves the right to modify this software without notice.
+  16           *
+  17           * HCC Embedded
+  18           * Budapest 1132
+  19           * Victor Hugo Utca 11-15
+  20           * Hungary
+  21           *
+  22           * Tel:  +36 (1) 450 1302
+  23           * Fax:  +36 (1) 450 1303
+  24           * http: www.hcc-embedded.com
+  25           * email: info@hcc-embedded.com
+  26           *
+  27           ***************************************************************************/
+  28           /*----------------------------------------------------------
+  29                   Developed by S/W Team, SHMT.Co
+  30                   Copyright @ 2006 SHMT. Co
+  31                   All Rights Reserved.
+  32          ----------------------------------------------------------*/
+  33          /*
+  34          /////////////////////////////////////////////////////////
+  35                  INCLUDE
+  36          ///////////////////////////////////////////////////////// 
+  37          */
+  38          #include <string.h>
+  39          #include "../lib_nand/ftl_l_layer.h"
+  40          #include "ftl_t_define.h"
+  41          #include "ftl_w_wear.h"
+  42          #include "ftl_c_core.h"
+  43          #include "ftl_o_rw.h"
+  44          #include "ftl_o_lowinit.h"
+  45          /*
+  46          /////////////////////////////////////////////////////////
+  47                  DEFINITION
+  48          ///////////////////////////////////////////////////////// 
+  49          */
+  50          /*
+  51          /////////////////////////////////////////////////////////
+  52                  GLOBAL VARIABLE
+  53          ///////////////////////////////////////////////////////// 
+  54          */
+C51 COMPILER V8.05a   FTL_O_INIT                                                           06/28/2007 17:29:23 PAGE 2   
+
+  55          /*
+  56          /////////////////////////////////////////////////////////
+  57                  STATIC VARIABLE
+  58          ///////////////////////////////////////////////////////// 
+  59          */
+  60          /*
+  61          /////////////////////////////////////////////////////////
+  62                  FUNCTIONS 
+  63          ///////////////////////////////////////////////////////// 
+  64          */
+  65          /*----------------------------------------------------------
+  66                  Function name   : FTL_O_Init
+  67                  Prototype               : 
+  68                  Return                  : 
+  69                  Argument                : 
+  70                  Comments                : Initialize this layer, this function must
+  71                                                    be called at the begining befores lowinit
+  72          -----------------------------------------------------------*/
+  73          smtBoolean              // SMT_TRUE/SMT_FALSE, success/any error
+  74          FTL_O_Init(
+  75          void
+  76          )
+  77          {
+  78   1              smtUint32       wear_sum                = 0;    /* summary of wears */
+  79   1              smtUint32       wear_count              = 0;    /* counting number of wears  */
+  80   1              smtUint32       wear_average    = 0;
+  81   1              smtBlkAddr      pba;
+  82   1              ST_SPARE        *sptr;
+  83   1      
+  84   1              smtUint32       mapBlkIdx;
+  85   1              smtUint32       refCnt;
+  86   1              ST_MAPBLOCK     *map;
+  87   1      
+  88   1              printf("[FTL_O_Init]+\n");
+  89   1      
+  90   1              sptr = GET_SPARE_AREA(ml_buffer);
+  91   1      
+  92   1              //-------------------------------------------------------
+  93   1              // search last map blk 
+  94   1              //-------------------------------------------------------
+  95   1              for (pba = 0; pba < gDevInfo.blks; pba++)
+  96   1              {
+  97   2              
+  98   2                      //---------------------------------------------------
+  99   2                      // (MAPBLOCK) Check map block ecc
+ 100   2                      //---------------------------------------------------
+ 101   2                      /*
+ 102   2                      {
+ 103   2                              smtUint32       block_type_ptr_pos;
+ 104   2      
+ 105   2                              block_type_ptr_pos 
+ 106   2                                      = (smtUint8)
+ 107   2                                      (
+ 108   2                                              (smtUint32)(&sptr->u.map.block_type)
+ 109   2                                              -(smtUint32)(sptr)
+ 110   2                                      );
+ 111   2      
+ 112   2                              if (FTL_L_ReadOne(
+ 113   2                                              pba,                                                            // block offset
+ 114   2                                              0,                                                                      // page offset
+ 115   2                                              (smtUint8)block_type_ptr_pos,           // block_type's position
+ 116   2                                              &block_type))                                           // destination buffer
+C51 COMPILER V8.05a   FTL_O_INIT                                                           06/28/2007 17:29:23 PAGE 3   
+
+ 117   2                              {
+ 118   2                                      continue; // pre selecting blocks 
+ 119   2                              }
+ 120   2                              block_type &= FTL_BTYPE_MASK;           // block type check 
+ 121   2                              if ((block_type == BLK_TYPE_INV)        // check 2bit error
+ 122   2                               || (!block_type))                                      
+ 123   2                              {
+ 124   2                                      continue; // skip 2 bit errors, no map block 
+ 125   2                              }
+ 126   2                      }
+ 127   2                      */
+ 128   2      
+ 129   2                      //---------------------------------------------------
+ 130   2                      // (MAPBLOCK) Check mapblock type
+ 131   2                      //---------------------------------------------------
+ 132   2                      if (!FTL_L_ReadPart(
+ 133   2                                      pba,                                    // block offset
+ 134   2                                      0,                                              // first page
+ 135   2                                      (smtUint8*)sptr,                // spare area pointer
+ 136   2                                      FTL_L_S0)                               // spare area
+ 137   2                              )
+ 138   2                      {
+ 139   3      
+ 140   3                              // Make wear information sum
+ 141   3                              if (sptr->wear < WEAR_NA)
+ 142   3                              {
+ 143   4                                      wear_count++;                           
+ 144   4                                      wear_sum        += sptr->wear;                          
+ 145   4                              }
+ 146   3      
+ 147   3                              // remove MAPBLOCK & MAPPAGE flag
+ 148   3                              mapBlkIdx       =       sptr->u.map.block_type  & ~FTL_BTYPE_MAPBLK;    
+ 149   3                              mapBlkIdx       =       mapBlkIdx                               & ~FTL_BTYPE_MAPPAGE;
+ 150   3                              if ((mapBlkIdx >= 0) 
+ 151   3                              &&  (mapBlkIdx <  FTL_MAPBLOCK_NUM)) 
+ 152   3                              {
+ 153   4      
+ 154   4                                      map             = &gpMapBlocks->mapBlks[mapBlkIdx];
+ 155   4                                      refCnt  = sptr->u.map.ref_count;
+ 156   4      
+ 157   4                                      // Check max wear, don't use it
+ 158   4                                      if(map->curPBA != BLK_NA)
+ 159   4                                      {
+ 160   5                                              if(map->ref_count < refCnt)
+ 161   5                                              {
+ 162   6                                                      if(refCnt-map->ref_count > 64)
+ 163   6                                                      continue;
+ 164   6                                              }
+ 165   5                                              else
+ 166   5                                              {
+ 167   6                                                      if(map->ref_count - refCnt < 64)
+ 168   6                                                      continue;
+ 169   6                                              }
+ 170   5                                      }
+ 171   4      
+ 172   4                                      // Set ST_MAPBLOCK::curPBA, ST_MAPBLOCK::ref_count
+ 173   4                                      map->curPBA             = pba;
+ 174   4                                      map->ref_count  = refCnt;
+ 175   4      
+ 176   4                                      printf("[FTL_O_Init] ------------------------------\n");
+ 177   4                                      printf("[FTL_O_Init] Found mapblock %d \n", mapBlkIdx);
+ 178   4                                      printf("[FTL_O_Init] ------------------------------\n");
+C51 COMPILER V8.05a   FTL_O_INIT                                                           06/28/2007 17:29:23 PAGE 4   
+
+ 179   4                                      printf("[FTL_O_Init] %30s : %d\n", "ST_MAPBLOCK::curPBA"        ,map->curPBA);
+ 180   4                                      printf("[FTL_O_Init] %30s : %d\n", "ST_MAPBLOCK::ref_count"     ,map->ref_count);
+ 181   4      
+ 182   4                              }
+ 183   3                      }
+ 184   2              }
+ 185   1      
+ 186   1      
+ 187   1              printf("[FTL_O_Init]-\n");
+ 188   1      
+ 189   1              return SMT_TRUE;
+ 190   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    476    ----
+   CONSTANT SIZE    =    175    ----
+   XDATA SIZE       =   ----      16
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
