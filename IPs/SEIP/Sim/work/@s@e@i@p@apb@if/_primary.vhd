@@ -1,0 +1,62 @@
+library verilog;
+use verilog.vl_types.all;
+entity SEIPApbIf is
+    generic(
+        RXAW            : integer := 3;
+        TXAW            : integer := 3;
+        RXCON           : integer := 2048;
+        RXSTS           : integer := 2049;
+        RXDAT           : integer := 2050;
+        TXCON           : integer := 2052;
+        TXSTS           : integer := 2053;
+        TXDAT           : integer := 2054;
+        P_IDLE          : integer := 1;
+        P_READ0         : integer := 2;
+        P_READ1         : integer := 4;
+        P_WRITE         : integer := 8
+    );
+    port(
+        PIA             : out    vl_logic_vector(10 downto 0);
+        PIDI            : out    vl_logic_vector(15 downto 0);
+        XPOE            : out    vl_logic;
+        XPWE            : out    vl_logic;
+        PIDO            : in     vl_logic_vector(15 downto 0);
+        PRDY            : in     vl_logic;
+        PCLK            : in     vl_logic;
+        PRESETB         : in     vl_logic;
+        PSEL            : in     vl_logic;
+        PENABLE         : in     vl_logic;
+        PADDR           : in     vl_logic_vector(13 downto 2);
+        PWRITE          : in     vl_logic;
+        PWDATA          : in     vl_logic_vector(31 downto 0);
+        PRDATA          : out    vl_logic_vector(31 downto 0);
+        PREADY          : out    vl_logic;
+        RxDmaErr        : in     vl_logic;
+        TxDmaErr        : in     vl_logic;
+        RxDmaReq        : in     vl_logic;
+        TxDmaReq        : in     vl_logic;
+        SEIPInt         : out    vl_logic;
+        RxFIFOWrite     : out    vl_logic;
+        RxFIFOWrData    : out    vl_logic_vector(31 downto 0);
+        RxFIFOReadCpu   : out    vl_logic;
+        RxFIFORdDataCpu : in     vl_logic_vector(31 downto 0);
+        RxFIFOFlush     : out    vl_logic;
+        RxFIFODataCnt   : in     vl_logic_vector;
+        RxFIFOEmpty     : in     vl_logic;
+        RxFIFOFull      : in     vl_logic;
+        RxDmaEn         : out    vl_logic;
+        RxDmaSize       : out    vl_logic_vector(2 downto 0);
+        RxDmaReset      : out    vl_logic;
+        TxFIFORead      : out    vl_logic;
+        TxFIFORdData    : in     vl_logic_vector(31 downto 0);
+        TxFIFOWriteCpu  : out    vl_logic;
+        TxFIFOWrDataCpu : out    vl_logic_vector(31 downto 0);
+        TxFIFOFlush     : out    vl_logic;
+        TxFIFODataCnt   : in     vl_logic_vector;
+        TxFIFOEmpty     : in     vl_logic;
+        TxFIFOFull      : in     vl_logic;
+        TxDmaEn         : out    vl_logic;
+        TxDmaSize       : out    vl_logic_vector(2 downto 0);
+        TxDmaReset      : out    vl_logic
+    );
+end SEIPApbIf;

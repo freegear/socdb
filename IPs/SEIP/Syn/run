@@ -1,0 +1,12 @@
+#!/bin/csh -fx
+
+dc_shell-t -f SEIP.tcl | tee /dev/tty >&! ./Log/SEIP.log
+
+#----========================================================================----
+#-- Proper Sdf Generaion Fitted to TSMC 
+#----========================================================================----
+./pt_postprocessor.pl -s ./Sdf/temp.sdf -o ./Sdf/SEIPTop.sdf
+
+\rm -rf *.log ./Sdf/temp.sdf
+
+exit

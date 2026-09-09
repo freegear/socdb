@@ -1,0 +1,60 @@
+library verilog;
+use verilog.vl_types.all;
+entity SEIPDmaIf is
+    generic(
+        RXAW            : integer := 3;
+        TXAW            : integer := 3;
+        RXCON           : integer := 2048;
+        RXSTS           : integer := 2049;
+        RXDAT           : integer := 2050;
+        TXCON           : integer := 2052;
+        TXSTS           : integer := 2053;
+        TXDAT           : integer := 2054;
+        R_IDLE          : integer := 1;
+        R_SYNC          : integer := 2;
+        R_RDY           : integer := 4;
+        T_IDLE          : integer := 1;
+        T_SYNC          : integer := 2;
+        T_RDY           : integer := 4
+    );
+    port(
+        PCLK            : in     vl_logic;
+        PRESETB         : in     vl_logic;
+        RxFIFOWrite     : in     vl_logic;
+        RxFIFOWrData    : in     vl_logic_vector(31 downto 0);
+        RxFIFOReadCpu   : in     vl_logic;
+        RxFIFORdDataCpu : out    vl_logic_vector(31 downto 0);
+        RxFIFOFlush     : in     vl_logic;
+        RxFIFODataCnt   : out    vl_logic_vector;
+        RxFIFOEmpty     : out    vl_logic;
+        RxFIFOFull      : out    vl_logic;
+        RxDmaEn         : in     vl_logic;
+        RxDmaSize       : in     vl_logic_vector(2 downto 0);
+        RxDmaReset      : in     vl_logic;
+        RxDmaRequest    : out    vl_logic;
+        RxDmaErr        : out    vl_logic;
+        RxDmaReq        : out    vl_logic;
+        TxFIFORead      : in     vl_logic;
+        TxFIFORdData    : out    vl_logic_vector(31 downto 0);
+        TxFIFOWriteCpu  : in     vl_logic;
+        TxFIFOWrDataCpu : in     vl_logic_vector(31 downto 0);
+        TxFIFOFlush     : in     vl_logic;
+        TxFIFODataCnt   : out    vl_logic_vector;
+        TxFIFOEmpty     : out    vl_logic;
+        TxFIFOFull      : out    vl_logic;
+        TxDmaEn         : in     vl_logic;
+        TxDmaSize       : in     vl_logic_vector(2 downto 0);
+        TxDmaReset      : in     vl_logic;
+        TxDmaRequest    : out    vl_logic;
+        TxDmaErr        : out    vl_logic;
+        TxDmaReq        : out    vl_logic;
+        RXSYNC          : in     vl_logic;
+        RXRDY           : in     vl_logic;
+        RXWE            : out    vl_logic;
+        RXD             : out    vl_logic_vector(31 downto 0);
+        TXSYNC          : in     vl_logic;
+        TXRDY           : out    vl_logic;
+        TXRD            : in     vl_logic;
+        TXD             : in     vl_logic_vector(31 downto 0)
+    );
+end SEIPDmaIf;

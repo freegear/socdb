@@ -1,0 +1,45 @@
+library verilog;
+use verilog.vl_types.all;
+entity WMA is
+    port(
+        WEMDO           : in     vl_logic_vector(7 downto 0);
+        PMD             : in     vl_logic_vector(15 downto 0);
+        PMA             : in     vl_logic_vector(8 downto 0);
+        WIMDO           : in     vl_logic_vector(15 downto 0);
+        GPA             : in     vl_logic_vector(3 downto 0);
+        GPD             : in     vl_logic_vector(15 downto 0);
+        CHTEST          : in     vl_logic;
+        WMDRE           : in     vl_logic;
+        ENP             : in     vl_logic;
+        WWREQ           : in     vl_logic;
+        CHOSLD          : in     vl_logic;
+        TE              : in     vl_logic;
+        XRST            : in     vl_logic;
+        FSYNC           : in     vl_logic;
+        START           : in     vl_logic;
+        TI              : in     vl_logic;
+        WMDWE           : in     vl_logic;
+        MCK             : in     vl_logic;
+        WST1            : in     vl_logic;
+        WST0            : in     vl_logic;
+        SLWD            : out    vl_logic_vector(19 downto 0);
+        WEMDI           : out    vl_logic_vector(7 downto 0);
+        WEMA            : out    vl_logic_vector(23 downto 0);
+        WIMA            : out    vl_logic_vector(8 downto 0);
+        WIMDI           : out    vl_logic_vector(15 downto 0);
+        PLACA           : out    vl_logic_vector(6 downto 0);
+        PITB            : out    vl_logic_vector(3 downto 0);
+        WMRD            : out    vl_logic_vector(7 downto 0);
+        CHS             : out    vl_logic_vector(5 downto 0);
+        FMODE           : out    vl_logic_vector(1 downto 0);
+        CHOFDT          : out    vl_logic;
+        TSYNC           : out    vl_logic;
+        CHONLE          : out    vl_logic;
+        \TO\            : out    vl_logic;
+        XWIMWE          : out    vl_logic;
+        WWRDY           : out    vl_logic;
+        XWEMWE          : out    vl_logic;
+        XWEMOC          : out    vl_logic;
+        WSCST           : out    vl_logic
+    );
+end WMA;

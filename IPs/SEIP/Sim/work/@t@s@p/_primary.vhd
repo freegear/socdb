@@ -1,0 +1,43 @@
+library verilog;
+use verilog.vl_types.all;
+entity TSP is
+    port(
+        TIMO            : in     vl_logic_vector(23 downto 0);
+        EROMA           : in     vl_logic_vector(8 downto 0);
+        PLACA           : in     vl_logic_vector(6 downto 0);
+        FMODE           : in     vl_logic_vector(1 downto 0);
+        SLWD            : in     vl_logic_vector(19 downto 0);
+        PMD             : in     vl_logic_vector(11 downto 0);
+        TROMO           : in     vl_logic_vector(7 downto 0);
+        PITB            : in     vl_logic_vector(3 downto 0);
+        CHLV            : in     vl_logic_vector(2 downto 0);
+        ITPD            : in     vl_logic_vector(7 downto 0);
+        PMA             : in     vl_logic_vector(8 downto 0);
+        CHTEST          : in     vl_logic;
+        XRST            : in     vl_logic;
+        TE              : in     vl_logic;
+        ESSCL           : in     vl_logic;
+        ESSCE           : in     vl_logic;
+        TI              : in     vl_logic;
+        CHOSLD          : in     vl_logic;
+        TSYNC           : in     vl_logic;
+        WSCST           : in     vl_logic;
+        EROMAS          : in     vl_logic;
+        TLWREQ          : in     vl_logic;
+        THWREQ          : in     vl_logic;
+        ENP             : in     vl_logic;
+        MCK             : in     vl_logic;
+        TROMA           : out    vl_logic_vector(8 downto 0);
+        ESSD            : out    vl_logic_vector(19 downto 0);
+        TIMI            : out    vl_logic_vector(23 downto 0);
+        TIMA            : out    vl_logic_vector(8 downto 0);
+        TSCST           : out    vl_logic;
+        TLWRDY          : out    vl_logic;
+        THWRDY          : out    vl_logic;
+        XTIMWE          : out    vl_logic;
+        \TO\            : out    vl_logic;
+        WST1            : out    vl_logic;
+        WST0            : out    vl_logic;
+        ESYNC           : out    vl_logic
+    );
+end TSP;

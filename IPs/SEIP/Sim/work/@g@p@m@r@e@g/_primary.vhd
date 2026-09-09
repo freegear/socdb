@@ -1,0 +1,48 @@
+library verilog;
+use verilog.vl_types.all;
+entity GPMREG is
+    port(
+        PIA             : in     vl_logic_vector(10 downto 0);
+        PIDI            : in     vl_logic_vector(15 downto 0);
+        CHORD           : in     vl_logic_vector(15 downto 0);
+        WMRD            : in     vl_logic_vector(7 downto 0);
+        XRST            : in     vl_logic;
+        TE              : in     vl_logic;
+        XPOE            : in     vl_logic;
+        XPWE            : in     vl_logic;
+        TI              : in     vl_logic;
+        TLWRDY          : in     vl_logic;
+        THWRDY          : in     vl_logic;
+        WWRDY           : in     vl_logic;
+        EWRDY           : in     vl_logic;
+        MCK             : in     vl_logic;
+        GPA             : out    vl_logic_vector(3 downto 0);
+        PMA             : out    vl_logic_vector(8 downto 0);
+        GPD             : out    vl_logic_vector(15 downto 0);
+        PMD             : out    vl_logic_vector(15 downto 0);
+        SOBWS           : out    vl_logic_vector(1 downto 0);
+        CHLV            : out    vl_logic_vector(2 downto 0);
+        ITPD            : out    vl_logic_vector(7 downto 0);
+        PIDO            : out    vl_logic_vector(15 downto 0);
+        EDBRS           : out    vl_logic_vector(1 downto 0);
+        CHTEST          : out    vl_logic;
+        EXMBIH          : out    vl_logic;
+        RXESEN          : out    vl_logic;
+        RXEN            : out    vl_logic;
+        TXEN            : out    vl_logic;
+        PRDY            : out    vl_logic;
+        PCEBEN          : out    vl_logic;
+        SURDEN          : out    vl_logic;
+        EMCL            : out    vl_logic;
+        START           : out    vl_logic;
+        CHORE           : out    vl_logic;
+        WMDRE           : out    vl_logic;
+        \TO\            : out    vl_logic;
+        WMDWE           : out    vl_logic;
+        CHOWE           : out    vl_logic;
+        TLWREQ          : out    vl_logic;
+        THWREQ          : out    vl_logic;
+        WWREQ           : out    vl_logic;
+        EWREQ           : out    vl_logic
+    );
+end GPMREG;

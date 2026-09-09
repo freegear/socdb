@@ -1,0 +1,42 @@
+library verilog;
+use verilog.vl_types.all;
+entity WPTLP is
+    port(
+        PITH            : in     vl_logic_vector(1 downto 0);
+        NSTLE           : in     vl_logic;
+        CARRY           : in     vl_logic;
+        WAPCEN          : in     vl_logic;
+        TI              : in     vl_logic;
+        MCK             : in     vl_logic;
+        WDRCLE          : in     vl_logic;
+        PITALE          : in     vl_logic;
+        XRST            : in     vl_logic;
+        W1ICE           : in     vl_logic;
+        W2ICE           : in     vl_logic;
+        W3ICE           : in     vl_logic;
+        W0ICE           : in     vl_logic;
+        CHNEN           : in     vl_logic;
+        PITBLE          : in     vl_logic;
+        TE              : in     vl_logic;
+        WMODE1          : in     vl_logic;
+        WMODE0          : in     vl_logic;
+        WRLEN           : in     vl_logic;
+        LDIRC           : in     vl_logic;
+        WSMSB           : in     vl_logic;
+        WAIVEN          : in     vl_logic;
+        W3LE            : in     vl_logic;
+        W2LE            : in     vl_logic;
+        W1LE            : in     vl_logic;
+        W0LE            : in     vl_logic;
+        PITB            : out    vl_logic_vector(3 downto 0);
+        RLD             : out    vl_logic_vector(2 downto 0);
+        WABINC          : out    vl_logic;
+        NLCDLE          : out    vl_logic;
+        WR1SE           : out    vl_logic;
+        CHOFDT          : out    vl_logic;
+        WR106           : out    vl_logic;
+        \TO\            : out    vl_logic;
+        WNDIRC          : out    vl_logic;
+        WAIVCT          : out    vl_logic
+    );
+end WPTLP;

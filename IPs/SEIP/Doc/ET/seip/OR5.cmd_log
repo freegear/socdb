@@ -1,0 +1,5 @@
+xst -intstyle ise -ifn __projnav/OR5.xst -ofn OR5.syr
+ngdbuild -intstyle ise -dd "d:\project\ct-500\xilinx_seip\seip/_ngo" -i  -p xc4vlx200-ff1513-11 OR5.ngc OR5.ngd
+map -intstyle ise -p xc4vlx200-ff1513-11 -cm area -pr b -k 4 -c 100 -o OR5_map.ncd OR5.ngd OR5.pcf
+par -w -intstyle ise -ol std -t 1 OR5_map.ncd OR5.ncd OR5.pcf
+trce -intstyle ise -e 3 -l 3 -s 11 -xml OR5 OR5.ncd -o OR5.twr OR5.pcf
