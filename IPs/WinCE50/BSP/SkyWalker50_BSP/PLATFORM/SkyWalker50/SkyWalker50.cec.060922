@@ -1,0 +1,460 @@
+CECInfo
+(
+	Name ( "SkyWalker50" )
+	CECVersion ( 5.00 )
+	Description ( "A BSP for the SMT SkyWalker Development Platform.  The platform uses the OS that is built for the ARM v4 architecture and contains the ARM instruction set with Thumb Interworking enabled." )
+	GUID ( {37A99740-0C66-432D-AD4C-31E16C24A528} )
+	Vendor ( "SMT" )
+)
+ComponentType
+(
+	Name ( "BSPs" )
+	GUID ( {3CABD6DA-B577-4A87-9490-9432E80DC2F1} )
+	Description ( "Board Support Packages" )
+	MaxResolvedImpsAllowed( 999 )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SkyWalker50: ARMV4I" )
+			GUID ( {0D57E743-7BAD-47B5-9B07-271F911F5564} )
+			Description ( "A BSP for the SMT SkyWalker Development Platform.  The platform uses the OS that is built for the ARM v4 architecture and contains the ARM instruction set with Thumb Interworking enabled." )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2004-04-15" )
+			Children ( "{FB140F63-511C-4D41-82CA-6121FEDB3761}" )
+			SizeIsCPUDependent( 1 )
+			CPUSizeMultiplier( 1.0 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {7788C5EA-B396-4364-83A7-EB827839672C} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+				)
+				BuildMethod
+				(
+					GUID ( {4E57559E-AB6E-460D-80C4-5D86287EBBB9} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Keyboard/Mouse" )
+	GUID ( {D912FD7E-DEF7-436C-AAEE-108D197606FC} )
+	Description ( "Import Device Drivers" )
+	Group ( "\Device Drivers\Input Devices" )
+	Vendor ( "Samsung" )
+	MaxResolvedImpsAllowed( 1 )
+	ExcludeWhenSet( ANY, "BSP_NOKEYBD" )
+	RequiredCEModules( ANY, "keybd pointer" )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SMT926A Matrix Keyboard/Mouse English" )
+			GUID ( {A4683F1A-49A9-475A-897C-77537F3E8A86} )
+			Description ( "SMT SMT926A Matrix Keyboard/Mouse English" )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "KbdS3C2440Us.dll" )
+			Variable( "BSP_KEYBD_NOP",  )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {A97E2695-0A9E-4D11-800C-AB2D99C35B30} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\KEYBD\KBDS3C2440US")' )
+				)
+				BuildMethod
+				(
+					GUID ( {0905EFBD-CF84-4676-9B32-3D757164E03C} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\KEYBD\KBDS3C2440US")' )
+				)
+			)
+		)
+		Implementation
+		(
+			Name ( "SMT Matrix Keyboard/Mouse Japanese2 (IBM layout)" )
+			GUID ( {24594343-1FD4-42C3-AF1C-A4DA91289C7A} )
+			Description ( "SMT SMT926A Matrix Keyboard/Mouse Japanese2 (IBM layout)" )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "KbdS3C2440Jpn2.dll" )
+			Variable( "BSP_KEYBD_JPN1",  )
+			Variable( "BSP_KEYBD_NOP",  )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {250D8F42-5418-4AA8-BCA3-0BE28FB6DE16} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\KEYBD\KBDS3C2440JPN2")' )
+				)
+				BuildMethod
+				(
+					GUID ( {3C2ADA69-9879-455E-9E1E-8E43491B5330} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\KEYBD\KBDS3C2440JPN2")' )
+				)
+			)
+		)
+		Implementation
+		(
+			Name ( "SMT926A Matrix Keyboard/Mouse Korean" )
+			GUID ( {4D28D8BC-36AA-4A34-82D4-80A8416C0931} )
+			Description ( "SMT SMT926A Keyboard/Mouse Korean" )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "KbdS3C2440Kor.dll" )
+			Variable( "BSP_KEYBD_NOP",  )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {09BF2774-F693-4F34-9267-1CD52324CC8D} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\KEYBD\KBDS3C2440KOR")' )
+				)
+				BuildMethod
+				(
+					GUID ( {526DF9C6-4F34-4B00-B407-8179C8D43161} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\KEYBD\KBDS3C2440KOR")' )
+				)
+			)
+		)
+		Implementation
+		(
+			Name ( "SMT926A Matrix Keyboard/Mouse Common" )
+			GUID ( {96A8F8AC-D6AB-4EE6-931C-C61E530F6A29} )
+			Description ( "SMT SMT926A Matrix Keyboard/Mouse Common" )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "kbdmouse.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {E11F0D0D-183F-47F8-981F-3016B5270EDF} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\KEYBD\KBDCOMMON")' )
+				)
+				BuildMethod
+				(
+					GUID ( {501258B2-2C5D-45AA-8948-5090511552F3} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\KEYBD\KBDCOMMON")' )
+				)
+			)
+		)
+		Implementation
+		(
+			Name ( "SMT926A Matrix Keyboard/Mouse Japanese1 (NEC layout)" )
+			GUID ( {DF9E0963-A8A9-4BD1-9F82-A53AD13772A7} )
+			Description ( "SMT SMT926A Matrix Keyboard/Mouse Japanese1 (NEC layout)" )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "KbdS3C2440Jpn1.dll" )
+			Variable( "BSP_KEYBD_JPN1", "1" )
+			Variable( "BSP_KEYBD_NOP",  )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {DF2B3C8B-FE33-48EB-9B59-BC57206DF9F4} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\KEYBD\KBDS3C2440JPN1")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "PC Card Host" )
+	GUID ( {3E1D534C-7082-44D7-9856-60E6D3B70704} )
+	Description ( "PCMCIA (PC Card)" )
+	Group ( "\Device Drivers\PC Card" )
+	Vendor ( "Samsung" )
+	MaxResolvedImpsAllowed( 1 )
+	ExcludeWhenSet( ANY, "BSP_NOPCMCIA" )
+	RequiredCEModules( ALL, "device pcmcia" )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "Cirrus Logic CL-PD6710 PCMCIA" )
+			GUID ( {5BE5C7C0-8690-4797-89CA-5D59CB3375D5} )
+			Description ( "Cirrus Logic CL-PD6710 PCMCIA controller." )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "pcc_smdk2440.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {6F6CA67A-C76C-414E-9623-7C133A198E4A} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#BUILD(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\PCCARD")' )
+				)
+				BuildMethod
+				(
+					GUID ( {68CE998A-59AE-4742-BDE9-AFE219DEA5AC} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#BUILD(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\PCCARD")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Serial" )
+	GUID ( {22FB9697-CA7E-4F3D-9582-36A78798DA95} )
+	Description ( "Serial" )
+	Group ( "\Device Drivers" )
+	Vendor ( "Samsung" )
+	MaxResolvedImpsAllowed( 999 )
+	ExcludeWhenSet( ANY, "BSP_NOSERIAL" )
+	RequiredCEModules( ANY, "pcmcia serial" )
+	RequiredCEModules( ALL, "device" )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SMT926A Serial Driver" )
+			GUID ( {B3F0AB76-DA0E-4EF7-B023-DB356D656A40} )
+			Description ( "SMT926ASerial Driver." )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "serial_smdk2440.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {8876486E-0E57-41F4-9888-7894117BC2FD} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\SERIAL")' )
+				)
+				BuildMethod
+				(
+					GUID ( {69804A6B-2969-44C7-82F3-89E1F4DE37E9} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\SERIAL")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "USB Function Bus Drivers" )
+	GUID ( {2DA6A882-AC9A-4DA4-A390-5D236F8A4546} )
+	Description ( "USB Function Bus Drivers" )
+	Group ( "\Device Drivers\USB Function" )
+	Vendor ( "Samsung" )
+	MaxResolvedImpsAllowed( 999 )
+	ExcludeWhenSet( ANY, "BSP_NOUSB" )
+	RequiredCEModules( ANY, "net2280" )
+	RequiredCEModules( ALL, "device" )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SMT SKYWALKER CSP" )
+			GUID ( {BE058F3B-18E7-48D5-8551-FBB9F1DEEAFC} )
+			Description ( "SMT SKYWALKER CSP USB Function Driver (SYSGEN_USBFN)" )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2004-03-28" )
+			FeatureVariable( "SYSGEN_USBFN", "1" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {1D64CD8C-4390-48EF-9D02-48B8757B11B7} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+				)
+				BuildMethod
+				(
+					GUID ( {2E64886C-5FF1-4BE6-9145-9F76948798A5} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "MSFlash Drivers" )
+	GUID ( {EAAF20EC-0D30-442F-B8D9-24700928E4D8} )
+	Description ( "MSFlash Drivers" )
+	Group ( "\Storage Drivers" )
+	Vendor ( "Samsung" )
+	MaxResolvedImpsAllowed( 1 )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SmartMedia NAND Flash Driver (SMFLASH)" )
+			GUID ( {EAD4EE57-A7F6-40CF-947E-422AD530A41C} )
+			Description ( "SmartMedia NAND Flash Driver (SMFLASH)" )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2003-01-14" )
+			FeatureVariable( "SYSGEN_MSFLASH", "1" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {2B82AAC1-9AD8-4BD6-B687-02408CBEE45D} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(DIRS,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\COMMON\SMARTMEDIA")' )
+				)
+				BuildMethod
+				(
+					GUID ( {BFC32BA3-0149-455E-B4DF-2A82215255E8} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(DIRS,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\COMMON\SMARTMEDIA")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Power Button" )
+	GUID ( {A4AF48B4-1103-4A90-A485-39D811311EB1} )
+	Description ( "Power button driver" )
+	Group ( "\Device Drivers" )
+	Vendor ( "Samsung" )
+	MaxResolvedImpsAllowed( 999 )
+	ExcludeWhenSet( ANY, "BSP_NOPOWERBUTTON" )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "SKYWALKER Power Button" )
+			GUID ( {ED9A2513-F5A6-4B96-8EBD-787EF1788061} )
+			Description ( "SMT SKYWALKER power button." )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2004-04-15" )
+			Variable( "MODULE_NAME", "pwrbtn2440.dll" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {C0FCCE91-9C9F-4FEC-A87F-08880B8E37E0} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\PWRBTN")' )
+				)
+				BuildMethod
+				(
+					GUID ( {059F989A-CD5A-4BEB-A561-6FAE5CA3A879} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#SRCCODE(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\DRIVERS\PWRBTN")' )
+				)
+			)
+		)
+	)
+)
+ComponentType
+(
+	Name ( "Ethernet Bootloader (eboot)" )
+	GUID ( {FB140F63-511C-4D41-82CA-6121FEDB3761} )
+	Description ( "SMT Windows CE Ethernet bootloader." )
+	Group ( "Bootloaders" )
+	MaxResolvedImpsAllowed( 1 )
+	Implementations
+	(
+		Implementation
+		(
+			Name ( "Ethernet Bootloader (eboot)" )
+			GUID ( {E9B9AB12-0D87-4DCA-80D5-7AD3616B527A} )
+			Description ( "SMT Windows CE Ethernet bootloader." )
+			BSPPlatformDir ( "SkyWalker50" )
+			Version ( "5.0.0.0" )
+			Locale ( 0409 )
+			Vendor ( "SMT" )
+			Date ( "2004-04-15" )
+			SizeIsCPUDependent( 1 )
+			BuildMethods
+			(
+				BuildMethod
+				(
+					GUID ( {07CE64DD-536C-4BB1-8278-F5A58441B724} )
+					Step ( BSP )
+					CPU ( "ARMV4I" )
+					Action ( '#BUILD(SOURCES,"$(_WINCEROOT)\PLATFORM\SKYWALKER50\SRC\BOOTLOADER\EBOOT")' )
+				)
+			)
+		)
+	)
+)

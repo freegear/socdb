@@ -1,0 +1,43 @@
+!if 0
+Copyright (c) Microsoft Corporation.  All rights reserved.
+!endif
+!if 0
+Use of this source code is subject to the terms of the Microsoft end-user
+license agreement (EULA) under which you licensed this SOFTWARE PRODUCT.
+If you did not accept the terms of the EULA, you are not authorized to use
+this source code. For a copy of the EULA, please see the LICENSE.RTF on your
+install media.
+!endif
+TARGETNAME=kernkitl
+TARGETTYPE=PROGRAM
+RELEASETYPE=PLATFORM
+SYNCHRONIZE_DRAIN=1
+
+EXEENTRY=StartUp
+
+LDEFINES=-subsystem:native /DEBUG /DEBUGTYPE:CV /FIXED:NO
+
+SOURCES=
+
+TARGETLIBS= \
+    $(_TARGETPLATROOT)\lib\$(_CPUDEPPATH)\oal.lib \
+    $(_COMMONOAKROOT)\lib\$(_CPUDEPPATH)\nk.lib \
+    $(_PLATCOMMONLIB)\$(_CPUINDPATH)\oal_abort_smt926a.lib \
+    $(_PLATCOMMONLIB)\$(_CPUINDPATH)\oal_cache_smt926a.lib \
+    $(_PLATCOMMONLIB)\$(_CPUINDPATH)\oal_memory_smt926a.lib \
+    $(_PLATCOMMONLIB)\$(_CPUDEPPATH)\oal_io_smt926a.lib \
+    $(_PLATCOMMONLIB)\$(_CPUINDPATH)\oal_intr_smt926a.lib \
+    $(_PLATCOMMONLIB)\$(_CPUINDPATH)\oal_timer_smt926a.lib \
+    $(_PLATCOMMONLIB)\$(_CPUINDPATH)\oal_power_smt926a.lib \
+    $(_PLATCOMMONLIB)\$(_CPUINDPATH)\oal_rtc_smt926a.lib \
+    $(_PLATCOMMONLIB)\$(_CPUINDPATH)\oal_ioctl_smt926a.lib \
+    $(_PLATCOMMONLIB)\$(_CPUINDPATH)\oal_io.lib \
+    $(_PLATCOMMONLIB)\$(_CPUDEPPATH)\oal_other.lib \
+    $(_PLATCOMMONLIB)\$(_CPUDEPPATH)\oal_log.lib \
+    $(_PLATCOMMONLIB)\$(_CPUDEPPATH)\oal_kitl.lib \
+    $(_PLATCOMMONLIB)\$(_CPUINDPATH)\oal_ethdrv_lan91c.lib \
+    $(_COMMONOAKROOT)\lib\$(_CPUINDPATH)\ddk_io.lib  \
+    $(_COMMONOAKROOT)\lib\$(_CPUDEPPATH)\vbridge.lib \
+    $(_COMMONOAKROOT)\lib\$(_CPUDEPPATH)\kitl.lib \
+    $(_TARGETPLATROOT)\lib\$(_CPUDEPPATH)\smflash_lib.lib \
+    $(_COMMONOAKROOT)\lib\$(_CPUINDPATH)\fulllibc.lib

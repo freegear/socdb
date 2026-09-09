@@ -1,0 +1,42 @@
+;
+; Copyright (c) Microsoft Corporation.  All rights reserved.
+;
+;
+; Use of this source code is subject to the terms of the Microsoft end-user
+; license agreement (EULA) under which you licensed this SOFTWARE PRODUCT.
+; If you did not accept the terms of the EULA, you are not authorized to use
+; this source code. For a copy of the EULA, please see the LICENSE.RTF on your
+; install media.
+;
+; This file is to be included in platform.reg if required.
+;
+[HKEY_LOCAL_MACHINE\Comm\LAN9000]
+	"DisplayName"="SMC LAN91C111 Ethernet"
+	"Group"="NDIS"
+	"ImagePath"="LAN91C111.DLL"
+	
+[HKEY_LOCAL_MACHINE\Comm\LAN9000\Linkage]
+	"Route"=multi_sz:"LAN90001"
+	
+[HKEY_LOCAL_MACHINE\Comm\LAN90001]
+	"DisplayName"="SMC LAN91C111 Ethernet"
+	"Group"="NDIS"
+	"ImagePath"="LAN91C111.DLL"
+	
+[HKEY_LOCAL_MACHINE\Comm\LAN90001\Parms]
+	"BusNumber"=dword:0
+	"BusType"=dword:1
+	"InterruptNumber"=dword:A ;<======== Enter the interrupt number here in hex
+	"IoBaseAddress"=dword:300 ;<======== Enter the IOBase address here in hex
+	"Transceiver"=dword:3
+	"CardType"=dword:1
+	
+[HKEY_LOCAL_MACHINE\Comm\LAN90001\Parms\TcpIp]
+	"EnableDHCP"=dword:1 ;<======== set to 1 if DHCP enabled.
+	"DefaultGateway"="" ;(contd) If set to 0 then enter the values next entries
+	"UseZeroBroadcast"=dword:0
+	"IpAddress"=""
+	"Subnetmask"=""
+	
+[HKEY_LOCAL_MACHINE\Comm\Tcpip\Linkage]
+	"Bind"=multi_sz:"LAN90001"

@@ -1,0 +1,64 @@
+//
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+//
+//
+// Use of this source code is subject to the terms of the Microsoft end-user
+// license agreement (EULA) under which you licensed this SOFTWARE PRODUCT.
+// If you did not accept the terms of the EULA, you are not authorized to use
+// this source code. For a copy of the EULA, please see the LICENSE.RTF on your
+// install media.
+//
+//------------------------------------------------------------------------------
+//
+//  Header: smt926a_iicbus.h
+//
+//  Defines the I2C bus controller CPU register layout and definitions.
+//
+#ifndef __SMT926A_IICBUS_H
+#define __SMT926A_IICBUS_H
+
+#if __cplusplus
+    extern "C" 
+    {
+#endif
+
+
+//------------------------------------------------------------------------------
+//  Type: SMT926A_IICBUS_REG
+//
+//  Defines IIC bus control register layout. This register bank is located by
+//  the constant CPU_BASE_REG_XX_IICBUS in the configuration file 
+//  cpu_base_reg_cfg.h.
+//
+
+typedef struct 
+{
+    UINT32    IICCON;
+    UINT32    IICSTAT;
+    UINT32    IICADD;
+    UINT32    IICDS;
+    UINT32    IICLC;
+
+	/* SMT926 I2C registers */
+	// Inserted by DJKIM 2006/09/27
+	// I2C0
+	UINT32	 ICCR0_0;
+	UINT32	 ICSR0;
+	UINT32	 IAR0;
+	UINT32	 IDSR0;
+	UINT32	 ICCR0_1;
+
+	// I2C1
+	UINT32	 ICCR1_0;
+	UINT32	 ICSR1;
+	UINT32	 IAR1;
+	UINT32	 IDSR1;
+	UINT32	 ICCR1_1;    
+} SMT926A_IICBUS_REG, *PSMT926A_IICBUS_REG;        
+
+
+#if __cplusplus
+    }
+#endif
+
+#endif 

@@ -1,0 +1,31 @@
+!if 0
+Copyright (c) Microsoft Corporation.  All rights reserved.
+!endif
+!if 0
+Use of this source code is subject to the terms of the Microsoft end-user
+license agreement (EULA) under which you licensed this SOFTWARE PRODUCT.
+If you did not accept the terms of the EULA, you are not authorized to use
+this source code. For a copy of the EULA, please see the LICENSE.RTF on your
+install media.
+!endif
+TARGETNAME=LAN91C111
+TARGETTYPE=DYNLINK
+RELEASETYPE=PLATFORM
+DEFFILE=LAN91C111.def
+
+CDEFINES=$(CDEFINES) -DNDIS_MINIPORT_DRIVER
+
+DLLENTRY=DllEntry
+
+TARGETLIBS=	$(_COMMONSDKROOT)\lib\$(_CPUINDPATH)\coredll.lib    \
+			$(_COMMONSDKROOT)\lib\$(_CPUINDPATH)\winsock.lib	\
+			$(_COMMONSDKROOT)\lib\$(_CPUINDPATH)\ndis.lib		\
+			$(_COMMONOAKROOT)\lib\$(_CPUINDPATH)\ceddk.lib
+			
+SOURCES= \
+		LAN91C111_Filter.C		\
+		LAN91C111_Init.C		\
+		LAN91C111_Intr.C		\
+		LAN91C111_Miniport.C	\
+		LAN91C111_NDIS.C		\
+		LAN91C111_Phy.C

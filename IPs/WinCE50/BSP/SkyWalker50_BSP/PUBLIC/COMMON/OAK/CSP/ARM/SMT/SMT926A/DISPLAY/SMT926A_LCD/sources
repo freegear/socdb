@@ -1,0 +1,38 @@
+#-------------------------------------------------------------------------------
+#	
+# Copyright (c) SANGHWA MICRO TECHNOLOGY. All rights reserved.
+#
+# author 	: Yang Yong Tae
+# history	: 
+#			  2006-10-24 1:44AM first implement
+#-------------------------------------------------------------------------------
+# preprocessor
+#-------------------------------------------------------------------------------
+!IFDEF BSP_CLEARTYPE
+CDEFINES 			= $(CDEFINES) -DDISP_CLEARTYPE
+!ENDIF
+
+!IFDEF !BSP_DBG_SWC
+CDEFINES 			= $(CDEFINES) -DDISP_HWC_ACCEL
+!ENDIF
+
+CDEFINES			= $(CDEFINES) -DDDI
+INCLUDES			= $(_COMMONOAKROOT)\CSP\ARM\SMT\SMT926A\inc
+#-------------------------------------------------------------------------------
+# build rule
+#-------------------------------------------------------------------------------
+TARGETNAME			= smt926a_lcd_lib
+TARGETTYPE			= LIBRARY
+RELEASETYPE			= OAK
+TARGETLIBS			= $(_COMMONSDKROOT)\lib\$(_CPUINDPATH)\coredll.lib
+SOURCELIBS			=
+SOURCES				= smt926a_lcd.cpp
+#-------------------------------------------------------------------------------
+# sysgen def file 
+#-------------------------------------------------------------------------------
+TARGETDEFNAME		= smt926a_lcd		# What is it??? by DJKIM 2006/09/21 
+DEFFILE				= smt926a_lcd.def
+WINCETARGETFILE0	= $(_COMMONOAKROOT)\lib\$(_CPUINDPATH)\$(TARGETDEFNAME).def
+
+      
+

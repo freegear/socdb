@@ -1,0 +1,120 @@
+//
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+//
+//
+// Use of this source code is subject to the terms of the Microsoft end-user
+// license agreement (EULA) under which you licensed this SOFTWARE PRODUCT.
+// If you did not accept the terms of the EULA, you are not authorized to use
+// this source code. For a copy of the EULA, please see the LICENSE.RTF on your
+// install media.
+//
+/*++
+THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
+ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+PARTICULAR PURPOSE.
+
+Module Name:  
+    kitlusbser.c
+    
+Abstract:
+
+    Platform specific code for USB serial KITL services.
+        
+Functions:
+
+
+Notes: 
+
+--*/
+
+#include <windows.h>
+#include <bsp.h>
+#include <kitl_cfg.h>
+
+static DWORD KitlIoPortBase;
+volatile SMT926A_USBD_REG *g_pUSBDReg;
+
+S3CUSB_INFO  g_Info; // record keeping
+USBSERKITL_INFO USBSerInfo;
+
+//extern void SMT926_USB_INIT(void); // To no bug temparary by DJKIM 2006/09/26
+//extern void SMT926_USB_EP0(void); // To no bug temparary by DJKIM 2006/09/26
+
+///////////////////////////////////////////////////////////////////////////////
+// Hard coded Wait
+//////////////////////////////////////////////////////////////////////////////
+void WaitMS (DWORD dwMS)
+{
+    volatile DWORD dCount,dwIndex;
+
+    for (dwIndex=0;dwIndex<dwMS;dwIndex++)
+    {
+        for (dCount=0;dCount<100000L;dCount++);
+    }
+}
+/* SMT926USBSER_Init
+ *
+ *  Called by PQOAL KITL framework to initialize the serial port
+ *
+ *  Return Value:
+ */
+BOOL SMT926USBSER_Init (KITL_SERIAL_INFO *pSerInfo)
+{
+    volatile SMT926A_IOPORT_REG *g_pIOPortReg;
+
+    g_pIOPortReg = (SMT926A_IOPORT_REG *)OALPAtoVA(SMT926A_BASE_REG_PA_IOPORT, FALSE);
+
+    memset(&g_Info, 0, sizeof(g_Info));
+    memset(&USBSerInfo, 0, sizeof(USBSERKITL_INFO));
+
+    KITLOutputDebugString ("Wait for connecting\n");
+
+    KitlIoPortBase = (DWORD)pSerInfo->pAddress; // KITL_SERIAL_INFO->pAddress : H/W base addr
+
+    if (!KitlIoPortBase)
+    {
+        return FALSE;
+    }
+    else
+    {
+        g_pUSBDReg = (volatile SMT926A_USBD_REG *)OALPAtoVA(KitlIoPortBase, FALSE);
+
+        //Shoule re-plugin the usb cable
+        //while(1)
+        //{
+        //  if(g_pUSBDReg->PMR.usb_re )
+        //      break;
+        //}
+
+        // USB detection control.
+        // SC32440 칩이 USB device로 동작 시 Host로 detect signal 전송(D+ line high)로 주도록 GPIO pin을 이용
+        g_pIOPortReg->GPGDAT &= ~0x1<<12;
+        g_pIOPortReg->GPGUP  |= 0x1<<12;
+        g_pIOPortReg->GPGCON  = (g_pIOPortReg->GPGCON & 0x3<<24) | 0x1<<24;
+        //g_pIOPortReg->GPGCON  = (g_pIOPortReg->GPGCON & ~(0x3<<24)) | 0x1<<24; // 이게 맞는게 아닌가??? by DJKIM 2006/10/10
+        g_pUSBDReg->UIR.reset_int = 1;
+
+        WaitMS(100);
+
+        g_pIOPortReg->GPGDAT |= 0x1<<12;
+    	
+        //SMT926_USB_INIT(); // To no bug temparary by DJKIM 2006/09/26
+
+        while(USBSerInfo.dwState != KITLUSBSER_STATE_CONFIGURED)
+        {
+            if (g_pUSBDReg->UIR.reset_int)
+            //SMT926_USB_INIT(); // To no bug temparary by DJKIM 2006/09/26
+
+            g_pUSBDReg->INDEX.index = 0;
+            //SMT926_USB_EP0(); // To no bug temparary by DJKIM 2006/09/26
+    	}
+    }
+
+    pSerInfo->bestSize = 64;
+
+    //KITLOutputDebugString ("-SMT926USBSER_Kitl_Init\n");
+
+    return TRUE;
+}
+

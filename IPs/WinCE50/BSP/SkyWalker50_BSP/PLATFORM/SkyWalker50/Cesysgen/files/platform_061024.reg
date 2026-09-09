@@ -1,0 +1,355 @@
+;
+; Copyright (c) Microsoft Corporation.  All rights reserved.
+;
+;
+; Use of this source code is subject to the terms of the Microsoft end-user
+; license agreement (EULA) under which you licensed this SOFTWARE PRODUCT.
+; If you did not accept the terms of the EULA, you are not authorized to use
+; this source code. For a copy of the EULA, please see the LICENSE.RTF on your
+; install media.
+;
+
+; Our variables
+#define BUILTIN_ROOT HKEY_LOCAL_MACHINE\Drivers\BuiltIn
+#define DRIVERS_DIR $(_PUBLICROOT)\common\oak\drivers
+
+
+; @CESYSGEN IF WCESHELLFE_MODULES_CTLPNL
+; This registry setting controls the checkboxes displayed in the Sounds CPL
+; under "enable clicks & taps". Set bit0 if you have a keyboard, set bit1 if
+; you have a touch screen. Set bit2 if you have HW buttons (NOTE: for now
+; HW buttons are mutually exclusive with the keyboard)
+[HKEY_LOCAL_MACHINE\ControlPanel]
+    "InputConfig"=dword:3   ; 3 => keybd and touch screen
+; @CESYSGEN ENDIF WCESHELLFE_MODULES_CTLPNL
+
+; @CESYSGEN IF WCESHELLFE_MODULES_EXPLORER
+; @CESYSGEN ENDIF WCESHELLFE_MODULES_EXPLORER
+
+
+; @CESYSGEN IF CE_MODULES_DEVICE
+
+; HIVE BOOT SECTION
+[HKEY_LOCAL_MACHINE\Drivers\Resources\IRQ]
+   "Identifier"=dword:1
+   "Minimum"=dword:1
+   "Space"=dword:20
+   "Ranges"="1-0x20"
+;  "Shared"=""
+
+[HKEY_LOCAL_MACHINE\Drivers\Resources\IO]
+   "Identifier"=dword:2
+   "Minimum"=dword:0
+   "Space"=dword:10000
+   "Ranges"="0-0xFFFF"
+; END HIVE BOOT SECTION
+
+
+; @CESYSGEN IF CE_MODULES_BATTDRVR
+; @CESYSGEN ENDIF CE_MODULES_BATTDRVR
+
+; @CESYSGEN IF CE_MODULES_NLEDDRVR
+#include "$(DRIVERS_DIR)\nleddrvr\nleddrvr.reg"
+; @CESYSGEN ENDIF CE_MODULES_NLEDDRVR
+
+; @CESYSGEN IF CE_MODULES_POINTER   
+[HKEY_LOCAL_MACHINE\HARDWARE\DEVICEMAP\TOUCH]
+  "MaxCalError"=dword:7
+; portrait 
+  "CalibrationData"="466,623 149,163 145,1101 798,1097 792,160 "
+;  "CalibrationData"="500,512 762,268 758,760 244,758 241,266 "
+; Landscape 
+;   "CalibrationData"="515,503 763,748 258,749 269,255 764,255 "
+; @CESYSGEN ENDIF CE_MODULES_POINTER   
+
+; @CESYSGEN IF CE_MODULES_SERIAL
+IF BSP_NOSERIAL !
+;=============== UART0 (physical COM1 connector P1) (Serial) ===============
+[HKEY_LOCAL_MACHINE\Drivers\BuiltIn\Serial]
+   "DeviceArrayIndex"=dword:0
+   "Irq"=dword:1c
+   "MemBase"=dword:50000000
+   "MemLen"=dword:2C
+   "InterruptBitsShift"=dword:0 ; UART 0 Interrupt Sub Register shift bit.
+   "ISTTimeouts"=dword:200	; every 512 ticks checking Modem status.
+   "Prefix"="COM"
+   "Index"=dword:1
+   "Dll"="serial_skywalker.dll"
+   "Order"=dword:0
+   "Priority"=dword:0
+   "Port"="COM1:"
+   "DeviceType"=dword:0
+   "FriendlyName"=LOC_DISPLAYNAME_COM1
+   "Tsp"="unimodem.dll"
+   "IClass"="{CC5195AC-BA49-48a0-BE17-DF6D1B0173DD}"
+   "DevConfig"=hex: 10,00, 00,00, 05,00,00,00, 10,01,00,00, 00,4B,00,00, 00,00, 08, 00, 00, 00,00,00,00
+
+; SkyWalker IrDA(UART2)
+[HKEY_LOCAL_MACHINE\Drivers\BuiltIn\IRDAskywalker]
+   "DeviceArrayIndex"=dword:1
+   "Irq"=dword:f
+   "MemBase"=dword:50008000
+   "MemLen"=dword:2C
+   "InterruptBitsShift"=dword:6 ; UART 2 Interrupt Sub Register shift bit.
+   ;"ISTTimeouts"=dword:200	; every 512 ticks checking Modem status.
+   "Prefix"="COM"
+   "Index"=dword:4
+   "Dll"="serial_skywalker.Dll"
+   "Order"=dword:0
+   "Priority"=dword:0
+   "Port"="COM4:"
+   "DeviceType"=dword:0  ; IRDA modem, 0 -> null modem
+   "FriendlyName"=LOC_DISPLAYNAME_RAWIR
+   "IClass"="{CC5195AC-BA49-48a0-BE17-DF6D1B0173DD}"
+   "DevConfig"=hex: 10,00, 00,00, 05,00,00,00, 10,01,00,00, 00,4B,00,00, 00,00, 08, 00, 00, 00,00,00,00
+
+[HKEY_LOCAL_MACHINE\Comm\Irsir1\Parms]
+   "Port"=dword:4
+   ; 0 = Use external dongle, 1 = Use internal IR
+   "IntIR"=dword:1
+   ; 0 - internal transceiver, 1 - Extended Systems JetEye dongle.
+   "TransceiverType"=dword:0
+
+ENDIF BSP_NOSERIAL !
+;=========== End of UART(Serial) ===============
+; @CESYSGEN ENDIF CE_MODULES_SERIAL
+
+; @CESYSGEN IF CE_MODULES_KEYBD
+; Keybd driver is the same.
+IF BSP_NOKEYBD !
+#include "$(DRIVERS_DIR)\keybd\keybd.reg"
+
+[HKEY_LOCAL_MACHINE\HARDWARE\DEVICEMAP\KEYBD]
+    "DriverName"="kbdmouse.dll"
+    "Irq"=dword:1
+    "IOBase"=dword:B1600000
+    "SSPBase"=dword:B1900000
+
+#include "$(DRIVERS_DIR)\keybd\LayMgr.reg"
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Layouts\$(input_locale)]
+	"Matrix"="kbdmouse.dll"
+
+
+; @CESYSGEN IF CE_MODULES_KBDA1
+; @CESYSGEN ENDIF CE_MODULES_KBDA1
+
+; @CESYSGEN IF CE_MODULES_KBDHEB
+; @CESYSGEN ENDIF CE_MODULES_KBDHEB
+
+; @CESYSGEN IF CE_MODULES_KBDTH0
+; @CESYSGEN ENDIF CE_MODULES_KBDTH0
+
+; @CESYSGEN IF CE_MODULES_KBDINHIN
+; @CESYSGEN ENDIF CE_MODULES_KBDINHIN
+
+; @CESYSGEN IF CE_MODULES_KBDINMAR
+; @CESYSGEN ENDIF CE_MODULES_KBDINMAR
+
+; @CESYSGEN IF CE_MODULES_KBDINPUN
+; @CESYSGEN ENDIF CE_MODULES_KBDINPUN
+
+; @CESYSGEN IF CE_MODULES_KBDINTEL
+; @CESYSGEN ENDIF CE_MODULES_KBDINTEL
+
+; @CESYSGEN IF CE_MODULES_KBDINGUJ
+; @CESYSGEN ENDIF CE_MODULES_KBDINGUJ
+
+; @CESYSGEN IF CE_MODULES_KBDINKAN
+; @CESYSGEN ENDIF CE_MODULES_KBDINKAN
+
+; @CESYSGEN IF CE_MODULES_KBDINTAM
+; @CESYSGEN ENDIF CE_MODULES_KBDINTAM
+
+; @CESYSGEN IF CE_MODULES_KBDDV
+; @CESYSGEN ENDIF CE_MODULES_KBDDV
+
+ENDIF BSP_NOKEYBD !
+; @CESYSGEN ENDIF CE_MODULES_KEYBD
+
+
+; @CESYSGEN IF CE_MODULES_PCCARD
+IF BSP_NOPCCARD !
+#include "$(_TARGETPLATROOT)\src\drivers\pccard\pcc_skywalker.reg"
+#include "$(DRIVERS_DIR)\pccard\mdd\pcc_serv.reg"
+[HKEY_LOCAL_MACHINE\Drivers\PCCARD\PCMCIA\TEMPLATE\PCMCIA]
+   "Dll"="pcmcia.dll"
+   "NoConfig"=dword:1
+   "NoISR"=dword:1 ; Do not load any ISR.
+   "IClass"=multi_sz:"{6BEAB08A-8914-42fd-B33F-61968B9AAB32}=PCMCIA Card Services"
+ENDIF BSP_NOPCCARD !
+; @CESYSGEN ENDIF CE_MODULES_PCCARD
+
+; @CESYSGEN IF CE_MODULES_SDBUS
+; @CESYSGEN ENDIF CE_MODULES_SDBUS
+
+
+IF BSP_NOPWRBTN !
+[HKEY_LOCAL_MACHINE\Drivers\BuiltIn\PBUTskywalker]
+    "Dll"="pwrbtnskywalker.dll"
+    "Prefix"="DSK"
+    "Index"=dword:2
+    "Order"=dword:2
+    "Ioctl"=dword:4
+    "FSD"= "fatfs.dll"
+ENDIF BSP_NOPWRBTN !
+
+
+IF BSP_NOAUDIO !
+; @CESYSGEN IF CE_MODULES_WAVEAPI
+[HKEY_LOCAL_MACHINE\Drivers\BuiltIn\Audio]
+   "Prefix"="WAV"
+   "Dll"="smt926a_wavedev.dll"
+   "Index"=dword:1
+   "Order"=dword:0
+; @CESYSGEN ENDIF CE_MODULES_WAVEAPI
+ENDIF BSP_NOAUDIO !
+
+
+;================= USB =================
+; @CESYSGEN IF CE_MODULES_USBD
+IF BSP_NOUSB !
+[HKEY_LOCAL_MACHINE\Drivers\BuiltIn\OHCI]
+   "InterfaceType"=dword:0     ; Internal
+   "Prefix"="HCD"
+   "Dll"="ohci2.dll"
+   "Index"=dword:1
+   "Order"=dword:1
+   "Irq"=dword:1a		; 26
+   "SysIntr"=dword:11		; (SYSINTR_FIRMWARE+1)
+   "MemBase"=dword:49000000
+   "MemLen"=dword:1000
+   "UseExistingSettings"=dword:0
+ENDIF
+
+;============= End of USB =================
+; @CESYSGEN ENDIF CE_MODULES_USBD
+
+; @CESYSGEN IF CE_MODULES_USBFN
+; @CESYSGEN ENDIF CE_MODULES_USBFN
+
+
+IF BSP_NOLAN91C111 !
+[HKEY_LOCAL_MACHINE\Drivers\LAN91C111]
+	"Dll"="ndis.dll"
+	"Prefix"="NDS"
+	"Miniport"="LAN91C111"
+
+[HKEY_LOCAL_MACHINE\Comm\LAN91C111]
+	"DisplayName"="LAN91C111"
+	"Group"="NDIS"
+	"ImagePath"="LAN91C111.dll"
+
+[HKEY_LOCAL_MACHINE\Comm\LAN91C111\Linkage]
+	"Route"=multi_sz:"LAN91C1112"
+
+[HKEY_LOCAL_MACHINE\Comm\LAN91C1112]
+	"DisplayName"="LAN91C111"
+	"Group"="NDIS"
+	"ImagePath"="LAN91C111.dll"
+
+[HKEY_LOCAL_MACHINE\Comm\LAN91C1112\Parms]
+	"BusNumber"=dword:0
+	"BusType"=dword:0
+	"InterruptNumber"=dword:25
+	"IoBaseAddress"=dword:A7000300
+	"Transceiver"=dword:3
+	"CardType"=dword:1
+
+[HKEY_LOCAL_MACHINE\Comm\LAN91C1112\Parms\TcpIp]
+	"EnableDHCP"=dword:1
+	"DefaultGateway"="0.0.0.0"
+	"LLInterface"=""
+	"UseZeroBroadcast"=dword:0
+	"IpAddress"="0.0.0.0"
+	"Subnetmask"="0.0.0.0"
+	"DNS"="0.0.0.0"
+
+[HKEY_LOCAL_MACHINE\Comm\Tcpip\Linkage]
+	"Bind"="LAN91C1112"
+ENDIF ; BSP_LAN91C111
+
+
+IF BSP_NOBACKLIGHT !
+; backlight driver
+[HKEY_LOCAL_MACHINE\Drivers\BuiltIn\BAK]
+	"Index"=dword:1
+	"Prefix"="BAK"
+	"Dll"="backlight.dll"
+	"Order"=dword:1
+	"IClass"="{A32942B7-920C-486b-B0E6-92A702A99B35}"   ; Power-manageable generic
+
+[HKEY_CURRENT_USER\ControlPanel\Backlight]
+	"ACTimeout"=dword:3c
+	"BatteryTimeout"=dword:1e
+	"BacklightOnTap"=dword:1
+	"ACBacklightOnTap"=dword:1
+	
+[HKEY_CURRENT_USER\ControlPanel\BackLight]
+    "AdvancedCPL" = "AdvBacklight"
+ENDIF ; BSP_NOBACKLIGHT
+
+
+; @CESYSGEN ENDIF CE_MODULES_DEVICE
+
+
+; HIVE BOOT SECTION
+IF BSP_NONANDFS !
+[HKEY_LOCAL_MACHINE\System\StorageManager\Profiles\MSFlash]
+    "DefaultFileSystem"="FATFS"
+    "PartitionDriver"="mspart.dll"
+    "MountAsROM"=dword:1
+    "MountAsHidden"=dword:1
+    "Folder"="Flash Disk"
+    "Name"="FLASH Disk Block Device"
+
+; Keep FATFS from trying to shadow \Windows
+[HKEY_LOCAL_MACHINE\System\StorageManager\Profiles\MSFlash\FATFS]
+    "MountAsROM"=dword:0
+
+[HKEY_LOCAL_MACHINE\Drivers\BuiltIn\MSFlash]
+        "Profile"="MSFlash"
+        "IClass"=multi_sz:"{A4E7EDDA-E575-4252-9D6B-4195D48BB865}"
+        "Order"=dword:0
+        "FriendlyName"="MSFLASH Driver"
+        "Dll"="smflash.dll"
+        "Prefix"="DSK"
+
+[HKEY_LOCAL_MACHINE\System\StorageManager\AutoLoad\MSFlash]
+    "DriverPath"="Drivers\\BuiltIn\\MSFlash"
+    ; LoadFlags 0x01 == load synchronously
+    "LoadFlags"=dword:1
+    "Order"=dword:0
+    "BootPhase"=dword:0
+ENDIF ; BSP_NONANDFS
+; END HIVE BOOT SECTION
+
+; @CESYSGEN IF CE_MODULES_DISPLAY
+IF BSP_NODISPLAY !
+[HKEY_LOCAL_MACHINE\Drivers\Display\SMT926\CONFIG]
+	"DisplayDll"="smt926a_lcd.dll"
+	"LCDVirtualFrameBase"=dword:ac100000
+	"LCDPhysicalFrameBase"=dword:30100000
+
+[HKEY_LOCAL_MACHINE\System\GDI\Drivers]
+    "Display"="smt926a_lcd.dll"
+
+; Settings to rotate the screen by 0 degrees clockwise upon download
+[HKEY_LOCAL_MACHINE\System\GDI\Rotation]
+    "Angle"=dword:0
+
+
+; GWES will pass this value to the LCD driver; the driver will open the
+; key to which it points to read its configuration.
+[HKEY_LOCAL_MACHINE\System\GDI\DisplayCandidates]
+	"Candidate10"="Drivers\\Display\\SMT926\\CONFIG"
+ENDIF BSP_NODISPLAY !
+; @CESYSGEN ENDIF CE_MODULES_DISPLAY
+
+; ----------------------------------------------------------------------------
+; Select a Direct3D Mobile Driver
+
+; @CESYSGEN IF DIRECTX_MODULES_D3DM
+; @CESYSGEN ENDIF DIRECTX_MODULES_D3DM
+
+#include "$(_TARGETPLATROOT)\Files\rasbook.reg"
