@@ -1,0 +1,112 @@
+File : ETRI_UWBCHIP_eco0_0916_ful.v
+
+
+############################################
+# Poc 연관 signals
+
+===========================================
+At module ETRI_UWBCHIP
+679 : 사라진 signal 선언.
+wire CfgEnb; // 20070918 added
+
+1167 : PoC input PAD의 direction control용 mux 추가.
+MX2X6 PlatformScanEn_mux (.A(CfgEnb), .B(VSS), .S0(_58_net_), .Y(PlatformScanEn_eco)); // 20070918 added
+
+
+1169 : PoC 겸용 PAD에 output enable signal 추가.
+PDB08DGZ P_SMC_ADDR1 (.C(CfgIn[1]), .I(n77_4), .OEN(PlatformScanEn_eco), .PAD(SMC_ADDR3_0[1]));
+
+1904 : PoC 겸용 PAD에 output enable signal 추가.
+PDB08DGZ P_SMC_ADDR3 (.C(CfgIn[3]), .I(n73_5), .OEN(PlatformScanEn_eco), .PAD(SMC_ADDR3_0[3])); // 20070918 revise
+
+3470 : PoC 겸용 PAD에 output enable signal 추가.
+PDB08DGZ P_SMC_ADDR2 (.C(CfgIn[2]), .I(n75_4), .OEN(PlatformScanEn_eco), .PAD(SMC_ADDR3_0[2])); //20070918 revise
+
+3598 : PoC 겸용 PAD에 output enable signal 추가.
+PDB08DGZ P_SMC_ADDR1 (.C(CfgIn[1]), .I(n77_4), .OEN(PlatformScanEn_eco), .PAD(SMC_ADDR3_0[1]));
+
+
+
+
+
+===========================================
+At module ETRI_UWBPlatform_test_1
+5243 : CfgEnb을 출력으로 선언.
+output CfgEnb; // 20070918 added
+
+5418 : 사라진 PocCfg 선언. Core에서 각종 configuration 신호로 만들어져 Core로 다시 입력.
+// 20070918 gtlee
+  wire [3:0] PocCfg;
+
+5663 : instance uCore의 PocCfg에 VSS로 끊겼던 signal 연결.
+// 20070918 gtlee
+//   .PocCfg({ VSS, VSS, VSS, VSS}), 
+     .PocCfg({ PocCfg[3], PocCfg[2], PocCfg[1], PocCfg[0]}),
+
+
+5589 : VSS로 끊긴 BOOT_WIDTH를 PocCfg로 연결.
+// 20070918 gtlee
+//   .BOOT_WIDTH({VSS, VSS}),
+     .BOOT_WIDTH({VSS, PocCfg[3]}),
+
+
+5635 : Nand Boot control signal을 PocCfg로 연결.
+// 20070918 gtlee
+//   .NF_Boot(VSS), .NF_IOWidth(VSS), .NF_Width(VSS), 
+//   .NF_BootCfg({VSS, VSS}), .NF_OutDtmn(VDD), 
+     .NF_Boot(PocCfg[0]), .NF_IOWidth(VSS), .NF_Width(VSS), .NF_BootCfg({PocCfg[2], PocCfg[1]}), .NF_OutDtmn(VDD),
+
+
+
+===========================================
+At module ETRI_UWBCore_test_1
+
+6546 : CfgEnb을 출력으로 선언.
+output CfgEnb; // 20070918 added
+
+6551 : PocCfg signal을 출력으로 수정.
+// 20070819 gtle
+// input [3:0] PocCfg;
+  output [3:0] PocCfg;
+
+7097 : remove unused signals of the POC
+// 20070918 gtlee
+//n567, n568, n569, n570, 
+
+
+7153 : remove unused signals of the POC
+// 20070918 gtlee
+// n560, n562, n564, n566,
+
+7497 : PocCfg signal선언.
+// 20070819 gtlee
+  wire [3:0] PocCfg;
+
+8387 : 사용하지 않는 logic 제거.
+// 20070918 gtlee
+//  AND2X1 U702_C1 (.A(n562), .B(PocCfg[1]), .Y(n569));
+
+9335 : 사용하지 않는 logic 제거.
+/ 20070918 gtlee
+//  AND2X1 U703_C1 (.A(n560), .B(PocCfg[0]), .Y(n570));
+
+9606 : 사용하지 않는 logic 제거.
+// 20070918 gtlee
+//  AND2X1 U700_C1 (.A(n566), .B(PocCfg[3]), .Y(n567));
+
+
+9658 : instance PMTop에서 PocCfg signal 연결을 수정.
+// 20070918 gtlee
+//   .PocCfg({n566, n564, n562, n560}),
+     .PocCfg({PocCfg[3],PocCfg[2],PocCfg[1],PocCfg[0]}),
+
+
+10053 : instance ResourceShare의 PocCfg 입력을 수정.
+//10070918 gtlee
+//   .PocCfg({n567, n568, n569, n570}),
+     .PocCfg({PocCfg[3],PocCfg[2],PocCfg[1],PocCfg[0]}),
+
+10227 : 사용하지 않는 logic 제거.
+// 20070918 gtlee
+//  AND2X1 U701_C1 (.A(n564), .B(PocCfg[2]), .Y(n568));
+

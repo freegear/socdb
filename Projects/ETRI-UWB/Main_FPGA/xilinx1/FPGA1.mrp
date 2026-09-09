@@ -1,0 +1,986 @@
+Release 7.1.04i Map H.42
+Xilinx Mapping Report File for Design 'FPGA1'
+
+Design Information
+------------------
+Command Line   : C:/Xilinx/bin/nt/map.exe -ise
+d:\etri_uwb\20070607_toetri\xilinx1\FPGA1.ise -intstyle ise -p
+xc4vlx200-ff1513-10 -cm area -pr b -k 4 -c 100 -o FPGA1_map.ncd FPGA1.ngd
+FPGA1.pcf 
+Target Device  : xc4vlx200
+Target Package : ff1513
+Target Speed   : -10
+Mapper Version : virtex4 -- $Revision: 1.26.6.4 $
+Mapped Date    : Wed Jul 04 00:36:09 2007
+
+Design Summary
+--------------
+Number of errors:      0
+Number of warnings:  155
+Logic Utilization:
+  Number of Slice Flip Flops:         120 out of 178,176    1%
+  Number of 4 input LUTs:              67 out of 178,176    1%
+Logic Distribution:
+  Number of occupied Slices:                           93 out of  89,088    1%
+    Number of Slices containing only related logic:      93 out of      93  100%
+    Number of Slices containing unrelated logic:          0 out of      93    0%
+      *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:            108 out of 178,176    1%
+  Number used as logic:                 67
+  Number used as a route-thru:          41
+  Number of bonded IOBs:              445 out of     960   46%
+  Number of BUFG/BUFGCTRLs:             3 out of      32    9%
+    Number used as BUFGs:                3
+    Number used as BUFGCTRLs:            0
+  Number of FIFO16/RAMB16s:            16 out of     336    4%
+    Number used as FIFO16s:              0
+    Number used as RAMB16s:             16
+  Number of DCM_ADVs:                   1 out of      12    8%
+
+Total equivalent gate count for design:  1,863
+Additional JTAG gate count for IOBs:  21,360
+Peak Memory Usage:  362 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity - e.g. two
+   LUTs are "related" if they share common inputs.  When assembling slices,
+   Map gives priority to combine logic that is related.  Doing so results in
+   the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin packing
+   unrelated logic into a slice once 99% of the slices are occupied through
+   related logic packing.
+
+   Note that once logic distribution reaches the 99% level through related
+   logic packing, this does not mean the device is completely utilized.
+   Unrelated logic packing will then begin, continuing until all usable LUTs
+   and FFs are occupied.  Depending on your timing budget, increased levels of
+   unrelated logic packing may adversely affect the overall timing performance
+   of your design.
+
+Table of Contents
+-----------------
+Section 1 - Errors
+Section 2 - Warnings
+Section 3 - Informational
+Section 4 - Removed Logic Summary
+Section 5 - Removed Logic
+Section 6 - IOB Properties
+Section 7 - RPMs
+Section 8 - Guide Report
+Section 9 - Area Group Summary
+Section 10 - Modular Design Summary
+Section 11 - Timing Report
+Section 12 - Configuration String Information
+Section 13 - Additional Device Resource Counts
+
+Section 1 - Errors
+------------------
+
+Section 2 - Warnings
+--------------------
+WARNING:LIT:243 - Logical network HRESP_M0[1]_IBUF has no load.
+WARNING:LIT:374 - The above warning message base_net_load_rule is repeated 152
+   more times for the following (max. 5 shown):
+   HRESP_M0[0]_IBUF,
+   HBURST_S0[2]_IBUF,
+   HBURST_S0[1]_IBUF,
+   HBURST_S0[0]_IBUF,
+   HBURST_S1[2]_IBUF
+   To see the details of these warning messages, please use the -detail switch.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[0]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[1]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[2]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[3]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[4]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[5]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[6]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[7]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[8]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[9]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HPROT_S0[0]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HPROT_S0[1]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HPROT_S0[2]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[10]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HPROT_S0[3]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[11]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HPROT_S1[0]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[12]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[20]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HPROT_S1[1]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[13]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[21]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HPROT_S1[2]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[14]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[22]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[30]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HPROT_S1[3]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[15]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[23]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[31]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[16]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[24]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[17]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[25]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[18]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[26]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[19]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[27]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[28]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWADDR_DDR[29]_IBUF> is incomplete.
+   The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HBURST_S0[0]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HBURST_S0[1]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HBURST_S0[2]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HBURST_S1[0]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HBURST_S1[1]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HBURST_S1[2]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[10]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[11]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[12]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[20]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[13]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[21]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[14]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[22]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[30]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[15]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[23]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[31]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[16]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[24]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[17]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[25]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[18]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[26]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[19]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[27]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[28]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[29]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[0]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[1]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[2]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[3]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[4]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[5]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[6]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[7]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[8]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[9]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HREADY_IN_M0_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[0]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[1]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWREADY_DDR_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[2]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[10]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[3]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[11]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[4]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[12]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[20]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[5]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[13]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[21]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[6]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[14]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[22]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[30]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[7]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[15]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[23]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[31]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[8]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[16]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[24]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WDATA_DDR[9]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[17]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[25]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[18]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[26]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[19]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[27]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[28]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRDATA_M0[29]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <AWVALID_DDR_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WREADY_DDR_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <WVALID_DDR_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[20]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[21]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[14]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[22]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[30]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[15]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[23]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[31]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[16]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[24]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[17]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[25]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[18]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[26]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[19]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[27]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[20]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[28]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[21]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S0[29]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[14]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[22]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[30]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[15]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[23]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[31]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[16]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[24]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[17]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[25]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[18]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[26]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[19]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[27]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[28]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HADDR_S1[29]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRESP_M0[0]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <HRESP_M0[1]_IBUF> is incomplete. The
+   signal does not drive any load pins in the design.
+
+Section 3 - Informational
+-------------------------
+INFO:MapLib:562 - No environment variables are currently set.
+INFO:MapLib:742 - Your design is targeting LX/SX Production Step 0/1/ES devices.
+   Please note that there are new specifications for the DCMs to guarantee
+   maximum frequency performance. If the DCM input clock might stop or if the
+   DCM reset might be asserted for an extended time, then use of the dcm_standby
+   macro may be required. Please see Answer Record 21127.
+INFO:LIT:244 - All of the single ended outputs in this design are using slew
+   rate limited output drivers. The delay on speed critical single ended outputs
+   can be dramatically reduced by designating them as fast outputs in the
+   schematic.
+
+Section 4 - Removed Logic Summary
+---------------------------------
+  19 block(s) optimized away
+
+Section 5 - Removed Logic
+-------------------------
+
+Optimized Block(s):
+TYPE 		BLOCK
+GND 		GND
+GND 		PLL1/GND
+VCC 		VCC
+GND 		sram0/ram0/GND
+VCC 		sram0/ram0/VCC
+GND 		sram0/ram1/GND
+VCC 		sram0/ram1/VCC
+GND 		sram0/ram2/GND
+VCC 		sram0/ram2/VCC
+GND 		sram0/ram3/GND
+VCC 		sram0/ram3/VCC
+GND 		sram1/ram0/GND
+VCC 		sram1/ram0/VCC
+GND 		sram1/ram1/GND
+VCC 		sram1/ram1/VCC
+GND 		sram1/ram2/GND
+VCC 		sram1/ram2/VCC
+GND 		sram1/ram3/GND
+VCC 		sram1/ram3/VCC
+
+To enable printing of redundant blocks removed and signals merged, set the
+detailed map report option and rerun map.
+
+Section 6 - IOB Properties
+--------------------------
+
++----------------------------------------------------------------------------------------------------------------------------------------+
+| IOB Name                           | Type             | Direction | IO Standard | Drive    | Slew | Reg (s)      | Resistor | IOB      |
+|                                    |                  |           |             | Strength | Rate |              |          | Delay    |
++----------------------------------------------------------------------------------------------------------------------------------------+
+| AWADDR_DDR[0]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[1]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[2]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[3]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[4]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[5]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[6]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[7]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[8]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[9]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[10]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[11]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[12]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[13]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[14]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[15]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[16]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[17]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[18]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[19]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[20]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[21]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[22]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[23]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[24]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[25]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[26]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[27]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[28]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[29]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[30]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWADDR_DDR[31]                     | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWREADY_DDR                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| AWVALID_DDR                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| CLK                                | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| CLK100M_Out                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| CLK200M_Out                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| CLK50M_Out                         | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[0]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[1]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[2]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[3]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[4]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[5]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[6]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[7]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[8]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[9]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[10]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[11]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[12]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[13]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[14]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[15]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[16]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[17]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[18]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[19]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[20]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[21]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[22]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[23]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[24]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[25]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[26]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[27]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[28]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[29]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[30]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_M0[31]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HADDR_S0[0]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[1]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[2]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[3]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[4]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[5]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[6]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[7]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[8]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[9]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[10]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[11]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[12]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[13]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[14]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[15]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[16]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[17]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[18]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[19]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[20]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[21]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[22]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[23]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[24]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[25]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[26]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[27]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[28]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[29]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[30]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S0[31]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[0]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[1]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[2]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[3]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[4]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[5]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[6]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[7]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[8]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[9]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[10]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[11]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[12]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[13]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[14]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[15]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[16]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[17]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[18]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[19]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[20]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[21]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[22]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[23]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[24]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[25]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[26]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[27]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[28]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[29]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[30]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HADDR_S1[31]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HBURST_M0[0]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HBURST_M0[1]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HBURST_M0[2]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HBURST_S0[0]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HBURST_S0[1]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HBURST_S0[2]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HBURST_S1[0]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HBURST_S1[1]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HBURST_S1[2]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HPROT_M0[0]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HPROT_M0[1]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HPROT_M0[2]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HPROT_M0[3]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HPROT_S0[0]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HPROT_S0[1]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HPROT_S0[2]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HPROT_S0[3]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HPROT_S1[0]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HPROT_S1[1]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HPROT_S1[2]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HPROT_S1[3]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[0]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[1]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[2]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[3]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[4]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[5]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[6]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[7]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[8]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[9]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[10]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[11]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[12]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[13]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[14]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[15]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[16]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[17]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[18]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[19]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[20]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[21]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[22]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[23]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[24]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[25]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[26]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[27]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[28]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[29]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[30]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_M0[31]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRDATA_S0[0]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[1]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[2]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[3]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[4]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[5]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[6]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[7]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[8]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[9]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[10]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[11]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[12]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[13]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[14]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[15]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[16]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[17]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[18]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[19]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[20]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[21]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[22]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[23]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[24]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[25]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[26]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[27]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[28]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[29]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[30]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S0[31]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[0]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[1]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[2]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[3]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[4]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[5]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[6]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[7]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[8]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[9]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[10]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[11]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[12]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[13]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[14]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[15]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[16]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[17]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[18]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[19]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[20]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[21]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[22]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[23]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[24]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[25]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[26]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[27]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[28]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[29]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[30]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRDATA_S1[31]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HREADY_IN_M0                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HREADY_OUT_S0                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HREADY_OUT_S1                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRESP_M0[0]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRESP_M0[1]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HRESP_S0[0]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRESP_S0[1]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRESP_S1[0]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HRESP_S1[1]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HSEL_S0                            | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HSEL_S1                            | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HSIZE_M0[0]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HSIZE_M0[1]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HSIZE_M0[2]                        | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HSIZE_S0[0]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HSIZE_S0[1]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HSIZE_S0[2]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HSIZE_S1[0]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HSIZE_S1[1]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HSIZE_S1[2]                        | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HTRANS_M0[0]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HTRANS_M0[1]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HTRANS_S0[0]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HTRANS_S0[1]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HTRANS_S1[0]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HTRANS_S1[1]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_M0[0]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[1]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[2]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[3]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[4]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[5]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[6]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[7]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[8]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[9]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[10]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[11]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[12]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[13]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[14]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[15]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[16]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[17]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[18]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[19]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[20]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[21]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[22]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[23]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[24]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[25]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[26]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[27]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[28]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[29]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[30]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_M0[31]                      | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWDATA_S0[0]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[1]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[2]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[3]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[4]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[5]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[6]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[7]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[8]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[9]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[10]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[11]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[12]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[13]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[14]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[15]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[16]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[17]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[18]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[19]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[20]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[21]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[22]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[23]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[24]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[25]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[26]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[27]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[28]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[29]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[30]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S0[31]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[0]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[1]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[2]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[3]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[4]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[5]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[6]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[7]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[8]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[9]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[10]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[11]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[12]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[13]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[14]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[15]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[16]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[17]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[18]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[19]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[20]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[21]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[22]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[23]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[24]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[25]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[26]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[27]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[28]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[29]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[30]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWDATA_S1[31]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWRITE_M0                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| HWRITE_S0                          | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| HWRITE_S1                          | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| MacIntSrc[0]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| MacIntSrc[1]                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegComm[0]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegComm[1]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegComm[2]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegComm[3]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegComm_FPGA0[0]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SevenSegComm_FPGA0[1]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SevenSegComm_FPGA0[2]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SevenSegComm_FPGA0[3]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SevenSegCtrl[0]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegCtrl[1]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegCtrl[2]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegCtrl[3]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegCtrl[4]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegCtrl[5]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegCtrl[6]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegCtrl[7]                    | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| SevenSegCtrl_FPGA0[0]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SevenSegCtrl_FPGA0[1]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SevenSegCtrl_FPGA0[2]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SevenSegCtrl_FPGA0[3]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SevenSegCtrl_FPGA0[4]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SevenSegCtrl_FPGA0[5]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SevenSegCtrl_FPGA0[6]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| SevenSegCtrl_FPGA0[7]              | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| UART_RXD0                          | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| UART_RXD1                          | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| UART_RXD0_F0                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| UART_RXD1_F0                       | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| UART_TXD0                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| UART_TXD1                          | IOB              | OUTPUT    | LVCMOS25    | 12       | SLOW |              |          |          |
+| UART_TXD0_F0                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| UART_TXD1_F0                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[0]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[1]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[2]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[3]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[4]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[5]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[6]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[7]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[8]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[9]                       | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[10]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[11]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[12]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[13]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[14]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[15]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[16]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[17]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[18]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[19]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[20]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[21]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[22]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[23]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[24]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[25]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[26]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[27]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[28]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[29]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[30]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WDATA_DDR[31]                      | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WREADY_DDR                         | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| WVALID_DDR                         | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
+| nRESET                             | IOB              | INPUT     | LVCMOS25    |          |      |              |          |          |
++----------------------------------------------------------------------------------------------------------------------------------------+
+
+Section 7 - RPMs
+----------------
+
+Section 8 - Guide Report
+------------------------
+Guide not run on this design.
+
+Section 9 - Area Group Summary
+------------------------------
+No area groups were found in this design.
+
+Section 10 - Modular Design Summary
+-----------------------------------
+Modular Design not used for this design.
+
+Section 11 - Timing Report
+--------------------------
+This design was not run using timing mode.
+
+Section 12 - Configuration String Details
+--------------------------
+Use the "-detail" map option to print out Configuration Strings
+
+Section 13 - Additional Device Resource Counts
+----------------------------------------------
+Number of JTAG Gates for IOBs = 445
+Number of Equivalent Gates for Design = 1,863
+Number of RPM Macros = 0
+Number of Hard Macros = 0
+PMV = 0
+USR_ACCESS_VIRTEX4 = 0
+BUFIO = 0
+GT11CLK = 0
+GT11 = 0
+IDELAYCTRL = 0
+FRAME_ECC_VIRTEX4 = 0
+STARTUP_VIRTEX4 = 0
+JTAGPPC = 0
+ICAP_VIRTEX4 = 0
+DPM = 0
+DCI_TEST = 0
+DCIRESET = 0
+CAPTURE_VIRTEX4 = 0
+BSCAN_VIRTEX4 = 0
+OSERDES = 0
+ISERDES = 0
+BUFR = 0
+EMAC = 0
+PPC405_ADV = 0
+MONITOR = 0
+PMCD = 0
+DCM_ADV = 1
+DSP48 = 0
+Unbonded IOBs = 0
+Bonded IOBs = 445
+XORs = 78
+CARRY_INITs = 49
+CARRY_SKIPs = 0
+CARRY_MUXes = 89
+Shift Registers = 0
+Static Shift Registers = 0
+Dynamic Shift Registers = 0
+16x1 ROMs = 0
+16x1 RAMs = 0
+32x1 RAMs = 0
+Dual Port RAMs = 0
+MUXFs = 0
+MULT_ANDs = 0
+4 input LUTs used as Route-Thrus = 41
+4 input LUTs = 67
+Slice Latches not driven by LUTs = 0
+Slice Latches = 0
+Slice Flip Flops not driven by LUTs = 106
+Slice Flip Flops = 120
+SliceMs = 0
+SliceLs = 93
+Slices = 93
+F6 Muxes = 0
+F5 Muxes = 0
+F8 Muxes = 0
+F7 Muxes = 0
+Number of LUT signals with 4 loads = 2
+Number of LUT signals with 3 loads = 2
+Number of LUT signals with 2 loads = 0
+Number of LUT signals with 1 load = 29
+NGM Average fanout of LUT = 4.70
+NGM Maximum fanout of LUT = 8
+NGM Average fanin for LUT = 2.8955
+Number of LUT symbols = 67

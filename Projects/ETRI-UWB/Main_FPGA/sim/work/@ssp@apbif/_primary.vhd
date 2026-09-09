@@ -1,0 +1,40 @@
+library verilog;
+use verilog.vl_types.all;
+entity SspApbif is
+    port(
+        PCLK            : in     vl_logic;
+        PRESETn         : in     vl_logic;
+        PSEL            : in     vl_logic;
+        PWRITE          : in     vl_logic;
+        PENABLE         : in     vl_logic;
+        PADDR           : in     vl_logic_vector(4 downto 2);
+        PWDATA          : in     vl_logic_vector(15 downto 0);
+        TNF             : in     vl_logic;
+        RNE             : in     vl_logic;
+        BSY             : in     vl_logic;
+        RFF             : in     vl_logic;
+        TFE             : in     vl_logic;
+        TXRIS           : in     vl_logic;
+        RXRIS           : in     vl_logic;
+        RTRISSync       : in     vl_logic;
+        RORRIS          : in     vl_logic;
+        TXMIS           : in     vl_logic;
+        RXMIS           : in     vl_logic;
+        RTMISSync       : in     vl_logic;
+        RORMIS          : in     vl_logic;
+        TxFFillLevel    : in     vl_logic_vector(3 downto 0);
+        RxFFillLevel    : in     vl_logic_vector(3 downto 0);
+        RxFRdData       : in     vl_logic_vector(15 downto 0);
+        TxFRdData       : in     vl_logic_vector(15 downto 0);
+        PRDATA          : out    vl_logic_vector(31 downto 0);
+        RORIC           : out    vl_logic;
+        RTIC            : out    vl_logic;
+        SPICON          : out    vl_logic_vector(3 downto 0);
+        SPIPRE          : out    vl_logic_vector(15 downto 0);
+        SPIINTDMA       : out    vl_logic_vector(13 downto 0);
+        SPITXDAT        : out    vl_logic_vector(15 downto 0);
+        SPIHIDDEN       : out    vl_logic_vector(7 downto 0);
+        SPITXDATWr      : out    vl_logic;
+        RxFRdPtrInc     : out    vl_logic
+    );
+end SspApbif;

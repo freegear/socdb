@@ -1,0 +1,535 @@
+Release 9.1.03i - xst J.33
+Copyright (c) 1995-2007 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 0.39 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.39 s | Elapsed : 0.00 / 1.00 s
+ 
+--> Reading design: PCI_FPGA.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) Partition Resource Summary
+     9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "PCI_FPGA.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "PCI_FPGA"
+Output Format                      : NGC
+Target Device                      : xc4vlx60-10-ff668
+
+---- Source Options
+Top Module Name                    : PCI_FPGA
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Use DSP Block                      : auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 32
+Number of Regional Clock Buffers   : 32
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Auto
+Use Synchronous Set                : Auto
+Use Synchronous Reset              : Auto
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Power Reduction                    : NO
+Library Search Order               : PCI_FPGA.lso
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+DSP48 Utilization Ratio            : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "SevenSegment.v" in library work
+Module <SevenSegment> compiled
+Compiling verilog file "PCI_FPGA.v" in library work
+Module <SevenSegmentCode> compiled
+Module <PCI_FPGA> compiled
+No errors in compilation
+Analysis of file <"PCI_FPGA.prj"> succeeded.
+ 
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for module <PCI_FPGA> in library <work>.
+
+Analyzing hierarchy for module <SevenSegment> in library <work>.
+
+Analyzing hierarchy for module <SevenSegmentCode> in library <work>.
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing top module <PCI_FPGA>.
+Module <PCI_FPGA> is correct for synthesis.
+ 
+Analyzing module <SevenSegment> in library <work>.
+"SevenSegment.v" line 73: Found FullParallel Case directive in module <SevenSegment>.
+Module <SevenSegment> is correct for synthesis.
+ 
+Analyzing module <SevenSegmentCode> in library <work>.
+Module <SevenSegmentCode> is correct for synthesis.
+ 
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <SevenSegmentCode>.
+    Related source file is "SevenSegment.v".
+    Found 16x8-bit ROM for signal <DataOut_temp>.
+    Summary:
+	inferred   1 ROM(s).
+Unit <SevenSegmentCode> synthesized.
+
+
+Synthesizing Unit <SevenSegment>.
+    Related source file is "SevenSegment.v".
+WARNING:Xst:646 - Signal <Data_reg<31>> is assigned but never used.
+WARNING:Xst:646 - Signal <Data_reg<23>> is assigned but never used.
+WARNING:Xst:646 - Signal <Data_reg<15>> is assigned but never used.
+WARNING:Xst:646 - Signal <Data_reg<7>> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <CommonOut_Temp>.
+    -----------------------------------------------------------------------
+    | States             | 4                                              |
+    | Transitions        | 4                                              |
+    | Inputs             | 0                                              |
+    | Outputs            | 4                                              |
+    | Clock              | Clock (rising_edge)                            |
+    | Reset              | nReset (negative)                              |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | 0001                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 8-bit register for signal <ControlOut_Temp>.
+    Found 32-bit register for signal <Data_reg>.
+    Found 32-bit register for signal <Data_temp>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  64 D-type flip-flop(s).
+Unit <SevenSegment> synthesized.
+
+
+Synthesizing Unit <PCI_FPGA>.
+    Related source file is "PCI_FPGA.v".
+WARNING:Xst:647 - Input <intaout_b> is never used.
+WARNING:Xst:647 - Input <oe_req> is never used.
+    Found 32-bit tristate buffer for signal <PCI_AD>.
+    Found 4-bit tristate buffer for signal <PCI_CBE>.
+    Found 1-bit tristate buffer for signal <PCI_DEVSEL>.
+    Found 1-bit tristate buffer for signal <PCI_FRAME>.
+    Found 1-bit tristate buffer for signal <PCI_IRDY>.
+    Found 1-bit tristate buffer for signal <PCI_PAR>.
+    Found 1-bit tristate buffer for signal <PCI_PERR>.
+    Found 1-bit tristate buffer for signal <PCI_STOP>.
+    Found 1-bit tristate buffer for signal <PCI_TRDY>.
+    Found 26-bit up counter for signal <cnt>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  43 Tristate(s).
+Unit <PCI_FPGA> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 4
+ 16x8-bit ROM                                          : 4
+# Counters                                             : 1
+ 26-bit up counter                                     : 1
+# Registers                                            : 3
+ 32-bit register                                       : 2
+ 8-bit register                                        : 1
+# Tristates                                            : 9
+ 1-bit tristate buffer                                 : 7
+ 32-bit tristate buffer                                : 1
+ 4-bit tristate buffer                                 : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <SevenSegment/CommonOut_Temp> on signal <CommonOut_Temp[1:2]> with gray encoding.
+-------------------
+ State | Encoding
+-------------------
+ 0001  | 00
+ 0010  | 01
+ 0100  | 11
+ 1000  | 10
+-------------------
+Loading device for application Rf_Device from file '4vlx60.nph' in environment C:\Xilinx91i.
+WARNING:Xst:2677 - Node <Data_temp_7> of sequential type is unconnected in block <SevenSegment>.
+WARNING:Xst:2677 - Node <Data_temp_15> of sequential type is unconnected in block <SevenSegment>.
+WARNING:Xst:2677 - Node <Data_temp_23> of sequential type is unconnected in block <SevenSegment>.
+WARNING:Xst:2677 - Node <Data_temp_31> of sequential type is unconnected in block <SevenSegment>.
+WARNING:Xst:2677 - Node <Data_reg_7> of sequential type is unconnected in block <SevenSegment>.
+WARNING:Xst:2677 - Node <Data_reg_15> of sequential type is unconnected in block <SevenSegment>.
+WARNING:Xst:2677 - Node <Data_reg_23> of sequential type is unconnected in block <SevenSegment>.
+WARNING:Xst:2677 - Node <Data_reg_31> of sequential type is unconnected in block <SevenSegment>.
+WARNING:Xst:1710 - FF/Latch  <7> (without init value) has a constant value of 0 in block <ControlOut_Temp>.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 1
+# ROMs                                                 : 4
+ 16x8-bit ROM                                          : 4
+# Counters                                             : 1
+ 26-bit up counter                                     : 1
+# Registers                                            : 66
+ Flip-Flops                                            : 66
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1710 - FF/Latch  <ControlOut_Temp_7> (without init value) has a constant value of 0 in block <SevenSegment>.
+INFO:Xst:2146 - In block <SevenSegment>, ROM <bit15_12/Mrom_DataOut_temp> <bit0_3/Mrom_DataOut_temp> are equivalent, XST will keep only <bit15_12/Mrom_DataOut_temp>.
+WARNING:Xst:1710 - FF/Latch  <Data_temp_30> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_29> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_28> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_27> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_26> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_25> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_24> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_22> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_21> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_20> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_19> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_18> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_17> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_16> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_0> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_1> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_2> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_3> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_4> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_5> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_6> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_8> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_9> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_10> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_11> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_12> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_13> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_temp_14> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_16> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_17> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_18> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_19> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_20> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_21> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_22> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_24> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_25> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_26> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_27> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_28> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_29> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_30> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_14> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_13> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_12> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_11> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_10> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_9> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_8> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_6> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_5> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_4> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_3> (without init value) has a constant value of 1 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_2> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_1> (without init value) has a constant value of 0 in block <SevenSegment>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <Data_reg_0> (without init value) has a constant value of 1 in block <SevenSegment>.
+INFO:Xst:2261 - The FF/Latch <ControlOut_Temp_3> in Unit <SevenSegment> is equivalent to the following FF/Latch, which will be removed : <ControlOut_Temp_0> 
+
+Optimizing unit <PCI_FPGA> ...
+
+Optimizing unit <SevenSegment> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block PCI_FPGA, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 34
+ Flip-Flops                                            : 34
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : PCI_FPGA.ngr
+Top Level Output File Name         : PCI_FPGA
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 196
+
+Cell Usage :
+# BELS                             : 100
+#      GND                         : 1
+#      INV                         : 18
+#      LUT1                        : 25
+#      LUT2                        : 5
+#      MUXCY                       : 25
+#      VCC                         : 1
+#      XORCY                       : 25
+# FlipFlops/Latches                : 34
+#      FDC                         : 32
+#      FDP                         : 2
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 193
+#      IBUF                        : 68
+#      IOBUF                       : 43
+#      OBUF                        : 82
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 4vlx60ff668-10 
+
+ Number of Slices:                      18  out of  26624     0%  
+ Number of Slice Flip Flops:            34  out of  53248     0%  
+ Number of 4 input LUTs:                48  out of  53248     0%  
+ Number of IOs:                        196
+ Number of bonded IOBs:                194  out of    448    43%  
+ Number of GCLKs:                        1  out of     32     3%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+Clk                                | BUFGP                  | 34    |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+------------------------------------------------------+------------------------+-------+
+Control Signal                                        | Buffer(FF name)        | Load  |
+------------------------------------------------------+------------------------+-------+
+SevenSegment/CommonOut_Temp_Rst_inv(nRst_inv1_INV_0:O)| NONE(cnt_22)           | 34    |
+------------------------------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -10
+
+   Minimum period: 3.067ns (Maximum Frequency: 326.004MHz)
+   Minimum input arrival time before clock: No path found
+   Maximum output required time after clock: 5.715ns
+   Maximum combinational path delay: 6.405ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'Clk'
+  Clock period: 3.067ns (frequency: 326.004MHz)
+  Total number of paths / destination ports: 359 / 32
+-------------------------------------------------------------------------
+Delay:               3.067ns (Levels of Logic = 26)
+  Source:            cnt_1 (FF)
+  Destination:       cnt_25 (FF)
+  Source Clock:      Clk rising
+  Destination Clock: Clk rising
+
+  Data Path: cnt_1 to cnt_25
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              1   0.360   0.741  cnt_1 (cnt_1)
+     LUT1:I0->O            1   0.195   0.000  Mcount_cnt_cy<1>_rt (Mcount_cnt_cy<1>_rt)
+     MUXCY:S->O            1   0.366   0.000  Mcount_cnt_cy<1> (Mcount_cnt_cy<1>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<2> (Mcount_cnt_cy<2>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<3> (Mcount_cnt_cy<3>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<4> (Mcount_cnt_cy<4>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<5> (Mcount_cnt_cy<5>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<6> (Mcount_cnt_cy<6>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<7> (Mcount_cnt_cy<7>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<8> (Mcount_cnt_cy<8>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<9> (Mcount_cnt_cy<9>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<10> (Mcount_cnt_cy<10>)
+     MUXCY:CI->O           1   0.045   0.000  Mcount_cnt_cy<11> (Mcount_cnt_cy<11>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<12> (Mcount_cnt_cy<12>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<13> (Mcount_cnt_cy<13>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<14> (Mcount_cnt_cy<14>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<15> (Mcount_cnt_cy<15>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<16> (Mcount_cnt_cy<16>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<17> (Mcount_cnt_cy<17>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<18> (Mcount_cnt_cy<18>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<19> (Mcount_cnt_cy<19>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<20> (Mcount_cnt_cy<20>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<21> (Mcount_cnt_cy<21>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<22> (Mcount_cnt_cy<22>)
+     MUXCY:CI->O           1   0.044   0.000  Mcount_cnt_cy<23> (Mcount_cnt_cy<23>)
+     MUXCY:CI->O           0   0.044   0.000  Mcount_cnt_cy<24> (Mcount_cnt_cy<24>)
+     XORCY:CI->O           1   0.360   0.000  Mcount_cnt_xor<25> (Result<25>)
+     FDC:D                     0.022          cnt_25
+    ----------------------------------------
+    Total                      3.067ns (2.327ns logic, 0.741ns route)
+                                       (75.8% logic, 24.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'Clk'
+  Total number of paths / destination ports: 19 / 15
+-------------------------------------------------------------------------
+Offset:              5.715ns (Levels of Logic = 2)
+  Source:            SevenSegment/CommonOut_Temp_FFd1 (FF)
+  Destination:       SevenSegComm<1> (PAD)
+  Source Clock:      Clk rising
+
+  Data Path: SevenSegment/CommonOut_Temp_FFd1 to SevenSegComm<1>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              8   0.360   0.826  SevenSegment/CommonOut_Temp_FFd1 (SevenSegment/CommonOut_Temp_FFd1)
+     LUT2:I0->O            2   0.195   0.377  SevenSegment/CommonOut<1>1 (SevenSegComm_1_OBUF)
+     OBUF:I->O                 3.957          SevenSegComm_1_OBUF (SevenSegComm<1>)
+    ----------------------------------------
+    Total                      5.715ns (4.512ns logic, 1.203ns route)
+                                       (78.9% logic, 21.1% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 152 / 109
+-------------------------------------------------------------------------
+Delay:               6.405ns (Levels of Logic = 3)
+  Source:            oe_ad (PAD)
+  Destination:       PCI_AD<31> (PAD)
+
+  Data Path: oe_ad to PCI_AD<31>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   0.965   0.360  oe_ad_IBUF (oe_ad_IBUF)
+     INV:I->O             32   0.195   0.928  oe_ad_inv1_INV_0 (oe_ad_inv)
+     IOBUF:T->IO               3.957          PCI_AD_31_IOBUF (PCI_AD<31>)
+    ----------------------------------------
+    Total                      6.405ns (5.117ns logic, 1.288ns route)
+                                       (79.9% logic, 20.1% route)
+
+=========================================================================
+CPU : 15.06 / 15.52 s | Elapsed : 15.00 / 16.00 s
+ 
+--> 
+
+Total memory usage is 288356 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   72 (   0 filtered)
+Number of infos    :    2 (   0 filtered)
+

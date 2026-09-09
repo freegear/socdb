@@ -1,0 +1,171 @@
+/* ***************************************************************************
+
+   Copyright (c) 2003 by Eureka Technology Inc.
+   All Rights Reserved
+   Confidential and Proprietary
+
+***************************************************************************** */
+
+target_library = "customer's_ library.db"
+link_library = "customer's_ library.db"
+
+read -f verilog ahdlprim.v
+read -f verilog BUF.v
+read -f verilog ab_masb.v
+read -f verilog ab_slvb.v
+read -f verilog customer's_eu_dpramx2.v
+read -f verilog customer's_eu_dpramx1.v
+//
+/* ******************************************************************* */
+/*                                                                     */
+/* IMPORTANT !!!!!                                                     */
+/* We expect that the eu_dpram... blocks are implemented as dual port  */
+/* ram from the ASIC library. Need to replace the behavioral model     */
+/* of these RAMs with ASIC RAMs and specify "dont_touch" for these     */
+/* RAMS.                                                               */
+/*                                                                     */
+/* ******************************************************************* */
+
+read -f verilog mbackpci.v
+read -f verilog pciif.v
+read -f verilog tbackpci.v
+read -f verilog pciarb.v
+read -f verilog ep454g6.v
+
+current_design ep454g6
+
+/* Assume clock delay is 1 ns */
+/* use 50Mhz and 33Mhz as system and PCI clock. Customer should pick */
+/* the values that match their requirements. */
+
+create_clock -period 30 -waveform {0 15} find(port,"pciclk")
+set_clock_skew pciclk -delay 1.0 -minus_uncertainty 0.5 -plus_uncertainty 0.5
+
+create_clock -period 20 -waveform {0 10} find(port,"clk")
+set_clock_skew clk -delay 1.0 -minus_uncertainty 0.5 -plus_uncertainty 0.5
+
+
+/* **************************** */
+/*                              */
+/* Set timing for PCI interface */
+/*                              */
+/* **************************** */
+
+/* Timing conditions: */
+/* Notes: Assume 30ns cycle time when compute arrival time */
+/* CYCLE_TIME = 30ns as setup above */
+/* PCI_SETUP = PCI input setup time, 7ns according to PCI spec */
+/* PCI_SETUPG = GNT_B signal setup time, 10ns according to PCI spec */
+/* INBUF_DLY = input buffer delay, normally 1 to 2ns */
+/* PCI_ARRIVALP = CYCLE_TIME - PCI_SETUP + INBUF_DLY */
+/* PCI_ARRIVALG = CYCLE_TIME - PCI_SETUPG + INBUF_DLY */
+
+/* Please substitue PCI_ARRIVALP and PCI_ARRIVALG with the actual value */
+
+set_input_delay PCI_ARRIVALP adin
+set_input_delay PCI_ARRIVALP cbein_b
+set_input_delay PCI_ARRIVALP devselin_b
+set_input_delay PCI_ARRIVALP framein_b
+set_input_delay PCI_ARRIVAlG gnt_b
+set_input_delay PCI_ARRIVALP idsel
+set_input_delay PCI_ARRIVALP irdyin_b
+set_input_delay PCI_ARRIVALP parin
+set_input_delay PCI_ARRIVALP perrin_b
+set_input_delay PCI_ARRIVALP stopin_b
+set_input_delay PCI_ARRIVALP trdyin_b
+set_input_delay PCI_ARRIVALP arb_req_b
+
+/* Need to adjust for output buffer delay when used in ASIC */
+/* PCI_TCO = PCI clock-to-output delay, 11ns according to pci spec */
+/* PCI_TCOR = req_b signal clock-to-out delay, 12ns, pci spec */
+/* OUTBUF_DLY = output buffer delay, normally 3 to 4 ns */
+/* MAX_OUTP = 30 - PCI_TCO + OUTBUF_DLY */
+/* MAX_OUTR = 30 - PCI_TOCR + OUTBUF_DLY */
+
+
+/* Please substitue MAX_OUTP and MAX_OUTR with the actual value */
+
+set_output_delay MAX_OUTP adout
+set_output_delay MAX_OUTP cbeout_b
+set_output_delay MAX_OUTP devselout_b
+set_output_delay MAX_OUTP frameout_b
+set_output_delay MAX_OUTP irdyout_b
+set_output_delay MAX_OUTP parout
+set_output_delay MAX_OUTP perrout_b
+set_output_delay MAX_OUTR reqout_b
+set_output_delay MAX_OUTP serrout_b
+set_output_delay MAX_OUTP stopout_b
+set_output_delay MAX_OUTP trdyout_b
+set_output_delay MAX_OUTP arb_gnt_b
+
+set_output_delay MAX_OUTP oe_ad
+set_output_delay MAX_OUTP oe_cbe
+set_output_delay MAX_OUTP oe_devsel
+set_output_delay MAX_OUTP oe_frame
+set_output_delay MAX_OUTP oe_irdy
+set_output_delay MAX_OUTP oe_par
+set_output_delay MAX_OUTP oe_perr
+set_output_delay MAX_OUTP oe_stop
+set_output_delay MAX_OUTP oe_trdy
+
+
+/* **************************** */
+/*                              */
+/* Set timing for AHB interface */
+/*                              */
+/* **************************** */
+
+/* Do not know the system timing requirement. */
+/* Assume input arrives at about half way during the clock cycle */
+set_input_delay 10 m_hgrant
+set_input_delay 10 m_hrdata
+set_input_delay 10 m_hready
+set_input_delay 10 m_hresp
+set_input_delay 10 haddr
+set_input_delay 10 hburst
+set_input_delay 10 hmaster
+set_input_delay 10 hready_i
+set_input_delay 10 hsel
+set_input_delay 10 hsize
+set_input_delay 10 htrans
+set_input_delay 10 hwdata
+set_input_delay 10 hwrite
+
+/* Do not know the system timing requirement. */
+/* Assume output available at about half way during the clock cycle */
+set_output_delay 10 m_haddr;
+set_output_delay 10 m_hburst;
+set_output_delay 10 m_hbusreq;
+set_output_delay 10 m_hlock;
+set_output_delay 10 m_hsize;
+set_output_delay 10 m_htrans;
+set_output_delay 10 m_hwdata;
+set_output_delay 10 m_hwrite;
+set_output_delay 10 hrdata;
+set_output_delay 10 hready;
+set_output_delay 10 hresp;
+set_output_delay 10 hsplit;
+
+set_fix_hold pciclk
+set_fix_hold clk
+
+ungroup -flatten -all
+
+/* the delay between the two clock domains should the cycle time of  */
+/* the faster clock domain */
+set_max_delay 20 -from find(clock, clk) -to find(clock, pciclk); 
+set_max_delay 20 -from find(clock, pciclk) -to find(clock, clk); 
+
+/* set wire load model and operating conditions according to library */
+/* requirements before compilation. Set compile effort as desired    */
+
+compile -map_effort medium
+
+check_design
+
+write -f verilog ep454g6 -o ep454g6_netlist.v
+
+report_constraints -all -verbose
+report_area
+
+report_timing

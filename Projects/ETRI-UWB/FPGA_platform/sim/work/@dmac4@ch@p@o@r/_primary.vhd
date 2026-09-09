@@ -1,0 +1,46 @@
+library verilog;
+use verilog.vl_types.all;
+entity Dmac4ChPOR is
+    port(
+        ACLK            : in     vl_logic;
+        ARESETn         : in     vl_logic;
+        DMA_BOOT        : in     vl_logic;
+        DMA_BOOT_SRC    : in     vl_logic_vector(31 downto 0);
+        DMA_BOOT_DST    : in     vl_logic_vector(31 downto 0);
+        DMA_BOOT_CTRL   : in     vl_logic_vector(31 downto 0);
+        DMAReq          : in     vl_logic_vector(3 downto 0);
+        DMAAck          : out    vl_logic_vector(3 downto 0);
+        Interrupt       : out    vl_logic_vector(3 downto 0);
+        PENABLE         : in     vl_logic;
+        PSEL            : in     vl_logic;
+        PWRITE          : in     vl_logic;
+        PADDR           : in     vl_logic_vector(6 downto 2);
+        PWDATA          : in     vl_logic_vector(31 downto 0);
+        PRDATA          : out    vl_logic_vector(31 downto 0);
+        ARVALID         : out    vl_logic;
+        ARREADY         : in     vl_logic;
+        ARADDR          : out    vl_logic_vector(31 downto 0);
+        ARLEN           : out    vl_logic_vector(3 downto 0);
+        ARSIZE          : out    vl_logic_vector(2 downto 0);
+        ARBURST         : out    vl_logic_vector(1 downto 0);
+        RDATA           : in     vl_logic_vector(31 downto 0);
+        RRESP           : in     vl_logic_vector(1 downto 0);
+        RLAST           : in     vl_logic;
+        RVALID          : in     vl_logic;
+        RREADY          : out    vl_logic;
+        AWVALID         : out    vl_logic;
+        AWREADY         : in     vl_logic;
+        AWADDR          : out    vl_logic_vector(31 downto 0);
+        AWLEN           : out    vl_logic_vector(3 downto 0);
+        AWSIZE          : out    vl_logic_vector(2 downto 0);
+        AWBURST         : out    vl_logic_vector(1 downto 0);
+        WDATA           : out    vl_logic_vector(31 downto 0);
+        WSTRB           : out    vl_logic_vector(3 downto 0);
+        WLAST           : out    vl_logic;
+        WVALID          : out    vl_logic;
+        WREADY          : in     vl_logic;
+        BRESP           : in     vl_logic_vector(1 downto 0);
+        BVALID          : in     vl_logic;
+        BREADY          : out    vl_logic
+    );
+end Dmac4ChPOR;

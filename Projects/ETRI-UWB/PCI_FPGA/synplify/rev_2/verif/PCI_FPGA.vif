@@ -1,0 +1,126 @@
+#
+# Synplicity Verification Interface File
+# Generated using Synplify-pro
+#
+# Copyright (c) 1996-2005 Synplicity, Inc.
+# All rights reserved
+#
+
+# Set logfile options
+vif_set_result_file  PCI_FPGA.vlf
+
+# Set technology for TCL script
+vif_set_technology -architecture FPGA -vendor Xilinx
+
+# RTL and technology files
+vif_add_library -original $XILINX/verilog/verification/unisims
+vif_add_library -original $XILINX/verilog/verification/simprims
+vif_add_file -original -verilog ../../rtl/SevenSegment.v
+vif_add_file -original -verilog ../../rtl/PCI_FPGA.v
+vif_set_top_module -original -top PCI_FPGA
+ 
+vif_add_library -translated $XILINX/verilog/verification/unisims
+vif_add_library -translated $XILINX/verilog/verification/simprims
+vif_add_file -translated -verilog PCI_FPGA.vm
+vif_set_top_module -translated -top PCI_FPGA 
+# Read FSM encoding
+vif_set_fsm -fsm fsm_0
+vif_set_fsmreg -original -fsm fsm_0 SevenSegment/CommonOut_Temp[3:0]
+vif_set_fsmreg -translated -fsm  fsm_0 SevenSegment/CommonOut_Temp[1:0]
+vif_set_state_map -fsm fsm_0 -original "0001" -translated "00"
+vif_set_state_map -fsm fsm_0 -original "0010" -translated "01"
+vif_set_state_map -fsm fsm_0 -original "0100" -translated "10"
+vif_set_state_map -fsm fsm_0 -original "1000" -translated "11"
+
+# Memory map points
+
+# SRL map points
+
+# Compiler constant registers
+
+# Compiler constant latches
+
+# Compiler RTL sequential redundancies
+
+# RTL sequential redundancies
+vif_set_merge -original  SevenSegment/ControlOut_Temp[3] SevenSegment/ControlOut_Temp[0]
+
+# Technology sequential redundancies
+vif_set_equiv -translated SevenSegment/ControlOut_Temp_rep0_i_Z[3] SevenSegment/ControlOut_Temp_i_Z[3]
+
+# Inversion map points
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[6] -translated SevenSegment/ControlOut_Temp_i_Z[6]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[5] -translated SevenSegment/ControlOut_Temp_i_Z[5]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[4] -translated SevenSegment/ControlOut_Temp_i_Z[4]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[2] -translated SevenSegment/ControlOut_Temp_i_Z[2]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[1] -translated SevenSegment/ControlOut_Temp_i_Z[1]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[3] -translated SevenSegment/ControlOut_Temp_rep0_i_Z[3]
+
+# Port mappping and directions
+
+# Black box mapping
+
+
+# Other sequential cells, including multidimensional arrays
+
+# Constant Registers
+vif_set_constant -original 0 SevenSegment/ControlOut_Temp[7]
+vif_set_constant -original -1 SevenSegment/Data_temp[30]
+vif_set_constant -original -1 SevenSegment/Data_temp[13]
+vif_set_constant -original -1 SevenSegment/Data_temp[18]
+vif_set_constant -original -1 SevenSegment/Data_temp[21]
+vif_set_constant -original -1 SevenSegment/Data_temp[24]
+vif_set_constant -original -1 SevenSegment/Data_temp[27]
+vif_set_constant -original -1 SevenSegment/Data_temp[28]
+vif_set_constant -original -1 SevenSegment/Data_temp[29]
+vif_set_constant -original -1 SevenSegment/Data_temp[0]
+vif_set_constant -original -1 SevenSegment/Data_temp[3]
+vif_set_constant -original -1 SevenSegment/Data_temp[4]
+vif_set_constant -original -1 SevenSegment/Data_temp[5]
+vif_set_constant -original -1 SevenSegment/Data_temp[6]
+vif_set_constant -original -1 SevenSegment/Data_temp[12]
+vif_set_constant -original -1 SevenSegment/Data_temp[14]
+vif_set_constant -original -1 SevenSegment/Data_temp[16]
+vif_set_constant -original -1 SevenSegment/Data_temp[17]
+vif_set_constant -original -1 SevenSegment/Data_temp[19]
+vif_set_constant -original -1 SevenSegment/Data_temp[20]
+vif_set_constant -original -1 SevenSegment/Data_temp[22]
+vif_set_constant -original -1 SevenSegment/Data_temp[25]
+vif_set_constant -original -1 SevenSegment/Data_temp[26]
+vif_set_constant -original -1 SevenSegment/Data_temp[1]
+vif_set_constant -original -1 SevenSegment/Data_temp[2]
+vif_set_constant -original -1 SevenSegment/Data_temp[8]
+vif_set_constant -original -1 SevenSegment/Data_temp[9]
+vif_set_constant -original -1 SevenSegment/Data_temp[10]
+vif_set_constant -original -1 SevenSegment/Data_temp[11]
+vif_set_constant -original -1 SevenSegment/Data_reg[11]
+vif_set_constant -original -1 SevenSegment/Data_reg[10]
+vif_set_constant -original -1 SevenSegment/Data_reg[9]
+vif_set_constant -original -1 SevenSegment/Data_reg[8]
+vif_set_constant -original -1 SevenSegment/Data_reg[2]
+vif_set_constant -original -1 SevenSegment/Data_reg[1]
+vif_set_constant -original -1 SevenSegment/Data_reg[26]
+vif_set_constant -original -1 SevenSegment/Data_reg[25]
+vif_set_constant -original -1 SevenSegment/Data_reg[22]
+vif_set_constant -original -1 SevenSegment/Data_reg[20]
+vif_set_constant -original -1 SevenSegment/Data_reg[19]
+vif_set_constant -original -1 SevenSegment/Data_reg[17]
+vif_set_constant -original -1 SevenSegment/Data_reg[16]
+vif_set_constant -original -1 SevenSegment/Data_reg[14]
+vif_set_constant -original -1 SevenSegment/Data_reg[12]
+vif_set_constant -original -1 SevenSegment/Data_reg[6]
+vif_set_constant -original -1 SevenSegment/Data_reg[5]
+vif_set_constant -original -1 SevenSegment/Data_reg[4]
+vif_set_constant -original -1 SevenSegment/Data_reg[3]
+vif_set_constant -original -1 SevenSegment/Data_reg[0]
+vif_set_constant -original -1 SevenSegment/Data_reg[29]
+vif_set_constant -original -1 SevenSegment/Data_reg[28]
+vif_set_constant -original -1 SevenSegment/Data_reg[27]
+vif_set_constant -original -1 SevenSegment/Data_reg[24]
+vif_set_constant -original -1 SevenSegment/Data_reg[21]
+vif_set_constant -original -1 SevenSegment/Data_reg[18]
+vif_set_constant -original -1 SevenSegment/Data_reg[13]
+vif_set_constant -original -1 SevenSegment/Data_reg[30]
+
+# Retimed Registers
+

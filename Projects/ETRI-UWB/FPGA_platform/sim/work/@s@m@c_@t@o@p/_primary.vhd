@@ -1,0 +1,60 @@
+library verilog;
+use verilog.vl_types.all;
+entity SMC_TOP is
+    generic(
+        WID_WIDTH       : integer := 4;
+        RID_WIDTH       : integer := 4
+    );
+    port(
+        ACLK            : in     vl_logic;
+        ARESETn         : in     vl_logic;
+        AWID            : in     vl_logic_vector;
+        AWADDR          : in     vl_logic_vector(31 downto 0);
+        AWLEN           : in     vl_logic_vector(3 downto 0);
+        AWSIZE          : in     vl_logic_vector(2 downto 0);
+        AWBURST         : in     vl_logic_vector(1 downto 0);
+        AWVALID         : in     vl_logic;
+        AWREADY         : out    vl_logic;
+        WID             : in     vl_logic_vector;
+        WDATA           : in     vl_logic_vector(31 downto 0);
+        WSTRB           : in     vl_logic_vector(3 downto 0);
+        WLAST           : in     vl_logic;
+        WVALID          : in     vl_logic;
+        WREADY          : out    vl_logic;
+        BID             : out    vl_logic_vector;
+        BRESP           : out    vl_logic_vector(1 downto 0);
+        BVALID          : out    vl_logic;
+        BREADY          : in     vl_logic;
+        ARID            : in     vl_logic_vector;
+        ARADDR          : in     vl_logic_vector(31 downto 0);
+        ARLEN           : in     vl_logic_vector(3 downto 0);
+        ARSIZE          : in     vl_logic_vector(2 downto 0);
+        ARBURST         : in     vl_logic_vector(1 downto 0);
+        ARVALID         : in     vl_logic;
+        ARREADY         : out    vl_logic;
+        RID             : out    vl_logic_vector;
+        RDATA           : out    vl_logic_vector(31 downto 0);
+        RRESP           : out    vl_logic_vector(1 downto 0);
+        RLAST           : out    vl_logic;
+        RVALID          : out    vl_logic;
+        RREADY          : in     vl_logic;
+        BOOT_WIDTH      : in     vl_logic_vector(1 downto 0);
+        PCLK            : in     vl_logic;
+        PRESETn         : in     vl_logic;
+        PADDR           : in     vl_logic_vector(5 downto 2);
+        PSEL            : in     vl_logic;
+        PENABLE         : in     vl_logic;
+        PWRITE          : in     vl_logic;
+        PWDATA          : in     vl_logic_vector(31 downto 0);
+        PRDATA          : out    vl_logic_vector(31 downto 0);
+        EXT_ADDR        : out    vl_logic_vector(26 downto 0);
+        EXT_WDATA       : out    vl_logic_vector(31 downto 0);
+        EXT_RDATA       : in     vl_logic_vector(31 downto 0);
+        EXT_CSb         : out    vl_logic_vector(8 downto 0);
+        EXT_OEb         : out    vl_logic;
+        EXT_WEb         : out    vl_logic;
+        EXT_BEb         : out    vl_logic_vector(3 downto 0);
+        EXT_WBEb        : out    vl_logic_vector(3 downto 0);
+        EXT_BIDEN       : out    vl_logic
+    );
+end SMC_TOP;

@@ -1,0 +1,82 @@
+Release 7.1.04i ngdbuild H.42
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+
+Command Line: ngdbuild -intstyle ise -dd d:\etri_uwb\adk_pci_test\xilinx/_ngo
+-nt timestamp -uc ETRI_UWBFPGA.ucf -p xc4vlx200-ff1513-10
+d:\etri_uwb\adk_pci_test\synplify\rev_1_identify\ETRI_UWBFPGA.edf
+ETRI_UWBFPGA.ngd 
+
+Executing edif2ngd -quiet
+"d:\etri_uwb\adk_pci_test\synplify\rev_1_identify\ETRI_UWBFPGA.edf"
+"d:\etri_uwb\adk_pci_test\xilinx\_ngo\ETRI_UWBFPGA.ngo"
+Release 7.1.04i - edif2ngd H.42
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+Reading NGO file 'd:/etri_uwb/adk_pci_test/xilinx/_ngo/ETRI_UWBFPGA.ngo' ...
+
+Applying constraints in "ETRI_UWBFPGA.ucf" to the design...
+
+Checking timing specifications ...
+WARNING:XdmHelpers:681 - UCF definition of specification "TS_CLK" overrides the
+   definition found in the netlist or NCF file:
+   UCF: PERIOD "CLK" 19000.000000 pS HIGH 50.000000 %
+   netlist/NCF: PERIOD:CLK:14286.000000:pS:HIGH:50.000000%
+WARNING:XdmHelpers:681 - UCF definition of specification "TS_CLK200M" overrides
+   the definition found in the netlist or NCF file:
+   UCF: PERIOD "CLK200M" TS_CLK * 0.500000 HIGH 50.000000 %
+   netlist/NCF: PERIOD:CLK200M:TS_CLK*0.500000:HIGH:50.000000%
+WARNING:XdmHelpers:681 - UCF definition of specification "TS_CLK50M" overrides
+   the definition found in the netlist or NCF file:
+   UCF: PERIOD "CLK50M" TS_CLK * 2.000000 HIGH 50.000000 %
+   netlist/NCF: PERIOD:CLK50M:TS_CLK*2.000000:HIGH:50.000000%
+WARNING:XdmHelpers:681 - UCF definition of specification "TS_DDR_CLK_c"
+   overrides the definition found in the netlist or NCF file:
+   UCF: PERIOD "DDR_CLK_c" TS_CLK * 1.000000 HIGH 50.000000 %
+   netlist/NCF: PERIOD:DDR_CLK_c:TS_CLK*1.000000:HIGH:50.000000%
+WARNING:XdmHelpers:681 - UCF definition of specification "TS_CLK33M" overrides
+   the definition found in the netlist or NCF file:
+   UCF: PERIOD "CLK33M" 30303.000000 pS HIGH 50.000000 %
+   netlist/NCF: PERIOD:CLK33M:30303.000000:pS:HIGH:50.000000%
+WARNING:XdmHelpers:681 - UCF definition of specification "TS_DDR_DQSI_1_"
+   overrides the definition found in the netlist or NCF file:
+   UCF: PERIOD "DDR_DQSI_1_" 9500.000000 pS HIGH 50.000000 %
+   netlist/NCF: PERIOD:DDR_DQSI_1_:7143.000000:pS:HIGH:50.000000%
+WARNING:XdmHelpers:681 - UCF definition of specification "TS_DDR_DQSI_0_"
+   overrides the definition found in the netlist or NCF file:
+   UCF: PERIOD "DDR_DQSI_0_" TS_DDR_DQSI_1_ * 1.000000 HIGH 50.000000 %
+   netlist/NCF: PERIOD:DDR_DQSI_0_:TS_DDR_DQSI_1_*1.000000:HIGH:50.000000%
+WARNING:XdmHelpers:681 - UCF definition of specification "TS_DDR_DQ_0__CLK200M"
+   overrides the definition found in the netlist or NCF file:
+   UCF: FROM "CLK200M" TO "DDR_DQ_0_" 9500.000000 pS
+   netlist/NCF: FROM:CLK200M:TO:DDR_DQ_0_:7143.000000:pS
+INFO:XdmHelpers:851 - TNM "CLK", used in period specification "TS_CLK", was
+   traced into DCM_ADV instance "PLL/DCM_ADV_INST". The following new TNM groups
+   and period specifications were generated at the DCM_ADV output(s):
+   CLK2X: TS_PLL_CLK2X_BUF=PERIOD PLL_CLK2X_BUF TS_CLK/2.000000 HIGH 50.000000%
+   CLK0: TS_PLL_CLK0_BUF=PERIOD PLL_CLK0_BUF TS_CLK*1.000000 HIGH 50.000000%
+   CLKDV: TS_PLL_CLKDV_BUF=PERIOD PLL_CLKDV_BUF TS_CLK*2.000000 HIGH 50.000000%
+WARNING:XdmHelpers:662 - Period specification "TS_DDR_CLK_c" references the TNM
+   group "DDR_CLK_c", which contains both pads and synchronous elements. The
+   timing analyzer will ignore the pads for this specification. You might want
+   to use a qualifier (e.g. "FFS") on the TNM property to remove the pads from
+   this group.
+WARNING:XdmHelpers:662 - Period specification "TS_CLK33M" references the TNM
+   group "CLK33M", which contains both pads and synchronous elements. The timing
+   analyzer will ignore the pads for this specification. You might want to use a
+   qualifier (e.g. "FFS") on the TNM property to remove the pads from this
+   group.
+WARNING:XdmHelpers:662 - Period specification "TS_PLL_CLK0_BUF" references the
+   TNM group "PLL_CLK0_BUF", which contains both pads and synchronous elements.
+   The timing analyzer will ignore the pads for this specification. You might
+   want to use a qualifier (e.g. "FFS") on the TNM property to remove the pads
+   from this group.
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:  11
+
+Total memory usage is 259356 kilobytes
+
+Writing NGD file "ETRI_UWBFPGA.ngd" ...
+
+Writing NGDBUILD log file "ETRI_UWBFPGA.bld"...

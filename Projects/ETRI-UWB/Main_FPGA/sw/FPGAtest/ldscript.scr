@@ -1,0 +1,113 @@
+OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm", "elf32-littlearm")
+OUTPUT_ARCH(arm)
+ENTRY(_start)
+GROUP(-lc  -lgcc -lm)
+SEARCH_DIR(/usr/local/arm/arm-linux/lib);
+
+/* Do we need any of these for elf?
+   __DYNAMIC = 0;    */
+MEMORY
+{
+	rom : ORIGIN = 0x00000000   , LENGTH = 2048K
+	ram : ORIGIN = 0x10000000   , LENGTH = 58K	/* Internal SRAM : Last 6KB is used as stack */
+	stack_ram : ORIGIN = 0x1000e800   , LENGTH = 6K	/* Internal SRAM : Last 6KB is used as stack */
+}
+
+SECTIONS
+{
+  /* Read-only sections, merged into text segment: */
+  . = 0x0;
+  .text      :
+  {
+    *(.vects)
+    *(.text)
+    *(.stub)
+    *(.rodata)
+    *(.rodata1)
+    *(.rodata.str1.4)
+
+    *(.glue_7t) *(.glue_7)
+    ___ctors = . ;
+    *(.ctors)
+    ___ctors_end = . ;
+    ___dtors = . ;
+    *(.dtors)
+    ___dtors_end = . ;
+    _etext = . ;
+	. = ALIGN(4);
+    ___shadow_data = . ;
+  } > rom
+  PROVIDE (etext = .);
+  PROVIDE (___shadow_data = . );
+  _erodata = .;
+  _data = .;   
+  .data :
+      AT ( ADDR (.text) + SIZEOF(.text) )
+  {
+	. = ALIGN(4);
+    _data_reload = . ;
+    PROVIDE(___data_reload = . );
+    *(.data)
+    *(.sdata)
+    CONSTRUCTORS
+	. = ALIGN(4);
+  } > ram
+  _edata  =  .;
+  PROVIDE (edata = .);
+  .bss (NOLOAD) :
+  {
+   . = ALIGN(4);
+   __bss_start = .;
+   *(.dynbss)
+   *(.bss)
+   *(COMMON)
+   . = ALIGN(4);
+   __bss_end = .;
+  } > ram
+  .stack (NOLOAD) :
+  {
+	*(.stack)
+	. += 0x800;
+	_stack = .;
+	. += 0x800;
+	_irq_stack = .;
+	. += 0x800;
+	_svc_stack = .;
+  } > stack_ram
+  _end = . ;
+  PROVIDE (end = .);
+  /* Stabs debugging sections.  */
+  .stab 0 : { *(.stab) }
+  .stabstr 0 : { *(.stabstr) }
+  .stab.excl 0 : { *(.stab.excl) }
+  .stab.exclstr 0 : { *(.stab.exclstr) }
+  .stab.index 0 : { *(.stab.index) }
+  .stab.indexstr 0 : { *(.stab.indexstr) }
+  .comment 0 : { *(.comment) }
+  /* DWARF debug sections.
+     Symbols in the DWARF debugging sections are relative to the beginning
+     of the section so we begin them at 0.  */
+  /* DWARF 1 */
+  .debug          0 : { *(.debug) }
+  .line           0 : { *(.line) }
+  /* GNU DWARF 1 extensions */
+  .debug_srcinfo  0 : { *(.debug_srcinfo) }
+  .debug_sfnames  0 : { *(.debug_sfnames) }
+  /* DWARF 1.1 and DWARF 2 */
+  .debug_aranges  0 : { *(.debug_aranges) }
+  .debug_pubnames 0 : { *(.debug_pubnames) }
+  /* DWARF 2 */
+  .debug_info     0 : { *(.debug_info) }
+  .debug_abbrev   0 : { *(.debug_abbrev) }
+  .debug_line     0 : { *(.debug_line) }
+  .debug_frame    0 : { *(.debug_frame) }
+  .debug_str      0 : { *(.debug_str) }
+  .debug_loc      0 : { *(.debug_loc) }
+  .debug_macinfo  0 : { *(.debug_macinfo) }
+  /* SGI/MIPS DWARF 2 extensions */
+  .debug_weaknames 0 : { *(.debug_weaknames) }
+  .debug_funcnames 0 : { *(.debug_funcnames) }
+  .debug_typenames 0 : { *(.debug_typenames) }
+  .debug_varnames  0 : { *(.debug_varnames) }
+}
+PROVIDE(___data_size = SIZEOF(.data));

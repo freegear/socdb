@@ -1,0 +1,64 @@
+library verilog;
+use verilog.vl_types.all;
+entity ETRI_UWBFPGA is
+    generic(
+        CLK_PERIOD      : integer := 5;
+        SDLY            : integer := 2
+    );
+    port(
+        nRESET          : in     vl_logic;
+        CLK             : in     vl_logic;
+        CLK27M          : in     vl_logic;
+        BOOTNAND        : in     vl_logic;
+        BOOTCSSWAP      : in     vl_logic;
+        ROM_ADDR        : out    vl_logic_vector(19 downto 0);
+        ROM_DATA        : in     vl_logic_vector(15 downto 0);
+        ROM_nCS         : out    vl_logic;
+        ROM_nOE         : out    vl_logic;
+        DDR_CLK         : out    vl_logic;
+        DDR_nCLK        : out    vl_logic;
+        DDR_CKE         : out    vl_logic;
+        DDR_CSB         : out    vl_logic;
+        DDR_RASB        : out    vl_logic;
+        DDR_CASB        : out    vl_logic;
+        DDR_WEB         : out    vl_logic;
+        DDR_BADDR       : out    vl_logic_vector(1 downto 0);
+        DDR_ADDR        : out    vl_logic_vector(12 downto 0);
+        DDR_DQ          : inout  vl_logic_vector(15 downto 0);
+        DDR_DQM         : out    vl_logic_vector(1 downto 0);
+        DDR_DQS         : inout  vl_logic_vector(1 downto 0);
+        UART_TXD        : out    vl_logic_vector(2 downto 0);
+        UART_RXD        : in     vl_logic_vector(2 downto 0);
+        I2C_SDA         : inout  vl_logic;
+        I2C_SCL         : inout  vl_logic;
+        NF_IO           : inout  vl_logic_vector(7 downto 0);
+        NF_CLE          : out    vl_logic;
+        NF_ALE          : out    vl_logic;
+        NF_nCE0         : out    vl_logic;
+        NF_nRE          : out    vl_logic;
+        NF_nWE          : out    vl_logic;
+        NF_RnB0         : in     vl_logic;
+        ARMICE_nSRST    : inout  vl_logic;
+        ARMICE_nTRST    : in     vl_logic;
+        ARMICE_TCK      : in     vl_logic;
+        ARMICE_RTCK     : out    vl_logic;
+        ARMICE_TMS      : in     vl_logic;
+        ARMICE_TDI      : in     vl_logic;
+        ARMICE_TDO      : out    vl_logic;
+        GPIO0           : inout  vl_logic_vector(31 downto 20);
+        GPIO1           : inout  vl_logic_vector(7 downto 0);
+        SevenSegmentCommon: out    vl_logic_vector(3 downto 0);
+        SevenSegmentControl: out    vl_logic_vector(7 downto 0);
+        SPI_SDO         : out    vl_logic;
+        SPI_SDI         : in     vl_logic;
+        SPI_SCK         : out    vl_logic;
+        I2S_MCLK        : out    vl_logic;
+        I2S_BCLK        : inout  vl_logic;
+        I2S_LRCLK       : inout  vl_logic;
+        I2S_SDOUT       : out    vl_logic;
+        I2S_SDIN        : in     vl_logic;
+        CLK200M_Out     : out    vl_logic;
+        CLK100M_Out     : out    vl_logic;
+        CLK50M_Out      : out    vl_logic
+    );
+end ETRI_UWBFPGA;

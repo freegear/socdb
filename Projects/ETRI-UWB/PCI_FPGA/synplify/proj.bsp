@@ -1,0 +1,17 @@
+# Identify Project File 
+#     Created by thlee on Windows NT
+#     at Mon Aug 06 17:20:09 2007
+
+# *WARNING* : This file must not be edited!
+
+project 2 0 "D:/ETRI_UWB/ADK_PCI_BOARD/synplify/proj.bsp"
+cwd "D:/ETRI_UWB/ADK_PCI_BOARD/synplify/rev_2_identify"
+compile include "./"
+compile include "C:/Program Files/Synplicity/fpga_862/lib"
+compile option -v2001 1
+compile devicelib "C:/Program Files/Synplicity/fpga_862/lib/xilinx/unisim.v"
+compile add  -verilog  -work work  "D:/ETRI_UWB/ADK_PCI_BOARD/rtl/SevenSegment.v"
+compile add  -verilog  -work work  "D:/ETRI_UWB/ADK_PCI_BOARD/rtl/PCI_FPGA.v"
+compile toplevel PCI_FPGA
+instrumentation new rev_2_identify
+instrumentation load rev_2_identify

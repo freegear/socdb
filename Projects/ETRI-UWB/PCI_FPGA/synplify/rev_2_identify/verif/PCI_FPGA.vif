@@ -1,0 +1,779 @@
+#
+# Synplicity Verification Interface File
+# Generated using Synplify-pro
+#
+# Copyright (c) 1996-2005 Synplicity, Inc.
+# All rights reserved
+#
+
+# Set logfile options
+vif_set_result_file  PCI_FPGA.vlf
+
+# Set technology for TCL script
+vif_set_technology -architecture FPGA -vendor Xilinx
+
+# RTL and technology files
+vif_add_library -original $XILINX/verilog/verification/unisims
+vif_add_library -original $XILINX/verilog/verification/simprims
+vif_add_file -original -verilog ./instr_sources/syn_dics.v
+vif_add_file -original -verilog ./instr_sources/SevenSegment.v
+vif_add_file -original -verilog ./instr_sources/PCI_FPGA.v
+vif_set_top_module -original -top PCI_FPGA
+ 
+vif_add_library -translated $XILINX/verilog/verification/unisims
+vif_add_library -translated $XILINX/verilog/verification/simprims
+vif_add_file -translated -verilog PCI_FPGA.vm
+vif_set_top_module -translated -top PCI_FPGA 
+# Read FSM encoding
+vif_set_fsm -fsm fsm_0
+vif_set_fsmreg -original -fsm fsm_0 iice_inst_0/b8_12m_IFLY/b5_nUTGT/b13_nAzGfFM_sLsv3[3:0]
+vif_set_fsmreg -translated -fsm  fsm_0 iice_inst_0/b8_12m_IFLY/b5_nUTGT/b13_nAzGfFM_sLsv3[9:0]
+vif_set_state_map -fsm fsm_0 -original "0000" -translated "0000000001"
+vif_set_state_map -fsm fsm_0 -original "0001" -translated "0000000010"
+vif_set_state_map -fsm fsm_0 -original "0010" -translated "0000000100"
+vif_set_state_map -fsm fsm_0 -original "0011" -translated "0000001000"
+vif_set_state_map -fsm fsm_0 -original "0100" -translated "0000010000"
+vif_set_state_map -fsm fsm_0 -original "1001" -translated "0000100000"
+vif_set_state_map -fsm fsm_0 -original "1010" -translated "0001000000"
+vif_set_state_map -fsm fsm_0 -original "1011" -translated "0010000000"
+vif_set_state_map -fsm fsm_0 -original "1100" -translated "0100000000"
+vif_set_state_map -fsm fsm_0 -original "1101" -translated "1000000000"
+vif_set_fsm -fsm fsm_11
+vif_set_fsmreg -original -fsm fsm_11 iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b4_nKB0/b6_nbTt39[2:0]
+vif_set_fsmreg -translated -fsm  fsm_11 iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b4_nKB0/b6_nbTt39[1:0]
+vif_set_state_map -fsm fsm_11 -original "000" -translated "00"
+vif_set_state_map -fsm fsm_11 -original "001" -translated "01"
+vif_set_state_map -fsm fsm_11 -original "010" -translated "10"
+vif_set_fsm -fsm fsm_14
+vif_set_fsmreg -original -fsm fsm_14 SevenSegment/CommonOut_Temp[3:0]
+vif_set_fsmreg -translated -fsm  fsm_14 SevenSegment/CommonOut_Temp[1:0]
+vif_set_state_map -fsm fsm_14 -original "0001" -translated "00"
+vif_set_state_map -fsm fsm_14 -original "0010" -translated "01"
+vif_set_state_map -fsm fsm_14 -original "0100" -translated "10"
+vif_set_state_map -fsm fsm_14 -original "1000" -translated "11"
+
+# Memory map points
+
+# SRL map points
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[0] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_155_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[0] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_155_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[0] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_155_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[1] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_154_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[1] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_154_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[1] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_154_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[2] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_153_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[2] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_153_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[2] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_153_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[3] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_152_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[3] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_152_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[3] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_152_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[4] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_151_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[4] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_151_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[4] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_151_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[5] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_150_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[5] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_150_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[5] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_150_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[6] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_149_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[6] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_149_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[6] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_149_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[7] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_148_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[7] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_148_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[7] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_148_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[8] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_147_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[8] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_147_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[8] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_147_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[9] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_146_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[9] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_146_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[9] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_146_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[10] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_145_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[10] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_145_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[10] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_145_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[11] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_144_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[11] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_144_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[11] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_144_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[12] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_143_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[12] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_143_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[12] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_143_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[13] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_142_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[13] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_142_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[13] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_142_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[14] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_141_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[14] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_141_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[14] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_141_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[15] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_140_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[15] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_140_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[15] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_140_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[16] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_139_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[16] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_139_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[16] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_139_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[17] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_138_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[17] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_138_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[17] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_138_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[18] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_137_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[18] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_137_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[18] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_137_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[19] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_136_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[19] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_136_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[19] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_136_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[20] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_135_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[20] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_135_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[20] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_135_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[21] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_134_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[21] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_134_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[21] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_134_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[22] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_133_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[22] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_133_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[22] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_133_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[23] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_132_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[23] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_132_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[23] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_132_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[24] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_131_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[24] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_131_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[24] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_131_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[25] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_130_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[25] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_130_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[25] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_130_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[26] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_129_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[26] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_129_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[26] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_129_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[27] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_128_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[27] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_128_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[27] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_128_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[28] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_127_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[28] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_127_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[28] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_127_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[29] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_126_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[29] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_126_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[29] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_126_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[30] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_125_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[30] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_125_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[30] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_125_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[31] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_124_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[31] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_124_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[31] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_124_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[32] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_123_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[32] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_123_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[32] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_123_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[33] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_122_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[33] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_122_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[33] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_122_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[34] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_121_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[34] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_121_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[34] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_121_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[35] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_120_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[35] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_120_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[35] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_120_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[36] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_119_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[36] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_119_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[36] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_119_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[37] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_118_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[37] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_118_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[37] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_118_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[38] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_117_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[38] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_117_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[38] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_117_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[39] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_116_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[39] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_116_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[39] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_116_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[40] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_115_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[40] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_115_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[40] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_115_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[41] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_114_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[41] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_114_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[41] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_114_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[42] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_113_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[42] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_113_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[42] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_113_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[43] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_112_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[43] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_112_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[43] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_112_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[44] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_111_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[44] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_111_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[44] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_111_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[45] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_110_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[45] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_110_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[45] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_110_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[46] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_109_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[46] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_109_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[46] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_109_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[47] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_108_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[47] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_108_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[47] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_108_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[48] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_107_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[48] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_107_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[48] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_107_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[49] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_106_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[49] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_106_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[49] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_106_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[50] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_105_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[50] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_105_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[50] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_105_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[51] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_104_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[51] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_104_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[51] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_104_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[52] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_103_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[52] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_103_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[52] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_103_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[53] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_102_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[53] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_102_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[53] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_102_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[54] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_101_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[54] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_101_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[54] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_101_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[55] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_100_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[55] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_100_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[55] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_100_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[56] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_99_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[56] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_99_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[56] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_99_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[57] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_98_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[57] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_98_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[57] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_98_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[58] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_97_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[58] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_97_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[58] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_97_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[59] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_96_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[59] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_96_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[59] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_96_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[60] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_95_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[60] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_95_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[60] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_95_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[61] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_94_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[61] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_94_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[61] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_94_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[62] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_93_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[62] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_93_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[62] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_93_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[63] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_92_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[63] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_92_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[63] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_92_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[64] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_91_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[64] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_91_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[64] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_91_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[65] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_90_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[65] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_90_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[65] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_90_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[66] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_89_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[66] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_89_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[66] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_89_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[67] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_88_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[67] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_88_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[67] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_88_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[68] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_87_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[68] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_87_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[68] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_87_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[69] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_86_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[69] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_86_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[69] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_86_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[70] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_85_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[70] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_85_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[70] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_85_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[71] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_84_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[71] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_84_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[71] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_84_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[72] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_83_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[72] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_83_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[72] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_83_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[73] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_82_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[73] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_82_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[73] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_82_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[74] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_81_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[74] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_81_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[74] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_81_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[75] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_80_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[75] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_80_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[75] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_80_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[76] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_79_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[76] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_79_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[76] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_79_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[77] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_78_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[77] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_78_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[77] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_78_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[78] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_77_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[78] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_77_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[78] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_77_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[79] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_76_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[79] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_76_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[79] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_76_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[80] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_75_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[80] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_75_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[80] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_75_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[81] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_74_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[81] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_74_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[81] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_74_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[82] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_73_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[82] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_73_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[82] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_73_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[83] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_72_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[83] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_72_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[83] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_72_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[84] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_71_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[84] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_71_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[84] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_71_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[85] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_70_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[85] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_70_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[85] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_70_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[86] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_69_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[86] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_69_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[86] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_69_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[87] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_68_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[87] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_68_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[87] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_68_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[88] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_67_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[88] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_67_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[88] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_67_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[89] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_66_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[89] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_66_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[89] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_66_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[90] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_65_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[90] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_65_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[90] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_65_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[91] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_64_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[91] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_64_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[91] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_64_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[92] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_63_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[92] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_63_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[92] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_63_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[93] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_62_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[93] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_62_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[93] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_62_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[94] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_61_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[94] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_61_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[94] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_61_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[95] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_60_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[95] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_60_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[95] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_60_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[96] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_59_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[96] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_59_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[96] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_59_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[97] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_58_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[97] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_58_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[97] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_58_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[98] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_57_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[98] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_57_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[98] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_57_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[99] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_56_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[99] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_56_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[99] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_56_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[100] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_55_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[100] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_55_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[100] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_55_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[101] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_54_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[101] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_54_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[101] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_54_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[102] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_53_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[102] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_53_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[102] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_53_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[103] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_52_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[103] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_52_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[103] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_52_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[104] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_51_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[104] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_51_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[104] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_51_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[105] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_50_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[105] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_50_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[105] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_50_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[106] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_49_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[106] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_49_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[106] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_49_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[107] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_48_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[107] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_48_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[107] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_48_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[108] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_47_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[108] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_47_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[108] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_47_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[109] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_46_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[109] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_46_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[109] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_46_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[110] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_45_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[110] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_45_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[110] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_45_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[111] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_44_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[111] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_44_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[111] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_44_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[112] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_43_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[112] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_43_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[112] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_43_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[113] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_42_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[113] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_42_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[113] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_42_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[114] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_41_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[114] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_41_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[114] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_41_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[115] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_40_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[115] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_40_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[115] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_40_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[116] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_39_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[116] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_39_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[116] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_39_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[117] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_38_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[117] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_38_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[117] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_38_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[118] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_37_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[118] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_37_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[118] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_37_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[119] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_36_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[119] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_36_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[119] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_36_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[120] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_35_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[120] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_35_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[120] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_35_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[121] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_34_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[121] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_34_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[121] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_34_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[122] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_33_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[122] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_33_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[122] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_33_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[123] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_32_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[123] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_32_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[123] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_32_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[124] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_31_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[124] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_31_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[124] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_31_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[125] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_30_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[125] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_30_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[125] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_30_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[126] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_29_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[126] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_29_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[126] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_29_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[127] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_28_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[127] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_28_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[127] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_28_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[128] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_27_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[128] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_27_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[128] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_27_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[129] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_26_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[129] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_26_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[129] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_26_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[130] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_25_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[130] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_25_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[130] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_25_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[131] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_24_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[131] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_24_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[131] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_24_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[132] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_23_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[132] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_23_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[132] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_23_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[133] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_22_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[133] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_22_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[133] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_22_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[134] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_21_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[134] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_21_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[134] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_21_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[135] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_20_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[135] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_20_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[135] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_20_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[136] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_19_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[136] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_19_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[136] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_19_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[137] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_18_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[137] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_18_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[137] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_18_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[138] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_17_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[138] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_17_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[138] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_17_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[139] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_16_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[139] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_16_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[139] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_16_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[140] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_15_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[140] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_15_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[140] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_15_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[141] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_14_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[141] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_14_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[141] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_14_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[142] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_13_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[142] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_13_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[142] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_13_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[143] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_12_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[143] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_12_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[143] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_12_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[144] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_11_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[144] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_11_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[144] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_11_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[145] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_10_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[145] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_10_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[145] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_10_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[146] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_9_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[146] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_9_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[146] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_9_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[147] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_8_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[147] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_8_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[147] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_8_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[148] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_7_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[148] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_7_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[148] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_7_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[149] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_6_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[149] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_6_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[149] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_6_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[150] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_5_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[150] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_5_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[150] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_5_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[151] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_4_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[151] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_4_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[151] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_4_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[152] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_3_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[152] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_3_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[152] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_3_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[153] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_2_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[153] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_2_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[153] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_2_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[154] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_1_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[154] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_1_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[154] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_1_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[155] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_0_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[155] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_0_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[155] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_0_DOUT_Z[0]
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LS[156] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_I_1_Z/ff0_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9LI[156] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_I_1_Z/ff1_r_e_g
+vif_set_map_point -register -original iice_inst_0/b3_SoW/b8_OFWNT9Lq[156] -translated iice_inst_0/b3_SoW/b8_OFWNT9Lq_DOUT_Z[0]
+
+# Compiler constant registers
+vif_set_constant -original 0 iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b4_nKB0/b6_nbTt39[0]
+
+# Compiler constant latches
+
+# Compiler RTL sequential redundancies
+
+# RTL sequential redundancies
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[150] iice_inst_0/b3_SoW/b8_OFWNT9LR[6]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[151] iice_inst_0/b3_SoW/b8_OFWNT9LR[5]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[152] iice_inst_0/b3_SoW/b8_OFWNT9LR[4]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[153] iice_inst_0/b3_SoW/b8_OFWNT9LR[3]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[154] iice_inst_0/b3_SoW/b8_OFWNT9LR[2]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[155] iice_inst_0/b3_SoW/b8_OFWNT9LR[1]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[156] iice_inst_0/b3_SoW/b8_OFWNT9LR[0]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[135] iice_inst_0/b3_SoW/b8_OFWNT9LR[21]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[136] iice_inst_0/b3_SoW/b8_OFWNT9LR[20]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[137] iice_inst_0/b3_SoW/b8_OFWNT9LR[19]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[138] iice_inst_0/b3_SoW/b8_OFWNT9LR[18]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[139] iice_inst_0/b3_SoW/b8_OFWNT9LR[17]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[140] iice_inst_0/b3_SoW/b8_OFWNT9LR[16]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[141] iice_inst_0/b3_SoW/b8_OFWNT9LR[15]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[142] iice_inst_0/b3_SoW/b8_OFWNT9LR[14]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[143] iice_inst_0/b3_SoW/b8_OFWNT9LR[13]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[144] iice_inst_0/b3_SoW/b8_OFWNT9LR[12]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[145] iice_inst_0/b3_SoW/b8_OFWNT9LR[11]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[146] iice_inst_0/b3_SoW/b8_OFWNT9LR[10]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[147] iice_inst_0/b3_SoW/b8_OFWNT9LR[9]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[148] iice_inst_0/b3_SoW/b8_OFWNT9LR[8]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[149] iice_inst_0/b3_SoW/b8_OFWNT9LR[7]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[120] iice_inst_0/b3_SoW/b8_OFWNT9LR[36]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[121] iice_inst_0/b3_SoW/b8_OFWNT9LR[35]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[122] iice_inst_0/b3_SoW/b8_OFWNT9LR[34]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[123] iice_inst_0/b3_SoW/b8_OFWNT9LR[33]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[124] iice_inst_0/b3_SoW/b8_OFWNT9LR[32]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[125] iice_inst_0/b3_SoW/b8_OFWNT9LR[31]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[126] iice_inst_0/b3_SoW/b8_OFWNT9LR[30]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[127] iice_inst_0/b3_SoW/b8_OFWNT9LR[29]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[128] iice_inst_0/b3_SoW/b8_OFWNT9LR[28]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[129] iice_inst_0/b3_SoW/b8_OFWNT9LR[27]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[130] iice_inst_0/b3_SoW/b8_OFWNT9LR[26]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[131] iice_inst_0/b3_SoW/b8_OFWNT9LR[25]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[132] iice_inst_0/b3_SoW/b8_OFWNT9LR[24]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[133] iice_inst_0/b3_SoW/b8_OFWNT9LR[23]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[134] iice_inst_0/b3_SoW/b8_OFWNT9LR[22]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[105] iice_inst_0/b3_SoW/b8_OFWNT9LR[51]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[106] iice_inst_0/b3_SoW/b8_OFWNT9LR[50]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[107] iice_inst_0/b3_SoW/b8_OFWNT9LR[49]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[108] iice_inst_0/b3_SoW/b8_OFWNT9LR[48]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[109] iice_inst_0/b3_SoW/b8_OFWNT9LR[47]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[110] iice_inst_0/b3_SoW/b8_OFWNT9LR[46]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[111] iice_inst_0/b3_SoW/b8_OFWNT9LR[45]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[112] iice_inst_0/b3_SoW/b8_OFWNT9LR[44]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[113] iice_inst_0/b3_SoW/b8_OFWNT9LR[43]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[114] iice_inst_0/b3_SoW/b8_OFWNT9LR[42]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[115] iice_inst_0/b3_SoW/b8_OFWNT9LR[41]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[116] iice_inst_0/b3_SoW/b8_OFWNT9LR[40]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[117] iice_inst_0/b3_SoW/b8_OFWNT9LR[39]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[118] iice_inst_0/b3_SoW/b8_OFWNT9LR[38]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[119] iice_inst_0/b3_SoW/b8_OFWNT9LR[37]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[90] iice_inst_0/b3_SoW/b8_OFWNT9LR[66]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[91] iice_inst_0/b3_SoW/b8_OFWNT9LR[65]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[92] iice_inst_0/b3_SoW/b8_OFWNT9LR[64]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[93] iice_inst_0/b3_SoW/b8_OFWNT9LR[63]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[94] iice_inst_0/b3_SoW/b8_OFWNT9LR[62]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[95] iice_inst_0/b3_SoW/b8_OFWNT9LR[61]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[96] iice_inst_0/b3_SoW/b8_OFWNT9LR[60]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[97] iice_inst_0/b3_SoW/b8_OFWNT9LR[59]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[98] iice_inst_0/b3_SoW/b8_OFWNT9LR[58]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[99] iice_inst_0/b3_SoW/b8_OFWNT9LR[57]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[100] iice_inst_0/b3_SoW/b8_OFWNT9LR[56]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[101] iice_inst_0/b3_SoW/b8_OFWNT9LR[55]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[102] iice_inst_0/b3_SoW/b8_OFWNT9LR[54]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[103] iice_inst_0/b3_SoW/b8_OFWNT9LR[53]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[104] iice_inst_0/b3_SoW/b8_OFWNT9LR[52]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[75] iice_inst_0/b3_SoW/b8_OFWNT9LR[81]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[76] iice_inst_0/b3_SoW/b8_OFWNT9LR[80]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[77] iice_inst_0/b3_SoW/b8_OFWNT9LR[79]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[78] iice_inst_0/b3_SoW/b8_OFWNT9LR[78]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[79] iice_inst_0/b3_SoW/b8_OFWNT9LR[77]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[80] iice_inst_0/b3_SoW/b8_OFWNT9LR[76]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[81] iice_inst_0/b3_SoW/b8_OFWNT9LR[75]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[82] iice_inst_0/b3_SoW/b8_OFWNT9LR[74]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[83] iice_inst_0/b3_SoW/b8_OFWNT9LR[73]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[84] iice_inst_0/b3_SoW/b8_OFWNT9LR[72]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[85] iice_inst_0/b3_SoW/b8_OFWNT9LR[71]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[86] iice_inst_0/b3_SoW/b8_OFWNT9LR[70]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[87] iice_inst_0/b3_SoW/b8_OFWNT9LR[69]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[88] iice_inst_0/b3_SoW/b8_OFWNT9LR[68]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[89] iice_inst_0/b3_SoW/b8_OFWNT9LR[67]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[60] iice_inst_0/b3_SoW/b8_OFWNT9LR[96]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[61] iice_inst_0/b3_SoW/b8_OFWNT9LR[95]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[62] iice_inst_0/b3_SoW/b8_OFWNT9LR[94]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[63] iice_inst_0/b3_SoW/b8_OFWNT9LR[93]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[64] iice_inst_0/b3_SoW/b8_OFWNT9LR[92]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[65] iice_inst_0/b3_SoW/b8_OFWNT9LR[91]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[66] iice_inst_0/b3_SoW/b8_OFWNT9LR[90]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[67] iice_inst_0/b3_SoW/b8_OFWNT9LR[89]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[68] iice_inst_0/b3_SoW/b8_OFWNT9LR[88]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[69] iice_inst_0/b3_SoW/b8_OFWNT9LR[87]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[70] iice_inst_0/b3_SoW/b8_OFWNT9LR[86]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[71] iice_inst_0/b3_SoW/b8_OFWNT9LR[85]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[72] iice_inst_0/b3_SoW/b8_OFWNT9LR[84]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[73] iice_inst_0/b3_SoW/b8_OFWNT9LR[83]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[74] iice_inst_0/b3_SoW/b8_OFWNT9LR[82]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[45] iice_inst_0/b3_SoW/b8_OFWNT9LR[111]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[46] iice_inst_0/b3_SoW/b8_OFWNT9LR[110]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[47] iice_inst_0/b3_SoW/b8_OFWNT9LR[109]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[48] iice_inst_0/b3_SoW/b8_OFWNT9LR[108]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[49] iice_inst_0/b3_SoW/b8_OFWNT9LR[107]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[50] iice_inst_0/b3_SoW/b8_OFWNT9LR[106]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[51] iice_inst_0/b3_SoW/b8_OFWNT9LR[105]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[52] iice_inst_0/b3_SoW/b8_OFWNT9LR[104]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[53] iice_inst_0/b3_SoW/b8_OFWNT9LR[103]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[54] iice_inst_0/b3_SoW/b8_OFWNT9LR[102]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[55] iice_inst_0/b3_SoW/b8_OFWNT9LR[101]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[56] iice_inst_0/b3_SoW/b8_OFWNT9LR[100]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[57] iice_inst_0/b3_SoW/b8_OFWNT9LR[99]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[58] iice_inst_0/b3_SoW/b8_OFWNT9LR[98]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[59] iice_inst_0/b3_SoW/b8_OFWNT9LR[97]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[30] iice_inst_0/b3_SoW/b8_OFWNT9LR[126]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[31] iice_inst_0/b3_SoW/b8_OFWNT9LR[125]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[32] iice_inst_0/b3_SoW/b8_OFWNT9LR[124]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[33] iice_inst_0/b3_SoW/b8_OFWNT9LR[123]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[34] iice_inst_0/b3_SoW/b8_OFWNT9LR[122]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[35] iice_inst_0/b3_SoW/b8_OFWNT9LR[121]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[36] iice_inst_0/b3_SoW/b8_OFWNT9LR[120]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[37] iice_inst_0/b3_SoW/b8_OFWNT9LR[119]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[38] iice_inst_0/b3_SoW/b8_OFWNT9LR[118]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[39] iice_inst_0/b3_SoW/b8_OFWNT9LR[117]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[40] iice_inst_0/b3_SoW/b8_OFWNT9LR[116]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[41] iice_inst_0/b3_SoW/b8_OFWNT9LR[115]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[42] iice_inst_0/b3_SoW/b8_OFWNT9LR[114]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[43] iice_inst_0/b3_SoW/b8_OFWNT9LR[113]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[44] iice_inst_0/b3_SoW/b8_OFWNT9LR[112]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[15] iice_inst_0/b3_SoW/b8_OFWNT9LR[141]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[16] iice_inst_0/b3_SoW/b8_OFWNT9LR[140]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[17] iice_inst_0/b3_SoW/b8_OFWNT9LR[139]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[18] iice_inst_0/b3_SoW/b8_OFWNT9LR[138]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[19] iice_inst_0/b3_SoW/b8_OFWNT9LR[137]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[20] iice_inst_0/b3_SoW/b8_OFWNT9LR[136]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[21] iice_inst_0/b3_SoW/b8_OFWNT9LR[135]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[22] iice_inst_0/b3_SoW/b8_OFWNT9LR[134]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[23] iice_inst_0/b3_SoW/b8_OFWNT9LR[133]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[24] iice_inst_0/b3_SoW/b8_OFWNT9LR[132]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[25] iice_inst_0/b3_SoW/b8_OFWNT9LR[131]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[26] iice_inst_0/b3_SoW/b8_OFWNT9LR[130]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[27] iice_inst_0/b3_SoW/b8_OFWNT9LR[129]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[28] iice_inst_0/b3_SoW/b8_OFWNT9LR[128]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[29] iice_inst_0/b3_SoW/b8_OFWNT9LR[127]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[0] iice_inst_0/b3_SoW/b8_OFWNT9LR[156]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[1] iice_inst_0/b3_SoW/b8_OFWNT9LR[155]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[2] iice_inst_0/b3_SoW/b8_OFWNT9LR[154]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[3] iice_inst_0/b3_SoW/b8_OFWNT9LR[153]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[4] iice_inst_0/b3_SoW/b8_OFWNT9LR[152]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[5] iice_inst_0/b3_SoW/b8_OFWNT9LR[151]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[6] iice_inst_0/b3_SoW/b8_OFWNT9LR[150]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[7] iice_inst_0/b3_SoW/b8_OFWNT9LR[149]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[8] iice_inst_0/b3_SoW/b8_OFWNT9LR[148]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[9] iice_inst_0/b3_SoW/b8_OFWNT9LR[147]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[10] iice_inst_0/b3_SoW/b8_OFWNT9LR[146]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[11] iice_inst_0/b3_SoW/b8_OFWNT9LR[145]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[12] iice_inst_0/b3_SoW/b8_OFWNT9LR[144]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[13] iice_inst_0/b3_SoW/b8_OFWNT9LR[143]
+vif_set_merge -original  iice_inst_0/b8_12m_IFLY/b4_PfFz/b7_PbTtl9G/b11_2ZAHB9rO9Xh[14] iice_inst_0/b3_SoW/b8_OFWNT9LR[142]
+vif_set_merge -original  SevenSegment/ControlOut_Temp[3] SevenSegment/ControlOut_Temp[0]
+
+# Technology sequential redundancies
+vif_set_equiv -translated SevenSegment/ControlOut_Temp_rep0_i_Z[3] SevenSegment/ControlOut_Temp_i_Z[3]
+
+# Inversion map points
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[6] -translated SevenSegment/ControlOut_Temp_i_Z[6]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[5] -translated SevenSegment/ControlOut_Temp_i_Z[5]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[4] -translated SevenSegment/ControlOut_Temp_i_Z[4]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[2] -translated SevenSegment/ControlOut_Temp_i_Z[2]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[1] -translated SevenSegment/ControlOut_Temp_i_Z[1]
+vif_set_map_point -register -inverted -original SevenSegment/ControlOut_Temp[3] -translated SevenSegment/ControlOut_Temp_rep0_i_Z[3]
+
+# Port mappping and directions
+
+# Black box mapping
+vif_set_black_box BSCAN_VIRTEX4
+
+vif_set_map_point -blackbox -original comm_block_inst/jtagi/jtag_prim1 -translated comm_block_inst/jtagi/jtag_prim1
+vif_set_map_point -blackbox -original comm_block_inst/jtagi/jtag_prim2 -translated comm_block_inst/jtagi/jtag_prim2
+
+# Other sequential cells, including multidimensional arrays
+
+# Constant Registers
+vif_set_constant -original 0 iice_inst_0/b8_12m_IFLY/b5_nUTGT/b3_nfs[1]
+vif_set_constant -original 0 SevenSegment/ControlOut_Temp[7]
+vif_set_constant -original -1 SevenSegment/Data_temp[30]
+vif_set_constant -original -1 SevenSegment/Data_temp[13]
+vif_set_constant -original -1 SevenSegment/Data_temp[18]
+vif_set_constant -original -1 SevenSegment/Data_temp[21]
+vif_set_constant -original -1 SevenSegment/Data_temp[24]
+vif_set_constant -original -1 SevenSegment/Data_temp[27]
+vif_set_constant -original -1 SevenSegment/Data_temp[28]
+vif_set_constant -original -1 SevenSegment/Data_temp[29]
+vif_set_constant -original -1 SevenSegment/Data_temp[0]
+vif_set_constant -original -1 SevenSegment/Data_temp[3]
+vif_set_constant -original -1 SevenSegment/Data_temp[4]
+vif_set_constant -original -1 SevenSegment/Data_temp[5]
+vif_set_constant -original -1 SevenSegment/Data_temp[6]
+vif_set_constant -original -1 SevenSegment/Data_temp[12]
+vif_set_constant -original -1 SevenSegment/Data_temp[14]
+vif_set_constant -original -1 SevenSegment/Data_temp[16]
+vif_set_constant -original -1 SevenSegment/Data_temp[17]
+vif_set_constant -original -1 SevenSegment/Data_temp[19]
+vif_set_constant -original -1 SevenSegment/Data_temp[20]
+vif_set_constant -original -1 SevenSegment/Data_temp[22]
+vif_set_constant -original -1 SevenSegment/Data_temp[25]
+vif_set_constant -original -1 SevenSegment/Data_temp[26]
+vif_set_constant -original -1 SevenSegment/Data_temp[1]
+vif_set_constant -original -1 SevenSegment/Data_temp[2]
+vif_set_constant -original -1 SevenSegment/Data_temp[8]
+vif_set_constant -original -1 SevenSegment/Data_temp[9]
+vif_set_constant -original -1 SevenSegment/Data_temp[10]
+vif_set_constant -original -1 SevenSegment/Data_temp[11]
+vif_set_constant -original -1 SevenSegment/Data_reg[11]
+vif_set_constant -original -1 SevenSegment/Data_reg[10]
+vif_set_constant -original -1 SevenSegment/Data_reg[9]
+vif_set_constant -original -1 SevenSegment/Data_reg[8]
+vif_set_constant -original -1 SevenSegment/Data_reg[2]
+vif_set_constant -original -1 SevenSegment/Data_reg[1]
+vif_set_constant -original -1 SevenSegment/Data_reg[26]
+vif_set_constant -original -1 SevenSegment/Data_reg[25]
+vif_set_constant -original -1 SevenSegment/Data_reg[22]
+vif_set_constant -original -1 SevenSegment/Data_reg[20]
+vif_set_constant -original -1 SevenSegment/Data_reg[19]
+vif_set_constant -original -1 SevenSegment/Data_reg[17]
+vif_set_constant -original -1 SevenSegment/Data_reg[16]
+vif_set_constant -original -1 SevenSegment/Data_reg[14]
+vif_set_constant -original -1 SevenSegment/Data_reg[12]
+vif_set_constant -original -1 SevenSegment/Data_reg[6]
+vif_set_constant -original -1 SevenSegment/Data_reg[5]
+vif_set_constant -original -1 SevenSegment/Data_reg[4]
+vif_set_constant -original -1 SevenSegment/Data_reg[3]
+vif_set_constant -original -1 SevenSegment/Data_reg[0]
+vif_set_constant -original -1 SevenSegment/Data_reg[29]
+vif_set_constant -original -1 SevenSegment/Data_reg[28]
+vif_set_constant -original -1 SevenSegment/Data_reg[27]
+vif_set_constant -original -1 SevenSegment/Data_reg[24]
+vif_set_constant -original -1 SevenSegment/Data_reg[21]
+vif_set_constant -original -1 SevenSegment/Data_reg[18]
+vif_set_constant -original -1 SevenSegment/Data_reg[13]
+vif_set_constant -original -1 SevenSegment/Data_reg[30]
+
+# Retimed Registers
+

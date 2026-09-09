@@ -1,0 +1,1414 @@
+--------------------------------------------------------------------------------
+Release 7.1.04i Trace H.42
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+
+C:/Xilinx/bin/nt/trce.exe -ise d:\etri_uwb\adk_pci_test\xilinx\ETRI_UWBFPGA.ise
+-intstyle ise -e 3 -l 3 -s 10 -xml ETRI_UWBFPGA ETRI_UWBFPGA.ncd -o
+ETRI_UWBFPGA.twr ETRI_UWBFPGA.pcf
+
+
+Design file:              etri_uwbfpga.ncd
+Physical constraint file: etri_uwbfpga.pcf
+Device,speed:             xc4vlx200,-10 (ADVANCED 1.57 2005-08-24, STEPPING level 1)
+Report level:             error report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths
+   option. All paths that are not constrained will be reported in the
+   unconstrained paths section(s) of the report.
+
+================================================================================
+Timing constraint: TS_comm_block_inst_jtagi_b10_8Kz_rKlrtX = PERIOD TIMEGRP
+        "comm_block_inst_jtagi_b10_8Kz_rKlrtX" 14.286 ns 
+HIGH 50%;
+
+ 0 items analyzed, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_comm_block_inst_jtagi_b7_oSD_3vW = PERIOD TIMEGRP
+        "comm_block_inst_jtagi_b7_oSD_3vW" 14.286 ns HIGH 
+50%;
+
+ 5 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Minimum period is   1.196ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_comm_block_inst_jtagi_b9_nv_oQwfYF_c = PERIOD TIMEGRP
+        "comm_block_inst_jtagi_b9_nv_oQwfYF_c" 14.286 ns 
+HIGH 50%;
+
+ 0 items analyzed, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_comm_block_inst_jtagi_identify_clk_tmp = PERIOD TIMEGRP
+        "comm_block_inst_jtagi_identify_clk_tmp" 
+14.286 ns HIGH 50%;
+
+ 7194 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Minimum period is  13.431ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_CLK100M_DDR_CLK_c = MAXDELAY FROM TIMEGRP "DDR_CLK_c" TO TIMEGRP "CLK100M"
+        14.286 ns;
+
+ 14242 items analyzed, 21 timing errors detected. (21 setup errors, 0 hold errors)
+ Maximum delay is  15.025ns.
+--------------------------------------------------------------------------------
+Slack:                  -0.739ns (requirement - data path)
+  Source:               Core/SMC/uAXI_interface/GeneratedAddr[28] (FF)
+  Destination:          ROM_ADDR[1] (PAD)
+  Requirement:          14.286ns
+  Data Path Delay:      15.025ns (Levels of Logic = 10)
+  Source Clock:         DDR_CLK_c rising at 0.000ns
+
+  Data Path: Core/SMC/uAXI_interface/GeneratedAddr[28] to ROM_ADDR[1]
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X118Y220.XQ    Tcko                  0.360   Core/SMC/GeneratedAddr[28]
+                                                       Core/SMC/uAXI_interface/GeneratedAddr[28]
+    SLICE_X101Y220.G3    net (fanout=12)       1.346   Core/SMC/GeneratedAddr[28]
+    SLICE_X101Y220.Y     Tilo                  0.194   Core.SMC.uSRAM_CTRL.N_2296_i
+                                                       Core/SMC/uAXI_interface/SMC_BANK_SEL48_0_a2
+    SLICE_X115Y221.G2    net (fanout=2)        0.759   Core/SMC/SMC_BANK_SEL[0]
+    SLICE_X115Y221.Y     Tilo                  0.194   Core/SMC/uSMC_REG/bank_reg_out15
+                                                       Core/SMC/uSMC_REG/bank_reg_out18_2
+    SLICE_X114Y218.G4    net (fanout=4)        0.367   Core/SMC/uSMC_REG/bank_reg_out15_2
+    SLICE_X114Y218.Y     Tilo                  0.195   Core/SMC/uSMC_REG/bank_reg_out_iv_1[19]
+                                                       Core/SMC/uSMC_REG/bank_reg_out18_4
+    SLICE_X114Y224.G4    net (fanout=18)       0.544   Core/SMC/uSMC_REG/bank_reg_out18_4
+    SLICE_X114Y224.Y     Tilo                  0.195   Core/SMC/un1_bank_reg_out18_1
+                                                       Core/SMC/uSMC_REG/un1_bank_reg_out18_1_3
+    SLICE_X114Y224.F4    net (fanout=1)        0.159   Core/SMC/uSMC_REG/un1_bank_reg_out18_1_3/O
+    SLICE_X114Y224.X     Tilo                  0.195   Core/SMC/un1_bank_reg_out18_1
+                                                       Core/SMC/uSMC_REG/un1_bank_reg_out18_1
+    SLICE_X57Y164.G4     net (fanout=18)       1.834   Core/SMC/un1_bank_reg_out18_1
+    SLICE_X57Y164.Y      Tilo                  0.194   Core/SMC/ADDR_SHIFT_i_0[0]
+                                                       Core/SMC/uSMC_REG/bank_reg_8__m[0]
+    SLICE_X57Y164.F3     net (fanout=1)        0.222   Core/SMC/uSMC_REG/bank_reg_8__m[0]/O
+    SLICE_X57Y164.X      Tilo                  0.194   Core/SMC/ADDR_SHIFT_i_0[0]
+                                                       Core/SMC/uSMC_REG/bank_reg_out_iv[0]
+    SLICE_X40Y153.G4     net (fanout=40)       0.957   Core/SMC/ADDR_SHIFT_i_0[0]
+    SLICE_X40Y153.Y      Tilo                  0.195   SMC_ADDR[1]
+                                                       Core/SMC/uSRAM_CTRL/EXT_ADDR_1_0_0[1]
+    SLICE_X40Y153.F3     net (fanout=1)        0.213   Core/SMC/uSRAM_CTRL/EXT_ADDR_1_0_0[1]/O
+    SLICE_X40Y153.X      Tilo                  0.195   SMC_ADDR[1]
+                                                       Core/SMC/uSRAM_CTRL/EXT_ADDR_3_0_0[1]
+    AU38.O               net (fanout=1)        2.906   SMC_ADDR[1]
+    AU38.PAD             Tioop                 3.607   ROM_ADDR[1]
+                                                       ROM_ADDR_obuf[1]
+                                                       ROM_ADDR[1]
+    -------------------------------------------------  ---------------------------
+    Total                                     15.025ns (5.718ns logic, 9.307ns route)
+                                                       (38.1% logic, 61.9% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -0.667ns (requirement - data path)
+  Source:               Core/SMC/uAXI_interface/GeneratedAddr[28] (FF)
+  Destination:          ROM_ADDR[1] (PAD)
+  Requirement:          14.286ns
+  Data Path Delay:      14.953ns (Levels of Logic = 9)
+  Source Clock:         DDR_CLK_c rising at 0.000ns
+
+  Data Path: Core/SMC/uAXI_interface/GeneratedAddr[28] to ROM_ADDR[1]
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X118Y220.XQ    Tcko                  0.360   Core/SMC/GeneratedAddr[28]
+                                                       Core/SMC/uAXI_interface/GeneratedAddr[28]
+    SLICE_X101Y220.G3    net (fanout=12)       1.346   Core/SMC/GeneratedAddr[28]
+    SLICE_X101Y220.Y     Tilo                  0.194   Core.SMC.uSRAM_CTRL.N_2296_i
+                                                       Core/SMC/uAXI_interface/SMC_BANK_SEL48_0_a2
+    SLICE_X115Y221.G2    net (fanout=2)        0.759   Core/SMC/SMC_BANK_SEL[0]
+    SLICE_X115Y221.Y     Tilo                  0.194   Core/SMC/uSMC_REG/bank_reg_out15
+                                                       Core/SMC/uSMC_REG/bank_reg_out18_2
+    SLICE_X113Y218.G4    net (fanout=4)        0.551   Core/SMC/uSMC_REG/bank_reg_out15_2
+    SLICE_X113Y218.Y     Tilo                  0.194   Core/SMC/uSMC_REG/bank_reg_out_iv_2[19]
+                                                       Core/SMC/uSMC_REG/bank_reg_out16
+    SLICE_X114Y224.F3    net (fanout=18)       0.643   Core/SMC/uSMC_REG/bank_reg_out16
+    SLICE_X114Y224.X     Tilo                  0.195   Core/SMC/un1_bank_reg_out18_1
+                                                       Core/SMC/uSMC_REG/un1_bank_reg_out18_1
+    SLICE_X57Y164.G4     net (fanout=18)       1.834   Core/SMC/un1_bank_reg_out18_1
+    SLICE_X57Y164.Y      Tilo                  0.194   Core/SMC/ADDR_SHIFT_i_0[0]
+                                                       Core/SMC/uSMC_REG/bank_reg_8__m[0]
+    SLICE_X57Y164.F3     net (fanout=1)        0.222   Core/SMC/uSMC_REG/bank_reg_8__m[0]/O
+    SLICE_X57Y164.X      Tilo                  0.194   Core/SMC/ADDR_SHIFT_i_0[0]
+                                                       Core/SMC/uSMC_REG/bank_reg_out_iv[0]
+    SLICE_X40Y153.G4     net (fanout=40)       0.957   Core/SMC/ADDR_SHIFT_i_0[0]
+    SLICE_X40Y153.Y      Tilo                  0.195   SMC_ADDR[1]
+                                                       Core/SMC/uSRAM_CTRL/EXT_ADDR_1_0_0[1]
+    SLICE_X40Y153.F3     net (fanout=1)        0.213   Core/SMC/uSRAM_CTRL/EXT_ADDR_1_0_0[1]/O
+    SLICE_X40Y153.X      Tilo                  0.195   SMC_ADDR[1]
+                                                       Core/SMC/uSRAM_CTRL/EXT_ADDR_3_0_0[1]
+    AU38.O               net (fanout=1)        2.906   SMC_ADDR[1]
+    AU38.PAD             Tioop                 3.607   ROM_ADDR[1]
+                                                       ROM_ADDR_obuf[1]
+                                                       ROM_ADDR[1]
+    -------------------------------------------------  ---------------------------
+    Total                                     14.953ns (5.522ns logic, 9.431ns route)
+                                                       (36.9% logic, 63.1% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -0.664ns (requirement - data path)
+  Source:               Core/SMC/uAXI_interface/GeneratedAddr[28] (FF)
+  Destination:          ROM_ADDR[1] (PAD)
+  Requirement:          14.286ns
+  Data Path Delay:      14.950ns (Levels of Logic = 9)
+  Source Clock:         DDR_CLK_c rising at 0.000ns
+
+  Data Path: Core/SMC/uAXI_interface/GeneratedAddr[28] to ROM_ADDR[1]
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X118Y220.XQ    Tcko                  0.360   Core/SMC/GeneratedAddr[28]
+                                                       Core/SMC/uAXI_interface/GeneratedAddr[28]
+    SLICE_X101Y220.G3    net (fanout=12)       1.346   Core/SMC/GeneratedAddr[28]
+    SLICE_X101Y220.Y     Tilo                  0.194   Core.SMC.uSRAM_CTRL.N_2296_i
+                                                       Core/SMC/uAXI_interface/SMC_BANK_SEL48_0_a2
+    SLICE_X115Y221.G2    net (fanout=2)        0.759   Core/SMC/SMC_BANK_SEL[0]
+    SLICE_X115Y221.Y     Tilo                  0.194   Core/SMC/uSMC_REG/bank_reg_out15
+                                                       Core/SMC/uSMC_REG/bank_reg_out18_2
+    SLICE_X114Y218.G4    net (fanout=4)        0.367   Core/SMC/uSMC_REG/bank_reg_out15_2
+    SLICE_X114Y218.Y     Tilo                  0.195   Core/SMC/uSMC_REG/bank_reg_out_iv_1[19]
+                                                       Core/SMC/uSMC_REG/bank_reg_out18_4
+    SLICE_X113Y216.F4    net (fanout=18)       0.568   Core/SMC/uSMC_REG/bank_reg_out18_4
+    SLICE_X113Y216.X     Tilo                  0.194   Core/SMC/uSMC_REG/bank_reg_7__m[0]
+                                                       Core/SMC/uSMC_REG/bank_reg_7__m[0]
+    SLICE_X110Y214.F2    net (fanout=1)        0.544   Core/SMC/uSMC_REG/bank_reg_7__m[0]
+    SLICE_X110Y214.X     Tilo                  0.195   Core/SMC/uSMC_REG/bank_reg_out_iv_3[0]
+                                                       Core/SMC/uSMC_REG/bank_reg_out_iv_3[0]
+    SLICE_X57Y164.F4     net (fanout=1)        1.767   Core/SMC/uSMC_REG/bank_reg_out_iv_3[0]
+    SLICE_X57Y164.X      Tilo                  0.194   Core/SMC/ADDR_SHIFT_i_0[0]
+                                                       Core/SMC/uSMC_REG/bank_reg_out_iv[0]
+    SLICE_X40Y153.G4     net (fanout=40)       0.957   Core/SMC/ADDR_SHIFT_i_0[0]
+    SLICE_X40Y153.Y      Tilo                  0.195   SMC_ADDR[1]
+                                                       Core/SMC/uSRAM_CTRL/EXT_ADDR_1_0_0[1]
+    SLICE_X40Y153.F3     net (fanout=1)        0.213   Core/SMC/uSRAM_CTRL/EXT_ADDR_1_0_0[1]/O
+    SLICE_X40Y153.X      Tilo                  0.195   SMC_ADDR[1]
+                                                       Core/SMC/uSRAM_CTRL/EXT_ADDR_3_0_0[1]
+    AU38.O               net (fanout=1)        2.906   SMC_ADDR[1]
+    AU38.PAD             Tioop                 3.607   ROM_ADDR[1]
+                                                       ROM_ADDR_obuf[1]
+                                                       ROM_ADDR[1]
+    -------------------------------------------------  ---------------------------
+    Total                                     14.950ns (5.523ns logic, 9.427ns route)
+                                                       (36.9% logic, 63.1% route)
+
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_ROM_ADDR_0__CLK50M = MAXDELAY FROM TIMEGRP "CLK50M" TO TIMEGRP
+        "ROM_ADDR_0_" 28.571 ns;
+
+ 796 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is  16.750ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_nRESET_DDR_CLK_c = MAXDELAY FROM TIMEGRP "nRESET" TO TIMEGRP "DDR_CLK_c"
+        14.286 ns;
+
+ 254707 items analyzed, 151 timing errors detected. (151 setup errors, 0 hold errors)
+ Maximum delay is  15.819ns.
+--------------------------------------------------------------------------------
+Slack:                  -1.533ns (requirement - data path)
+  Source:               BOOTNAND (PAD)
+  Destination:          Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/INFORMATION_0[0] (FF)
+  Requirement:          14.286ns
+  Data Path Delay:      15.819ns (Levels of Logic = 14)
+  Destination Clock:    DDR_CLK_c rising at 0.000ns
+
+  Data Path: BOOTNAND to Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/INFORMATION_0[0]
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    AL19.I               Tiopi                 0.936   BOOTNAND
+                                                       BOOTNAND
+                                                       BOOTNAND_ibuf
+    SLICE_X156Y181.G3    net (fanout=37)       2.567   BOOTNAND_c
+    SLICE_X156Y181.Y     Tilo                  0.195   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/ID0SlaveBuffer[2]
+                                                       Core/SBUS/SBUS_WriteChannel/m13
+    SLICE_X161Y181.F3    net (fanout=3)        0.455   Core/SBUS/SBUS_WriteChannel/N_14
+    SLICE_X161Y181.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/ID0SlaveBuffer[3]
+                                                       Core/SBUS/SBUS_WriteChannel/m21_0_0
+    SLICE_X160Y185.G1    net (fanout=2)        0.584   Core/SBUS/SBUS_WriteChannel/m21_0_0
+    SLICE_X160Y185.Y     Tilo                  0.195   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/N_37
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/un1_SlaveNum_1_NE_0
+    SLICE_X160Y185.F3    net (fanout=1)        0.213   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/un1_SlaveNum_1_NE_0/O
+    SLICE_X160Y185.X     Tilo                  0.195   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/N_37
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/un1_SlaveNum_1_NE
+    SLICE_X161Y189.F2    net (fanout=3)        0.539   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/N_37
+    SLICE_X161Y189.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_0[0]
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_0[0]
+    SLICE_X159Y201.G4    net (fanout=8)        0.777   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_0[0]
+    SLICE_X159Y201.Y     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/AWVALIDsi22mi[2]
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_1[6]
+    SLICE_X155Y212.G2    net (fanout=3)        0.776   Core/SBUS/SBUS_WriteChannel/AWVALIDsi22mi_1[6]
+    SLICE_X155Y212.XMUX  Tif5x                 0.574   Core/SBUS/N_453
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/r0_SMC_WriteChannelmi.AWVALIDmi2s_2_0_0_am
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/r0_SMC_WriteChannelmi.AWVALIDmi2s_2_0_0
+    SLICE_X153Y215.F4    net (fanout=6)        0.780   Core/SBUS/N_453
+    SLICE_X153Y215.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/N_1199
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/SMC_WriteChannelmi/WENn_i_i_m3_0_0
+    SLICE_X149Y203.F4    net (fanout=6)        0.800   Core/SBUS/SBUS_WriteChannel/N_1199
+    SLICE_X149Y203.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/WREADYmi62si_1[2]
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/SMC_WriteChannelmi/WREADYmi2si_2_m_0_a2_1[2]
+    SLICE_X164Y190.G4    net (fanout=1)        0.844   Core/SBUS/SBUS_WriteChannel/WREADYmi62si_1[2]
+    SLICE_X164Y190.F5    Tif5                  0.459   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/N_4540
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/WREADYsi2m_6_i_m2_0_0_am
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/WREADYsi2m_6_i_m2_0_0
+    SLICE_X164Y190.FXINA net (fanout=1)        0.000   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/N_4540
+    SLICE_X164Y190.YMUX  Tif6y                 0.395   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/N_4540
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/WREADYsi2m_7_i_m2_0_0
+    SLICE_X167Y184.F3    net (fanout=3)        0.675   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/N_4541
+    SLICE_X167Y184.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/N_2473
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0_o2[0]
+    SLICE_X172Y158.F4    net (fanout=4)        1.043   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/N_2473
+    SLICE_X172Y158.X     Tilo                  0.195   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0_2[0]
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0[0]
+    SLICE_X170Y172.CE    net (fanout=19)       0.904   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0_2[0]
+    SLICE_X170Y172.CLK   Tceck                 0.554   Core/SBUS/SBUS_WriteChannel/w0WLASTm2si
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/INFORMATION_0[0]
+    -------------------------------------------------  ---------------------------
+    Total                                     15.819ns (4.862ns logic, 10.957ns route)
+                                                       (30.7% logic, 69.3% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -1.503ns (requirement - data path)
+  Source:               BOOTNAND (PAD)
+  Destination:          Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/INFORMATION_0[0] (FF)
+  Requirement:          14.286ns
+  Data Path Delay:      15.789ns (Levels of Logic = 14)
+  Destination Clock:    DDR_CLK_c rising at 0.000ns
+
+  Data Path: BOOTNAND to Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/INFORMATION_0[0]
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    AL19.I               Tiopi                 0.936   BOOTNAND
+                                                       BOOTNAND
+                                                       BOOTNAND_ibuf
+    SLICE_X154Y181.G3    net (fanout=37)       2.624   BOOTNAND_c
+    SLICE_X154Y181.Y     Tilo                  0.195   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/ID0SlaveBuffer[1]
+                                                       Core/SBUS/SBUS_WriteChannel/m15_0_0
+    SLICE_X154Y181.F3    net (fanout=1)        0.213   Core/SBUS/SBUS_WriteChannel/m15_0_0/O
+    SLICE_X154Y181.X     Tilo                  0.195   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/ID0SlaveBuffer[1]
+                                                       Core/SBUS/SBUS_WriteChannel/m17_0_0
+    SLICE_X161Y184.F4    net (fanout=3)        0.630   Core/SBUS/SBUS_WriteChannel/SlaveNum[1]
+    SLICE_X161Y184.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/N_112_i_0
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/un1_SlaveNum_1_1_0_x2
+    SLICE_X160Y185.F4    net (fanout=1)        0.322   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/N_112_i_0
+    SLICE_X160Y185.X     Tilo                  0.195   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/N_37
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/un1_SlaveNum_1_NE
+    SLICE_X161Y189.F2    net (fanout=3)        0.539   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/N_37
+    SLICE_X161Y189.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_0[0]
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_0[0]
+    SLICE_X159Y201.G4    net (fanout=8)        0.777   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_0[0]
+    SLICE_X159Y201.Y     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/AWVALIDsi22mi[2]
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_1[6]
+    SLICE_X155Y212.G2    net (fanout=3)        0.776   Core/SBUS/SBUS_WriteChannel/AWVALIDsi22mi_1[6]
+    SLICE_X155Y212.XMUX  Tif5x                 0.574   Core/SBUS/N_453
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/r0_SMC_WriteChannelmi.AWVALIDmi2s_2_0_0_am
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/r0_SMC_WriteChannelmi.AWVALIDmi2s_2_0_0
+    SLICE_X153Y215.F4    net (fanout=6)        0.780   Core/SBUS/N_453
+    SLICE_X153Y215.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/N_1199
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/SMC_WriteChannelmi/WENn_i_i_m3_0_0
+    SLICE_X149Y203.F4    net (fanout=6)        0.800   Core/SBUS/SBUS_WriteChannel/N_1199
+    SLICE_X149Y203.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/WREADYmi62si_1[2]
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/SMC_WriteChannelmi/WREADYmi2si_2_m_0_a2_1[2]
+    SLICE_X164Y190.G4    net (fanout=1)        0.844   Core/SBUS/SBUS_WriteChannel/WREADYmi62si_1[2]
+    SLICE_X164Y190.F5    Tif5                  0.459   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/N_4540
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/WREADYsi2m_6_i_m2_0_0_am
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/WREADYsi2m_6_i_m2_0_0
+    SLICE_X164Y190.FXINA net (fanout=1)        0.000   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/N_4540
+    SLICE_X164Y190.YMUX  Tif6y                 0.395   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/N_4540
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/WREADYsi2m_7_i_m2_0_0
+    SLICE_X167Y184.F3    net (fanout=3)        0.675   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/N_4541
+    SLICE_X167Y184.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/N_2473
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0_o2[0]
+    SLICE_X172Y158.F4    net (fanout=4)        1.043   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/N_2473
+    SLICE_X172Y158.X     Tilo                  0.195   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0_2[0]
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0[0]
+    SLICE_X170Y172.CE    net (fanout=19)       0.904   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0_2[0]
+    SLICE_X170Y172.CLK   Tceck                 0.554   Core/SBUS/SBUS_WriteChannel/w0WLASTm2si
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/INFORMATION_0[0]
+    -------------------------------------------------  ---------------------------
+    Total                                     15.789ns (4.862ns logic, 10.927ns route)
+                                                       (30.8% logic, 69.2% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -1.482ns (requirement - data path)
+  Source:               BOOTNAND (PAD)
+  Destination:          Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/INFORMATION_0[0] (FF)
+  Requirement:          14.286ns
+  Data Path Delay:      15.768ns (Levels of Logic = 14)
+  Destination Clock:    DDR_CLK_c rising at 0.000ns
+
+  Data Path: BOOTNAND to Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/INFORMATION_0[0]
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    AL19.I               Tiopi                 0.936   BOOTNAND
+                                                       BOOTNAND
+                                                       BOOTNAND_ibuf
+    SLICE_X155Y180.G4    net (fanout=37)       2.593   BOOTNAND_c
+    SLICE_X155Y180.Y     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/ID0SlaveBuffer[0]
+                                                       Core/SBUS/SBUS_WriteChannel/m8
+    SLICE_X155Y180.F3    net (fanout=1)        0.222   Core/SBUS/SBUS_WriteChannel/m8/O
+    SLICE_X155Y180.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/ID0SlaveBuffer[0]
+                                                       Core/SBUS/SBUS_WriteChannel/m12
+    SLICE_X160Y180.G2    net (fanout=3)        0.728   Core/SBUS/SBUS_WriteChannel/SlaveNum[0]
+    SLICE_X160Y180.Y     Tilo                  0.195   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/CtlData2datach[0]
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/un1_SlaveNum_NE_0
+    SLICE_X161Y189.G3    net (fanout=2)        0.598   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/un1_SlaveNum_NE_0
+    SLICE_X161Y189.Y     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_0[0]
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/U0PermitCtl/un2_CtlData2writech_i_1
+    SLICE_X161Y189.F4    net (fanout=2)        0.168   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/un2_CtlData2writech_i_1
+    SLICE_X161Y189.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_0[0]
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_0[0]
+    SLICE_X159Y201.G4    net (fanout=8)        0.777   Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_0[0]
+    SLICE_X159Y201.Y     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/AWVALIDsi22mi[2]
+                                                       Core/SBUS/SBUS_WriteChannel/DMAC_RS_WriteChannelsi/DMAC_WriteChannelsi/AWVALIDsi2mi_0_a2_1[6]
+    SLICE_X155Y212.G2    net (fanout=3)        0.776   Core/SBUS/SBUS_WriteChannel/AWVALIDsi22mi_1[6]
+    SLICE_X155Y212.XMUX  Tif5x                 0.574   Core/SBUS/N_453
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/r0_SMC_WriteChannelmi.AWVALIDmi2s_2_0_0_am
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/r0_SMC_WriteChannelmi.AWVALIDmi2s_2_0_0
+    SLICE_X153Y215.F4    net (fanout=6)        0.780   Core/SBUS/N_453
+    SLICE_X153Y215.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/N_1199
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/SMC_WriteChannelmi/WENn_i_i_m3_0_0
+    SLICE_X149Y203.F4    net (fanout=6)        0.800   Core/SBUS/SBUS_WriteChannel/N_1199
+    SLICE_X149Y203.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/WREADYmi62si_1[2]
+                                                       Core/SBUS/SBUS_WriteChannel/SMC_RS_WriteChannelmi/SMC_WriteChannelmi/WREADYmi2si_2_m_0_a2_1[2]
+    SLICE_X164Y190.G4    net (fanout=1)        0.844   Core/SBUS/SBUS_WriteChannel/WREADYmi62si_1[2]
+    SLICE_X164Y190.F5    Tif5                  0.459   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/N_4540
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/WREADYsi2m_6_i_m2_0_0_am
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/WREADYsi2m_6_i_m2_0_0
+    SLICE_X164Y190.FXINA net (fanout=1)        0.000   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/N_4540
+    SLICE_X164Y190.YMUX  Tif6y                 0.395   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/N_4540
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_WriteChannelsi/WREADYsi2m_7_i_m2_0_0
+    SLICE_X167Y184.F3    net (fanout=3)        0.675   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/N_4541
+    SLICE_X167Y184.X     Tilo                  0.194   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/N_2473
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0_o2[0]
+    SLICE_X172Y158.F4    net (fanout=4)        1.043   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/N_2473
+    SLICE_X172Y158.X     Tilo                  0.195   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0_2[0]
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0[0]
+    SLICE_X170Y172.CE    net (fanout=19)       0.904   Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/un1_que_len_2_0_2[0]
+    SLICE_X170Y172.CLK   Tceck                 0.554   Core/SBUS/SBUS_WriteChannel/w0WLASTm2si
+                                                       Core/SBUS/SBUS_WriteChannel/ARMD_RS_WriteChannelsi/ARMD_0_WDSIm2si_registered/INFORMATION_0[0]
+    -------------------------------------------------  ---------------------------
+    Total                                     15.768ns (4.860ns logic, 10.908ns route)
+                                                       (30.8% logic, 69.2% route)
+
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_DDR_DQ_0__0_DDR_DQSI_0_ = MAXDELAY FROM TIMEGRP "DDR_DQ_0__0" TO TIMEGRP
+        "DDR_DQSI_0_" 7.143 ns;
+
+ 8 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   4.828ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_DDR_DQ_8__DDR_DQSI_1_ = MAXDELAY FROM TIMEGRP "DDR_DQ_8_" TO TIMEGRP
+        "DDR_DQSI_1_" 7.143 ns;
+
+ 8 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   4.628ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_UART_RXD_0__CLK50M = MAXDELAY FROM TIMEGRP "UART_RXD_0_" TO TIMEGRP
+        "CLK50M" 28.571 ns;
+
+ 54 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   7.054ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_CLK = PERIOD TIMEGRP "CLK" 19 ns HIGH 50%;
+
+ 96 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Minimum period is  10.068ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_CLK200M = PERIOD TIMEGRP "CLK200M" TS_CLK * 0.5 HIGH 50%;
+
+ 0 items analyzed, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_CLK50M = PERIOD TIMEGRP "CLK50M" TS_CLK * 2 HIGH 50%;
+
+ 0 items analyzed, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_DDR_CLK_c = PERIOD TIMEGRP "DDR_CLK_c" TS_CLK HIGH 50%;
+
+ 0 items analyzed, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_CLK33M = PERIOD TIMEGRP "CLK33M" 30.303 ns HIGH 50%;
+
+ 152288 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Minimum period is  15.698ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_DDR_DQSI_1_ = PERIOD TIMEGRP "DDR_DQSI_1_" 9.5 ns HIGH 50%;
+
+ 0 items analyzed, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_DDR_DQSI_0_ = PERIOD TIMEGRP "DDR_DQSI_0_" TS_DDR_DQSI_1_ HIGH 50%;
+
+ 0 items analyzed, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_DDR_DQ_0__CLK200M = MAXDELAY FROM TIMEGRP "CLK200M" TO TIMEGRP "DDR_DQ_0_"
+        9.5 ns;
+
+ 39 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   7.278ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_PLL_CLK2X_BUF = PERIOD TIMEGRP "PLL_CLK2X_BUF" TS_CLK / 2 HIGH 50%;
+
+ 1744 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Minimum period is   5.738ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_PLL_CLK0_BUF = PERIOD TIMEGRP "PLL_CLK0_BUF" TS_CLK HIGH 50%;
+
+ 968118034 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Minimum period is  18.831ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_PLL_CLKDV_BUF = PERIOD TIMEGRP "PLL_CLKDV_BUF" TS_CLK * 2 HIGH 50%;
+
+ 317090 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Minimum period is  26.602ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: OFFSET = OUT 30.303 ns AFTER COMP "CLK33M";
+
+ 77 items analyzed, 0 timing errors detected.
+ Minimum allowable offset is  15.118ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: OFFSET = OUT 14.286 ns AFTER COMP "CLK";
+
+ 1 item analyzed, 0 timing errors detected.
+ Minimum allowable offset is  13.410ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: OFFSET = IN 14.286 ns BEFORE COMP "CLK";
+
+ 176 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Minimum allowable offset is   7.001ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: OFFSET = IN 30.303 ns BEFORE COMP "CLK33M";
+
+ 2483 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Minimum allowable offset is   5.432ns.
+--------------------------------------------------------------------------------
+
+
+2 constraints not met.
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Setup/Hold to clock CLK
+-------------+------------+------------+------------------+--------+
+             |  Setup to  |  Hold to   |                  |  Clock |
+Source       | clk (edge) | clk (edge) |Internal Clock(s) |  Phase |
+-------------+------------+------------+------------------+--------+
+ARMICE_TCK   |    4.591(R)|   -3.893(R)|DDR_CLK_c         |   0.000|
+ARMICE_TDI   |    4.666(R)|   -3.965(R)|DDR_CLK_c         |   0.000|
+ARMICE_TMS   |    4.661(R)|   -3.959(R)|DDR_CLK_c         |   0.000|
+BOOTNAND     |    3.559(R)|    1.843(R)|CLKIN_IBUFG_INST  |   0.000|
+             |   15.993(R)|   -3.462(R)|DDR_CLK_c         |   0.000|
+GPIO0[20]    |    3.401(R)|   -0.600(R)|CLK50M            |   0.000|
+GPIO0[21]    |    3.935(R)|   -0.593(R)|CLK50M            |   0.000|
+GPIO0[22]    |    3.701(R)|   -0.603(R)|CLK50M            |   0.000|
+GPIO0[23]    |    3.698(R)|   -0.595(R)|CLK50M            |   0.000|
+GPIO0[24]    |    6.777(R)|   -1.251(R)|CLK50M            |   0.000|
+GPIO0[25]    |    5.827(R)|   -1.251(R)|CLK50M            |   0.000|
+GPIO0[26]    |    6.235(R)|   -1.243(R)|CLK50M            |   0.000|
+GPIO0[27]    |    7.414(R)|   -1.243(R)|CLK50M            |   0.000|
+GPIO0[28]    |    4.175(R)|   -0.604(R)|CLK50M            |   0.000|
+GPIO0[29]    |    3.713(R)|   -0.645(R)|CLK50M            |   0.000|
+GPIO0[30]    |    6.033(R)|   -1.677(R)|CLK50M            |   0.000|
+GPIO0[31]    |    5.582(R)|   -1.683(R)|CLK50M            |   0.000|
+GPIO1[0]     |    4.979(R)|   -1.709(R)|CLK50M            |   0.000|
+GPIO1[1]     |    4.989(R)|   -1.707(R)|CLK50M            |   0.000|
+GPIO1[2]     |    5.613(R)|   -0.341(R)|CLK50M            |   0.000|
+GPIO1[3]     |    5.247(R)|   -0.344(R)|CLK50M            |   0.000|
+GPIO1[4]     |    4.212(R)|   -1.474(R)|CLK50M            |   0.000|
+GPIO1[5]     |    4.089(R)|   -1.486(R)|CLK50M            |   0.000|
+GPIO1[6]     |    5.134(R)|   -0.381(R)|CLK50M            |   0.000|
+GPIO1[7]     |    4.989(R)|   -0.363(R)|CLK50M            |   0.000|
+HADDR_M0[0]  |    5.160(R)|   -4.050(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[10] |    4.017(R)|   -3.184(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[11] |    4.239(R)|   -3.387(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[12] |    3.597(R)|   -2.815(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[13] |    3.602(R)|   -2.818(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[14] |    3.598(R)|   -2.799(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[15] |    3.837(R)|   -3.019(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[16] |    3.941(R)|   -3.120(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[17] |    3.604(R)|   -2.810(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[18] |    4.304(R)|   -3.460(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[19] |    3.863(R)|   -3.053(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[1]  |    5.160(R)|   -4.209(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[20] |    3.987(R)|   -3.170(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[21] |    4.038(R)|   -3.216(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[22] |    3.776(R)|   -2.959(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[23] |    3.974(R)|   -3.139(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[24] |    4.072(R)|   -3.259(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[25] |    4.106(R)|   -3.289(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[26] |    4.354(R)|   -3.530(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[27] |    4.548(R)|   -3.707(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[28] |    4.364(R)|   -3.522(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[29] |    4.368(R)|   -3.524(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[2]  |    4.240(R)|   -3.385(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[30] |    5.083(R)|   -4.203(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[31] |    5.096(R)|   -4.213(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[3]  |    4.187(R)|   -3.335(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[4]  |    4.452(R)|   -3.579(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[5]  |    4.444(R)|   -3.571(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[6]  |    4.033(R)|   -3.202(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[7]  |    4.157(R)|   -3.315(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[8]  |    4.412(R)|   -3.564(R)|DDR_CLK_c         |   0.000|
+HADDR_M0[9]  |    4.447(R)|   -3.594(R)|DDR_CLK_c         |   0.000|
+HBURST_M0[0] |    5.311(R)|   -4.414(R)|DDR_CLK_c         |   0.000|
+HBURST_M0[1] |    5.530(R)|   -4.451(R)|DDR_CLK_c         |   0.000|
+HBURST_M0[2] |    6.092(R)|   -4.470(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[0] |    5.640(R)|   -4.084(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[10]|    4.471(R)|   -3.214(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[11]|    4.415(R)|   -3.224(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[12]|    4.426(R)|   -2.991(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[13]|    4.939(R)|   -2.985(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[14]|    4.757(R)|   -3.662(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[15]|    4.723(R)|   -3.167(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[16]|    4.795(R)|   -2.974(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[17]|    4.723(R)|   -2.960(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[18]|    4.585(R)|   -2.955(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[19]|    4.523(R)|   -2.964(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[1] |    5.236(R)|   -3.211(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[20]|    4.832(R)|   -2.979(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[21]|    4.620(R)|   -3.179(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[22]|    4.168(R)|   -2.922(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[23]|    4.304(R)|   -3.038(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[24]|    4.974(R)|   -3.008(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[25]|    4.784(R)|   -3.400(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[26]|    4.517(R)|   -3.485(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[27]|    4.379(R)|   -3.193(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[28]|    4.498(R)|   -3.223(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[29]|    4.775(R)|   -2.967(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[2] |    4.237(R)|   -3.202(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[30]|    4.445(R)|   -2.953(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[31]|    4.214(R)|   -3.407(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[3] |    4.690(R)|   -3.151(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[4] |    4.784(R)|   -2.989(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[5] |    4.479(R)|   -3.616(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[6] |    3.971(R)|   -3.187(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[7] |    5.116(R)|   -3.440(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[8] |    4.779(R)|   -2.972(R)|DDR_CLK_c         |   0.000|
+HRDATA_S0[9] |    4.567(R)|   -3.359(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[0] |    8.121(R)|   -5.412(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[10]|    5.364(R)|   -3.993(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[11]|    5.520(R)|   -4.418(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[12]|    5.514(R)|   -4.225(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[13]|    6.091(R)|   -4.198(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[14]|    5.461(R)|   -4.151(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[15]|    5.831(R)|   -4.251(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[16]|    5.892(R)|   -4.007(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[17]|    6.295(R)|   -4.575(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[18]|    5.986(R)|   -4.331(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[19]|    5.707(R)|   -4.223(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[1] |    6.295(R)|   -4.564(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[20]|    5.250(R)|   -4.053(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[21]|    5.225(R)|   -4.180(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[22]|    5.615(R)|   -4.401(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[23]|    5.723(R)|   -4.413(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[24]|    6.099(R)|   -4.678(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[25]|    5.818(R)|   -4.289(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[26]|    5.705(R)|   -4.400(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[27]|    5.720(R)|   -4.699(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[28]|    5.653(R)|   -4.522(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[29]|    6.245(R)|   -4.255(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[2] |    5.189(R)|   -4.103(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[30]|    7.764(R)|   -4.244(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[31]|    8.978(R)|   -6.748(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[3] |    5.715(R)|   -4.014(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[4] |    5.138(R)|   -4.032(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[5] |    5.532(R)|   -4.565(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[6] |    5.379(R)|   -4.301(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[7] |    5.481(R)|   -4.244(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[8] |    5.527(R)|   -4.528(R)|DDR_CLK_c         |   0.000|
+HRDATA_S1[9] |    5.401(R)|   -3.992(R)|DDR_CLK_c         |   0.000|
+HREADY_IN_S0 |    8.639(R)|   -3.445(R)|DDR_CLK_c         |   0.000|
+HREADY_IN_S1 |   13.804(R)|   -5.637(R)|DDR_CLK_c         |   0.000|
+HRESP_S0[0]  |    8.844(R)|   -3.000(R)|DDR_CLK_c         |   0.000|
+HRESP_S0[1]  |    8.995(R)|   -3.347(R)|DDR_CLK_c         |   0.000|
+HRESP_S1[0]  |   13.482(R)|   -5.567(R)|DDR_CLK_c         |   0.000|
+HRESP_S1[1]  |   13.425(R)|   -5.214(R)|DDR_CLK_c         |   0.000|
+HSIZE_M0[0]  |    1.641(R)|   -0.942(R)|DDR_CLK_c         |   0.000|
+HSIZE_M0[1]  |    1.932(R)|   -1.211(R)|DDR_CLK_c         |   0.000|
+HSIZE_M0[2]  |    4.920(R)|   -4.033(R)|DDR_CLK_c         |   0.000|
+HTRANS_M0[0] |   11.521(R)|   -3.611(R)|DDR_CLK_c         |   0.000|
+HTRANS_M0[1] |   13.389(R)|   -4.549(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[0] |    3.929(R)|   -2.991(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[10]|    3.582(R)|   -2.803(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[11]|    3.801(R)|   -2.807(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[12]|    4.353(R)|   -3.085(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[13]|    3.810(R)|   -2.836(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[14]|    3.924(R)|   -2.999(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[15]|    3.748(R)|   -2.827(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[16]|    4.046(R)|   -2.859(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[17]|    3.994(R)|   -2.826(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[18]|    4.197(R)|   -2.974(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[19]|    3.683(R)|   -2.844(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[1] |    4.440(R)|   -2.349(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[20]|    3.998(R)|   -3.147(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[21]|    4.353(R)|   -3.080(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[22]|    4.344(R)|   -3.176(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[23]|    3.953(R)|   -3.111(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[24]|    4.091(R)|   -3.143(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[25]|    3.933(R)|   -3.034(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[26]|    4.336(R)|   -3.022(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[27]|    4.147(R)|   -3.303(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[28]|    4.087(R)|   -3.268(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[29]|    3.976(R)|   -2.896(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[2] |    3.535(R)|   -2.354(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[30]|    4.044(R)|   -3.070(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[31]|    3.977(R)|   -3.116(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[3] |    3.493(R)|   -2.493(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[4] |    3.673(R)|   -2.523(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[5] |    4.071(R)|   -2.972(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[6] |    3.870(R)|   -2.803(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[7] |    3.847(R)|   -2.809(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[8] |    3.883(R)|   -2.975(R)|DDR_CLK_c         |   0.000|
+HWDATA_M0[9] |    3.955(R)|   -2.629(R)|DDR_CLK_c         |   0.000|
+HWRITE_M0    |    6.292(R)|   -4.488(R)|DDR_CLK_c         |   0.000|
+I2C_SCLi     |    2.311(R)|   -1.601(R)|CLK50M            |   0.000|
+I2C_SDAi     |    3.422(R)|   -2.407(R)|CLK50M            |   0.000|
+I2S_BCLK_I   |    2.534(R)|   -1.816(R)|CLK50M            |   0.000|
+I2S_LRCLK_I  |    2.467(R)|   -1.753(R)|CLK50M            |   0.000|
+I2S_SDIN     |    2.055(R)|   -1.374(R)|CLK50M            |   0.000|
+MacIntSrc[0] |    5.562(R)|   -4.748(R)|DDR_CLK_c         |   0.000|
+MacIntSrc[1] |    3.961(R)|   -3.162(R)|DDR_CLK_c         |   0.000|
+NF_IO[0]     |    6.295(R)|   -0.376(R)|DDR_CLK_c         |   0.000|
+NF_IO[1]     |    6.293(R)|   -0.360(R)|DDR_CLK_c         |   0.000|
+NF_IO[2]     |    6.426(R)|   -0.367(R)|DDR_CLK_c         |   0.000|
+NF_IO[3]     |    6.271(R)|   -0.355(R)|DDR_CLK_c         |   0.000|
+NF_IO[4]     |    6.497(R)|   -0.370(R)|DDR_CLK_c         |   0.000|
+NF_IO[5]     |    5.975(R)|   -0.358(R)|DDR_CLK_c         |   0.000|
+NF_IO[6]     |    5.806(R)|   -0.352(R)|DDR_CLK_c         |   0.000|
+NF_IO[7]     |    5.865(R)|   -0.326(R)|DDR_CLK_c         |   0.000|
+NF_RnB0      |    3.206(R)|   -1.533(R)|DDR_CLK_c         |   0.000|
+PCI_INTAb    |    4.047(R)|   -2.268(R)|DDR_CLK_c         |   0.000|
+PCI_INTBb    |    2.826(R)|   -1.961(R)|DDR_CLK_c         |   0.000|
+PCI_INTCb    |    2.938(R)|   -2.077(R)|DDR_CLK_c         |   0.000|
+PCI_INTDb    |    6.270(R)|   -4.594(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[0]  |    6.711(R)|   -4.419(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[10] |    7.201(R)|   -4.833(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[11] |    7.930(R)|   -4.346(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[12] |    6.551(R)|   -4.502(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[13] |    7.000(R)|   -4.798(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[14] |    6.977(R)|   -4.898(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[15] |    7.427(R)|   -4.545(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[1]  |    6.860(R)|   -4.462(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[2]  |    6.843(R)|   -4.078(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[3]  |    7.679(R)|   -4.352(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[4]  |    6.343(R)|   -4.323(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[5]  |    6.668(R)|   -4.262(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[6]  |    7.137(R)|   -4.000(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[7]  |    7.308(R)|   -4.655(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[8]  |    6.715(R)|   -4.388(R)|DDR_CLK_c         |   0.000|
+ROM_DATA[9]  |    6.506(R)|   -4.193(R)|DDR_CLK_c         |   0.000|
+SPI_SDI      |    3.264(R)|   -2.433(R)|CLK50M            |   0.000|
+UART_RXD[0]  |    3.152(R)|   -1.510(R)|CLK50M            |   0.000|
+UART_RXD[1]  |    3.355(R)|   -1.904(R)|CLK50M            |   0.000|
+adin[0]      |    2.021(R)|   -1.302(R)|DDR_CLK_c         |   0.000|
+adin[10]     |    3.038(R)|   -2.239(R)|DDR_CLK_c         |   0.000|
+adin[11]     |    2.847(R)|   -2.071(R)|DDR_CLK_c         |   0.000|
+adin[12]     |    3.252(R)|   -2.445(R)|DDR_CLK_c         |   0.000|
+adin[13]     |    2.879(R)|   -2.097(R)|DDR_CLK_c         |   0.000|
+adin[14]     |    3.013(R)|   -2.221(R)|DDR_CLK_c         |   0.000|
+adin[15]     |    3.122(R)|   -2.316(R)|DDR_CLK_c         |   0.000|
+adin[16]     |    3.313(R)|   -2.493(R)|DDR_CLK_c         |   0.000|
+adin[17]     |    2.902(R)|   -2.113(R)|DDR_CLK_c         |   0.000|
+adin[18]     |    2.937(R)|   -2.147(R)|DDR_CLK_c         |   0.000|
+adin[19]     |    2.854(R)|   -2.070(R)|DDR_CLK_c         |   0.000|
+adin[1]      |    2.448(R)|   -1.696(R)|DDR_CLK_c         |   0.000|
+adin[20]     |    3.109(R)|   -2.301(R)|DDR_CLK_c         |   0.000|
+adin[21]     |    3.044(R)|   -2.240(R)|DDR_CLK_c         |   0.000|
+adin[22]     |    3.147(R)|   -2.335(R)|DDR_CLK_c         |   0.000|
+adin[23]     |    2.717(R)|   -1.958(R)|DDR_CLK_c         |   0.000|
+adin[24]     |    3.140(R)|   -2.348(R)|DDR_CLK_c         |   0.000|
+adin[25]     |    2.077(R)|   -1.368(R)|DDR_CLK_c         |   0.000|
+adin[26]     |    2.775(R)|   -2.011(R)|DDR_CLK_c         |   0.000|
+adin[27]     |    2.240(R)|   -1.519(R)|DDR_CLK_c         |   0.000|
+adin[28]     |    2.362(R)|   -1.631(R)|DDR_CLK_c         |   0.000|
+adin[29]     |    2.285(R)|   -1.559(R)|DDR_CLK_c         |   0.000|
+adin[2]      |    2.278(R)|   -1.539(R)|DDR_CLK_c         |   0.000|
+adin[30]     |    2.326(R)|   -1.599(R)|DDR_CLK_c         |   0.000|
+adin[31]     |    3.258(R)|   -2.505(R)|DDR_CLK_c         |   0.000|
+adin[3]      |    2.700(R)|   -1.923(R)|DDR_CLK_c         |   0.000|
+adin[4]      |    2.892(R)|   -2.101(R)|DDR_CLK_c         |   0.000|
+adin[5]      |    2.752(R)|   -1.983(R)|DDR_CLK_c         |   0.000|
+adin[6]      |    2.845(R)|   -2.067(R)|DDR_CLK_c         |   0.000|
+adin[7]      |    2.915(R)|   -2.127(R)|DDR_CLK_c         |   0.000|
+adin[8]      |    2.548(R)|   -1.788(R)|DDR_CLK_c         |   0.000|
+adin[9]      |    2.757(R)|   -1.981(R)|DDR_CLK_c         |   0.000|
+arb_req_b[1] |    2.823(R)|   -2.008(R)|DDR_CLK_c         |   0.000|
+arb_req_b[2] |    2.662(R)|   -1.862(R)|DDR_CLK_c         |   0.000|
+arb_req_b[3] |    2.854(R)|   -2.041(R)|DDR_CLK_c         |   0.000|
+arb_req_b[4] |    3.029(R)|   -2.203(R)|DDR_CLK_c         |   0.000|
+cbein_b[0]   |    2.409(R)|   -1.639(R)|DDR_CLK_c         |   0.000|
+cbein_b[1]   |    2.224(R)|   -1.468(R)|DDR_CLK_c         |   0.000|
+cbein_b[2]   |    1.998(R)|   -1.263(R)|DDR_CLK_c         |   0.000|
+cbein_b[3]   |    2.915(R)|   -2.105(R)|DDR_CLK_c         |   0.000|
+devselin_b   |    3.064(R)|   -2.268(R)|DDR_CLK_c         |   0.000|
+framein_b    |    2.950(R)|   -2.156(R)|DDR_CLK_c         |   0.000|
+irdyin_b     |    3.878(R)|   -3.015(R)|DDR_CLK_c         |   0.000|
+nRESET       |    6.417(R)|   -5.521(R)|DDR_CLK_c         |   0.000|
+trdyin_b     |    4.194(R)|   -3.318(R)|DDR_CLK_c         |   0.000|
+-------------+------------+------------+------------------+--------+
+
+Setup/Hold to clock CLK33M
+------------+------------+------------+------------------+--------+
+            |  Setup to  |  Hold to   |                  |  Clock |
+Source      | clk (edge) | clk (edge) |Internal Clock(s) |  Phase |
+------------+------------+------------+------------------+--------+
+adin[0]     |    3.223(R)|    5.142(R)|CLK33M_c          |   0.000|
+adin[10]    |    3.265(R)|    4.691(R)|CLK33M_c          |   0.000|
+adin[11]    |    3.259(R)|    4.510(R)|CLK33M_c          |   0.000|
+adin[12]    |    3.237(R)|    4.562(R)|CLK33M_c          |   0.000|
+adin[13]    |    3.229(R)|    4.513(R)|CLK33M_c          |   0.000|
+adin[14]    |    3.233(R)|    4.276(R)|CLK33M_c          |   0.000|
+adin[15]    |    3.235(R)|    4.386(R)|CLK33M_c          |   0.000|
+adin[16]    |    3.249(R)|    4.559(R)|CLK33M_c          |   0.000|
+adin[17]    |    3.248(R)|    4.759(R)|CLK33M_c          |   0.000|
+adin[18]    |    3.226(R)|    4.443(R)|CLK33M_c          |   0.000|
+adin[19]    |    3.215(R)|    4.593(R)|CLK33M_c          |   0.000|
+adin[1]     |    3.210(R)|    4.707(R)|CLK33M_c          |   0.000|
+adin[20]    |    3.254(R)|    4.350(R)|CLK33M_c          |   0.000|
+adin[21]    |    3.254(R)|    4.169(R)|CLK33M_c          |   0.000|
+adin[22]    |    3.256(R)|    4.436(R)|CLK33M_c          |   0.000|
+adin[23]    |    3.251(R)|    4.510(R)|CLK33M_c          |   0.000|
+adin[24]    |    3.234(R)|    4.838(R)|CLK33M_c          |   0.000|
+adin[25]    |    3.234(R)|    4.529(R)|CLK33M_c          |   0.000|
+adin[26]    |    3.221(R)|    4.144(R)|CLK33M_c          |   0.000|
+adin[27]    |    3.224(R)|    4.171(R)|CLK33M_c          |   0.000|
+adin[28]    |    3.255(R)|    4.124(R)|CLK33M_c          |   0.000|
+adin[29]    |    3.253(R)|    3.973(R)|CLK33M_c          |   0.000|
+adin[2]     |    3.236(R)|    4.695(R)|CLK33M_c          |   0.000|
+adin[30]    |    3.222(R)|    4.492(R)|CLK33M_c          |   0.000|
+adin[31]    |    3.225(R)|    4.433(R)|CLK33M_c          |   0.000|
+adin[3]     |    3.231(R)|    4.987(R)|CLK33M_c          |   0.000|
+adin[4]     |    3.204(R)|    4.377(R)|CLK33M_c          |   0.000|
+adin[5]     |    3.208(R)|    4.841(R)|CLK33M_c          |   0.000|
+adin[6]     |    3.238(R)|    4.586(R)|CLK33M_c          |   0.000|
+adin[7]     |    3.236(R)|    4.727(R)|CLK33M_c          |   0.000|
+adin[8]     |    3.255(R)|    4.471(R)|CLK33M_c          |   0.000|
+adin[9]     |    3.255(R)|    4.400(R)|CLK33M_c          |   0.000|
+arb_req_b[1]|    5.432(R)|    4.249(R)|CLK33M_c          |   0.000|
+arb_req_b[2]|    5.401(R)|    3.749(R)|CLK33M_c          |   0.000|
+arb_req_b[3]|    4.912(R)|    4.073(R)|CLK33M_c          |   0.000|
+arb_req_b[4]|    4.561(R)|    4.129(R)|CLK33M_c          |   0.000|
+cbein_b[0]  |    3.202(R)|    4.283(R)|CLK33M_c          |   0.000|
+cbein_b[1]  |    3.204(R)|    4.600(R)|CLK33M_c          |   0.000|
+cbein_b[2]  |    3.173(R)|    4.371(R)|CLK33M_c          |   0.000|
+cbein_b[3]  |    3.166(R)|    4.811(R)|CLK33M_c          |   0.000|
+devselin_b  |   -1.095(R)|    4.519(R)|CLK33M_c          |   0.000|
+framein_b   |    2.133(R)|    4.582(R)|CLK33M_c          |   0.000|
+idsel       |   -2.730(R)|    4.501(R)|CLK33M_c          |   0.000|
+irdyin_b    |    2.187(R)|    4.668(R)|CLK33M_c          |   0.000|
+parin       |   -0.443(R)|    4.614(R)|CLK33M_c          |   0.000|
+perrin_b    |   -3.091(R)|    4.824(R)|CLK33M_c          |   0.000|
+stopin_b    |   -0.383(R)|    4.083(R)|CLK33M_c          |   0.000|
+trdyin_b    |    2.948(R)|    4.345(R)|CLK33M_c          |   0.000|
+------------+------------+------------+------------------+--------+
+
+Setup/Hold to clock DDR_DQS[0]
+------------+------------+------------+------------------+--------+
+            |  Setup to  |  Hold to   |                  |  Clock |
+Source      | clk (edge) | clk (edge) |Internal Clock(s) |  Phase |
+------------+------------+------------+------------------+--------+
+DDR_DQ[0]   |   -3.522(R)|    7.124(R)|DDR_DQSI_0[0]     |   0.000|
+DDR_DQ[1]   |   -3.327(R)|    6.946(R)|DDR_DQSI_0[0]     |   0.000|
+DDR_DQ[2]   |   -3.428(R)|    7.160(R)|DDR_DQSI_0[0]     |   0.000|
+DDR_DQ[3]   |   -4.190(R)|    7.862(R)|DDR_DQSI_0[0]     |   0.000|
+DDR_DQ[4]   |   -3.788(R)|    7.431(R)|DDR_DQSI_0[0]     |   0.000|
+DDR_DQ[5]   |   -3.798(R)|    7.442(R)|DDR_DQSI_0[0]     |   0.000|
+DDR_DQ[6]   |   -2.459(R)|    6.156(R)|DDR_DQSI_0[0]     |   0.000|
+DDR_DQ[7]   |   -2.833(R)|    6.500(R)|DDR_DQSI_0[0]     |   0.000|
+------------+------------+------------+------------------+--------+
+
+Setup/Hold to clock DDR_DQS[1]
+------------+------------+------------+------------------+--------+
+            |  Setup to  |  Hold to   |                  |  Clock |
+Source      | clk (edge) | clk (edge) |Internal Clock(s) |  Phase |
+------------+------------+------------+------------------+--------+
+DDR_DQ[10]  |   -3.346(R)|    7.043(R)|DDR_DQSI_0[1]     |   0.000|
+DDR_DQ[11]  |   -3.046(R)|    6.764(R)|DDR_DQSI_0[1]     |   0.000|
+DDR_DQ[12]  |   -3.038(R)|    6.757(R)|DDR_DQSI_0[1]     |   0.000|
+DDR_DQ[13]  |   -3.046(R)|    6.763(R)|DDR_DQSI_0[1]     |   0.000|
+DDR_DQ[14]  |   -3.099(R)|    6.714(R)|DDR_DQSI_0[1]     |   0.000|
+DDR_DQ[15]  |   -3.118(R)|    6.734(R)|DDR_DQSI_0[1]     |   0.000|
+DDR_DQ[8]   |   -3.043(R)|    6.728(R)|DDR_DQSI_0[1]     |   0.000|
+DDR_DQ[9]   |   -3.055(R)|    6.740(R)|DDR_DQSI_0[1]     |   0.000|
+------------+------------+------------+------------------+--------+
+
+Clock CLK to Pad
+----------------------+------------+------------------+--------+
+                      | clk (edge) |                  |  Clock |
+Destination           | to PAD     |Internal Clock(s) |  Phase |
+----------------------+------------+------------------+--------+
+ARMICE_RTCK           |    6.836(R)|DDR_CLK_c         |   0.000|
+ARMICE_TDO            |   12.402(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[0]         |    6.475(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[10]        |    7.074(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[11]        |    6.727(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[12]        |    7.027(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[13]        |    7.118(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[14]        |    6.818(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[15]        |    6.813(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[16]        |    7.254(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[17]        |   13.395(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[18]        |    6.791(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[19]        |    6.940(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[1]         |    6.748(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[20]        |    6.867(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[21]        |    6.876(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[22]        |    6.825(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[23]        |    6.837(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[24]        |    6.567(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[25]        |    6.846(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[26]        |    6.581(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[27]        |    6.465(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[28]        |    7.307(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[29]        |    7.118(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[2]         |    7.323(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[30]        |    7.011(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[31]        |    7.032(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[3]         |    7.257(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[4]         |    7.895(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[5]         |    7.157(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[6]         |    7.233(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[7]         |    7.251(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[8]         |    6.536(R)|DDR_CLK_c         |   0.000|
+AWADDR_DDR[9]         |    7.212(R)|DDR_CLK_c         |   0.000|
+AWBURST_DDR[0]        |    6.704(R)|DDR_CLK_c         |   0.000|
+AWBURST_DDR[1]        |    7.966(R)|DDR_CLK_c         |   0.000|
+AWID_DDR[0]           |    5.691(R)|DDR_CLK_c         |   0.000|
+AWID_DDR[1]           |    5.355(R)|DDR_CLK_c         |   0.000|
+AWID_DDR[2]           |    6.124(R)|DDR_CLK_c         |   0.000|
+AWLEN_DDR[0]          |    6.927(R)|DDR_CLK_c         |   0.000|
+AWLEN_DDR[1]          |    6.308(R)|DDR_CLK_c         |   0.000|
+AWLEN_DDR[2]          |    7.007(R)|DDR_CLK_c         |   0.000|
+AWLEN_DDR[3]          |    6.789(R)|DDR_CLK_c         |   0.000|
+AWREADY_DDR           |   11.585(R)|DDR_CLK_c         |   0.000|
+AWSIZE_DDR[0]         |    7.833(R)|DDR_CLK_c         |   0.000|
+AWSIZE_DDR[1]         |    7.449(R)|DDR_CLK_c         |   0.000|
+AWSIZE_DDR[2]         |    6.870(R)|DDR_CLK_c         |   0.000|
+AWVALID_DDR           |    8.152(R)|DDR_CLK_c         |   0.000|
+CLK100M_Out           |    8.918(R)|DDR_CLK_c         |   0.000|
+CLK200M_Out           |   12.307(R)|DDR_CLK_c         |   0.000|
+CLK50M_Out            |    9.017(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[0]           |    5.316(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[10]          |    5.340(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[11]          |    5.454(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[12]          |    5.590(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[1]           |    5.041(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[2]           |    5.349(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[3]           |    4.769(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[4]           |    4.409(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[5]           |    4.647(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[6]           |    4.515(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[7]           |    4.428(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[8]           |    5.099(R)|DDR_CLK_c         |   0.000|
+DDR_ADDR[9]           |    5.289(R)|DDR_CLK_c         |   0.000|
+DDR_BADDR[0]          |    5.459(R)|DDR_CLK_c         |   0.000|
+DDR_BADDR[1]          |    5.578(R)|DDR_CLK_c         |   0.000|
+DDR_CASB              |    4.694(R)|DDR_CLK_c         |   0.000|
+DDR_CKE               |    5.475(R)|DDR_CLK_c         |   0.000|
+DDR_CSB               |    4.672(R)|DDR_CLK_c         |   0.000|
+DDR_DQM[0]            |    6.918(F)|CLK200M           |   4.750|
+DDR_DQM[1]            |    6.920(F)|CLK200M           |   4.750|
+DDR_DQ[0]             |    6.921(F)|CLK200M           |   4.750|
+DDR_DQ[10]            |    7.024(F)|CLK200M           |   4.750|
+DDR_DQ[11]            |    7.002(F)|CLK200M           |   4.750|
+DDR_DQ[12]            |    7.002(F)|CLK200M           |   4.750|
+DDR_DQ[13]            |    6.963(F)|CLK200M           |   4.750|
+DDR_DQ[14]            |    6.961(F)|CLK200M           |   4.750|
+DDR_DQ[15]            |    6.987(F)|CLK200M           |   4.750|
+DDR_DQ[1]             |    6.929(F)|CLK200M           |   4.750|
+DDR_DQ[2]             |    6.951(F)|CLK200M           |   4.750|
+DDR_DQ[3]             |    6.956(F)|CLK200M           |   4.750|
+DDR_DQ[4]             |    6.947(F)|CLK200M           |   4.750|
+DDR_DQ[5]             |    6.964(F)|CLK200M           |   4.750|
+DDR_DQ[6]             |    7.039(F)|CLK200M           |   4.750|
+DDR_DQ[7]             |    7.036(F)|CLK200M           |   4.750|
+DDR_DQ[8]             |    6.975(F)|CLK200M           |   4.750|
+DDR_DQ[9]             |    6.975(F)|CLK200M           |   4.750|
+DDR_RASB              |    5.588(R)|DDR_CLK_c         |   0.000|
+DDR_WEB               |    5.495(R)|DDR_CLK_c         |   0.000|
+GPIO0[20]             |    6.330(R)|CLK50M            |   0.000|
+GPIO0[21]             |    6.369(R)|CLK50M            |   0.000|
+GPIO0[22]             |    6.531(R)|CLK50M            |   0.000|
+GPIO0[23]             |    6.368(R)|CLK50M            |   0.000|
+GPIO0[24]             |    8.367(R)|CLK50M            |   0.000|
+GPIO0[25]             |    7.508(R)|CLK50M            |   0.000|
+GPIO0[26]             |    6.914(R)|CLK50M            |   0.000|
+GPIO0[27]             |    8.258(R)|CLK50M            |   0.000|
+GPIO0[28]             |    6.979(R)|CLK50M            |   0.000|
+GPIO0[29]             |    6.275(R)|CLK50M            |   0.000|
+GPIO0[30]             |    6.467(R)|CLK50M            |   0.000|
+GPIO0[31]             |    6.394(R)|CLK50M            |   0.000|
+GPIO1[0]              |    6.085(R)|CLK50M            |   0.000|
+GPIO1[1]              |    6.162(R)|CLK50M            |   0.000|
+GPIO1[2]              |    7.529(R)|CLK50M            |   0.000|
+GPIO1[3]              |    6.702(R)|CLK50M            |   0.000|
+GPIO1[4]              |    5.878(R)|CLK50M            |   0.000|
+GPIO1[5]              |    5.962(R)|CLK50M            |   0.000|
+GPIO1[6]              |    8.065(R)|CLK50M            |   0.000|
+GPIO1[7]              |    7.858(R)|CLK50M            |   0.000|
+HADDR_S0[0]           |    7.435(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[10]          |    7.036(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[11]          |    6.605(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[12]          |    7.351(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[13]          |    7.337(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[14]          |    7.030(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[15]          |    6.620(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[16]          |    6.508(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[17]          |    6.833(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[18]          |    6.653(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[19]          |    6.601(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[1]           |    6.519(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[20]          |    6.385(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[21]          |    6.469(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[22]          |    6.959(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[23]          |    6.465(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[24]          |    7.149(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[25]          |    6.089(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[26]          |    6.375(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[27]          |    6.395(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[28]          |    6.433(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[29]          |    6.657(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[2]           |    7.297(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[30]          |    7.239(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[31]          |    6.442(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[3]           |    7.468(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[4]           |    7.246(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[5]           |    6.915(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[6]           |    6.561(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[7]           |    7.521(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[8]           |    7.266(R)|DDR_CLK_c         |   0.000|
+HADDR_S0[9]           |    7.376(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[0]           |    8.660(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[10]          |    7.840(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[11]          |    7.527(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[12]          |    7.594(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[13]          |    8.843(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[14]          |    7.438(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[15]          |    7.566(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[16]          |    8.142(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[17]          |    7.966(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[18]          |    8.082(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[19]          |    8.765(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[1]           |    7.101(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[20]          |    7.460(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[21]          |    8.095(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[22]          |    7.505(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[23]          |    7.464(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[24]          |    7.758(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[25]          |    7.973(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[26]          |    8.871(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[27]          |    7.321(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[28]          |    7.509(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[29]          |    7.171(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[2]           |    8.853(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[30]          |    8.253(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[31]          |    7.106(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[3]           |    8.632(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[4]           |    7.426(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[5]           |    7.020(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[6]           |    7.802(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[7]           |    8.051(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[8]           |    8.046(R)|DDR_CLK_c         |   0.000|
+HADDR_S1[9]           |    7.030(R)|DDR_CLK_c         |   0.000|
+HBURST_S0[0]          |    4.301(R)|DDR_CLK_c         |   0.000|
+HBURST_S0[1]          |    4.305(R)|DDR_CLK_c         |   0.000|
+HBURST_S0[2]          |    4.322(R)|DDR_CLK_c         |   0.000|
+HBURST_S1[0]          |    4.619(R)|DDR_CLK_c         |   0.000|
+HBURST_S1[1]          |    4.614(R)|DDR_CLK_c         |   0.000|
+HBURST_S1[2]          |    4.586(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[0]          |    8.485(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[10]         |    8.366(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[11]         |    8.864(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[12]         |    8.624(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[13]         |    8.875(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[14]         |    8.424(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[15]         |    9.148(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[16]         |    8.695(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[17]         |    8.917(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[18]         |    9.076(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[19]         |    8.761(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[1]          |    8.319(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[20]         |    8.683(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[21]         |    8.843(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[22]         |    8.637(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[23]         |    9.120(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[24]         |    8.670(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[25]         |    9.233(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[26]         |    8.726(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[27]         |    8.922(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[28]         |    9.056(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[29]         |    8.881(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[2]          |    8.579(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[30]         |    8.802(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[31]         |    6.984(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[3]          |    8.363(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[4]          |    6.726(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[5]          |    8.745(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[6]          |    8.277(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[7]          |    8.992(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[8]          |    8.523(R)|DDR_CLK_c         |   0.000|
+HRDATA_M0[9]          |    8.778(R)|DDR_CLK_c         |   0.000|
+HREADY_OUT_M0         |   11.522(R)|DDR_CLK_c         |   0.000|
+HRESP_M0[0]           |   10.058(R)|DDR_CLK_c         |   0.000|
+HSEL_S0               |    6.947(R)|DDR_CLK_c         |   0.000|
+HSEL_S1               |    9.321(R)|DDR_CLK_c         |   0.000|
+HSIZE_S0[0]           |    4.311(R)|DDR_CLK_c         |   0.000|
+HSIZE_S0[1]           |    4.305(R)|DDR_CLK_c         |   0.000|
+HSIZE_S0[2]           |    4.310(R)|DDR_CLK_c         |   0.000|
+HSIZE_S1[0]           |    4.614(R)|DDR_CLK_c         |   0.000|
+HSIZE_S1[1]           |    4.553(R)|DDR_CLK_c         |   0.000|
+HSIZE_S1[2]           |    4.554(R)|DDR_CLK_c         |   0.000|
+HTRANS_S0[0]          |    7.989(R)|DDR_CLK_c         |   0.000|
+HTRANS_S0[1]          |   10.561(R)|DDR_CLK_c         |   0.000|
+HTRANS_S1[0]          |   11.120(R)|DDR_CLK_c         |   0.000|
+HTRANS_S1[1]          |   12.704(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[0]          |    6.460(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[10]         |    6.777(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[11]         |    8.408(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[12]         |    8.190(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[13]         |    8.429(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[14]         |    8.354(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[15]         |    8.451(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[16]         |    6.978(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[17]         |    6.857(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[18]         |    8.322(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[19]         |    8.409(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[1]          |    6.441(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[20]         |    8.126(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[21]         |    8.135(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[22]         |    8.492(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[23]         |    8.201(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[24]         |    7.731(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[25]         |    8.007(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[26]         |    7.766(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[27]         |    7.667(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[28]         |    7.983(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[29]         |    7.984(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[2]          |    6.443(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[30]         |    8.138(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[31]         |    8.132(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[3]          |    6.412(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[4]          |    6.442(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[5]          |    6.748(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[6]          |    6.499(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[7]          |    6.795(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[8]          |    6.653(R)|DDR_CLK_c         |   0.000|
+HWDATA_S0[9]          |    6.682(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[0]          |    8.728(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[10]         |    7.312(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[11]         |   11.113(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[12]         |    9.349(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[13]         |    9.631(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[14]         |    7.510(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[15]         |   13.285(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[16]         |    8.603(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[17]         |   10.082(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[18]         |    9.717(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[19]         |    9.490(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[1]          |    8.880(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[20]         |    7.498(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[21]         |    9.491(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[22]         |    7.340(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[23]         |   11.172(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[24]         |    7.385(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[25]         |    7.381(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[26]         |    7.534(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[27]         |    9.711(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[28]         |    9.934(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[29]         |    9.743(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[2]          |    9.000(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[30]         |   10.016(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[31]         |    9.805(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[3]          |    8.810(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[4]          |    8.574(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[5]          |    8.495(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[6]          |    8.965(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[7]          |    8.856(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[8]          |    8.535(R)|DDR_CLK_c         |   0.000|
+HWDATA_S1[9]          |   12.104(R)|DDR_CLK_c         |   0.000|
+HWRITE_S0             |    7.820(R)|DDR_CLK_c         |   0.000|
+HWRITE_S1             |    8.802(R)|DDR_CLK_c         |   0.000|
+I2C_nSCLEn            |    6.332(R)|CLK50M            |   0.000|
+I2C_nSDAEn            |   16.766(R)|CLK50M            |   0.000|
+I2S_BCLK_O            |    7.420(R)|CLK200M           |   0.000|
+                      |    7.148(R)|CLK50M            |   0.000|
+I2S_BCLK_OE           |    7.437(R)|CLK50M            |   0.000|
+I2S_LRCLK_O           |    7.469(R)|CLK200M           |   0.000|
+                      |    7.520(R)|CLK50M            |   0.000|
+I2S_LRCLK_OE          |    7.739(R)|CLK50M            |   0.000|
+I2S_MCLK              |    7.090(R)|CLK200M           |   0.000|
+I2S_MCLK_OE           |    6.849(R)|CLK50M            |   0.000|
+I2S_SDOUT             |   10.523(R)|CLK50M            |   0.000|
+IDEAD                 |    9.301(R)|DDR_CLK_c         |   0.000|
+NF_ALE                |    6.872(R)|DDR_CLK_c         |   0.000|
+NF_CLE                |    6.695(R)|DDR_CLK_c         |   0.000|
+NF_IO[0]              |    8.085(R)|DDR_CLK_c         |   0.000|
+NF_IO[1]              |    7.831(R)|DDR_CLK_c         |   0.000|
+NF_IO[2]              |    7.006(R)|DDR_CLK_c         |   0.000|
+NF_IO[3]              |    7.612(R)|DDR_CLK_c         |   0.000|
+NF_IO[4]              |    7.528(R)|DDR_CLK_c         |   0.000|
+NF_IO[5]              |    7.802(R)|DDR_CLK_c         |   0.000|
+NF_IO[6]              |    7.490(R)|DDR_CLK_c         |   0.000|
+NF_IO[7]              |    7.736(R)|DDR_CLK_c         |   0.000|
+NF_nCE0               |    6.854(R)|DDR_CLK_c         |   0.000|
+NF_nRE                |    6.588(R)|DDR_CLK_c         |   0.000|
+NF_nWE                |    6.577(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[0]           |   11.497(R)|CLK50M            |   0.000|
+                      |   14.172(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[10]          |   11.393(R)|CLK50M            |   0.000|
+                      |   14.068(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[11]          |   11.306(R)|CLK50M            |   0.000|
+                      |   13.981(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[12]          |   11.254(R)|CLK50M            |   0.000|
+                      |   13.929(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[13]          |   11.208(R)|CLK50M            |   0.000|
+                      |   13.883(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[14]          |   11.249(R)|CLK50M            |   0.000|
+                      |   13.924(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[15]          |   11.392(R)|CLK50M            |   0.000|
+                      |   14.067(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[16]          |   11.069(R)|CLK50M            |   0.000|
+                      |   13.744(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[17]          |   11.338(R)|CLK50M            |   0.000|
+                      |   14.013(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[18]          |   11.094(R)|CLK50M            |   0.000|
+                      |   13.769(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[19]          |   11.255(R)|CLK50M            |   0.000|
+                      |   13.930(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[1]           |   11.598(R)|CLK50M            |   0.000|
+                      |   14.273(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[2]           |   11.339(R)|CLK50M            |   0.000|
+                      |   14.014(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[3]           |   11.494(R)|CLK50M            |   0.000|
+                      |   14.169(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[4]           |   11.265(R)|CLK50M            |   0.000|
+                      |   13.940(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[5]           |   11.356(R)|CLK50M            |   0.000|
+                      |   14.031(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[6]           |   11.327(R)|CLK50M            |   0.000|
+                      |   14.002(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[7]           |   11.338(R)|CLK50M            |   0.000|
+                      |   14.013(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[8]           |   11.480(R)|CLK50M            |   0.000|
+                      |   14.155(R)|DDR_CLK_c         |   0.000|
+ROM_ADDR[9]           |   11.256(R)|CLK50M            |   0.000|
+                      |   13.931(R)|DDR_CLK_c         |   0.000|
+ROM_nCS               |   10.290(R)|DDR_CLK_c         |   0.000|
+ROM_nOE               |    9.716(R)|DDR_CLK_c         |   0.000|
+SPI_SCK               |    7.822(R)|CLK50M            |   0.000|
+SPI_SDO               |    7.467(R)|CLK50M            |   0.000|
+SevenSegmentCommon[0] |    4.590(R)|CLK50M            |   0.000|
+SevenSegmentCommon[1] |    4.600(R)|CLK50M            |   0.000|
+SevenSegmentCommon[2] |    4.598(R)|CLK50M            |   0.000|
+SevenSegmentCommon[3] |    4.594(R)|CLK50M            |   0.000|
+SevenSegmentControl[0]|    4.547(R)|CLK50M            |   0.000|
+SevenSegmentControl[1]|    4.531(R)|CLK50M            |   0.000|
+SevenSegmentControl[2]|    4.572(R)|CLK50M            |   0.000|
+SevenSegmentControl[3]|    4.576(R)|CLK50M            |   0.000|
+SevenSegmentControl[4]|    4.538(R)|CLK50M            |   0.000|
+SevenSegmentControl[5]|    4.548(R)|CLK50M            |   0.000|
+SevenSegmentControl[6]|    4.563(R)|CLK50M            |   0.000|
+SevenSegmentControl[7]|    4.554(R)|CLK50M            |   0.000|
+UART_TXD[0]           |    8.743(R)|CLK50M            |   0.000|
+UART_TXD[1]           |    8.720(R)|CLK50M            |   0.000|
+WDATA_DDR[0]          |    8.507(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[10]         |    7.617(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[11]         |    9.137(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[12]         |    8.242(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[13]         |    7.361(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[14]         |    7.911(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[15]         |    7.517(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[16]         |    8.119(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[17]         |    9.466(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[18]         |    7.520(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[19]         |    7.878(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[1]          |    8.236(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[20]         |    7.956(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[21]         |    8.119(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[22]         |    8.494(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[23]         |   10.470(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[24]         |   10.688(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[25]         |    8.284(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[26]         |   10.324(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[27]         |    8.575(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[28]         |    8.649(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[29]         |    8.294(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[2]          |    9.060(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[30]         |    8.057(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[31]         |    8.132(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[3]          |    7.692(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[4]          |    8.818(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[5]          |    8.013(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[6]          |    7.843(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[7]          |    7.155(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[8]          |    7.244(R)|DDR_CLK_c         |   0.000|
+WDATA_DDR[9]          |    7.703(R)|DDR_CLK_c         |   0.000|
+WID_DDR[0]            |    6.369(R)|DDR_CLK_c         |   0.000|
+WID_DDR[1]            |    5.967(R)|DDR_CLK_c         |   0.000|
+WID_DDR[2]            |    6.042(R)|DDR_CLK_c         |   0.000|
+WLAST_DDR             |    7.006(R)|DDR_CLK_c         |   0.000|
+WREADY_DDR            |   12.235(R)|DDR_CLK_c         |   0.000|
+WSTRB_DDR[0]          |    6.701(R)|DDR_CLK_c         |   0.000|
+WSTRB_DDR[1]          |    7.018(R)|DDR_CLK_c         |   0.000|
+WSTRB_DDR[2]          |    6.908(R)|DDR_CLK_c         |   0.000|
+WSTRB_DDR[3]          |    8.060(R)|DDR_CLK_c         |   0.000|
+WVALID_DDR            |   13.822(R)|DDR_CLK_c         |   0.000|
+oe_req                |   13.410(R)|CLKIN_IBUFG_INST  |   0.000|
+----------------------+------------+------------------+--------+
+
+Clock CLK33M to Pad
+------------+------------+------------------+--------+
+            | clk (edge) |                  |  Clock |
+Destination | to PAD     |Internal Clock(s) |  Phase |
+------------+------------+------------------+--------+
+adout[0]    |   13.388(R)|CLK33M_c          |   0.000|
+adout[10]   |   13.696(R)|CLK33M_c          |   0.000|
+adout[11]   |   13.524(R)|CLK33M_c          |   0.000|
+adout[12]   |   13.162(R)|CLK33M_c          |   0.000|
+adout[13]   |   13.413(R)|CLK33M_c          |   0.000|
+adout[14]   |   13.874(R)|CLK33M_c          |   0.000|
+adout[15]   |   13.553(R)|CLK33M_c          |   0.000|
+adout[16]   |   14.134(R)|CLK33M_c          |   0.000|
+adout[17]   |   13.675(R)|CLK33M_c          |   0.000|
+adout[18]   |   13.271(R)|CLK33M_c          |   0.000|
+adout[19]   |   13.688(R)|CLK33M_c          |   0.000|
+adout[1]    |   14.489(R)|CLK33M_c          |   0.000|
+adout[20]   |   14.206(R)|CLK33M_c          |   0.000|
+adout[21]   |   13.558(R)|CLK33M_c          |   0.000|
+adout[22]   |   12.926(R)|CLK33M_c          |   0.000|
+adout[23]   |   13.356(R)|CLK33M_c          |   0.000|
+adout[24]   |   13.357(R)|CLK33M_c          |   0.000|
+adout[25]   |   13.447(R)|CLK33M_c          |   0.000|
+adout[26]   |   13.559(R)|CLK33M_c          |   0.000|
+adout[27]   |   14.269(R)|CLK33M_c          |   0.000|
+adout[28]   |   14.603(R)|CLK33M_c          |   0.000|
+adout[29]   |   14.747(R)|CLK33M_c          |   0.000|
+adout[2]    |   14.671(R)|CLK33M_c          |   0.000|
+adout[30]   |   13.828(R)|CLK33M_c          |   0.000|
+adout[31]   |   14.419(R)|CLK33M_c          |   0.000|
+adout[3]    |   14.733(R)|CLK33M_c          |   0.000|
+adout[4]    |   14.563(R)|CLK33M_c          |   0.000|
+adout[5]    |   14.419(R)|CLK33M_c          |   0.000|
+adout[6]    |   14.627(R)|CLK33M_c          |   0.000|
+adout[7]    |   14.846(R)|CLK33M_c          |   0.000|
+adout[8]    |   13.055(R)|CLK33M_c          |   0.000|
+adout[9]    |   13.693(R)|CLK33M_c          |   0.000|
+arb_gnt_b[1]|   15.118(R)|CLK33M_c          |   0.000|
+arb_gnt_b[2]|   15.102(R)|CLK33M_c          |   0.000|
+arb_gnt_b[3]|   14.883(R)|CLK33M_c          |   0.000|
+arb_gnt_b[4]|   14.984(R)|CLK33M_c          |   0.000|
+cbeout_b[0] |   14.013(R)|CLK33M_c          |   0.000|
+cbeout_b[1] |   14.050(R)|CLK33M_c          |   0.000|
+cbeout_b[2] |   13.529(R)|CLK33M_c          |   0.000|
+cbeout_b[3] |   13.447(R)|CLK33M_c          |   0.000|
+devselout_b |   13.431(R)|CLK33M_c          |   0.000|
+frameout_b  |   13.149(R)|CLK33M_c          |   0.000|
+irdyout_b   |   12.917(R)|CLK33M_c          |   0.000|
+oe_ad       |   13.248(R)|CLK33M_c          |   0.000|
+oe_cbe      |   13.419(R)|CLK33M_c          |   0.000|
+oe_devsel   |   13.863(R)|CLK33M_c          |   0.000|
+oe_frame    |   13.571(R)|CLK33M_c          |   0.000|
+oe_irdy     |   13.511(R)|CLK33M_c          |   0.000|
+oe_par      |   11.012(R)|CLK33M_c          |   0.000|
+oe_perr     |   12.871(R)|CLK33M_c          |   0.000|
+oe_stop     |   13.673(R)|CLK33M_c          |   0.000|
+oe_trdy     |   13.226(R)|CLK33M_c          |   0.000|
+parout      |   13.221(R)|CLK33M_c          |   0.000|
+perrout_b   |   12.680(R)|CLK33M_c          |   0.000|
+serrout_b   |   12.125(R)|CLK33M_c          |   0.000|
+stopout_b   |   13.946(R)|CLK33M_c          |   0.000|
+trdyout_b   |   14.307(R)|CLK33M_c          |   0.000|
+------------+------------+------------------+--------+
+
+Clock to Setup on destination clock CLK
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+CLK            |   18.831|    6.227|    8.518|    4.363|
+CLK33M         |    7.001|    7.001|         |         |
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock CLK33M
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+CLK33M         |   15.698|         |         |         |
+---------------+---------+---------+---------+---------+
+
+
+Timing summary:
+---------------
+
+Timing errors: 172  Score: 150548
+
+Constraints cover 968869042 paths, 0 nets, and 265823 connections
+
+Design statistics:
+   Minimum period:  26.602ns (Maximum frequency:  37.591MHz)
+   Maximum path delay from/to any node:  16.750ns
+   Minimum input required time before clock:   7.001ns
+   Minimum output required time after clock:  15.118ns
+
+
+Analysis completed Wed Jul 25 03:18:20 2007
+--------------------------------------------------------------------------------
+
+
+
+Peak Memory Usage: 1108 MB

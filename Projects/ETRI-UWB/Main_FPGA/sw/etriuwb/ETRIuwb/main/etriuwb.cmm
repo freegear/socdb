@@ -1,0 +1,23 @@
+reset
+system.cpu arm926ej
+;system.jtagclock 8Mhz
+system.jtagclock RTCK
+system.up
+register.reset
+data.set 0x40004000 %long 0x00037535 
+data.set 0x40004004 %long 0xA1    
+data.set 0x4000400C %long 0x410   
+data.set 0x40004010 %long 0x24    
+data.load ./ETRIuwb_Data/Debug/ETRIuwb.axf
+setup.var %hex
+data.list
+
+;symbol.browse.symbol
+
+
+
+
+
+
+
+

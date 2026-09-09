@@ -1,0 +1,6 @@
+
+#define DDRRAM_USER	(DDRRAM_STARTADDR+2*1024*1024)		// lower 2MB used as code/data
+#define FRAME_BASEADDR (DDRRAM_USER)
+#define DDR_TESTREGION (FRAME_BASEADDR+4*1024*1024)		// 4MB as Frame buffer
+#define VIDEO_BASEADDR (FRAME_BASEADDR+8*1024*1024)		// 4MB as Frame buffer
+#define AUDIO_TESTADDR (FRAME_BASEADDR+12*1024*1024)		// 4MB as Frame buffer

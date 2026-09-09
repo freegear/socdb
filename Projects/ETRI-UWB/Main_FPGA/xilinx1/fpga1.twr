@@ -1,0 +1,309 @@
+--------------------------------------------------------------------------------
+Release 7.1.04i Trace H.42
+Copyright (c) 1995-2005 Xilinx, Inc.  All rights reserved.
+
+C:/Xilinx/bin/nt/trce.exe -ise d:\etri_uwb\20070607_toetri\xilinx1\FPGA1.ise
+-intstyle ise -e 3 -l 3 -s 10 -xml FPGA1 FPGA1.ncd -o FPGA1.twr FPGA1.pcf
+
+
+Design file:              fpga1.ncd
+Physical constraint file: fpga1.pcf
+Device,speed:             xc4vlx200,-10 (ADVANCED 1.57 2005-08-24, STEPPING level 1)
+Report level:             error report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths
+   option. All paths that are not constrained will be reported in the
+   unconstrained paths section(s) of the report.
+
+================================================================================
+Timing constraint: TS_CLK = PERIOD TIMEGRP "CLK" 4.365 ns HIGH 50%;
+
+ 0 items analyzed, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_PLL1_CLK2X_BUF = PERIOD TIMEGRP "PLL1_CLK2X_BUF" TS_CLK / 2 HIGH 50%;
+
+ 379 items analyzed, 18 timing errors detected. (18 setup errors, 0 hold errors)
+ Minimum period is   2.491ns.
+--------------------------------------------------------------------------------
+Slack:                  -0.309ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               CLK200MCnt[3] (FF)
+  Destination:          CLK200MCnt[26] (FF)
+  Requirement:          2.182ns
+  Data Path Delay:      2.431ns (Levels of Logic = 8)
+  Clock Path Skew:      0.000ns
+  Source Clock:         CLK200M rising at 0.000ns
+  Destination Clock:    CLK200M rising at 2.182ns
+  Clock Uncertainty:    0.060ns
+
+  Data Path: CLK200MCnt[3] to CLK200MCnt[26]
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X152Y195.XQ    Tcko                  0.360   CLK200MCnt[3]
+                                                       CLK200MCnt[3]
+    SLICE_X155Y195.G2    net (fanout=3)        0.569   CLK200MCnt[3]
+    SLICE_X155Y195.COUT  Topcyg                0.559   CLK200MCnt_qxu_par_1[2]/O
+                                                       CLK200MCnt_qxu_par_0_0[2]
+                                                       CLK200MCnt_qxu_par_1[2]
+    SLICE_X155Y196.CIN   net (fanout=1)        0.000   CLK200MCnt_qxu_par_1[2]/O
+    SLICE_X155Y196.COUT  Tbyp                  0.086   CLK200MCnt_qxu_par_1[6]/O
+                                                       CLK200MCnt_qxu_par_1[4]
+                                                       CLK200MCnt_qxu_par_1[6]
+    SLICE_X155Y197.CIN   net (fanout=1)        0.000   CLK200MCnt_qxu_par_1[6]/O
+    SLICE_X155Y197.COUT  Tbyp                  0.086   CLK200MCnt_qxu_par_1[10]/O
+                                                       CLK200MCnt_qxu_par_1[8]
+                                                       CLK200MCnt_qxu_par_1[10]
+    SLICE_X155Y198.CIN   net (fanout=1)        0.000   CLK200MCnt_qxu_par_1[10]/O
+    SLICE_X155Y198.COUT  Tbyp                  0.086   CLK200MCnt_cry_3[25]/O
+                                                       CLK200MCnt_cry_1[25]
+                                                       CLK200MCnt_cry_3[25]
+    SLICE_X155Y199.CIN   net (fanout=1)        0.000   CLK200MCnt_cry_3[25]/O
+    SLICE_X155Y199.COUT  Tbyp                  0.086   CLK200MCnt[20]
+                                                       CLK200MCnt_cry[20]
+                                                       CLK200MCnt_cry[21]
+    SLICE_X155Y200.CIN   net (fanout=1)        0.000   CLK200MCnt_cry[21]/O
+    SLICE_X155Y200.COUT  Tbyp                  0.086   CLK200MCnt[22]
+                                                       CLK200MCnt_cry[22]
+                                                       CLK200MCnt_cry[23]
+    SLICE_X155Y201.CIN   net (fanout=1)        0.000   CLK200MCnt_cry[23]/O
+    SLICE_X155Y201.COUT  Tbyp                  0.086   CLK200MCnt[24]
+                                                       CLK200MCnt_cry[24]
+                                                       CLK200MCnt_cry[25]
+    SLICE_X155Y202.CIN   net (fanout=1)        0.000   CLK200MCnt_cry[25]/O
+    SLICE_X155Y202.CLK   Tcinck                0.427   CLK200MCnt[26]
+                                                       CLK200MCnt_s[26]
+                                                       CLK200MCnt[26]
+    -------------------------------------------------  ---------------------------
+    Total                                      2.431ns (1.862ns logic, 0.569ns route)
+                                                       (76.6% logic, 23.4% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -0.299ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               CLK200MCnt[2] (FF)
+  Destination:          CLK200MCnt[19] (FF)
+  Requirement:          2.182ns
+  Data Path Delay:      2.421ns (Levels of Logic = 7)
+  Clock Path Skew:      0.000ns
+  Source Clock:         CLK200M rising at 0.000ns
+  Destination Clock:    CLK200M rising at 2.182ns
+  Clock Uncertainty:    0.060ns
+
+  Data Path: CLK200MCnt[2] to CLK200MCnt[19]
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X152Y194.YQ    Tcko                  0.360   CLK200MCnt[1]
+                                                       CLK200MCnt[2]
+    SLICE_X154Y194.G2    net (fanout=3)        0.577   CLK200MCnt[2]
+    SLICE_X154Y194.COUT  Topcyg                0.561   CLK200MCnt_qxu_par[2]/O
+                                                       CLK200MCnt_qxu_par_0[2]
+                                                       CLK200MCnt_qxu_par[2]
+    SLICE_X154Y195.CIN   net (fanout=1)        0.000   CLK200MCnt_qxu_par[2]/O
+    SLICE_X154Y195.COUT  Tbyp                  0.089   CLK200MCnt_qxu_par[6]/O
+                                                       CLK200MCnt_qxu_par[4]
+                                                       CLK200MCnt_qxu_par[6]
+    SLICE_X154Y196.CIN   net (fanout=1)        0.000   CLK200MCnt_qxu_par[6]/O
+    SLICE_X154Y196.COUT  Tbyp                  0.089   CLK200MCnt_qxu_par[10]/O
+                                                       CLK200MCnt_qxu_par[8]
+                                                       CLK200MCnt_qxu_par[10]
+    SLICE_X154Y197.CIN   net (fanout=1)        0.000   CLK200MCnt_qxu_par[10]/O
+    SLICE_X154Y197.COUT  Tbyp                  0.089   CLK200MCnt[12]
+                                                       CLK200MCnt_cry[12]
+                                                       CLK200MCnt_cry[13]
+    SLICE_X154Y198.CIN   net (fanout=1)        0.000   CLK200MCnt_cry[13]/O
+    SLICE_X154Y198.COUT  Tbyp                  0.089   CLK200MCnt[14]
+                                                       CLK200MCnt_cry[14]
+                                                       CLK200MCnt_cry[15]
+    SLICE_X154Y199.CIN   net (fanout=1)        0.000   CLK200MCnt_cry[15]/O
+    SLICE_X154Y199.COUT  Tbyp                  0.089   CLK200MCnt[16]
+                                                       CLK200MCnt_cry[16]
+                                                       CLK200MCnt_cry[17]
+    SLICE_X154Y200.CIN   net (fanout=1)        0.000   CLK200MCnt_cry[17]/O
+    SLICE_X154Y200.CLK   Tcinck                0.478   CLK200MCnt[18]
+                                                       CLK200MCnt_cry[18]
+                                                       CLK200MCnt_s[19]
+                                                       CLK200MCnt[19]
+    -------------------------------------------------  ---------------------------
+    Total                                      2.421ns (1.844ns logic, 0.577ns route)
+                                                       (76.2% logic, 23.8% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -0.297ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               CLK200MCnt[10] (FF)
+  Destination:          CLK200MCnt[19] (FF)
+  Requirement:          2.182ns
+  Data Path Delay:      2.419ns (Levels of Logic = 5)
+  Clock Path Skew:      0.000ns
+  Source Clock:         CLK200M rising at 0.000ns
+  Destination Clock:    CLK200M rising at 2.182ns
+  Clock Uncertainty:    0.060ns
+
+  Data Path: CLK200MCnt[10] to CLK200MCnt[19]
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X152Y198.YQ    Tcko                  0.360   CLK200MCnt[9]
+                                                       CLK200MCnt[10]
+    SLICE_X154Y196.G2    net (fanout=3)        0.753   CLK200MCnt[10]
+    SLICE_X154Y196.COUT  Topcyg                0.561   CLK200MCnt_qxu_par[10]/O
+                                                       CLK200MCnt_qxu_par_0[10]
+                                                       CLK200MCnt_qxu_par[10]
+    SLICE_X154Y197.CIN   net (fanout=1)        0.000   CLK200MCnt_qxu_par[10]/O
+    SLICE_X154Y197.COUT  Tbyp                  0.089   CLK200MCnt[12]
+                                                       CLK200MCnt_cry[12]
+                                                       CLK200MCnt_cry[13]
+    SLICE_X154Y198.CIN   net (fanout=1)        0.000   CLK200MCnt_cry[13]/O
+    SLICE_X154Y198.COUT  Tbyp                  0.089   CLK200MCnt[14]
+                                                       CLK200MCnt_cry[14]
+                                                       CLK200MCnt_cry[15]
+    SLICE_X154Y199.CIN   net (fanout=1)        0.000   CLK200MCnt_cry[15]/O
+    SLICE_X154Y199.COUT  Tbyp                  0.089   CLK200MCnt[16]
+                                                       CLK200MCnt_cry[16]
+                                                       CLK200MCnt_cry[17]
+    SLICE_X154Y200.CIN   net (fanout=1)        0.000   CLK200MCnt_cry[17]/O
+    SLICE_X154Y200.CLK   Tcinck                0.478   CLK200MCnt[18]
+                                                       CLK200MCnt_cry[18]
+                                                       CLK200MCnt_s[19]
+                                                       CLK200MCnt[19]
+    -------------------------------------------------  ---------------------------
+    Total                                      2.419ns (1.666ns logic, 0.753ns route)
+                                                       (68.9% logic, 31.1% route)
+
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_PLL1_CLK0_BUF = PERIOD TIMEGRP "PLL1_CLK0_BUF" TS_CLK HIGH 50%;
+
+ 924 items analyzed, 66 timing errors detected. (66 setup errors, 0 hold errors)
+ Minimum period is   5.469ns.
+--------------------------------------------------------------------------------
+Slack:                  -1.104ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               ismc0/wr_be[0] (FF)
+  Destination:          sram0/ram0/memory_1.memory_1_0_1 (RAM)
+  Requirement:          4.365ns
+  Data Path Delay:      5.409ns (Levels of Logic = 1)
+  Clock Path Skew:      0.000ns
+  Source Clock:         CLK100M rising at 0.000ns
+  Destination Clock:    CLK100M rising at 4.365ns
+  Clock Uncertainty:    0.060ns
+
+  Data Path: ismc0/wr_be[0] to sram0/ram0/memory_1.memory_1_0_1
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X90Y140.YQ     Tcko                  0.360   ismc0/wr_be[1]
+                                                       ismc0/wr_be[0]
+    SLICE_X153Y134.F4    net (fanout=1)        1.445   ismc0/wr_be[0]
+    SLICE_X153Y134.X     Tilo                  0.194   wrb0_i[0]
+                                                       ismc0/un2_sram_wrb
+    RAMB16_X2Y13.WEA2    net (fanout=8)        2.662   wrb0_i[0]
+    RAMB16_X2Y13.CLKA    Trcck_WEA             0.748   sram0/ram0/memory_1.memory_1_0_1
+                                                       sram0/ram0/memory_1.memory_1_0_1
+    -------------------------------------------------  ---------------------------
+    Total                                      5.409ns (1.302ns logic, 4.107ns route)
+                                                       (24.1% logic, 75.9% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -1.104ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               ismc0/wr_be[0] (FF)
+  Destination:          sram0/ram0/memory_1.memory_1_0_1 (RAM)
+  Requirement:          4.365ns
+  Data Path Delay:      5.409ns (Levels of Logic = 1)
+  Clock Path Skew:      0.000ns
+  Source Clock:         CLK100M rising at 0.000ns
+  Destination Clock:    CLK100M rising at 4.365ns
+  Clock Uncertainty:    0.060ns
+
+  Data Path: ismc0/wr_be[0] to sram0/ram0/memory_1.memory_1_0_1
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X90Y140.YQ     Tcko                  0.360   ismc0/wr_be[1]
+                                                       ismc0/wr_be[0]
+    SLICE_X153Y134.F4    net (fanout=1)        1.445   ismc0/wr_be[0]
+    SLICE_X153Y134.X     Tilo                  0.194   wrb0_i[0]
+                                                       ismc0/un2_sram_wrb
+    RAMB16_X2Y13.WEA0    net (fanout=8)        2.662   wrb0_i[0]
+    RAMB16_X2Y13.CLKA    Trcck_WEA             0.748   sram0/ram0/memory_1.memory_1_0_1
+                                                       sram0/ram0/memory_1.memory_1_0_1
+    -------------------------------------------------  ---------------------------
+    Total                                      5.409ns (1.302ns logic, 4.107ns route)
+                                                       (24.1% logic, 75.9% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -1.104ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               ismc0/wr_be[0] (FF)
+  Destination:          sram0/ram0/memory_1.memory_1_0_1 (RAM)
+  Requirement:          4.365ns
+  Data Path Delay:      5.409ns (Levels of Logic = 1)
+  Clock Path Skew:      0.000ns
+  Source Clock:         CLK100M rising at 0.000ns
+  Destination Clock:    CLK100M rising at 4.365ns
+  Clock Uncertainty:    0.060ns
+
+  Data Path: ismc0/wr_be[0] to sram0/ram0/memory_1.memory_1_0_1
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X90Y140.YQ     Tcko                  0.360   ismc0/wr_be[1]
+                                                       ismc0/wr_be[0]
+    SLICE_X153Y134.F4    net (fanout=1)        1.445   ismc0/wr_be[0]
+    SLICE_X153Y134.X     Tilo                  0.194   wrb0_i[0]
+                                                       ismc0/un2_sram_wrb
+    RAMB16_X2Y13.WEA1    net (fanout=8)        2.662   wrb0_i[0]
+    RAMB16_X2Y13.CLKA    Trcck_WEA             0.748   sram0/ram0/memory_1.memory_1_0_1
+                                                       sram0/ram0/memory_1.memory_1_0_1
+    -------------------------------------------------  ---------------------------
+    Total                                      5.409ns (1.302ns logic, 4.107ns route)
+                                                       (24.1% logic, 75.9% route)
+
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_PLL1_CLKDV_BUF = PERIOD TIMEGRP "PLL1_CLKDV_BUF" TS_CLK * 2 HIGH 50%;
+
+ 378 items analyzed, 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Minimum period is   2.978ns.
+--------------------------------------------------------------------------------
+
+
+2 constraints not met.
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Clock to Setup on destination clock CLK
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+CLK            |    5.469|         |         |         |
+---------------+---------+---------+---------+---------+
+
+
+Timing summary:
+---------------
+
+Timing errors: 84  Score: 15261
+
+Constraints cover 1681 paths, 0 nets, and 773 connections
+
+Design statistics:
+   Minimum period:   5.469ns (Maximum frequency: 182.849MHz)
+
+
+Analysis completed Wed Jul 04 00:52:01 2007
+--------------------------------------------------------------------------------
+
+
+
+Peak Memory Usage: 351 MB
