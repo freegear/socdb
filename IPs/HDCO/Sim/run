@@ -1,0 +1,29 @@
+rm ./work/*
+
+ncvlog ../Rtl/APBinterface/VideoEncAPBinterface.v
+
+ncvlog ../Rtl/HDC/HDCColorGen.v
+ncvlog ../Rtl/HDC/HDCCore.v
+ncvlog ../Rtl/HDC/HDCOutGen.v
+ncvlog ../Rtl/HDC/HDCRGB2YPbPr.v
+ncvlog ../Rtl/HDC/HDCTimerGen.v
+ncvlog ../Rtl/HDC/HDCTop.v
+
+ncvlog ../Rtl/TestDM/dualram32.v
+ncvlog ../Rtl/TestDM/BLKMEMDP_V6_1.v
+ncvlog ../Rtl/TestDM/MULTISRAM.v
+ncvlog ../Rtl/TestDM/MULTISRAM8bit.v
+ncvlog ../Rtl/TestDM/TestDM.v
+ncvlog ../Rtl/TestDM/TestDMTop.v
+ncvlog ../Rtl/TestDM/TestSlave.v
+ncvlog ../Rtl/TestDM/VIDEOEnC_SSRAM32bit.v
+ncvlog ../Rtl/TestDM/VideoEncoderTester.v
+
+# TOP
+ncvlog ./tb.v
+
+### Elaboration
+ncelab -nospecify -messages work.tb -access +rwc -timescale 1ns/10ps
+
+### Simulation
+ncsim  work.tb
