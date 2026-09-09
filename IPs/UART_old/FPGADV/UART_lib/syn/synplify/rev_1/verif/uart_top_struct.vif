@@ -1,0 +1,272 @@
+#
+# Synplicity Verification Interface File
+# Generated using Synplify-pro
+#
+# Copyright (c) 1996-2005 Synplicity, Inc.
+# All rights reserved
+#
+
+# Set logfile options
+vif_set_result_file  UART_TOP.vlf
+
+# Set technology for TCL script
+vif_set_technology -architecture FPGA -vendor Xilinx
+
+# RTL and technology files
+vif_add_library -original $XILINX/verilog/verification/unisims
+vif_add_library -original $XILINX/verilog/verification/simprims
+vif_add_file -original -verilog ../../../hdl/RegBlk.v
+vif_add_file -original -verilog ../../../hdl/RxBlock.v
+vif_add_file -original -verilog ../../../hdl/TxBlock.v
+vif_add_file -original -verilog ../../../hdl/uart_top_struct.v
+vif_set_top_module -original -top UART_TOP
+ 
+vif_add_library -translated $XILINX/verilog/verification/unisims
+vif_add_library -translated $XILINX/verilog/verification/simprims
+vif_add_file -translated -verilog UART_TOP.vm
+vif_set_top_module -translated -top UART_TOP 
+# Read FSM encoding
+vif_set_fsm -fsm fsm_0
+vif_set_fsmreg -original -fsm fsm_0 RxBLK/current_state[17:0]
+vif_set_fsmreg -translated -fsm  fsm_0 RxBLK/current_state[17:0]
+vif_set_state_map -fsm fsm_0 -original "000000000000000001" -translated "000000000000000001"
+vif_set_state_map -fsm fsm_0 -original "000000000000000010" -translated "000000000000000010"
+vif_set_state_map -fsm fsm_0 -original "000000000000000100" -translated "000000000000000100"
+vif_set_state_map -fsm fsm_0 -original "000000000000001000" -translated "000000000000001000"
+vif_set_state_map -fsm fsm_0 -original "000000000000010000" -translated "000000000000010000"
+vif_set_state_map -fsm fsm_0 -original "000000000000100000" -translated "000000000000100000"
+vif_set_state_map -fsm fsm_0 -original "000000000001000000" -translated "000000000001000000"
+vif_set_state_map -fsm fsm_0 -original "000000000010000000" -translated "000000000010000000"
+vif_set_state_map -fsm fsm_0 -original "000000000100000000" -translated "000000000100000000"
+vif_set_state_map -fsm fsm_0 -original "000000001000000000" -translated "000000001000000000"
+vif_set_state_map -fsm fsm_0 -original "000000010000000000" -translated "000000010000000000"
+vif_set_state_map -fsm fsm_0 -original "000000100000000000" -translated "000000100000000000"
+vif_set_state_map -fsm fsm_0 -original "000001000000000000" -translated "000001000000000000"
+vif_set_state_map -fsm fsm_0 -original "000010000000000000" -translated "000010000000000000"
+vif_set_state_map -fsm fsm_0 -original "000100000000000000" -translated "000100000000000000"
+vif_set_state_map -fsm fsm_0 -original "001000000000000000" -translated "001000000000000000"
+vif_set_state_map -fsm fsm_0 -original "010000000000000000" -translated "010000000000000000"
+vif_set_state_map -fsm fsm_0 -original "100000000000000000" -translated "100000000000000000"
+vif_set_fsm -fsm fsm_17
+vif_set_fsmreg -original -fsm fsm_17 TxBLK/current_state[14:0]
+vif_set_fsmreg -translated -fsm  fsm_17 TxBLK/current_state[14:0]
+vif_set_state_map -fsm fsm_17 -original "000000000000001" -translated "000000000000001"
+vif_set_state_map -fsm fsm_17 -original "000000000000010" -translated "000000000000010"
+vif_set_state_map -fsm fsm_17 -original "000000000000100" -translated "000000000000100"
+vif_set_state_map -fsm fsm_17 -original "000000000001000" -translated "000000000001000"
+vif_set_state_map -fsm fsm_17 -original "000000000010000" -translated "000000000010000"
+vif_set_state_map -fsm fsm_17 -original "000000000100000" -translated "000000000100000"
+vif_set_state_map -fsm fsm_17 -original "000000001000000" -translated "000000001000000"
+vif_set_state_map -fsm fsm_17 -original "000000010000000" -translated "000000010000000"
+vif_set_state_map -fsm fsm_17 -original "000000100000000" -translated "000000100000000"
+vif_set_state_map -fsm fsm_17 -original "000001000000000" -translated "000001000000000"
+vif_set_state_map -fsm fsm_17 -original "000010000000000" -translated "000010000000000"
+vif_set_state_map -fsm fsm_17 -original "000100000000000" -translated "000100000000000"
+vif_set_state_map -fsm fsm_17 -original "001000000000000" -translated "001000000000000"
+vif_set_state_map -fsm fsm_17 -original "010000000000000" -translated "010000000000000"
+vif_set_state_map -fsm fsm_17 -original "100000000000000" -translated "100000000000000"
+
+# Memory map points
+# Select ram points
+vif_set_map_point -register -original RxBLK/rxfifo[0][7] -translated RxBLK/rxfifo.I_1/ff0_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[1][7] -translated RxBLK/rxfifo.I_1/ff1_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[2][7] -translated RxBLK/rxfifo.I_1/ff2_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[3][7] -translated RxBLK/rxfifo.I_1/ff3_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[4][7] -translated RxBLK/rxfifo.I_1/ff4_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[5][7] -translated RxBLK/rxfifo.I_1/ff5_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[6][7] -translated RxBLK/rxfifo.I_1/ff6_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[7][7] -translated RxBLK/rxfifo.I_1/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original RxBLK/rxfifo[0][4] -translated RxBLK/rxfifo.I_2/ff0_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[1][4] -translated RxBLK/rxfifo.I_2/ff1_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[2][4] -translated RxBLK/rxfifo.I_2/ff2_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[3][4] -translated RxBLK/rxfifo.I_2/ff3_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[4][4] -translated RxBLK/rxfifo.I_2/ff4_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[5][4] -translated RxBLK/rxfifo.I_2/ff5_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[6][4] -translated RxBLK/rxfifo.I_2/ff6_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[7][4] -translated RxBLK/rxfifo.I_2/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original RxBLK/rxfifo[0][5] -translated RxBLK/rxfifo.I_3/ff0_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[1][5] -translated RxBLK/rxfifo.I_3/ff1_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[2][5] -translated RxBLK/rxfifo.I_3/ff2_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[3][5] -translated RxBLK/rxfifo.I_3/ff3_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[4][5] -translated RxBLK/rxfifo.I_3/ff4_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[5][5] -translated RxBLK/rxfifo.I_3/ff5_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[6][5] -translated RxBLK/rxfifo.I_3/ff6_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[7][5] -translated RxBLK/rxfifo.I_3/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original RxBLK/rxfifo[0][6] -translated RxBLK/rxfifo.I_4/ff0_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[1][6] -translated RxBLK/rxfifo.I_4/ff1_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[2][6] -translated RxBLK/rxfifo.I_4/ff2_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[3][6] -translated RxBLK/rxfifo.I_4/ff3_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[4][6] -translated RxBLK/rxfifo.I_4/ff4_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[5][6] -translated RxBLK/rxfifo.I_4/ff5_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[6][6] -translated RxBLK/rxfifo.I_4/ff6_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[7][6] -translated RxBLK/rxfifo.I_4/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original RxBLK/rxfifo[0][3] -translated RxBLK/rxfifo.I_5/ff0_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[1][3] -translated RxBLK/rxfifo.I_5/ff1_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[2][3] -translated RxBLK/rxfifo.I_5/ff2_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[3][3] -translated RxBLK/rxfifo.I_5/ff3_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[4][3] -translated RxBLK/rxfifo.I_5/ff4_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[5][3] -translated RxBLK/rxfifo.I_5/ff5_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[6][3] -translated RxBLK/rxfifo.I_5/ff6_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[7][3] -translated RxBLK/rxfifo.I_5/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original RxBLK/rxfifo[0][0] -translated RxBLK/rxfifo.I_6/ff0_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[1][0] -translated RxBLK/rxfifo.I_6/ff1_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[2][0] -translated RxBLK/rxfifo.I_6/ff2_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[3][0] -translated RxBLK/rxfifo.I_6/ff3_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[4][0] -translated RxBLK/rxfifo.I_6/ff4_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[5][0] -translated RxBLK/rxfifo.I_6/ff5_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[6][0] -translated RxBLK/rxfifo.I_6/ff6_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[7][0] -translated RxBLK/rxfifo.I_6/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original RxBLK/rxfifo[0][1] -translated RxBLK/rxfifo.I_7/ff0_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[1][1] -translated RxBLK/rxfifo.I_7/ff1_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[2][1] -translated RxBLK/rxfifo.I_7/ff2_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[3][1] -translated RxBLK/rxfifo.I_7/ff3_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[4][1] -translated RxBLK/rxfifo.I_7/ff4_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[5][1] -translated RxBLK/rxfifo.I_7/ff5_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[6][1] -translated RxBLK/rxfifo.I_7/ff6_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[7][1] -translated RxBLK/rxfifo.I_7/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original RxBLK/rxfifo[0][2] -translated RxBLK/rxfifo.I_8/ff0_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[1][2] -translated RxBLK/rxfifo.I_8/ff1_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[2][2] -translated RxBLK/rxfifo.I_8/ff2_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[3][2] -translated RxBLK/rxfifo.I_8/ff3_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[4][2] -translated RxBLK/rxfifo.I_8/ff4_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[5][2] -translated RxBLK/rxfifo.I_8/ff5_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[6][2] -translated RxBLK/rxfifo.I_8/ff6_r_e_g
+vif_set_map_point -register -original RxBLK/rxfifo[7][2] -translated RxBLK/rxfifo.I_8/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original TxBLK/txfifo[0][7] -translated TxBLK/txfifo.I_1/ff0_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[1][7] -translated TxBLK/txfifo.I_1/ff1_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[2][7] -translated TxBLK/txfifo.I_1/ff2_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[3][7] -translated TxBLK/txfifo.I_1/ff3_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[4][7] -translated TxBLK/txfifo.I_1/ff4_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[5][7] -translated TxBLK/txfifo.I_1/ff5_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[6][7] -translated TxBLK/txfifo.I_1/ff6_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[7][7] -translated TxBLK/txfifo.I_1/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original TxBLK/txfifo[0][4] -translated TxBLK/txfifo.I_2/ff0_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[1][4] -translated TxBLK/txfifo.I_2/ff1_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[2][4] -translated TxBLK/txfifo.I_2/ff2_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[3][4] -translated TxBLK/txfifo.I_2/ff3_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[4][4] -translated TxBLK/txfifo.I_2/ff4_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[5][4] -translated TxBLK/txfifo.I_2/ff5_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[6][4] -translated TxBLK/txfifo.I_2/ff6_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[7][4] -translated TxBLK/txfifo.I_2/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original TxBLK/txfifo[0][5] -translated TxBLK/txfifo.I_3/ff0_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[1][5] -translated TxBLK/txfifo.I_3/ff1_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[2][5] -translated TxBLK/txfifo.I_3/ff2_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[3][5] -translated TxBLK/txfifo.I_3/ff3_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[4][5] -translated TxBLK/txfifo.I_3/ff4_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[5][5] -translated TxBLK/txfifo.I_3/ff5_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[6][5] -translated TxBLK/txfifo.I_3/ff6_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[7][5] -translated TxBLK/txfifo.I_3/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original TxBLK/txfifo[0][6] -translated TxBLK/txfifo.I_4/ff0_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[1][6] -translated TxBLK/txfifo.I_4/ff1_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[2][6] -translated TxBLK/txfifo.I_4/ff2_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[3][6] -translated TxBLK/txfifo.I_4/ff3_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[4][6] -translated TxBLK/txfifo.I_4/ff4_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[5][6] -translated TxBLK/txfifo.I_4/ff5_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[6][6] -translated TxBLK/txfifo.I_4/ff6_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[7][6] -translated TxBLK/txfifo.I_4/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original TxBLK/txfifo[0][3] -translated TxBLK/txfifo.I_5/ff0_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[1][3] -translated TxBLK/txfifo.I_5/ff1_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[2][3] -translated TxBLK/txfifo.I_5/ff2_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[3][3] -translated TxBLK/txfifo.I_5/ff3_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[4][3] -translated TxBLK/txfifo.I_5/ff4_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[5][3] -translated TxBLK/txfifo.I_5/ff5_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[6][3] -translated TxBLK/txfifo.I_5/ff6_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[7][3] -translated TxBLK/txfifo.I_5/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original TxBLK/txfifo[0][0] -translated TxBLK/txfifo.I_6/ff0_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[1][0] -translated TxBLK/txfifo.I_6/ff1_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[2][0] -translated TxBLK/txfifo.I_6/ff2_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[3][0] -translated TxBLK/txfifo.I_6/ff3_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[4][0] -translated TxBLK/txfifo.I_6/ff4_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[5][0] -translated TxBLK/txfifo.I_6/ff5_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[6][0] -translated TxBLK/txfifo.I_6/ff6_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[7][0] -translated TxBLK/txfifo.I_6/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original TxBLK/txfifo[0][1] -translated TxBLK/txfifo.I_7/ff0_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[1][1] -translated TxBLK/txfifo.I_7/ff1_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[2][1] -translated TxBLK/txfifo.I_7/ff2_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[3][1] -translated TxBLK/txfifo.I_7/ff3_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[4][1] -translated TxBLK/txfifo.I_7/ff4_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[5][1] -translated TxBLK/txfifo.I_7/ff5_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[6][1] -translated TxBLK/txfifo.I_7/ff6_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[7][1] -translated TxBLK/txfifo.I_7/ff7_r_e_g
+
+# Select ram points
+vif_set_map_point -register -original TxBLK/txfifo[0][2] -translated TxBLK/txfifo.I_8/ff0_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[1][2] -translated TxBLK/txfifo.I_8/ff1_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[2][2] -translated TxBLK/txfifo.I_8/ff2_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[3][2] -translated TxBLK/txfifo.I_8/ff3_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[4][2] -translated TxBLK/txfifo.I_8/ff4_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[5][2] -translated TxBLK/txfifo.I_8/ff5_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[6][2] -translated TxBLK/txfifo.I_8/ff6_r_e_g
+vif_set_map_point -register -original TxBLK/txfifo[7][2] -translated TxBLK/txfifo.I_8/ff7_r_e_g
+
+
+# SRL map points
+
+# Compiler constant registers
+
+# Compiler constant latches
+
+# Compiler RTL sequential redundancies
+
+# RTL sequential redundancies
+
+# Technology sequential redundancies
+vif_set_equiv -translated RegBlock/timeoutintenb_int_Z RegBlock/timeoutintenb_int_rep1_Z
+vif_set_equiv -translated RegBlock/timeoutintenb_int_Z RegBlock/timeoutintenb_int_fast_Z
+vif_set_equiv -translated RegBlock/baudx16clk_int_Z RegBlock/baudx16clk_int_rep1_Z
+vif_set_equiv -translated RegBlock/baudx16clk_int_Z RegBlock/baudx16clk_int_fast_Z
+vif_set_equiv -translated RegBlock/swrstb_int_Z RegBlock/swrstb_int_rep2_Z
+vif_set_equiv -translated RegBlock/swrstb_int_Z RegBlock/swrstb_int_rep1_Z
+vif_set_equiv -translated RegBlock/swrstb_int_Z RegBlock/swrstb_int_fast_Z
+vif_set_equiv -translated RxBLK/fifowrb_Z RxBLK/fifowrb_rep1_Z
+vif_set_equiv -translated RxBLK/fifowrb_Z RxBLK/fifowrb_fast_Z
+vif_set_equiv -translated TxBLK/fifordb_Z TxBLK/fifordb_rep1_Z
+vif_set_equiv -translated TxBLK/fifordb_Z TxBLK/fifordb_fast_Z
+vif_set_equiv -translated TxBLK/fifo_rdpos_Z[2] TxBLK/fifo_rdpos_fast_Z[2]
+vif_set_equiv -translated TxBLK/fifo_rdpos_Z[0] TxBLK/fifo_rdpos_fast_Z[0]
+vif_set_equiv -translated TxBLK/fifo_rdpos_Z[1] TxBLK/fifo_rdpos_fast_Z[1]
+
+# Inversion map points
+
+# Port mappping and directions
+
+# Black box mapping
+
+
+# Other sequential cells, including multidimensional arrays
+
+# Constant Registers
+vif_set_constant -original -1 RxBLK/current_state[17]
+vif_set_constant -original -1 RxBLK/current_state[0]
+vif_set_constant -original -1 TxBLK/txdoutsel[1]
+
+# Retimed Registers
+

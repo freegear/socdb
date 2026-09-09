@@ -1,0 +1,549 @@
+
+d RegBlock;
+gi un1_rxfifocnt_1; ai .rtl_const false;
+
+gi baudx16clk_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:uartenb";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi databit_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.loopbackenb_int7";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi parity_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.loopbackenb_int7";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi stopbit_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.loopbackenb_int7";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi dmareqenb_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.loopbackenb_int7";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi intgenenb_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.loopbackenb_int7";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi loopbackenb_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.loopbackenb_int7";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi timeoutintenb_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.loopbackenb_int7";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi uartenb_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.loopbackenb_int7";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi rxwaterlevel_int[5:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.loopbackenb_int7";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi txwaterlevel_int[5:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.loopbackenb_int7";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi clkdiv[15:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.clkdiv8";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi timeoutcnt[19:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.timeoutcnt8";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi swrstb_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi receivetimeoutb;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RegBlock.un1_timeoutintenb_int_2";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi clkdivcnt[15:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:uartenb";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi clkdivcnt_msb_dly;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:uartenb";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi timeoutcnt_int[19:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi interrupt_status;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+d RxBLK;
+gi un2_parityint; ai .rtl_const false;
+gi parityint; ai .rtl_reduce to_xor;
+
+gi un34_sum[2:0];
+ai .rtl_dangling_pins "OUT[1]";
+
+
+gi fifordb_dly;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi current_state[17:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi rx_lpfd;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:baudx16clk";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi rxsftreg[7:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RxBLK.rxsftreg9";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi fifowrb;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi fifordb_chk;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi in_dly[5:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:baudx16clk";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi fifo_wrpos[2:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi fifo_rdpos[2:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi parity_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RxBLK.un1_rstparityb_1";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi rxfifo[7:0];
+ai .clock "NONE";
+gp CLK;
+ap .is_clock 1;
+ap .clock "NONE";
+
+gi rxclk;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi overrunerrorb_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RxBLK.un1_overrunerrorb_int_2";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi frameerrorb_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RxBLK.un1_frameerrorb_int16_1";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi rxclkcnt[3:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi parityerrorb_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:RxBLK.un1_parityerrorb_int15_1";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi fifocnt[2:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi paritychkb;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi rstparityb;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi framechkb;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi dataphaseb;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi rxbusyb_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi rxclkenb;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+d TxBLK;
+gi txd_int_0_sqmuxa; ai .rtl_const false;
+gi txd_int9; ai .rtl_const false;
+
+gi txfifo[7:0];
+ai .clock "NONE";
+gp CLK;
+ap .is_clock 1;
+ap .clock "NONE";
+
+gi parity_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:TxBLK.un1_fifordb_1";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi shiftreg[7:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .clock_enable "n:TxBLK.un1_fifordb_2";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi txclkcntenb;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi txclk;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi fifo_wrpos[2:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi fifo_rdpos[2:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi dtxclk;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi current_state[14:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi txclkcnt[3:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi fifordb;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi txbusyb_int;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi shiftenb;
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_set "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi txdoutsel[3:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+gi fifocnt[3:0];
+ai .clock "NONE";
+ai .clock_edge "rise";
+ai .async_reset "n:rstb";
+gp C;
+ap .is_clock 1;
+ap .clock "NONE";
+ap .clock_edge "rise";
+
+n work UART_TOP verilog;
+av .syn_compile_point 1;
+av .compile_point_name UART_TOP;
