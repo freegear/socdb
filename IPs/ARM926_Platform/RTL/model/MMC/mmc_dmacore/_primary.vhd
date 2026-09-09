@@ -1,0 +1,60 @@
+library verilog;
+use verilog.vl_types.all;
+entity mmc_dmacore is
+    generic(
+        idle            : integer := 0;
+        st_a            : integer := 1;
+        st_b            : integer := 2;
+        st_c            : integer := 3;
+        st_d            : integer := 4;
+        st_e            : integer := 5;
+        st_f            : integer := 6
+    );
+    port(
+        mresetn         : in     vl_logic;
+        hclk            : in     vl_logic;
+        hendian         : in     vl_logic;
+        hbusreq         : out    vl_logic;
+        hgrant          : in     vl_logic;
+        haddr           : out    vl_logic_vector(31 downto 0);
+        htrans          : out    vl_logic_vector(1 downto 0);
+        hsize           : out    vl_logic_vector(2 downto 0);
+        hburst          : out    vl_logic_vector(2 downto 0);
+        hwrite          : out    vl_logic;
+        hprot           : out    vl_logic_vector(3 downto 0);
+        hwdata          : out    vl_logic_vector(31 downto 0);
+        hready          : in     vl_logic;
+        hrdata          : in     vl_logic_vector(31 downto 0);
+        hiaddr          : in     vl_logic_vector(29 downto 0);
+        hdst            : in     vl_logic_vector(1 downto 0);
+        hicnt           : in     vl_logic_vector(19 downto 0);
+        hccnt_clr       : in     vl_logic;
+        hxenable        : in     vl_logic;
+        hxmode          : in     vl_logic;
+        hdae            : in     vl_logic;
+        hcaddr          : out    vl_logic_vector(29 downto 0);
+        hcdst           : out    vl_logic_vector(1 downto 0);
+        hccnt           : out    vl_logic_vector(19 downto 0);
+        hrstb           : out    vl_logic;
+        hwstb           : out    vl_logic;
+        hssize          : out    vl_logic_vector(2 downto 0);
+        hwd             : out    vl_logic_vector(31 downto 0);
+        hrd             : in     vl_logic_vector(31 downto 0);
+        hstore_write    : in     vl_logic_vector(5 downto 0);
+        hstore_read     : in     vl_logic_vector(5 downto 0);
+        hdma1locken     : in     vl_logic_vector(7 downto 0);
+        state           : out    vl_logic_vector(2 downto 0);
+        xfer_req        : out    vl_logic;
+        xfer_req_tx_word: out    vl_logic;
+        xfer_req_rx_word: out    vl_logic;
+        xfer_req_tx_byte: out    vl_logic;
+        xfer_req_rx_byte: out    vl_logic;
+        hstore_write_edge: out    vl_logic_vector(5 downto 0);
+        hstore_read_edge: out    vl_logic_vector(5 downto 0);
+        hxenable_stb    : out    vl_logic;
+        har_stb         : out    vl_logic;
+        hwrited         : out    vl_logic;
+        mcmdindex       : in     vl_logic_vector(5 downto 0);
+        dma1_lock       : out    vl_logic
+    );
+end mmc_dmacore;
