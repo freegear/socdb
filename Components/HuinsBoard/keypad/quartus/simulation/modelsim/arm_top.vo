@@ -1,0 +1,5196 @@
+// Copyright (C) 1991-2004 Altera Corporation
+// Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+// support information,  device programming or simulation file,  and any other
+// associated  documentation or information  provided by  Altera  or a partner
+// under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+// to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+// other  use  of such  megafunction  design,  netlist,  support  information,
+// device programming or simulation file,  or any other  related documentation
+// or information  is prohibited  for  any  other purpose,  including, but not
+// limited to  modification,  reverse engineering,  de-compiling, or use  with
+// any other  silicon devices,  unless such use is  explicitly  licensed under
+// a separate agreement with  Altera  or a megafunction partner.  Title to the
+// intellectual property,  including patents,  copyrights,  trademarks,  trade
+// secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+// support  information,  device programming or simulation file,  or any other
+// related documentation or information provided by  Altera  or a megafunction
+// partner, remains with Altera, the megafunction partner, or their respective
+// licensors. No other licenses, including any licenses needed under any third
+// party's intellectual property, are provided herein.
+
+// VENDOR "Altera"
+// PROGRAM "Quartus II"
+// VERSION "Version 4.2 Build 157 12/07/2004 SJ Full Version"
+
+// DATE "12/02/2005 17:25:57"
+
+// 
+// Device: Altera EPXA10F1020C2 Package FBGA1020
+// 
+
+// 
+// This Verilog file should be used for ModelSim (Verilog HDL output from Quartus II) only
+// 
+
+`timescale 1 ps/ 1 ps
+
+module 	arm_top (
+	HCLOCK,
+	HRESET,
+	DATA_A,
+	DATA_B,
+	DATA_C,
+	DATA_D,
+	DATA_AVAIL,
+	clk_ref,
+	npor,
+	ebiack,
+	uartctsn,
+	uartdsrn,
+	uartrxd,
+	intextpin,
+	nreset,
+	uartdcdn,
+	uartrin,
+	ebidq,
+	hready,
+	Mwrite,
+	masterhaddr,
+	burst,
+	size,
+	trans,
+	masterhwdata,
+	intpld,
+	masterhrdata,
+	hresp,
+	HCLK,
+	uartdtrn,
+	uarttxd,
+	uartrtsn,
+	ebiwen,
+	ebioen,
+	ebiaddr,
+	ebicsn);
+input 	HCLOCK;
+input 	HRESET;
+input 	DATA_A;
+input 	DATA_B;
+input 	DATA_C;
+input 	DATA_D;
+input 	DATA_AVAIL;
+input 	clk_ref;
+input 	npor;
+input 	ebiack;
+input 	uartctsn;
+input 	uartdsrn;
+input 	uartrxd;
+input 	intextpin;
+inout 	nreset;
+inout 	uartdcdn;
+inout 	uartrin;
+inout 	[15:0] ebidq;
+output 	hready;
+output 	Mwrite;
+output 	[31:0] masterhaddr;
+output 	[2:0] burst;
+output 	[1:0] size;
+output 	[1:0] trans;
+output 	[31:0] masterhwdata;
+output 	[1:1] intpld;
+output 	[31:0] masterhrdata;
+output 	[1:0] hresp;
+output 	HCLK;
+output 	uartdtrn;
+output 	uarttxd;
+output 	uartrtsn;
+output 	ebiwen;
+output 	ebioen;
+output 	[24:0] ebiaddr;
+output 	[3:0] ebicsn;
+
+wire gnd = 1'b0;
+wire vcc = 1'b1;
+
+tri1 devclrn;
+tri1 devpor;
+tri0 devoe;
+// synopsys translate_off
+initial $sdf_annotate("arm_top_v.sdo");
+// synopsys translate_on
+
+wire \inst5|lpm_instance|dp0|dpram~PORTADATAOUT1 ;
+wire \inst5|lpm_instance|dp0|dpram~PORTADATAOUT2 ;
+wire \inst5|lpm_instance|dp0|dpram~PORTADATAOUT3 ;
+wire \inst5|lpm_instance|dp0|dpram~PORTADATAOUT4 ;
+wire \inst5|lpm_instance|dp0|dpram~PORTADATAOUT5 ;
+wire \inst5|lpm_instance|dp0|dpram~PORTADATAOUT6 ;
+wire \inst5|lpm_instance|dp0|dpram~PORTADATAOUT7 ;
+wire \inst|key_state|PLD_STATE.IDLE ;
+wire \inst|key_state|PLD_STATE.WAIT_STATE2 ;
+wire \inst5|lpm_instance|dp0|portadataout[0] ;
+wire \inst5|lpm_instance|core|core ;
+wire \inst5|lpm_instance|core|MASTERHWRITE ;
+wire \inst5|lpm_instance|core|core~EBIWEN ;
+wire \inst5|lpm_instance|core|core~EBIOEN ;
+wire \inst5|lpm_instance|core|core~EBIDQOE ;
+wire \inst5|lpm_instance|core|core~UARTRION ;
+wire \inst5|lpm_instance|core|core~UARTDCDON ;
+wire \inst5|lpm_instance|core|core~UARTDCDRIOE ;
+wire \inst5|lpm_instance|core|core~UARTTXD ;
+wire \inst5|lpm_instance|core|core~UARTRTSN ;
+wire \inst5|lpm_instance|core|core~UARTDTRN ;
+wire \inst5|lpm_instance|core|MASTERHADDR[0] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[1] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[2] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[3] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[4] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[5] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[6] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[7] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[8] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[9] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[10] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[11] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[12] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[13] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[14] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[15] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[16] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[17] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[18] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[19] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[20] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[21] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[22] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[23] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[24] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[25] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[26] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[27] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[28] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[29] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[30] ;
+wire \inst5|lpm_instance|core|MASTERHADDR[31] ;
+wire \inst5|lpm_instance|core|MASTERHTRANS[0] ;
+wire \inst5|lpm_instance|core|MASTERHTRANS[1] ;
+wire \inst5|lpm_instance|core|MASTERHSIZE[0] ;
+wire \inst5|lpm_instance|core|MASTERHSIZE[1] ;
+wire \inst5|lpm_instance|core|MASTERHBURST[0] ;
+wire \inst5|lpm_instance|core|MASTERHBURST[1] ;
+wire \inst5|lpm_instance|core|MASTERHBURST[2] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[0] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[1] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[2] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[3] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[4] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[5] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[6] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[7] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[8] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[9] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[10] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[11] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[12] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[13] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[14] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[15] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[16] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[17] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[18] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[19] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[20] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[21] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[22] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[23] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[24] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[25] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[26] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[27] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[28] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[29] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[30] ;
+wire \inst5|lpm_instance|core|MASTERHWDATA[31] ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT0 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT1 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT2 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT3 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT4 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT5 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT6 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT7 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT8 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT9 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT10 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT11 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT12 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT13 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT14 ;
+wire \inst5|lpm_instance|core|core~EBIDQOUT15 ;
+wire \inst5|lpm_instance|core|core~EBICSN0 ;
+wire \inst5|lpm_instance|core|core~EBICSN1 ;
+wire \inst5|lpm_instance|core|core~EBICSN2 ;
+wire \inst5|lpm_instance|core|core~EBICSN3 ;
+wire \inst5|lpm_instance|core|core~EBIADDR0 ;
+wire \inst5|lpm_instance|core|core~EBIADDR1 ;
+wire \inst5|lpm_instance|core|core~EBIADDR2 ;
+wire \inst5|lpm_instance|core|core~EBIADDR3 ;
+wire \inst5|lpm_instance|core|core~EBIADDR4 ;
+wire \inst5|lpm_instance|core|core~EBIADDR5 ;
+wire \inst5|lpm_instance|core|core~EBIADDR6 ;
+wire \inst5|lpm_instance|core|core~EBIADDR7 ;
+wire \inst5|lpm_instance|core|core~EBIADDR8 ;
+wire \inst5|lpm_instance|core|core~EBIADDR9 ;
+wire \inst5|lpm_instance|core|core~EBIADDR10 ;
+wire \inst5|lpm_instance|core|core~EBIADDR11 ;
+wire \inst5|lpm_instance|core|core~EBIADDR12 ;
+wire \inst5|lpm_instance|core|core~EBIADDR13 ;
+wire \inst5|lpm_instance|core|core~EBIADDR14 ;
+wire \inst5|lpm_instance|core|core~EBIADDR15 ;
+wire \inst5|lpm_instance|core|core~EBIADDR16 ;
+wire \inst5|lpm_instance|core|core~EBIADDR17 ;
+wire \inst5|lpm_instance|core|core~EBIADDR18 ;
+wire \inst5|lpm_instance|core|core~EBIADDR19 ;
+wire \inst5|lpm_instance|core|core~EBIADDR20 ;
+wire \inst5|lpm_instance|core|core~EBIADDR21 ;
+wire \inst5|lpm_instance|core|core~EBIADDR22 ;
+wire \inst5|lpm_instance|core|core~EBIADDR23 ;
+wire \inst5|lpm_instance|core|core~EBIADDR24 ;
+wire \inst5|lpm_instance|core|nreset_pbidir|combout ;
+wire \inst5|lpm_instance|core|uartdcdn_pbidir|combout ;
+wire \inst5|lpm_instance|core|uartrin_pbidir|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[0]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[1]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[2]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[3]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[4]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[5]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[6]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[7]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[8]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[9]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[10]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[11]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[12]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[13]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[14]|combout ;
+wire \inst5|lpm_instance|core|ebidq_pbidir[15]|combout ;
+wire \DATA_AVAIL~combout ;
+wire \HCLOCK~combout ;
+wire \HRESET~combout ;
+wire \inst|key_state|DATA_AVAIL_1d ;
+wire \inst|key_state|DATA_AVAIL_2d ;
+wire \inst|key_state|Latch_en ;
+wire \inst|key_state|PLD_STATE.DATA_PHASE ;
+wire \inst|key_state|Hready_i~33 ;
+wire \inst|key_state|PLD_STATE.WAIT_STATE ;
+wire \inst|key_state|Hready_i ;
+wire \inst|ahb_slave_sm2|Select~296 ;
+wire \inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE ;
+wire \inst|ahb_slave_sm2|Select~295 ;
+wire \inst|ahb_slave_sm2|slave_state.DATA_PHASE ;
+wire \inst|ahb_slave_sm2|slave_state.BURST_PHASE ;
+wire \inst|ahb_slave_sm2|Select~293 ;
+wire \inst|ahb_slave_sm2|HREADY_r ;
+wire \inst|ahb_slave_sm2|HREADY~1 ;
+wire \inst|key_state|Int_reg ;
+wire \inst|key_state|read_data[4] ;
+wire \DATA_A~combout ;
+wire \inst|key_state|DATA_1d[3] ;
+wire \inst|key_state|read_data[3] ;
+wire \DATA_B~combout ;
+wire \inst|key_state|DATA_1d[2] ;
+wire \inst|key_state|read_data[2] ;
+wire \DATA_C~combout ;
+wire \inst|key_state|DATA_1d[1] ;
+wire \inst|key_state|read_data[1] ;
+wire \DATA_D~combout ;
+wire \inst|key_state|DATA_1d[0] ;
+wire \inst|key_state|read_data[0] ;
+wire \~VCC ;
+wire \clk_ref~combout ;
+wire \npor~combout ;
+wire \inst5|lpm_instance|lcell_hgrant ;
+wire \ebiack~combout ;
+wire \uartctsn~combout ;
+wire \uartdsrn~combout ;
+wire \uartrxd~combout ;
+wire \intextpin~combout ;
+wire \inst5|lpm_instance|lcell_hresp0 ;
+wire \inst5|lpm_instance|lcell_hresp1 ;
+
+wire [7:0] \inst5|lpm_instance|dp0|dpram_adataout_bus ;
+wire [31:0] \inst5|lpm_instance|core|core~I_masterhaddr_bus ;
+wire [1:0] \inst5|lpm_instance|core|core~I_masterhtrans_bus ;
+wire [1:0] \inst5|lpm_instance|core|core~I_masterhsize_bus ;
+wire [2:0] \inst5|lpm_instance|core|core~I_masterhburst_bus ;
+wire [31:0] \inst5|lpm_instance|core|core~I_masterhwdata_bus ;
+wire [15:0] \inst5|lpm_instance|core|core~I_ebidqout_bus ;
+wire [24:0] \inst5|lpm_instance|core|core~I_ebiaddr_bus ;
+wire [3:0] \inst5|lpm_instance|core|core~I_ebicsn_bus ;
+
+assign \inst5|lpm_instance|dp0|portadataout[0]  = \inst5|lpm_instance|dp0|dpram_adataout_bus [0];
+assign \inst5|lpm_instance|dp0|dpram~PORTADATAOUT1  = \inst5|lpm_instance|dp0|dpram_adataout_bus [1];
+assign \inst5|lpm_instance|dp0|dpram~PORTADATAOUT2  = \inst5|lpm_instance|dp0|dpram_adataout_bus [2];
+assign \inst5|lpm_instance|dp0|dpram~PORTADATAOUT3  = \inst5|lpm_instance|dp0|dpram_adataout_bus [3];
+assign \inst5|lpm_instance|dp0|dpram~PORTADATAOUT4  = \inst5|lpm_instance|dp0|dpram_adataout_bus [4];
+assign \inst5|lpm_instance|dp0|dpram~PORTADATAOUT5  = \inst5|lpm_instance|dp0|dpram_adataout_bus [5];
+assign \inst5|lpm_instance|dp0|dpram~PORTADATAOUT6  = \inst5|lpm_instance|dp0|dpram_adataout_bus [6];
+assign \inst5|lpm_instance|dp0|dpram~PORTADATAOUT7  = \inst5|lpm_instance|dp0|dpram_adataout_bus [7];
+
+assign \inst5|lpm_instance|core|MASTERHADDR[0]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [0];
+assign \inst5|lpm_instance|core|MASTERHADDR[1]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [1];
+assign \inst5|lpm_instance|core|MASTERHADDR[2]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [2];
+assign \inst5|lpm_instance|core|MASTERHADDR[3]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [3];
+assign \inst5|lpm_instance|core|MASTERHADDR[4]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [4];
+assign \inst5|lpm_instance|core|MASTERHADDR[5]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [5];
+assign \inst5|lpm_instance|core|MASTERHADDR[6]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [6];
+assign \inst5|lpm_instance|core|MASTERHADDR[7]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [7];
+assign \inst5|lpm_instance|core|MASTERHADDR[8]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [8];
+assign \inst5|lpm_instance|core|MASTERHADDR[9]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [9];
+assign \inst5|lpm_instance|core|MASTERHADDR[10]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [10];
+assign \inst5|lpm_instance|core|MASTERHADDR[11]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [11];
+assign \inst5|lpm_instance|core|MASTERHADDR[12]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [12];
+assign \inst5|lpm_instance|core|MASTERHADDR[13]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [13];
+assign \inst5|lpm_instance|core|MASTERHADDR[14]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [14];
+assign \inst5|lpm_instance|core|MASTERHADDR[15]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [15];
+assign \inst5|lpm_instance|core|MASTERHADDR[16]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [16];
+assign \inst5|lpm_instance|core|MASTERHADDR[17]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [17];
+assign \inst5|lpm_instance|core|MASTERHADDR[18]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [18];
+assign \inst5|lpm_instance|core|MASTERHADDR[19]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [19];
+assign \inst5|lpm_instance|core|MASTERHADDR[20]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [20];
+assign \inst5|lpm_instance|core|MASTERHADDR[21]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [21];
+assign \inst5|lpm_instance|core|MASTERHADDR[22]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [22];
+assign \inst5|lpm_instance|core|MASTERHADDR[23]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [23];
+assign \inst5|lpm_instance|core|MASTERHADDR[24]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [24];
+assign \inst5|lpm_instance|core|MASTERHADDR[25]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [25];
+assign \inst5|lpm_instance|core|MASTERHADDR[26]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [26];
+assign \inst5|lpm_instance|core|MASTERHADDR[27]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [27];
+assign \inst5|lpm_instance|core|MASTERHADDR[28]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [28];
+assign \inst5|lpm_instance|core|MASTERHADDR[29]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [29];
+assign \inst5|lpm_instance|core|MASTERHADDR[30]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [30];
+assign \inst5|lpm_instance|core|MASTERHADDR[31]  = \inst5|lpm_instance|core|core~I_masterhaddr_bus [31];
+
+assign \inst5|lpm_instance|core|MASTERHTRANS[0]  = \inst5|lpm_instance|core|core~I_masterhtrans_bus [0];
+assign \inst5|lpm_instance|core|MASTERHTRANS[1]  = \inst5|lpm_instance|core|core~I_masterhtrans_bus [1];
+
+assign \inst5|lpm_instance|core|MASTERHSIZE[0]  = \inst5|lpm_instance|core|core~I_masterhsize_bus [0];
+assign \inst5|lpm_instance|core|MASTERHSIZE[1]  = \inst5|lpm_instance|core|core~I_masterhsize_bus [1];
+
+assign \inst5|lpm_instance|core|MASTERHBURST[0]  = \inst5|lpm_instance|core|core~I_masterhburst_bus [0];
+assign \inst5|lpm_instance|core|MASTERHBURST[1]  = \inst5|lpm_instance|core|core~I_masterhburst_bus [1];
+assign \inst5|lpm_instance|core|MASTERHBURST[2]  = \inst5|lpm_instance|core|core~I_masterhburst_bus [2];
+
+assign \inst5|lpm_instance|core|MASTERHWDATA[0]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [0];
+assign \inst5|lpm_instance|core|MASTERHWDATA[1]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [1];
+assign \inst5|lpm_instance|core|MASTERHWDATA[2]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [2];
+assign \inst5|lpm_instance|core|MASTERHWDATA[3]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [3];
+assign \inst5|lpm_instance|core|MASTERHWDATA[4]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [4];
+assign \inst5|lpm_instance|core|MASTERHWDATA[5]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [5];
+assign \inst5|lpm_instance|core|MASTERHWDATA[6]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [6];
+assign \inst5|lpm_instance|core|MASTERHWDATA[7]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [7];
+assign \inst5|lpm_instance|core|MASTERHWDATA[8]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [8];
+assign \inst5|lpm_instance|core|MASTERHWDATA[9]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [9];
+assign \inst5|lpm_instance|core|MASTERHWDATA[10]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [10];
+assign \inst5|lpm_instance|core|MASTERHWDATA[11]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [11];
+assign \inst5|lpm_instance|core|MASTERHWDATA[12]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [12];
+assign \inst5|lpm_instance|core|MASTERHWDATA[13]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [13];
+assign \inst5|lpm_instance|core|MASTERHWDATA[14]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [14];
+assign \inst5|lpm_instance|core|MASTERHWDATA[15]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [15];
+assign \inst5|lpm_instance|core|MASTERHWDATA[16]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [16];
+assign \inst5|lpm_instance|core|MASTERHWDATA[17]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [17];
+assign \inst5|lpm_instance|core|MASTERHWDATA[18]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [18];
+assign \inst5|lpm_instance|core|MASTERHWDATA[19]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [19];
+assign \inst5|lpm_instance|core|MASTERHWDATA[20]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [20];
+assign \inst5|lpm_instance|core|MASTERHWDATA[21]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [21];
+assign \inst5|lpm_instance|core|MASTERHWDATA[22]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [22];
+assign \inst5|lpm_instance|core|MASTERHWDATA[23]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [23];
+assign \inst5|lpm_instance|core|MASTERHWDATA[24]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [24];
+assign \inst5|lpm_instance|core|MASTERHWDATA[25]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [25];
+assign \inst5|lpm_instance|core|MASTERHWDATA[26]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [26];
+assign \inst5|lpm_instance|core|MASTERHWDATA[27]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [27];
+assign \inst5|lpm_instance|core|MASTERHWDATA[28]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [28];
+assign \inst5|lpm_instance|core|MASTERHWDATA[29]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [29];
+assign \inst5|lpm_instance|core|MASTERHWDATA[30]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [30];
+assign \inst5|lpm_instance|core|MASTERHWDATA[31]  = \inst5|lpm_instance|core|core~I_masterhwdata_bus [31];
+
+assign \inst5|lpm_instance|core|core~EBIDQOUT0  = \inst5|lpm_instance|core|core~I_ebidqout_bus [0];
+assign \inst5|lpm_instance|core|core~EBIDQOUT1  = \inst5|lpm_instance|core|core~I_ebidqout_bus [1];
+assign \inst5|lpm_instance|core|core~EBIDQOUT2  = \inst5|lpm_instance|core|core~I_ebidqout_bus [2];
+assign \inst5|lpm_instance|core|core~EBIDQOUT3  = \inst5|lpm_instance|core|core~I_ebidqout_bus [3];
+assign \inst5|lpm_instance|core|core~EBIDQOUT4  = \inst5|lpm_instance|core|core~I_ebidqout_bus [4];
+assign \inst5|lpm_instance|core|core~EBIDQOUT5  = \inst5|lpm_instance|core|core~I_ebidqout_bus [5];
+assign \inst5|lpm_instance|core|core~EBIDQOUT6  = \inst5|lpm_instance|core|core~I_ebidqout_bus [6];
+assign \inst5|lpm_instance|core|core~EBIDQOUT7  = \inst5|lpm_instance|core|core~I_ebidqout_bus [7];
+assign \inst5|lpm_instance|core|core~EBIDQOUT8  = \inst5|lpm_instance|core|core~I_ebidqout_bus [8];
+assign \inst5|lpm_instance|core|core~EBIDQOUT9  = \inst5|lpm_instance|core|core~I_ebidqout_bus [9];
+assign \inst5|lpm_instance|core|core~EBIDQOUT10  = \inst5|lpm_instance|core|core~I_ebidqout_bus [10];
+assign \inst5|lpm_instance|core|core~EBIDQOUT11  = \inst5|lpm_instance|core|core~I_ebidqout_bus [11];
+assign \inst5|lpm_instance|core|core~EBIDQOUT12  = \inst5|lpm_instance|core|core~I_ebidqout_bus [12];
+assign \inst5|lpm_instance|core|core~EBIDQOUT13  = \inst5|lpm_instance|core|core~I_ebidqout_bus [13];
+assign \inst5|lpm_instance|core|core~EBIDQOUT14  = \inst5|lpm_instance|core|core~I_ebidqout_bus [14];
+assign \inst5|lpm_instance|core|core~EBIDQOUT15  = \inst5|lpm_instance|core|core~I_ebidqout_bus [15];
+
+assign \inst5|lpm_instance|core|core~EBIADDR0  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [0];
+assign \inst5|lpm_instance|core|core~EBIADDR1  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [1];
+assign \inst5|lpm_instance|core|core~EBIADDR2  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [2];
+assign \inst5|lpm_instance|core|core~EBIADDR3  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [3];
+assign \inst5|lpm_instance|core|core~EBIADDR4  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [4];
+assign \inst5|lpm_instance|core|core~EBIADDR5  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [5];
+assign \inst5|lpm_instance|core|core~EBIADDR6  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [6];
+assign \inst5|lpm_instance|core|core~EBIADDR7  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [7];
+assign \inst5|lpm_instance|core|core~EBIADDR8  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [8];
+assign \inst5|lpm_instance|core|core~EBIADDR9  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [9];
+assign \inst5|lpm_instance|core|core~EBIADDR10  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [10];
+assign \inst5|lpm_instance|core|core~EBIADDR11  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [11];
+assign \inst5|lpm_instance|core|core~EBIADDR12  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [12];
+assign \inst5|lpm_instance|core|core~EBIADDR13  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [13];
+assign \inst5|lpm_instance|core|core~EBIADDR14  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [14];
+assign \inst5|lpm_instance|core|core~EBIADDR15  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [15];
+assign \inst5|lpm_instance|core|core~EBIADDR16  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [16];
+assign \inst5|lpm_instance|core|core~EBIADDR17  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [17];
+assign \inst5|lpm_instance|core|core~EBIADDR18  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [18];
+assign \inst5|lpm_instance|core|core~EBIADDR19  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [19];
+assign \inst5|lpm_instance|core|core~EBIADDR20  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [20];
+assign \inst5|lpm_instance|core|core~EBIADDR21  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [21];
+assign \inst5|lpm_instance|core|core~EBIADDR22  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [22];
+assign \inst5|lpm_instance|core|core~EBIADDR23  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [23];
+assign \inst5|lpm_instance|core|core~EBIADDR24  = \inst5|lpm_instance|core|core~I_ebiaddr_bus [24];
+
+assign \inst5|lpm_instance|core|core~EBICSN0  = \inst5|lpm_instance|core|core~I_ebicsn_bus [0];
+assign \inst5|lpm_instance|core|core~EBICSN1  = \inst5|lpm_instance|core|core~I_ebicsn_bus [1];
+assign \inst5|lpm_instance|core|core~EBICSN2  = \inst5|lpm_instance|core|core~I_ebicsn_bus [2];
+assign \inst5|lpm_instance|core|core~EBICSN3  = \inst5|lpm_instance|core|core~I_ebicsn_bus [3];
+
+// atom is at LC3_8_A1
+apex20ke_lcell \inst|key_state|PLD_STATE.IDLE~I (
+// Equation(s):
+// \inst|key_state|PLD_STATE.IDLE  = DFFE(!\inst|key_state|PLD_STATE.WAIT_STATE2  & \inst|key_state|PLD_STATE.IDLE  # \inst|key_state|Latch_en , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(vcc),
+	.datab(\inst|key_state|PLD_STATE.IDLE ),
+	.datac(\inst|key_state|PLD_STATE.WAIT_STATE2 ),
+	.datad(\inst|key_state|Latch_en ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|PLD_STATE.IDLE ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|PLD_STATE.IDLE~I .operation_mode = "normal";
+defparam \inst|key_state|PLD_STATE.IDLE~I .packed_mode = "false";
+defparam \inst|key_state|PLD_STATE.IDLE~I .lut_mask = "0F0C";
+defparam \inst|key_state|PLD_STATE.IDLE~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC6_10_A1
+apex20ke_lcell \inst|key_state|PLD_STATE.WAIT_STATE2~I (
+// Equation(s):
+// \inst|key_state|PLD_STATE.WAIT_STATE2  = DFFE(\inst|key_state|Hready_i , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(\inst|key_state|Hready_i ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|PLD_STATE.WAIT_STATE2 ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|PLD_STATE.WAIT_STATE2~I .operation_mode = "normal";
+defparam \inst|key_state|PLD_STATE.WAIT_STATE2~I .packed_mode = "false";
+defparam \inst|key_state|PLD_STATE.WAIT_STATE2~I .lut_mask = "FF00";
+defparam \inst|key_state|PLD_STATE.WAIT_STATE2~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at DPRAM_0
+apex20ke_dpram \inst5|lpm_instance|dp0|dpram (
+	.portaclk(\~VCC ),
+	.portbclk(),
+	.portaena(),
+	.portbena(),
+	.portawe(\HCLOCK~combout ),
+	.portbwe(),
+	.portadatain({gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd}),
+	.portbdatain(),
+	.portaaddr({gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd}),
+	.portbaddr(),
+	.portadataout(\inst5|lpm_instance|dp0|dpram_adataout_bus ),
+	.portbdataout());
+// synopsys translate_off
+defparam \inst5|lpm_instance|dp0|dpram .operation_mode = "single_port";
+defparam \inst5|lpm_instance|dp0|dpram .output_mode = "unreg";
+defparam \inst5|lpm_instance|dp0|dpram .depth = 65536;
+defparam \inst5|lpm_instance|dp0|dpram .addrwidth = 16;
+defparam \inst5|lpm_instance|dp0|dpram .width = 8;
+defparam \inst5|lpm_instance|dp0|dpram .ramblock = 0;
+// synopsys translate_on
+
+// atom is at UPCORE
+apex20ke_upcore \inst5|lpm_instance|core|core~I (
+	.clkref(\clk_ref~combout ),
+	.npor(\npor~combout ),
+	.nreseti(\inst5|lpm_instance|core|nreset_pbidir|combout ),
+	.slavehclk(gnd),
+	.slavehwrite(gnd),
+	.slavehreadyi(gnd),
+	.slavehselreg(gnd),
+	.slavehsel(gnd),
+	.slavehmastlock(gnd),
+	.masterhclk(\HCLOCK~combout ),
+	.masterhready(\inst|ahb_slave_sm2|HREADY~1 ),
+	.masterhgrant(!\inst5|lpm_instance|lcell_hgrant ),
+	.ebiack(\ebiack~combout ),
+	.uartctsn(\uartctsn~combout ),
+	.uartdcdin(\inst5|lpm_instance|core|uartdcdn_pbidir|combout ),
+	.uartdsrn(\uartdsrn~combout ),
+	.uartrxd(\uartrxd~combout ),
+	.uartriin(\inst5|lpm_instance|core|uartrin_pbidir|combout ),
+	.intextpin(\intextpin~combout ),
+	.lockreqdp0(),
+	.lockreqdp1(),
+	.debugrq(gnd),
+	.debugext0(gnd),
+	.debugext1(gnd),
+	.debugiebrkpt(),
+	.debugdewpt(),
+	.intnmi(\inst5|lpm_instance|dp0|portadataout[0] ),
+	.slavehaddr({gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd}),
+	.slavehtrans({gnd,gnd}),
+	.slavehsize({gnd,gnd}),
+	.slavehburst({gnd,gnd,gnd}),
+	.slavehwdata({gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd,gnd}),
+	.masterhrdata({!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!
+\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!
+\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!
+\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[4] ,!\inst|key_state|read_data[3] ,!\inst|key_state|read_data[2] ,!\inst|key_state|read_data[1] ,!\inst|key_state|read_data[0] }),
+	.masterhresp({!\inst5|lpm_instance|lcell_hresp1 ,!\inst5|lpm_instance|lcell_hresp0 }),
+	.sdramdqin(),
+	.sdramdqsin(),
+	.ebidqin({\inst5|lpm_instance|core|ebidq_pbidir[15]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[14]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[13]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[12]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[11]|combout ,
+\inst5|lpm_instance|core|ebidq_pbidir[10]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[9]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[8]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[7]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[6]|combout ,
+\inst5|lpm_instance|core|ebidq_pbidir[5]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[4]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[3]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[2]|combout ,\inst5|lpm_instance|core|ebidq_pbidir[1]|combout ,
+\inst5|lpm_instance|core|ebidq_pbidir[0]|combout }),
+	.intpld({gnd,gnd,gnd,gnd,\inst|key_state|Int_reg ,gnd}),
+	.debugextin({gnd,gnd,gnd,gnd}),
+	.gpi(),
+	.nreseto(\inst5|lpm_instance|core|core ),
+	.nresetoe(),
+	.masterhwrite(\inst5|lpm_instance|core|MASTERHWRITE ),
+	.masterhlock(),
+	.masterhbusreq(),
+	.slavehreadyo(),
+	.slavebuserrint(),
+	.sdramclk(),
+	.sdramclkn(),
+	.sdramclke(),
+	.sdramwen(),
+	.sdramcasn(),
+	.sdramrasn(),
+	.sdramdqsoe(),
+	.intuart(),
+	.inttimer0(),
+	.inttimer1(),
+	.intproc0(),
+	.intproc1(),
+	.debugack(),
+	.debugrng0(),
+	.debugrng1(),
+	.ebiwen(\inst5|lpm_instance|core|core~EBIWEN ),
+	.ebioen(\inst5|lpm_instance|core|core~EBIOEN ),
+	.ebiclk(),
+	.ebidqoe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.uartrion(\inst5|lpm_instance|core|core~UARTRION ),
+	.uartdcdon(\inst5|lpm_instance|core|core~UARTDCDON ),
+	.uartdcdrioe(\inst5|lpm_instance|core|core~UARTDCDRIOE ),
+	.uarttxd(\inst5|lpm_instance|core|core~UARTTXD ),
+	.uartrtsn(\inst5|lpm_instance|core|core~UARTRTSN ),
+	.uartdtrn(\inst5|lpm_instance|core|core~UARTDTRN ),
+	.lockgrantdp0(),
+	.lockgrantdp1(),
+	.traceclk(),
+	.tracesync(),
+	.perreset(),
+	.masterhaddr(\inst5|lpm_instance|core|core~I_masterhaddr_bus ),
+	.masterhtrans(\inst5|lpm_instance|core|core~I_masterhtrans_bus ),
+	.masterhsize(\inst5|lpm_instance|core|core~I_masterhsize_bus ),
+	.masterhburst(\inst5|lpm_instance|core|core~I_masterhburst_bus ),
+	.masterhwdata(\inst5|lpm_instance|core|core~I_masterhwdata_bus ),
+	.slavehresp(),
+	.slavehrdata(),
+	.sdramdqm(),
+	.sdramaddr(),
+	.sdramcsn(),
+	.sdramdqout(),
+	.sdramdqsout(),
+	.sdramdqoe(),
+	.ebidqout(\inst5|lpm_instance|core|core~I_ebidqout_bus ),
+	.ebibe(),
+	.ebicsn(\inst5|lpm_instance|core|core~I_ebicsn_bus ),
+	.ebiaddr(\inst5|lpm_instance|core|core~I_ebiaddr_bus ),
+	.debugextout(),
+	.tracepipestat(),
+	.tracepkt(),
+	.gpo());
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|core~I .processor = "ARM";
+defparam \inst5|lpm_instance|core|core~I .sdram_width = 32;
+defparam \inst5|lpm_instance|core|core~I .sdramdqm_width = 4;
+defparam \inst5|lpm_instance|core|core~I .gpio_width = 4;
+// synopsys translate_on
+
+// atom is at PIN_B13
+apex20ke_io \inst5|lpm_instance|core|nreset_pbidir|ioatom (
+	.datain(\inst5|lpm_instance|core|core ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|nreset_pbidir|combout ),
+	.regout(),
+	.padio(nreset));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|nreset_pbidir|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|nreset_pbidir|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|nreset_pbidir|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|nreset_pbidir|ioatom .power_up = "low";
+defparam \inst5|lpm_instance|core|nreset_pbidir|ioatom .open_drain_output = "true";
+// synopsys translate_on
+
+// atom is at PIN_G27
+apex20ke_io \inst5|lpm_instance|core|uartdcdn_pbidir|ioatom (
+	.datain(\inst5|lpm_instance|core|core~UARTDCDON ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~UARTDCDRIOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|uartdcdn_pbidir|combout ),
+	.regout(),
+	.padio(uartdcdn));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|uartdcdn_pbidir|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|uartdcdn_pbidir|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|uartdcdn_pbidir|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|uartdcdn_pbidir|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E28
+apex20ke_io \inst5|lpm_instance|core|uartrin_pbidir|ioatom (
+	.datain(\inst5|lpm_instance|core|core~UARTRION ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~UARTDCDRIOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|uartrin_pbidir|combout ),
+	.regout(),
+	.padio(uartrin));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|uartrin_pbidir|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|uartrin_pbidir|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|uartrin_pbidir|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|uartrin_pbidir|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J21
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[0]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT0 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[0]|combout ),
+	.regout(),
+	.padio(ebidq[0]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[0]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[0]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[0]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[0]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H21
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[1]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT1 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[1]|combout ),
+	.regout(),
+	.padio(ebidq[1]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[1]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[1]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[1]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[1]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E20
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[2]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT2 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[2]|combout ),
+	.regout(),
+	.padio(ebidq[2]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[2]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[2]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[2]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[2]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_F20
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[3]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT3 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[3]|combout ),
+	.regout(),
+	.padio(ebidq[3]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[3]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[3]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[3]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[3]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E19
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[4]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT4 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[4]|combout ),
+	.regout(),
+	.padio(ebidq[4]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[4]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[4]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[4]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[4]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_L20
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[5]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT5 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[5]|combout ),
+	.regout(),
+	.padio(ebidq[5]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[5]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[5]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[5]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[5]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_K20
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[6]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT6 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[6]|combout ),
+	.regout(),
+	.padio(ebidq[6]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[6]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[6]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[6]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[6]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J20
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[7]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT7 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[7]|combout ),
+	.regout(),
+	.padio(ebidq[7]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[7]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[7]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[7]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[7]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H20
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[8]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT8 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[8]|combout ),
+	.regout(),
+	.padio(ebidq[8]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[8]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[8]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[8]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[8]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G20
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[9]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT9 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[9]|combout ),
+	.regout(),
+	.padio(ebidq[9]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[9]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[9]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[9]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[9]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_F19
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[10]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT10 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[10]|combout ),
+	.regout(),
+	.padio(ebidq[10]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[10]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[10]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[10]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[10]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G19
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[11]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT11 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[11]|combout ),
+	.regout(),
+	.padio(ebidq[11]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[11]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[11]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[11]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[11]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_L19
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[12]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT12 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[12]|combout ),
+	.regout(),
+	.padio(ebidq[12]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[12]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[12]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[12]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[12]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_K19
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[13]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT13 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[13]|combout ),
+	.regout(),
+	.padio(ebidq[13]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[13]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[13]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[13]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[13]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J19
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[14]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT14 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[14]|combout ),
+	.regout(),
+	.padio(ebidq[14]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[14]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[14]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[14]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[14]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H19
+apex20ke_io \inst5|lpm_instance|core|ebidq_pbidir[15]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIDQOUT15 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(\inst5|lpm_instance|core|core~EBIDQOE ),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\inst5|lpm_instance|core|ebidq_pbidir[15]|combout ),
+	.regout(),
+	.padio(ebidq[15]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebidq_pbidir[15]|ioatom .operation_mode = "bidir";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[15]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[15]|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebidq_pbidir[15]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_AD31
+apex20ke_io \DATA_AVAIL~I (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\DATA_AVAIL~combout ),
+	.regout(),
+	.padio(DATA_AVAIL));
+// synopsys translate_off
+defparam \DATA_AVAIL~I .operation_mode = "input";
+defparam \DATA_AVAIL~I .reg_source_mode = "none";
+defparam \DATA_AVAIL~I .feedback_mode = "from_pin";
+defparam \DATA_AVAIL~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_W30
+apex20ke_io \HCLOCK~I (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\HCLOCK~combout ),
+	.regout(),
+	.padio(HCLOCK));
+// synopsys translate_off
+defparam \HCLOCK~I .operation_mode = "input";
+defparam \HCLOCK~I .reg_source_mode = "none";
+defparam \HCLOCK~I .feedback_mode = "from_pin";
+defparam \HCLOCK~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_AE28
+apex20ke_io \HRESET~I (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\HRESET~combout ),
+	.regout(),
+	.padio(HRESET));
+// synopsys translate_off
+defparam \HRESET~I .operation_mode = "input";
+defparam \HRESET~I .reg_source_mode = "none";
+defparam \HRESET~I .feedback_mode = "from_pin";
+defparam \HRESET~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at LC10_9_A1
+apex20ke_lcell \inst|key_state|DATA_AVAIL_1d~I (
+// Equation(s):
+// \inst|key_state|DATA_AVAIL_1d  = DFFE(\DATA_AVAIL~combout , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(\DATA_AVAIL~combout ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|DATA_AVAIL_1d ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|DATA_AVAIL_1d~I .operation_mode = "normal";
+defparam \inst|key_state|DATA_AVAIL_1d~I .packed_mode = "false";
+defparam \inst|key_state|DATA_AVAIL_1d~I .lut_mask = "FF00";
+defparam \inst|key_state|DATA_AVAIL_1d~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC5_8_A1
+apex20ke_lcell \inst|key_state|DATA_AVAIL_2d~I (
+// Equation(s):
+// \inst|key_state|DATA_AVAIL_2d  = DFFE(\inst|key_state|DATA_AVAIL_1d , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(\inst|key_state|DATA_AVAIL_1d ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|DATA_AVAIL_2d ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|DATA_AVAIL_2d~I .operation_mode = "normal";
+defparam \inst|key_state|DATA_AVAIL_2d~I .packed_mode = "false";
+defparam \inst|key_state|DATA_AVAIL_2d~I .lut_mask = "FF00";
+defparam \inst|key_state|DATA_AVAIL_2d~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC9_9_A1
+apex20ke_lcell \inst|key_state|Latch_en~I (
+// Equation(s):
+// \inst|key_state|Latch_en  = DFFE(!\inst|key_state|DATA_AVAIL_1d  & \inst|key_state|DATA_AVAIL_2d , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(\inst|key_state|DATA_AVAIL_1d ),
+	.datab(vcc),
+	.datac(\inst|key_state|DATA_AVAIL_2d ),
+	.datad(vcc),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|Latch_en ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|Latch_en~I .operation_mode = "normal";
+defparam \inst|key_state|Latch_en~I .packed_mode = "false";
+defparam \inst|key_state|Latch_en~I .lut_mask = "5050";
+defparam \inst|key_state|Latch_en~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC2_9_A1
+apex20ke_lcell \inst|key_state|PLD_STATE.DATA_PHASE~I (
+// Equation(s):
+// \inst|key_state|PLD_STATE.DATA_PHASE  = DFFE(!\inst|key_state|PLD_STATE.IDLE  & \inst|key_state|Latch_en , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(\inst|key_state|PLD_STATE.IDLE ),
+	.datab(vcc),
+	.datac(\inst|key_state|Latch_en ),
+	.datad(vcc),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|PLD_STATE.DATA_PHASE ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|PLD_STATE.DATA_PHASE~I .operation_mode = "normal";
+defparam \inst|key_state|PLD_STATE.DATA_PHASE~I .packed_mode = "false";
+defparam \inst|key_state|PLD_STATE.DATA_PHASE~I .lut_mask = "5050";
+defparam \inst|key_state|PLD_STATE.DATA_PHASE~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC7_11_A1
+apex20ke_lcell \inst|key_state|Hready_i~33_I (
+// Equation(s):
+// \inst|key_state|Hready_i~33  = !\inst5|lpm_instance|core|MASTERHWRITE  & \inst5|lpm_instance|core|MASTERHADDR[2]  & !\inst5|lpm_instance|core|MASTERHADDR[0]  & !\inst5|lpm_instance|core|MASTERHADDR[1] 
+
+	.dataa(\inst5|lpm_instance|core|MASTERHWRITE ),
+	.datab(\inst5|lpm_instance|core|MASTERHADDR[2] ),
+	.datac(\inst5|lpm_instance|core|MASTERHADDR[0] ),
+	.datad(\inst5|lpm_instance|core|MASTERHADDR[1] ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(\inst|key_state|Hready_i~33 ),
+	.regout(),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|Hready_i~33_I .operation_mode = "normal";
+defparam \inst|key_state|Hready_i~33_I .packed_mode = "false";
+defparam \inst|key_state|Hready_i~33_I .lut_mask = "0004";
+defparam \inst|key_state|Hready_i~33_I .output_mode = "comb_only";
+// synopsys translate_on
+
+// atom is at LC10_11_A1
+apex20ke_lcell \inst|key_state|PLD_STATE.WAIT_STATE~I (
+// Equation(s):
+// \inst|key_state|PLD_STATE.WAIT_STATE  = DFFE(\inst|key_state|PLD_STATE.DATA_PHASE  # \inst|key_state|PLD_STATE.WAIT_STATE  & !\inst|key_state|Hready_i~33 , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(vcc),
+	.datab(\inst|key_state|PLD_STATE.WAIT_STATE ),
+	.datac(\inst|key_state|PLD_STATE.DATA_PHASE ),
+	.datad(\inst|key_state|Hready_i~33 ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|PLD_STATE.WAIT_STATE ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|PLD_STATE.WAIT_STATE~I .operation_mode = "normal";
+defparam \inst|key_state|PLD_STATE.WAIT_STATE~I .packed_mode = "false";
+defparam \inst|key_state|PLD_STATE.WAIT_STATE~I .lut_mask = "F0FC";
+defparam \inst|key_state|PLD_STATE.WAIT_STATE~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC4_11_A1
+apex20ke_lcell \inst|key_state|Hready_i~I (
+// Equation(s):
+// \inst|key_state|Hready_i  = DFFE(\inst|key_state|PLD_STATE.WAIT_STATE  & \inst|key_state|Hready_i~33 , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(vcc),
+	.datab(\inst|key_state|PLD_STATE.WAIT_STATE ),
+	.datac(vcc),
+	.datad(\inst|key_state|Hready_i~33 ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|Hready_i ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|Hready_i~I .operation_mode = "normal";
+defparam \inst|key_state|Hready_i~I .packed_mode = "false";
+defparam \inst|key_state|Hready_i~I .lut_mask = "CC00";
+defparam \inst|key_state|Hready_i~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC6_11_A1
+apex20ke_lcell \inst|ahb_slave_sm2|Select~296_I (
+// Equation(s):
+// \inst|ahb_slave_sm2|Select~296  = \inst|key_state|Hready_i  & \inst|ahb_slave_sm2|slave_state.DATA_PHASE 
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(\inst|key_state|Hready_i ),
+	.datad(\inst|ahb_slave_sm2|slave_state.DATA_PHASE ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(\inst|ahb_slave_sm2|Select~296 ),
+	.regout(),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|ahb_slave_sm2|Select~296_I .operation_mode = "normal";
+defparam \inst|ahb_slave_sm2|Select~296_I .packed_mode = "false";
+defparam \inst|ahb_slave_sm2|Select~296_I .lut_mask = "F000";
+defparam \inst|ahb_slave_sm2|Select~296_I .output_mode = "comb_only";
+// synopsys translate_on
+
+// atom is at LC9_11_A1
+apex20ke_lcell \inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE~I (
+// Equation(s):
+// \inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE  = DFFE(\inst|ahb_slave_sm2|Select~295  # \inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE  & \inst5|lpm_instance|core|MASTERHTRANS[0]  # \inst|ahb_slave_sm2|Select~296 , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(\inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE ),
+	.datab(\inst5|lpm_instance|core|MASTERHTRANS[0] ),
+	.datac(\inst|ahb_slave_sm2|Select~296 ),
+	.datad(\inst|ahb_slave_sm2|Select~295 ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE~I .operation_mode = "normal";
+defparam \inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE~I .packed_mode = "false";
+defparam \inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE~I .lut_mask = "FFA8";
+defparam \inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC8_11_A1
+apex20ke_lcell \inst|ahb_slave_sm2|Select~295_I (
+// Equation(s):
+// \inst|ahb_slave_sm2|Select~295  = !\inst5|lpm_instance|core|MASTERHTRANS[0]  & \inst5|lpm_instance|core|MASTERHTRANS[1]  & \inst|ahb_slave_sm2|slave_state.DATA_PHASE  # !\inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE 
+
+	.dataa(\inst5|lpm_instance|core|MASTERHTRANS[0] ),
+	.datab(\inst|ahb_slave_sm2|slave_state.DATA_PHASE ),
+	.datac(\inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE ),
+	.datad(\inst5|lpm_instance|core|MASTERHTRANS[1] ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(\inst|ahb_slave_sm2|Select~295 ),
+	.regout(),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|ahb_slave_sm2|Select~295_I .operation_mode = "normal";
+defparam \inst|ahb_slave_sm2|Select~295_I .packed_mode = "false";
+defparam \inst|ahb_slave_sm2|Select~295_I .lut_mask = "4500";
+defparam \inst|ahb_slave_sm2|Select~295_I .output_mode = "comb_only";
+// synopsys translate_on
+
+// atom is at LC3_11_A1
+apex20ke_lcell \inst|ahb_slave_sm2|slave_state.DATA_PHASE~I (
+// Equation(s):
+// \inst|ahb_slave_sm2|slave_state.DATA_PHASE  = DFFE(\inst|ahb_slave_sm2|Select~295  # \inst|ahb_slave_sm2|slave_state.DATA_PHASE  & \inst|key_state|Hready_i , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(vcc),
+	.datab(\inst|ahb_slave_sm2|slave_state.DATA_PHASE ),
+	.datac(\inst|key_state|Hready_i ),
+	.datad(\inst|ahb_slave_sm2|Select~295 ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|ahb_slave_sm2|slave_state.DATA_PHASE ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|ahb_slave_sm2|slave_state.DATA_PHASE~I .operation_mode = "normal";
+defparam \inst|ahb_slave_sm2|slave_state.DATA_PHASE~I .packed_mode = "false";
+defparam \inst|ahb_slave_sm2|slave_state.DATA_PHASE~I .lut_mask = "FFC0";
+defparam \inst|ahb_slave_sm2|slave_state.DATA_PHASE~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC2_11_A1
+apex20ke_lcell \inst|ahb_slave_sm2|slave_state.BURST_PHASE~I (
+// Equation(s):
+// \inst|ahb_slave_sm2|slave_state.BURST_PHASE  = DFFE(\inst5|lpm_instance|core|MASTERHTRANS[0]  & \inst|ahb_slave_sm2|slave_state.BURST_PHASE  # \inst|ahb_slave_sm2|slave_state.DATA_PHASE  & !\inst|key_state|Hready_i , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(\inst|ahb_slave_sm2|slave_state.BURST_PHASE ),
+	.datab(\inst|ahb_slave_sm2|slave_state.DATA_PHASE ),
+	.datac(\inst|key_state|Hready_i ),
+	.datad(\inst5|lpm_instance|core|MASTERHTRANS[0] ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|ahb_slave_sm2|slave_state.BURST_PHASE ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|ahb_slave_sm2|slave_state.BURST_PHASE~I .operation_mode = "normal";
+defparam \inst|ahb_slave_sm2|slave_state.BURST_PHASE~I .packed_mode = "false";
+defparam \inst|ahb_slave_sm2|slave_state.BURST_PHASE~I .lut_mask = "AE00";
+defparam \inst|ahb_slave_sm2|slave_state.BURST_PHASE~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC1_10_A1
+apex20ke_lcell \inst|ahb_slave_sm2|Select~293_I (
+// Equation(s):
+// \inst|ahb_slave_sm2|Select~293  = \inst|ahb_slave_sm2|slave_state.BURST_PHASE  # !\inst5|lpm_instance|core|MASTERHTRANS[0]  & !\inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE  & !\inst5|lpm_instance|core|MASTERHTRANS[1] 
+
+	.dataa(\inst5|lpm_instance|core|MASTERHTRANS[0] ),
+	.datab(\inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE ),
+	.datac(\inst|ahb_slave_sm2|slave_state.BURST_PHASE ),
+	.datad(\inst5|lpm_instance|core|MASTERHTRANS[1] ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(\inst|ahb_slave_sm2|Select~293 ),
+	.regout(),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|ahb_slave_sm2|Select~293_I .operation_mode = "normal";
+defparam \inst|ahb_slave_sm2|Select~293_I .packed_mode = "false";
+defparam \inst|ahb_slave_sm2|Select~293_I .lut_mask = "F0F1";
+defparam \inst|ahb_slave_sm2|Select~293_I .output_mode = "comb_only";
+// synopsys translate_on
+
+// atom is at LC7_10_A1
+apex20ke_lcell \inst|ahb_slave_sm2|HREADY_r~I (
+// Equation(s):
+// \inst|ahb_slave_sm2|HREADY_r  = DFFE(!\inst|ahb_slave_sm2|slave_state.DATA_PHASE  & !\inst|ahb_slave_sm2|Select~293  & \inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE  # \inst|ahb_slave_sm2|HREADY_r , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(\inst|ahb_slave_sm2|slave_state.ADDRESS_PHASE ),
+	.datab(\inst|ahb_slave_sm2|HREADY_r ),
+	.datac(\inst|ahb_slave_sm2|slave_state.DATA_PHASE ),
+	.datad(\inst|ahb_slave_sm2|Select~293 ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|ahb_slave_sm2|HREADY_r ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|ahb_slave_sm2|HREADY_r~I .operation_mode = "normal";
+defparam \inst|ahb_slave_sm2|HREADY_r~I .packed_mode = "false";
+defparam \inst|ahb_slave_sm2|HREADY_r~I .lut_mask = "000E";
+defparam \inst|ahb_slave_sm2|HREADY_r~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC5_10_A1
+apex20ke_lcell \inst|ahb_slave_sm2|HREADY~1_I (
+// Equation(s):
+// \inst|ahb_slave_sm2|HREADY~1  = !\inst|key_state|Hready_i  & !\inst|ahb_slave_sm2|HREADY_r 
+
+	.dataa(vcc),
+	.datab(\inst|key_state|Hready_i ),
+	.datac(vcc),
+	.datad(\inst|ahb_slave_sm2|HREADY_r ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(\inst|ahb_slave_sm2|HREADY~1 ),
+	.regout(),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|ahb_slave_sm2|HREADY~1_I .operation_mode = "normal";
+defparam \inst|ahb_slave_sm2|HREADY~1_I .packed_mode = "false";
+defparam \inst|ahb_slave_sm2|HREADY~1_I .lut_mask = "0033";
+defparam \inst|ahb_slave_sm2|HREADY~1_I .output_mode = "comb_only";
+// synopsys translate_on
+
+// atom is at LC5_11_A1
+apex20ke_lcell \inst|key_state|Int_reg~I (
+// Equation(s):
+// \inst|key_state|Int_reg  = DFFE(\inst|key_state|PLD_STATE.DATA_PHASE  # \inst|key_state|Hready_i  # \inst|key_state|Int_reg  & \inst|key_state|PLD_STATE.WAIT_STATE , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , )
+
+	.dataa(\inst|key_state|PLD_STATE.DATA_PHASE ),
+	.datab(\inst|key_state|Int_reg ),
+	.datac(\inst|key_state|Hready_i ),
+	.datad(\inst|key_state|PLD_STATE.WAIT_STATE ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|Int_reg ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|Int_reg~I .operation_mode = "normal";
+defparam \inst|key_state|Int_reg~I .packed_mode = "false";
+defparam \inst|key_state|Int_reg~I .lut_mask = "FEFA";
+defparam \inst|key_state|Int_reg~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC8_10_A1
+apex20ke_lcell \inst|key_state|read_data[4]~I (
+// Equation(s):
+// \inst|key_state|read_data[4]  = DFFE(VCC, GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , \inst|key_state|Hready_i )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(vcc),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(\inst|key_state|Hready_i ),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|read_data[4] ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|read_data[4]~I .operation_mode = "normal";
+defparam \inst|key_state|read_data[4]~I .packed_mode = "false";
+defparam \inst|key_state|read_data[4]~I .lut_mask = "FFFF";
+defparam \inst|key_state|read_data[4]~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at PIN_AC32
+apex20ke_io \DATA_A~I (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\DATA_A~combout ),
+	.regout(),
+	.padio(DATA_A));
+// synopsys translate_off
+defparam \DATA_A~I .operation_mode = "input";
+defparam \DATA_A~I .reg_source_mode = "none";
+defparam \DATA_A~I .feedback_mode = "from_pin";
+defparam \DATA_A~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at LC1_9_A1
+apex20ke_lcell \inst|key_state|DATA_1d[3]~I (
+// Equation(s):
+// \inst|key_state|DATA_1d[3]  = DFFE(\DATA_A~combout , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , \inst|key_state|PLD_STATE.DATA_PHASE )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(\DATA_A~combout ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(\inst|key_state|PLD_STATE.DATA_PHASE ),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|DATA_1d[3] ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|DATA_1d[3]~I .operation_mode = "normal";
+defparam \inst|key_state|DATA_1d[3]~I .packed_mode = "false";
+defparam \inst|key_state|DATA_1d[3]~I .lut_mask = "FF00";
+defparam \inst|key_state|DATA_1d[3]~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC10_10_A1
+apex20ke_lcell \inst|key_state|read_data[3]~I (
+// Equation(s):
+// \inst|key_state|read_data[3]  = DFFE(!\inst|key_state|DATA_1d[3] , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , \inst|key_state|Hready_i )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(\inst|key_state|DATA_1d[3] ),
+	.datad(vcc),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(\inst|key_state|Hready_i ),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|read_data[3] ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|read_data[3]~I .operation_mode = "normal";
+defparam \inst|key_state|read_data[3]~I .packed_mode = "false";
+defparam \inst|key_state|read_data[3]~I .lut_mask = "0F0F";
+defparam \inst|key_state|read_data[3]~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at PIN_AC31
+apex20ke_io \DATA_B~I (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\DATA_B~combout ),
+	.regout(),
+	.padio(DATA_B));
+// synopsys translate_off
+defparam \DATA_B~I .operation_mode = "input";
+defparam \DATA_B~I .reg_source_mode = "none";
+defparam \DATA_B~I .feedback_mode = "from_pin";
+defparam \DATA_B~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at LC5_9_A1
+apex20ke_lcell \inst|key_state|DATA_1d[2]~I (
+// Equation(s):
+// \inst|key_state|DATA_1d[2]  = DFFE(\DATA_B~combout , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , \inst|key_state|PLD_STATE.DATA_PHASE )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(\DATA_B~combout ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(\inst|key_state|PLD_STATE.DATA_PHASE ),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|DATA_1d[2] ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|DATA_1d[2]~I .operation_mode = "normal";
+defparam \inst|key_state|DATA_1d[2]~I .packed_mode = "false";
+defparam \inst|key_state|DATA_1d[2]~I .lut_mask = "FF00";
+defparam \inst|key_state|DATA_1d[2]~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC3_10_A1
+apex20ke_lcell \inst|key_state|read_data[2]~I (
+// Equation(s):
+// \inst|key_state|read_data[2]  = DFFE(!\inst|key_state|DATA_1d[2] , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , \inst|key_state|Hready_i )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(\inst|key_state|DATA_1d[2] ),
+	.datad(vcc),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(\inst|key_state|Hready_i ),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|read_data[2] ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|read_data[2]~I .operation_mode = "normal";
+defparam \inst|key_state|read_data[2]~I .packed_mode = "false";
+defparam \inst|key_state|read_data[2]~I .lut_mask = "0F0F";
+defparam \inst|key_state|read_data[2]~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at PIN_R26
+apex20ke_io \DATA_C~I (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\DATA_C~combout ),
+	.regout(),
+	.padio(DATA_C));
+// synopsys translate_off
+defparam \DATA_C~I .operation_mode = "input";
+defparam \DATA_C~I .reg_source_mode = "none";
+defparam \DATA_C~I .feedback_mode = "from_pin";
+defparam \DATA_C~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at LC4_9_A1
+apex20ke_lcell \inst|key_state|DATA_1d[1]~I (
+// Equation(s):
+// \inst|key_state|DATA_1d[1]  = DFFE(\DATA_C~combout , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , \inst|key_state|PLD_STATE.DATA_PHASE )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(\DATA_C~combout ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(\inst|key_state|PLD_STATE.DATA_PHASE ),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|DATA_1d[1] ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|DATA_1d[1]~I .operation_mode = "normal";
+defparam \inst|key_state|DATA_1d[1]~I .packed_mode = "false";
+defparam \inst|key_state|DATA_1d[1]~I .lut_mask = "FF00";
+defparam \inst|key_state|DATA_1d[1]~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC2_10_A1
+apex20ke_lcell \inst|key_state|read_data[1]~I (
+// Equation(s):
+// \inst|key_state|read_data[1]  = DFFE(!\inst|key_state|DATA_1d[1] , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , \inst|key_state|Hready_i )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(\inst|key_state|DATA_1d[1] ),
+	.datad(vcc),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(\inst|key_state|Hready_i ),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|read_data[1] ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|read_data[1]~I .operation_mode = "normal";
+defparam \inst|key_state|read_data[1]~I .packed_mode = "false";
+defparam \inst|key_state|read_data[1]~I .lut_mask = "0F0F";
+defparam \inst|key_state|read_data[1]~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at PIN_Y32
+apex20ke_io \DATA_D~I (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\DATA_D~combout ),
+	.regout(),
+	.padio(DATA_D));
+// synopsys translate_off
+defparam \DATA_D~I .operation_mode = "input";
+defparam \DATA_D~I .reg_source_mode = "none";
+defparam \DATA_D~I .feedback_mode = "from_pin";
+defparam \DATA_D~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at LC8_9_A1
+apex20ke_lcell \inst|key_state|DATA_1d[0]~I (
+// Equation(s):
+// \inst|key_state|DATA_1d[0]  = DFFE(\DATA_D~combout , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , \inst|key_state|PLD_STATE.DATA_PHASE )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(\DATA_D~combout ),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(\inst|key_state|PLD_STATE.DATA_PHASE ),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|DATA_1d[0] ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|DATA_1d[0]~I .operation_mode = "normal";
+defparam \inst|key_state|DATA_1d[0]~I .packed_mode = "false";
+defparam \inst|key_state|DATA_1d[0]~I .lut_mask = "FF00";
+defparam \inst|key_state|DATA_1d[0]~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC9_10_A1
+apex20ke_lcell \inst|key_state|read_data[0]~I (
+// Equation(s):
+// \inst|key_state|read_data[0]  = DFFE(!\inst|key_state|DATA_1d[0] , GLOBAL(\HCLOCK~combout ), !\HRESET~combout , , \inst|key_state|Hready_i )
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(\inst|key_state|DATA_1d[0] ),
+	.datad(vcc),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(\HCLOCK~combout ),
+	.aclr(\HRESET~combout ),
+	.ena(\inst|key_state|Hready_i ),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(),
+	.regout(\inst|key_state|read_data[0] ),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst|key_state|read_data[0]~I .operation_mode = "normal";
+defparam \inst|key_state|read_data[0]~I .packed_mode = "false";
+defparam \inst|key_state|read_data[0]~I .lut_mask = "0F0F";
+defparam \inst|key_state|read_data[0]~I .output_mode = "reg_only";
+// synopsys translate_on
+
+// atom is at LC3_19_U2
+apex20ke_lcell \~VCC~I (
+// Equation(s):
+// \~VCC  = VCC
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(vcc),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(\~VCC ),
+	.regout(),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \~VCC~I .operation_mode = "normal";
+defparam \~VCC~I .packed_mode = "false";
+defparam \~VCC~I .lut_mask = "FFFF";
+defparam \~VCC~I .output_mode = "comb_only";
+// synopsys translate_on
+
+// atom is at PIN_A28
+apex20ke_io \inst5|lpm_instance|core|clk_ref_pin|ioatom (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\clk_ref~combout ),
+	.regout(),
+	.padio(clk_ref));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|clk_ref_pin|ioatom .operation_mode = "input";
+defparam \inst5|lpm_instance|core|clk_ref_pin|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|clk_ref_pin|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|clk_ref_pin|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_B28
+apex20ke_io \inst5|lpm_instance|core|npor_pin|ioatom (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\npor~combout ),
+	.regout(),
+	.padio(npor));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|npor_pin|ioatom .operation_mode = "input";
+defparam \inst5|lpm_instance|core|npor_pin|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|npor_pin|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|npor_pin|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at LC7_9_A1
+apex20ke_lcell \inst5|lpm_instance|lcell_hgrant~I (
+// Equation(s):
+// \inst5|lpm_instance|lcell_hgrant  = GND
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(vcc),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(\inst5|lpm_instance|lcell_hgrant ),
+	.regout(),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst5|lpm_instance|lcell_hgrant~I .operation_mode = "normal";
+defparam \inst5|lpm_instance|lcell_hgrant~I .packed_mode = "false";
+defparam \inst5|lpm_instance|lcell_hgrant~I .lut_mask = "0000";
+defparam \inst5|lpm_instance|lcell_hgrant~I .output_mode = "comb_only";
+// synopsys translate_on
+
+// atom is at PIN_F25
+apex20ke_io \inst5|lpm_instance|core|ebiack_pin|ioatom (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\ebiack~combout ),
+	.regout(),
+	.padio(ebiack));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiack_pin|ioatom .operation_mode = "input";
+defparam \inst5|lpm_instance|core|ebiack_pin|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiack_pin|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|ebiack_pin|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G28
+apex20ke_io \inst5|lpm_instance|core|uartctsn_pin|ioatom (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\uartctsn~combout ),
+	.regout(),
+	.padio(uartctsn));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|uartctsn_pin|ioatom .operation_mode = "input";
+defparam \inst5|lpm_instance|core|uartctsn_pin|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|uartctsn_pin|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|uartctsn_pin|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_F28
+apex20ke_io \inst5|lpm_instance|core|uartdsrn_pin|ioatom (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\uartdsrn~combout ),
+	.regout(),
+	.padio(uartdsrn));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|uartdsrn_pin|ioatom .operation_mode = "input";
+defparam \inst5|lpm_instance|core|uartdsrn_pin|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|uartdsrn_pin|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|uartdsrn_pin|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_D29
+apex20ke_io \inst5|lpm_instance|core|uartrxd_pin|ioatom (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\uartrxd~combout ),
+	.regout(),
+	.padio(uartrxd));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|uartrxd_pin|ioatom .operation_mode = "input";
+defparam \inst5|lpm_instance|core|uartrxd_pin|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|uartrxd_pin|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|uartrxd_pin|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G25
+apex20ke_io \inst5|lpm_instance|core|intextpin_pin|ioatom (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(gnd),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(\intextpin~combout ),
+	.regout(),
+	.padio(intextpin));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|intextpin_pin|ioatom .operation_mode = "input";
+defparam \inst5|lpm_instance|core|intextpin_pin|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|intextpin_pin|ioatom .feedback_mode = "from_pin";
+defparam \inst5|lpm_instance|core|intextpin_pin|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at LC6_9_A1
+apex20ke_lcell \inst5|lpm_instance|lcell_hresp0~I (
+// Equation(s):
+// \inst5|lpm_instance|lcell_hresp0  = VCC
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(vcc),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(\inst5|lpm_instance|lcell_hresp0 ),
+	.regout(),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst5|lpm_instance|lcell_hresp0~I .operation_mode = "normal";
+defparam \inst5|lpm_instance|lcell_hresp0~I .packed_mode = "false";
+defparam \inst5|lpm_instance|lcell_hresp0~I .lut_mask = "FFFF";
+defparam \inst5|lpm_instance|lcell_hresp0~I .output_mode = "comb_only";
+// synopsys translate_on
+
+// atom is at LC3_13_A1
+apex20ke_lcell \inst5|lpm_instance|lcell_hresp1~I (
+// Equation(s):
+// \inst5|lpm_instance|lcell_hresp1  = VCC
+
+	.dataa(vcc),
+	.datab(vcc),
+	.datac(vcc),
+	.datad(vcc),
+	.cin(gnd),
+	.cascin(vcc),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.sclr(gnd),
+	.sload(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.combout(\inst5|lpm_instance|lcell_hresp1 ),
+	.regout(),
+	.cout(),
+	.cascout());
+// synopsys translate_off
+defparam \inst5|lpm_instance|lcell_hresp1~I .operation_mode = "normal";
+defparam \inst5|lpm_instance|lcell_hresp1~I .packed_mode = "false";
+defparam \inst5|lpm_instance|lcell_hresp1~I .lut_mask = "FFFF";
+defparam \inst5|lpm_instance|lcell_hresp1~I .output_mode = "comb_only";
+// synopsys translate_on
+
+// atom is at PIN_N10
+apex20ke_io \hready~I (
+	.datain(\inst|ahb_slave_sm2|HREADY~1 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(hready));
+// synopsys translate_off
+defparam \hready~I .operation_mode = "output";
+defparam \hready~I .reg_source_mode = "none";
+defparam \hready~I .feedback_mode = "none";
+defparam \hready~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G9
+apex20ke_io \Mwrite~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWRITE ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(Mwrite));
+// synopsys translate_off
+defparam \Mwrite~I .operation_mode = "output";
+defparam \Mwrite~I .reg_source_mode = "none";
+defparam \Mwrite~I .feedback_mode = "none";
+defparam \Mwrite~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_N3
+apex20ke_io \masterhaddr[31]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[31] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[31]));
+// synopsys translate_off
+defparam \masterhaddr[31]~I .operation_mode = "output";
+defparam \masterhaddr[31]~I .reg_source_mode = "none";
+defparam \masterhaddr[31]~I .feedback_mode = "none";
+defparam \masterhaddr[31]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E7
+apex20ke_io \masterhaddr[30]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[30] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[30]));
+// synopsys translate_off
+defparam \masterhaddr[30]~I .operation_mode = "output";
+defparam \masterhaddr[30]~I .reg_source_mode = "none";
+defparam \masterhaddr[30]~I .feedback_mode = "none";
+defparam \masterhaddr[30]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_T8
+apex20ke_io \masterhaddr[29]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[29] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[29]));
+// synopsys translate_off
+defparam \masterhaddr[29]~I .operation_mode = "output";
+defparam \masterhaddr[29]~I .reg_source_mode = "none";
+defparam \masterhaddr[29]~I .feedback_mode = "none";
+defparam \masterhaddr[29]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_P12
+apex20ke_io \masterhaddr[28]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[28] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[28]));
+// synopsys translate_off
+defparam \masterhaddr[28]~I .operation_mode = "output";
+defparam \masterhaddr[28]~I .reg_source_mode = "none";
+defparam \masterhaddr[28]~I .feedback_mode = "none";
+defparam \masterhaddr[28]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_L5
+apex20ke_io \masterhaddr[27]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[27] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[27]));
+// synopsys translate_off
+defparam \masterhaddr[27]~I .operation_mode = "output";
+defparam \masterhaddr[27]~I .reg_source_mode = "none";
+defparam \masterhaddr[27]~I .feedback_mode = "none";
+defparam \masterhaddr[27]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_B5
+apex20ke_io \masterhaddr[26]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[26] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[26]));
+// synopsys translate_off
+defparam \masterhaddr[26]~I .operation_mode = "output";
+defparam \masterhaddr[26]~I .reg_source_mode = "none";
+defparam \masterhaddr[26]~I .feedback_mode = "none";
+defparam \masterhaddr[26]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_V4
+apex20ke_io \masterhaddr[25]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[25] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[25]));
+// synopsys translate_off
+defparam \masterhaddr[25]~I .operation_mode = "output";
+defparam \masterhaddr[25]~I .reg_source_mode = "none";
+defparam \masterhaddr[25]~I .feedback_mode = "none";
+defparam \masterhaddr[25]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_P11
+apex20ke_io \masterhaddr[24]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[24] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[24]));
+// synopsys translate_off
+defparam \masterhaddr[24]~I .operation_mode = "output";
+defparam \masterhaddr[24]~I .reg_source_mode = "none";
+defparam \masterhaddr[24]~I .feedback_mode = "none";
+defparam \masterhaddr[24]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E8
+apex20ke_io \masterhaddr[23]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[23] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[23]));
+// synopsys translate_off
+defparam \masterhaddr[23]~I .operation_mode = "output";
+defparam \masterhaddr[23]~I .reg_source_mode = "none";
+defparam \masterhaddr[23]~I .feedback_mode = "none";
+defparam \masterhaddr[23]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_V6
+apex20ke_io \masterhaddr[22]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[22] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[22]));
+// synopsys translate_off
+defparam \masterhaddr[22]~I .operation_mode = "output";
+defparam \masterhaddr[22]~I .reg_source_mode = "none";
+defparam \masterhaddr[22]~I .feedback_mode = "none";
+defparam \masterhaddr[22]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_V12
+apex20ke_io \masterhaddr[21]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[21] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[21]));
+// synopsys translate_off
+defparam \masterhaddr[21]~I .operation_mode = "output";
+defparam \masterhaddr[21]~I .reg_source_mode = "none";
+defparam \masterhaddr[21]~I .feedback_mode = "none";
+defparam \masterhaddr[21]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_R3
+apex20ke_io \masterhaddr[20]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[20] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[20]));
+// synopsys translate_off
+defparam \masterhaddr[20]~I .operation_mode = "output";
+defparam \masterhaddr[20]~I .reg_source_mode = "none";
+defparam \masterhaddr[20]~I .feedback_mode = "none";
+defparam \masterhaddr[20]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_T12
+apex20ke_io \masterhaddr[19]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[19] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[19]));
+// synopsys translate_off
+defparam \masterhaddr[19]~I .operation_mode = "output";
+defparam \masterhaddr[19]~I .reg_source_mode = "none";
+defparam \masterhaddr[19]~I .feedback_mode = "none";
+defparam \masterhaddr[19]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G6
+apex20ke_io \masterhaddr[18]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[18] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[18]));
+// synopsys translate_off
+defparam \masterhaddr[18]~I .operation_mode = "output";
+defparam \masterhaddr[18]~I .reg_source_mode = "none";
+defparam \masterhaddr[18]~I .feedback_mode = "none";
+defparam \masterhaddr[18]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_F18
+apex20ke_io \masterhaddr[17]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[17] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[17]));
+// synopsys translate_off
+defparam \masterhaddr[17]~I .operation_mode = "output";
+defparam \masterhaddr[17]~I .reg_source_mode = "none";
+defparam \masterhaddr[17]~I .feedback_mode = "none";
+defparam \masterhaddr[17]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_R7
+apex20ke_io \masterhaddr[16]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[16] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[16]));
+// synopsys translate_off
+defparam \masterhaddr[16]~I .operation_mode = "output";
+defparam \masterhaddr[16]~I .reg_source_mode = "none";
+defparam \masterhaddr[16]~I .feedback_mode = "none";
+defparam \masterhaddr[16]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_U4
+apex20ke_io \masterhaddr[15]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[15] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[15]));
+// synopsys translate_off
+defparam \masterhaddr[15]~I .operation_mode = "output";
+defparam \masterhaddr[15]~I .reg_source_mode = "none";
+defparam \masterhaddr[15]~I .feedback_mode = "none";
+defparam \masterhaddr[15]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_W12
+apex20ke_io \masterhaddr[14]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[14] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[14]));
+// synopsys translate_off
+defparam \masterhaddr[14]~I .operation_mode = "output";
+defparam \masterhaddr[14]~I .reg_source_mode = "none";
+defparam \masterhaddr[14]~I .feedback_mode = "none";
+defparam \masterhaddr[14]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_A5
+apex20ke_io \masterhaddr[13]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[13] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[13]));
+// synopsys translate_off
+defparam \masterhaddr[13]~I .operation_mode = "output";
+defparam \masterhaddr[13]~I .reg_source_mode = "none";
+defparam \masterhaddr[13]~I .feedback_mode = "none";
+defparam \masterhaddr[13]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_U11
+apex20ke_io \masterhaddr[12]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[12] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[12]));
+// synopsys translate_off
+defparam \masterhaddr[12]~I .operation_mode = "output";
+defparam \masterhaddr[12]~I .reg_source_mode = "none";
+defparam \masterhaddr[12]~I .feedback_mode = "none";
+defparam \masterhaddr[12]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_U8
+apex20ke_io \masterhaddr[11]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[11] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[11]));
+// synopsys translate_off
+defparam \masterhaddr[11]~I .operation_mode = "output";
+defparam \masterhaddr[11]~I .reg_source_mode = "none";
+defparam \masterhaddr[11]~I .feedback_mode = "none";
+defparam \masterhaddr[11]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J4
+apex20ke_io \masterhaddr[10]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[10] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[10]));
+// synopsys translate_off
+defparam \masterhaddr[10]~I .operation_mode = "output";
+defparam \masterhaddr[10]~I .reg_source_mode = "none";
+defparam \masterhaddr[10]~I .feedback_mode = "none";
+defparam \masterhaddr[10]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_T5
+apex20ke_io \masterhaddr[9]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[9] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[9]));
+// synopsys translate_off
+defparam \masterhaddr[9]~I .operation_mode = "output";
+defparam \masterhaddr[9]~I .reg_source_mode = "none";
+defparam \masterhaddr[9]~I .feedback_mode = "none";
+defparam \masterhaddr[9]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_C4
+apex20ke_io \masterhaddr[8]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[8] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[8]));
+// synopsys translate_off
+defparam \masterhaddr[8]~I .operation_mode = "output";
+defparam \masterhaddr[8]~I .reg_source_mode = "none";
+defparam \masterhaddr[8]~I .feedback_mode = "none";
+defparam \masterhaddr[8]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G5
+apex20ke_io \masterhaddr[7]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[7] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[7]));
+// synopsys translate_off
+defparam \masterhaddr[7]~I .operation_mode = "output";
+defparam \masterhaddr[7]~I .reg_source_mode = "none";
+defparam \masterhaddr[7]~I .feedback_mode = "none";
+defparam \masterhaddr[7]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_B8
+apex20ke_io \masterhaddr[6]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[6] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[6]));
+// synopsys translate_off
+defparam \masterhaddr[6]~I .operation_mode = "output";
+defparam \masterhaddr[6]~I .reg_source_mode = "none";
+defparam \masterhaddr[6]~I .feedback_mode = "none";
+defparam \masterhaddr[6]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_T7
+apex20ke_io \masterhaddr[5]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[5] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[5]));
+// synopsys translate_off
+defparam \masterhaddr[5]~I .operation_mode = "output";
+defparam \masterhaddr[5]~I .reg_source_mode = "none";
+defparam \masterhaddr[5]~I .feedback_mode = "none";
+defparam \masterhaddr[5]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_P7
+apex20ke_io \masterhaddr[4]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[4]));
+// synopsys translate_off
+defparam \masterhaddr[4]~I .operation_mode = "output";
+defparam \masterhaddr[4]~I .reg_source_mode = "none";
+defparam \masterhaddr[4]~I .feedback_mode = "none";
+defparam \masterhaddr[4]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E3
+apex20ke_io \masterhaddr[3]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[3] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[3]));
+// synopsys translate_off
+defparam \masterhaddr[3]~I .operation_mode = "output";
+defparam \masterhaddr[3]~I .reg_source_mode = "none";
+defparam \masterhaddr[3]~I .feedback_mode = "none";
+defparam \masterhaddr[3]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_N8
+apex20ke_io \masterhaddr[2]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[2] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[2]));
+// synopsys translate_off
+defparam \masterhaddr[2]~I .operation_mode = "output";
+defparam \masterhaddr[2]~I .reg_source_mode = "none";
+defparam \masterhaddr[2]~I .feedback_mode = "none";
+defparam \masterhaddr[2]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E6
+apex20ke_io \masterhaddr[1]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[1] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[1]));
+// synopsys translate_off
+defparam \masterhaddr[1]~I .operation_mode = "output";
+defparam \masterhaddr[1]~I .reg_source_mode = "none";
+defparam \masterhaddr[1]~I .feedback_mode = "none";
+defparam \masterhaddr[1]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_N9
+apex20ke_io \masterhaddr[0]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHADDR[0] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhaddr[0]));
+// synopsys translate_off
+defparam \masterhaddr[0]~I .operation_mode = "output";
+defparam \masterhaddr[0]~I .reg_source_mode = "none";
+defparam \masterhaddr[0]~I .feedback_mode = "none";
+defparam \masterhaddr[0]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_V8
+apex20ke_io \burst[2]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHBURST[2] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(burst[2]));
+// synopsys translate_off
+defparam \burst[2]~I .operation_mode = "output";
+defparam \burst[2]~I .reg_source_mode = "none";
+defparam \burst[2]~I .feedback_mode = "none";
+defparam \burst[2]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_F5
+apex20ke_io \burst[1]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHBURST[1] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(burst[1]));
+// synopsys translate_off
+defparam \burst[1]~I .operation_mode = "output";
+defparam \burst[1]~I .reg_source_mode = "none";
+defparam \burst[1]~I .feedback_mode = "none";
+defparam \burst[1]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_P13
+apex20ke_io \burst[0]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHBURST[0] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(burst[0]));
+// synopsys translate_off
+defparam \burst[0]~I .operation_mode = "output";
+defparam \burst[0]~I .reg_source_mode = "none";
+defparam \burst[0]~I .feedback_mode = "none";
+defparam \burst[0]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_N5
+apex20ke_io \size[1]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHSIZE[1] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(size[1]));
+// synopsys translate_off
+defparam \size[1]~I .operation_mode = "output";
+defparam \size[1]~I .reg_source_mode = "none";
+defparam \size[1]~I .feedback_mode = "none";
+defparam \size[1]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_R10
+apex20ke_io \size[0]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHSIZE[0] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(size[0]));
+// synopsys translate_off
+defparam \size[0]~I .operation_mode = "output";
+defparam \size[0]~I .reg_source_mode = "none";
+defparam \size[0]~I .feedback_mode = "none";
+defparam \size[0]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H8
+apex20ke_io \trans[1]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHTRANS[1] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(trans[1]));
+// synopsys translate_off
+defparam \trans[1]~I .operation_mode = "output";
+defparam \trans[1]~I .reg_source_mode = "none";
+defparam \trans[1]~I .feedback_mode = "none";
+defparam \trans[1]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_F16
+apex20ke_io \trans[0]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHTRANS[0] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(trans[0]));
+// synopsys translate_off
+defparam \trans[0]~I .operation_mode = "output";
+defparam \trans[0]~I .reg_source_mode = "none";
+defparam \trans[0]~I .feedback_mode = "none";
+defparam \trans[0]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_A8
+apex20ke_io \masterhwdata[31]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[31] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[31]));
+// synopsys translate_off
+defparam \masterhwdata[31]~I .operation_mode = "output";
+defparam \masterhwdata[31]~I .reg_source_mode = "none";
+defparam \masterhwdata[31]~I .feedback_mode = "none";
+defparam \masterhwdata[31]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_A4
+apex20ke_io \masterhwdata[30]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[30] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[30]));
+// synopsys translate_off
+defparam \masterhwdata[30]~I .operation_mode = "output";
+defparam \masterhwdata[30]~I .reg_source_mode = "none";
+defparam \masterhwdata[30]~I .feedback_mode = "none";
+defparam \masterhwdata[30]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_R11
+apex20ke_io \masterhwdata[29]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[29] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[29]));
+// synopsys translate_off
+defparam \masterhwdata[29]~I .operation_mode = "output";
+defparam \masterhwdata[29]~I .reg_source_mode = "none";
+defparam \masterhwdata[29]~I .feedback_mode = "none";
+defparam \masterhwdata[29]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_K5
+apex20ke_io \masterhwdata[28]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[28] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[28]));
+// synopsys translate_off
+defparam \masterhwdata[28]~I .operation_mode = "output";
+defparam \masterhwdata[28]~I .reg_source_mode = "none";
+defparam \masterhwdata[28]~I .feedback_mode = "none";
+defparam \masterhwdata[28]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E5
+apex20ke_io \masterhwdata[27]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[27] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[27]));
+// synopsys translate_off
+defparam \masterhwdata[27]~I .operation_mode = "output";
+defparam \masterhwdata[27]~I .reg_source_mode = "none";
+defparam \masterhwdata[27]~I .feedback_mode = "none";
+defparam \masterhwdata[27]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J3
+apex20ke_io \masterhwdata[26]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[26] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[26]));
+// synopsys translate_off
+defparam \masterhwdata[26]~I .operation_mode = "output";
+defparam \masterhwdata[26]~I .reg_source_mode = "none";
+defparam \masterhwdata[26]~I .feedback_mode = "none";
+defparam \masterhwdata[26]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_U9
+apex20ke_io \masterhwdata[25]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[25] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[25]));
+// synopsys translate_off
+defparam \masterhwdata[25]~I .operation_mode = "output";
+defparam \masterhwdata[25]~I .reg_source_mode = "none";
+defparam \masterhwdata[25]~I .feedback_mode = "none";
+defparam \masterhwdata[25]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_V11
+apex20ke_io \masterhwdata[24]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[24] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[24]));
+// synopsys translate_off
+defparam \masterhwdata[24]~I .operation_mode = "output";
+defparam \masterhwdata[24]~I .reg_source_mode = "none";
+defparam \masterhwdata[24]~I .feedback_mode = "none";
+defparam \masterhwdata[24]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_N4
+apex20ke_io \masterhwdata[23]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[23] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[23]));
+// synopsys translate_off
+defparam \masterhwdata[23]~I .operation_mode = "output";
+defparam \masterhwdata[23]~I .reg_source_mode = "none";
+defparam \masterhwdata[23]~I .feedback_mode = "none";
+defparam \masterhwdata[23]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_N11
+apex20ke_io \masterhwdata[22]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[22] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[22]));
+// synopsys translate_off
+defparam \masterhwdata[22]~I .operation_mode = "output";
+defparam \masterhwdata[22]~I .reg_source_mode = "none";
+defparam \masterhwdata[22]~I .feedback_mode = "none";
+defparam \masterhwdata[22]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_R13
+apex20ke_io \masterhwdata[21]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[21] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[21]));
+// synopsys translate_off
+defparam \masterhwdata[21]~I .operation_mode = "output";
+defparam \masterhwdata[21]~I .reg_source_mode = "none";
+defparam \masterhwdata[21]~I .feedback_mode = "none";
+defparam \masterhwdata[21]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H3
+apex20ke_io \masterhwdata[20]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[20] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[20]));
+// synopsys translate_off
+defparam \masterhwdata[20]~I .operation_mode = "output";
+defparam \masterhwdata[20]~I .reg_source_mode = "none";
+defparam \masterhwdata[20]~I .feedback_mode = "none";
+defparam \masterhwdata[20]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_T10
+apex20ke_io \masterhwdata[19]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[19] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[19]));
+// synopsys translate_off
+defparam \masterhwdata[19]~I .operation_mode = "output";
+defparam \masterhwdata[19]~I .reg_source_mode = "none";
+defparam \masterhwdata[19]~I .feedback_mode = "none";
+defparam \masterhwdata[19]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_R9
+apex20ke_io \masterhwdata[18]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[18] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[18]));
+// synopsys translate_off
+defparam \masterhwdata[18]~I .operation_mode = "output";
+defparam \masterhwdata[18]~I .reg_source_mode = "none";
+defparam \masterhwdata[18]~I .feedback_mode = "none";
+defparam \masterhwdata[18]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_M5
+apex20ke_io \masterhwdata[17]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[17] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[17]));
+// synopsys translate_off
+defparam \masterhwdata[17]~I .operation_mode = "output";
+defparam \masterhwdata[17]~I .reg_source_mode = "none";
+defparam \masterhwdata[17]~I .feedback_mode = "none";
+defparam \masterhwdata[17]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_R6
+apex20ke_io \masterhwdata[16]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[16] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[16]));
+// synopsys translate_off
+defparam \masterhwdata[16]~I .operation_mode = "output";
+defparam \masterhwdata[16]~I .reg_source_mode = "none";
+defparam \masterhwdata[16]~I .feedback_mode = "none";
+defparam \masterhwdata[16]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_T6
+apex20ke_io \masterhwdata[15]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[15] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[15]));
+// synopsys translate_off
+defparam \masterhwdata[15]~I .operation_mode = "output";
+defparam \masterhwdata[15]~I .reg_source_mode = "none";
+defparam \masterhwdata[15]~I .feedback_mode = "none";
+defparam \masterhwdata[15]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_D5
+apex20ke_io \masterhwdata[14]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[14] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[14]));
+// synopsys translate_off
+defparam \masterhwdata[14]~I .operation_mode = "output";
+defparam \masterhwdata[14]~I .reg_source_mode = "none";
+defparam \masterhwdata[14]~I .feedback_mode = "none";
+defparam \masterhwdata[14]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_P8
+apex20ke_io \masterhwdata[13]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[13] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[13]));
+// synopsys translate_off
+defparam \masterhwdata[13]~I .operation_mode = "output";
+defparam \masterhwdata[13]~I .reg_source_mode = "none";
+defparam \masterhwdata[13]~I .feedback_mode = "none";
+defparam \masterhwdata[13]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_N12
+apex20ke_io \masterhwdata[12]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[12] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[12]));
+// synopsys translate_off
+defparam \masterhwdata[12]~I .operation_mode = "output";
+defparam \masterhwdata[12]~I .reg_source_mode = "none";
+defparam \masterhwdata[12]~I .feedback_mode = "none";
+defparam \masterhwdata[12]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_D4
+apex20ke_io \masterhwdata[11]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[11] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[11]));
+// synopsys translate_off
+defparam \masterhwdata[11]~I .operation_mode = "output";
+defparam \masterhwdata[11]~I .reg_source_mode = "none";
+defparam \masterhwdata[11]~I .feedback_mode = "none";
+defparam \masterhwdata[11]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_U5
+apex20ke_io \masterhwdata[10]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[10] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[10]));
+// synopsys translate_off
+defparam \masterhwdata[10]~I .operation_mode = "output";
+defparam \masterhwdata[10]~I .reg_source_mode = "none";
+defparam \masterhwdata[10]~I .feedback_mode = "none";
+defparam \masterhwdata[10]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_R5
+apex20ke_io \masterhwdata[9]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[9] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[9]));
+// synopsys translate_off
+defparam \masterhwdata[9]~I .operation_mode = "output";
+defparam \masterhwdata[9]~I .reg_source_mode = "none";
+defparam \masterhwdata[9]~I .feedback_mode = "none";
+defparam \masterhwdata[9]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_U10
+apex20ke_io \masterhwdata[8]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[8] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[8]));
+// synopsys translate_off
+defparam \masterhwdata[8]~I .operation_mode = "output";
+defparam \masterhwdata[8]~I .reg_source_mode = "none";
+defparam \masterhwdata[8]~I .feedback_mode = "none";
+defparam \masterhwdata[8]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_N13
+apex20ke_io \masterhwdata[7]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[7] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[7]));
+// synopsys translate_off
+defparam \masterhwdata[7]~I .operation_mode = "output";
+defparam \masterhwdata[7]~I .reg_source_mode = "none";
+defparam \masterhwdata[7]~I .feedback_mode = "none";
+defparam \masterhwdata[7]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_D3
+apex20ke_io \masterhwdata[6]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[6] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[6]));
+// synopsys translate_off
+defparam \masterhwdata[6]~I .operation_mode = "output";
+defparam \masterhwdata[6]~I .reg_source_mode = "none";
+defparam \masterhwdata[6]~I .feedback_mode = "none";
+defparam \masterhwdata[6]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_P10
+apex20ke_io \masterhwdata[5]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[5] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[5]));
+// synopsys translate_off
+defparam \masterhwdata[5]~I .operation_mode = "output";
+defparam \masterhwdata[5]~I .reg_source_mode = "none";
+defparam \masterhwdata[5]~I .feedback_mode = "none";
+defparam \masterhwdata[5]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_V10
+apex20ke_io \masterhwdata[4]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[4]));
+// synopsys translate_off
+defparam \masterhwdata[4]~I .operation_mode = "output";
+defparam \masterhwdata[4]~I .reg_source_mode = "none";
+defparam \masterhwdata[4]~I .feedback_mode = "none";
+defparam \masterhwdata[4]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_T13
+apex20ke_io \masterhwdata[3]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[3] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[3]));
+// synopsys translate_off
+defparam \masterhwdata[3]~I .operation_mode = "output";
+defparam \masterhwdata[3]~I .reg_source_mode = "none";
+defparam \masterhwdata[3]~I .feedback_mode = "none";
+defparam \masterhwdata[3]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_P4
+apex20ke_io \masterhwdata[2]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[2] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[2]));
+// synopsys translate_off
+defparam \masterhwdata[2]~I .operation_mode = "output";
+defparam \masterhwdata[2]~I .reg_source_mode = "none";
+defparam \masterhwdata[2]~I .feedback_mode = "none";
+defparam \masterhwdata[2]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_D8
+apex20ke_io \masterhwdata[1]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[1] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[1]));
+// synopsys translate_off
+defparam \masterhwdata[1]~I .operation_mode = "output";
+defparam \masterhwdata[1]~I .reg_source_mode = "none";
+defparam \masterhwdata[1]~I .feedback_mode = "none";
+defparam \masterhwdata[1]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E4
+apex20ke_io \masterhwdata[0]~I (
+	.datain(\inst5|lpm_instance|core|MASTERHWDATA[0] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhwdata[0]));
+// synopsys translate_off
+defparam \masterhwdata[0]~I .operation_mode = "output";
+defparam \masterhwdata[0]~I .reg_source_mode = "none";
+defparam \masterhwdata[0]~I .feedback_mode = "none";
+defparam \masterhwdata[0]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H5
+apex20ke_io \intpld[1]~I (
+	.datain(\inst|key_state|Int_reg ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(intpld[1]));
+// synopsys translate_off
+defparam \intpld[1]~I .operation_mode = "output";
+defparam \intpld[1]~I .reg_source_mode = "none";
+defparam \intpld[1]~I .feedback_mode = "none";
+defparam \intpld[1]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_N6
+apex20ke_io \masterhrdata[31]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[31]));
+// synopsys translate_off
+defparam \masterhrdata[31]~I .operation_mode = "output";
+defparam \masterhrdata[31]~I .reg_source_mode = "none";
+defparam \masterhrdata[31]~I .feedback_mode = "none";
+defparam \masterhrdata[31]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H15
+apex20ke_io \masterhrdata[30]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[30]));
+// synopsys translate_off
+defparam \masterhrdata[30]~I .operation_mode = "output";
+defparam \masterhrdata[30]~I .reg_source_mode = "none";
+defparam \masterhrdata[30]~I .feedback_mode = "none";
+defparam \masterhrdata[30]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J8
+apex20ke_io \masterhrdata[29]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[29]));
+// synopsys translate_off
+defparam \masterhrdata[29]~I .operation_mode = "output";
+defparam \masterhrdata[29]~I .reg_source_mode = "none";
+defparam \masterhrdata[29]~I .feedback_mode = "none";
+defparam \masterhrdata[29]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_AJ5
+apex20ke_io \masterhrdata[28]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[28]));
+// synopsys translate_off
+defparam \masterhrdata[28]~I .operation_mode = "output";
+defparam \masterhrdata[28]~I .reg_source_mode = "none";
+defparam \masterhrdata[28]~I .feedback_mode = "none";
+defparam \masterhrdata[28]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_AE9
+apex20ke_io \masterhrdata[27]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[27]));
+// synopsys translate_off
+defparam \masterhrdata[27]~I .operation_mode = "output";
+defparam \masterhrdata[27]~I .reg_source_mode = "none";
+defparam \masterhrdata[27]~I .feedback_mode = "none";
+defparam \masterhrdata[27]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_M6
+apex20ke_io \masterhrdata[26]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[26]));
+// synopsys translate_off
+defparam \masterhrdata[26]~I .operation_mode = "output";
+defparam \masterhrdata[26]~I .reg_source_mode = "none";
+defparam \masterhrdata[26]~I .feedback_mode = "none";
+defparam \masterhrdata[26]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_AF9
+apex20ke_io \masterhrdata[25]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[25]));
+// synopsys translate_off
+defparam \masterhrdata[25]~I .operation_mode = "output";
+defparam \masterhrdata[25]~I .reg_source_mode = "none";
+defparam \masterhrdata[25]~I .feedback_mode = "none";
+defparam \masterhrdata[25]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_K6
+apex20ke_io \masterhrdata[24]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[24]));
+// synopsys translate_off
+defparam \masterhrdata[24]~I .operation_mode = "output";
+defparam \masterhrdata[24]~I .reg_source_mode = "none";
+defparam \masterhrdata[24]~I .feedback_mode = "none";
+defparam \masterhrdata[24]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_L6
+apex20ke_io \masterhrdata[23]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[23]));
+// synopsys translate_off
+defparam \masterhrdata[23]~I .operation_mode = "output";
+defparam \masterhrdata[23]~I .reg_source_mode = "none";
+defparam \masterhrdata[23]~I .feedback_mode = "none";
+defparam \masterhrdata[23]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_AM8
+apex20ke_io \masterhrdata[22]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[22]));
+// synopsys translate_off
+defparam \masterhrdata[22]~I .operation_mode = "output";
+defparam \masterhrdata[22]~I .reg_source_mode = "none";
+defparam \masterhrdata[22]~I .feedback_mode = "none";
+defparam \masterhrdata[22]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H14
+apex20ke_io \masterhrdata[21]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[21]));
+// synopsys translate_off
+defparam \masterhrdata[21]~I .operation_mode = "output";
+defparam \masterhrdata[21]~I .reg_source_mode = "none";
+defparam \masterhrdata[21]~I .feedback_mode = "none";
+defparam \masterhrdata[21]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_K18
+apex20ke_io \masterhrdata[20]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[20]));
+// synopsys translate_off
+defparam \masterhrdata[20]~I .operation_mode = "output";
+defparam \masterhrdata[20]~I .reg_source_mode = "none";
+defparam \masterhrdata[20]~I .feedback_mode = "none";
+defparam \masterhrdata[20]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J17
+apex20ke_io \masterhrdata[19]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[19]));
+// synopsys translate_off
+defparam \masterhrdata[19]~I .operation_mode = "output";
+defparam \masterhrdata[19]~I .reg_source_mode = "none";
+defparam \masterhrdata[19]~I .feedback_mode = "none";
+defparam \masterhrdata[19]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_M7
+apex20ke_io \masterhrdata[18]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[18]));
+// synopsys translate_off
+defparam \masterhrdata[18]~I .operation_mode = "output";
+defparam \masterhrdata[18]~I .reg_source_mode = "none";
+defparam \masterhrdata[18]~I .feedback_mode = "none";
+defparam \masterhrdata[18]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J7
+apex20ke_io \masterhrdata[17]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[17]));
+// synopsys translate_off
+defparam \masterhrdata[17]~I .operation_mode = "output";
+defparam \masterhrdata[17]~I .reg_source_mode = "none";
+defparam \masterhrdata[17]~I .feedback_mode = "none";
+defparam \masterhrdata[17]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_N7
+apex20ke_io \masterhrdata[16]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[16]));
+// synopsys translate_off
+defparam \masterhrdata[16]~I .operation_mode = "output";
+defparam \masterhrdata[16]~I .reg_source_mode = "none";
+defparam \masterhrdata[16]~I .feedback_mode = "none";
+defparam \masterhrdata[16]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J14
+apex20ke_io \masterhrdata[15]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[15]));
+// synopsys translate_off
+defparam \masterhrdata[15]~I .operation_mode = "output";
+defparam \masterhrdata[15]~I .reg_source_mode = "none";
+defparam \masterhrdata[15]~I .feedback_mode = "none";
+defparam \masterhrdata[15]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J9
+apex20ke_io \masterhrdata[14]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[14]));
+// synopsys translate_off
+defparam \masterhrdata[14]~I .operation_mode = "output";
+defparam \masterhrdata[14]~I .reg_source_mode = "none";
+defparam \masterhrdata[14]~I .feedback_mode = "none";
+defparam \masterhrdata[14]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J10
+apex20ke_io \masterhrdata[13]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[13]));
+// synopsys translate_off
+defparam \masterhrdata[13]~I .operation_mode = "output";
+defparam \masterhrdata[13]~I .reg_source_mode = "none";
+defparam \masterhrdata[13]~I .feedback_mode = "none";
+defparam \masterhrdata[13]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_K17
+apex20ke_io \masterhrdata[12]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[12]));
+// synopsys translate_off
+defparam \masterhrdata[12]~I .operation_mode = "output";
+defparam \masterhrdata[12]~I .reg_source_mode = "none";
+defparam \masterhrdata[12]~I .feedback_mode = "none";
+defparam \masterhrdata[12]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G17
+apex20ke_io \masterhrdata[11]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[11]));
+// synopsys translate_off
+defparam \masterhrdata[11]~I .operation_mode = "output";
+defparam \masterhrdata[11]~I .reg_source_mode = "none";
+defparam \masterhrdata[11]~I .feedback_mode = "none";
+defparam \masterhrdata[11]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_L18
+apex20ke_io \masterhrdata[10]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[10]));
+// synopsys translate_off
+defparam \masterhrdata[10]~I .operation_mode = "output";
+defparam \masterhrdata[10]~I .reg_source_mode = "none";
+defparam \masterhrdata[10]~I .feedback_mode = "none";
+defparam \masterhrdata[10]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J15
+apex20ke_io \masterhrdata[9]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[9]));
+// synopsys translate_off
+defparam \masterhrdata[9]~I .operation_mode = "output";
+defparam \masterhrdata[9]~I .reg_source_mode = "none";
+defparam \masterhrdata[9]~I .feedback_mode = "none";
+defparam \masterhrdata[9]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_K8
+apex20ke_io \masterhrdata[8]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[8]));
+// synopsys translate_off
+defparam \masterhrdata[8]~I .operation_mode = "output";
+defparam \masterhrdata[8]~I .reg_source_mode = "none";
+defparam \masterhrdata[8]~I .feedback_mode = "none";
+defparam \masterhrdata[8]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J16
+apex20ke_io \masterhrdata[7]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[7]));
+// synopsys translate_off
+defparam \masterhrdata[7]~I .operation_mode = "output";
+defparam \masterhrdata[7]~I .reg_source_mode = "none";
+defparam \masterhrdata[7]~I .feedback_mode = "none";
+defparam \masterhrdata[7]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_K7
+apex20ke_io \masterhrdata[6]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[6]));
+// synopsys translate_off
+defparam \masterhrdata[6]~I .operation_mode = "output";
+defparam \masterhrdata[6]~I .reg_source_mode = "none";
+defparam \masterhrdata[6]~I .feedback_mode = "none";
+defparam \masterhrdata[6]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J6
+apex20ke_io \masterhrdata[5]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[5]));
+// synopsys translate_off
+defparam \masterhrdata[5]~I .operation_mode = "output";
+defparam \masterhrdata[5]~I .reg_source_mode = "none";
+defparam \masterhrdata[5]~I .feedback_mode = "none";
+defparam \masterhrdata[5]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J18
+apex20ke_io \masterhrdata[4]~I (
+	.datain(!\inst|key_state|read_data[4] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[4]));
+// synopsys translate_off
+defparam \masterhrdata[4]~I .operation_mode = "output";
+defparam \masterhrdata[4]~I .reg_source_mode = "none";
+defparam \masterhrdata[4]~I .feedback_mode = "none";
+defparam \masterhrdata[4]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_M9
+apex20ke_io \masterhrdata[3]~I (
+	.datain(!\inst|key_state|read_data[3] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[3]));
+// synopsys translate_off
+defparam \masterhrdata[3]~I .operation_mode = "output";
+defparam \masterhrdata[3]~I .reg_source_mode = "none";
+defparam \masterhrdata[3]~I .feedback_mode = "none";
+defparam \masterhrdata[3]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_M8
+apex20ke_io \masterhrdata[2]~I (
+	.datain(!\inst|key_state|read_data[2] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[2]));
+// synopsys translate_off
+defparam \masterhrdata[2]~I .operation_mode = "output";
+defparam \masterhrdata[2]~I .reg_source_mode = "none";
+defparam \masterhrdata[2]~I .feedback_mode = "none";
+defparam \masterhrdata[2]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G12
+apex20ke_io \masterhrdata[1]~I (
+	.datain(!\inst|key_state|read_data[1] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[1]));
+// synopsys translate_off
+defparam \masterhrdata[1]~I .operation_mode = "output";
+defparam \masterhrdata[1]~I .reg_source_mode = "none";
+defparam \masterhrdata[1]~I .feedback_mode = "none";
+defparam \masterhrdata[1]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_L8
+apex20ke_io \masterhrdata[0]~I (
+	.datain(!\inst|key_state|read_data[0] ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(masterhrdata[0]));
+// synopsys translate_off
+defparam \masterhrdata[0]~I .operation_mode = "output";
+defparam \masterhrdata[0]~I .reg_source_mode = "none";
+defparam \masterhrdata[0]~I .feedback_mode = "none";
+defparam \masterhrdata[0]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_Y30
+apex20ke_io \hresp[1]~I (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(hresp[1]));
+// synopsys translate_off
+defparam \hresp[1]~I .operation_mode = "output";
+defparam \hresp[1]~I .reg_source_mode = "none";
+defparam \hresp[1]~I .feedback_mode = "none";
+defparam \hresp[1]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_AH17
+apex20ke_io \hresp[0]~I (
+	.datain(gnd),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(hresp[0]));
+// synopsys translate_off
+defparam \hresp[0]~I .operation_mode = "output";
+defparam \hresp[0]~I .reg_source_mode = "none";
+defparam \hresp[0]~I .feedback_mode = "none";
+defparam \hresp[0]~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_AE27
+apex20ke_io \HCLK~I (
+	.datain(\HCLOCK~combout ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(HCLK));
+// synopsys translate_off
+defparam \HCLK~I .operation_mode = "output";
+defparam \HCLK~I .reg_source_mode = "none";
+defparam \HCLK~I .feedback_mode = "none";
+defparam \HCLK~I .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G26
+apex20ke_io \inst5|lpm_instance|core|uartdtrn_pout|ioatom (
+	.datain(\inst5|lpm_instance|core|core~UARTDTRN ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(uartdtrn));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|uartdtrn_pout|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|uartdtrn_pout|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|uartdtrn_pout|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|uartdtrn_pout|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_D28
+apex20ke_io \inst5|lpm_instance|core|uarttxd_pout|ioatom (
+	.datain(\inst5|lpm_instance|core|core~UARTTXD ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(uarttxd));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|uarttxd_pout|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|uarttxd_pout|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|uarttxd_pout|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|uarttxd_pout|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_C28
+apex20ke_io \inst5|lpm_instance|core|uartrtsn_pout|ioatom (
+	.datain(\inst5|lpm_instance|core|core~UARTRTSN ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(uartrtsn));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|uartrtsn_pout|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|uartrtsn_pout|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|uartrtsn_pout|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|uartrtsn_pout|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E26
+apex20ke_io \inst5|lpm_instance|core|ebiwen_pout|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIWEN ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiwen));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiwen_pout|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiwen_pout|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiwen_pout|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiwen_pout|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_F26
+apex20ke_io \inst5|lpm_instance|core|ebioen_pout|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIOEN ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebioen));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebioen_pout|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebioen_pout|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebioen_pout|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebioen_pout|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_K21
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[24]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR24 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[24]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[24]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[24]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[24]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[24]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_L21
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[23]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR23 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[23]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[23]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[23]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[23]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[23]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G21
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[22]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR22 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[22]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[22]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[22]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[22]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[22]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_F21
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[21]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR21 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[21]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[21]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[21]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[21]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[21]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G22
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[20]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR20 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[20]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[20]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[20]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[20]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[20]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H22
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[19]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR19 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[19]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[19]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[19]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[19]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[19]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J22
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[18]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR18 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[18]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[18]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[18]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[18]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[18]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_K22
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[17]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR17 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[17]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[17]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[17]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[17]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[17]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_L22
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[16]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR16 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[16]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[16]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[16]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[16]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[16]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E21
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[15]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR15 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[15]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[15]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[15]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[15]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[15]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_F22
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[14]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR14 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[14]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[14]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[14]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[14]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[14]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E22
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[13]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR13 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[13]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[13]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[13]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[13]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[13]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H23
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[12]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR12 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[12]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[12]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[12]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[12]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[12]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J23
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[11]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR11 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[11]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[11]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[11]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[11]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[11]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_K23
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[10]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR10 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[10]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[10]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[10]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[10]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[10]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G23
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[9]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR9 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[9]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[9]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[9]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[9]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[9]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_F23
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[8]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR8 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[8]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[8]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[8]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[8]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[8]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E23
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[7]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR7 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[7]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[7]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[7]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[7]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[7]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H24
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[6]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR6 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[6]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[6]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[6]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[6]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[6]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_J24
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[5]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR5 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[5]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[5]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[5]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[5]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[5]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_G24
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[4]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR4 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[4]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[4]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[4]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[4]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[4]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_F24
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[3]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR3 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[3]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[3]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[3]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[3]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[3]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_E24
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[2]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR2 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[2]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[2]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[2]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[2]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[2]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_D24
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[1]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR1 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[1]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[1]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[1]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[1]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[1]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_H25
+apex20ke_io \inst5|lpm_instance|core|ebiaddr_pout[0]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBIADDR0 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebiaddr[0]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebiaddr_pout[0]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[0]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[0]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebiaddr_pout[0]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_D25
+apex20ke_io \inst5|lpm_instance|core|ebicsn_pout[3]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBICSN3 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebicsn[3]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebicsn_pout[3]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebicsn_pout[3]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebicsn_pout[3]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebicsn_pout[3]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_C25
+apex20ke_io \inst5|lpm_instance|core|ebicsn_pout[2]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBICSN2 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebicsn[2]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebicsn_pout[2]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebicsn_pout[2]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebicsn_pout[2]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebicsn_pout[2]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_B25
+apex20ke_io \inst5|lpm_instance|core|ebicsn_pout[1]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBICSN1 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebicsn[1]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebicsn_pout[1]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebicsn_pout[1]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebicsn_pout[1]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebicsn_pout[1]|ioatom .power_up = "low";
+// synopsys translate_on
+
+// atom is at PIN_A25
+apex20ke_io \inst5|lpm_instance|core|ebicsn_pout[0]|ioatom (
+	.datain(\inst5|lpm_instance|core|core~EBICSN0 ),
+	.clk(gnd),
+	.aclr(gnd),
+	.ena(vcc),
+	.oe(vcc),
+	.preset(gnd),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.devoe(devoe),
+	.combout(),
+	.regout(),
+	.padio(ebicsn[0]));
+// synopsys translate_off
+defparam \inst5|lpm_instance|core|ebicsn_pout[0]|ioatom .operation_mode = "output";
+defparam \inst5|lpm_instance|core|ebicsn_pout[0]|ioatom .reg_source_mode = "none";
+defparam \inst5|lpm_instance|core|ebicsn_pout[0]|ioatom .feedback_mode = "none";
+defparam \inst5|lpm_instance|core|ebicsn_pout[0]|ioatom .power_up = "low";
+// synopsys translate_on
+
+endmodule

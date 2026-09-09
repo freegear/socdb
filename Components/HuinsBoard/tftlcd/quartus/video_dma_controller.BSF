@@ -1,0 +1,196 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 1991-2002 Altera Corporation
+Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+support information,  device programming or simulation file,  and any other
+associated  documentation or information  provided by  Altera  or a partner
+under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+other  use  of such  megafunction  design,  netlist,  support  information,
+device programming or simulation file,  or any other  related documentation
+or information  is prohibited  for  any  other purpose,  including, but not
+limited to  modification,  reverse engineering,  de-compiling, or use  with
+any other  silicon devices,  unless such use is  explicitly  licensed under
+a separate agreement with  Altera  or a megafunction partner.  Title to the
+intellectual property,  including patents,  copyrights,  trademarks,  trade
+secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+support  information,  device programming or simulation file,  or any other
+related documentation or information provided by  Altera  or a megafunction
+partner, remains with Altera, the megafunction partner, or their respective
+licensors. No other licenses, including any licenses needed under any third
+party's intellectual property, are provided herein.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 16 16 312 272)
+	(text "video_dma_controller" (rect 5 0 102 12)(font "Arial" ))
+	(text "inst" (rect 8 240 24 252)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "buffer_address[31..0]" (rect 0 0 100 12)(font "Arial" ))
+		(text "buffer_address[31..0]" (rect 21 27 121 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "num_words_per_line[15..0]" (rect 0 0 122 12)(font "Arial" ))
+		(text "num_words_per_line[15..0]" (rect 21 43 143 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "num_lines[15..0]" (rect 0 0 75 12)(font "Arial" ))
+		(text "num_lines[15..0]" (rect 21 59 96 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "enable_dma" (rect 0 0 55 12)(font "Arial" ))
+		(text "enable_dma" (rect 21 75 76 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 1))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "vblank" (rect 0 0 30 12)(font "Arial" ))
+		(text "vblank" (rect 21 91 51 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 1))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "hblank" (rect 0 0 29 12)(font "Arial" ))
+		(text "hblank" (rect 21 107 50 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 1))
+	)
+	(port
+		(pt 0 128)
+		(input)
+		(text "reset_n" (rect 0 0 34 12)(font "Arial" ))
+		(text "reset_n" (rect 21 123 55 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128)(line_width 1))
+	)
+	(port
+		(pt 0 144)
+		(input)
+		(text "masterhclk" (rect 0 0 50 12)(font "Arial" ))
+		(text "masterhclk" (rect 21 139 71 151)(font "Arial" ))
+		(line (pt 0 144)(pt 16 144)(line_width 1))
+	)
+	(port
+		(pt 0 160)
+		(input)
+		(text "masterhgrant" (rect 0 0 60 12)(font "Arial" ))
+		(text "masterhgrant" (rect 21 155 81 167)(font "Arial" ))
+		(line (pt 0 160)(pt 16 160)(line_width 1))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "masterhready" (rect 0 0 63 12)(font "Arial" ))
+		(text "masterhready" (rect 21 171 84 183)(font "Arial" ))
+		(line (pt 0 176)(pt 16 176)(line_width 1))
+	)
+	(port
+		(pt 0 192)
+		(input)
+		(text "masterhrdata[31..0]" (rect 0 0 90 12)(font "Arial" ))
+		(text "masterhrdata[31..0]" (rect 21 187 111 199)(font "Arial" ))
+		(line (pt 0 192)(pt 16 192)(line_width 3))
+	)
+	(port
+		(pt 296 32)
+		(output)
+		(text "masterhlock" (rect 0 0 56 12)(font "Arial" ))
+		(text "masterhlock" (rect 219 27 275 39)(font "Arial" ))
+		(line (pt 296 32)(pt 280 32)(line_width 1))
+	)
+	(port
+		(pt 296 48)
+		(output)
+		(text "masterhaddr[31..0]" (rect 0 0 86 12)(font "Arial" ))
+		(text "masterhaddr[31..0]" (rect 189 43 275 55)(font "Arial" ))
+		(line (pt 296 48)(pt 280 48)(line_width 3))
+	)
+	(port
+		(pt 296 64)
+		(output)
+		(text "masterhbusreq" (rect 0 0 68 12)(font "Arial" ))
+		(text "masterhbusreq" (rect 207 59 275 71)(font "Arial" ))
+		(line (pt 296 64)(pt 280 64)(line_width 1))
+	)
+	(port
+		(pt 296 80)
+		(output)
+		(text "masterhsize[1..0]" (rect 0 0 79 12)(font "Arial" ))
+		(text "masterhsize[1..0]" (rect 196 75 275 87)(font "Arial" ))
+		(line (pt 296 80)(pt 280 80)(line_width 3))
+	)
+	(port
+		(pt 296 96)
+		(output)
+		(text "masterhtrans[1..0]" (rect 0 0 84 12)(font "Arial" ))
+		(text "masterhtrans[1..0]" (rect 191 91 275 103)(font "Arial" ))
+		(line (pt 296 96)(pt 280 96)(line_width 3))
+	)
+	(port
+		(pt 296 112)
+		(output)
+		(text "masterhburst[2..0]" (rect 0 0 84 12)(font "Arial" ))
+		(text "masterhburst[2..0]" (rect 191 107 275 119)(font "Arial" ))
+		(line (pt 296 112)(pt 280 112)(line_width 3))
+	)
+	(port
+		(pt 296 128)
+		(output)
+		(text "masterhwdata[31..0]" (rect 0 0 93 12)(font "Arial" ))
+		(text "masterhwdata[31..0]" (rect 182 123 275 135)(font "Arial" ))
+		(line (pt 296 128)(pt 280 128)(line_width 3))
+	)
+	(port
+		(pt 296 144)
+		(output)
+		(text "set_irq" (rect 0 0 30 12)(font "Arial" ))
+		(text "set_irq" (rect 245 139 275 151)(font "Arial" ))
+		(line (pt 296 144)(pt 280 144)(line_width 1))
+	)
+	(port
+		(pt 296 160)
+		(output)
+		(text "buffer_select" (rect 0 0 61 12)(font "Arial" ))
+		(text "buffer_select" (rect 214 155 275 167)(font "Arial" ))
+		(line (pt 296 160)(pt 280 160)(line_width 1))
+	)
+	(port
+		(pt 296 176)
+		(output)
+		(text "dma_data[31..0]" (rect 0 0 74 12)(font "Arial" ))
+		(text "dma_data[31..0]" (rect 201 171 275 183)(font "Arial" ))
+		(line (pt 296 176)(pt 280 176)(line_width 3))
+	)
+	(port
+		(pt 296 192)
+		(output)
+		(text "rx_buffer_wraddress[9..0]" (rect 0 0 118 12)(font "Arial" ))
+		(text "rx_buffer_wraddress[9..0]" (rect 157 187 275 199)(font "Arial" ))
+		(line (pt 296 192)(pt 280 192)(line_width 3))
+	)
+	(port
+		(pt 296 208)
+		(output)
+		(text "dma_data_valid" (rect 0 0 72 12)(font "Arial" ))
+		(text "dma_data_valid" (rect 203 203 275 215)(font "Arial" ))
+		(line (pt 296 208)(pt 280 208)(line_width 1))
+	)
+	(drawing
+		(rectangle (rect 16 16 280 240)(line_width 1))
+	)
+)

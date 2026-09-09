@@ -1,0 +1,46 @@
+library verilog;
+use verilog.vl_types.all;
+entity arm_top is
+    port(
+        clk_ref         : in     vl_logic;
+        npor            : in     vl_logic;
+        intextpin       : in     vl_logic;
+        ebiack          : in     vl_logic;
+        uartrxd         : in     vl_logic;
+        uartdsrn        : in     vl_logic;
+        uartctsn        : in     vl_logic;
+        pld_clk         : in     vl_logic;
+        reset_slave     : in     vl_logic;
+        uarttxd         : out    vl_logic;
+        uartrtsn        : out    vl_logic;
+        uartdtrn        : out    vl_logic;
+        ebiwen          : out    vl_logic;
+        ebioen          : out    vl_logic;
+        ebiclk          : out    vl_logic;
+        sdramrasn       : out    vl_logic;
+        sdramcasn       : out    vl_logic;
+        sdramwen        : out    vl_logic;
+        sdramclke       : out    vl_logic;
+        sdramclkn       : out    vl_logic;
+        sdramclk        : out    vl_logic;
+        lcd_en          : out    vl_logic;
+        nreset          : inout  vl_logic;
+        uartdcdn        : inout  vl_logic;
+        uartrin         : inout  vl_logic;
+        ebiaddr         : out    vl_logic_vector(24 downto 0);
+        ebibe           : out    vl_logic_vector(1 downto 0);
+        ebicsn          : out    vl_logic_vector(3 downto 0);
+        ebidq           : inout  vl_logic_vector(15 downto 0);
+        lcd_data        : out    vl_logic_vector(7 downto 0);
+        mode            : out    vl_logic_vector(1 downto 0);
+        sdramaddr       : out    vl_logic_vector(14 downto 0);
+        sdramcsn        : out    vl_logic_vector(1 downto 0);
+        sdramdq         : inout  vl_logic_vector(31 downto 0);
+        sdramdqm        : out    vl_logic_vector(3 downto 0);
+        sdramdqs        : out    vl_logic_vector(3 downto 0);
+        seg_gnd1        : out    vl_logic_vector(2 downto 0);
+        seg_gnd2        : out    vl_logic_vector(2 downto 0);
+        seg_out1        : out    vl_logic_vector(7 downto 0);
+        seg_out2        : out    vl_logic_vector(7 downto 0)
+    );
+end arm_top;

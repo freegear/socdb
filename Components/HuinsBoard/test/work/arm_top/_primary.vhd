@@ -1,0 +1,40 @@
+library verilog;
+use verilog.vl_types.all;
+entity arm_top is
+    port(
+        clk_ref         : in     vl_logic;
+        npor            : in     vl_logic;
+        ebiack          : in     vl_logic;
+        intextpin       : in     vl_logic;
+        uartrxd         : in     vl_logic;
+        uartdsrn        : in     vl_logic;
+        uartctsn        : in     vl_logic;
+        DATA_A          : in     vl_logic;
+        DATA_B          : in     vl_logic;
+        DATA_C          : in     vl_logic;
+        DATA_D          : in     vl_logic;
+        DATA_AVAIL      : in     vl_logic;
+        HCLOCK          : in     vl_logic;
+        HRESET          : in     vl_logic;
+        uartdtrn        : out    vl_logic;
+        uarttxd         : out    vl_logic;
+        uartrtsn        : out    vl_logic;
+        ebiwen          : out    vl_logic;
+        ebioen          : out    vl_logic;
+        Mwrite          : out    vl_logic;
+        hready          : out    vl_logic;
+        nreset          : inout  vl_logic;
+        uartrin         : inout  vl_logic;
+        uartdcdn        : inout  vl_logic;
+        burst           : out    vl_logic_vector(2 downto 0);
+        ebiaddr         : out    vl_logic_vector(24 downto 0);
+        ebicsn          : out    vl_logic_vector(3 downto 0);
+        ebidq           : inout  vl_logic_vector(15 downto 0);
+        hresp           : out    vl_logic_vector(1 downto 0);
+        masterhaddr     : out    vl_logic_vector(31 downto 0);
+        masterhrdata    : out    vl_logic_vector(31 downto 0);
+        masterhwdata    : out    vl_logic_vector(31 downto 0);
+        size            : out    vl_logic_vector(1 downto 0);
+        trans           : out    vl_logic_vector(1 downto 0)
+    );
+end arm_top;

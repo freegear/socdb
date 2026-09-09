@@ -1,0 +1,710 @@
+Analysis & Synthesis report for arm_top
+Mon Oct 31 16:49:36 2005
+Version 4.2 Build 157 12/07/2004 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. State Machine - |arm_top|SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state
+  5. Hierarchy
+  6. User-Specified and Inferred Latches
+  7. General Register Statistics
+  8. Inverted Register Statistics
+  9. WYSIWYG Cells
+ 10. Analysis & Synthesis Resource Utilization by Entity
+ 11. Analysis & Synthesis Equations
+ 12. Analysis & Synthesis Source Files Read
+ 13. Analysis & Synthesis Resource Usage Summary
+ 14. Analysis & Synthesis RAM Summary
+ 15. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2004 Altera Corporation
+Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+support information,  device programming or simulation file,  and any other
+associated  documentation or information  provided by  Altera  or a partner
+under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+other  use  of such  megafunction  design,  netlist,  support  information,
+device programming or simulation file,  or any other  related documentation
+or information  is prohibited  for  any  other purpose,  including, but not
+limited to  modification,  reverse engineering,  de-compiling, or use  with
+any other  silicon devices,  unless such use is  explicitly  licensed under
+a separate agreement with  Altera  or a megafunction partner.  Title to the
+intellectual property,  including patents,  copyrights,  trademarks,  trade
+secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+support  information,  device programming or simulation file,  or any other
+related documentation or information provided by  Altera  or a megafunction
+partner, remains with Altera, the megafunction partner, or their respective
+licensors. No other licenses, including any licenses needed under any third
+party's intellectual property, are provided herein.
+
+
+
++------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                           ;
++-----------------------------+------------------------------------------+
+; Analysis & Synthesis Status ; Successful - Mon Oct 31 16:49:36 2005    ;
+; Quartus II Version          ; 4.2 Build 157 12/07/2004 SJ Full Version ;
+; Revision Name               ; arm_top                                  ;
+; Top-level Entity Name       ; arm_top                                  ;
+; Family                      ; EXCALIBUR_ARM                            ;
+; Total logic elements        ; 301                                      ;
+; Total pins                  ; 161                                      ;
+; Total virtual pins          ; 0                                        ;
+; Total memory bits           ; 320                                      ;
+; Total PLLs                  ; 0                                        ;
++-----------------------------+------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                              ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+; Option                                                                                     ; Setting       ; Default Value ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+; Device                                                                                     ; EPXA10F1020C2 ;               ;
+; Family name                                                                                ; EXCALIBUR_ARM ; Stratix       ;
+; Use smart compilation                                                                      ; Normal        ; Normal        ;
+; Create Debugging Nodes for IP Cores                                                        ; off           ; off           ;
+; Preserve fewer node names                                                                  ; On            ; On            ;
+; Disable OpenCore Plus hardware evaluation                                                  ; Off           ; Off           ;
+; Verilog Version                                                                            ; Verilog_2001  ; Verilog_2001  ;
+; VHDL Version                                                                               ; VHDL93        ; VHDL93        ;
+; Top-level entity name                                                                      ; arm_top       ; arm_top       ;
+; State Machine Processing                                                                   ; Auto          ; Auto          ;
+; Extract Verilog State Machines                                                             ; On            ; On            ;
+; Extract VHDL State Machines                                                                ; On            ; On            ;
+; NOT Gate Push-Back                                                                         ; On            ; On            ;
+; Power-Up Don't Care                                                                        ; On            ; On            ;
+; Remove Redundant Logic Cells                                                               ; Off           ; Off           ;
+; Remove Duplicate Registers                                                                 ; On            ; On            ;
+; Ignore CARRY Buffers                                                                       ; Off           ; Off           ;
+; Ignore CASCADE Buffers                                                                     ; Off           ; Off           ;
+; Ignore GLOBAL Buffers                                                                      ; Off           ; Off           ;
+; Ignore ROW GLOBAL Buffers                                                                  ; Off           ; Off           ;
+; Ignore LCELL Buffers                                                                       ; Off           ; Off           ;
+; Ignore SOFT Buffers                                                                        ; On            ; On            ;
+; Limit AHDL Integers to 32 Bits                                                             ; Off           ; Off           ;
+; Auto Implement in ROM                                                                      ; Off           ; Off           ;
+; Technology Mapper -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur              ; LUT           ; LUT           ;
+; Optimization Technique -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur         ; Balanced      ; Balanced      ;
+; Allow XOR Gate Usage                                                                       ; On            ; On            ;
+; Carry Chain Length                                                                         ; 48            ; 48            ;
+; Cascade Chain Length                                                                       ; 2             ; 2             ;
+; Parallel Expander Chain Length -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur ; 16            ; 16            ;
+; Auto Carry Chains                                                                          ; On            ; On            ;
+; Auto Parallel Expanders                                                                    ; On            ; On            ;
+; Auto Open-Drain Pins                                                                       ; On            ; On            ;
+; Remove Duplicate Logic                                                                     ; On            ; On            ;
+; Perform WYSIWYG Primitive Resynthesis                                                      ; Off           ; Off           ;
+; Perform gate-level register retiming                                                       ; Off           ; Off           ;
+; Allow register retiming to trade off Tsu/Tco with Fmax                                     ; On            ; On            ;
+; Auto ROM Replacement                                                                       ; On            ; On            ;
+; Auto RAM Replacement                                                                       ; On            ; On            ;
+; Auto Clock Enable Replacement                                                              ; On            ; On            ;
+; Auto Resource Sharing                                                                      ; Off           ; Off           ;
+; Allow Any RAM Size For Recognition                                                         ; Off           ; Off           ;
+; Allow Any ROM Size For Recognition                                                         ; Off           ; Off           ;
+; Allow Any Shift Register Size For Recognition                                              ; Off           ; Off           ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |arm_top|SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state                                                               ;
++-----------------------------+-----------------------------+-------------------------+------------------------+---------------------------+
+; Name                        ; slave_state.READ_WAIT_PHASE ; slave_state.ERROR_PHASE ; slave_state.DATA_PHASE ; slave_state.ADDRESS_PHASE ;
++-----------------------------+-----------------------------+-------------------------+------------------------+---------------------------+
+; slave_state.ADDRESS_PHASE   ; 0                           ; 0                       ; 0                      ; 0                         ;
+; slave_state.DATA_PHASE      ; 0                           ; 0                       ; 1                      ; 1                         ;
+; slave_state.ERROR_PHASE     ; 0                           ; 1                       ; 0                      ; 1                         ;
+; slave_state.READ_WAIT_PHASE ; 1                           ; 0                       ; 0                      ; 1                         ;
++-----------------------------+-----------------------------+-------------------------+------------------------+---------------------------+
+
+
++-----------+
+; Hierarchy ;
++-----------+
+arm_top
+ |-- stripe:inst
+      |-- alt_exc_stripe:lpm_instance
+           |-- alt_exc_upcore:core
+                |-- apex20ke_io_in:clk_ref_pin
+                |-- apex20ke_io_in:ebiack_pin
+                |-- apex20ke_io_out:ebiaddr_pout
+                |-- apex20ke_io_out:ebiaddr_pout[0]
+                |-- apex20ke_io_out:ebiaddr_pout[1]
+                |-- apex20ke_io_out:ebiaddr_pout[2]
+                |-- apex20ke_io_out:ebiaddr_pout[3]
+                |-- apex20ke_io_out:ebiaddr_pout[4]
+                |-- apex20ke_io_out:ebiaddr_pout[5]
+                |-- apex20ke_io_out:ebiaddr_pout[6]
+                |-- apex20ke_io_out:ebiaddr_pout[7]
+                |-- apex20ke_io_out:ebiaddr_pout[8]
+                |-- apex20ke_io_out:ebiaddr_pout[9]
+                |-- apex20ke_io_out:ebiaddr_pout[10]
+                |-- apex20ke_io_out:ebiaddr_pout[11]
+                |-- apex20ke_io_out:ebiaddr_pout[12]
+                |-- apex20ke_io_out:ebiaddr_pout[13]
+                |-- apex20ke_io_out:ebiaddr_pout[14]
+                |-- apex20ke_io_out:ebiaddr_pout[15]
+                |-- apex20ke_io_out:ebiaddr_pout[16]
+                |-- apex20ke_io_out:ebiaddr_pout[17]
+                |-- apex20ke_io_out:ebiaddr_pout[18]
+                |-- apex20ke_io_out:ebiaddr_pout[19]
+                |-- apex20ke_io_out:ebiaddr_pout[20]
+                |-- apex20ke_io_out:ebiaddr_pout[21]
+                |-- apex20ke_io_out:ebiaddr_pout[22]
+                |-- apex20ke_io_out:ebiaddr_pout[23]
+                |-- apex20ke_io_out:ebiaddr_pout[24]
+                |-- apex20ke_io_out:ebibe_pout
+                |-- apex20ke_io_out:ebibe_pout[0]
+                |-- apex20ke_io_out:ebibe_pout[1]
+                |-- apex20ke_io_out:ebiclk_pout
+                |-- apex20ke_io_out:ebicsn_pout
+                |-- apex20ke_io_out:ebicsn_pout[0]
+                |-- apex20ke_io_out:ebicsn_pout[1]
+                |-- apex20ke_io_out:ebicsn_pout[2]
+                |-- apex20ke_io_out:ebicsn_pout[3]
+                |-- apex20ke_io_bidir:ebidq_pbidir
+                |-- apex20ke_io_bidir:ebidq_pbidir[0]
+                |-- apex20ke_io_bidir:ebidq_pbidir[1]
+                |-- apex20ke_io_bidir:ebidq_pbidir[2]
+                |-- apex20ke_io_bidir:ebidq_pbidir[3]
+                |-- apex20ke_io_bidir:ebidq_pbidir[4]
+                |-- apex20ke_io_bidir:ebidq_pbidir[5]
+                |-- apex20ke_io_bidir:ebidq_pbidir[6]
+                |-- apex20ke_io_bidir:ebidq_pbidir[7]
+                |-- apex20ke_io_bidir:ebidq_pbidir[8]
+                |-- apex20ke_io_bidir:ebidq_pbidir[9]
+                |-- apex20ke_io_bidir:ebidq_pbidir[10]
+                |-- apex20ke_io_bidir:ebidq_pbidir[11]
+                |-- apex20ke_io_bidir:ebidq_pbidir[12]
+                |-- apex20ke_io_bidir:ebidq_pbidir[13]
+                |-- apex20ke_io_bidir:ebidq_pbidir[14]
+                |-- apex20ke_io_bidir:ebidq_pbidir[15]
+                |-- apex20ke_io_out:ebioen_pout
+                |-- apex20ke_io_out:ebiwen_pout
+                |-- apex20ke_io_in:intextpin_pin
+                |-- apex20ke_io_in:npor_pin
+                |-- apex20ke_io_bidir_od:nreset_pbidir
+                |-- apex20ke_io_out:sdramaddr_pout
+                |-- apex20ke_io_out:sdramaddr_pout[0]
+                |-- apex20ke_io_out:sdramaddr_pout[1]
+                |-- apex20ke_io_out:sdramaddr_pout[2]
+                |-- apex20ke_io_out:sdramaddr_pout[3]
+                |-- apex20ke_io_out:sdramaddr_pout[4]
+                |-- apex20ke_io_out:sdramaddr_pout[5]
+                |-- apex20ke_io_out:sdramaddr_pout[6]
+                |-- apex20ke_io_out:sdramaddr_pout[7]
+                |-- apex20ke_io_out:sdramaddr_pout[8]
+                |-- apex20ke_io_out:sdramaddr_pout[9]
+                |-- apex20ke_io_out:sdramaddr_pout[10]
+                |-- apex20ke_io_out:sdramaddr_pout[11]
+                |-- apex20ke_io_out:sdramaddr_pout[12]
+                |-- apex20ke_io_out:sdramaddr_pout[13]
+                |-- apex20ke_io_out:sdramaddr_pout[14]
+                |-- apex20ke_io_out:sdramcasn_pout
+                |-- apex20ke_io_out:sdramclk_pout
+                |-- apex20ke_io_out:sdramclke_pout
+                |-- apex20ke_io_out:sdramclkn_pout
+                |-- apex20ke_io_out:sdramcsn_pout
+                |-- apex20ke_io_out:sdramcsn_pout[0]
+                |-- apex20ke_io_out:sdramcsn_pout[1]
+                |-- apex20ke_io_bidir:sdramdq_pbidir
+                |-- apex20ke_io_bidir:sdramdq_pbidir[0]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[1]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[2]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[3]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[4]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[5]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[6]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[7]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[8]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[9]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[10]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[11]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[12]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[13]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[14]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[15]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[16]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[17]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[18]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[19]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[20]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[21]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[22]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[23]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[24]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[25]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[26]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[27]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[28]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[29]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[30]
+                |-- apex20ke_io_bidir:sdramdq_pbidir[31]
+                |-- apex20ke_io_out:sdramdqm_pout
+                |-- apex20ke_io_out:sdramdqm_pout[0]
+                |-- apex20ke_io_out:sdramdqm_pout[1]
+                |-- apex20ke_io_out:sdramdqm_pout[2]
+                |-- apex20ke_io_out:sdramdqm_pout[3]
+                |-- apex20ke_io_bidir:sdramdqs_pbidir
+                |-- apex20ke_io_bidir:sdramdqs_pbidir[0]
+                |-- apex20ke_io_bidir:sdramdqs_pbidir[1]
+                |-- apex20ke_io_bidir:sdramdqs_pbidir[2]
+                |-- apex20ke_io_bidir:sdramdqs_pbidir[3]
+                |-- apex20ke_io_out:sdramrasn_pout
+                |-- apex20ke_io_out:sdramwen_pout
+                |-- apex20ke_io_in:uartctsn_pin
+                |-- apex20ke_io_bidir:uartdcdn_pbidir
+                |-- apex20ke_io_in:uartdsrn_pin
+                |-- apex20ke_io_out:uartdtrn_pout
+                |-- apex20ke_io_bidir:uartrin_pbidir
+                |-- apex20ke_io_out:uartrtsn_pout
+                |-- apex20ke_io_in:uartrxd_pin
+                |-- apex20ke_io_out:uarttxd_pout
+ |-- SEG_SLAVE:inst1
+      |-- ahb_slave_sm:b2v_inst
+      |-- seven_seg:b2v_inst1
+           |-- bin2seg:BIN2SEG_1
+           |-- bin2seg:BIN2SEG_2
+           |-- bin2seg:BIN2SEG_3
+           |-- bin2seg:BIN2SEG_4
+           |-- bin2seg:BIN2SEG_5
+           |-- bin2seg:BIN2SEG_6
+           |-- lpm_counter:cnt64k_rtl_2
+                |-- alt_synch_counter:wysi_counter
+      |-- LCD_TOP:b2v_inst2
+           |-- lpm_counter:counter_rtl_1
+                |-- alt_synch_counter:wysi_counter
+           |-- dp_ram:dpram1
+                |-- altdpram:mem_rtl_0
+
+
++----------------------------------------------------+
+; User-Specified and Inferred Latches                ;
++------------------------------------------------+---+
+; Latch Name                                     ;   ;
++------------------------------------------------+---+
+; SEG_SLAVE:inst1|seven_seg:b2v_inst1|seg_gnd[2] ;   ;
+; SEG_SLAVE:inst1|seven_seg:b2v_inst1|seg_gnd[1] ;   ;
+; SEG_SLAVE:inst1|seven_seg:b2v_inst1|seg_gnd[0] ;   ;
+; Number of user-specified and inferred latches  ; 3 ;
++------------------------------------------------+---+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 119   ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 89    ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 47    ;
+; Number of registers using Output Enable      ; 0     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------------+
+; Inverted Register Statistics                           ;
++----------------------------------------------+---------+
+; Inverted Register                            ; Fan out ;
++----------------------------------------------+---------+
+; SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|lcd_en     ; 1       ;
+; SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|HREADY ; 1       ;
+; Total number of inverted registers = 2       ;         ;
++----------------------------------------------+---------+
+
+
++----------------------------------------------------------------+
+; WYSIWYG Cells                                                  ;
++--------------------------------------------------------+-------+
+; Statistic                                              ; Value ;
++--------------------------------------------------------+-------+
+; Number of WYSIWYG cells                                ; 42    ;
+; Number of synthesis-generated cells                    ; 259   ;
+; Number of WYSIWYG LUTs                                 ; 42    ;
+; Number of synthesis-generated LUTs                     ; 206   ;
+; Number of WYSIWYG registers                            ; 39    ;
+; Number of synthesis-generated registers                ; 80    ;
+; Number of cells with combinational logic only          ; 182   ;
+; Number of cells with registers only                    ; 53    ;
+; Number of cells with combinational logic and registers ; 66    ;
++--------------------------------------------------------+-------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                     ;
++----------------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+-----------------------------------------------------------------------------------------------------------+
+; Compilation Hierarchy Node                         ; Logic Cells ; LC Registers ; Memory Bits ; Pins ; Virtual Pins ; LUT-Only LCs ; Register-Only LCs ; LUT/Register LCs ; Carry Chain LCs ; Full Hierarchy Name                                                                                       ;
++----------------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+-----------------------------------------------------------------------------------------------------------+
+; |arm_top                                           ; 301 (21)    ; 119          ; 320         ; 161  ; 0            ; 182 (21)     ; 53 (0)            ; 66 (0)           ; 39 (0)          ; |arm_top                                                                                                  ;
+;    |SEG_SLAVE:inst1|                               ; 277 (0)     ; 119          ; 320         ; 0    ; 0            ; 158 (0)      ; 53 (0)            ; 66 (0)           ; 39 (0)          ; |arm_top|SEG_SLAVE:inst1                                                                                  ;
+;       |LCD_TOP:b2v_inst2|                          ; 95 (71)     ; 50           ; 320         ; 0    ; 0            ; 45 (45)      ; 19 (19)           ; 31 (7)           ; 24 (0)          ; |arm_top|SEG_SLAVE:inst1|LCD_TOP:b2v_inst2                                                                ;
+;          |dp_ram:dpram1|                           ; 0 (0)       ; 0            ; 320         ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|dp_ram:dpram1                                                  ;
+;             |altdpram:mem_rtl_0|                   ; 0 (0)       ; 0            ; 320         ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|dp_ram:dpram1|altdpram:mem_rtl_0                               ;
+;          |lpm_counter:counter_rtl_1|               ; 24 (0)      ; 24           ; 0           ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 24 (0)           ; 24 (0)          ; |arm_top|SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|lpm_counter:counter_rtl_1                                      ;
+;             |alt_synch_counter:wysi_counter|       ; 24 (24)     ; 24           ; 0           ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 24 (24)          ; 24 (24)         ; |arm_top|SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|lpm_counter:counter_rtl_1|alt_synch_counter:wysi_counter       ;
+;       |ahb_slave_sm:b2v_inst|                      ; 41 (41)     ; 14           ; 0           ; 0    ; 0            ; 27 (27)      ; 0 (0)             ; 14 (14)          ; 0 (0)           ; |arm_top|SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst                                                            ;
+;       |seven_seg:b2v_inst1|                        ; 141 (126)   ; 55           ; 0           ; 0    ; 0            ; 86 (86)      ; 34 (34)           ; 21 (6)           ; 15 (0)          ; |arm_top|SEG_SLAVE:inst1|seven_seg:b2v_inst1                                                              ;
+;          |lpm_counter:cnt64k_rtl_2|                ; 15 (0)      ; 15           ; 0           ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 15 (0)           ; 15 (0)          ; |arm_top|SEG_SLAVE:inst1|seven_seg:b2v_inst1|lpm_counter:cnt64k_rtl_2                                     ;
+;             |alt_synch_counter:wysi_counter|       ; 15 (15)     ; 15           ; 0           ; 0    ; 0            ; 0 (0)        ; 0 (0)             ; 15 (15)          ; 15 (15)         ; |arm_top|SEG_SLAVE:inst1|seven_seg:b2v_inst1|lpm_counter:cnt64k_rtl_2|alt_synch_counter:wysi_counter      ;
+;    |stripe:inst|                                   ; 3 (0)       ; 0            ; 0           ; 126  ; 0            ; 3 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst                                                                                      ;
+;       |alt_exc_stripe:lpm_instance|                ; 3 (3)       ; 0            ; 0           ; 126  ; 0            ; 3 (3)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance                                                          ;
+;          |alt_exc_upcore:core|                     ; 0 (0)       ; 0            ; 0           ; 126  ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core                                      ;
+;             |apex20ke_io_bidir:ebidq_pbidir[0]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[0]    ;
+;             |apex20ke_io_bidir:ebidq_pbidir[10]|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[10]   ;
+;             |apex20ke_io_bidir:ebidq_pbidir[11]|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[11]   ;
+;             |apex20ke_io_bidir:ebidq_pbidir[12]|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[12]   ;
+;             |apex20ke_io_bidir:ebidq_pbidir[13]|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[13]   ;
+;             |apex20ke_io_bidir:ebidq_pbidir[14]|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[14]   ;
+;             |apex20ke_io_bidir:ebidq_pbidir[15]|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[15]   ;
+;             |apex20ke_io_bidir:ebidq_pbidir[1]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[1]    ;
+;             |apex20ke_io_bidir:ebidq_pbidir[2]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[2]    ;
+;             |apex20ke_io_bidir:ebidq_pbidir[3]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[3]    ;
+;             |apex20ke_io_bidir:ebidq_pbidir[4]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[4]    ;
+;             |apex20ke_io_bidir:ebidq_pbidir[5]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[5]    ;
+;             |apex20ke_io_bidir:ebidq_pbidir[6]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[6]    ;
+;             |apex20ke_io_bidir:ebidq_pbidir[7]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[7]    ;
+;             |apex20ke_io_bidir:ebidq_pbidir[8]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[8]    ;
+;             |apex20ke_io_bidir:ebidq_pbidir[9]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[9]    ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[0]|  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[0]  ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[10]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[10] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[11]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[11] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[12]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[12] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[13]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[13] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[14]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[14] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[15]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[15] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[16]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[16] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[17]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[17] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[18]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[18] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[19]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[19] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[1]|  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[1]  ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[20]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[20] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[21]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[21] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[22]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[22] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[23]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[23] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[24]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[24] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[25]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[25] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[26]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[26] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[27]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[27] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[28]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[28] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[29]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[29] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[2]|  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[2]  ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[30]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[30] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[31]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[31] ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[3]|  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[3]  ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[4]|  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[4]  ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[5]|  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[5]  ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[6]|  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[6]  ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[7]|  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[7]  ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[8]|  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[8]  ;
+;             |apex20ke_io_bidir:sdramdq_pbidir[9]|  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdq_pbidir[9]  ;
+;             |apex20ke_io_bidir:sdramdqs_pbidir[0]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdqs_pbidir[0] ;
+;             |apex20ke_io_bidir:sdramdqs_pbidir[1]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdqs_pbidir[1] ;
+;             |apex20ke_io_bidir:sdramdqs_pbidir[2]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdqs_pbidir[2] ;
+;             |apex20ke_io_bidir:sdramdqs_pbidir[3]| ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdqs_pbidir[3] ;
+;             |apex20ke_io_bidir:uartdcdn_pbidir|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:uartdcdn_pbidir    ;
+;             |apex20ke_io_bidir:uartrin_pbidir|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:uartrin_pbidir     ;
+;             |apex20ke_io_bidir_od:nreset_pbidir|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir_od:nreset_pbidir   ;
+;             |apex20ke_io_in:clk_ref_pin|           ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:clk_ref_pin           ;
+;             |apex20ke_io_in:ebiack_pin|            ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:ebiack_pin            ;
+;             |apex20ke_io_in:intextpin_pin|         ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:intextpin_pin         ;
+;             |apex20ke_io_in:npor_pin|              ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:npor_pin              ;
+;             |apex20ke_io_in:uartctsn_pin|          ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:uartctsn_pin          ;
+;             |apex20ke_io_in:uartdsrn_pin|          ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:uartdsrn_pin          ;
+;             |apex20ke_io_in:uartrxd_pin|           ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:uartrxd_pin           ;
+;             |apex20ke_io_out:ebiaddr_pout[0]|      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[0]      ;
+;             |apex20ke_io_out:ebiaddr_pout[10]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[10]     ;
+;             |apex20ke_io_out:ebiaddr_pout[11]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[11]     ;
+;             |apex20ke_io_out:ebiaddr_pout[12]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[12]     ;
+;             |apex20ke_io_out:ebiaddr_pout[13]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[13]     ;
+;             |apex20ke_io_out:ebiaddr_pout[14]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[14]     ;
+;             |apex20ke_io_out:ebiaddr_pout[15]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[15]     ;
+;             |apex20ke_io_out:ebiaddr_pout[16]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[16]     ;
+;             |apex20ke_io_out:ebiaddr_pout[17]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[17]     ;
+;             |apex20ke_io_out:ebiaddr_pout[18]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[18]     ;
+;             |apex20ke_io_out:ebiaddr_pout[19]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[19]     ;
+;             |apex20ke_io_out:ebiaddr_pout[1]|      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[1]      ;
+;             |apex20ke_io_out:ebiaddr_pout[20]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[20]     ;
+;             |apex20ke_io_out:ebiaddr_pout[21]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[21]     ;
+;             |apex20ke_io_out:ebiaddr_pout[22]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[22]     ;
+;             |apex20ke_io_out:ebiaddr_pout[23]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[23]     ;
+;             |apex20ke_io_out:ebiaddr_pout[24]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[24]     ;
+;             |apex20ke_io_out:ebiaddr_pout[2]|      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[2]      ;
+;             |apex20ke_io_out:ebiaddr_pout[3]|      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[3]      ;
+;             |apex20ke_io_out:ebiaddr_pout[4]|      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[4]      ;
+;             |apex20ke_io_out:ebiaddr_pout[5]|      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[5]      ;
+;             |apex20ke_io_out:ebiaddr_pout[6]|      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[6]      ;
+;             |apex20ke_io_out:ebiaddr_pout[7]|      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[7]      ;
+;             |apex20ke_io_out:ebiaddr_pout[8]|      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[8]      ;
+;             |apex20ke_io_out:ebiaddr_pout[9]|      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[9]      ;
+;             |apex20ke_io_out:ebibe_pout[0]|        ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebibe_pout[0]        ;
+;             |apex20ke_io_out:ebibe_pout[1]|        ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebibe_pout[1]        ;
+;             |apex20ke_io_out:ebiclk_pout|          ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiclk_pout          ;
+;             |apex20ke_io_out:ebicsn_pout[0]|       ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebicsn_pout[0]       ;
+;             |apex20ke_io_out:ebicsn_pout[1]|       ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebicsn_pout[1]       ;
+;             |apex20ke_io_out:ebicsn_pout[2]|       ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebicsn_pout[2]       ;
+;             |apex20ke_io_out:ebicsn_pout[3]|       ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebicsn_pout[3]       ;
+;             |apex20ke_io_out:ebioen_pout|          ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebioen_pout          ;
+;             |apex20ke_io_out:ebiwen_pout|          ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiwen_pout          ;
+;             |apex20ke_io_out:sdramaddr_pout[0]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[0]    ;
+;             |apex20ke_io_out:sdramaddr_pout[10]|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[10]   ;
+;             |apex20ke_io_out:sdramaddr_pout[11]|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[11]   ;
+;             |apex20ke_io_out:sdramaddr_pout[12]|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[12]   ;
+;             |apex20ke_io_out:sdramaddr_pout[13]|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[13]   ;
+;             |apex20ke_io_out:sdramaddr_pout[14]|   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[14]   ;
+;             |apex20ke_io_out:sdramaddr_pout[1]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[1]    ;
+;             |apex20ke_io_out:sdramaddr_pout[2]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[2]    ;
+;             |apex20ke_io_out:sdramaddr_pout[3]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[3]    ;
+;             |apex20ke_io_out:sdramaddr_pout[4]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[4]    ;
+;             |apex20ke_io_out:sdramaddr_pout[5]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[5]    ;
+;             |apex20ke_io_out:sdramaddr_pout[6]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[6]    ;
+;             |apex20ke_io_out:sdramaddr_pout[7]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[7]    ;
+;             |apex20ke_io_out:sdramaddr_pout[8]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[8]    ;
+;             |apex20ke_io_out:sdramaddr_pout[9]|    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramaddr_pout[9]    ;
+;             |apex20ke_io_out:sdramcasn_pout|       ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramcasn_pout       ;
+;             |apex20ke_io_out:sdramclk_pout|        ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramclk_pout        ;
+;             |apex20ke_io_out:sdramclke_pout|       ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramclke_pout       ;
+;             |apex20ke_io_out:sdramclkn_pout|       ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramclkn_pout       ;
+;             |apex20ke_io_out:sdramcsn_pout[0]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramcsn_pout[0]     ;
+;             |apex20ke_io_out:sdramcsn_pout[1]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramcsn_pout[1]     ;
+;             |apex20ke_io_out:sdramdqm_pout[0]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramdqm_pout[0]     ;
+;             |apex20ke_io_out:sdramdqm_pout[1]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramdqm_pout[1]     ;
+;             |apex20ke_io_out:sdramdqm_pout[2]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramdqm_pout[2]     ;
+;             |apex20ke_io_out:sdramdqm_pout[3]|     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramdqm_pout[3]     ;
+;             |apex20ke_io_out:sdramrasn_pout|       ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramrasn_pout       ;
+;             |apex20ke_io_out:sdramwen_pout|        ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:sdramwen_pout        ;
+;             |apex20ke_io_out:uartdtrn_pout|        ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:uartdtrn_pout        ;
+;             |apex20ke_io_out:uartrtsn_pout|        ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:uartrtsn_pout        ;
+;             |apex20ke_io_out:uarttxd_pout|         ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:uarttxd_pout         ;
++----------------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+-----------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------+
+; Analysis & Synthesis Equations ;
++--------------------------------+
+The equations can be found in C:/Documents and Settings/a/바탕 화면/SoCMaster관련 자료/SoCMasterXP8000/seglcd/quartus/arm_top.map.eqn.
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                           ;
++----------------------------------+-----------------+-------------------------------------------------------------------------------------------------------------+
+; File Name with User-Entered Path ; Used in Netlist ; File Name with Absolute Path                                                                                ;
++----------------------------------+-----------------+-------------------------------------------------------------------------------------------------------------+
+; SEG_SLAVE.v                      ; yes             ; C:/Documents and Settings/a/바탕 화면/SoCMaster관련 자료/SoCMasterXP8000/seglcd/quartus/SEG_SLAVE.v         ;
+; seven_seg.v                      ; yes             ; C:/Documents and Settings/a/바탕 화면/SoCMaster관련 자료/SoCMasterXP8000/seglcd/quartus/seven_seg.v         ;
+; ahb_slave_include.v              ; yes             ; C:/Documents and Settings/a/바탕 화면/SoCMaster관련 자료/SoCMasterXP8000/seglcd/quartus/ahb_slave_include.v ;
+; ahb_slave_sm.v                   ; yes             ; C:/Documents and Settings/a/바탕 화면/SoCMaster관련 자료/SoCMasterXP8000/seglcd/quartus/ahb_slave_sm.v      ;
+; arm_top.bdf                      ; yes             ; C:/Documents and Settings/a/바탕 화면/SoCMaster관련 자료/SoCMasterXP8000/seglcd/quartus/arm_top.bdf         ;
+; bin2seg.v                        ; yes             ; C:/Documents and Settings/a/바탕 화면/SoCMaster관련 자료/SoCMasterXP8000/seglcd/quartus/bin2seg.v           ;
+; dp_ram.v                         ; yes             ; C:/Documents and Settings/a/바탕 화면/SoCMaster관련 자료/SoCMasterXP8000/seglcd/quartus/dp_ram.v            ;
+; LCD_TOP.v                        ; yes             ; C:/Documents and Settings/a/바탕 화면/SoCMaster관련 자료/SoCMasterXP8000/seglcd/quartus/LCD_TOP.v           ;
+; stripe.v                         ; yes             ; C:/Documents and Settings/a/바탕 화면/SoCMaster관련 자료/SoCMasterXP8000/seglcd/quartus/stripe.v            ;
+; alt_exc_stripe.tdf               ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_exc_stripe.tdf                                              ;
+; aglobal42.inc                    ; yes             ; c:/altera/quartus42/libraries/megafunctions/aglobal42.inc                                                   ;
+; alt_exc_upcore.inc               ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_exc_upcore.inc                                              ;
+; alt_exc_dpram.inc                ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_exc_dpram.inc                                               ;
+; apex20ke_lcell.inc               ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_lcell.inc                                              ;
+; alt_exc_upcore.tdf               ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_exc_upcore.tdf                                              ;
+; apex20ke_upcore.inc              ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_upcore.inc                                             ;
+; apex20ke_io.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_io.inc                                                 ;
+; apex20ke_io_in.v                 ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_io_in.v                                                ;
+; apex20ke_io_bidir_od.v           ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_io_bidir_od.v                                          ;
+; apex20ke_io_out.v                ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_io_out.v                                               ;
+; apex20ke_io_bidir.v              ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_io_bidir.v                                             ;
+; altdpram.tdf                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/altdpram.tdf                                                    ;
+; memmodes.inc                     ; yes             ; c:/altera/quartus42/libraries/others/maxplus2/memmodes.inc                                                  ;
+; lpm_decode.inc                   ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_decode.inc                                                  ;
+; lpm_mux.inc                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_mux.inc                                                     ;
+; a_hdffe.inc                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/a_hdffe.inc                                                     ;
+; a_rdenreg.inc                    ; yes             ; c:/altera/quartus42/libraries/megafunctions/a_rdenreg.inc                                                   ;
+; altqpram.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/altqpram.inc                                                    ;
+; alt_le_rden_reg.inc              ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_le_rden_reg.inc                                             ;
+; altsyncram.inc                   ; yes             ; c:/altera/quartus42/libraries/megafunctions/altsyncram.inc                                                  ;
+; lpm_counter.tdf                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_counter.tdf                                                 ;
+; lpm_constant.inc                 ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_constant.inc                                                ;
+; lpm_add_sub.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_add_sub.inc                                                 ;
+; cmpconst.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/cmpconst.inc                                                    ;
+; lpm_compare.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_compare.inc                                                 ;
+; lpm_counter.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_counter.inc                                                 ;
+; dffeea.inc                       ; yes             ; c:/altera/quartus42/libraries/megafunctions/dffeea.inc                                                      ;
+; alt_synch_counter.inc            ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_synch_counter.inc                                           ;
+; alt_synch_counter_f.inc          ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_synch_counter_f.inc                                         ;
+; alt_counter_f10ke.inc            ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_counter_f10ke.inc                                           ;
+; alt_counter_stratix.inc          ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_counter_stratix.inc                                         ;
+; alt_synch_counter.tdf            ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_synch_counter.tdf                                           ;
+; mercury_lcell.inc                ; yes             ; c:/altera/quartus42/libraries/megafunctions/mercury_lcell.inc                                               ;
+; apex20k_lcell.inc                ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20k_lcell.inc                                               ;
+; flex6k_lcell.inc                 ; yes             ; c:/altera/quartus42/libraries/megafunctions/flex6k_lcell.inc                                                ;
+; alt_asynch_counter.inc           ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_asynch_counter.inc                                          ;
++----------------------------------+-----------------+-------------------------------------------------------------------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                                                          ;
++-----------------------------------+------------------------------------------------------------------+
+; Resource                          ; Usage                                                            ;
++-----------------------------------+------------------------------------------------------------------+
+; Logic cells                       ; 301                                                              ;
+; Total combinational functions     ; 248                                                              ;
+; Total 4-input functions           ; 147                                                              ;
+; Total 3-input functions           ; 44                                                               ;
+; Total 2-input functions           ; 28                                                               ;
+; Total 1-input functions           ; 25                                                               ;
+; Total 0-input functions           ; 4                                                                ;
+; Combinational cells for routing   ; 0                                                                ;
+; Total registers                   ; 119                                                              ;
+; Total logic cells in carry chains ; 39                                                               ;
+; I/O pins                          ; 161                                                              ;
+; Total memory bits                 ; 320                                                              ;
+; Maximum fan-out node              ; stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|core ;
+; Maximum fan-out                   ; 189                                                              ;
+; Total fan-out                     ; 1488                                                             ;
+; Average fan-out                   ; 3.16                                                             ;
++-----------------------------------+------------------------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis RAM Summary                                                                                                                                 ;
++----------------------------------------------------------------------------+-----------+--------------+--------------+--------------+--------------+------+------+
+; Name                                                                       ; Mode      ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size ; MIF  ;
++----------------------------------------------------------------------------+-----------+--------------+--------------+--------------+--------------+------+------+
+; SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|dp_ram:dpram1|altdpram:mem_rtl_0|content ; Dual Port ; 40           ; 8            ; 40           ; 8            ; 320  ; none ;
++----------------------------------------------------------------------------+-----------+--------------+--------------+--------------+--------------+------+------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II Analysis & Synthesis
+    Info: Version 4.2 Build 157 12/07/2004 SJ Full Version
+    Info: Processing started: Mon Oct 31 16:49:24 2005
+Info: Command: quartus_map --import_settings_files=on --export_settings_files=off arm_top -c arm_top
+Warning: This product family is not recommended for new designs. Altera provides newer product families with better cost & performance attributes than ARM-Based Excalibur devices
+Info: Found 1 design units, including 1 entities, in source file SEG_SLAVE.v
+    Info: Found entity 1: SEG_SLAVE
+Info: Found 1 design units, including 1 entities, in source file seven_seg.v
+    Info: Found entity 1: seven_seg
+Info: Found 0 design units, including 0 entities, in source file ahb_slave_include.v
+Info: Found 1 design units, including 1 entities, in source file ahb_slave_sm.v
+    Info: Found entity 1: ahb_slave_sm
+Info: Found 1 design units, including 1 entities, in source file arm_top.bdf
+    Info: Found entity 1: arm_top
+Info: Found 1 design units, including 1 entities, in source file bin2seg.v
+    Info: Found entity 1: bin2seg
+Info: Found 1 design units, including 1 entities, in source file dp_ram.v
+    Info: Found entity 1: dp_ram
+Info: Found 1 design units, including 1 entities, in source file LCD_TOP.v
+    Info: Found entity 1: LCD_TOP
+Warning: Port "sdramdqs" of type stripe and instance "inst" is missing source signal
+Info: Using design file stripe.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info: Found entity 1: stripe
+Info: Found 1 design units, including 1 entities, in source file ../../../../../../../altera/quartus42/libraries/megafunctions/alt_exc_stripe.tdf
+    Info: Found entity 1: alt_exc_stripe
+Info: Found 1 design units, including 1 entities, in source file ../../../../../../../altera/quartus42/libraries/megafunctions/alt_exc_upcore.tdf
+    Info: Found entity 1: alt_exc_upcore
+Info: Found 1 design units, including 1 entities, in source file ../../../../../../../altera/quartus42/libraries/megafunctions/apex20ke_io_in.v
+    Info: Found entity 1: apex20ke_io_in
+Info: Found 1 design units, including 1 entities, in source file ../../../../../../../altera/quartus42/libraries/megafunctions/apex20ke_io_bidir_od.v
+    Info: Found entity 1: apex20ke_io_bidir_od
+Info: Found 1 design units, including 1 entities, in source file ../../../../../../../altera/quartus42/libraries/megafunctions/apex20ke_io_out.v
+    Info: Found entity 1: apex20ke_io_out
+Info: Found 1 design units, including 1 entities, in source file ../../../../../../../altera/quartus42/libraries/megafunctions/apex20ke_io_bidir.v
+    Info: Found entity 1: apex20ke_io_bidir
+Warning: Verilog HDL assignment warning at seven_seg.v(88): truncated value with size 17 to match size of target (16)
+Warning: Verilog HDL assignment warning at seven_seg.v(102): truncated value with size 3 to match size of target (2)
+Warning: Verilog HDL Always Construct warning at seven_seg.v(109): variable seg_gnd may not be assigned a new value in every possible path through the Always Construct.  Variable seg_gnd holds its previous value in every path with no new value assignment, which may create a combinational loop in the current design.
+Warning: Verilog HDL assignment warning at LCD_TOP.v(194): truncated value with size 25 to match size of target (24)
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[30]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[29]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[28]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[27]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[26]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[25]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[24]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[23]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[22]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[21]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[20]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[19]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[18]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[17]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[16]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[15]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[14]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[13]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[12]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[11]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[10]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[9]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[8]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|read_reg[31]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|seven_seg:b2v_inst1|seg_out1[0]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|seven_seg:b2v_inst1|seg_out2[0]" with stuck data_in port to stuck value GND
+Warning: Reduced register "SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|HRESP[1]" with stuck data_in port to stuck value GND
+Info: Duplicate registers merged to single register
+    Info: Duplicate register "SEG_SLAVE:inst1|seven_seg:b2v_inst1|cnt64k[0]" merged to single register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|counter[0]"
+Warning: Created node "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|dp_ram:dpram1|mem~0" as a RAM by generating altdpram megafunction to implement register logic with Embedded System Block. Functionality differs from the original design.
+Warning: Reduced register "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|mode[0]" with stuck data_in port to stuck value GND
+Info: State machine "|arm_top|SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state" contains 4 states and 0 state bits
+Info: Selected Auto state machine encoding method for state machine "|arm_top|SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state"
+Info: Encoding result for state machine "|arm_top|SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state"
+    Info: Completed encoding using 4 state bits
+        Info: Encoded state bit "SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state.READ_WAIT_PHASE"
+        Info: Encoded state bit "SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state.ERROR_PHASE"
+        Info: Encoded state bit "SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state.DATA_PHASE"
+        Info: Encoded state bit "SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state.ADDRESS_PHASE"
+    Info: State "|arm_top|SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state.ADDRESS_PHASE" uses code string "0000"
+    Info: State "|arm_top|SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state.DATA_PHASE" uses code string "0011"
+    Info: State "|arm_top|SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state.ERROR_PHASE" uses code string "0101"
+    Info: State "|arm_top|SEG_SLAVE:inst1|ahb_slave_sm:b2v_inst|slave_state.READ_WAIT_PHASE" uses code string "1001"
+Info: Inferred 3 megafunctions from design logic
+    Info: Inferred altdpram megafunction (NUMWORDS=40, WIDTH=8) from the following logic: "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|dp_ram:dpram1|mem~0"
+    Info: Inferred lpm_counter megafunction (LPM_WIDTH=24) from the following logic: "SEG_SLAVE:inst1|LCD_TOP:b2v_inst2|counter[0]~24"
+    Info: Inferred lpm_counter megafunction (LPM_WIDTH=15) from the following logic: "SEG_SLAVE:inst1|seven_seg:b2v_inst1|cnt64k[1]~35"
+Info: Found 1 design units, including 1 entities, in source file ../../../../../../../altera/quartus42/libraries/megafunctions/altdpram.tdf
+    Info: Found entity 1: altdpram
+Info: Found 1 design units, including 1 entities, in source file ../../../../../../../altera/quartus42/libraries/megafunctions/lpm_counter.tdf
+    Info: Found entity 1: lpm_counter
+Info: Found 1 design units, including 1 entities, in source file ../../../../../../../altera/quartus42/libraries/megafunctions/alt_synch_counter.tdf
+    Info: Found entity 1: alt_synch_counter
+Info: Registers with preset signals will power-up high
+Info: DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Warning: Output pins are stuck at VCC or GND
+    Warning: Pin "mode[0]" stuck at GND
+    Warning: Pin "seg_out1[0]" stuck at GND
+    Warning: Pin "seg_out2[0]" stuck at GND
+Warning: WYSIWYG I/O operation modes do not match their padio pin's type
+    Warning: WYSIWYG I/O "stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdqs_pbidir[3]|ioatom" operation mode is BIDIR, which does not match padio pin "sdramdqs[3]" type of OUTPUT
+    Warning: WYSIWYG I/O "stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdqs_pbidir[2]|ioatom" operation mode is BIDIR, which does not match padio pin "sdramdqs[2]" type of OUTPUT
+    Warning: WYSIWYG I/O "stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdqs_pbidir[1]|ioatom" operation mode is BIDIR, which does not match padio pin "sdramdqs[1]" type of OUTPUT
+    Warning: WYSIWYG I/O "stripe:inst|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:sdramdqs_pbidir[0]|ioatom" operation mode is BIDIR, which does not match padio pin "sdramdqs[0]" type of OUTPUT
+Info: Found the following redundant logic cells in design
+    Info: Logic cell "stripe:inst|alt_exc_stripe:lpm_instance|lcell_hresp0"
+    Info: Logic cell "stripe:inst|alt_exc_stripe:lpm_instance|lcell_hresp1"
+Info: Implemented 471 device resources after synthesis - the final resource count might be different
+    Info: Implemented 9 input pins
+    Info: Implemented 97 output pins
+    Info: Implemented 55 bidirectional pins
+    Info: Implemented 301 logic cells
+    Info: Implemented 8 RAM segments
+    Info: Implemented 1 microprocessor core elements in Excalibur device
+Info: Quartus II Analysis & Synthesis was successful. 0 errors, 44 warnings
+    Info: Processing ended: Mon Oct 31 16:49:36 2005
+    Info: Elapsed time: 00:00:13
+
+

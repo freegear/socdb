@@ -1,0 +1,34 @@
+/////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Altera upCore Bus Transaction Simulator Slave Memory Configuration File
+//
+// slavememory.cfg.dat
+//
+// This file is interpretted by apex20ke_atoms.v to initialise the memory space available
+// through the PLD slave port.
+// The address space is divided into 6 banks each of up to 65536 32-bit words.
+// Banks should not overlap.
+// Memory is little-endian.
+//
+// The initial contents of each bank are defined in Verilog compatible hex files
+// 			slavememory.<bank number>.dat
+//
+//////////////////////////////////////////////////////////////////////////////////////////////
+// FORMAT
+//     * - Bank Number
+//         ******** - Bank Start byte address
+//                 ******** - Bank End byte address +1
+// @{0..5} HHHHHHHHHHHHHHHH
+// 
+// Bank start addresses should be word aligned.
+//    |      ||      |
+// @0 00000000000000FF			// Bank zero contains 255 bytes between 00 and FF
+//    |      ||      |			// initialisation file: slavememory.0.dat
+//    |      ||      |
+//////////////////////////////////////////////////////////////////////////////////////////////
+//    |      ||      |
+//
+//
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+

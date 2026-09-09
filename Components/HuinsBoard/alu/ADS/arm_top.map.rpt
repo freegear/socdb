@@ -1,0 +1,734 @@
+Analysis & Synthesis report for arm_top
+Tue Nov 22 10:09:19 2005
+Version 4.2 Build 157 12/07/2004 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. State Machine - |arm_top|pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state
+  5. Hierarchy
+  6. Analysis & Synthesis Resource Utilization by Entity
+  7. Analysis & Synthesis Equations
+  8. Analysis & Synthesis Source Files Read
+  9. Analysis & Synthesis Resource Usage Summary
+ 10. WYSIWYG Cells
+ 11. General Register Statistics
+ 12. Inverted Register Statistics
+ 13. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2004 Altera Corporation
+Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+support information,  device programming or simulation file,  and any other
+associated  documentation or information  provided by  Altera  or a partner
+under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+other  use  of such  megafunction  design,  netlist,  support  information,
+device programming or simulation file,  or any other  related documentation
+or information  is prohibited  for  any  other purpose,  including, but not
+limited to  modification,  reverse engineering,  de-compiling, or use  with
+any other  silicon devices,  unless such use is  explicitly  licensed under
+a separate agreement with  Altera  or a megafunction partner.  Title to the
+intellectual property,  including patents,  copyrights,  trademarks,  trade
+secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+support  information,  device programming or simulation file,  or any other
+related documentation or information provided by  Altera  or a megafunction
+partner, remains with Altera, the megafunction partner, or their respective
+licensors. No other licenses, including any licenses needed under any third
+party's intellectual property, are provided herein.
+
+
+
++------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                           ;
++-----------------------------+------------------------------------------+
+; Analysis & Synthesis Status ; Successful - Tue Nov 22 10:09:19 2005    ;
+; Quartus II Version          ; 4.2 Build 157 12/07/2004 SJ Full Version ;
+; Revision Name               ; arm_top                                  ;
+; Top-level Entity Name       ; arm_top                                  ;
+; Family                      ; EXCALIBUR_ARM                            ;
+; Total logic elements        ; 1,759                                    ;
+; Total pins                  ; 65                                       ;
+; Total virtual pins          ; 0                                        ;
+; Total memory bits           ; 0                                        ;
+; Total PLLs                  ; 0                                        ;
++-----------------------------+------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                              ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+; Option                                                                                     ; Setting       ; Default Value ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+; Device                                                                                     ; EPXA10F1020C2 ;               ;
+; Family name                                                                                ; EXCALIBUR_ARM ; Stratix       ;
+; Type of Retiming Performed During Resynthesis                                              ; Full          ;               ;
+; Resynthesis Optimization Effort                                                            ; Normal        ;               ;
+; Physical Synthesis Level for Resynthesis                                                   ; Normal        ;               ;
+; Use Generated Physical Constraints File                                                    ; On            ;               ;
+; Use smart compilation                                                                      ; Normal        ; Normal        ;
+; Create Debugging Nodes for IP Cores                                                        ; off           ; off           ;
+; Preserve fewer node names                                                                  ; On            ; On            ;
+; Disable OpenCore Plus hardware evaluation                                                  ; Off           ; Off           ;
+; Verilog Version                                                                            ; Verilog_2001  ; Verilog_2001  ;
+; VHDL Version                                                                               ; VHDL93        ; VHDL93        ;
+; Top-level entity name                                                                      ; arm_top       ; arm_top       ;
+; State Machine Processing                                                                   ; Auto          ; Auto          ;
+; Extract Verilog State Machines                                                             ; On            ; On            ;
+; Extract VHDL State Machines                                                                ; On            ; On            ;
+; NOT Gate Push-Back                                                                         ; On            ; On            ;
+; Power-Up Don't Care                                                                        ; On            ; On            ;
+; Remove Redundant Logic Cells                                                               ; Off           ; Off           ;
+; Remove Duplicate Registers                                                                 ; On            ; On            ;
+; Ignore CARRY Buffers                                                                       ; Off           ; Off           ;
+; Ignore CASCADE Buffers                                                                     ; Off           ; Off           ;
+; Ignore GLOBAL Buffers                                                                      ; Off           ; Off           ;
+; Ignore ROW GLOBAL Buffers                                                                  ; Off           ; Off           ;
+; Ignore LCELL Buffers                                                                       ; Off           ; Off           ;
+; Ignore SOFT Buffers                                                                        ; On            ; On            ;
+; Limit AHDL Integers to 32 Bits                                                             ; Off           ; Off           ;
+; Auto Implement in ROM                                                                      ; Off           ; Off           ;
+; Technology Mapper -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur              ; LUT           ; LUT           ;
+; Optimization Technique -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur         ; Balanced      ; Balanced      ;
+; Allow XOR Gate Usage                                                                       ; On            ; On            ;
+; Carry Chain Length                                                                         ; 48            ; 48            ;
+; Cascade Chain Length                                                                       ; 2             ; 2             ;
+; Parallel Expander Chain Length -- APEX 20K/APEX 20KE/APEX 20KC/APEX II/ARM-based Excalibur ; 16            ; 16            ;
+; Auto Carry Chains                                                                          ; On            ; On            ;
+; Auto Parallel Expanders                                                                    ; On            ; On            ;
+; Auto Open-Drain Pins                                                                       ; On            ; On            ;
+; Remove Duplicate Logic                                                                     ; On            ; On            ;
+; Perform WYSIWYG Primitive Resynthesis                                                      ; Off           ; Off           ;
+; Perform gate-level register retiming                                                       ; Off           ; Off           ;
+; Allow register retiming to trade off Tsu/Tco with Fmax                                     ; On            ; On            ;
+; Auto ROM Replacement                                                                       ; On            ; On            ;
+; Auto RAM Replacement                                                                       ; On            ; On            ;
+; Auto Clock Enable Replacement                                                              ; On            ; On            ;
+; Auto Resource Sharing                                                                      ; Off           ; Off           ;
+; Allow Any RAM Size For Recognition                                                         ; Off           ; Off           ;
+; Allow Any ROM Size For Recognition                                                         ; Off           ; Off           ;
+; Allow Any Shift Register Size For Recognition                                              ; Off           ; Off           ;
++--------------------------------------------------------------------------------------------+---------------+---------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |arm_top|pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state                                               ;
++-----------------------------+-----------------------------+-------------------------+------------------------+---------------------------+
+; Name                        ; slave_state.READ_WAIT_PHASE ; slave_state.ERROR_PHASE ; slave_state.DATA_PHASE ; slave_state.ADDRESS_PHASE ;
++-----------------------------+-----------------------------+-------------------------+------------------------+---------------------------+
+; slave_state.ADDRESS_PHASE   ; 0                           ; 0                       ; 0                      ; 0                         ;
+; slave_state.DATA_PHASE      ; 0                           ; 0                       ; 1                      ; 1                         ;
+; slave_state.ERROR_PHASE     ; 0                           ; 1                       ; 0                      ; 1                         ;
+; slave_state.READ_WAIT_PHASE ; 1                           ; 0                       ; 0                      ; 1                         ;
++-----------------------------+-----------------------------+-------------------------+------------------------+---------------------------+
+
+
++-----------+
+; Hierarchy ;
++-----------+
+arm_top
+ |-- stripe:b2v_inst2
+      |-- alt_exc_stripe:lpm_instance
+           |-- alt_exc_upcore:core
+                |-- apex20ke_io_in:clk_ref_pin
+                |-- apex20ke_io_in:ebiack_pin
+                |-- apex20ke_io_out:ebiaddr_pout
+                |-- apex20ke_io_out:ebiaddr_pout[0]
+                |-- apex20ke_io_out:ebiaddr_pout[1]
+                |-- apex20ke_io_out:ebiaddr_pout[2]
+                |-- apex20ke_io_out:ebiaddr_pout[3]
+                |-- apex20ke_io_out:ebiaddr_pout[4]
+                |-- apex20ke_io_out:ebiaddr_pout[5]
+                |-- apex20ke_io_out:ebiaddr_pout[6]
+                |-- apex20ke_io_out:ebiaddr_pout[7]
+                |-- apex20ke_io_out:ebiaddr_pout[8]
+                |-- apex20ke_io_out:ebiaddr_pout[9]
+                |-- apex20ke_io_out:ebiaddr_pout[10]
+                |-- apex20ke_io_out:ebiaddr_pout[11]
+                |-- apex20ke_io_out:ebiaddr_pout[12]
+                |-- apex20ke_io_out:ebiaddr_pout[13]
+                |-- apex20ke_io_out:ebiaddr_pout[14]
+                |-- apex20ke_io_out:ebiaddr_pout[15]
+                |-- apex20ke_io_out:ebiaddr_pout[16]
+                |-- apex20ke_io_out:ebiaddr_pout[17]
+                |-- apex20ke_io_out:ebiaddr_pout[18]
+                |-- apex20ke_io_out:ebiaddr_pout[19]
+                |-- apex20ke_io_out:ebiaddr_pout[20]
+                |-- apex20ke_io_out:ebiaddr_pout[21]
+                |-- apex20ke_io_out:ebiaddr_pout[22]
+                |-- apex20ke_io_out:ebiaddr_pout[23]
+                |-- apex20ke_io_out:ebiaddr_pout[24]
+                |-- apex20ke_io_out:ebibe_pout
+                |-- apex20ke_io_out:ebibe_pout[0]
+                |-- apex20ke_io_out:ebibe_pout[1]
+                |-- apex20ke_io_out:ebiclk_pout
+                |-- apex20ke_io_out:ebicsn_pout
+                |-- apex20ke_io_out:ebicsn_pout[0]
+                |-- apex20ke_io_out:ebicsn_pout[1]
+                |-- apex20ke_io_out:ebicsn_pout[2]
+                |-- apex20ke_io_out:ebicsn_pout[3]
+                |-- apex20ke_io_bidir:ebidq_pbidir
+                |-- apex20ke_io_bidir:ebidq_pbidir[0]
+                |-- apex20ke_io_bidir:ebidq_pbidir[1]
+                |-- apex20ke_io_bidir:ebidq_pbidir[2]
+                |-- apex20ke_io_bidir:ebidq_pbidir[3]
+                |-- apex20ke_io_bidir:ebidq_pbidir[4]
+                |-- apex20ke_io_bidir:ebidq_pbidir[5]
+                |-- apex20ke_io_bidir:ebidq_pbidir[6]
+                |-- apex20ke_io_bidir:ebidq_pbidir[7]
+                |-- apex20ke_io_bidir:ebidq_pbidir[8]
+                |-- apex20ke_io_bidir:ebidq_pbidir[9]
+                |-- apex20ke_io_bidir:ebidq_pbidir[10]
+                |-- apex20ke_io_bidir:ebidq_pbidir[11]
+                |-- apex20ke_io_bidir:ebidq_pbidir[12]
+                |-- apex20ke_io_bidir:ebidq_pbidir[13]
+                |-- apex20ke_io_bidir:ebidq_pbidir[14]
+                |-- apex20ke_io_bidir:ebidq_pbidir[15]
+                |-- apex20ke_io_out:ebioen_pout
+                |-- apex20ke_io_out:ebiwen_pout
+                |-- apex20ke_io_in:intextpin_pin
+                |-- apex20ke_io_in:npor_pin
+                |-- apex20ke_io_bidir_od:nreset_pbidir
+                |-- apex20ke_io_in:uartctsn_pin
+                |-- apex20ke_io_bidir:uartdcdn_pbidir
+                |-- apex20ke_io_in:uartdsrn_pin
+                |-- apex20ke_io_out:uartdtrn_pout
+                |-- apex20ke_io_bidir:uartrin_pbidir
+                |-- apex20ke_io_out:uartrtsn_pout
+                |-- apex20ke_io_in:uartrxd_pin
+                |-- apex20ke_io_out:uarttxd_pout
+ |-- pld_slave:b2v_pld_slave
+      |-- alu:b2v_ALU
+           |-- lpm_mult:mult_rtl_0
+                |-- altshift:external_latency_ffs
+                |-- multcore:mult_core
+                     |-- mul_boothc:booth_enc
+                     |-- mpar_add:padder
+                          |-- lpm_add_sub:adder
+                          |-- lpm_add_sub:adder[0]
+                               |-- addcore:adder
+                                    |-- a_csnbuffer:cout_node
+                                    |-- a_csnbuffer:oflow_node
+                                    |-- a_csnbuffer:result_node
+                               |-- altshift:carry_ext_latency_ffs
+                               |-- altshift:oflow_ext_latency_ffs
+                               |-- altshift:result_ext_latency_ffs
+                          |-- lpm_add_sub:adder[1]
+                               |-- addcore:adder
+                                    |-- a_csnbuffer:cout_node
+                                    |-- a_csnbuffer:oflow_node
+                                    |-- a_csnbuffer:result_node
+                               |-- altshift:carry_ext_latency_ffs
+                               |-- altshift:oflow_ext_latency_ffs
+                               |-- altshift:result_ext_latency_ffs
+                          |-- lpm_add_sub:adder[2]
+                               |-- addcore:adder
+                                    |-- a_csnbuffer:cout_node
+                                    |-- a_csnbuffer:oflow_node
+                                    |-- a_csnbuffer:result_node
+                               |-- altshift:carry_ext_latency_ffs
+                               |-- altshift:oflow_ext_latency_ffs
+                               |-- altshift:result_ext_latency_ffs
+                          |-- lpm_add_sub:adder[3]
+                               |-- addcore:adder
+                                    |-- a_csnbuffer:cout_node
+                                    |-- a_csnbuffer:oflow_node
+                                    |-- a_csnbuffer:result_node
+                               |-- altshift:carry_ext_latency_ffs
+                               |-- altshift:oflow_ext_latency_ffs
+                               |-- altshift:result_ext_latency_ffs
+                          |-- lpm_add_sub:adder[4]
+                               |-- addcore:adder
+                                    |-- a_csnbuffer:cout_node
+                                    |-- a_csnbuffer:oflow_node
+                                    |-- a_csnbuffer:result_node
+                               |-- altshift:carry_ext_latency_ffs
+                               |-- altshift:oflow_ext_latency_ffs
+                               |-- altshift:result_ext_latency_ffs
+                          |-- lpm_add_sub:adder[5]
+                               |-- addcore:adder
+                                    |-- a_csnbuffer:cout_node
+                                    |-- a_csnbuffer:oflow_node
+                                    |-- a_csnbuffer:result_node
+                               |-- altshift:carry_ext_latency_ffs
+                               |-- altshift:oflow_ext_latency_ffs
+                               |-- altshift:result_ext_latency_ffs
+                          |-- lpm_add_sub:adder[6]
+                               |-- addcore:adder
+                                    |-- a_csnbuffer:cout_node
+                                    |-- a_csnbuffer:oflow_node
+                                    |-- a_csnbuffer:result_node
+                               |-- altshift:carry_ext_latency_ffs
+                               |-- altshift:oflow_ext_latency_ffs
+                               |-- altshift:result_ext_latency_ffs
+                          |-- lpm_add_sub:adder[7]
+                               |-- addcore:adder
+                                    |-- a_csnbuffer:cout_node
+                                    |-- a_csnbuffer:oflow_node
+                                    |-- a_csnbuffer:result_node
+                               |-- altshift:carry_ext_latency_ffs
+                               |-- altshift:oflow_ext_latency_ffs
+                               |-- altshift:result_ext_latency_ffs
+                          |-- lpm_add_sub:adder[8]
+                               |-- addcore:adder
+                                    |-- a_csnbuffer:cout_node
+                                    |-- a_csnbuffer:oflow_node
+                                    |-- a_csnbuffer:result_node
+                               |-- altshift:carry_ext_latency_ffs
+                               |-- altshift:oflow_ext_latency_ffs
+                               |-- altshift:result_ext_latency_ffs
+                          |-- mpar_add:sub_par_add
+                               |-- lpm_add_sub:adder
+                               |-- lpm_add_sub:adder[0]
+                                    |-- addcore:adder
+                                         |-- a_csnbuffer:cout_node
+                                         |-- a_csnbuffer:oflow_node
+                                         |-- a_csnbuffer:result_node
+                                    |-- altshift:carry_ext_latency_ffs
+                                    |-- altshift:oflow_ext_latency_ffs
+                                    |-- altshift:result_ext_latency_ffs
+                               |-- lpm_add_sub:adder[1]
+                                    |-- addcore:adder
+                                         |-- a_csnbuffer:cout_node
+                                         |-- a_csnbuffer:oflow_node
+                                         |-- a_csnbuffer:result_node
+                                    |-- altshift:carry_ext_latency_ffs
+                                    |-- altshift:oflow_ext_latency_ffs
+                                    |-- altshift:result_ext_latency_ffs
+                               |-- lpm_add_sub:adder[2]
+                                    |-- addcore:adder
+                                         |-- a_csnbuffer:cout_node
+                                         |-- a_csnbuffer:oflow_node
+                                         |-- a_csnbuffer:result_node
+                                    |-- altshift:carry_ext_latency_ffs
+                                    |-- altshift:oflow_ext_latency_ffs
+                                    |-- altshift:result_ext_latency_ffs
+                               |-- lpm_add_sub:adder[3]
+                                    |-- addcore:adder
+                                         |-- a_csnbuffer:cout_node
+                                         |-- a_csnbuffer:oflow_node
+                                         |-- a_csnbuffer:result_node
+                                    |-- altshift:carry_ext_latency_ffs
+                                    |-- altshift:oflow_ext_latency_ffs
+                                    |-- altshift:result_ext_latency_ffs
+                               |-- mpar_add:sub_par_add
+                                    |-- lpm_add_sub:adder
+                                    |-- lpm_add_sub:adder[0]
+                                         |-- addcore:adder
+                                              |-- a_csnbuffer:cout_node
+                                              |-- a_csnbuffer:oflow_node
+                                              |-- a_csnbuffer:result_node
+                                         |-- altshift:carry_ext_latency_ffs
+                                         |-- altshift:oflow_ext_latency_ffs
+                                         |-- altshift:result_ext_latency_ffs
+                                    |-- lpm_add_sub:adder[1]
+                                         |-- addcore:adder
+                                              |-- a_csnbuffer:cout_node
+                                              |-- a_csnbuffer:oflow_node
+                                              |-- a_csnbuffer:result_node
+                                         |-- altshift:carry_ext_latency_ffs
+                                         |-- altshift:oflow_ext_latency_ffs
+                                         |-- altshift:result_ext_latency_ffs
+                                    |-- mpar_add:sub_par_add
+                                         |-- lpm_add_sub:adder
+                                         |-- lpm_add_sub:adder[0]
+                                              |-- addcore:adder
+                                                   |-- a_csnbuffer:cout_node
+                                                   |-- addcore:first_seg_adder
+                                                        |-- a_csnbuffer:cout_node
+                                                        |-- a_csnbuffer:oflow_node
+                                                        |-- a_csnbuffer:result_node
+                                                   |-- a_csnbuffer:oflow_node
+                                                   |-- addcore:part_seg_adder
+                                                        |-- a_csnbuffer:cout_node
+                                                        |-- a_csnbuffer:oflow_node
+                                                        |-- a_csnbuffer:result_node
+                                                   |-- a_csnbuffer:result_node
+                                              |-- altshift:carry_ext_latency_ffs
+                                              |-- altshift:oflow_ext_latency_ffs
+                                              |-- altshift:result_ext_latency_ffs
+                                         |-- mpar_add:sub_par_add
+                                              |-- lpm_add_sub:adder
+                                              |-- lpm_add_sub:adder[0]
+                                                   |-- addcore:adder
+                                                        |-- a_csnbuffer:cout_node
+                                                        |-- addcore:first_seg_adder
+                                                             |-- a_csnbuffer:cout_node
+                                                             |-- a_csnbuffer:oflow_node
+                                                             |-- a_csnbuffer:result_node
+                                                        |-- a_csnbuffer:oflow_node
+                                                        |-- addcore:part_seg_adder
+                                                             |-- a_csnbuffer:cout_node
+                                                             |-- a_csnbuffer:oflow_node
+                                                             |-- a_csnbuffer:result_node
+                                                        |-- a_csnbuffer:result_node
+                                                   |-- altshift:carry_ext_latency_ffs
+                                                   |-- altshift:oflow_ext_latency_ffs
+                                                   |-- altshift:result_ext_latency_ffs
+      |-- ahb_slave_sm:b2v_Control_Unit
+      |-- regfile:b2v_Register_File
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                                                                                                                                                                                    ;
++------------------------------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Compilation Hierarchy Node                                       ; Logic Cells ; LC Registers ; Memory Bits ; Pins ; Virtual Pins ; LUT-Only LCs ; Register-Only LCs ; LUT/Register LCs ; Carry Chain LCs ; Full Hierarchy Name                                                                                                                                                                                                                                                        ;
++------------------------------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; |arm_top                                                         ; 1759 (1)    ; 139          ; 0           ; 65   ; 0            ; 1620 (1)     ; 2 (0)             ; 137 (0)          ; 761 (0)         ; |arm_top                                                                                                                                                                                                                                                                   ;
+;    |pld_slave:b2v_pld_slave|                                     ; 1755 (0)    ; 139          ; 0           ; 0    ; 0            ; 1616 (0)     ; 2 (0)             ; 137 (0)          ; 761 (0)         ; |arm_top|pld_slave:b2v_pld_slave                                                                                                                                                                                                                                           ;
+;       |ahb_slave_sm:b2v_Control_Unit|                            ; 73 (73)     ; 11           ; 0           ; 0    ; 0            ; 62 (62)      ; 2 (2)             ; 9 (9)            ; 0 (0)           ; |arm_top|pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit                                                                                                                                                                                                             ;
+;       |alu:b2v_ALU|                                              ; 1354 (66)   ; 0            ; 0           ; 0    ; 0            ; 1354 (66)    ; 0 (0)             ; 0 (0)            ; 761 (66)        ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU                                                                                                                                                                                                                               ;
+;          |lpm_mult:mult_rtl_0|                                   ; 1288 (0)    ; 0            ; 0           ; 0    ; 0            ; 1288 (0)     ; 0 (0)             ; 0 (0)            ; 695 (0)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0                                                                                                                                                                                                           ;
+;             |multcore:mult_core|                                 ; 1288 (591)  ; 0            ; 0           ; 0    ; 0            ; 1288 (591)   ; 0 (0)             ; 0 (0)            ; 695 (0)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core                                                                                                                                                                                        ;
+;                |mpar_add:padder|                                 ; 647 (0)     ; 0            ; 0           ; 0    ; 0            ; 647 (0)      ; 0 (0)             ; 0 (0)            ; 646 (0)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder                                                                                                                                                                        ;
+;                   |lpm_add_sub:adder[0]|                         ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[0]                                                                                                                                                   ;
+;                      |addcore:adder|                             ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[0]|addcore:adder                                                                                                                                     ;
+;                         |a_csnbuffer:result_node|                ; 36 (36)     ; 0            ; 0           ; 0    ; 0            ; 36 (36)      ; 0 (0)             ; 0 (0)            ; 36 (36)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[0]|addcore:adder|a_csnbuffer:result_node                                                                                                             ;
+;                   |lpm_add_sub:adder[1]|                         ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[1]                                                                                                                                                   ;
+;                      |addcore:adder|                             ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[1]|addcore:adder                                                                                                                                     ;
+;                         |a_csnbuffer:result_node|                ; 36 (36)     ; 0            ; 0           ; 0    ; 0            ; 36 (36)      ; 0 (0)             ; 0 (0)            ; 36 (36)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[1]|addcore:adder|a_csnbuffer:result_node                                                                                                             ;
+;                   |lpm_add_sub:adder[2]|                         ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[2]                                                                                                                                                   ;
+;                      |addcore:adder|                             ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[2]|addcore:adder                                                                                                                                     ;
+;                         |a_csnbuffer:result_node|                ; 36 (36)     ; 0            ; 0           ; 0    ; 0            ; 36 (36)      ; 0 (0)             ; 0 (0)            ; 36 (36)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[2]|addcore:adder|a_csnbuffer:result_node                                                                                                             ;
+;                   |lpm_add_sub:adder[3]|                         ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[3]                                                                                                                                                   ;
+;                      |addcore:adder|                             ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[3]|addcore:adder                                                                                                                                     ;
+;                         |a_csnbuffer:result_node|                ; 36 (36)     ; 0            ; 0           ; 0    ; 0            ; 36 (36)      ; 0 (0)             ; 0 (0)            ; 36 (36)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[3]|addcore:adder|a_csnbuffer:result_node                                                                                                             ;
+;                   |lpm_add_sub:adder[4]|                         ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[4]                                                                                                                                                   ;
+;                      |addcore:adder|                             ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[4]|addcore:adder                                                                                                                                     ;
+;                         |a_csnbuffer:result_node|                ; 36 (36)     ; 0            ; 0           ; 0    ; 0            ; 36 (36)      ; 0 (0)             ; 0 (0)            ; 36 (36)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[4]|addcore:adder|a_csnbuffer:result_node                                                                                                             ;
+;                   |lpm_add_sub:adder[5]|                         ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[5]                                                                                                                                                   ;
+;                      |addcore:adder|                             ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[5]|addcore:adder                                                                                                                                     ;
+;                         |a_csnbuffer:result_node|                ; 36 (36)     ; 0            ; 0           ; 0    ; 0            ; 36 (36)      ; 0 (0)             ; 0 (0)            ; 36 (36)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[5]|addcore:adder|a_csnbuffer:result_node                                                                                                             ;
+;                   |lpm_add_sub:adder[6]|                         ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[6]                                                                                                                                                   ;
+;                      |addcore:adder|                             ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[6]|addcore:adder                                                                                                                                     ;
+;                         |a_csnbuffer:result_node|                ; 36 (36)     ; 0            ; 0           ; 0    ; 0            ; 36 (36)      ; 0 (0)             ; 0 (0)            ; 36 (36)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[6]|addcore:adder|a_csnbuffer:result_node                                                                                                             ;
+;                   |lpm_add_sub:adder[7]|                         ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[7]                                                                                                                                                   ;
+;                      |addcore:adder|                             ; 36 (0)      ; 0            ; 0           ; 0    ; 0            ; 36 (0)       ; 0 (0)             ; 0 (0)            ; 36 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[7]|addcore:adder                                                                                                                                     ;
+;                         |a_csnbuffer:result_node|                ; 36 (36)     ; 0            ; 0           ; 0    ; 0            ; 36 (36)      ; 0 (0)             ; 0 (0)            ; 36 (36)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[7]|addcore:adder|a_csnbuffer:result_node                                                                                                             ;
+;                   |lpm_add_sub:adder[8]|                         ; 32 (0)      ; 0            ; 0           ; 0    ; 0            ; 32 (0)       ; 0 (0)             ; 0 (0)            ; 32 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[8]                                                                                                                                                   ;
+;                      |addcore:adder|                             ; 32 (0)      ; 0            ; 0           ; 0    ; 0            ; 32 (0)       ; 0 (0)             ; 0 (0)            ; 32 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[8]|addcore:adder                                                                                                                                     ;
+;                         |a_csnbuffer:result_node|                ; 32 (32)     ; 0            ; 0           ; 0    ; 0            ; 32 (32)      ; 0 (0)             ; 0 (0)            ; 32 (32)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|lpm_add_sub:adder[8]|addcore:adder|a_csnbuffer:result_node                                                                                                             ;
+;                   |mpar_add:sub_par_add|                         ; 327 (0)     ; 0            ; 0           ; 0    ; 0            ; 327 (0)      ; 0 (0)             ; 0 (0)            ; 326 (0)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add                                                                                                                                                   ;
+;                      |lpm_add_sub:adder[0]|                      ; 39 (0)      ; 0            ; 0           ; 0    ; 0            ; 39 (0)       ; 0 (0)             ; 0 (0)            ; 39 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]                                                                                                                              ;
+;                         |addcore:adder|                          ; 39 (0)      ; 0            ; 0           ; 0    ; 0            ; 39 (0)       ; 0 (0)             ; 0 (0)            ; 39 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder                                                                                                                ;
+;                            |a_csnbuffer:result_node|             ; 39 (39)     ; 0            ; 0           ; 0    ; 0            ; 39 (39)      ; 0 (0)             ; 0 (0)            ; 39 (39)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder|a_csnbuffer:result_node                                                                                        ;
+;                      |lpm_add_sub:adder[1]|                      ; 39 (0)      ; 0            ; 0           ; 0    ; 0            ; 39 (0)       ; 0 (0)             ; 0 (0)            ; 39 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[1]                                                                                                                              ;
+;                         |addcore:adder|                          ; 39 (0)      ; 0            ; 0           ; 0    ; 0            ; 39 (0)       ; 0 (0)             ; 0 (0)            ; 39 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[1]|addcore:adder                                                                                                                ;
+;                            |a_csnbuffer:result_node|             ; 39 (39)     ; 0            ; 0           ; 0    ; 0            ; 39 (39)      ; 0 (0)             ; 0 (0)            ; 39 (39)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[1]|addcore:adder|a_csnbuffer:result_node                                                                                        ;
+;                      |lpm_add_sub:adder[2]|                      ; 39 (0)      ; 0            ; 0           ; 0    ; 0            ; 39 (0)       ; 0 (0)             ; 0 (0)            ; 39 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[2]                                                                                                                              ;
+;                         |addcore:adder|                          ; 39 (0)      ; 0            ; 0           ; 0    ; 0            ; 39 (0)       ; 0 (0)             ; 0 (0)            ; 39 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[2]|addcore:adder                                                                                                                ;
+;                            |a_csnbuffer:result_node|             ; 39 (39)     ; 0            ; 0           ; 0    ; 0            ; 39 (39)      ; 0 (0)             ; 0 (0)            ; 39 (39)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[2]|addcore:adder|a_csnbuffer:result_node                                                                                        ;
+;                      |lpm_add_sub:adder[3]|                      ; 38 (0)      ; 0            ; 0           ; 0    ; 0            ; 38 (0)       ; 0 (0)             ; 0 (0)            ; 38 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[3]                                                                                                                              ;
+;                         |addcore:adder|                          ; 38 (0)      ; 0            ; 0           ; 0    ; 0            ; 38 (0)       ; 0 (0)             ; 0 (0)            ; 38 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[3]|addcore:adder                                                                                                                ;
+;                            |a_csnbuffer:result_node|             ; 38 (38)     ; 0            ; 0           ; 0    ; 0            ; 38 (38)      ; 0 (0)             ; 0 (0)            ; 38 (38)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[3]|addcore:adder|a_csnbuffer:result_node                                                                                        ;
+;                      |mpar_add:sub_par_add|                      ; 172 (0)     ; 0            ; 0           ; 0    ; 0            ; 172 (0)      ; 0 (0)             ; 0 (0)            ; 171 (0)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add                                                                                                                              ;
+;                         |lpm_add_sub:adder[0]|                   ; 43 (0)      ; 0            ; 0           ; 0    ; 0            ; 43 (0)       ; 0 (0)             ; 0 (0)            ; 43 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]                                                                                                         ;
+;                            |addcore:adder|                       ; 43 (0)      ; 0            ; 0           ; 0    ; 0            ; 43 (0)       ; 0 (0)             ; 0 (0)            ; 43 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder                                                                                           ;
+;                               |a_csnbuffer:result_node|          ; 43 (43)     ; 0            ; 0           ; 0    ; 0            ; 43 (43)      ; 0 (0)             ; 0 (0)            ; 43 (43)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder|a_csnbuffer:result_node                                                                   ;
+;                         |lpm_add_sub:adder[1]|                   ; 42 (0)      ; 0            ; 0           ; 0    ; 0            ; 42 (0)       ; 0 (0)             ; 0 (0)            ; 42 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[1]                                                                                                         ;
+;                            |addcore:adder|                       ; 42 (0)      ; 0            ; 0           ; 0    ; 0            ; 42 (0)       ; 0 (0)             ; 0 (0)            ; 42 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[1]|addcore:adder                                                                                           ;
+;                               |a_csnbuffer:result_node|          ; 42 (42)     ; 0            ; 0           ; 0    ; 0            ; 42 (42)      ; 0 (0)             ; 0 (0)            ; 42 (42)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[1]|addcore:adder|a_csnbuffer:result_node                                                                   ;
+;                         |mpar_add:sub_par_add|                   ; 87 (0)      ; 0            ; 0           ; 0    ; 0            ; 87 (0)       ; 0 (0)             ; 0 (0)            ; 86 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add                                                                                                         ;
+;                            |lpm_add_sub:adder[0]|                ; 53 (0)      ; 0            ; 0           ; 0    ; 0            ; 53 (0)       ; 0 (0)             ; 0 (0)            ; 52 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]                                                                                    ;
+;                               |addcore:adder|                    ; 53 (1)      ; 0            ; 0           ; 0    ; 0            ; 53 (1)       ; 0 (0)             ; 0 (0)            ; 52 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder                                                                      ;
+;                                  |addcore:first_seg_adder|       ; 48 (0)      ; 0            ; 0           ; 0    ; 0            ; 48 (0)       ; 0 (0)             ; 0 (0)            ; 48 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder|addcore:first_seg_adder                                              ;
+;                                     |a_csnbuffer:result_node|    ; 48 (48)     ; 0            ; 0           ; 0    ; 0            ; 48 (48)      ; 0 (0)             ; 0 (0)            ; 48 (48)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder|addcore:first_seg_adder|a_csnbuffer:result_node                      ;
+;                                  |addcore:part_seg_adder|        ; 4 (0)       ; 0            ; 0           ; 0    ; 0            ; 4 (0)        ; 0 (0)             ; 0 (0)            ; 4 (0)           ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder|addcore:part_seg_adder                                               ;
+;                                     |a_csnbuffer:result_node|    ; 4 (4)       ; 0            ; 0           ; 0    ; 0            ; 4 (4)        ; 0 (0)             ; 0 (0)            ; 4 (4)           ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder|addcore:part_seg_adder|a_csnbuffer:result_node                       ;
+;                            |mpar_add:sub_par_add|                ; 34 (0)      ; 0            ; 0           ; 0    ; 0            ; 34 (0)       ; 0 (0)             ; 0 (0)            ; 34 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add                                                                                    ;
+;                               |lpm_add_sub:adder[0]|             ; 34 (0)      ; 0            ; 0           ; 0    ; 0            ; 34 (0)       ; 0 (0)             ; 0 (0)            ; 34 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]                                                               ;
+;                                  |addcore:adder|                 ; 34 (0)      ; 0            ; 0           ; 0    ; 0            ; 34 (0)       ; 0 (0)             ; 0 (0)            ; 34 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder                                                 ;
+;                                     |addcore:first_seg_adder|    ; 34 (0)      ; 0            ; 0           ; 0    ; 0            ; 34 (0)       ; 0 (0)             ; 0 (0)            ; 34 (0)          ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder|addcore:first_seg_adder                         ;
+;                                        |a_csnbuffer:result_node| ; 34 (34)     ; 0            ; 0           ; 0    ; 0            ; 34 (34)      ; 0 (0)             ; 0 (0)            ; 34 (34)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder|addcore:first_seg_adder|a_csnbuffer:result_node ;
+;                |mul_boothc:booth_enc|                            ; 50 (50)     ; 0            ; 0           ; 0    ; 0            ; 50 (50)      ; 0 (0)             ; 0 (0)            ; 49 (49)         ; |arm_top|pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mul_boothc:booth_enc                                                                                                                                                                   ;
+;       |regfile:b2v_Register_File|                                ; 328 (328)   ; 128          ; 0           ; 0    ; 0            ; 200 (200)    ; 0 (0)             ; 128 (128)        ; 0 (0)           ; |arm_top|pld_slave:b2v_pld_slave|regfile:b2v_Register_File                                                                                                                                                                                                                 ;
+;    |stripe:b2v_inst2|                                            ; 3 (0)       ; 0            ; 0           ; 63   ; 0            ; 3 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2                                                                                                                                                                                                                                                  ;
+;       |alt_exc_stripe:lpm_instance|                              ; 3 (3)       ; 0            ; 0           ; 63   ; 0            ; 3 (3)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance                                                                                                                                                                                                                      ;
+;          |alt_exc_upcore:core|                                   ; 0 (0)       ; 0            ; 0           ; 63   ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core                                                                                                                                                                                                  ;
+;             |apex20ke_io_bidir:ebidq_pbidir[0]|                  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[0]                                                                                                                                                                ;
+;             |apex20ke_io_bidir:ebidq_pbidir[10]|                 ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[10]                                                                                                                                                               ;
+;             |apex20ke_io_bidir:ebidq_pbidir[11]|                 ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[11]                                                                                                                                                               ;
+;             |apex20ke_io_bidir:ebidq_pbidir[12]|                 ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[12]                                                                                                                                                               ;
+;             |apex20ke_io_bidir:ebidq_pbidir[13]|                 ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[13]                                                                                                                                                               ;
+;             |apex20ke_io_bidir:ebidq_pbidir[14]|                 ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[14]                                                                                                                                                               ;
+;             |apex20ke_io_bidir:ebidq_pbidir[15]|                 ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[15]                                                                                                                                                               ;
+;             |apex20ke_io_bidir:ebidq_pbidir[1]|                  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[1]                                                                                                                                                                ;
+;             |apex20ke_io_bidir:ebidq_pbidir[2]|                  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[2]                                                                                                                                                                ;
+;             |apex20ke_io_bidir:ebidq_pbidir[3]|                  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[3]                                                                                                                                                                ;
+;             |apex20ke_io_bidir:ebidq_pbidir[4]|                  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[4]                                                                                                                                                                ;
+;             |apex20ke_io_bidir:ebidq_pbidir[5]|                  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[5]                                                                                                                                                                ;
+;             |apex20ke_io_bidir:ebidq_pbidir[6]|                  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[6]                                                                                                                                                                ;
+;             |apex20ke_io_bidir:ebidq_pbidir[7]|                  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[7]                                                                                                                                                                ;
+;             |apex20ke_io_bidir:ebidq_pbidir[8]|                  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[8]                                                                                                                                                                ;
+;             |apex20ke_io_bidir:ebidq_pbidir[9]|                  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:ebidq_pbidir[9]                                                                                                                                                                ;
+;             |apex20ke_io_bidir:uartdcdn_pbidir|                  ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:uartdcdn_pbidir                                                                                                                                                                ;
+;             |apex20ke_io_bidir:uartrin_pbidir|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir:uartrin_pbidir                                                                                                                                                                 ;
+;             |apex20ke_io_bidir_od:nreset_pbidir|                 ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_bidir_od:nreset_pbidir                                                                                                                                                               ;
+;             |apex20ke_io_in:clk_ref_pin|                         ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:clk_ref_pin                                                                                                                                                                       ;
+;             |apex20ke_io_in:ebiack_pin|                          ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:ebiack_pin                                                                                                                                                                        ;
+;             |apex20ke_io_in:intextpin_pin|                       ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:intextpin_pin                                                                                                                                                                     ;
+;             |apex20ke_io_in:npor_pin|                            ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:npor_pin                                                                                                                                                                          ;
+;             |apex20ke_io_in:uartctsn_pin|                        ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:uartctsn_pin                                                                                                                                                                      ;
+;             |apex20ke_io_in:uartdsrn_pin|                        ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:uartdsrn_pin                                                                                                                                                                      ;
+;             |apex20ke_io_in:uartrxd_pin|                         ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_in:uartrxd_pin                                                                                                                                                                       ;
+;             |apex20ke_io_out:ebiaddr_pout[0]|                    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[0]                                                                                                                                                                  ;
+;             |apex20ke_io_out:ebiaddr_pout[10]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[10]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[11]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[11]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[12]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[12]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[13]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[13]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[14]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[14]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[15]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[15]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[16]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[16]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[17]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[17]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[18]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[18]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[19]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[19]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[1]|                    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[1]                                                                                                                                                                  ;
+;             |apex20ke_io_out:ebiaddr_pout[20]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[20]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[21]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[21]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[22]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[22]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[23]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[23]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[24]|                   ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[24]                                                                                                                                                                 ;
+;             |apex20ke_io_out:ebiaddr_pout[2]|                    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[2]                                                                                                                                                                  ;
+;             |apex20ke_io_out:ebiaddr_pout[3]|                    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[3]                                                                                                                                                                  ;
+;             |apex20ke_io_out:ebiaddr_pout[4]|                    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[4]                                                                                                                                                                  ;
+;             |apex20ke_io_out:ebiaddr_pout[5]|                    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[5]                                                                                                                                                                  ;
+;             |apex20ke_io_out:ebiaddr_pout[6]|                    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[6]                                                                                                                                                                  ;
+;             |apex20ke_io_out:ebiaddr_pout[7]|                    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[7]                                                                                                                                                                  ;
+;             |apex20ke_io_out:ebiaddr_pout[8]|                    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[8]                                                                                                                                                                  ;
+;             |apex20ke_io_out:ebiaddr_pout[9]|                    ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiaddr_pout[9]                                                                                                                                                                  ;
+;             |apex20ke_io_out:ebibe_pout[0]|                      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebibe_pout[0]                                                                                                                                                                    ;
+;             |apex20ke_io_out:ebibe_pout[1]|                      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebibe_pout[1]                                                                                                                                                                    ;
+;             |apex20ke_io_out:ebiclk_pout|                        ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiclk_pout                                                                                                                                                                      ;
+;             |apex20ke_io_out:ebicsn_pout[0]|                     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebicsn_pout[0]                                                                                                                                                                   ;
+;             |apex20ke_io_out:ebicsn_pout[1]|                     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebicsn_pout[1]                                                                                                                                                                   ;
+;             |apex20ke_io_out:ebicsn_pout[2]|                     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebicsn_pout[2]                                                                                                                                                                   ;
+;             |apex20ke_io_out:ebicsn_pout[3]|                     ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebicsn_pout[3]                                                                                                                                                                   ;
+;             |apex20ke_io_out:ebioen_pout|                        ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebioen_pout                                                                                                                                                                      ;
+;             |apex20ke_io_out:ebiwen_pout|                        ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:ebiwen_pout                                                                                                                                                                      ;
+;             |apex20ke_io_out:uartdtrn_pout|                      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:uartdtrn_pout                                                                                                                                                                    ;
+;             |apex20ke_io_out:uartrtsn_pout|                      ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:uartrtsn_pout                                                                                                                                                                    ;
+;             |apex20ke_io_out:uarttxd_pout|                       ; 0 (0)       ; 0            ; 0           ; 1    ; 0            ; 0 (0)        ; 0 (0)             ; 0 (0)            ; 0 (0)           ; |arm_top|stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|apex20ke_io_out:uarttxd_pout                                                                                                                                                                     ;
++------------------------------------------------------------------+-------------+--------------+-------------+------+--------------+--------------+-------------------+------------------+-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------+
+; Analysis & Synthesis Equations ;
++--------------------------------+
+The equations can be found in C:/SoCMasterXP8000/alu/ADS/arm_top.map.eqn.
+
+
++--------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                   ;
++----------------------------------+-----------------+---------------------------------------------------------------------+
+; File Name with User-Entered Path ; Used in Netlist ; File Name with Absolute Path                                        ;
++----------------------------------+-----------------+---------------------------------------------------------------------+
+; ../rtl/ahb_slave_sm.v            ; yes             ; C:/SoCMasterXP8000/alu/rtl/ahb_slave_sm.v                           ;
+; ../rtl/alu.v                     ; yes             ; C:/SoCMasterXP8000/alu/rtl/alu.v                                    ;
+; ../rtl/pld_slave.v               ; yes             ; C:/SoCMasterXP8000/alu/rtl/pld_slave.v                              ;
+; ../rtl/regfile.v                 ; yes             ; C:/SoCMasterXP8000/alu/rtl/regfile.v                                ;
+; ahb_slave_include.v              ; yes             ; C:/SoCMasterXP8000/alu/ADS/ahb_slave_include.v                      ;
+; arm_top.v                        ; yes             ; C:/SoCMasterXP8000/alu/ADS/arm_top.v                                ;
+; stripe.v                         ; yes             ; C:/SoCMasterXP8000/alu/ADS/stripe.v                                 ;
+; alt_exc_stripe.tdf               ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_exc_stripe.tdf      ;
+; aglobal42.inc                    ; yes             ; c:/altera/quartus42/libraries/megafunctions/aglobal42.inc           ;
+; alt_exc_upcore.inc               ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_exc_upcore.inc      ;
+; alt_exc_dpram.inc                ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_exc_dpram.inc       ;
+; apex20ke_lcell.inc               ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_lcell.inc      ;
+; alt_exc_upcore.tdf               ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_exc_upcore.tdf      ;
+; apex20ke_upcore.inc              ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_upcore.inc     ;
+; apex20ke_io.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_io.inc         ;
+; apex20ke_io_in.v                 ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_io_in.v        ;
+; apex20ke_io_bidir_od.v           ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_io_bidir_od.v  ;
+; apex20ke_io_out.v                ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_io_out.v       ;
+; apex20ke_io_bidir.v              ; yes             ; c:/altera/quartus42/libraries/megafunctions/apex20ke_io_bidir.v     ;
+; lpm_mult.tdf                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_mult.tdf            ;
+; lpm_add_sub.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_add_sub.inc         ;
+; multcore.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/multcore.inc            ;
+; bypassff.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/bypassff.inc            ;
+; altshift.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/altshift.inc            ;
+; multcore.tdf                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/multcore.tdf            ;
+; csa_add.inc                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/csa_add.inc             ;
+; mpar_add.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/mpar_add.inc            ;
+; muleabz.inc                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/muleabz.inc             ;
+; mul_lfrg.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/mul_lfrg.inc            ;
+; mul_boothc.inc                   ; yes             ; c:/altera/quartus42/libraries/megafunctions/mul_boothc.inc          ;
+; alt_ded_mult.inc                 ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_ded_mult.inc        ;
+; alt_ded_mult_y.inc               ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_ded_mult_y.inc      ;
+; dffpipe.inc                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/dffpipe.inc             ;
+; mul_boothc.tdf                   ; yes             ; c:/altera/quartus42/libraries/megafunctions/mul_boothc.tdf          ;
+; mpar_add.tdf                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/mpar_add.tdf            ;
+; lpm_add_sub.tdf                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/lpm_add_sub.tdf         ;
+; addcore.inc                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/addcore.inc             ;
+; look_add.inc                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/look_add.inc            ;
+; alt_stratix_add_sub.inc          ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_stratix_add_sub.inc ;
+; alt_mercury_add_sub.inc          ; yes             ; c:/altera/quartus42/libraries/megafunctions/alt_mercury_add_sub.inc ;
+; addcore.tdf                      ; yes             ; c:/altera/quartus42/libraries/megafunctions/addcore.tdf             ;
+; a_csnbuffer.inc                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/a_csnbuffer.inc         ;
+; a_csnbuffer.tdf                  ; yes             ; c:/altera/quartus42/libraries/megafunctions/a_csnbuffer.tdf         ;
+; altshift.tdf                     ; yes             ; c:/altera/quartus42/libraries/megafunctions/altshift.tdf            ;
++----------------------------------+-----------------+---------------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                                                               ;
++-----------------------------------+-----------------------------------------------------------------------+
+; Resource                          ; Usage                                                                 ;
++-----------------------------------+-----------------------------------------------------------------------+
+; Logic cells                       ; 1,759                                                                 ;
+; Total combinational functions     ; 1756                                                                  ;
+; Total 4-input functions           ; 748                                                                   ;
+; Total 3-input functions           ; 63                                                                    ;
+; Total 2-input functions           ; 936                                                                   ;
+; Total 1-input functions           ; 2                                                                     ;
+; Total 0-input functions           ; 7                                                                     ;
+; Combinational cells for routing   ; 1                                                                     ;
+; Total registers                   ; 139                                                                   ;
+; Total logic cells in carry chains ; 761                                                                   ;
+; I/O pins                          ; 65                                                                    ;
+; Maximum fan-out node              ; stripe:b2v_inst2|alt_exc_stripe:lpm_instance|alt_exc_upcore:core|core ;
+; Maximum fan-out                   ; 184                                                                   ;
+; Total fan-out                     ; 6222                                                                  ;
+; Average fan-out                   ; 3.41                                                                  ;
++-----------------------------------+-----------------------------------------------------------------------+
+
+
++----------------------------------------------------------------+
+; WYSIWYG Cells                                                  ;
++--------------------------------------------------------+-------+
+; Statistic                                              ; Value ;
++--------------------------------------------------------+-------+
+; Number of WYSIWYG cells                                ; 716   ;
+; Number of synthesis-generated cells                    ; 1043  ;
+; Number of WYSIWYG LUTs                                 ; 716   ;
+; Number of synthesis-generated LUTs                     ; 1041  ;
+; Number of WYSIWYG registers                            ; 0     ;
+; Number of synthesis-generated registers                ; 139   ;
+; Number of cells with combinational logic only          ; 1620  ;
+; Number of cells with registers only                    ; 2     ;
+; Number of cells with combinational logic and registers ; 137   ;
++--------------------------------------------------------+-------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 139   ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 139   ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 128   ;
+; Number of registers using Output Enable      ; 0     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++------------------------------------------------------------------------+
+; Inverted Register Statistics                                           ;
++--------------------------------------------------------------+---------+
+; Inverted Register                                            ; Fan out ;
++--------------------------------------------------------------+---------+
+; pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|HREADY ; 1       ;
+; Total number of inverted registers = 1                       ;         ;
++--------------------------------------------------------------+---------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II Analysis & Synthesis
+    Info: Version 4.2 Build 157 12/07/2004 SJ Full Version
+    Info: Processing started: Tue Nov 22 10:08:44 2005
+Info: Command: quartus_map --import_settings_files=on --export_settings_files=off arm_tutorial -c arm_top
+Warning: This product family is not recommended for new designs. Altera provides newer product families with better cost & performance attributes than ARM-Based Excalibur devices
+Info: Found 1 design units, including 1 entities, in source file ../rtl/ahb_slave_sm.v
+    Info: Found entity 1: ahb_slave_sm
+Info: Found 1 design units, including 1 entities, in source file ../rtl/alu.v
+    Info: Found entity 1: alu
+Info: Found 1 design units, including 1 entities, in source file ../rtl/pld_slave.v
+    Info: Found entity 1: pld_slave
+Info: Found 1 design units, including 1 entities, in source file ../rtl/regfile.v
+    Info: Found entity 1: regfile
+Info: Using design file arm_top.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info: Found entity 1: arm_top
+Warning: Found the following files while searching for definition of entity "arm_top", but did not use these files because already using a different file containing the entity definition
+    Warning: File: arm_top.bdf
+Info: Using design file stripe.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+    Info: Found entity 1: stripe
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/alt_exc_stripe.tdf
+    Info: Found entity 1: alt_exc_stripe
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/alt_exc_upcore.tdf
+    Info: Found entity 1: alt_exc_upcore
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/apex20ke_io_in.v
+    Info: Found entity 1: apex20ke_io_in
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/apex20ke_io_bidir_od.v
+    Info: Found entity 1: apex20ke_io_bidir_od
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/apex20ke_io_out.v
+    Info: Found entity 1: apex20ke_io_out
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/apex20ke_io_bidir.v
+    Info: Found entity 1: apex20ke_io_bidir
+Warning: Verilog HDL Always Construct warning at alu.v(60): variable "add_result_low" is read inside the Always Construct but isn't in the Always Construct's Event Control
+Warning: Verilog HDL Always Construct warning at alu.v(61): variable "add_result_high" is read inside the Always Construct but isn't in the Always Construct's Event Control
+Warning: Verilog HDL Always Construct warning at alu.v(64): variable "sub_result_low" is read inside the Always Construct but isn't in the Always Construct's Event Control
+Warning: Verilog HDL Always Construct warning at alu.v(65): variable "sub_result_high" is read inside the Always Construct but isn't in the Always Construct's Event Control
+Warning: Verilog HDL Always Construct warning at alu.v(68): variable "mult_result_low" is read inside the Always Construct but isn't in the Always Construct's Event Control
+Warning: Verilog HDL Always Construct warning at alu.v(69): variable "mult_result_high" is read inside the Always Construct but isn't in the Always Construct's Event Control
+Warning: Reduced register "pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|HRESP[1]" with stuck data_in port to stuck value GND
+Info: State machine "|arm_top|pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state" contains 4 states and 0 state bits
+Info: Selected Auto state machine encoding method for state machine "|arm_top|pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state"
+Info: Encoding result for state machine "|arm_top|pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state"
+    Info: Completed encoding using 4 state bits
+        Info: Encoded state bit "pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state.READ_WAIT_PHASE"
+        Info: Encoded state bit "pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state.ERROR_PHASE"
+        Info: Encoded state bit "pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state.DATA_PHASE"
+        Info: Encoded state bit "pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state.ADDRESS_PHASE"
+    Info: State "|arm_top|pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state.ADDRESS_PHASE" uses code string "0000"
+    Info: State "|arm_top|pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state.DATA_PHASE" uses code string "0011"
+    Info: State "|arm_top|pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state.ERROR_PHASE" uses code string "0101"
+    Info: State "|arm_top|pld_slave:b2v_pld_slave|ahb_slave_sm:b2v_Control_Unit|slave_state.READ_WAIT_PHASE" uses code string "1001"
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/lpm_mult.tdf
+    Info: Found entity 1: lpm_mult
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/multcore.tdf
+    Info: Found entity 1: multcore
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/mul_boothc.tdf
+    Info: Found entity 1: mul_boothc
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/mpar_add.tdf
+    Info: Found entity 1: mpar_add
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/lpm_add_sub.tdf
+    Info: Found entity 1: lpm_add_sub
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/addcore.tdf
+    Info: Found entity 1: addcore
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/a_csnbuffer.tdf
+    Info: Found entity 1: a_csnbuffer
+Info: Found 1 design units, including 1 entities, in source file ../../../altera/quartus42/libraries/megafunctions/altshift.tdf
+    Info: Found entity 1: altshift
+Info: Ignored 84 buffer(s)
+    Info: Ignored 84 SOFT buffer(s)
+Info: Registers with preset signals will power-up high
+Info: DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Info: Found the following redundant logic cells in design
+    Info: Logic cell "stripe:b2v_inst2|alt_exc_stripe:lpm_instance|lcell_hresp0"
+    Info: Logic cell "stripe:b2v_inst2|alt_exc_stripe:lpm_instance|lcell_hresp1"
+    Info: Logic cell "pld_slave:b2v_pld_slave|alu:b2v_ALU|lpm_mult:mult_rtl_0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|mpar_add:sub_par_add|mpar_add:sub_par_add|lpm_add_sub:adder[0]|addcore:adder|$00008"
+Info: Implemented 1825 device resources after synthesis - the final resource count might be different
+    Info: Implemented 9 input pins
+    Info: Implemented 37 output pins
+    Info: Implemented 19 bidirectional pins
+    Info: Implemented 1759 logic cells
+    Info: Implemented 1 microprocessor core elements in Excalibur device
+Info: Quartus II Analysis & Synthesis was successful. 0 errors, 10 warnings
+    Info: Processing ended: Tue Nov 22 10:09:19 2005
+    Info: Elapsed time: 00:00:35
+
+

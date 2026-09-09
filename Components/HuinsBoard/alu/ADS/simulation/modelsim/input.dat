@@ -1,0 +1,34 @@
+
+idle(4); /*allow for the BFM to get passed is init issues*/
+
+
+/* Addition test*/
+write (4, 32, 1, 0xA);	/* write the 32-bit value 0xA into address 4 */
+write (8, 32, 1, 3);	/* write the 32-bit value 3 into address 8 */
+write (12, 32, 1, 5);	/* write the 32-bit value 5 into address 12 to add the operands */
+
+read (16, 32, 1);       /* read the 32-bit value from address 16*/
+
+/* Subtraction Test*/
+write (4, 32, 1, 0xC);	/* write the 32-bit value 0xC into address 4 */
+write (8, 32, 1, 4);	/* write the 32-bit value 4 into address 8 */
+write (12, 32, 1, 6);	/* write the 32-bit value 6 into address 12 to subtract the operands */
+read (16, 32, 1);       /* read the 32-bit value from address 16*/
+
+/*Multiplication Test*/
+write (4, 32, 1, 0x9502F900);	/* write the 32-bit value 0x9502F900 into address 4 */
+write (8, 32, 1, 5);	/* write the 32-bit value 5 into address 8 */
+write (12, 32, 1, 7);	/* write the 32-bit value 7 into address 12 to multiply the operands */
+read (16, 32, 1);       /* read the 32-bit value from address 16*/
+read (20, 32, 1);		/* read result High*/
+
+/*INCR Burst test*/
+write (4, 32, 3, 9 ,6, 5);		/* burst test */
+read (16, 32, 1);       /* read the 32-bit value from address 16*/
+
+
+/*Error Checking test*/
+write (16, 32, 1, 10);	/* Used to check the error condition of writing to a read only register */
+read (16, 32, 1);	/* read from the same read only address to see if check works*/
+read (16, 16, 1);     	/* Used to test the error condition where the incorrect size data is used*/
+read (24, 32, 1);     	/* Used to test error condition where transaction is not in address space*/

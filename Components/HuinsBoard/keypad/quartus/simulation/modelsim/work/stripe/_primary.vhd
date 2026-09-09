@@ -1,0 +1,45 @@
+library verilog;
+use verilog.vl_types.all;
+entity stripe is
+    port(
+        clk_ref         : in     vl_logic;
+        npor            : in     vl_logic;
+        nreset          : inout  vl_logic;
+        uartrxd         : in     vl_logic;
+        uartdsrn        : in     vl_logic;
+        uartctsn        : in     vl_logic;
+        uartrin         : inout  vl_logic;
+        uartdcdn        : inout  vl_logic;
+        uarttxd         : out    vl_logic;
+        uartrtsn        : out    vl_logic;
+        uartdtrn        : out    vl_logic;
+        intextpin       : in     vl_logic;
+        ebiack          : in     vl_logic;
+        ebidq           : inout  vl_logic_vector(15 downto 0);
+        ebiclk          : out    vl_logic;
+        ebiwen          : out    vl_logic;
+        ebioen          : out    vl_logic;
+        ebiaddr         : out    vl_logic_vector(24 downto 0);
+        ebibe           : out    vl_logic_vector(1 downto 0);
+        ebicsn          : out    vl_logic_vector(3 downto 0);
+        masterhclk      : in     vl_logic;
+        masterhready    : in     vl_logic;
+        masterhgrant    : in     vl_logic;
+        masterhrdata    : in     vl_logic_vector(31 downto 0);
+        masterhresp     : in     vl_logic_vector(1 downto 0);
+        masterhwrite    : out    vl_logic;
+        masterhlock     : out    vl_logic;
+        masterhbusreq   : out    vl_logic;
+        masterhaddr     : out    vl_logic_vector(31 downto 0);
+        masterhburst    : out    vl_logic_vector(2 downto 0);
+        masterhsize     : out    vl_logic_vector(1 downto 0);
+        masterhtrans    : out    vl_logic_vector(1 downto 0);
+        masterhwdata    : out    vl_logic_vector(31 downto 0);
+        intpld          : in     vl_logic_vector(5 downto 0);
+        dp0_2_portaclk  : in     vl_logic;
+        dp0_portawe     : in     vl_logic;
+        dp0_portaaddr   : in     vl_logic_vector(15 downto 0);
+        dp0_portadatain : in     vl_logic_vector(7 downto 0);
+        dp0_portadataout: out    vl_logic_vector(7 downto 0)
+    );
+end stripe;

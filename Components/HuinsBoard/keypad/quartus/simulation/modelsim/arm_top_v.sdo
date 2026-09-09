@@ -1,0 +1,2949 @@
+// Copyright (C) 1991-2004 Altera Corporation
+// Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+// support information,  device programming or simulation file,  and any other
+// associated  documentation or information  provided by  Altera  or a partner
+// under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+// to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+// other  use  of such  megafunction  design,  netlist,  support  information,
+// device programming or simulation file,  or any other  related documentation
+// or information  is prohibited  for  any  other purpose,  including, but not
+// limited to  modification,  reverse engineering,  de-compiling, or use  with
+// any other  silicon devices,  unless such use is  explicitly  licensed under
+// a separate agreement with  Altera  or a megafunction partner.  Title to the
+// intellectual property,  including patents,  copyrights,  trademarks,  trade
+// secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+// support  information,  device programming or simulation file,  or any other
+// related documentation or information provided by  Altera  or a megafunction
+// partner, remains with Altera, the megafunction partner, or their respective
+// licensors. No other licenses, including any licenses needed under any third
+// party's intellectual property, are provided herein.
+
+
+// 
+// Device: Altera EPXA10F1020C2 Package FBGA1020
+// 
+
+// 
+// This SDF file should be used for ModelSim (Verilog HDL output from Quartus II) only
+// 
+
+(DELAYFILE
+  (SDFVERSION "2.1")
+  (DESIGN "arm_top")
+  (DATE "12/02/2005 17:25:57")
+  (VENDOR "Altera")
+  (PROGRAM "Quartus II")
+  (VERSION "Version 4.2 Build 157 12/07/2004 SJ Full Version")
+  (DIVIDER .)
+  (TIMESCALE 1 ps)
+
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|PLD_STATE\.IDLE\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datab (293:293:293) (293:293:293))
+        (PORT datac (1203:1203:1203) (1203:1203:1203))
+        (PORT datad (309:309:309) (309:309:309))
+        (IOPATH datab regin (567:567:567) (567:567:567))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|PLD_STATE\.IDLE\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15733:15733:15733) (15733:15733:15733))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|PLD_STATE\.WAIT_STATE2\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datad (404:404:404) (404:404:404))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|PLD_STATE\.WAIT_STATE2\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15728:15728:15728) (15728:15728:15728))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_dpram")
+    (INSTANCE inst5\|lpm_instance\|dp0\|dpram)
+    (DELAY
+      (ABSOLUTE
+        (PORT portadatain[0] (3407:3407:3407) (3407:3407:3407))
+        (PORT portadatain[1] (3407:3407:3407) (3407:3407:3407))
+        (PORT portadatain[2] (3407:3407:3407) (3407:3407:3407))
+        (PORT portadatain[3] (3407:3407:3407) (3407:3407:3407))
+        (PORT portadatain[4] (3407:3407:3407) (3407:3407:3407))
+        (PORT portadatain[5] (3407:3407:3407) (3407:3407:3407))
+        (PORT portadatain[6] (3407:3407:3407) (3407:3407:3407))
+        (PORT portadatain[7] (3407:3407:3407) (3407:3407:3407))
+        (PORT portaaddr[0] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[1] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[2] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[3] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[4] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[5] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[6] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[7] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[8] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[9] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[10] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[11] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[12] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[13] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[14] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaaddr[15] (3380:3380:3380) (3380:3380:3380))
+        (PORT portaclk (4740:4740:4740) (4740:4740:4740))
+        (PORT portawe (6515:6515:6515) (6515:6515:6515))
+        (IOPATH (posedge portaclk) portadataout[0] (9867:9867:9867) (9867:9867:9867))
+        (IOPATH (posedge portaclk) portadataout[1] (9867:9867:9867) (9867:9867:9867))
+        (IOPATH (posedge portaclk) portadataout[2] (9867:9867:9867) (9867:9867:9867))
+        (IOPATH (posedge portaclk) portadataout[3] (9867:9867:9867) (9867:9867:9867))
+        (IOPATH (posedge portaclk) portadataout[4] (9867:9867:9867) (9867:9867:9867))
+        (IOPATH (posedge portaclk) portadataout[5] (9867:9867:9867) (9867:9867:9867))
+        (IOPATH (posedge portaclk) portadataout[6] (9867:9867:9867) (9867:9867:9867))
+        (IOPATH (posedge portaclk) portadataout[7] (9867:9867:9867) (9867:9867:9867))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_upcore")
+    (INSTANCE inst5\|lpm_instance\|core\|core\~I)
+    (DELAY
+      (ABSOLUTE
+        (PORT clkref (2000:2000:2000) (2000:2000:2000))
+        (PORT npor (2000:2000:2000) (2000:2000:2000))
+        (PORT nreseti (2000:2000:2000) (2000:2000:2000))
+        (PORT slavehclk (0:0:0) (0:0:0))
+        (PORT slavehwrite (0:0:0) (0:0:0))
+        (PORT slavehreadyi (0:0:0) (0:0:0))
+        (PORT slavehselreg (0:0:0) (0:0:0))
+        (PORT slavehsel (0:0:0) (0:0:0))
+        (PORT masterhclk (1477:1477:1477) (1477:1477:1477))
+        (PORT masterhready (1398:1398:1398) (1398:1398:1398))
+        (PORT masterhgrant (1390:1390:1390) (1390:1390:1390))
+        (PORT ebiack (4000:4000:4000) (4000:4000:4000))
+        (PORT uartctsn (4000:4000:4000) (4000:4000:4000))
+        (PORT uartdcdin (4000:4000:4000) (4000:4000:4000))
+        (PORT uartdsrn (4000:4000:4000) (4000:4000:4000))
+        (PORT uartrxd (4000:4000:4000) (4000:4000:4000))
+        (PORT uartriin (4000:4000:4000) (4000:4000:4000))
+        (PORT intextpin (4000:4000:4000) (4000:4000:4000))
+        (PORT debugrq (2000:2000:2000) (2000:2000:2000))
+        (PORT debugext0 (2000:2000:2000) (2000:2000:2000))
+        (PORT debugext1 (2000:2000:2000) (2000:2000:2000))
+        (PORT intnmi (7184:7184:7184) (7184:7184:7184))
+        (PORT slavehaddr[0] (0:0:0) (0:0:0))
+        (PORT slavehaddr[1] (0:0:0) (0:0:0))
+        (PORT slavehaddr[2] (0:0:0) (0:0:0))
+        (PORT slavehaddr[3] (0:0:0) (0:0:0))
+        (PORT slavehaddr[4] (0:0:0) (0:0:0))
+        (PORT slavehaddr[5] (0:0:0) (0:0:0))
+        (PORT slavehaddr[6] (0:0:0) (0:0:0))
+        (PORT slavehaddr[7] (0:0:0) (0:0:0))
+        (PORT slavehaddr[8] (0:0:0) (0:0:0))
+        (PORT slavehaddr[9] (0:0:0) (0:0:0))
+        (PORT slavehaddr[10] (0:0:0) (0:0:0))
+        (PORT slavehaddr[11] (0:0:0) (0:0:0))
+        (PORT slavehaddr[12] (0:0:0) (0:0:0))
+        (PORT slavehaddr[13] (0:0:0) (0:0:0))
+        (PORT slavehaddr[14] (0:0:0) (0:0:0))
+        (PORT slavehaddr[15] (0:0:0) (0:0:0))
+        (PORT slavehaddr[16] (0:0:0) (0:0:0))
+        (PORT slavehaddr[17] (0:0:0) (0:0:0))
+        (PORT slavehaddr[18] (0:0:0) (0:0:0))
+        (PORT slavehaddr[19] (0:0:0) (0:0:0))
+        (PORT slavehaddr[20] (0:0:0) (0:0:0))
+        (PORT slavehaddr[21] (0:0:0) (0:0:0))
+        (PORT slavehaddr[22] (0:0:0) (0:0:0))
+        (PORT slavehaddr[23] (0:0:0) (0:0:0))
+        (PORT slavehaddr[24] (0:0:0) (0:0:0))
+        (PORT slavehaddr[25] (0:0:0) (0:0:0))
+        (PORT slavehaddr[26] (0:0:0) (0:0:0))
+        (PORT slavehaddr[27] (0:0:0) (0:0:0))
+        (PORT slavehaddr[28] (0:0:0) (0:0:0))
+        (PORT slavehaddr[29] (0:0:0) (0:0:0))
+        (PORT slavehaddr[30] (0:0:0) (0:0:0))
+        (PORT slavehaddr[31] (0:0:0) (0:0:0))
+        (PORT slavehtrans[0] (0:0:0) (0:0:0))
+        (PORT slavehtrans[1] (0:0:0) (0:0:0))
+        (PORT slavehsize[0] (0:0:0) (0:0:0))
+        (PORT slavehsize[1] (0:0:0) (0:0:0))
+        (PORT slavehburst[0] (0:0:0) (0:0:0))
+        (PORT slavehburst[1] (0:0:0) (0:0:0))
+        (PORT slavehburst[2] (0:0:0) (0:0:0))
+        (PORT slavehwdata[0] (0:0:0) (0:0:0))
+        (PORT slavehwdata[1] (0:0:0) (0:0:0))
+        (PORT slavehwdata[2] (0:0:0) (0:0:0))
+        (PORT slavehwdata[3] (0:0:0) (0:0:0))
+        (PORT slavehwdata[4] (0:0:0) (0:0:0))
+        (PORT slavehwdata[5] (0:0:0) (0:0:0))
+        (PORT slavehwdata[6] (0:0:0) (0:0:0))
+        (PORT slavehwdata[7] (0:0:0) (0:0:0))
+        (PORT slavehwdata[8] (0:0:0) (0:0:0))
+        (PORT slavehwdata[9] (0:0:0) (0:0:0))
+        (PORT slavehwdata[10] (0:0:0) (0:0:0))
+        (PORT slavehwdata[11] (0:0:0) (0:0:0))
+        (PORT slavehwdata[12] (0:0:0) (0:0:0))
+        (PORT slavehwdata[13] (0:0:0) (0:0:0))
+        (PORT slavehwdata[14] (0:0:0) (0:0:0))
+        (PORT slavehwdata[15] (0:0:0) (0:0:0))
+        (PORT slavehwdata[16] (0:0:0) (0:0:0))
+        (PORT slavehwdata[17] (0:0:0) (0:0:0))
+        (PORT slavehwdata[18] (0:0:0) (0:0:0))
+        (PORT slavehwdata[19] (0:0:0) (0:0:0))
+        (PORT slavehwdata[20] (0:0:0) (0:0:0))
+        (PORT slavehwdata[21] (0:0:0) (0:0:0))
+        (PORT slavehwdata[22] (0:0:0) (0:0:0))
+        (PORT slavehwdata[23] (0:0:0) (0:0:0))
+        (PORT slavehwdata[24] (0:0:0) (0:0:0))
+        (PORT slavehwdata[25] (0:0:0) (0:0:0))
+        (PORT slavehwdata[26] (0:0:0) (0:0:0))
+        (PORT slavehwdata[27] (0:0:0) (0:0:0))
+        (PORT slavehwdata[28] (0:0:0) (0:0:0))
+        (PORT slavehwdata[29] (0:0:0) (0:0:0))
+        (PORT slavehwdata[30] (0:0:0) (0:0:0))
+        (PORT slavehwdata[31] (0:0:0) (0:0:0))
+        (PORT masterhrdata[0] (2353:2353:2353) (2353:2353:2353))
+        (PORT masterhrdata[1] (1406:1406:1406) (1406:1406:1406))
+        (PORT masterhrdata[2] (1417:1417:1417) (1417:1417:1417))
+        (PORT masterhrdata[3] (1382:1382:1382) (1382:1382:1382))
+        (PORT masterhrdata[4] (2572:2572:2572) (2572:2572:2572))
+        (PORT masterhrdata[5] (2503:2503:2503) (2503:2503:2503))
+        (PORT masterhrdata[6] (2497:2497:2497) (2497:2497:2497))
+        (PORT masterhrdata[7] (2490:2490:2490) (2490:2490:2490))
+        (PORT masterhrdata[8] (2649:2649:2649) (2649:2649:2649))
+        (PORT masterhrdata[9] (2566:2566:2566) (2566:2566:2566))
+        (PORT masterhrdata[10] (2558:2558:2558) (2558:2558:2558))
+        (PORT masterhrdata[11] (2550:2550:2550) (2550:2550:2550))
+        (PORT masterhrdata[12] (2665:2665:2665) (2665:2665:2665))
+        (PORT masterhrdata[13] (2641:2641:2641) (2641:2641:2641))
+        (PORT masterhrdata[14] (2632:2632:2632) (2632:2632:2632))
+        (PORT masterhrdata[15] (2622:2622:2622) (2622:2622:2622))
+        (PORT masterhrdata[16] (2699:2699:2699) (2699:2699:2699))
+        (PORT masterhrdata[17] (2659:2659:2659) (2659:2659:2659))
+        (PORT masterhrdata[18] (2651:2651:2651) (2651:2651:2651))
+        (PORT masterhrdata[19] (2643:2643:2643) (2643:2643:2643))
+        (PORT masterhrdata[20] (2752:2752:2752) (2752:2752:2752))
+        (PORT masterhrdata[21] (2693:2693:2693) (2693:2693:2693))
+        (PORT masterhrdata[22] (2685:2685:2685) (2685:2685:2685))
+        (PORT masterhrdata[23] (2677:2677:2677) (2677:2677:2677))
+        (PORT masterhrdata[24] (2770:2770:2770) (2770:2770:2770))
+        (PORT masterhrdata[25] (2744:2744:2744) (2744:2744:2744))
+        (PORT masterhrdata[26] (2735:2735:2735) (2735:2735:2735))
+        (PORT masterhrdata[27] (2725:2725:2725) (2725:2725:2725))
+        (PORT masterhrdata[28] (2680:2680:2680) (2680:2680:2680))
+        (PORT masterhrdata[29] (2762:2762:2762) (2762:2762:2762))
+        (PORT masterhrdata[30] (2753:2753:2753) (2753:2753:2753))
+        (PORT masterhrdata[31] (2743:2743:2743) (2743:2743:2743))
+        (PORT masterhresp[0] (2324:2324:2324) (2324:2324:2324))
+        (PORT masterhresp[1] (2340:2340:2340) (2340:2340:2340))
+        (PORT ebidqin[0] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[1] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[2] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[3] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[4] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[5] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[6] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[7] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[8] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[9] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[10] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[11] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[12] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[13] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[14] (4000:4000:4000) (4000:4000:4000))
+        (PORT ebidqin[15] (4000:4000:4000) (4000:4000:4000))
+        (PORT intpld[0] (2000:2000:2000) (2000:2000:2000))
+        (PORT intpld[1] (7302:7302:7302) (7302:7302:7302))
+        (PORT intpld[2] (2000:2000:2000) (2000:2000:2000))
+        (PORT intpld[3] (2000:2000:2000) (2000:2000:2000))
+        (PORT intpld[4] (2000:2000:2000) (2000:2000:2000))
+        (PORT intpld[5] (2000:2000:2000) (2000:2000:2000))
+        (PORT debugextin[0] (2000:2000:2000) (2000:2000:2000))
+        (PORT debugextin[1] (2000:2000:2000) (2000:2000:2000))
+        (PORT debugextin[2] (2000:2000:2000) (2000:2000:2000))
+        (PORT debugextin[3] (2000:2000:2000) (2000:2000:2000))
+        (IOPATH (posedge masterhclk) masterhwrite (3949:3949:3949) (3949:3949:3949))
+        (IOPATH (posedge masterhclk) masterhaddr[0] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[1] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[2] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[3] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[4] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[5] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[6] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[7] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[8] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[9] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[10] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[11] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[12] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[13] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[14] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[15] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[16] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[17] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[18] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[19] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[20] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[21] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[22] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[23] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[24] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[25] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[26] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[27] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[28] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[29] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[30] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhaddr[31] (4130:4130:4130) (4130:4130:4130))
+        (IOPATH (posedge masterhclk) masterhtrans[0] (3886:3886:3886) (3886:3886:3886))
+        (IOPATH (posedge masterhclk) masterhtrans[1] (3886:3886:3886) (3886:3886:3886))
+        (IOPATH (posedge masterhclk) masterhsize[0] (3416:3416:3416) (3416:3416:3416))
+        (IOPATH (posedge masterhclk) masterhsize[1] (3416:3416:3416) (3416:3416:3416))
+        (IOPATH (posedge masterhclk) masterhburst[0] (3361:3361:3361) (3361:3361:3361))
+        (IOPATH (posedge masterhclk) masterhburst[1] (3361:3361:3361) (3361:3361:3361))
+        (IOPATH (posedge masterhclk) masterhburst[2] (3361:3361:3361) (3361:3361:3361))
+        (IOPATH (posedge masterhclk) masterhwdata[0] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[1] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[2] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[3] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[4] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[5] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[6] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[7] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[8] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[9] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[10] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[11] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[12] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[13] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[14] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[15] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[16] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[17] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[18] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[19] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[20] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[21] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[22] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[23] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[24] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[25] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[26] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[27] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[28] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[29] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[30] (4392:4392:4392) (4392:4392:4392))
+        (IOPATH (posedge masterhclk) masterhwdata[31] (4392:4392:4392) (4392:4392:4392))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP slavehreadyi slavehclk (4527:4527:4527))
+      (SETUP slavehselreg slavehclk (4265:4265:4265))
+      (SETUP slavehsel slavehclk (4617:4617:4617))
+      (SETUP masterhready masterhclk (4346:4346:4346))
+      (SETUP masterhgrant masterhclk (5006:5006:5006))
+      (SETUP slavehaddr[0] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[1] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[2] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[3] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[4] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[5] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[6] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[7] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[8] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[9] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[10] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[11] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[12] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[13] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[14] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[15] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[16] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[17] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[18] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[19] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[20] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[21] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[22] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[23] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[24] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[25] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[26] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[27] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[28] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[29] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[30] slavehclk (4699:4699:4699))
+      (SETUP slavehaddr[31] slavehclk (4699:4699:4699))
+      (SETUP slavehtrans[0] slavehclk (4925:4925:4925))
+      (SETUP slavehtrans[1] slavehclk (4925:4925:4925))
+      (SETUP slavehsize[0] slavehclk (1075:1075:1075))
+      (SETUP slavehsize[1] slavehclk (1075:1075:1075))
+      (SETUP slavehburst[0] slavehclk (1681:1681:1681))
+      (SETUP slavehburst[1] slavehclk (1681:1681:1681))
+      (SETUP slavehburst[2] slavehclk (1681:1681:1681))
+      (SETUP slavehwdata[0] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[1] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[2] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[3] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[4] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[5] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[6] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[7] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[8] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[9] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[10] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[11] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[12] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[13] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[14] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[15] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[16] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[17] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[18] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[19] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[20] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[21] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[22] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[23] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[24] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[25] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[26] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[27] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[28] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[29] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[30] slavehclk (2377:2377:2377))
+      (SETUP slavehwdata[31] slavehclk (2377:2377:2377))
+      (SETUP masterhrdata[0] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[1] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[2] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[3] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[4] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[5] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[6] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[7] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[8] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[9] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[10] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[11] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[12] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[13] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[14] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[15] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[16] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[17] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[18] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[19] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[20] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[21] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[22] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[23] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[24] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[25] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[26] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[27] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[28] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[29] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[30] masterhclk (1781:1781:1781))
+      (SETUP masterhrdata[31] masterhclk (1781:1781:1781))
+      (SETUP masterhresp[0] masterhclk (4780:4780:4780))
+      (SETUP masterhresp[1] masterhclk (4780:4780:4780))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|nreset_pbidir\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (0:0:0) (0:0:0))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH datain padio (4576:4576:4576) (4576:4576:4576))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|uartdcdn_pbidir\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|uartrin_pbidir\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[0\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[1\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[2\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[3\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[4\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[5\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[6\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[7\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[8\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[9\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[10\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[11\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[12\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[13\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[14\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebidq_pbidir\[15\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (PORT oe (2000:2000:2000) (2000:2000:2000))
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+        (IOPATH (posedge oe) padio (499:499:499) (499:499:499))
+        (IOPATH (negedge oe) padio (2623:2623:2623) (2623:2623:2623))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE DATA_AVAIL\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2100:2100:2100) (2100:2100:2100))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE HCLOCK\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (1407:1407:1407) (1407:1407:1407))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE HRESET\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2100:2100:2100) (2100:2100:2100))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|DATA_AVAIL_1d\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datad (13854:13854:13854) (13854:13854:13854))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|DATA_AVAIL_1d\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15725:15725:15725) (15725:15725:15725))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|DATA_AVAIL_2d\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datad (309:309:309) (309:309:309))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|DATA_AVAIL_2d\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15737:15737:15737) (15737:15737:15737))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|Latch_en\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT dataa (309:309:309) (309:309:309))
+        (PORT datac (274:274:274) (274:274:274))
+        (IOPATH dataa regin (589:589:589) (589:589:589))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|Latch_en\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15727:15727:15727) (15727:15727:15727))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|PLD_STATE\.DATA_PHASE\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT dataa (293:293:293) (293:293:293))
+        (PORT datac (309:309:309) (309:309:309))
+        (IOPATH dataa regin (589:589:589) (589:589:589))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|PLD_STATE\.DATA_PHASE\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15721:15721:15721) (15721:15721:15721))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|Hready_i\~33_I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT dataa (3838:3838:3838) (3838:3838:3838))
+        (PORT datab (4157:4157:4157) (4157:4157:4157))
+        (PORT datac (4166:4166:4166) (4166:4166:4166))
+        (PORT datad (4173:4173:4173) (4173:4173:4173))
+        (IOPATH dataa combout (954:954:954) (954:954:954))
+        (IOPATH datab combout (932:932:932) (932:932:932))
+        (IOPATH datac combout (869:869:869) (869:869:869))
+        (IOPATH datad combout (394:394:394) (394:394:394))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|PLD_STATE\.WAIT_STATE\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datab (312:312:312) (312:312:312))
+        (PORT datac (1288:1288:1288) (1288:1288:1288))
+        (PORT datad (317:317:317) (317:317:317))
+        (IOPATH datab regin (567:567:567) (567:567:567))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|PLD_STATE\.WAIT_STATE\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15663:15663:15663) (15663:15663:15663))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|Hready_i\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datab (312:312:312) (312:312:312))
+        (PORT datad (317:317:317) (317:317:317))
+        (IOPATH datab regin (567:567:567) (567:567:567))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|Hready_i\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15663:15663:15663) (15663:15663:15663))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|ahb_slave_sm2\|Select\~296_I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datac (404:404:404) (404:404:404))
+        (PORT datad (331:331:331) (331:331:331))
+        (IOPATH datac combout (869:869:869) (869:869:869))
+        (IOPATH datad combout (394:394:394) (394:394:394))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|ahb_slave_sm2\|slave_state\.ADDRESS_PHASE\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT dataa (320:320:320) (320:320:320))
+        (PORT datab (3957:3957:3957) (3957:3957:3957))
+        (PORT datac (298:298:298) (298:298:298))
+        (PORT datad (317:317:317) (317:317:317))
+        (IOPATH dataa regin (589:589:589) (589:589:589))
+        (IOPATH datab regin (567:567:567) (567:567:567))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|ahb_slave_sm2\|slave_state\.ADDRESS_PHASE\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15664:15664:15664) (15664:15664:15664))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|ahb_slave_sm2\|Select\~295_I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT dataa (3878:3878:3878) (3878:3878:3878))
+        (PORT datab (331:331:331) (331:331:331))
+        (PORT datac (320:320:320) (320:320:320))
+        (PORT datad (3896:3896:3896) (3896:3896:3896))
+        (IOPATH dataa combout (954:954:954) (954:954:954))
+        (IOPATH datab combout (932:932:932) (932:932:932))
+        (IOPATH datac combout (869:869:869) (869:869:869))
+        (IOPATH datad combout (394:394:394) (394:394:394))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|ahb_slave_sm2\|slave_state\.DATA_PHASE\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datab (331:331:331) (331:331:331))
+        (PORT datac (404:404:404) (404:404:404))
+        (PORT datad (317:317:317) (317:317:317))
+        (IOPATH datab regin (567:567:567) (567:567:567))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|ahb_slave_sm2\|slave_state\.DATA_PHASE\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15661:15661:15661) (15661:15661:15661))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|ahb_slave_sm2\|slave_state\.BURST_PHASE\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT dataa (338:338:338) (338:338:338))
+        (PORT datab (331:331:331) (331:331:331))
+        (PORT datac (404:404:404) (404:404:404))
+        (PORT datad (3946:3946:3946) (3946:3946:3946))
+        (IOPATH dataa regin (589:589:589) (589:589:589))
+        (IOPATH datab regin (567:567:567) (567:567:567))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|ahb_slave_sm2\|slave_state\.BURST_PHASE\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15659:15659:15659) (15659:15659:15659))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|ahb_slave_sm2\|Select\~293_I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT dataa (3834:3834:3834) (3834:3834:3834))
+        (PORT datab (320:320:320) (320:320:320))
+        (PORT datac (1208:1208:1208) (1208:1208:1208))
+        (PORT datad (3870:3870:3870) (3870:3870:3870))
+        (IOPATH dataa combout (954:954:954) (954:954:954))
+        (IOPATH datab combout (932:932:932) (932:932:932))
+        (IOPATH datac combout (869:869:869) (869:869:869))
+        (IOPATH datad combout (394:394:394) (394:394:394))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|ahb_slave_sm2\|HREADY_r\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT dataa (1207:1207:1207) (1207:1207:1207))
+        (PORT datab (309:309:309) (309:309:309))
+        (PORT datac (1207:1207:1207) (1207:1207:1207))
+        (PORT datad (338:338:338) (338:338:338))
+        (IOPATH dataa regin (589:589:589) (589:589:589))
+        (IOPATH datab regin (567:567:567) (567:567:567))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|ahb_slave_sm2\|HREADY_r\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15728:15728:15728) (15728:15728:15728))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|ahb_slave_sm2\|HREADY\~1_I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datab (404:404:404) (404:404:404))
+        (PORT datad (309:309:309) (309:309:309))
+        (IOPATH datab combout (932:932:932) (932:932:932))
+        (IOPATH datad combout (394:394:394) (394:394:394))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|Int_reg\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT dataa (1287:1287:1287) (1287:1287:1287))
+        (PORT datab (306:306:306) (306:306:306))
+        (PORT datac (404:404:404) (404:404:404))
+        (PORT datad (312:312:312) (312:312:312))
+        (IOPATH dataa regin (589:589:589) (589:589:589))
+        (IOPATH datab regin (567:567:567) (567:567:567))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|Int_reg\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15665:15665:15665) (15665:15665:15665))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|read_data\[4\]\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15728:15728:15728) (15728:15728:15728))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (PORT ena (1572:1572:1572) (1572:1572:1572))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (SETUP ena (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+      (HOLD ena (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE DATA_A\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2100:2100:2100) (2100:2100:2100))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|DATA_1d\[3\]\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datad (13778:13778:13778) (13778:13778:13778))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|DATA_1d\[3\]\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15718:15718:15718) (15718:15718:15718))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (PORT ena (2392:2392:2392) (2392:2392:2392))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (SETUP ena (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+      (HOLD ena (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|read_data\[3\]\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datac (306:306:306) (306:306:306))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|read_data\[3\]\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15725:15725:15725) (15725:15725:15725))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (PORT ena (1572:1572:1572) (1572:1572:1572))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (SETUP ena (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+      (HOLD ena (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE DATA_B\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2100:2100:2100) (2100:2100:2100))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|DATA_1d\[2\]\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datad (13799:13799:13799) (13799:13799:13799))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|DATA_1d\[2\]\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15727:15727:15727) (15727:15727:15727))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (PORT ena (2401:2401:2401) (2401:2401:2401))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (SETUP ena (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+      (HOLD ena (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|read_data\[2\]\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datac (290:290:290) (290:290:290))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|read_data\[2\]\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15724:15724:15724) (15724:15724:15724))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (PORT ena (1572:1572:1572) (1572:1572:1572))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (SETUP ena (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+      (HOLD ena (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE DATA_C\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2100:2100:2100) (2100:2100:2100))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|DATA_1d\[1\]\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datad (13787:13787:13787) (13787:13787:13787))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|DATA_1d\[1\]\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15726:15726:15726) (15726:15726:15726))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (PORT ena (2399:2399:2399) (2399:2399:2399))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (SETUP ena (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+      (HOLD ena (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|read_data\[1\]\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datac (306:306:306) (306:306:306))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|read_data\[1\]\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15721:15721:15721) (15721:15721:15721))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (PORT ena (1572:1572:1572) (1572:1572:1572))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (SETUP ena (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+      (HOLD ena (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE DATA_D\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2100:2100:2100) (2100:2100:2100))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|DATA_1d\[0\]\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datad (13789:13789:13789) (13789:13789:13789))
+        (IOPATH datad regin (29:29:29) (29:29:29))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|DATA_1d\[0\]\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15728:15728:15728) (15728:15728:15728))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (PORT ena (2401:2401:2401) (2401:2401:2401))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (SETUP ena (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+      (HOLD ena (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_lcell")
+    (INSTANCE inst\|key_state\|read_data\[0\]\~I.lecomb)
+    (DELAY
+      (ABSOLUTE
+        (PORT datac (290:290:290) (290:290:290))
+        (IOPATH datac regin (503:503:503) (503:503:503))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_lcell_register")
+    (INSTANCE inst\|key_state\|read_data\[0\]\~I.lereg)
+    (DELAY
+      (ABSOLUTE
+        (PORT aclr (15727:15727:15727) (15727:15727:15727))
+        (PORT clk (2498:2498:2498) (2498:2498:2498))
+        (PORT ena (1572:1572:1572) (1572:1572:1572))
+        (IOPATH (posedge clk) regout (486:486:486) (486:486:486))
+        (IOPATH (posedge aclr) regout (369:369:369) (369:369:369))
+      )
+    )
+    (TIMINGCHECK
+      (SETUP datain (posedge clk) (250:250:250))
+      (SETUP ena (posedge clk) (250:250:250))
+      (HOLD datain (posedge clk) (250:250:250))
+      (HOLD ena (posedge clk) (250:250:250))
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|clk_ref_pin\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|npor_pin\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiack_pin\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|uartctsn_pin\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|uartdsrn_pin\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|uartrxd_pin\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|intextpin_pin\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (IOPATH padio combout (2235:2235:2235) (2235:2235:2235))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE hready\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1230:1230:1230) (1230:1230:1230))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE Mwrite\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (3907:3907:3907) (3907:3907:3907))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[31\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (5012:5012:5012) (5012:5012:5012))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[30\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4168:4168:4168) (4168:4168:4168))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[29\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4920:4920:4920) (4920:4920:4920))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[28\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4655:4655:4655) (4655:4655:4655))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[27\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4518:4518:4518) (4518:4518:4518))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[26\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4369:4369:4369) (4369:4369:4369))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[25\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (5001:5001:5001) (5001:5001:5001))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[24\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4675:4675:4675) (4675:4675:4675))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[23\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4304:4304:4304) (4304:4304:4304))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[22\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (5058:5058:5058) (5058:5058:5058))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[21\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4940:4940:4940) (4940:4940:4940))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[20\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (5099:5099:5099) (5099:5099:5099))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[19\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4878:4878:4878) (4878:4878:4878))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[18\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4000:4000:4000) (4000:4000:4000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[17\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (3880:3880:3880) (3880:3880:3880))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[16\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4969:4969:4969) (4969:4969:4969))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[15\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4996:4996:4996) (4996:4996:4996))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[14\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (5040:5040:5040) (5040:5040:5040))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[13\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4465:4465:4465) (4465:4465:4465))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[12\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4992:4992:4992) (4992:4992:4992))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[11\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (5098:5098:5098) (5098:5098:5098))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[10\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4633:4633:4633) (4633:4633:4633))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[9\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (5131:5131:5131) (5131:5131:5131))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[8\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (5127:5127:5127) (5127:5127:5127))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[7\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4594:4594:4594) (4594:4594:4594))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[6\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4328:4328:4328) (4328:4328:4328))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[5\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (5128:5128:5128) (5128:5128:5128))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[4\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4968:4968:4968) (4968:4968:4968))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[3\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (5190:5190:5190) (5190:5190:5190))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[2\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4210:4210:4210) (4210:4210:4210))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[1\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4325:4325:4325) (4325:4325:4325))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhaddr\[0\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4151:4151:4151) (4151:4151:4151))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE burst\[2\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4864:4864:4864) (4864:4864:4864))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE burst\[1\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4221:4221:4221) (4221:4221:4221))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE burst\[0\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4538:4538:4538) (4538:4538:4538))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE size\[1\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4561:4561:4561) (4561:4561:4561))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE size\[0\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4559:4559:4559) (4559:4559:4559))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE trans\[1\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (3853:3853:3853) (3853:3853:3853))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE trans\[0\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4162:4162:4162) (4162:4162:4162))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[31\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (3710:3710:3710) (3710:3710:3710))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[30\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4550:4550:4550) (4550:4550:4550))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[29\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4314:4314:4314) (4314:4314:4314))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[28\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4081:4081:4081) (4081:4081:4081))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[27\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (3999:3999:3999) (3999:3999:3999))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[26\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4671:4671:4671) (4671:4671:4671))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[25\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4593:4593:4593) (4593:4593:4593))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[24\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4588:4588:4588) (4588:4588:4588))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[23\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4267:4267:4267) (4267:4267:4267))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[22\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4255:4255:4255) (4255:4255:4255))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[21\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4312:4312:4312) (4312:4312:4312))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[20\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4693:4693:4693) (4693:4693:4693))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[19\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4531:4531:4531) (4531:4531:4531))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[18\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4511:4511:4511) (4511:4511:4511))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[17\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4216:4216:4216) (4216:4216:4216))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[16\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4635:4635:4635) (4635:4635:4635))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[15\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4705:4705:4705) (4705:4705:4705))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[14\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4085:4085:4085) (4085:4085:4085))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[13\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4510:4510:4510) (4510:4510:4510))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[12\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4304:4304:4304) (4304:4304:4304))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[11\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4745:4745:4745) (4745:4745:4745))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[10\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4757:4757:4757) (4757:4757:4757))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[9\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4679:4679:4679) (4679:4679:4679))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[8\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4672:4672:4672) (4672:4672:4672))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[7\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4368:4368:4368) (4368:4368:4368))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[6\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4782:4782:4782) (4782:4782:4782))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[5\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4418:4418:4418) (4418:4418:4418))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[4\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4759:4759:4759) (4759:4759:4759))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[3\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4619:4619:4619) (4619:4619:4619))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[2\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4406:4406:4406) (4406:4406:4406))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[1\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4072:4072:4072) (4072:4072:4072))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhwdata\[0\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4264:4264:4264) (4264:4264:4264))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE intpld\[1\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (3274:3274:3274) (3274:3274:3274))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[31\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1625:1625:1625) (1625:1625:1625))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[30\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4703:4703:4703) (4703:4703:4703))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[29\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1450:1450:1450) (1450:1450:1450))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[28\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (5085:5085:5085) (5085:5085:5085))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[27\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4945:4945:4945) (4945:4945:4945))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[26\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1635:1635:1635) (1635:1635:1635))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[25\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4914:4914:4914) (4914:4914:4914))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[24\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1653:1653:1653) (1653:1653:1653))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[23\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1643:1643:1643) (1643:1643:1643))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[22\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4971:4971:4971) (4971:4971:4971))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[21\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4649:4649:4649) (4649:4649:4649))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[20\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4621:4621:4621) (4621:4621:4621))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[19\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4715:4715:4715) (4715:4715:4715))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[18\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1532:1532:1532) (1532:1532:1532))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[17\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1577:1577:1577) (1577:1577:1577))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[16\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1522:1522:1522) (1522:1522:1522))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[15\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4653:4653:4653) (4653:4653:4653))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[14\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (3875:3875:3875) (3875:3875:3875))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[13\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (3919:3919:3919) (3919:3919:3919))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[12\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4617:4617:4617) (4617:4617:4617))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[11\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4699:4699:4699) (4699:4699:4699))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[10\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4560:4560:4560) (4560:4560:4560))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[9\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4676:4676:4676) (4676:4676:4676))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[8\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1397:1397:1397) (1397:1397:1397))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[7\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4680:4680:4680) (4680:4680:4680))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[6\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1551:1551:1551) (1551:1551:1551))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[5\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1569:1569:1569) (1569:1569:1569))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[4\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (4719:4719:4719) (4719:4719:4719))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[3\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (298:298:298) (298:298:298))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[2\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (317:317:317) (317:317:317))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[1\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1492:1492:1492) (1492:1492:1492))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE masterhrdata\[0\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (1242:1242:1242) (1242:1242:1242))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE hresp\[1\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (0:0:0) (0:0:0))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE hresp\[0\]\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (0:0:0) (0:0:0))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE HCLK\~I.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2298:2298:2298) (2298:2298:2298))
+        (IOPATH datain padio (2414:2414:2414) (2414:2414:2414))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|uartdtrn_pout\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|uarttxd_pout\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|uartrtsn_pout\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiwen_pout\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebioen_pout\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[24\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[23\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[22\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[21\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[20\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[19\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[18\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[17\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[16\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[15\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[14\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[13\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[12\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[11\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[10\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[9\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[8\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[7\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[6\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[5\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[4\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[3\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[2\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[1\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebiaddr_pout\[0\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebicsn_pout\[3\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebicsn_pout\[2\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebicsn_pout\[1\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+  (CELL
+    (CELLTYPE "apex20ke_asynch_io")
+    (INSTANCE inst5\|lpm_instance\|core\|ebicsn_pout\[0\]\|ioatom.asynch_inst)
+    (DELAY
+      (ABSOLUTE
+        (PORT datain (2000:2000:2000) (2000:2000:2000))
+        (IOPATH datain padio (2452:2452:2452) (2452:2452:2452))
+      )
+    )
+  )
+)

@@ -1,0 +1,129 @@
+# Copyright (C) 1991-2004 Altera Corporation
+# Any  megafunction  design,  and related netlist (encrypted  or  decrypted),
+# support information,  device programming or simulation file,  and any other
+# associated  documentation or information  provided by  Altera  or a partner
+# under  Altera's   Megafunction   Partnership   Program  may  be  used  only
+# to program  PLD  devices (but not masked  PLD  devices) from  Altera.   Any
+# other  use  of such  megafunction  design,  netlist,  support  information,
+# device programming or simulation file,  or any other  related documentation
+# or information  is prohibited  for  any  other purpose,  including, but not
+# limited to  modification,  reverse engineering,  de-compiling, or use  with
+# any other  silicon devices,  unless such use is  explicitly  licensed under
+# a separate agreement with  Altera  or a megafunction partner.  Title to the
+# intellectual property,  including patents,  copyrights,  trademarks,  trade
+# secrets,  or maskworks,  embodied in any such megafunction design, netlist,
+# support  information,  device programming or simulation file,  or any other
+# related documentation or information provided by  Altera  or a megafunction
+# partner, remains with Altera, the megafunction partner, or their respective
+# licensors. No other licenses, including any licenses needed under any third
+# party's intellectual property, are provided herein.
+
+
+# The default values for assignments are stored in the file
+#		arm_top_assignment_defaults.qdf
+# If this file doesn't exist, and for assignments not listed, see file
+#		assignment_defaults.qdf
+
+# Altera recommends that you do not modify this file. This
+# file is updated automatically by the Quartus II software
+# and any changes you make may be lost or overwritten.
+
+
+# Project-Wide Assignments
+# ========================
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION "4.1 SP2"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "17:49:05  FEBRUARY 28, 2005"
+set_global_assignment -name LAST_QUARTUS_VERSION 4.2
+set_global_assignment -name ASM_FILE software/armc_startup.s
+set_global_assignment -name C_FILE software/exceptions.c
+set_global_assignment -name C_FILE software/irq.c
+set_global_assignment -name C_FILE software/main.c
+set_global_assignment -name C_FILE software/retarget.c
+set_global_assignment -name C_FILE software/uartcomm.c
+set_global_assignment -name VHDL_FILE video_dma_controller.vhd
+set_global_assignment -name BDF_FILE arm_top.bdf
+set_global_assignment -name VHDL_FILE default_slave.vhd
+set_global_assignment -name VHDL_FILE irq_control.vhd
+set_global_assignment -name VHDL_FILE line_buffer.vhd
+set_global_assignment -name VHDL_FILE response_and_data_mux.vhd
+set_global_assignment -name VHDL_FILE slave_decoder.vhd
+set_global_assignment -name VHDL_FILE slave_interface.vhd
+set_global_assignment -name VHDL_FILE system_pll.vhd
+set_global_assignment -name VHDL_FILE vga_driver.vhd
+set_global_assignment -name VHDL_FILE video_components.vhd
+set_global_assignment -name BDF_FILE video_dma3.bdf
+
+# Pin & Location Assignments
+# ==========================
+set_location_assignment PIN_AD6 -to B[3]
+set_location_assignment PIN_AJ2 -to R[3]
+set_location_assignment PIN_AB6 -to R[4]
+set_location_assignment PIN_AA5 -to R[5]
+set_location_assignment PIN_AB5 -to R[6]
+set_location_assignment PIN_AC7 -to R[7]
+set_location_assignment PIN_AC6 -to G[2]
+set_location_assignment PIN_AC5 -to G[3]
+set_location_assignment PIN_AC4 -to G[4]
+set_location_assignment PIN_AD5 -to G[5]
+set_location_assignment PIN_AD4 -to G[6]
+set_location_assignment PIN_AD7 -to G[7]
+set_location_assignment PIN_AE4 -to B[4]
+set_location_assignment PIN_AF5 -to B[5]
+set_location_assignment PIN_AE5 -to B[6]
+set_location_assignment PIN_AE6 -to B[7]
+set_location_assignment PIN_AJ4 -to vga_clk
+set_location_assignment PIN_AE7 -to vsync
+set_location_assignment PIN_AF6 -to hsync
+set_location_assignment PIN_AF7 -to DE
+set_location_assignment PIN_AH4 -to pwr_en
+set_location_assignment PIN_W30 -to sys_clk
+set_location_assignment PIN_AE28 -to RESET_N
+
+# Analysis & Synthesis Assignments
+# ================================
+set_global_assignment -name FAMILY EXCALIBUR_ARM
+set_global_assignment -name TOP_LEVEL_ENTITY arm_top
+
+# Fitter Assignments
+# ==================
+set_global_assignment -name DEVICE EPXA10F1020C2
+set_global_assignment -name EXCALIBUR_CONFIGURATION_SCHEME "BOOT FROM FLASH"
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
+set_global_assignment -name ENABLE_INIT_DONE_OUTPUT ON
+set_global_assignment -name APEX20KE_DEVICE_IO_STANDARD LVTTL
+
+# EDA Netlist Writer Assignments
+# ==============================
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim (Verilog HDL output from Quartus II)"
+
+# Assembler Assignments
+# =====================
+set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
+set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_NO_OUTPUT_GND "AS INPUT TRI-STATED"
+
+# Simulator Assignments
+# =====================
+set_global_assignment -name GLITCH_INTERVAL "1 "
+
+# Software Builder Assignments
+# ============================
+set_global_assignment -name TOOLSET "ADS STANDARD TOOLS"
+set_global_assignment -name PROGRAMMING_FILE_TYPE "FLASH PROGRAMMING FILE"
+set_global_assignment -name DO_POST_BUILD_COMMAND_LINE off
+set_global_assignment -name USE_C_PREPROCESSOR_FOR_GNU_ASM_FILES on
+set_global_assignment -name ARM_CPP_COMMAND_LINE "-g -O0 -I. -I./software"
+set_global_assignment -name OUTPUT_FILE_NAME debug/arm_top.hex
+set_global_assignment -name ARM_LINK_COMMAND_LINE " -first armc_startup.o(init), -entry 0x0 -ro 0x0"
+set_global_assignment -name ARM_ASM_COMMAND_LINE "-g -keep -I. -I./software"
+set_global_assignment -name FLASH_PROGRAMMING_FILE_NAME arm_top.sbi
+
+# ---------------------------------------
+# start EDA_TOOL_SETTINGS(eda_simulation)
+
+	# EDA Netlist Writer Assignments
+	# ==============================
+	set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VERILOG -section_id eda_simulation
+
+# end EDA_TOOL_SETTINGS(eda_simulation)
+# -------------------------------------
