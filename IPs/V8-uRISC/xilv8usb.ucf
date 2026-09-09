@@ -1,0 +1,195 @@
+############Timing constraints###################################
+#
+# USB clock is 16Mhz=62.5ns when the DPLL runs a short cycle
+
+#TIMESPEC TSFFS_TO_FFS = FROM  :  ffs  :  TO  :  ffs  :  62.0 ns;
+# slowed down to 12Mhz so the place and route would complete in a 
+# reasonable time instead of 2 days!
+TIMESPEC TSFFS_TO_FFS = FROM  :  ffs  :  TO  :  ffs  :  80.0 ns;
+
+#
+# The maximum operating frequency for the V8 MCU is generally limited
+# by the clk->addr->SRAM_data_access_time->datain->clk path.
+# The SRAM used on the V8 Single board computer is a 20ns access time
+# from CE or ADDR.
+# 
+
+# Thus, to achieve 16Mhz operation, we need to meet the following:
+# SRAMs address setup = 62 - 20(clk->addr) - 22(data setup time)=20ns
+
+#TIMESPEC TSFFS_TO_addr = FROM  :  FFS  :  TO  :  PADS( EAST_A<3>:EAST_A<4>:EAST_A<5>:EAST_A<6>:EAST_A<7>:EAST_A<8>:EAST_A<9>:EAST_A<10>:EAST_A<11>:EAST_A<12>:EAST_A<13>:EAST_A<14>:EAST_A<15>:EAST_A<16>:EAST_A<17>:EAST_A<18>:EAST_A<19> )  :  30.0 ns;
+
+#TIMESPEC TSFFS_TO_ramce = FROM  :  FFS  :  TO  :  PADS( EAST_A<20> )  :  30.0 ns;
+
+# 20 ns setup to the rising edge of write
+
+#TIMESPEC TSFFS_TO_data = FROM  :  FFS  :  TO  :  PADS( EAST_C<1>:EAST_C<2>:EAST_C<3>:EAST_C<4>:EAST_C<5>:EAST_C<6>:EAST_C<7>:EAST_C<8> )  :  50.0 ns;
+
+# 22 ns data setup into the V8
+
+#TIMESPEC TSdata_TO_FFs = FROM  :  PADS( EAST_C<1>:EAST_C<2>:EAST_C<3>:EAST_C<4>:EAST_C<5>:EAST_C<6>:EAST_C<7>:EAST_C<8> )  :  TO  :  FFS  :  32.0 ns;
+
+
+# The following specs are included just to make sure nothing else is
+# way out of bounds.
+
+#TIMESPEC = " TSFFS_TO_uce = FROM  : FFS : TO : PADS( u_ce_n ) = 20.0 ns ";
+#TIMESPEC TSFFS_TO_uce = FROM  :  FFS  :  TO  :  PADS( EAST_A<21> )  :  20.0 ns;
+
+#TIMESPEC = " TSFFS_TO_siece = FROM  : FFS : TO : PADS( sie_ce ) = 20.0 ns ";
+#TIMESPEC TSFFS_TO_siece = FROM  :  FFS  :  TO  :  PADS( "sie_ce" )  :  20.0 ns;
+
+#TIMESPEC = " TSFFS_TO_bgnt = FROM  : FFS : TO : PADS( bus_gnt ) = 20.0 ns ";
+#TIMESPEC TSFFS_TO_bgnt = FROM  :  FFS  :  TO  :  PADS( EAST_A<29> )  :  20.0 ns;
+
+#TIMESPEC = " TSFFS_TO_oe = FROM  : FFS : TO : PADS( oe_n ) = 20.0 ns ";
+#TIMESPEC TSFFS_TO_oe = FROM  :  FFS  :  TO  :  PADS( EAST_C<17> )  :  20.0 ns;
+
+#TIMESPEC = " TSwrite_TO_we = FROM  : FFS( *WRITE* ) : TO : PADS( we_n ) = 20.0 ns ";
+####this one fails???###TIMESPEC TSwrite_TO_we = FROM  :  PADS( "*WRITE*" )  :  TO  :  PADS( "we_n" )  :  20.0 ns;
+
+#TIMESPEC = " TSFFS_TO_we = FROM  : FFS : TO : PADS( we_n ) = 30.0 ns ";
+#TIMESPEC TSFFS_TO_we = FROM  :  FFS  :  TO  :  PADS( EAST_C<18> )  :  20.0 ns;
+
+#TIMESPEC="TSFFS_TO_ready=FROM:FFS:TO:PADS(ready)=20.0ns";
+
+#
+
+#TIMESPEC = " TSrst_TO_FFs = FROM  : PADS( reset_n ) : TO : FFS = 20.0 ns ";
+#TIMESPEC TSrst_TO_FFs = FROM  :  PADS( "reset_n" )  :  TO  :  FFS  :  20.0 ns;
+
+#TIMESPEC="TSready_TO_FFs=FROM:PADS(ready):TO:FFS=50.0ns";
+#TIMESPEC TSready_TO_FFs = FROM : PADS( EAST_C<19> ) : TO : FFS : 40.0 ns ;
+
+#TIMESPEC = " TSbreq_TO_FFs = FROM  : PADS( bus_req ) : TO : FFS = 20.0 ns ";
+#TIMESPEC TSbreq_TO_FFs = FROM  :  PADS( "bus_req" )  :  TO  :  FFS  :  20.0 ns;
+
+
+#################################################################
+# do a little bit of floorplanning to improve the layout...
+# Place the opcode decode above all of the other logic
+
+#INST "cpu_o*" LOC = "CLB_R1C1","CLB_R10C24";
+#INST "cpu_a_modgen_14_ax_add" LOC = "CLB_R15C8";
+#INST "cpu_r*" LOC = "CLB_R14C1","CLB_R14C12";
+
+# Place the flop that generates WE_N near the IO pin
+# to insure we don't have any glitches on it.
+#INST "*writel*" LOC = "CLB_R27C36";
+# MAP has a tendancy to put critical path FFs in with the write flop
+# which in turn makes the delay quite huge. So, we force it to put
+# the addr<1> bit in here which should prevent anything else from
+# going in. The addr<1> IO cell is right next to WE_N
+#INST "*usb_bus_gnt" LOC = "CLB_R27C36";
+# Place the write enable from the USB side right near it.
+#INST "*weo_lcl" LOC = "CLB_R28C36";
+#INST "*reo_lcl" LOC = "CLB_R28C36";
+
+# We want the WE_N signal to be as fast as possible.
+#NET "EAST_C<18>" FAST;
+
+#INST "bufgs_manual_clk" LOC = "BR";
+
+# set some priorities on routing
+#NET "V8_CPU_ADDR_SEL<0>" MAXDELAY=7 ns ;
+#NET "V8_CPU_ADDR_SEL<1>" MAXDELAY=7 ns ;
+#NET "V8_ADDR_CPU<0>" MAXDELAY=7 ns ;
+#NET "V8_ADDR_CPU<1>" MAXDELAY=7 ns ;
+#NET "V8_ADDR_CPU<2>" MAXDELAY=7 ns ;
+#NET "V8_ADDR_CPU<3>" MAXDELAY=7 ns ;
+#NET "V8_ADDR_CPU<4>" MAXDELAY=7 ns ;
+#NET "V8_ADDR_CPU<5>" MAXDELAY=7 ns ;
+#NET "V8_ADDR_CPU<6>" MAXDELAY=7 ns ;
+#NET "V8_ADDR_CPU<7>" MAXDELAY=7 ns ;
+#NET "V8_ADDR_CPU<8>" MAXDELAY=5 ns ;
+#NET "V8_ADDR_CPU<9>" MAXDELAY=5 ns ;
+#NET "V8_ADDR_CPU<10>" MAXDELAY=5 ns ;
+#NET "V8_ADDR_CPU<11>" MAXDELAY=5 ns ;
+#NET "V8_ADDR_CPU<12>" MAXDELAY=5 ns ;
+#NET "V8_ADDR_CPU<13>" MAXDELAY=5 ns ;
+#NET "V8_ADDR_CPU<14>" MAXDELAY=5 ns ;
+#NET "V8_ADDR_CPU<15>" MAXDELAY=5 ns ;
+
+
+############Timing constraints###################################
+# USB clock is 12Mhz=83ns but the DPLL could shift it up to 16Mhz
+#TIMESPEC="TS_SYS_MAX_CLK=FROM:FFS:TO:FFS=62.0ns";
+NET "*clken_dpllo" TNM = CLK_USB ;
+TIMESPEC TS_clken_dpllo_wav = PERIOD CLK_USB : 62 ns : HIGH 20 ns ;
+TIMESPEC TS_clken_dpllo = FROM : CLK_USB : TO : CLK_USB : 16 Mhz ;
+
+#
+# The maximum operating frequency for the VUSB DMA is generally limited
+# by the clk->addr->SRAM_data_access_time->datain->clk path.
+# The SRAM used on the V8 Single board computer is a 20ns access time
+# from CE or ADDR.
+# 
+# Thus, to achieve 16Mhz operation, we need to meet the following:
+# SRAMs address setup = 62.0 - 21(clk->addr) - 21(data setup time)=20.0ns
+
+## THE DPLL RUNS AT 48MHZ, WE WANT IT TO RUN AT 50MZ!
+NET "*clk48*" TNM = PLL_CLK ;
+
+#TIMESPEC TS_DPLL=FROM:FFS(USIE_PLL_*):TO:FFS(USIE_PLL_*) : 20.0 NS;
+TIMESPEC TS_DPLL=FROM : PLL_CLK : TO : PLL_CLK : 50 Mhz ;
+
+# All inputs from the USB should be treated as async so we should
+# flop them before using them internally. Thus, they should have low
+# input delay.
+#TIMESPEC TS_USB_IN0=FROM:PADS(WEST_C<30>:WEST_C<31>:WEST_C<32>):TO:FFS : 8.5 NS;
+
+#################################################################
+# do a little bit of floorplanning to improve the layout...
+
+#INST "bufgs_usie_manual_usbclkx4" LOC = "BUFGE_WSW";
+# Place the ROM in the lower right corner of the die.
+INST "v8_rom/BANK_R0C0" LOC = "CLB_R36C30";
+#INST "*BANK_R0C0" LOC = "CLB_R28C21";
+
+# Place the DPLL in a corner of the die so it can meet the 48Mhz timing.
+#INST "*v8_usb_pll_*" 		LOC =  "CLB_R1C1:CLB_R8C4";
+
+
+INST "*v8_usb_pll_reg_dminus_f"      LOC =  "CLB_R42C5"; 
+INST "*v8_usb_pll_reg_dminus_ff"     LOC = "CLB_R42C5";
+INST "*v8_usb_pll_reg_dminus_fff"    LOC = "CLB_R42C4";
+#INST "*v8_usb_pll_reg_se0_ff" 	     LOC =  "CLB_R42C3"; 
+INST "*v8_usb_pll_reg_eop_dpll"      LOC = "CLB_R42C2";
+INST "*v8_usb_pll_reg_dplus_f"       LOC = "CLB_R43C5";
+INST "*v8_usb_pll_reg_dplus_ff"      LOC = "CLB_R43C5";
+INST "*v8_usb_pll_reg_se0_fffff"     LOC = "CLB_R43C3";
+INST "*v8_usb_pll_reg_se0_ffff"      LOC = "CLB_R43C3";
+INST "*v8_usb_pll_reg_dplus_fff"     LOC = "CLB_R43C2";
+INST "*v8_usb_pll_reg_rcvoutl"       LOC = "CLB_R43C1";
+INST "*v8_usb_pll_reg_j_state_in_ffff" LOC = "CLB_R44C4";
+INST "*v8_usb_pll_reg_clken_12l"     LOC = "CLB_R44C4";
+#INST "*v8_usb_pll_reg_late_window"  LOC =  "CLB_R44C3"; 
+INST "*v8_usb_pll_reg_late"          LOC = "CLB_R44C3";
+INST "*v8_usb_pll_reg_se0l" 	     LOC = "CLB_R44C2"; 
+INST "*v8_usb_pll_reg_eopl"          LOC = "CLB_R44C2";
+INST "*v8_usb_pll_reg_j_state_in_fff"  LOC = "CLB_R45C5";
+INST "*v8_usb_pll_reg_shifter<2>"    LOC =  "CLB_R45C4"; 
+INST "*v8_usb_pll_reg_early"         LOC =  "CLB_R45C3"; 
+INST "*v8_usb_pll_reg_pre_data"      LOC = "CLB_R45C2";
+INST "*v8_usb_pll_reg_dataoutl"      LOC = "CLB_R45C1";
+INST "*v8_usb_pll_reg_datain_f"      LOC = "CLB_R46C5";
+INST "*v8_usb_pll_reg_datain_ff"     LOC = "CLB_R46C5";
+INST "*v8_usb_pll_reg_shifter<0>"    LOC =  "CLB_R46C4"; 
+INST "*v8_usb_pll_reg_state<0>"      LOC =  "CLB_R46C3"; 
+INST "*v8_usb_pll_reg_phase_f"       LOC =  "CLB_R47C4"; 
+INST "*v8_usb_pll_reg_state<3>"      LOC =  "CLB_R47C3"; 
+INST "*v8_usb_pll_reg_phase_ff"      LOC = "CLB_R47C2";
+INST "*v8_usb_pll_reg_phase_fff"     LOC = "CLB_R47C2";
+
+INST "*v8_usb_pll_reg_reset_after_clks"      LOC = "CLB_R41C2";
+INST "*v8_usb_pll_reg_reset_after_clks_f"    LOC = "CLB_R41C2";
+INST "*v8_usb_pll_reg_reset_after_clks_ff"   LOC = "CLB_R41C3";
+INST "*v8_usb_pll_reg_reset_after_clks_fff"  LOC = "CLB_R41C3";
+INST "*v8_usb_pll_reg_reset_f"               LOC = "CLB_R41C4";
+INST "*v8_usb_pll_reg_reset_ff"              LOC = "CLB_R41C4";
+
+
+#Place the the power control register.
+INST "reg_sleep_fff"          LOC =  "CLB_R1C2"; 
+
+

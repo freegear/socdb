@@ -1,0 +1,53 @@
+ROMBLDR documentation
+
+The ROMBLDR program is provided AS-IS. No support will be provided by
+VAutomation. However, the source code is available on our web site
+at HTTP://www.vautomation.com/free/free.htm. The source code is
+ANSI C and has been compiled on SUNs and PCs.
+
+The ROMBLDR program reads in an Intel Hex format file and produces
+a Xilinx 4000 FPGA ROM of the same size. The ROM must be 8 bits
+wide and can be up to 4K bytes deep.
+
+The ROM is built using 32:1 ROMs in one CLB for the base memory element.
+These are in turn connected to TBUFs with a decoder to enable only the
+selected cell. The ROM_ENB signal is added to the equation for the
+TBUF enable to help keep power consumption down. This ROM structure is
+optimal for > 128 byte ROMs in both performance and density. However,
+there is a possibility of tristate contention when the upper address
+bits are switching. To minimize the contention, a ROM_ENB signal is 
+provided when can be used to turn off all of the TBUF when the ROM
+is not active, or can be used to disable all TBUFs for a short time
+while the address lines are settling.
+
+The ROM CLBs and the upper address decoders are RLOCed into a 
+grid with one data bit per ROW. We've found that this results in a dense
+ROM with good performance. PAR tends to route the lower address bits 
+through BUFGs. The TBUFs cannot easily be RLOCed due to limitations in
+the M1 tools and thus they do occasionally move away from their desired
+location next to the ROM CLB.
+
+To run the program:
+
+rombldr <intel_hex_file.ihx> > rom.xnf
+
+ROMBLDR then outputs a Xilinx XNF file on stdout which is typically
+redirected to a file.
+
+The ROM has the following connections:
+addr[12:0] 	- IN - address bus - see Note 1 below
+rom_enb		- IN - ROM tristate enable
+ROM_OUT[7:0]	- OUT- ROM data out
+
+Note 1: Some of the upper address lines are not needed if the ROM is smaller than
+4K bytes. 
+
+This program was developed by VAutomation to meet our specific needs.
+Feel free to make enhancements to the code but please return a copy to us.
+
+Some future enhancements might include:
+1) Add self-timed logic to force all TBUFs into tristate while the addr bus
+   is switching. (the trick is to not incurr lots of delay on the enable)
+2) Allow each data bit to occupy 2 or more rows (IE: allow the ROM to
+   be "folded"). Large ROMs tend to be wide but thin.
+3) Support larger ROMs. (4K is the practical limit for todays devices).

@@ -1,0 +1,96 @@
+;
+;  Syntax of instructions for v8asm
+;
+;  The syntax of this file is:
+;
+;  1. opcode in column 1 and 2 in hex (00 to ff)
+;  2. a comma delimiter
+;  3. mnemonic of instruction (max 4 chars)    
+;  4. a comma delimiter
+;  5. a 2 byte operand format designator
+;
+;    operand formats are:
+;
+;       0 = no operand 
+;       1 = register operand r0-r7, R0-R7 to be placed in
+;           first 3 bits of opcode
+;       2 = three bit number 0-7 to be placed in 
+;           first 3 bits of opcode
+;       3 = 8 bit operand to be placed as 2nd byte of object code
+;           formats are:
+;                   127 to -128
+;                   0x00 to 0xff
+;                   h'00 to h'ff
+;                   b'00000000 to b'11111111
+;                   o'000 to o'776
+;                   'c' a single character
+;                   "c" a single byte string 
+;                   Label as offset from current position
+;       4 = Same as 3, except Labels are treated as a value      
+;       5 = 16 bit operand to be placed as 2nd and 3rd byte of object code
+;           formats are:
+;                   0 - 65535
+;                   0x0000 to 0xffff
+;                   h'0000 to h'ffff
+;                   b'0000000000000000 to b'1111111111111111
+;                   o'000000 to o'777774
+;                   'c' a single byte character
+;                   "cc" two byte string   
+;
+00,inc,10
+08,adc,10
+10,tx0,10
+18,or,10
+20,and,10
+28,xor,10
+30,rol,10
+38,ror,10
+40,dec,10
+48,sbc,10
+50,add,10
+58,stp,20
+60,btt,20
+68,clp,20
+70,t0x,10
+78,cmp,10
+80,psh,10
+88,pop,10
+90,br0,23
+98,br1,23
+a0,usr,00
+a8,int,20
+b0,usr2,00
+b8,xsp,00
+b9,rts,00
+ba,rti,00
+bb,brk,00
+bc,jmp,50
+bf,jsr,50
+c0,upp,10
+c8,sta,15
+d0,stx,10
+d8,sto,13
+e0,ldi,14
+e8,lda,15
+f0,ldx,10
+f8,ldo,13
+;
+;  Add nop as a tx0 r0 for convenience
+;
+10,nop,00
+; 
+; Various other branch forms for convience
+90,brne,30
+98,breq,30
+91,brcc,30
+91,brlt,30
+99,brcs,30
+99,brge,30
+92,brpl,30
+9a,brmi,30
+
+;; after BTT, branch if bit was set
+90,brbs,30
+
+;; after BTT, branch if bit was clear
+98,brbc,30

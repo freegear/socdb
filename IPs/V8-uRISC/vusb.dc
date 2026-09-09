@@ -1,0 +1,150 @@
+/* This is a Synopsys DC_SHELL script for synthesizing the VUSB Core, and
+ * the DPLL. Each component is synthesized seperately.
+ * This is only a sample script. Feel free to modify it to acheive
+ * the results you want.
+ *
+ */
+
+/* Libaries used are LSI 10K which are typically shipped with Synopsys
+ * Replace these with your desired target technology
+ */
+search_path = {. \
+get_unix_variable("SYNOPSYS") + "/libraries/syn"};
+link_library = { "*" lsi_10k.db }
+target_library = { lsi_10k.db }
+symbol_library = {lsi_10k.slib};
+
+define_name_rules hdl -allow "A-Z 0-9 _ "
+define_name_rules hdl -first_restrict "0-9 _"
+define_name_rules hdl -max_length 32
+define_name_rules hdl -case_insensitive
+define_name_rules hdl -reserved_words { \
+"BD", "BID", "BIDIRECT", "BIDIRECTS", "BLOCK",\
+"BUS", "CELL", "CELSTAT", "CHECK", "COMPILE", \
+"DEF", "DEFINE", "DEL", "DELAYS", "DELETE", "DESC", \
+"DESCRIPTION", "DIRECTORY", "DIR", "DIRECTION", "DUMMY", \
+"END", "FUNCTION", "IN", "INITIALIZE", "INPUT", "INPUTS", \
+"LEVEL", "LIBRARY", "LIST", "LOAD", "MOD", "MODULE", "NAME",\
+"NC", "NET", "NOCONNECT", "OPT", "OPTION", "OPTIONS", "OUT", \
+"OUTPUT", "OUTPUTS", "PIN", "TDL", "USE", "VIA", "WIRE", "WIRED" }
+ 
+compile_preserve_sync_resets="true" /****** we use sync resets! *******/
+/* however, the COMPILE_PRESERVE_SYNC_RESETS variable is no longer
+   supported in synopsys. The attributes in the source code are
+   all that is required.
+*/
+
+verilogout_no_tri="true"        /* prevent "tri" net types in verilog netlists*/
+
+read -f vhdl cfg_usb.vhd
+read -f vhdl dpllnrzi.vhd
+current_design=dpllnrzi
+link		/* explicit link is good to do */
+
+set_operating_conditions  WCCOM	/* set the operating conditions to worst case */
+
+/* create the clock to be 50Mhz, easily met in .8um CMOS */
+create_clock  "clk" -period 20.0 
+set_clock_skew -plus_uncertainty 0.5 -minus_uncertainty 0.5 clk
+set_drive 0 clk
+
+/* prevent Synopsys from buffer the clock, 
+ * typically you'll do clock tree synthesis with your ASIC vendors tools. */
+dont_touch_network "clk"
+
+check_design	/* This will find any obvious errors in the design */
+
+/* If you plan on doing scan insertion/ATPG, you'll want to do a:
+set_dont_use target_library/<all scan cells>
+ * You'll have to go thru the cell library to identify all of
+ * scan cells manually though.
+ * This prevents Synopsys from using the scan cells at this stage
+ * of the design so we can use them during scan insertion.
+*/
+
+uniquify	/* create unique instances of all submodules */
+
+/* Some gates can be saved by flattening the design.
+ungroup -all -flatten
+ * but this will remove all of the heirarchy which makes it more difficult
+ * to debug if there are any problems at the gate level.
+*/
+   
+compile	/* synthesize and optimize the design */
+
+change_names -rules vhdl	/* fix names that are invalid in VHDL */
+
+write -hierarchy -format vhdl -output dpllnrzi.net	/* output the netlist */
+write -hierarchy -output dpllnrzi.db			/* save the synopsys database */
+write_timing -f sdf-v2.1 -output dpllnrzi.sdf2.1    /* output SDF delay information */ 
+
+/* generate various reports */
+report_design > dpllnrzi.syn_rpt
+report_hierarchy -full >> dpllnrzi.syn_rpt
+report_reference >> dpllnrzi.syn_rpt
+report_cell >> dpllnrzi.syn_rpt
+report_area >> dpllnrzi.syn_rpt
+report_clock -attributes >> dpllnrzi.syn_rpt
+check_timing			/* compute static timing analysis */
+report_timing -path full -delay max -max_paths 5 > dpllnrzi.timing
+report_constraints -all_violators >> dpllnrzi.syn_rpt
+
+remove_design dpllnrzi
+
+
+read -f vhdl cfg_usb.vhd
+read -f vhdl fifo8xn.vhd
+read -f vhdl up_int.vhd
+read -f vhdl usb_sie.vhd	
+read -f vhdl vusb.vhd
+current_design=vusb
+link		/* explicit link is good to do */
+
+set_operating_conditions  WCCOM	/* set the operating conditions to worst case */
+
+/* create the clock to be 50Mhz, easily met in .8um CMOS */
+create_clock  "clk" -period 20.0 
+set_clock_skew -plus_uncertainty 0.5 -minus_uncertainty 0.5 clk
+set_drive 0 clk
+
+/* prevent Synopsys from buffer the clock, 
+ * typically you'll do clock tree synthesis with your ASIC vendors tools. */
+dont_touch_network "clk"
+
+check_design	/* This will find any obvious errors in the design */
+
+/* If you plan on doing scan insertion/ATPG, you'll want to do a:
+set_dont_use target_library/<all scan cells>
+ * You'll have to go thru the cell library to identify all of
+ * scan cells manually though.
+ * This prevents Synopsys from using the scan cells at this stage
+ * of the design so we can use them during scan insertion.
+*/
+
+uniquify	/* create unique instances of all submodules */
+
+/* Some gates can be saved by flattening the design.
+ungroup -all -flatten
+ * but this will remove all of the heirarchy which makes it more difficult
+ * to debug if there are any problems at the gate level.
+*/
+   
+compile	/* synthesize and optimize the design */
+
+change_names -rules vhdl	/* fix names that are invalid in VHDL */
+
+write -hierarchy -format vhdl -output vusb.net	/* output the netlist */
+write -hierarchy -output vusb.db			/* save the synopsys database */
+write_timing -f sdf-v2.1 -output vusb.sdf2.1    /* output SDF delay information */ 
+
+/* generate various reports */
+report_design > vusb.syn_rpt
+report_hierarchy -full >> vusb.syn_rpt
+report_reference >> vusb.syn_rpt
+report_cell >> vusb.syn_rpt
+report_area >> vusb.syn_rpt
+report_clock -attributes >> vusb.syn_rpt
+check_timing			/* compute static timing analysis */
+report_timing -path full -delay max -max_paths 5 > vusb.timing
+report_constraints -all_violators >> vusb.syn_rpt
+quit()
